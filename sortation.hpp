@@ -4,11 +4,6 @@
 #define SORTATION_MODULE
 #include "trajection.hpp"
 
-// Documentation Notes
-// -------------------
-// Equate:  Returns true if and only if both values are to be considered equivalent
-// Order:    Return true if and only if the parametric order of the values is in sorted order
-
 namespace sortation {
 
     using namespace ::trajection;

@@ -7,8 +7,8 @@
 #include "junction/association/selection.hpp"
 #include "junction/association/collection.hpp"
 #include "junction/association/stdlib.hpp"
-#include <stdio.h>
-#include <stdlib.h>
+#include <cstdio>
+#include <cstdlib>
 
 using namespace ::composition;
 using namespace ::association;
