@@ -3,7 +3,7 @@
 #ifndef ALLOCATION_STDLIB_MODULE
 #define ALLOCATION_STDLIB_MODULE
 #include "../location.hpp"
-#include <stdlib.h>
+#include <cstdlib>
 
 namespace allocation {
 
