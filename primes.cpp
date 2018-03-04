@@ -50,7 +50,7 @@ SequencePrimes(
             sequencer.proceed( sequence, value );
 }
 
-static void
+static bool
 Demonstration( void ) {
     using namespace ::junction;
     using namespace ::junction::consecution;
@@ -72,9 +72,11 @@ Demonstration( void ) {
     Initialize( primes );
     puts( "Prime Number Sequencer" );
     printf( "First natural integer: " );
-    scanf( "%u", Locate( first ).at );
+    if (scanf( "%u", Locate( first ).at ) < 1)
+        return false;
     printf( "Last natural integer: " );
-    scanf( "%u", Locate( last ).at );
+    if (scanf( "%u", Locate( last ).at ) < 1)
+        return false;
     printf( "Calculating primes..." );
     fflush( stdout );
     SequencePrimes( primes, Sequencer, first, last );
@@ -89,10 +91,13 @@ Demonstration( void ) {
     fflush( stdout );
     while (Sequencer.condense( primes ));
     puts( "done" );
+    return true;
 }
 
 int
 main() {
-    Demonstration();
-    return 0;
+    return Demonstration()
+        ? 0
+        : -1
+        ;
 }
