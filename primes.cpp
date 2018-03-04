@@ -72,12 +72,20 @@ Demonstration( void ) {
     Initialize( primes );
     puts( "Prime Number Sequencer" );
     printf( "First natural integer: " );
-    if (scanf( "%u", Locate( first ).at ) < 1)
+    if (scanf( "%u", Locate( first ).at ) < 1) {
+        fprintf( stderr, "Error parsing first integer." );
         return false;
+    }
     printf( "Last natural integer: " );
-    if (scanf( "%u", Locate( last ).at ) < 1)
+    if (scanf( "%u", Locate( last ).at ) < 1) {
+        fprintf( stderr, "Error parsing last integer." );
         return false;
-    printf( "Calculating primes..." );
+    }
+    if (first > last) {
+        fprintf( stderr, "First integer should be less than or equal to last." );
+        return false;
+    }
+    printf( "Calculating prime numbers..." );
     fflush( stdout );
     SequencePrimes( primes, Sequencer, first, last );
     puts( "done" );
@@ -96,8 +104,5 @@ Demonstration( void ) {
 
 int
 main() {
-    return Demonstration()
-        ? 0
-        : -1
-        ;
+    return Demonstration() ? 0 : -1;
 }

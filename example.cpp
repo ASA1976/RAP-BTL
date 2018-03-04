@@ -36,8 +36,7 @@ ComposeSets(
         && composer.compose( base, 'M' )
         && composer.compose( relative, 'M' )
         && composer.compose( relative, 'B' )
-        && composer.compose( relative, 'Z' )
-        ;
+        && composer.compose( relative, 'Z' );
 }
 
 template <
@@ -55,8 +54,7 @@ AssociateMap(
     associator.prepare( map, 3 );
     return associator.associate( map, 'y', 1 )
         && associator.associate( map, 'z', -1 )
-        && associator.associate( map, 'x', 0 )
-        ;
+        && associator.associate( map, 'x', 0 );
 }
 
 template <
@@ -127,8 +125,7 @@ DisplayCharacters(
     size_t
         count;
     return Count( list, direction, position, count )
-        && DisplayCharacters( list, direction.scale, count )
-        ;
+        && DisplayCharacters( list, direction.scale, count );
 }
 
 template <
@@ -353,8 +350,5 @@ QueueDemonstrations( void ) {
 
 int
 main() {
-    return QueueDemonstrations()
-        ? 0
-        : -1
-        ;
+    return QueueDemonstrations() ? 0 : -1;
 }
