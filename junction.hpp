@@ -16,7 +16,8 @@ namespace junction {
     struct Junctional {
 
         Locational< Junctional< Elemental > >
-            previous, next;
+            previous,
+            next;
 
         Elemental
             element;
@@ -30,10 +31,13 @@ namespace junction {
     struct Junctive {
 
         Natural
-            count, total;
+            count,
+            total;
 
         Locational< Junctional< Elemental > >
-            first, last, unused;
+            first,
+            last,
+            unused;
 
     };
 
