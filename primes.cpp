@@ -6,103 +6,113 @@
 using namespace ::consecution;
 
 template <
-    typename Natural
->
-static inline bool
-IsPrime(
-    Referential< const Natural >
-        value
-) {
-    static const Natural
-        Zero = 0,
-        Two = 2;
-    Natural
-        divisor;
-    if (value < Two)
-        return false;
-    for (divisor = Two; divisor < value; divisor++)
-        if (value % divisor == Zero)
-            return false;
-    return true;
-}
-
-template <
     typename Spatial,
     typename Positional,
     typename Accumulative,
     typename Natural
 >
-static inline void
+static inline bool
 SequencePrimes(
     Referential< Spatial >
         sequence,
     Referential< const Sequent< Spatial, Positional, Accumulative, Natural > >
         sequencer,
+    Referential< const Directional< const Spatial, Positional, const Natural > >
+        increment,
     Referential< const Natural >
-        first,
-    Referential< const Natural >
-        last
+        to
 ) {
+    static const Natural
+        Two = 2;
+    auto
+        scale = increment.scale;
     Natural
         value;
-    for (value = first; value <= last; value++)
-        if (IsPrime( value ))
-            sequencer.proceed( sequence, value );
+    Positional
+        position;
+    if (to < Two)
+        return false;
+    sequencer.proceed( sequence, Two );
+    for (value = Two + 1; value <= to; value++) {
+        scale.begin( sequence, position );
+        while (true) {
+            if (value % scale.go( sequence, position ).to == 0)
+                break;
+            if (!increment.traversable( sequence, position )) {
+                sequencer.proceed( sequence, value );
+                break;
+            }
+            scale.traverse( sequence, position );
+        }
+    }
+    return true;
 }
 
+template <
+    typename Natural
+>
 static bool
-Demonstration( void ) {
+DisplayPrimes(
+    Referential< const Natural >
+        to
+) {
     using namespace ::junction;
     using namespace ::junction::consecution;
     static auto
-        Sequencer = JunctionSequencer< size_t, unsigned, CopyNewAdjunct< size_t, unsigned > >;
+        Sequencer = JunctionSequencer< size_t, Natural, CopyNewAdjunct< size_t, Natural > >;
     static auto
-        Begin = BeginReadIncrement< size_t, unsigned >;
+        Increment = ReadIncrementDirection< size_t, Natural >;
     static auto
-        Traverse = TraverseReadIncrement< size_t, unsigned >;
-    static auto
-        Traversable = IncrementTraversable< size_t, unsigned >;
-    Junctive< size_t, unsigned >
+        Scale = Increment.scale;
+    Junctive< size_t, Natural >
         primes;
-    Positional< unsigned >
+    Positional< Natural >
         position;
-    unsigned
-        first,
-        last;
     Initialize( primes );
-    puts( "Prime Number Sequencer" );
-    printf( "First natural integer: " );
-    if (scanf( "%u", Locate( first ).at ) < 1) {
-        fprintf( stderr, "Error parsing first integer." );
-        return false;
+    SequencePrimes( primes, Sequencer, Increment, to );
+    if (Increment.begins( primes )) {
+        for (Scale.begin( primes, position ); true; Scale.traverse( primes, position )) {
+            printf( "%u\n", GoRead( primes, position ).to );
+            if (!Increment.traversable( primes, position ))
+                break;
+        }
+        Sequencer.secede( primes );
+        while (Sequencer.condense( primes ));
     }
-    printf( "Last natural integer: " );
-    if (scanf( "%u", Locate( last ).at ) < 1) {
-        fprintf( stderr, "Error parsing last integer." );
-        return false;
-    }
-    if (first > last) {
-        fprintf( stderr, "First integer should be less than or equal to last." );
-        return false;
-    }
-    printf( "Calculating prime numbers..." );
-    fflush( stdout );
-    SequencePrimes( primes, Sequencer, first, last );
-    puts( "done" );
-    for (Begin( primes, position ); true; Traverse( primes, position )) {
-        printf( "%u\n", GoRead( primes, position ).to );
-        if (!Traversable( primes, position ))
-            break;
-    }
-    Sequencer.secede( primes );
-    printf( "Freeing memory..." );
-    fflush( stdout );
-    while (Sequencer.condense( primes ));
-    puts( "done" );
     return true;
 }
 
 int
-main() {
-    return Demonstration() ? 0 : -1;
+main(
+    int
+        argc,
+    Locational< Locational< char > >
+        argv
+) {
+    static auto
+        PrintTitle = [&]{
+            puts( "Prime Number Sequencer" );
+            puts( "" );
+            printf( "%s TO\n\n", argv[0] );
+        };
+    long
+        test;
+    unsigned
+        to;
+    if (argc != 2) {
+        PrintTitle();
+        printf( "Where TO is a natural integer upper bound\n" );
+        return 0;
+    }
+    if (
+        sscanf( argv[1], "%ld", Locate( test ).at ) < 1
+        || test < 0
+        || sscanf( argv[1], "%u", Locate( to ).at ) < 1
+    ) {
+        PrintTitle();
+        fprintf( stderr, "Error parsing TO upper bound ('%s') as a natural integer\n", argv[1] );
+        return -1;
+    }
+    DisplayPrimes( to );
+    return 0;
 }

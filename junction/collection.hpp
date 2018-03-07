@@ -541,18 +541,20 @@ namespace junction {
                 position;
             RelativePositional
                 opposition;
-            auto RemainingBase = [&]( void ) -> bool {
-                BasicPositional
-                    last;
-                basis.decrement.scale.begin( base_set, last );
-                return ProceedMany( operand, basis.increment, base_set, position, last );
-            };
-            auto RemainingRelative = [&]( void ) -> bool {
-                RelativePositional
-                    last;
-                relativity.decrement.scale.begin( relative_set, last );
-                return ProceedMany( operand, relativity.increment, relative_set, opposition, last );
-            };
+            static auto
+                RemainingBase = [&]{
+                    BasicPositional
+                        last;
+                    basis.decrement.scale.begin( base_set, last );
+                    return ProceedMany( operand, basis.increment, base_set, position, last );
+                };
+            static auto
+                RemainingRelative = [&]{
+                    RelativePositional
+                        last;
+                    relativity.decrement.scale.begin( relative_set, last );
+                    return ProceedMany( operand, relativity.increment, relative_set, opposition, last );
+                };
             Empty( operand );
             if (!basis.increment.begins( base_set )) {
                 if (relativity.increment.begins( relative_set )) {
@@ -700,18 +702,20 @@ namespace junction {
                 position;
             RelativePositional
                 apposition;
-            auto RemainingBase = [&]( void ) -> bool {
-                BasicPositional
-                    last;
-                basis.decrement.scale.begin( base_set, last );
-                return ProceedMany( operand, basis.increment, base_set, position, last );
-            };
-            auto RemainingRelative = [&]( void ) -> bool {
-                RelativePositional
-                    last;
-                relativity.decrement.scale.begin( relative_set, last );
-                return ProceedMany( operand, relativity.increment, relative_set, apposition, last );
-            };
+            static auto
+                RemainingBase = [&]{
+                    BasicPositional
+                        last;
+                    basis.decrement.scale.begin( base_set, last );
+                    return ProceedMany( operand, basis.increment, base_set, position, last );
+                };
+            static auto
+                RemainingRelative = [&]{
+                    RelativePositional
+                        last;
+                    relativity.decrement.scale.begin( relative_set, last );
+                    return ProceedMany( operand, relativity.increment, relative_set, apposition, last );
+                };
             Empty( operand );
             if (!basis.increment.begins( base_set )) {
                 if (!relativity.increment.begins( relative_set ))

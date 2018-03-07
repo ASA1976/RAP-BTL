@@ -257,71 +257,72 @@ DemonstrateJunction( void ) {
         relative;
     AssociativelyJunctive< size_t, char, int >
         map;
-    auto FreeMemory = [&]( bool status ) -> bool {
-        ListSequencer.secede( list );
-        ListSequencer.secede( base );
-        ListSequencer.secede( relative );
-        MapCorrelator.disband( map );
-        printf( "Freeing Linked List 1/4." );
-        while (ListSequencer.condense( list ))
-            printf( "." );
-        printf( " 2/4." );
-        while (ListSequencer.condense( base ))
-            printf( "." );
-        printf( " 3/4." );
-        while (ListSequencer.condense( relative ))
-            printf( "." );
-        printf( " 4/4." );
-        while (MapCorrelator.dissolve( map ))
-            printf( "." );
-        printf( "\n" );
-        return status;
-    };
+    static auto
+        ReturnResult = [&]( bool result ) -> bool {
+            ListSequencer.secede( list );
+            ListSequencer.secede( base );
+            ListSequencer.secede( relative );
+            MapCorrelator.disband( map );
+            printf( "Freeing Linked List 1/4." );
+            while (ListSequencer.condense( list ))
+                printf( "." );
+            printf( " 2/4." );
+            while (ListSequencer.condense( base ))
+                printf( "." );
+            printf( " 3/4." );
+            while (ListSequencer.condense( relative ))
+                printf( "." );
+            printf( " 4/4." );
+            while (MapCorrelator.dissolve( map ))
+                printf( "." );
+            printf( "\n" );
+            return result;
+        };
     puts( "Junction" );
     Initialize( list );
     Initialize( base );
     Initialize( relative );
     Initialize( map );
     if (!ProceedSequence( list, ListSequencer, ListConjoiner ))
-        return FreeMemory( false );
+        return ReturnResult( false );
     printf( "Sequence = (" );
     DisplayCharacters( list, ListAxis.increment );
     puts( ")" );
     if (!ComposeSets( base, relative, ListSelector.composer ))
-        return FreeMemory( false );
+        return ReturnResult( false );
     printf( "Unordered Sets: Base = {" );
     DisplayCharacters( base, ListAxis.increment );
     printf( "}, Relative = {" );
     DisplayCharacters( relative, ListAxis.increment );
     puts( "}" );
     if (!ListSelector.section.unite( list, ListAxis.increment, base, ListAxis.increment, relative ))
-        return FreeMemory( false );
+        return ReturnResult( false );
     printf( "Unordered Union Of Base And Relative = {" );
     DisplayCharacters( list, ListAxis.increment );
     puts( "}" );
     if (!ComposeSets( base, relative, ListCollector.selector.composer ))
-        return FreeMemory( false );
+        return ReturnResult( false );
     printf( "Ordered Sets: Base = {" );
     DisplayCharacters( base, ListAxis.increment );
     printf( "}, Relative = {" );
     DisplayCharacters( relative, ListAxis.increment );
     puts( "}" );
     if (!ListCollector.bisection.unite( list, ListAxis, base, ListAxis, relative ))
-        return FreeMemory( false );
+        return ReturnResult( false );
     printf( "Ordered Union Of Base And Relative = {" );
     DisplayCharacters( list, ListAxis.increment );
     puts( "}" );
     if (!AssociateMap( map, MapCorrelator ))
-        return FreeMemory( false );
+        return ReturnResult( false );
     printf( "Unordered Map: [" );
     DisplayMappings( map, MapDirection );
     puts( "]" );
     if (!AssociateMap( map, MapAssociator ))
-        return FreeMemory( false );
+        return ReturnResult( false );
     printf( "Ordered Map: [" );
     DisplayMappings( map, MapDirection );
     puts( "]" );
-    return FreeMemory( true );
+    return ReturnResult( true );
 }
 
 static bool
