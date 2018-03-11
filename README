@@ -91,6 +91,10 @@ resulting source code can become vastly more expressive.
 
 ::location
 
+    Memory location type and function templates.  These are used to improve
+    syntactic clarity as noted in each template.
+
+
                                  TYPE TEMPLATES
 
 
@@ -108,7 +112,7 @@ resulting source code can become vastly more expressive.
             Type of the subject location.
 
         Pointer location type template.  Increases the legibility of function 
-        pointer parameter definitions, where type and identifier both appear.        
+        pointer parameter declarations, where type and identifier both appear.        
 
 
 ::location::Referential (type alias)
@@ -125,7 +129,7 @@ resulting source code can become vastly more expressive.
             Type of the subject reference.
 
         Reference type template.  Increases the legibility of array and function
-        reference parameter definitions, where type and identifier both appear.
+        reference parameter declarations, where type and identifier both appear.
 
         
 ::location::Positive (struct)
@@ -279,6 +283,11 @@ resulting source code can become vastly more expressive.
 
 
 ::allocation
+
+    Memory allocation type, prototype, function and variable templates.  These 
+    templates are used for memory management in template programming 
+    circumstances.  Included are new and delete C++ programming language 
+    operator based memory management which incur constructor invocations.
 
 
                                 TYPE TEMPLATES
@@ -753,6 +762,11 @@ resulting source code can become vastly more expressive.
 
 ::allocation::stdlib
 
+    Standard C library based function and variable templates.  These use 
+    standard C library based memory management with the interface templates 
+    defined in the outer namespace.  These will not incur constructor 
+    invocations.
+
 
                                FUNCTION TEMPLATES
 
@@ -1035,6 +1049,14 @@ resulting source code can become vastly more expressive.
 
 
 ::trajection
+
+    Spatial trajection type, prototype and function templates.  These templates
+    can be used to represent trajectories through memory spaces such as arrays 
+    or through hypothetical spaces such as stepped integer counting.  If the 
+    space is altered, all instances of positions into that space should 
+    immediately be considered invalidated when metaprogramming with spaces and 
+    positions as template parameter types.
+
 
                                 TYPE TEMPLATES
 
@@ -1402,6 +1424,14 @@ resulting source code can become vastly more expressive.
 
 ::sortation
 
+    Spatial sortation prototype and function templates.  These templates are 
+    used to search for positions in spaces linearly or bisectionally.  Trivial 
+    relational operator based equate and order function templates are also 
+    provided for use with the search function templates.  If the space is 
+    altered, all instances of positions into that space should immediately be 
+    considered invalidated when metaprogramming with spaces and positions as 
+    template parameter types.
+
 
                                 TYPE TEMPLATES
 
@@ -1697,6 +1727,12 @@ resulting source code can become vastly more expressive.
 
 ::consecution
 
+    Sequence operation type templates.  These templates are used to manipulate a
+    sequence in order to add or remove elements in the space.  After the space 
+    is altered, all instances of positions into that space should immediately be 
+    considered invalidated when metaprogramming with spaces and positions as 
+    template parameter types.
+
 
                                 TYPE TEMPLATES
 
@@ -1890,7 +1926,8 @@ resulting source code can become vastly more expressive.
         Supports generic sequence operations, including adding or removing
         zero or more elements at the beginning, at a given position or at the 
         end of the sequence, as well as generic memory management facilities for
-        the sequence.
+        the sequence.  After any function alters the space, all positions in the
+        space should immediately be considered invalidated.
 
 
 --------------------------------------------------------------------------------
@@ -1903,6 +1940,11 @@ resulting source code can become vastly more expressive.
 
 
 ::composition
+
+    Composition operation type template.  This template is used to manipulate
+compositions which may or may not have a specific semantic contract.  For
+instance it may or may not be valid to compose the same element twice in a
+composition, depending on the context of it's use.
 
 
                                 TYPE TEMPLATES
@@ -2004,6 +2046,11 @@ resulting source code can become vastly more expressive.
 
 
 ::selection
+
+    Unsorted set operation type, prototype and function templates.  These 
+    templates are used to manipulate, operate, duplicate or compare unsorted 
+    sets.  Sets shall not contain duplicate elements in order to achieve finer 
+    optimization of operations.
 
 
                                 TYPE TEMPLATES
@@ -2268,6 +2315,11 @@ resulting source code can become vastly more expressive.
 
 ::collection
 
+    Sorted set operation type, prototype and function templates.  These 
+    templates are used to manipulate, operate, duplicate or compare sorted sets.
+    Sets shall not contain duplicate elements in order to achieve finer 
+    optimization of operations.
+
 
                                 TYPE TEMPLATES
 
@@ -2493,6 +2545,10 @@ resulting source code can become vastly more expressive.
 
 ::association
 
+    Associative mapping operation type templates.  These templates are used to
+    manipulate and optionally constitute associative maps.  Maps shall not 
+    contain duplicate keys in order to achieve finer optimization of operations.
+
 
                                 TYPE TEMPLATES
 
@@ -2627,6 +2683,9 @@ resulting source code can become vastly more expressive.
 
 
 ::localization
+
+    Pointer trajection type, function and variable templates.  These templates 
+    are used to traverse elements relative to a pointer space.
 
 
                                 TYPE TEMPLATES
@@ -3126,6 +3185,11 @@ resulting source code can become vastly more expressive.
 
 
 ::segmentation
+
+    Pointer based segment trajection type, function and variable templates.  
+    These templates are used to traverse elements of a segment forward relative 
+    to a pointer.  The number of elements must be known at compile time in order 
+    to use a pointer as the basis of a segment.
 
                                 
                                FUNCTION TEMPLATES
@@ -4261,6 +4325,12 @@ resulting source code can become vastly more expressive.
 
 
 ::ordination
+
+    Array trajection type, function and variable templates.  These templates are 
+    used to traverse elements of an array.  The indexical type is a template 
+    parameter in order to prevent inclusion of an unintended standard library 
+    when including the ordination.hpp file.  The std::size_t type is the 
+    appropriate portable type choice for the indexical type parameter.
 
 
                                 TYPE TEMPLATES
@@ -5565,6 +5635,15 @@ resulting source code can become vastly more expressive.
                                     Junction
 
 
+::junction
+
+    Linked list common type, function and variable templates.  These templates 
+    are used to traverse and manage elements of a doubly linked list.  The 
+    positional type template exists as a single member pointer structure in 
+    order to overload relational operators for linked list positions without 
+    affecting the relational operators of the pointer to junctional node type.
+
+
                                  TYPE TEMPLATES
 
 
@@ -5933,7 +6012,7 @@ resulting source code can become vastly more expressive.
         If no node was found in the unused sublist, returns null.
 
 
-::junction::Free
+::junction::Remove
 
     Template Parameters:
         typename Natural
@@ -5958,7 +6037,8 @@ resulting source code can become vastly more expressive.
             Memory management function table.
         
         Given a reference to a modifiable list, returns true if and only if 
-        there are more nodes available to free after one node has been freed.
+        there are more nodes available to be removed after one node has been 
+        freed.
 
 
 ::junction::AllocateNothing
@@ -7539,6 +7619,10 @@ resulting source code can become vastly more expressive.
 
 ::junction::stdlib
 
+    Linked list stdlib memory management variable templates.  These templates 
+    are used to allocate nodes of a doubly linked list using stdlib memory 
+    management functions.
+
 
                                VARIABLE TEMPLATES
 
@@ -7593,6 +7677,10 @@ resulting source code can become vastly more expressive.
 ::junction::consecution
 
 
+    Linked list sequence prototype, function and variable templates.  These 
+    templates are used to provide sequence operations tables for linked lists.
+
+
                                  TYPE TEMPLATES
 
 
@@ -7617,7 +7705,7 @@ resulting source code can become vastly more expressive.
             Type of the node element.
             
         Linked list accede and proceed function prototype template.  Facilitates 
-        template parameter definitions in junction's selection and collection 
+        template parameter declarations in junction's selection and collection 
         implementations.
     
 
@@ -7643,7 +7731,7 @@ resulting source code can become vastly more expressive.
             Type of the node element.
         
         Linked list precede function prototype template.  Facilitates template
-        parameter definitions in junction's selection and collection 
+        parameter declarations in junction's selection and collection 
         implementations.
     
 
@@ -7669,7 +7757,7 @@ resulting source code can become vastly more expressive.
             Type of the node element.
         
         Linked list concede function prototype template.  Facilitates template
-        parameter definitions in junction's selection and collection 
+        parameter declarations in junction's selection and collection 
         implementations.
     
 
@@ -7703,7 +7791,7 @@ resulting source code can become vastly more expressive.
             Type of the node element.
         
         Linked list batch accede and proceed function prototype template.  
-        Facilitates template parameter definitions junction's selection and 
+        Facilitates template parameter declarations in junction's selection and 
         collection implementations.
 
 
@@ -8380,6 +8468,10 @@ resulting source code can become vastly more expressive.
 ::junction::selection
 
 
+    Linked list unsorted set function and variable templates.  These templates 
+    are used to provide unsorted set operations for linked lists.
+
+
                                FUNCTION TEMPLATES
 
 
@@ -9022,6 +9114,9 @@ resulting source code can become vastly more expressive.
 
 
 ::junction::collection
+
+    Linked list sorted set function and variable templates.  These templates 
+    are used to provide sorted set operations for linked lists.
 
 
                                FUNCTION TEMPLATES
@@ -10226,6 +10321,9 @@ resulting source code can become vastly more expressive.
 
 ::junction::association
 
+    Linked map common type, function and variable templates.  These templates 
+    are used to traverse and manage mappings in a doubly linked list.
+
 
                                  TYPE TEMPLATES
 
@@ -11383,6 +11481,8 @@ resulting source code can become vastly more expressive.
 
 ::junction::association::stdlib
 
+    Linked map stdlib memory management variable templates.  These templates are 
+    used to provide stdlib based memory management linked lists.
 
                                VARIABLE TEMPLATES
 
@@ -11441,6 +11541,9 @@ resulting source code can become vastly more expressive.
 
 
 ::junction::association::selection
+
+    Linked unsorted map function and variable templates.  These templates are 
+    used to provide unsorted key operations for linked maps.
 
 
                                FUNCTION TEMPLATES
@@ -11825,6 +11928,9 @@ resulting source code can become vastly more expressive.
 
 
 ::junction::association::collection
+
+    Linked sorted map function and variable templates.  These templates are used
+    to provide sorted key operations for linked maps.
 
 
                                FUNCTION TEMPLATES

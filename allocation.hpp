@@ -35,8 +35,8 @@ namespace allocation {
     using DefaultDisclaimable = DefaultClaimable< Subjective >;
 
     template <
-        typename Subjective,
-        typename Natural
+        typename Natural,
+        typename Subjective
     >
     using ArrayClaimable = void(
         Referential< Locational< Subjective > >,
@@ -57,10 +57,10 @@ namespace allocation {
     using DefaultAllocative = Allocative< DefaultClaimable< Subjective >, DefaultDisclaimable< Subjective > >;
 
     template <
-        typename Subjective,
-        typename Natural
+        typename Natural,
+        typename Subjective
     >
-    using ArrayAllocative = Allocative< ArrayClaimable< Subjective, Natural >, DefaultDisclaimable< Subjective > >;
+    using ArrayAllocative = Allocative< ArrayClaimable< Natural, Subjective >, DefaultDisclaimable< Subjective > >;
 
     template <
         typename Subjective
@@ -79,8 +79,8 @@ namespace allocation {
     }
 
     template <
-        typename Subjective,
-        typename Natural
+        typename Natural,
+        typename Subjective
     >
     static inline void
     NewArray(
@@ -175,17 +175,17 @@ namespace allocation {
     FastDefaultNew = {New, Delete};
 
     template <
-        typename Subjective,
-        typename Natural
+        typename Natural,
+        typename Subjective
     >
-    constexpr ArrayAllocative< Subjective, Natural >
+    constexpr ArrayAllocative< Natural, Subjective >
     ArrayNew = {NewArray, DeleteArrayAndNull};
 
     template <
-        typename Subjective,
-        typename Natural
+        typename Natural,
+        typename Subjective
     >
-    constexpr ArrayAllocative< Subjective, Natural >
+    constexpr ArrayAllocative< Natural, Subjective >
     FastArrayNew = {NewArray, DeleteArray};
 
     template <

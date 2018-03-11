@@ -10,7 +10,8 @@ namespace segmentation {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     static inline bool
@@ -25,7 +26,8 @@ namespace segmentation {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     static inline bool
@@ -58,7 +60,8 @@ namespace segmentation {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     static inline Conferential< Elemental >
@@ -79,7 +82,8 @@ namespace segmentation {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     static inline bool
@@ -104,7 +108,8 @@ namespace segmentation {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     static inline bool
@@ -125,7 +130,8 @@ namespace segmentation {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     static inline Conferential< Elemental >
@@ -144,7 +150,8 @@ namespace segmentation {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     static inline bool
@@ -157,7 +164,8 @@ namespace segmentation {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     static inline bool
@@ -174,7 +182,8 @@ namespace segmentation {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     static inline Referential< const Locational< Elemental > >
@@ -193,7 +202,8 @@ namespace segmentation {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     static inline Referential< const Locational< Elemental > >
@@ -209,7 +219,8 @@ namespace segmentation {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     static inline Referential< const Locational< Elemental > >
@@ -230,7 +241,8 @@ namespace segmentation {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     static inline bool
@@ -245,7 +257,8 @@ namespace segmentation {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     static inline bool
@@ -266,7 +279,8 @@ namespace segmentation {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     static inline bool
@@ -281,7 +295,8 @@ namespace segmentation {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     static inline bool
@@ -302,7 +317,8 @@ namespace segmentation {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     static inline Referential< const Locational< Elemental > >
@@ -321,7 +337,8 @@ namespace segmentation {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     static inline Referential< const Locational< Elemental > >
@@ -340,7 +357,8 @@ namespace segmentation {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     constexpr Vectorial< const Locational< const Elemental >, Indexical, const Elemental >
@@ -351,7 +369,8 @@ namespace segmentation {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     constexpr Vectorial< const Locational< const Elemental >, Indexical, const Elemental >
@@ -362,7 +381,8 @@ namespace segmentation {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     constexpr Vectorial< const Locational< Elemental >, Indexical, Elemental >
@@ -373,7 +393,8 @@ namespace segmentation {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     constexpr Vectorial< const Locational< Elemental >, Indexical, Elemental >
@@ -384,7 +405,8 @@ namespace segmentation {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     constexpr Scalar< const Locational< const Elemental >, Locational< const Elemental >, const Elemental >
@@ -396,7 +418,8 @@ namespace segmentation {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     constexpr Scalar< const Locational< Elemental >, Locational< Elemental >, Elemental >
@@ -408,7 +431,8 @@ namespace segmentation {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     constexpr Scalar< const Locational< const Elemental >, Locational< const Elemental >, const Elemental >
@@ -420,7 +444,8 @@ namespace segmentation {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     constexpr Scalar< const Locational< const Elemental >, Locational< const Elemental >, const Elemental >
@@ -432,7 +457,8 @@ namespace segmentation {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     constexpr Scalar< const Locational< Elemental >, Locational< Elemental >, Elemental >
@@ -444,7 +470,8 @@ namespace segmentation {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     constexpr Scalar< const Locational< Elemental >, Locational< Elemental >, Elemental >
@@ -456,7 +483,8 @@ namespace segmentation {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     constexpr Lineal< const Locational< const Elemental >, Locational< const Elemental >, const Elemental >
@@ -467,7 +495,8 @@ namespace segmentation {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     constexpr Lineal< const Locational< Elemental >, Locational< Elemental >, Elemental >
@@ -478,7 +507,8 @@ namespace segmentation {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     constexpr Directional< const Locational< const Elemental >, Locational< const Elemental >, const Elemental >
@@ -491,7 +521,8 @@ namespace segmentation {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     constexpr Directional< const Locational< const Elemental >, Locational< const Elemental >, const Elemental >
@@ -504,7 +535,8 @@ namespace segmentation {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     constexpr Directional< const Locational< Elemental >, Locational< Elemental >, Elemental >
@@ -517,7 +549,8 @@ namespace segmentation {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     constexpr Directional< const Locational< Elemental >, Locational< Elemental >, Elemental >
@@ -530,7 +563,8 @@ namespace segmentation {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     constexpr Directional< const Locational< const Elemental >, Locational< const Elemental >, const Elemental >
@@ -543,7 +577,8 @@ namespace segmentation {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     constexpr Directional< const Locational< const Elemental >, Locational< const Elemental >, const Elemental >
@@ -556,7 +591,8 @@ namespace segmentation {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     constexpr Directional< const Locational< Elemental >, Locational< Elemental >, Elemental >
@@ -569,7 +605,8 @@ namespace segmentation {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     constexpr Directional< const Locational< Elemental >, Locational< Elemental >, Elemental >
@@ -582,7 +619,8 @@ namespace segmentation {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     constexpr Axial< const Locational< const Elemental >, Locational< const Elemental >, const Elemental >
@@ -593,7 +631,8 @@ namespace segmentation {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     constexpr Axial< const Locational< const Elemental >, Locational< const Elemental >, const Elemental >
@@ -604,7 +643,8 @@ namespace segmentation {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     constexpr Axial< const Locational< Elemental >, Locational< Elemental >, Elemental >
@@ -615,7 +655,8 @@ namespace segmentation {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     constexpr Axial< const Locational< Elemental >, Locational< Elemental >, Elemental >

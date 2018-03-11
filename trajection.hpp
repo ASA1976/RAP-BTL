@@ -143,11 +143,7 @@ namespace trajection {
         if (!direction.begins( space ))
             return false;
         count = 0;
-        for (
-            scale.begin( space, position );
-            true;
-            scale.traverse( space, position )
-        ) {
+        for (scale.begin( space, position ); true; scale.traverse( space, position )) {
             count++;
             if (!direction.traversable( space, position ))
                 return true;

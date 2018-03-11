@@ -10,14 +10,16 @@ namespace ordination {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     using WriteOrdinal = Elemental[Length];
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     using ReadOrdinal = const Elemental[Length];
@@ -34,7 +36,8 @@ namespace ordination {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     static inline bool
@@ -49,7 +52,8 @@ namespace ordination {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     static inline Conferential< Elemental >
@@ -64,7 +68,8 @@ namespace ordination {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     static inline Conferential< Elemental >
@@ -81,7 +86,8 @@ namespace ordination {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     static inline bool
@@ -96,7 +102,8 @@ namespace ordination {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     static inline bool
@@ -115,7 +122,8 @@ namespace ordination {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     static inline Conferential< Elemental >
@@ -130,7 +138,8 @@ namespace ordination {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     static inline Conferential< Elemental >
@@ -151,7 +160,8 @@ namespace ordination {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     static inline bool
@@ -164,7 +174,8 @@ namespace ordination {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     static inline Referential< const Locational< Elemental > >
@@ -180,7 +191,8 @@ namespace ordination {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     static inline Referential< const Locational< Elemental > >
@@ -196,7 +208,8 @@ namespace ordination {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     static inline bool
@@ -211,7 +224,8 @@ namespace ordination {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     static inline bool
@@ -230,7 +244,8 @@ namespace ordination {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     static inline bool
@@ -245,7 +260,8 @@ namespace ordination {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     static inline bool
@@ -264,7 +280,8 @@ namespace ordination {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     static inline Referential< const Locational< Elemental > >
@@ -280,7 +297,8 @@ namespace ordination {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     static inline Referential< const Locational< Elemental > >
@@ -301,7 +319,8 @@ namespace ordination {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     static inline Referential< const Locational< Elemental > >
@@ -317,7 +336,8 @@ namespace ordination {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     static inline Referential< const Locational< Elemental > >
@@ -338,7 +358,8 @@ namespace ordination {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     constexpr Vectorial< const Elemental[Length], Indexical, const Elemental >
@@ -349,7 +370,8 @@ namespace ordination {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     constexpr Vectorial< const Elemental[Length], Indexical, const Elemental >
@@ -360,7 +382,8 @@ namespace ordination {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     constexpr Vectorial< Elemental[Length], Indexical, Elemental >
@@ -371,7 +394,8 @@ namespace ordination {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     constexpr Vectorial< Elemental[Length], Indexical, Elemental >
@@ -382,7 +406,8 @@ namespace ordination {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     constexpr Scalar< const Elemental[Length], Locational< const Elemental >, const Elemental >
@@ -394,7 +419,8 @@ namespace ordination {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     constexpr Scalar< const Elemental[Length], Locational< const Elemental >, const Elemental >
@@ -406,7 +432,8 @@ namespace ordination {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     constexpr Scalar< Elemental[Length], Locational< Elemental >, Elemental >
@@ -418,7 +445,8 @@ namespace ordination {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     constexpr Scalar< Elemental[Length], Locational< Elemental >, Elemental >
@@ -430,7 +458,8 @@ namespace ordination {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     constexpr Scalar< const Elemental[Length], Locational< const Elemental >, const Elemental >
@@ -442,7 +471,8 @@ namespace ordination {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     constexpr Scalar< const Elemental[Length], Locational< const Elemental >, const Elemental >
@@ -454,7 +484,8 @@ namespace ordination {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     constexpr Scalar< Elemental[Length], Locational< Elemental >, Elemental >
@@ -466,7 +497,8 @@ namespace ordination {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     constexpr Scalar< Elemental[Length], Locational< Elemental >, Elemental >
@@ -478,7 +510,8 @@ namespace ordination {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     constexpr Lineal< const Elemental[Length], Locational< const Elemental >, const Elemental >
@@ -489,7 +522,8 @@ namespace ordination {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     constexpr Lineal< const Elemental[Length], Locational< const Elemental >, const Elemental >
@@ -500,7 +534,8 @@ namespace ordination {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     constexpr Lineal< Elemental[Length], Locational< Elemental >, Elemental >
@@ -511,7 +546,8 @@ namespace ordination {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     constexpr Lineal< Elemental[Length], Locational< Elemental >, Elemental >
@@ -522,7 +558,8 @@ namespace ordination {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     constexpr Directional< const Elemental[Length], Locational< const Elemental >, const Elemental >
@@ -535,7 +572,8 @@ namespace ordination {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     constexpr Directional< const Elemental[Length], Locational< const Elemental >, const Elemental >
@@ -548,7 +586,8 @@ namespace ordination {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     constexpr Directional< Elemental[Length], Locational< Elemental >, Elemental >
@@ -561,7 +600,8 @@ namespace ordination {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     constexpr Directional< Elemental[Length], Locational< Elemental >, Elemental >
@@ -574,7 +614,8 @@ namespace ordination {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     constexpr Directional< const Elemental[Length], Locational< const Elemental >, const Elemental >
@@ -587,7 +628,8 @@ namespace ordination {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     constexpr Directional< const Elemental[Length], Locational< const Elemental >, const Elemental >
@@ -600,7 +642,8 @@ namespace ordination {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     constexpr Directional< Elemental[Length], Locational< Elemental >, Elemental >
@@ -613,7 +656,8 @@ namespace ordination {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     constexpr Directional< Elemental[Length], Locational< Elemental >, Elemental >
@@ -626,7 +670,8 @@ namespace ordination {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     constexpr Axial< const Elemental[Length], Locational< const Elemental >, const Elemental >
@@ -637,7 +682,8 @@ namespace ordination {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     constexpr Axial< const Elemental[Length], Locational< const Elemental >, const Elemental >
@@ -648,7 +694,8 @@ namespace ordination {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     constexpr Axial< Elemental[Length], Locational< Elemental >, Elemental >
@@ -659,7 +706,8 @@ namespace ordination {
 
     template <
         typename Indexical,
-        Indexical Length,
+        Indexical
+            Length,
         typename Elemental
     >
     constexpr Axial< Elemental[Length], Locational< Elemental >, Elemental >
