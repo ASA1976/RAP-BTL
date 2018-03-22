@@ -66,12 +66,11 @@ CONCLUSION
 inline candidacy preservations across compile time determinate referencing and 
 code optimizations to the point of being able to determine the invariability of
 the program output and simply reduce the complete algorithm, including template
-argument based behavioral delegations, to trivially generating a console output
-signal at instruction 2 with a predetermined single output string.  Making use
-of C++'14 template based programming in order to promote source code reusability 
-does not introduce any observable compiler inefficiencies.  Procedural syntax is
-greatly augmented by the dimensions of template parametric spaces where the 
-resulting source code can become vastly more expressive.
+argument based behavioral delegations, to generating a single output string.  
+Making use of C++'14 template based programming in order to promote source code
+reusability does not introduce any observable compiler inefficiencies.  
+Procedural syntax is greatly augmented by the dimensions of template parametric 
+spaces where the resulting source code can become vastly more expressive.
 
 
 --------------------------------------------------------------------------------
