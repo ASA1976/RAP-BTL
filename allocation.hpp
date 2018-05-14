@@ -3,6 +3,7 @@
 #ifndef ALLOCATION_MODULE
 #define ALLOCATION_MODULE
 #include "location.hpp"
+#include <type_traits>
 
 namespace allocation {
 
@@ -89,6 +90,11 @@ namespace allocation {
         Referential< const Natural >
             count
     ) {
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
         locality = new Subjective[count];
     }
 

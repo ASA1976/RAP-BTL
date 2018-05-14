@@ -4,6 +4,7 @@
 #define JUNCTION_CONSECUTION_MODULE
 #include "../junction.hpp"
 #include "../consecution.hpp"
+#include <type_traits>
 
 namespace junction {
 
@@ -65,7 +66,7 @@ namespace junction {
         static inline bool
         Sequence(
             Referential< Junctive< Natural, Elemental > >
-                list,
+                sequence,
             Referential< Locational< Junctional< Elemental > > >
                 head,
             Referential< Locational< Junctional< Elemental > > >
@@ -81,20 +82,26 @@ namespace junction {
             Referential< const Appositional >
                 to
         ) {
-            auto Result = [&head, &tail, &length](
-                Referential< const Locational< Junctional< Elemental > > >
-                    start,
-                Referential< const Locational< Junctional< Elemental > > >
-                    finish,
-                Referential< const Natural >
-                    counted
-            ) -> bool {
-                head = start;
-                tail = finish;
-                length = counted;
-                return length > 0;
-            };
-            auto
+            using namespace ::std;
+            static_assert(
+                is_integral< Natural >::value && is_unsigned< Natural >::value,
+                "Natural:  Unsigned integer type required"
+            );
+            static auto
+                Finalize = [&head, &tail, &length](
+                    Referential< const Locational< Junctional< Elemental > > >
+                        start,
+                    Referential< const Locational< Junctional< Elemental > > >
+                        finish,
+                    Referential< const Natural >
+                        counted
+                ) -> bool {
+                    head = start;
+                    tail = finish;
+                    length = counted;
+                    return length > 0;
+                };
+            Referential< const Scalar< const Relative, Appositional, const Elemental > >
                 scale = direction.scale;
             Appositional
                 current;
@@ -103,26 +110,26 @@ namespace junction {
             Natural
                 count;
             current = from;
-            first = Adjunct.proclaim( list, scale.go( space, current ).to );
+            first = Adjunct.proclaim( sequence, scale.go( space, current ).to );
             if (!first)
-                return Result( 0, 0, 0 );
+                return Finalize( 0, 0, 0 );
             last = first;
             count = 1;
             while (current != to) {
                 direction.scale.traverse( space, current );
-                last->next = Adjunct.proclaim( list, scale.go( space, current ).to );
+                last->next = Adjunct.proclaim( sequence, scale.go( space, current ).to );
                 if (!last->next) {
-                    if (list.unused)
-                        list.unused->previous = last;
-                    last->next = list.unused;
-                    list.unused = first;
-                    return Result( 0, 0, 0 );
+                    if (sequence.unused)
+                        sequence.unused->previous = last;
+                    last->next = sequence.unused;
+                    sequence.unused = first;
+                    return Finalize( 0, 0, 0 );
                 }
                 last->next->previous = last;
                 last = last->next;
                 count++;
             }
-            return Result( first, last, count );
+            return Finalize( first, last, count );
         }
 
         template <
@@ -132,9 +139,14 @@ namespace junction {
         static inline Natural
         Account(
             Referential< const Junctive< Natural, Elemental > >
-                list
+                sequence
         ) {
-            return list.count;
+            using namespace ::std;
+            static_assert(
+                is_integral< Natural >::value && is_unsigned< Natural >::value,
+                "Natural:  Unsigned integer type required"
+            );
+            return sequence.count;
         }
 
         template <
@@ -146,23 +158,28 @@ namespace junction {
         static inline bool
         Accede(
             Referential< Junctive< Natural, Elemental > >
-                list,
+                sequence,
             Referential< const Elemental >
                 value
         ) {
+            using namespace ::std;
+            static_assert(
+                is_integral< Natural >::value && is_unsigned< Natural >::value,
+                "Natural:  Unsigned integer type required"
+            );
             Locational< Junctional< Elemental > >
                 result;
-            result = Adjunct.proclaim( list, value );
+            result = Adjunct.proclaim( sequence, value );
             if (!result)
                 return false;
             result->previous = 0;
-            result->next = list.first;
-            if (list.first)
-                list.first->previous = result;
+            result->next = sequence.first;
+            if (sequence.first)
+                sequence.first->previous = result;
             else
-                list.last = result;
-            list.first = result;
-            list.count++;
+                sequence.last = result;
+            sequence.first = result;
+            sequence.count++;
             return true;
         }
 
@@ -177,7 +194,7 @@ namespace junction {
         static inline bool
         Accede(
             Referential< Junctive< Natural, Elemental > >
-                list,
+                sequence,
             Referential< const Directional< const Relative, Appositional, const Elemental > >
                 direction,
             Referential< const Relative >
@@ -187,21 +204,35 @@ namespace junction {
             Referential< const Appositional >
                 to
         ) {
-            static auto
+            using namespace ::std;
+            static_assert(
+                is_integral< Natural >::value && is_unsigned< Natural >::value,
+                "Natural:  Unsigned integer type required"
+            );
+            static Referential< bool(
+                Referential< Junctive< Natural, Elemental > >,
+                Referential< Locational< Junctional< Elemental > > >,
+                Referential< Locational< Junctional< Elemental > > >,
+                Referential< Natural >,
+                Referential< const Directional< const Relative, Appositional, const Elemental > >,
+                Referential< const Relative >,
+                Referential< const Appositional >,
+                Referential< const Appositional >
+            ) >
                 SequenceList = Sequence< Relative, Appositional, Natural, Elemental, Adjunct >;
             Locational< Junctional< Elemental > >
                 first, last;
             Natural
                 length;
-            if (!SequenceList( list, first, last, length, direction, space, from, to ))
+            if (!SequenceList( sequence, first, last, length, direction, space, from, to ))
                 return false;
-            last->next = list.first;
-            if (list.first)
-                list.first->previous = last;
+            last->next = sequence.first;
+            if (sequence.first)
+                sequence.first->previous = last;
             else
-                list.last = last;
-            list.first = first;
-            list.count += length;
+                sequence.last = last;
+            sequence.first = first;
+            sequence.count += length;
             return true;
         }
 
@@ -214,25 +245,30 @@ namespace junction {
         static inline bool
         Precede(
             Referential< Junctive< Natural, Elemental > >
-                list,
+                sequence,
             Referential< const Positional< Elemental > >
                 rank,
             Referential< const Elemental >
                 value
         ) {
+            using namespace ::std;
+            static_assert(
+                is_integral< Natural >::value && is_unsigned< Natural >::value,
+                "Natural:  Unsigned integer type required"
+            );
             Locational< Junctional< Elemental > >
                 result;
-            result = Adjunct.proclaim( list, value );
+            result = Adjunct.proclaim( sequence, value );
             if (!result)
                 return false;
             if (rank.at->previous)
                 rank.at->previous->next = result;
             else
-                list.first = result;
+                sequence.first = result;
             result->previous = rank.at->previous;
             result->next = rank.at;
             rank.at->previous = result;
-            list.count++;
+            sequence.count++;
             return true;
         }
 
@@ -245,17 +281,26 @@ namespace junction {
         static inline bool
         PrecedeSafely(
             Referential< Junctive< Natural, Elemental > >
-                list,
+                sequence,
             Referential< const Positional< Elemental > >
                 rank,
             Referential< const Elemental >
                 value
         ) {
-            static auto
+            using namespace ::std;
+            static_assert(
+                is_integral< Natural >::value && is_unsigned< Natural >::value,
+                "Natural:  Unsigned integer type required"
+            );
+            static Referential< bool(
+                Referential< Junctive< Natural, Elemental > >,
+                Referential< const Positional< Elemental > >,
+                Referential< const Elemental >
+            ) >
                 PrecedeList = Precede< Natural, Elemental, Adjunct >;
             if (!rank.at)
                 throw rank;
-            return PrecedeList( list, rank, value );
+            return PrecedeList( sequence, rank, value );
         }
 
         template <
@@ -269,7 +314,7 @@ namespace junction {
         static inline bool
         Precede(
             Referential< Junctive< Natural, Elemental > >
-                list,
+                sequence,
             Referential< const Positional< Elemental > >
                 rank,
             Referential< const Directional< const Relative, Appositional, const Elemental > >
@@ -281,22 +326,36 @@ namespace junction {
             Referential< const Appositional >
                 to
         ) {
-            static auto
+            using namespace ::std;
+            static_assert(
+                is_integral< Natural >::value && is_unsigned< Natural >::value,
+                "Natural:  Unsigned integer type required"
+            );
+            static Referential< bool(
+                Referential< Junctive< Natural, Elemental > >,
+                Referential< Locational< Junctional< Elemental > > >,
+                Referential< Locational< Junctional< Elemental > > >,
+                Referential< Natural >,
+                Referential< const Directional< const Relative, Appositional, const Elemental > >,
+                Referential< const Relative >,
+                Referential< const Appositional >,
+                Referential< const Appositional >
+            ) >
                 SequenceList = Sequence< Relative, Appositional, Natural, Elemental, Adjunct >;
             Locational< Junctional< Elemental > >
                 first, last;
             Natural
                 length;
-            if (!SequenceList( list, first, last, length, direction, space, from, to ))
+            if (!SequenceList( sequence, first, last, length, direction, space, from, to ))
                 return false;
             first->previous = rank.at->previous;
             if (first->previous)
                 first->previous->next = first;
             else
-                list.first = first;
+                sequence.first = first;
             last->next = rank.at;
             rank.at->previous = last;
-            list.count += length;
+            sequence.count += length;
             return true;
         }
 
@@ -311,7 +370,7 @@ namespace junction {
         static inline bool
         PrecedeSafely(
             Referential< Junctive< Natural, Elemental > >
-                list,
+                sequence,
             Referential< const Positional< Elemental > >
                 rank,
             Referential< const Directional< const Relative, Appositional, const Elemental > >
@@ -323,11 +382,23 @@ namespace junction {
             Referential< const Appositional >
                 to
         ) {
-            static auto
+            using namespace ::std;
+            static_assert(
+                is_integral< Natural >::value && is_unsigned< Natural >::value,
+                "Natural:  Unsigned integer type required"
+            );
+            static Referential< bool(
+                Referential< Junctive< Natural, Elemental > >,
+                Referential< const Positional< Elemental > >,
+                Referential< const Directional< const Relative, Appositional, const Elemental > >,
+                Referential< const Relative >,
+                Referential< const Appositional >,
+                Referential< const Appositional >
+            ) >
                 PrecedeList = Precede< Relative, Appositional, Natural, Elemental, Adjunct >;
             if (!rank.at)
                 throw rank;
-            return PrecedeList( list, rank, direction, space, from, to );
+            return PrecedeList( sequence, rank, direction, space, from, to );
         }
 
         template <
@@ -339,23 +410,28 @@ namespace junction {
         static inline bool
         Proceed(
             Referential< Junctive< Natural, Elemental > >
-                list,
+                sequence,
             Referential< const Elemental >
                 value
         ) {
+            using namespace ::std;
+            static_assert(
+                is_integral< Natural >::value && is_unsigned< Natural >::value,
+                "Natural:  Unsigned integer type required"
+            );
             Locational< Junctional< Elemental > >
                 result;
-            result = Adjunct.proclaim( list, value );
+            result = Adjunct.proclaim( sequence, value );
             if (!result)
                 return false;
-            result->previous = list.last;
+            result->previous = sequence.last;
             result->next = 0;
-            if (list.last)
-                list.last->next = result;
+            if (sequence.last)
+                sequence.last->next = result;
             else
-                list.first = result;
-            list.last = result;
-            list.count++;
+                sequence.first = result;
+            sequence.last = result;
+            sequence.count++;
             return true;
         }
 
@@ -370,7 +446,7 @@ namespace junction {
         static inline bool
         Proceed(
             Referential< Junctive< Natural, Elemental > >
-                list,
+                sequence,
             Referential< const Directional< const Relative, Appositional, const Elemental > >
                 direction,
             Referential< const Relative >
@@ -380,21 +456,35 @@ namespace junction {
             Referential< const Appositional >
                 to
         ) {
-            static auto
+            using namespace ::std;
+            static_assert(
+                is_integral< Natural >::value && is_unsigned< Natural >::value,
+                "Natural:  Unsigned integer type required"
+            );
+            static Referential< bool(
+                Referential< Junctive< Natural, Elemental > >,
+                Referential< Locational< Junctional< Elemental > > >,
+                Referential< Locational< Junctional< Elemental > > >,
+                Referential< Natural >,
+                Referential< const Directional< const Relative, Appositional, const Elemental > >,
+                Referential< const Relative >,
+                Referential< const Appositional >,
+                Referential< const Appositional >
+            ) >
                 SequenceList = Sequence< Relative, Appositional, Natural, Elemental, Adjunct >;
             Locational< Junctional< Elemental > >
                 first, last;
             Natural
                 length;
-            if (!SequenceList( list, first, last, length, direction, space, from, to ))
+            if (!SequenceList( sequence, first, last, length, direction, space, from, to ))
                 return false;
-            first->previous = list.last;
-            if (list.last)
-                list.last->next = first;
+            first->previous = sequence.last;
+            if (sequence.last)
+                sequence.last->next = first;
             else
-                list.first = first;
-            list.last = last;
-            list.count += length;
+                sequence.first = first;
+            sequence.last = last;
+            sequence.count += length;
             return true;
         }
 
@@ -405,30 +495,35 @@ namespace junction {
         static inline bool
         Succeed(
             Referential< Junctive< Natural, Elemental > >
-                list,
+                sequence,
             Referential< const Natural >
                 count
         ) {
+            using namespace ::std;
+            static_assert(
+                is_integral< Natural >::value && is_unsigned< Natural >::value,
+                "Natural:  Unsigned integer type required"
+            );
             Positional< Elemental >
                 first, last;
             Natural
                 index;
-            first.at = last.at = list.first;
+            first.at = last.at = sequence.first;
             for (index = 1; index < count; index++) {
                 if (!last.at->next)
                     return false;
                 last.at = last.at->next;
             }
-            list.first = last.at->next;
-            if (list.first)
-                list.first->previous = 0;
+            sequence.first = last.at->next;
+            if (sequence.first)
+                sequence.first->previous = 0;
             else
-                list.last = 0;
-            last.at->next = list.unused;
-            if (list.unused)
-                list.unused->previous = last.at;
-            list.unused = first.at;
-            list.count -= count;
+                sequence.last = 0;
+            last.at->next = sequence.unused;
+            if (sequence.unused)
+                sequence.unused->previous = last.at;
+            sequence.unused = first.at;
+            sequence.count -= count;
             return true;
         }
 
@@ -439,12 +534,17 @@ namespace junction {
         static inline bool
         Concede(
             Referential< Junctive< Natural, Elemental > >
-                list,
+                sequence,
             Referential< const Positional< Elemental > >
                 rank,
             Referential< const Natural >
                 count
         ) {
+            using namespace ::std;
+            static_assert(
+                is_integral< Natural >::value && is_unsigned< Natural >::value,
+                "Natural:  Unsigned integer type required"
+            );
             Positional< Elemental >
                 last;
             Natural
@@ -458,16 +558,16 @@ namespace junction {
             if (rank.at->previous)
                 rank.at->previous->next = last.at->next;
             else
-                list.first = last.at->next;
+                sequence.first = last.at->next;
             if (last.at->next)
                 last.at->next->previous = rank.at->previous;
             else
-                list.last = rank.at->previous;
-            last.at->next = list.unused;
-            if (list.unused)
-                list.unused->previous = last.at;
-            list.unused = rank.at;
-            list.count -= count;
+                sequence.last = rank.at->previous;
+            last.at->next = sequence.unused;
+            if (sequence.unused)
+                sequence.unused->previous = last.at;
+            sequence.unused = rank.at;
+            sequence.count -= count;
             return true;
         }
 
@@ -478,15 +578,20 @@ namespace junction {
         static inline bool
         ConcedeSafely(
             Referential< Junctive< Natural, Elemental > >
-                list,
+                sequence,
             Referential< const Positional< Elemental > >
                 rank,
             Referential< const Natural >
                 count
         ) {
+            using namespace ::std;
+            static_assert(
+                is_integral< Natural >::value && is_unsigned< Natural >::value,
+                "Natural:  Unsigned integer type required"
+            );
             if (!rank.at)
                 throw rank;
-            return Concede( list, rank, count );
+            return Concede( sequence, rank, count );
         }
 
         template <
@@ -496,31 +601,36 @@ namespace junction {
         static inline bool
         Recede(
             Referential< Junctive< Natural, Elemental > >
-                list,
+                sequence,
             Referential< const Natural >
                 count
         ) {
+            using namespace ::std;
+            static_assert(
+                is_integral< Natural >::value && is_unsigned< Natural >::value,
+                "Natural:  Unsigned integer type required"
+            );
             Positional< Elemental >
                 first, last;
             Natural
                 index;
-            first.at = last.at = list.last;
+            first.at = last.at = sequence.last;
             for (index = 1; index < count; index++) {
                 if (!first.at->previous)
                     return false;
                 first.at = first.at->previous;
             }
-            list.last = first.at->previous;
-            if (list.last) {
-                list.last->next = 0;
+            sequence.last = first.at->previous;
+            if (sequence.last) {
+                sequence.last->next = 0;
                 first.at->previous = 0;
             } else
-                list.first = 0;
-            last.at->next = list.unused;
-            if (list.unused)
-                list.unused->previous = last.at;
-            list.unused = first.at;
-            list.count -= count;
+                sequence.first = 0;
+            last.at->next = sequence.unused;
+            if (sequence.unused)
+                sequence.unused->previous = last.at;
+            sequence.unused = first.at;
+            sequence.count -= count;
             return true;
         }
 

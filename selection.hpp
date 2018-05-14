@@ -107,9 +107,14 @@ namespace selection {
         Referential< const Relative >
             relative_set
     ) {
-        static auto
+        static Referential< bool(
+            Referential< const Relative >,
+            Referential< const Directional< const Relative, RelativePositional, const Elemental > >,
+            Referential< const Elemental >,
+            Referential< RelativePositional >
+        ) >
             SearchInRelative = SearchLinearly< Relative, RelativePositional, Elemental, Equate >;
-        auto
+        Referential< const Scalar< const Basic, BasicPositional, const Elemental > >
             scale = basis.scale;
         BasicPositional
             base_position;

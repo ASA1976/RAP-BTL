@@ -3,6 +3,7 @@
 #ifndef SEGMENTATION_MODULE
 #define SEGMENTATION_MODULE
 #include "localization.hpp"
+#include <type_traits>
 
 namespace segmentation {
 
@@ -21,6 +22,11 @@ namespace segmentation {
         Referential< const Indexical >
             index
     ) {
+        using namespace ::std;
+        static_assert(
+            is_integral< Indexical >::value,
+            "Indexical:  Integer type required"
+        );
         return index >= 0 && index < Length;
     }
 
@@ -37,7 +43,15 @@ namespace segmentation {
         Referential< const Indexical >
             index
     ) {
-        static auto
+        using namespace ::std;
+        static_assert(
+            is_integral< Indexical >::value,
+            "Indexical:  Integer type required"
+        );
+        static Referential< bool(
+            Referential< const Locational< Elemental > >,
+            Referential< const Indexical >
+        ) >
             Contains = ContainsIndex< Indexical, Length, Elemental >;
         if (!locality)
             throw locality;
@@ -55,6 +69,11 @@ namespace segmentation {
         Referential< const Indexical >
             index
     ) {
+        using namespace ::std;
+        static_assert(
+            is_integral< Indexical >::value,
+            "Indexical:  Integer type required"
+        );
         return Confer( locality[index] );
     }
 
@@ -71,7 +90,15 @@ namespace segmentation {
         Referential< const Indexical >
             index
     ) {
-        static auto
+        using namespace ::std;
+        static_assert(
+            is_integral< Indexical >::value,
+            "Indexical:  Integer type required"
+        );
+        static Referential< bool(
+            Referential< const Locational< Elemental > >,
+            Referential< const Indexical >
+        ) >
             Contains = ContainsIndexChecksForNull< Indexical, Length, Elemental >;
         if (!locality)
             throw locality;
@@ -93,6 +120,11 @@ namespace segmentation {
         Referential< const Locational< Elemental > >
             position
     ) {
+        using namespace ::std;
+        static_assert(
+            is_integral< Indexical >::value,
+            "Indexical:  Integer type required"
+        );
         Locational< Elemental >
             current;
         Indexical
@@ -119,7 +151,15 @@ namespace segmentation {
         Referential< const Locational< Elemental > >
             position
     ) {
-        static auto
+        using namespace ::std;
+        static_assert(
+            is_integral< Indexical >::value,
+            "Indexical:  Integer type required"
+        );
+        static Referential< bool(
+            Referential< const Locational< Elemental > >,
+            Referential< const Locational< Elemental > >
+        ) >
             Contains = ContainsPosition< Indexical, Length, Elemental >;
         if (!locality)
             throw locality;
@@ -141,7 +181,15 @@ namespace segmentation {
         Referential< const Locational< Elemental > >
             position
     ) {
-        static auto
+        using namespace ::std;
+        static_assert(
+            is_integral< Indexical >::value,
+            "Indexical:  Integer type required"
+        );
+        static Referential< bool(
+            Referential< const Locational< Elemental > >,
+            Referential< const Locational< Elemental > >
+        ) >
             Contains = ContainsPositionChecksForNull< Indexical, Length, Elemental >;
         if (!Contains( locality, position ))
             throw position;
@@ -159,6 +207,11 @@ namespace segmentation {
         Referential< const Locational< Elemental > >
             locality
     ) {
+        using namespace ::std;
+        static_assert(
+            is_integral< Indexical >::value,
+            "Indexical:  Integer type required"
+        );
         return Length > 0;
     }
 
@@ -173,7 +226,14 @@ namespace segmentation {
         Referential< const Locational< Elemental > >
             locality
     ) {
-        static auto
+        using namespace ::std;
+        static_assert(
+            is_integral< Indexical >::value,
+            "Indexical:  Integer type required"
+        );
+        static Referential< bool(
+            Referential< const Locational< Elemental > >
+        ) >
             SegmentBegins = Begins< Indexical, Length, Elemental >;
         if (!locality)
             throw locality;
@@ -193,6 +253,11 @@ namespace segmentation {
         Referential< Locational< Elemental > >
             position
     ) {
+        using namespace ::std;
+        static_assert(
+            is_integral< Indexical >::value,
+            "Indexical:  Integer type required"
+        );
         if (Length <= 0)
             throw Length;
         if (!locality)
@@ -213,6 +278,11 @@ namespace segmentation {
         Referential< Locational< Elemental > >
             position
     ) {
+        using namespace ::std;
+        static_assert(
+            is_integral< Indexical >::value,
+            "Indexical:  Integer type required"
+        );
         position = locality + (Length <= 0 ? 0 : Length - 1);
         return position;
     }
@@ -230,7 +300,15 @@ namespace segmentation {
         Referential< Locational< Elemental > >
             position
     ) {
-        static auto
+        using namespace ::std;
+        static_assert(
+            is_integral< Indexical >::value,
+            "Indexical:  Integer type required"
+        );
+        static Referential< Referential< const Locational< Elemental > >(
+            Referential< const Locational< Elemental > >,
+            Referential< Locational< Elemental > >
+        ) >
             Descend = BeginDecrement< Indexical, Length, Elemental >;
         if (Length <= 0)
             throw Length;
@@ -252,6 +330,11 @@ namespace segmentation {
         Referential< const Locational< Elemental > >
             position
     ) {
+        using namespace ::std;
+        static_assert(
+            is_integral< Indexical >::value,
+            "Indexical:  Integer type required"
+        );
         return position != locality + (Length <= 0 ? 0 : Length - 1);
     }
 
@@ -268,7 +351,15 @@ namespace segmentation {
         Referential< const Locational< Elemental > >
             position
     ) {
-        static auto
+        using namespace ::std;
+        static_assert(
+            is_integral< Indexical >::value,
+            "Indexical:  Integer type required"
+        );
+        static Referential< bool(
+            Referential< const Locational< Elemental > >,
+            Referential< const Locational< Elemental > >
+        ) >
             Traversable = IncrementTraversable< Indexical, Length, Elemental >;
         if (!locality)
             throw locality;
@@ -290,6 +381,11 @@ namespace segmentation {
         Referential< const Locational< Elemental > >
             position
     ) {
+        using namespace ::std;
+        static_assert(
+            is_integral< Indexical >::value,
+            "Indexical:  Integer type required"
+        );
         return position != locality;
     }
 
@@ -306,7 +402,15 @@ namespace segmentation {
         Referential< const Locational< Elemental > >
             position
     ) {
-        static auto
+        using namespace ::std;
+        static_assert(
+            is_integral< Indexical >::value,
+            "Indexical:  Integer type required"
+        );
+        static Referential< bool(
+            Referential< const Locational< Elemental > >,
+            Referential< const Locational< Elemental > >
+        ) >
             Traversable = DecrementTraversable< Indexical, Length, Elemental >;
         if (!locality)
             throw locality;
@@ -328,7 +432,15 @@ namespace segmentation {
         Referential< Locational< Elemental > >
             position
     ) {
-        static auto
+        using namespace ::std;
+        static_assert(
+            is_integral< Indexical >::value,
+            "Indexical:  Integer type required"
+        );
+        static Referential< bool(
+            Referential< const Locational< Elemental > >,
+            Referential< const Locational< Elemental > >
+        ) >
             Traversable = IncrementTraversableChecksForNull< Indexical, Length, Elemental >;
         if (!Traversable( locality, position ))
             throw position;
@@ -348,7 +460,15 @@ namespace segmentation {
         Referential< Locational< Elemental > >
             position
     ) {
-        static auto
+        using namespace ::std;
+        static_assert(
+            is_integral< Indexical >::value,
+            "Indexical:  Integer type required"
+        );
+        static Referential< bool(
+            Referential< const Locational< Elemental > >,
+            Referential< const Locational< Elemental > >
+        ) >
             Traversable = DecrementTraversableChecksForNull< Indexical, Length, Elemental >;
         if (!Traversable( locality, position ))
             throw position;

@@ -3,6 +3,7 @@
 #ifndef TRAJECTION_MODULE
 #define TRAJECTION_MODULE
 #include "location.hpp"
+#include <type_traits>
 
 namespace trajection {
 
@@ -138,7 +139,12 @@ namespace trajection {
         Referential< Natural >
             count
     ) {
-        static auto
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
+        static Referential< const Scalar< Spatial, Positional, Endemical > >
             scale = direction.scale;
         if (!direction.begins( space ))
             return false;
@@ -167,6 +173,11 @@ namespace trajection {
         Referential< Natural >
             count
     ) {
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
         return Count( space, Direction, position, count );
     }
 

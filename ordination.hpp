@@ -3,22 +3,23 @@
 #ifndef ORDINATION_MODULE
 #define ORDINATION_MODULE
 #include "trajection.hpp"
+#include <type_traits>
 
 namespace ordination {
 
     using namespace ::trajection;
 
     template <
-        typename Indexical,
-        Indexical
+        typename Natural,
+        Natural
             Length,
         typename Elemental
     >
     using WriteOrdinal = Elemental[Length];
 
     template <
-        typename Indexical,
-        Indexical
+        typename Natural,
+        Natural
             Length,
         typename Elemental
     >
@@ -35,8 +36,8 @@ namespace ordination {
     using ReadPositional = Locational< const Elemental >;
 
     template <
-        typename Indexical,
-        Indexical
+        typename Natural,
+        Natural
             Length,
         typename Elemental
     >
@@ -44,49 +45,64 @@ namespace ordination {
     ContainsIndex(
         Referential< const Elemental[Length] >
             array,
-        Referential< const Indexical >
+        Referential< const Natural >
             index
     ) {
-        return index >= 0 && index < Length;
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
+        return index < Length;
     }
 
     template <
-        typename Indexical,
-        Indexical
+        typename Natural,
+        Natural
             Length,
         typename Elemental
     >
     static inline Conferential< Elemental >
-    IndexicalGo(
+    NaturalGo(
         Referential< Elemental[Length] >
             array,
-        Referential< const Indexical >
+        Referential< const Natural >
             index
     ) {
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
         return Confer( array[index] );
     }
 
     template <
-        typename Indexical,
-        Indexical
+        typename Natural,
+        Natural
             Length,
         typename Elemental
     >
     static inline Conferential< Elemental >
-    IndexicalGoSafely(
+    NaturalGoSafely(
         Referential< Elemental[Length] >
             array,
-        Referential< const Indexical >
+        Referential< const Natural >
             index
     ) {
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
         if (!ContainsIndex( array, index ))
             throw index;
-        return IndexicalGo( array, index );
+        return NaturalGo( array, index );
     }
 
     template <
-        typename Indexical,
-        Indexical
+        typename Natural,
+        Natural
             Length,
         typename Elemental
     >
@@ -97,12 +113,17 @@ namespace ordination {
         Referential< const Locational< Elemental > >
             position
     ) {
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
         return position >= array && position <= array + Length - 1;
     }
 
     template <
-        typename Indexical,
-        Indexical
+        typename Natural,
+        Natural
             Length,
         typename Elemental
     >
@@ -113,16 +134,24 @@ namespace ordination {
         Referential< const Locational< Elemental > >
             position
     ) {
-        static auto
-            Contains = ContainsPosition< Indexical, Length, Elemental >;
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
+        static Referential< bool(
+            Referential< const Elemental[Length] >,
+            Referential< const Locational< Elemental > >
+        ) >
+            Contains = ContainsPosition< Natural, Length, Elemental >;
         if (!position)
             throw position;
         return Contains( array, position );
     }
 
     template <
-        typename Indexical,
-        Indexical
+        typename Natural,
+        Natural
             Length,
         typename Elemental
     >
@@ -133,12 +162,17 @@ namespace ordination {
         Referential< const Locational< Elemental > >
             position
     ) {
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
         return Refer( position );
     }
 
     template <
-        typename Indexical,
-        Indexical
+        typename Natural,
+        Natural
             Length,
         typename Elemental
     >
@@ -149,18 +183,29 @@ namespace ordination {
         Referential< const Locational< Elemental > >
             position
     ) {
-        static auto
-            Contains = ContainsPositionChecksForNull< Indexical, Length, Elemental >;
-        static auto
-            Go = PositionalGo< Indexical, Length, Elemental >;
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
+        static Referential< bool(
+            Referential< const Elemental[Length] >,
+            Referential< const Locational< Elemental > >
+        ) >
+            Contains = ContainsPositionChecksForNull< Natural, Length, Elemental >;
+        static Referential< Conferential< Elemental >(
+            Referential< Elemental[Length] >,
+            Referential< const Locational< Elemental > >
+        ) >
+            Go = PositionalGo< Natural, Length, Elemental >;
         if (!Contains( array, position ))
             throw position;
         return Go( array, position );
     }
 
     template <
-        typename Indexical,
-        Indexical
+        typename Natural,
+        Natural
             Length,
         typename Elemental
     >
@@ -169,12 +214,17 @@ namespace ordination {
         Referential< const Elemental[Length] >
             array
     ) {
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
         return Length > 0;
     }
 
     template <
-        typename Indexical,
-        Indexical
+        typename Natural,
+        Natural
             Length,
         typename Elemental
     >
@@ -185,13 +235,18 @@ namespace ordination {
         Referential< Locational< Elemental > >
             position
     ) {
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
         position = array;
         return position;
     }
 
     template <
-        typename Indexical,
-        Indexical
+        typename Natural,
+        Natural
             Length,
         typename Elemental
     >
@@ -202,13 +257,18 @@ namespace ordination {
         Referential< Locational< Elemental > >
             position
     ) {
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
         position = array + Length - 1;
         return position;
     }
 
     template <
-        typename Indexical,
-        Indexical
+        typename Natural,
+        Natural
             Length,
         typename Elemental
     >
@@ -219,12 +279,17 @@ namespace ordination {
         Referential< const Locational< Elemental > >
             position
     ) {
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
         return position < array + Length - 1;
     }
 
     template <
-        typename Indexical,
-        Indexical
+        typename Natural,
+        Natural
             Length,
         typename Elemental
     >
@@ -235,16 +300,24 @@ namespace ordination {
         Referential< const Locational< Elemental > >
             position
     ) {
-        static auto
-            Traversable = IncrementTraversable< Indexical, Length, Elemental >;
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
+        static Referential< bool(
+            Referential< const Elemental[Length] >,
+            Referential< const Locational< Elemental > >
+        ) >
+            Traversable = IncrementTraversable< Natural, Length, Elemental >;
         if (!position)
             throw position;
         return Traversable( array, position );
     }
 
     template <
-        typename Indexical,
-        Indexical
+        typename Natural,
+        Natural
             Length,
         typename Elemental
     >
@@ -255,12 +328,17 @@ namespace ordination {
         Referential< const Locational< Elemental > >
             position
     ) {
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
         return position > array;
     }
 
     template <
-        typename Indexical,
-        Indexical
+        typename Natural,
+        Natural
             Length,
         typename Elemental
     >
@@ -271,16 +349,24 @@ namespace ordination {
         Referential< const Locational< Elemental > >
             position
     ) {
-        static auto
-            Traversable = DecrementTraversable< Indexical, Length, Elemental >;
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
+        static Referential< bool(
+            Referential< const Elemental[Length] >,
+            Referential< const Locational< Elemental > >
+        ) >
+            Traversable = DecrementTraversable< Natural, Length, Elemental >;
         if (!position)
             throw position;
         return Traversable( array, position );
     }
 
     template <
-        typename Indexical,
-        Indexical
+        typename Natural,
+        Natural
             Length,
         typename Elemental
     >
@@ -291,13 +377,18 @@ namespace ordination {
         Referential< Locational< Elemental > >
             position
     ) {
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
         position++;
         return position;
     }
 
     template <
-        typename Indexical,
-        Indexical
+        typename Natural,
+        Natural
             Length,
         typename Elemental
     >
@@ -308,18 +399,29 @@ namespace ordination {
         Referential< Locational< Elemental > >
             position
     ) {
-        static auto
-            Traversable = IncrementTraversableChecksForNull< Indexical, Length, Elemental >;
-        static auto
-            Traverse = TraverseIncrement< Indexical, Length, Elemental >;
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
+        static Referential< bool(
+            Referential< const Elemental[Length] >,
+            Referential< const Locational< Elemental > >
+        ) >
+            Traversable = IncrementTraversableChecksForNull< Natural, Length, Elemental >;
+        static Referential< Referential< const Locational< Elemental > >(
+            Referential< Elemental[Length] >,
+            Referential< Locational< Elemental > >
+        ) >
+            Traverse = TraverseIncrement< Natural, Length, Elemental >;
         if (!Traversable( array, position ))
             throw position;
         return Traverse( array, position );
     }
 
     template <
-        typename Indexical,
-        Indexical
+        typename Natural,
+        Natural
             Length,
         typename Elemental
     >
@@ -330,13 +432,18 @@ namespace ordination {
         Referential< Locational< Elemental > >
             position
     ) {
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
         position--;
         return position;
     }
 
     template <
-        typename Indexical,
-        Indexical
+        typename Natural,
+        Natural
             Length,
         typename Elemental
     >
@@ -347,373 +454,384 @@ namespace ordination {
         Referential< Locational< Elemental > >
             position
     ) {
-        static auto
-            Traversable = DecrementTraversableChecksForNull< Indexical, Length, Elemental >;
-        static auto
-            Traverse = TraverseDecrement< Indexical, Length, Elemental >;
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
+        static Referential< bool(
+            Referential< const Elemental[Length] >,
+            Referential< const Locational< Elemental > >
+        ) >
+            Traversable = DecrementTraversableChecksForNull< Natural, Length, Elemental >;
+        static Referential< Referential< const Locational< Elemental > >(
+            Referential< Elemental[Length] >,
+            Referential< Locational< Elemental > >
+        ) >
+            Traverse = TraverseDecrement< Natural, Length, Elemental >;
         if (!Traversable( array, position ))
             throw position;
         return Traverse( array, position );
     }
 
     template <
-        typename Indexical,
-        Indexical
+        typename Natural,
+        Natural
             Length,
         typename Elemental
     >
-    constexpr Vectorial< const Elemental[Length], Indexical, const Elemental >
+    constexpr Vectorial< const Elemental[Length], Natural, const Elemental >
     ReadVector = {
-        ContainsIndex< Indexical, Length, const Elemental >,
-        IndexicalGo< Indexical, Length, const Elemental >
+        ContainsIndex< Natural, Length, const Elemental >,
+        NaturalGo< Natural, Length, const Elemental >
     };
 
     template <
-        typename Indexical,
-        Indexical
+        typename Natural,
+        Natural
             Length,
         typename Elemental
     >
-    constexpr Vectorial< const Elemental[Length], Indexical, const Elemental >
+    constexpr Vectorial< const Elemental[Length], Natural, const Elemental >
     SafeReadVector = {
-        ContainsIndex< Indexical, Length, const Elemental >,
-        IndexicalGoSafely< Indexical, Length, const Elemental >
+        ContainsIndex< Natural, Length, const Elemental >,
+        NaturalGoSafely< Natural, Length, const Elemental >
     };
 
     template <
-        typename Indexical,
-        Indexical
+        typename Natural,
+        Natural
             Length,
         typename Elemental
     >
-    constexpr Vectorial< Elemental[Length], Indexical, Elemental >
+    constexpr Vectorial< Elemental[Length], Natural, Elemental >
     WriteVector = {
-        ContainsIndex< Indexical, Length, Elemental >,
-        IndexicalGo< Indexical, Length, Elemental >
+        ContainsIndex< Natural, Length, Elemental >,
+        NaturalGo< Natural, Length, Elemental >
     };
 
     template <
-        typename Indexical,
-        Indexical
+        typename Natural,
+        Natural
             Length,
         typename Elemental
     >
-    constexpr Vectorial< Elemental[Length], Indexical, Elemental >
+    constexpr Vectorial< Elemental[Length], Natural, Elemental >
     SafeWriteVector = {
-        ContainsIndex< Indexical, Length, Elemental >,
-        IndexicalGoSafely< Indexical, Length, Elemental >
+        ContainsIndex< Natural, Length, Elemental >,
+        NaturalGoSafely< Natural, Length, Elemental >
     };
 
     template <
-        typename Indexical,
-        Indexical
+        typename Natural,
+        Natural
             Length,
         typename Elemental
     >
     constexpr Scalar< const Elemental[Length], Locational< const Elemental >, const Elemental >
     ReadIncrementScale = {
-        BeginIncrement< Indexical, Length, const Elemental >,
-        TraverseIncrement< Indexical, Length, const Elemental >,
-        PositionalGo< Indexical, Length, const Elemental >,
+        BeginIncrement< Natural, Length, const Elemental >,
+        TraverseIncrement< Natural, Length, const Elemental >,
+        PositionalGo< Natural, Length, const Elemental >,
     };
 
     template <
-        typename Indexical,
-        Indexical
+        typename Natural,
+        Natural
             Length,
         typename Elemental
     >
     constexpr Scalar< const Elemental[Length], Locational< const Elemental >, const Elemental >
     SafeReadIncrementScale = {
-        BeginIncrement< Indexical, Length, const Elemental >,
-        TraverseIncrementSafely< Indexical, Length, const Elemental >,
-        PositionalGoSafely< Indexical, Length, const Elemental >,
+        BeginIncrement< Natural, Length, const Elemental >,
+        TraverseIncrementSafely< Natural, Length, const Elemental >,
+        PositionalGoSafely< Natural, Length, const Elemental >,
     };
 
     template <
-        typename Indexical,
-        Indexical
+        typename Natural,
+        Natural
             Length,
         typename Elemental
     >
     constexpr Scalar< Elemental[Length], Locational< Elemental >, Elemental >
     WriteIncrementScale = {
-        BeginIncrement< Indexical, Length, Elemental >,
-        TraverseIncrement< Indexical, Length, Elemental >,
-        PositionalGo< Indexical, Length, Elemental >,
+        BeginIncrement< Natural, Length, Elemental >,
+        TraverseIncrement< Natural, Length, Elemental >,
+        PositionalGo< Natural, Length, Elemental >,
     };
 
     template <
-        typename Indexical,
-        Indexical
+        typename Natural,
+        Natural
             Length,
         typename Elemental
     >
     constexpr Scalar< Elemental[Length], Locational< Elemental >, Elemental >
     SafeWriteIncrementScale = {
-        BeginIncrement< Indexical, Length, Elemental >,
-        TraverseIncrementSafely< Indexical, Length, Elemental >,
-        PositionalGoSafely< Indexical, Length, Elemental >,
+        BeginIncrement< Natural, Length, Elemental >,
+        TraverseIncrementSafely< Natural, Length, Elemental >,
+        PositionalGoSafely< Natural, Length, Elemental >,
     };
 
     template <
-        typename Indexical,
-        Indexical
+        typename Natural,
+        Natural
             Length,
         typename Elemental
     >
     constexpr Scalar< const Elemental[Length], Locational< const Elemental >, const Elemental >
     ReadDecrementScale = {
-        BeginDecrement< Indexical, Length, const Elemental >,
-        TraverseDecrement< Indexical, Length, const Elemental >,
-        PositionalGo< Indexical, Length, const Elemental >,
+        BeginDecrement< Natural, Length, const Elemental >,
+        TraverseDecrement< Natural, Length, const Elemental >,
+        PositionalGo< Natural, Length, const Elemental >,
     };
 
     template <
-        typename Indexical,
-        Indexical
+        typename Natural,
+        Natural
             Length,
         typename Elemental
     >
     constexpr Scalar< const Elemental[Length], Locational< const Elemental >, const Elemental >
     SafeReadDecrementScale = {
-        BeginDecrement< Indexical, Length, const Elemental >,
-        TraverseDecrementSafely< Indexical, Length, const Elemental >,
-        PositionalGoSafely< Indexical, Length, const Elemental >,
+        BeginDecrement< Natural, Length, const Elemental >,
+        TraverseDecrementSafely< Natural, Length, const Elemental >,
+        PositionalGoSafely< Natural, Length, const Elemental >,
     };
 
     template <
-        typename Indexical,
-        Indexical
+        typename Natural,
+        Natural
             Length,
         typename Elemental
     >
     constexpr Scalar< Elemental[Length], Locational< Elemental >, Elemental >
     WriteDecrementScale = {
-        BeginDecrement< Indexical, Length, Elemental >,
-        TraverseDecrement< Indexical, Length, Elemental >,
-        PositionalGo< Indexical, Length, Elemental >,
+        BeginDecrement< Natural, Length, Elemental >,
+        TraverseDecrement< Natural, Length, Elemental >,
+        PositionalGo< Natural, Length, Elemental >,
     };
 
     template <
-        typename Indexical,
-        Indexical
+        typename Natural,
+        Natural
             Length,
         typename Elemental
     >
     constexpr Scalar< Elemental[Length], Locational< Elemental >, Elemental >
     SafeWriteDecrementScale = {
-        BeginDecrement< Indexical, Length, Elemental >,
-        TraverseDecrementSafely< Indexical, Length, Elemental >,
-        PositionalGoSafely< Indexical, Length, Elemental >,
+        BeginDecrement< Natural, Length, Elemental >,
+        TraverseDecrementSafely< Natural, Length, Elemental >,
+        PositionalGoSafely< Natural, Length, Elemental >,
     };
 
     template <
-        typename Indexical,
-        Indexical
+        typename Natural,
+        Natural
             Length,
         typename Elemental
     >
     constexpr Lineal< const Elemental[Length], Locational< const Elemental >, const Elemental >
     ReadLiner = {
-        ReadIncrementScale< Indexical, Length, Elemental >,
-        ReadDecrementScale< Indexical, Length, Elemental >
+        ReadIncrementScale< Natural, Length, Elemental >,
+        ReadDecrementScale< Natural, Length, Elemental >
     };
 
     template <
-        typename Indexical,
-        Indexical
+        typename Natural,
+        Natural
             Length,
         typename Elemental
     >
     constexpr Lineal< const Elemental[Length], Locational< const Elemental >, const Elemental >
     SafeReadLiner = {
-        SafeReadIncrementScale< Indexical, Length, Elemental >,
-        SafeReadDecrementScale< Indexical, Length, Elemental >
+        SafeReadIncrementScale< Natural, Length, Elemental >,
+        SafeReadDecrementScale< Natural, Length, Elemental >
     };
 
     template <
-        typename Indexical,
-        Indexical
+        typename Natural,
+        Natural
             Length,
         typename Elemental
     >
     constexpr Lineal< Elemental[Length], Locational< Elemental >, Elemental >
     WriteLiner = {
-        WriteIncrementScale< Indexical, Length, Elemental >,
-        WriteDecrementScale< Indexical, Length, Elemental >
+        WriteIncrementScale< Natural, Length, Elemental >,
+        WriteDecrementScale< Natural, Length, Elemental >
     };
 
     template <
-        typename Indexical,
-        Indexical
+        typename Natural,
+        Natural
             Length,
         typename Elemental
     >
     constexpr Lineal< Elemental[Length], Locational< Elemental >, Elemental >
     SafeWriteLiner = {
-        SafeWriteIncrementScale< Indexical, Length, Elemental >,
-        SafeWriteDecrementScale< Indexical, Length, Elemental >
+        SafeWriteIncrementScale< Natural, Length, Elemental >,
+        SafeWriteDecrementScale< Natural, Length, Elemental >
     };
 
     template <
-        typename Indexical,
-        Indexical
+        typename Natural,
+        Natural
             Length,
         typename Elemental
     >
     constexpr Directional< const Elemental[Length], Locational< const Elemental >, const Elemental >
     ReadIncrementDirection = {
-        ReadIncrementScale< Indexical, Length, Elemental >,
-        Begins< Indexical, Length, const Elemental >,
-        IncrementTraversable< Indexical, Length, const Elemental >,
-        ContainsPosition< Indexical, Length, const Elemental >
+        ReadIncrementScale< Natural, Length, Elemental >,
+        Begins< Natural, Length, const Elemental >,
+        IncrementTraversable< Natural, Length, const Elemental >,
+        ContainsPosition< Natural, Length, const Elemental >
     };
 
     template <
-        typename Indexical,
-        Indexical
+        typename Natural,
+        Natural
             Length,
         typename Elemental
     >
     constexpr Directional< const Elemental[Length], Locational< const Elemental >, const Elemental >
     SafeReadIncrementDirection = {
-        SafeReadIncrementScale< Indexical, Length, Elemental >,
-        Begins< Indexical, Length, const Elemental >,
-        IncrementTraversableChecksForNull< Indexical, Length, const Elemental >,
-        ContainsPositionChecksForNull< Indexical, Length, const Elemental >
+        SafeReadIncrementScale< Natural, Length, Elemental >,
+        Begins< Natural, Length, const Elemental >,
+        IncrementTraversableChecksForNull< Natural, Length, const Elemental >,
+        ContainsPositionChecksForNull< Natural, Length, const Elemental >
     };
 
     template <
-        typename Indexical,
-        Indexical
+        typename Natural,
+        Natural
             Length,
         typename Elemental
     >
     constexpr Directional< Elemental[Length], Locational< Elemental >, Elemental >
     WriteIncrementDirection = {
-        WriteIncrementScale< Indexical, Length, Elemental >,
-        Begins< Indexical, Length, Elemental >,
-        IncrementTraversable< Indexical, Length, Elemental >,
-        ContainsPosition< Indexical, Length, Elemental >
+        WriteIncrementScale< Natural, Length, Elemental >,
+        Begins< Natural, Length, Elemental >,
+        IncrementTraversable< Natural, Length, Elemental >,
+        ContainsPosition< Natural, Length, Elemental >
     };
 
     template <
-        typename Indexical,
-        Indexical
+        typename Natural,
+        Natural
             Length,
         typename Elemental
     >
     constexpr Directional< Elemental[Length], Locational< Elemental >, Elemental >
     SafeWriteIncrementDirection = {
-        SafeWriteIncrementScale< Indexical, Length, Elemental >,
-        Begins< Indexical, Length, Elemental >,
-        IncrementTraversableChecksForNull< Indexical, Length, Elemental >,
-        ContainsPositionChecksForNull< Indexical, Length, Elemental >
+        SafeWriteIncrementScale< Natural, Length, Elemental >,
+        Begins< Natural, Length, Elemental >,
+        IncrementTraversableChecksForNull< Natural, Length, Elemental >,
+        ContainsPositionChecksForNull< Natural, Length, Elemental >
     };
 
     template <
-        typename Indexical,
-        Indexical
+        typename Natural,
+        Natural
             Length,
         typename Elemental
     >
     constexpr Directional< const Elemental[Length], Locational< const Elemental >, const Elemental >
     ReadDecrementDirection = {
-        ReadDecrementScale< Indexical, Length, Elemental >,
-        Begins< Indexical, Length, const Elemental >,
-        DecrementTraversable< Indexical, Length, const Elemental >,
-        ContainsPosition< Indexical, Length, const Elemental >
+        ReadDecrementScale< Natural, Length, Elemental >,
+        Begins< Natural, Length, const Elemental >,
+        DecrementTraversable< Natural, Length, const Elemental >,
+        ContainsPosition< Natural, Length, const Elemental >
     };
 
     template <
-        typename Indexical,
-        Indexical
+        typename Natural,
+        Natural
             Length,
         typename Elemental
     >
     constexpr Directional< const Elemental[Length], Locational< const Elemental >, const Elemental >
     SafeReadDecrementDirection = {
-        SafeReadDecrementScale< Indexical, Length, Elemental >,
-        Begins< Indexical, Length, const Elemental >,
-        DecrementTraversableChecksForNull< Indexical, Length, const Elemental >,
-        ContainsPositionChecksForNull< Indexical, Length, const Elemental >
+        SafeReadDecrementScale< Natural, Length, Elemental >,
+        Begins< Natural, Length, const Elemental >,
+        DecrementTraversableChecksForNull< Natural, Length, const Elemental >,
+        ContainsPositionChecksForNull< Natural, Length, const Elemental >
     };
 
     template <
-        typename Indexical,
-        Indexical
+        typename Natural,
+        Natural
             Length,
         typename Elemental
     >
     constexpr Directional< Elemental[Length], Locational< Elemental >, Elemental >
     WriteDecrementDirection = {
-        WriteDecrementScale< Indexical, Length, Elemental >,
-        Begins< Indexical, Length, Elemental >,
-        DecrementTraversable< Indexical, Length, Elemental >,
-        ContainsPosition< Indexical, Length, Elemental >
+        WriteDecrementScale< Natural, Length, Elemental >,
+        Begins< Natural, Length, Elemental >,
+        DecrementTraversable< Natural, Length, Elemental >,
+        ContainsPosition< Natural, Length, Elemental >
     };
 
     template <
-        typename Indexical,
-        Indexical
+        typename Natural,
+        Natural
             Length,
         typename Elemental
     >
     constexpr Directional< Elemental[Length], Locational< Elemental >, Elemental >
     SafeWriteDecrementDirection = {
-        SafeWriteDecrementScale< Indexical, Length, Elemental >,
-        Begins< Indexical, Length, Elemental >,
-        DecrementTraversableChecksForNull< Indexical, Length, Elemental >,
-        ContainsPositionChecksForNull< Indexical, Length, Elemental >
+        SafeWriteDecrementScale< Natural, Length, Elemental >,
+        Begins< Natural, Length, Elemental >,
+        DecrementTraversableChecksForNull< Natural, Length, Elemental >,
+        ContainsPositionChecksForNull< Natural, Length, Elemental >
     };
 
     template <
-        typename Indexical,
-        Indexical
+        typename Natural,
+        Natural
             Length,
         typename Elemental
     >
     constexpr Axial< const Elemental[Length], Locational< const Elemental >, const Elemental >
     ReadAxis = {
-        ReadIncrementDirection< Indexical, Length, Elemental >,
-        ReadDecrementDirection< Indexical, Length, Elemental >
+        ReadIncrementDirection< Natural, Length, Elemental >,
+        ReadDecrementDirection< Natural, Length, Elemental >
     };
 
     template <
-        typename Indexical,
-        Indexical
+        typename Natural,
+        Natural
             Length,
         typename Elemental
     >
     constexpr Axial< const Elemental[Length], Locational< const Elemental >, const Elemental >
     SafeReadAxis = {
-        SafeReadIncrementDirection< Indexical, Length, Elemental >,
-        SafeReadDecrementDirection< Indexical, Length, Elemental >
+        SafeReadIncrementDirection< Natural, Length, Elemental >,
+        SafeReadDecrementDirection< Natural, Length, Elemental >
     };
 
     template <
-        typename Indexical,
-        Indexical
+        typename Natural,
+        Natural
             Length,
         typename Elemental
     >
     constexpr Axial< Elemental[Length], Locational< Elemental >, Elemental >
     WriteAxis = {
-        WriteIncrementDirection< Indexical, Length, Elemental >,
-        WriteDecrementDirection< Indexical, Length, Elemental >
+        WriteIncrementDirection< Natural, Length, Elemental >,
+        WriteDecrementDirection< Natural, Length, Elemental >
     };
 
     template <
-        typename Indexical,
-        Indexical
+        typename Natural,
+        Natural
             Length,
         typename Elemental
     >
     constexpr Axial< Elemental[Length], Locational< Elemental >, Elemental >
     SafeWriteAxis = {
-        SafeWriteIncrementDirection< Indexical, Length, Elemental >,
-        SafeWriteDecrementDirection< Indexical, Length, Elemental >
+        SafeWriteIncrementDirection< Natural, Length, Elemental >,
+        SafeWriteDecrementDirection< Natural, Length, Elemental >
     };
 
 }

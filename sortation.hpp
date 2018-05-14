@@ -3,6 +3,7 @@
 #ifndef SORTATION_MODULE
 #define SORTATION_MODULE
 #include "trajection.hpp"
+#include <type_traits>
 
 namespace sortation {
 
@@ -73,7 +74,7 @@ namespace sortation {
         Referential< Positional >
             position
     ) {
-        auto
+        Referential< const Scalar< const Spatial, Positional, const Evaluative > >
             scale = direction.scale;
         if (!direction.begins( space ))
             return false;
@@ -102,7 +103,12 @@ namespace sortation {
         Referential< Positional >
             position
     ) {
-        static auto
+        static Referential< bool(
+            Referential< const Spatial >,
+            Referential< const Directional< const Spatial, Positional, const Evaluative > >,
+            Referential< const Evaluative >,
+            Referential< Positional >
+        ) >
             Search = SearchLinearly< Spatial, Positional, Evaluative, Equate >;
         return Search( space, Direction, value, position );
     }
@@ -130,7 +136,12 @@ namespace sortation {
         Referential< Positional >
             position
     ) {
-        static auto
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
+        static Referential< Expositive< const Spatial, Positional, const Evaluative > >
             go = axis.increment.scale.go;
         Natural
             remaining, move, offset;
@@ -184,7 +195,18 @@ namespace sortation {
         Referential< Positional >
             position
     ) {
-        static auto
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
+        static Referential< bool(
+            Referential< const Spatial >,
+            Referential< const Axial< const Spatial, Positional, const Evaluative > >,
+            Referential< const Natural >,
+            Referential< const Evaluative >,
+            Referential< Positional >
+        ) >
             Search = SearchBisectionally< Spatial, Positional, Natural, Evaluative, Equate, Order >;
         return Search( space, Axis, count, value, position );
     }

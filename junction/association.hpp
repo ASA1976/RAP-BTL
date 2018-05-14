@@ -5,6 +5,7 @@
 #include "consecution.hpp"
 #include "../association.hpp"
 #include "../sortation.hpp"
+#include <type_traits>
 
 namespace junction {
 
@@ -45,6 +46,11 @@ namespace junction {
             Referential< const AssociativelyPositional< Correlative, Elemental > >
                 position
         ) {
+            using namespace ::std;
+            static_assert(
+                is_integral< Natural >::value && is_unsigned< Natural >::value,
+                "Natural:  Unsigned integer type required"
+            );
             return Confer( GoRead( map, position ).to.relator );
         }
 
@@ -60,6 +66,11 @@ namespace junction {
             Referential< const AssociativelyPositional< Correlative, Elemental > >
                 position
         ) {
+            using namespace ::std;
+            static_assert(
+                is_integral< Natural >::value && is_unsigned< Natural >::value,
+                "Natural:  Unsigned integer type required"
+            );
             if (!ContainsChecksForNull( map, position ))
                 throw position;
             return GoReadRelator( map, position );
@@ -77,6 +88,11 @@ namespace junction {
             Referential< const AssociativelyPositional< Correlative, Elemental > >
                 position
         ) {
+            using namespace ::std;
+            static_assert(
+                is_integral< Natural >::value && is_unsigned< Natural >::value,
+                "Natural:  Unsigned integer type required"
+            );
             return Confer( GoRead( map, position ).to.value );
         }
 
@@ -92,6 +108,11 @@ namespace junction {
             Referential< const AssociativelyPositional< Correlative, Elemental > >
                 position
         ) {
+            using namespace ::std;
+            static_assert(
+                is_integral< Natural >::value && is_unsigned< Natural >::value,
+                "Natural:  Unsigned integer type required"
+            );
             if (!ContainsChecksForNull( map, position ))
                 throw position;
             return GoReadElement( map, position );
@@ -109,6 +130,11 @@ namespace junction {
             Referential< const AssociativelyPositional< Correlative, Elemental > >
                 position
         ) {
+            using namespace ::std;
+            static_assert(
+                is_integral< Natural >::value && is_unsigned< Natural >::value,
+                "Natural:  Unsigned integer type required"
+            );
             return Confer( GoWrite( map, position ).to.value );
         }
 
@@ -124,6 +150,11 @@ namespace junction {
             Referential< const AssociativelyPositional< Correlative, Elemental > >
                 position
         ) {
+            using namespace ::std;
+            static_assert(
+                is_integral< Natural >::value && is_unsigned< Natural >::value,
+                "Natural:  Unsigned integer type required"
+            );
             if (!ContainsChecksForNull( map, position ))
                 throw position;
             return GoWriteElement( map, position );
@@ -560,22 +591,6 @@ namespace junction {
             SafeWriteElementIncrementDirection< Natural, Correlative, Elemental >,
             SafeWriteElementDecrementDirection< Natural, Correlative, Elemental >
         };
-
-        template <
-            typename Natural,
-            typename Correlative,
-            typename Elemental
-        >
-        constexpr auto
-        DefaultNewAssociativeAdjunct = DefaultNewAdjunct< Natural, Associational< Correlative, Elemental > >;
-
-        template <
-            typename Natural,
-            typename Correlative,
-            typename Elemental
-        >
-        constexpr auto
-        CopyNewAssociativeAdjunct = CopyNewAdjunct< Natural, Associational< Correlative, Elemental > >;
 
     }
 

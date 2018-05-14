@@ -4,6 +4,7 @@
 #define JUNCTION_MODULE
 #include "allocation.hpp"
 #include "trajection.hpp"
+#include <type_traits>
 
 namespace junction {
 
@@ -202,6 +203,11 @@ namespace junction {
         Referential< Junctive< Natural, Elemental > >
             list
     ) {
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
         list.count = list.total = 0;
         list.first = list.last = list.unused = 0;
         return list;
@@ -216,6 +222,11 @@ namespace junction {
         Referential< Junctive< Natural, Elemental > >
             list
     ) {
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
         bool
             actioned = false;
         if (list.last) {
@@ -239,6 +250,11 @@ namespace junction {
         Referential< Junctive< Natural, Elemental > >
             list
     ) {
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
         Locational< Junctional< Elemental > >
             result;
         result = list.unused;
@@ -262,6 +278,11 @@ namespace junction {
         Referential< Junctive< Natural, Elemental > >
             list
     ) {
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
         Locational< Junctional< Elemental > >
             next;
         if (!list.unused)
@@ -284,6 +305,11 @@ namespace junction {
         Referential< Junctive< Natural, Elemental > >
             list
     ) {
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
         return 0;
     }
 
@@ -299,6 +325,11 @@ namespace junction {
         Referential< Junctive< Natural, Elemental > >
             list
     ) {
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
         Locational< Junctional< Elemental > >
             result;
         Allocator.claim( result );
@@ -321,6 +352,11 @@ namespace junction {
         Referential< Locational< Junctional< Elemental > > >
             node
     ) {
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
         if (node) {
             Allocator.disclaim( node );
             list.total--;
@@ -343,6 +379,11 @@ namespace junction {
         Referential< const Elemental >
             value
     ) {
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
         Locational< Junctional< Elemental > >
             result;
         result = Reclaim( list );
@@ -370,6 +411,11 @@ namespace junction {
         Referential< const Elemental >
             value
     ) {
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
         const Junctional< Elemental >
             copy = {0, 0, value};
         Locational< Junctional < Elemental > >
@@ -393,6 +439,11 @@ namespace junction {
         Referential< const Natural >
             count
     ) {
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
         Locational< Junctional< Elemental > >
             current;
         while (list.total - list.count < count) {
@@ -418,6 +469,11 @@ namespace junction {
         Referential< const Positional< Elemental > >
             position
     ) {
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
         Locational< Junctional< Elemental > >
             current;
         for (current = list.first; current; current = current->next)
@@ -437,6 +493,11 @@ namespace junction {
         Referential< const Positional< Elemental > >
             position
     ) {
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
         if (!position.at)
             throw position;
         return Contains( list, position );
@@ -453,7 +514,12 @@ namespace junction {
         Referential< const Positional< Elemental > >
             position
     ) {
-        static auto
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
+        static Referential< Conferential< const Elemental >( Referential< Elemental > ) >
             DoDefer = Defer< Elemental >;
         return DoDefer( position.at->element );
     }
@@ -469,6 +535,11 @@ namespace junction {
         Referential< const Positional< Elemental > >
             position
     ) {
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
         if (!ContainsChecksForNull( list, position ))
             throw position;
         return GoRead( list, position );
@@ -485,7 +556,12 @@ namespace junction {
         Referential< const Positional< Elemental > >
             position
     ) {
-        static auto
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
+        static Referential< Conferential< Elemental >( Referential< Elemental > ) >
             DoConfer = Confer< Elemental >;
         return DoConfer( position.at->element );
     }
@@ -501,6 +577,11 @@ namespace junction {
         Referential< const Positional< Elemental > >
             position
     ) {
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
         if (!ContainsChecksForNull( list, position ))
             throw position;
         return GoWrite( list, position );
@@ -517,6 +598,11 @@ namespace junction {
         Referential< Positional< Elemental > >
             position
     ) {
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
         position.at = list.first;
         return position;
     }
@@ -532,6 +618,11 @@ namespace junction {
         Referential< Positional< Elemental > >
             position
     ) {
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
         if (!list.first)
             throw list;
         return BeginReadIncrement( list, position );
@@ -548,6 +639,11 @@ namespace junction {
         Referential< Positional< Elemental > >
             position
     ) {
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
         position.at = list.first;
         return position;
     }
@@ -563,6 +659,11 @@ namespace junction {
         Referential< Positional< Elemental > >
             position
     ) {
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
         if (!list.first)
             throw list;
         return BeginWriteIncrement( list, position );
@@ -577,6 +678,11 @@ namespace junction {
         Referential< const Junctive< Natural, Elemental > >
             list
     ) {
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
         return list.first;
     }
 
@@ -591,6 +697,11 @@ namespace junction {
         Referential< Positional< Elemental > >
             position
     ) {
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
         position.at = position.at->next;
         return position;
     }
@@ -606,6 +717,11 @@ namespace junction {
         Referential< Positional< Elemental > >
             position
     ) {
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
         if (!position.at)
             throw position;
         if (!position.at->next)
@@ -624,6 +740,11 @@ namespace junction {
         Referential< Positional< Elemental > >
             position
     ) {
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
         position.at = position.at->next;
         return position;
     }
@@ -639,6 +760,11 @@ namespace junction {
         Referential< Positional< Elemental > >
             position
     ) {
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
         if (!position.at)
             throw position;
         if (!position.at->next)
@@ -657,6 +783,11 @@ namespace junction {
         Referential< const Positional< Elemental > >
             position
     ) {
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
         return position.at->next;
     }
 
@@ -671,6 +802,11 @@ namespace junction {
         Referential< const Positional< Elemental > >
             position
     ) {
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
         if (!position.at)
             throw position;
         return IncrementTraversable( list, position );
@@ -687,6 +823,11 @@ namespace junction {
         Referential< Positional< Elemental > >
             position
     ) {
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
         position.at = list.last;
         return position;
     }
@@ -702,6 +843,11 @@ namespace junction {
         Referential< Positional< Elemental > >
             position
     ) {
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
         if (!list.last)
             throw list;
         return BeginReadDecrement( list, position );
@@ -718,6 +864,11 @@ namespace junction {
         Referential< Positional< Elemental > >
             position
     ) {
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
         position.at = list.last;
         return position;
     }
@@ -733,6 +884,11 @@ namespace junction {
         Referential< Positional< Elemental > >
             position
     ) {
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
         if (!list.last)
             throw list;
         return BeginWriteDecrement( list, position );
@@ -747,6 +903,11 @@ namespace junction {
         Referential< const Junctive< Natural, Elemental > >
             list
     ) {
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
         return list.last;
     }
 
@@ -761,6 +922,11 @@ namespace junction {
         Referential< Positional< Elemental > >
             position
     ) {
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
         position.at = position.at->previous;
         return position;
     }
@@ -776,6 +942,11 @@ namespace junction {
         Referential< Positional< Elemental > >
             position
     ) {
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
         if (!position.at)
             throw position;
         if (!position.at->previous)
@@ -794,6 +965,11 @@ namespace junction {
         Referential< Positional< Elemental > >
             position
     ) {
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
         position.at = position.at->previous;
         return position;
     }
@@ -809,6 +985,11 @@ namespace junction {
         Referential< Positional< Elemental > >
             position
     ) {
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
         if (!position.at)
             throw position;
         if (!position.at->previous)
@@ -827,6 +1008,11 @@ namespace junction {
         Referential< const Positional< Elemental > >
             position
     ) {
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
         return position.at->previous;
     }
 
@@ -841,6 +1027,11 @@ namespace junction {
         Referential< const Positional< Elemental > >
             position
     ) {
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
         if (!position.at)
             throw position;
         return DecrementTraversable( list, position );

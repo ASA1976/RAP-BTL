@@ -3,6 +3,7 @@
 #ifndef JUNCTION_ASSOCIATION_SELECTION_MODULE
 #define JUNCTION_ASSOCIATION_SELECTION_MODULE
 #include "../association.hpp"
+#include <type_traits>
 
 namespace junction {
 
@@ -17,7 +18,11 @@ namespace junction {
                 Referential< Assortive< Correlative > >
                     Equate
             >
-            auto
+            Referential< bool(
+                Referential< const AssociativelyJunctive< Natural, Correlative, Elemental > >,
+                Referential< const Correlative >,
+                Referential< AssociativelyPositional< Correlative, Elemental > >
+            ) >
             SearchCorrelation = SearchLinearly< AssociativelyJunctive< Natural, Correlative, Elemental >, AssociativelyPositional< Correlative, Elemental >, Correlative, ReadRelatorIncrementDirection< Natural, Correlative, Elemental >, Equate >;
 
             template <
@@ -34,7 +39,16 @@ namespace junction {
                 Referential< const Correlative >
                     relator
             ) {
-                static auto
+                using namespace ::std;
+                static_assert(
+                    is_integral< Natural >::value && is_unsigned< Natural >::value,
+                    "Natural:  Unsigned integer type required"
+                );
+                static Referential< bool(
+                    Referential< const AssociativelyJunctive< Natural, Correlative, Elemental > >,
+                    Referential< const Correlative >,
+                    Referential< AssociativelyPositional< Correlative, Elemental > >
+                ) >
                     Search = SearchCorrelation< Natural, Correlative, Elemental, Equate >;
                 AssociativelyPositional< Correlative, Elemental >
                     position;
@@ -59,7 +73,15 @@ namespace junction {
                 Referential< const Elemental >
                     value
             ) {
-                static auto
+                using namespace ::std;
+                static_assert(
+                    is_integral< Natural >::value && is_unsigned< Natural >::value,
+                    "Natural:  Unsigned integer type required"
+                );
+                static Referential< bool(
+                    Referential< const AssociativelyJunctive< Natural, Correlative, Elemental > >,
+                    Referential< const Correlative >
+                ) >
                     CorrespondInMap = Correspond< Natural, Correlative, Elemental, Equate >;
                 const Associational< Correlative, Elemental >
                     associate = {relator, value};
@@ -88,12 +110,24 @@ namespace junction {
                 Referential< const Correlative >
                     replacement
             ) {
-                static auto
-                    CorrespondInMap = Correspond< Natural, Correlative, Elemental, Equate >;
-                static auto
-                    Search = SearchCorrelation< Natural, Correlative, Elemental, Equate >;
+                using namespace ::std;
+                static_assert(
+                    is_integral< Natural >::value && is_unsigned< Natural >::value,
+                    "Natural:  Unsigned integer type required"
+                );
                 static const Natural
                     One = 1;
+                static Referential< bool(
+                    Referential< const AssociativelyJunctive< Natural, Correlative, Elemental > >,
+                    Referential< const Correlative >
+                ) >
+                    CorrespondInMap = Correspond< Natural, Correlative, Elemental, Equate >;
+                static Referential< bool(
+                    Referential< const AssociativelyJunctive< Natural, Correlative, Elemental > >,
+                    Referential< const Correlative >,
+                    Referential< AssociativelyPositional< Correlative, Elemental > >
+                ) >
+                    Search = SearchCorrelation< Natural, Correlative, Elemental, Equate >;
                 AssociativelyPositional< Correlative, Elemental >
                     position;
                 if (CorrespondInMap( map, replacement ))
@@ -122,7 +156,16 @@ namespace junction {
                 Referential< const Correlative >
                     relator
             ) {
-                static auto
+                using namespace ::std;
+                static_assert(
+                    is_integral< Natural >::value && is_unsigned< Natural >::value,
+                    "Natural:  Unsigned integer type required"
+                );
+                static Referential< bool(
+                    Referential< const AssociativelyJunctive< Natural, Correlative, Elemental > >,
+                    Referential< const Correlative >,
+                    Referential< AssociativelyPositional< Correlative, Elemental > >
+                ) >
                     Search = SearchCorrelation< Natural, Correlative, Elemental, Equate >;
                 static const Natural
                     One = 1;
@@ -146,7 +189,16 @@ namespace junction {
                 Referential< const Correlative >
                     relator
             ) {
-                static auto
+                using namespace ::std;
+                static_assert(
+                    is_integral< Natural >::value && is_unsigned< Natural >::value,
+                    "Natural:  Unsigned integer type required"
+                );
+                static Referential< bool(
+                    Referential< const AssociativelyJunctive< Natural, Correlative, Elemental > >,
+                    Referential< const Correlative >,
+                    Referential< AssociativelyPositional< Correlative, Elemental > >
+                ) >
                     Search = SearchCorrelation< Natural, Correlative, Elemental, Equate >;
                 AssociativelyPositional< Correlative, Elemental >
                     position;
@@ -169,7 +221,16 @@ namespace junction {
                 Referential< const Correlative >
                     relator
             ) {
-                static auto
+                using namespace ::std;
+                static_assert(
+                    is_integral< Natural >::value && is_unsigned< Natural >::value,
+                    "Natural:  Unsigned integer type required"
+                );
+                static Referential< bool(
+                    Referential< const AssociativelyJunctive< Natural, Correlative, Elemental > >,
+                    Referential< const Correlative >,
+                    Referential< AssociativelyPositional< Correlative, Elemental > >
+                ) >
                     Search = SearchCorrelation< Natural, Correlative, Elemental, Equate >;
                 AssociativelyPositional< Correlative, Elemental >
                     position;

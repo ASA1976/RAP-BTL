@@ -4,6 +4,7 @@
 #define JUNCTION_COLLECTION_MODULE
 #include "consecution.hpp"
 #include "../collection.hpp"
+#include <type_traits>
 
 namespace junction {
 
@@ -21,7 +22,12 @@ namespace junction {
             Referential< Assortive< Elemental > >
                 Order
         >
-        auto
+        Referential< bool(
+            Referential< const Junctive< Natural, Elemental > >,
+            Referential< const Natural >,
+            Referential< const Elemental >,
+            Referential< Positional< Elemental > >
+        ) >
         SearchCollection = SearchBisectionally< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental, ReadAxis< Natural, Elemental >, Equate, Order >;
 
         template <
@@ -39,7 +45,17 @@ namespace junction {
             Referential< const Elemental >
                 value
         ) {
-            static auto
+            using namespace ::std;
+            static_assert(
+                is_integral< Natural >::value && is_unsigned< Natural >::value,
+                "Natural:  Unsigned integer type required"
+            );
+            static Referential< bool(
+                Referential< const Junctive< Natural, Elemental > >,
+                Referential< const Natural >,
+                Referential< const Elemental >,
+                Referential< Positional< Elemental > >
+            ) >
                 Search = SearchCollection< Natural, Elemental, Equate, Order >;
             Positional< Elemental >
                 position;
@@ -65,7 +81,17 @@ namespace junction {
             Referential< const Elemental >
                 value
         ) {
-            static auto
+            using namespace ::std;
+            static_assert(
+                is_integral< Natural >::value && is_unsigned< Natural >::value,
+                "Natural:  Unsigned integer type required"
+            );
+            static Referential< bool(
+                Referential< const Junctive< Natural, Elemental > >,
+                Referential< const Natural >,
+                Referential< const Elemental >,
+                Referential< Positional< Elemental > >
+            ) >
                 Search = SearchCollection< Natural, Elemental, Equate, Order >;
             Positional< Elemental >
                 position;
@@ -95,7 +121,17 @@ namespace junction {
             Referential< const Elemental >
                 value
         ) {
-            static auto
+            using namespace ::std;
+            static_assert(
+                is_integral< Natural >::value && is_unsigned< Natural >::value,
+                "Natural:  Unsigned integer type required"
+            );
+            static Referential< bool(
+                Referential< const Junctive< Natural, Elemental > >,
+                Referential< const Natural >,
+                Referential< const Elemental >,
+                Referential< Positional< Elemental > >
+            ) >
                 Search = SearchCollection< Natural, Elemental, Equate, Order >;
             static const Natural
                 One = 1;
@@ -129,12 +165,25 @@ namespace junction {
             Referential< const Elemental >
                 replacement
         ) {
-            static auto
+            using namespace ::std;
+            static_assert(
+                is_integral< Natural >::value && is_unsigned< Natural >::value,
+                "Natural:  Unsigned integer type required"
+            );
+            static Referential< bool(
+                Referential< const Junctive< Natural, Elemental > >,
+                Referential< const Natural >,
+                Referential< const Elemental >,
+                Referential< Positional< Elemental > >
+            ) >
                 Search = SearchCollection< Natural, Elemental, Equate, Order >;
+            static Referential< bool(
+                Referential< Junctive< Natural, Elemental > >,
+                Referential< const Elemental >
+            ) >
+                Discompose = DiscomposeCollection< Natural, Elemental, Concede, Equate, Order >;
             Positional< Elemental >
                 position;
-            static auto
-                Discompose = DiscomposeCollection< Natural, Elemental, Concede, Equate, Order >;
             if (Search( set, set.count, replacement, position ))
                 return false;
             if (!Precede( set, position, replacement ))
@@ -165,9 +214,19 @@ namespace junction {
             Referential< const Basic >
                 base
         ) {
-            static auto
+            using namespace ::std;
+            static_assert(
+                is_integral< Natural >::value && is_unsigned< Natural >::value,
+                "Natural:  Unsigned integer type required"
+            );
+            static Referential< bool(
+                Referential< const Junctive< Natural, Elemental > >,
+                Referential< const Natural >,
+                Referential< const Elemental >,
+                Referential< Positional< Elemental > >
+            ) >
                 Search = SearchCollection< Natural, Elemental, Equate, Order >;
-            auto
+            Referential< const Scalar< const Basic, BasicPositional, const Elemental > >
                 scale = basis.scale;
             Positional< Elemental >
                 operand_position;
@@ -210,6 +269,11 @@ namespace junction {
             Referential< const Basic >
                 base
         ) {
+            using namespace ::std;
+            static_assert(
+                is_integral< Natural >::value && is_unsigned< Natural >::value,
+                "Natural:  Unsigned integer type required"
+            );
             BasicPositional
                 first, last;
             Empty( operand );
@@ -249,11 +313,24 @@ namespace junction {
             Referential< const Relative >
                 relative_set
         ) {
-            static auto
+            using namespace ::std;
+            static_assert(
+                is_integral< Natural >::value && is_unsigned< Natural >::value,
+                "Natural:  Unsigned integer type required"
+            );
+            static Referential< bool(
+                Referential< const Basic >,
+                Referential< const Directional< const Basic, BasicPositional, const Elemental > >,
+                Referential< const Elemental >,
+                Referential< BasicPositional >
+            ) >
                 SearchInBase = SearchLinearly< Basic, BasicPositional, Elemental, Equate >;
-            static auto
+            static Referential< bool(
+                Referential< Junctive< Natural, Elemental > >,
+                Referential< const Elemental >
+            ) >
                 ComposeComplement = ComposeCollection< Natural, Elemental, Precede, Proceed, Equate, Order >;
-            auto
+            Referential< const Scalar< const Relative, RelativePositional, const Elemental > >
                 scale = relativity.scale;
             BasicPositional
                 base_position;
@@ -300,11 +377,29 @@ namespace junction {
             Referential< const Relative >
                 relative_set
         ) {
-            static auto
+            using namespace ::std;
+            static_assert(
+                is_integral< Natural >::value && is_unsigned< Natural >::value,
+                "Natural:  Unsigned integer type required"
+            );
+            static Referential< bool(
+                Referential< const Basic >,
+                Referential< const Directional< const Basic, BasicPositional, const Elemental > >,
+                Referential< const Elemental >,
+                Referential< BasicPositional >
+            ) >
                 SearchInBase = SearchLinearly< Basic, BasicPositional, Elemental, Equate >;
-            static auto
+            static Referential< bool(
+                Referential< const Relative >,
+                Referential< const Directional< const Relative, RelativePositional, const Elemental > >,
+                Referential< const Elemental >,
+                Referential< RelativePositional >
+            ) >
                 SearchInRelative = SearchLinearly< Relative, RelativePositional, Elemental, Equate >;
-            static auto
+            static Referential< bool(
+                Referential< Junctive< Natural, Elemental > >,
+                Referential< const Elemental >
+            ) >
                 ComposeDifference = ComposeCollection< Natural, Elemental, Precede, Proceed, Equate, Order >;
             BasicPositional
                 base_position;
@@ -360,9 +455,22 @@ namespace junction {
             Referential< const Relative >
                 relative_set
         ) {
-            static auto
+            using namespace ::std;
+            static_assert(
+                is_integral< Natural >::value && is_unsigned< Natural >::value,
+                "Natural:  Unsigned integer type required"
+            );
+            static Referential< bool(
+                Referential< const Basic >,
+                Referential< const Directional< const Basic, BasicPositional, const Elemental > >,
+                Referential< const Elemental >,
+                Referential< BasicPositional >
+            ) >
                 SearchInBase = SearchLinearly< Basic, BasicPositional, Elemental, Equate >;
-            static auto
+            static Referential< bool(
+                Referential< Junctive< Natural, Elemental > >,
+                Referential< const Elemental >
+            ) >
                 ComposeIntersection = ComposeCollection< Natural, Elemental, Precede, Proceed, Equate, Order >;
             BasicPositional
                 base_position;
@@ -409,7 +517,15 @@ namespace junction {
             Referential< const Relative >
                 relative_set
         ) {
-            static auto
+            using namespace ::std;
+            static_assert(
+                is_integral< Natural >::value && is_unsigned< Natural >::value,
+                "Natural:  Unsigned integer type required"
+            );
+            static Referential< bool(
+                Referential< Junctive< Natural, Elemental > >,
+                Referential< const Elemental >
+            ) >
                 ComposeUnion = ComposeCollection< Natural, Elemental, Precede, Proceed, Equate, Order >;
             BasicPositional
                 base_position;
@@ -463,9 +579,14 @@ namespace junction {
             Referential< const Relative >
                 relative_set
         ) {
-            auto
+            using namespace ::std;
+            static_assert(
+                is_integral< Natural >::value && is_unsigned< Natural >::value,
+                "Natural:  Unsigned integer type required"
+            );
+            Referential< Expositive< const Basic, BasicPositional, const Elemental > >
                 go_basis = basis.increment.scale.go;
-            auto
+            Referential< Expositive< const Relative, RelativePositional, const Elemental > >
                 go_relativity = relativity.increment.scale.go;
             BasicPositional
                 position;
@@ -513,8 +634,10 @@ namespace junction {
             typename Elemental,
             Referential< Consequent< Natural, Elemental > >
                 ProceedOne,
+            Referential< ConjointlyConsequent< Basic, BasicPositional, Natural, Elemental > >
+                ProceedManyFromBase,
             Referential< ConjointlyConsequent< Relative, RelativePositional, Natural, Elemental > >
-                ProceedMany,
+                ProceedManyFromRelative,
             Referential< Assortive< Elemental > >
                 Equate,
             Referential< Assortive< Elemental > >
@@ -533,9 +656,14 @@ namespace junction {
             Referential< const Relative >
                 relative_set
         ) {
-            auto
+            using namespace ::std;
+            static_assert(
+                is_integral< Natural >::value && is_unsigned< Natural >::value,
+                "Natural:  Unsigned integer type required"
+            );
+            Referential< Expositive< const Basic, BasicPositional, const Elemental > >
                 go_basis = basis.increment.scale.go;
-            auto
+            Referential< Expositive< const Relative, RelativePositional, const Elemental > >
                 go_relativity = relativity.increment.scale.go;
             BasicPositional
                 position;
@@ -546,14 +674,14 @@ namespace junction {
                     BasicPositional
                         last;
                     basis.decrement.scale.begin( base_set, last );
-                    return ProceedMany( operand, basis.increment, base_set, position, last );
+                    return ProceedManyFromBase( operand, basis.increment, base_set, position, last );
                 };
             static auto
                 RemainingRelative = [&]{
                     RelativePositional
                         last;
                     relativity.decrement.scale.begin( relative_set, last );
-                    return ProceedMany( operand, relativity.increment, relative_set, opposition, last );
+                    return ProceedManyFromRelative( operand, relativity.increment, relative_set, opposition, last );
                 };
             Empty( operand );
             if (!basis.increment.begins( base_set )) {
@@ -629,9 +757,14 @@ namespace junction {
             Referential< const Relative >
                 relative_set
         ) {
-            auto
+            using namespace ::std;
+            static_assert(
+                is_integral< Natural >::value && is_unsigned< Natural >::value,
+                "Natural:  Unsigned integer type required"
+            );
+            Referential< Expositive< const Basic, BasicPositional, const Elemental > >
                 go_basis = basis.increment.scale.go;
-            auto
+            Referential< Expositive< const Relative, RelativePositional, const Elemental > >
                 go_relativity = relativity.increment.scale.go;
             BasicPositional
                 position;
@@ -674,8 +807,10 @@ namespace junction {
             typename Elemental,
             Referential< Consequent< Natural, Elemental > >
                 ProceedOne,
+            Referential< ConjointlyConsequent< Basic, BasicPositional, Natural, Elemental > >
+                ProceedManyFromBase,
             Referential< ConjointlyConsequent< Relative, RelativePositional, Natural, Elemental > >
-                ProceedMany,
+                ProceedManyFromRelative,
             Referential< Assortive< Elemental > >
                 Equate,
             Referential< Assortive< Elemental > >
@@ -694,9 +829,14 @@ namespace junction {
             Referential< const Relative >
                 relative_set
         ) {
-            auto
+            using namespace ::std;
+            static_assert(
+                is_integral< Natural >::value && is_unsigned< Natural >::value,
+                "Natural:  Unsigned integer type required"
+            );
+            Referential< Expositive< const Basic, BasicPositional, const Elemental > >
                 go_basis = basis.increment.scale.go;
-            auto
+            Referential< Expositive< const Relative, RelativePositional, const Elemental > >
                 go_relativity = relativity.increment.scale.go;
             BasicPositional
                 position;
@@ -707,14 +847,14 @@ namespace junction {
                     BasicPositional
                         last;
                     basis.decrement.scale.begin( base_set, last );
-                    return ProceedMany( operand, basis.increment, base_set, position, last );
+                    return ProceedManyFromBase( operand, basis.increment, base_set, position, last );
                 };
             static auto
                 RemainingRelative = [&]{
                     RelativePositional
                         last;
                     relativity.decrement.scale.begin( relative_set, last );
-                    return ProceedMany( operand, relativity.increment, relative_set, apposition, last );
+                    return ProceedManyFromRelative( operand, relativity.increment, relative_set, apposition, last );
                 };
             Empty( operand );
             if (!basis.increment.begins( base_set )) {
@@ -897,31 +1037,9 @@ namespace junction {
         constexpr Bisectional< Junctive< Natural, Elemental >, Basic, BasicPositional, Relative, RelativePositional, Elemental >
         JunctionBisection = {
             ComplementCollections< Basic, BasicPositional, Relative, RelativePositional, Natural, Elemental, Proceed< Natural, Elemental, Adjunct >, Proceed< Relative, RelativePositional, Natural, Elemental, Adjunct >, Equate, Order >,
-            DifferentiateCollections< Basic, BasicPositional, Relative, RelativePositional, Natural, Elemental, Proceed< Natural, Elemental, Adjunct >, Proceed< Relative, RelativePositional, Natural, Elemental, Adjunct >, Equate, Order >,
+            DifferentiateCollections< Basic, BasicPositional, Relative, RelativePositional, Natural, Elemental, Proceed< Natural, Elemental, Adjunct >, Proceed< Basic, BasicPositional, Natural, Elemental, Adjunct >, Proceed< Relative, RelativePositional, Natural, Elemental, Adjunct >, Equate, Order >,
             IntersectCollections< Basic, BasicPositional, Relative, RelativePositional, Natural, Elemental, Proceed< Natural, Elemental, Adjunct >, Equate, Order >,
-            UniteCollections< Basic, BasicPositional, Relative, RelativePositional, Natural, Elemental, Proceed< Natural, Elemental, Adjunct >, Proceed< Relative, RelativePositional, Natural, Elemental, Adjunct >, Equate, Order >
-        };
-
-        template <
-            typename Basic,
-            typename BasicPositional,
-            typename Relative,
-            typename RelativePositional,
-            typename Natural,
-            typename Elemental,
-            Referential< const Adjunctive< Natural, Elemental > >
-                Adjunct,
-            Referential< Assortive< Elemental > >
-                Equate,
-            Referential< Assortive< Elemental > >
-                Order
-        >
-        constexpr Bisectional< Junctive< Natural, Elemental >, Basic, BasicPositional, Relative, RelativePositional, Elemental >
-        SafeJunctionBisection = {
-            ComplementCollections< Basic, BasicPositional, Relative, RelativePositional, Natural, Elemental, Proceed< Natural, Elemental, Adjunct >, Proceed< Relative, RelativePositional, Natural, Elemental, Adjunct >, Equate, Order >,
-            DifferentiateCollections< Basic, BasicPositional, Relative, RelativePositional, Natural, Elemental, Proceed< Natural, Elemental, Adjunct >, Proceed< Relative, RelativePositional, Natural, Elemental, Adjunct >, Equate, Order >,
-            IntersectCollections< Basic, BasicPositional, Relative, RelativePositional, Natural, Elemental, Proceed< Natural, Elemental, Adjunct >, Equate, Order >,
-            UniteCollections< Basic, BasicPositional, Relative, RelativePositional, Natural, Elemental, Proceed< Natural, Elemental, Adjunct >, Proceed< Relative, RelativePositional, Natural, Elemental, Adjunct >, Equate, Order >
+            UniteCollections< Basic, BasicPositional, Relative, RelativePositional, Natural, Elemental, Proceed< Natural, Elemental, Adjunct >, Proceed< Basic, BasicPositional, Natural, Elemental, Adjunct >, Proceed< Relative, RelativePositional, Natural, Elemental, Adjunct >, Equate, Order >
         };
 
         template <
@@ -955,7 +1073,7 @@ namespace junction {
         constexpr Collective< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental >
         SafeJunctionCollector = {
             SafeJunctionOrderSelector< Natural, Elemental, Adjunct, Equate, Order >,
-            SafeJunctionBisection< Junctive< Natural, Elemental >, Positional< Elemental >, Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental, Adjunct, Equate, Order >,
+            JunctionBisection< Junctive< Natural, Elemental >, Positional< Elemental >, Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental, Adjunct, Equate, Order >,
             CollateCollection< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental, Proceed< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental, Adjunct > >,
             EquateCollections< Junctive< Natural, Elemental >, Positional< Elemental >, Junctive< Natural, Elemental >, Positional< Elemental >, Elemental, Equate >
         };

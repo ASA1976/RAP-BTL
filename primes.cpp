@@ -1,48 +1,47 @@
 // © 2018 Aaron Sami Abassi
 // Licensed under the Academic Free License version 3.0
-#include "junction/consecution.hpp"
+#include "localization.hpp"
 #include <cstdio>
 
-using namespace ::consecution;
+using namespace ::trajection;
 
 template <
     typename Spatial,
     typename Positional,
-    typename Accumulative,
     typename Natural
 >
 static inline bool
 SequencePrimes(
     Referential< Spatial >
-        sequence,
-    Referential< const Sequent< Spatial, Positional, Accumulative, Natural > >
-        sequencer,
-    Referential< const Directional< const Spatial, Positional, const Natural > >
+        primes,
+    Referential< const Scalar< Spatial, Positional, Natural > >
         increment,
     Referential< const Natural >
-        to
+        count
 ) {
-    static const Natural
-        Two = 2;
-    auto
-        scale = increment.scale;
     Natural
+        added,
         value;
     Positional
-        position;
-    if (to < Two)
+        read_position,
+        write_position;
+    if (count < 1)
         return false;
-    sequencer.proceed( sequence, Two );
-    for (value = Two + 1; value <= to; value++) {
-        scale.begin( sequence, position );
+    value = 2;
+    increment.begin( primes, write_position );
+    increment.go( primes, write_position ).to = value++;
+    for (added = 1; added < count; value++) {
+        increment.begin( primes, read_position );
         while (true) {
-            if (value % scale.go( sequence, position ).to == 0)
+            if (value % increment.go( primes, read_position ).to == 0)
                 break;
-            if (!increment.traversable( sequence, position )) {
-                sequencer.proceed( sequence, value );
+            if (read_position == write_position) {
+                increment.traverse( primes, write_position );
+                increment.go( primes, write_position ).to = value;
+                added++;
                 break;
             }
-            scale.traverse( sequence, position );
+            increment.traverse( primes, read_position );
         }
     }
     return true;
@@ -51,35 +50,38 @@ SequencePrimes(
 template <
     typename Natural
 >
-static bool
+static inline bool
 DisplayPrimes(
     Referential< const Natural >
-        to
+        count
 ) {
-    using namespace ::junction;
-    using namespace ::junction::consecution;
-    static auto
-        Sequencer = JunctionSequencer< size_t, Natural, CopyNewAdjunct< size_t, Natural > >;
-    static auto
-        Increment = ReadIncrementDirection< size_t, Natural >;
-    static auto
-        Scale = Increment.scale;
-    Junctive< size_t, Natural >
-        primes;
-    Positional< Natural >
+    using namespace ::localization;
+    static Referential< const Scalar< WriteLocal< Natural >, WritePositional< Natural >, Natural > >
+        Increment = WriteIncrementScale< Natural >;
+    WriteLocal< Natural >
+        primes = new Natural[count];
+    WritePositional< Natural >
         position;
-    Initialize( primes );
-    SequencePrimes( primes, Sequencer, Increment, to );
-    if (Increment.begins( primes )) {
-        for (Scale.begin( primes, position ); true; Scale.traverse( primes, position )) {
-            printf( "%u\n", GoRead( primes, position ).to );
-            if (!Increment.traversable( primes, position ))
-                break;
-        }
-        Sequencer.secede( primes );
-        while (Sequencer.condense( primes ));
+    if (count < 1)
+        return false;
+    SequencePrimes( primes, Increment, count );
+    Increment.begin( primes, position );
+    while (true) {
+        printf( "%u\n", Increment.go( primes, position ).to );
+        if (position == primes + count - 1)
+            break;
+        Increment.traverse( primes, position );
     }
     return true;
+}
+
+static inline void PrintTitle(
+    const Locational< const char >
+        filename
+) {
+    puts( "Prime Number Sequencer" );
+    puts( "" );
+    printf( "%s COUNT\n\n", filename );
 }
 
 int
@@ -89,30 +91,23 @@ main(
     Locational< Locational< char > >
         argv
 ) {
-    static auto
-        PrintTitle = [&]{
-            puts( "Prime Number Sequencer" );
-            puts( "" );
-            printf( "%s TO\n\n", argv[0] );
-        };
     long
         test;
     unsigned
-        to;
+        count;
     if (argc != 2) {
-        PrintTitle();
-        printf( "Where TO is a natural integer upper bound\n" );
+        PrintTitle( argv[0] );
+        printf( "Where COUNT is a natural integer number of primes to generate\n" );
         return 0;
     }
     if (
         sscanf( argv[1], "%ld", Locate( test ).at ) < 1
         || test < 0
-        || sscanf( argv[1], "%u", Locate( to ).at ) < 1
+        || sscanf( argv[1], "%u", Locate( count ).at ) < 1
     ) {
-        PrintTitle();
-        fprintf( stderr, "Error parsing TO upper bound ('%s') as a natural integer\n", argv[1] );
+        PrintTitle( argv[0] );
+        fprintf( stderr, "Error parsing COUNT '%s' as a natural integer\n", argv[1] );
         return -1;
     }
-    DisplayPrimes( to );
-    return 0;
+    return DisplayPrimes( count ) ? 0 : -1;
 }

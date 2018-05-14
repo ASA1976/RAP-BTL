@@ -69,7 +69,9 @@ namespace location {
         Referential< Subjective >
             subject
     ) {
-        static auto
+        static Referential< Conferential< const Subjective >(
+            Referential< const Subjective >
+        ) >
             Deter = Confer< const Subjective >;
         return Deter( subject );
     }
