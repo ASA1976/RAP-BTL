@@ -87,8 +87,8 @@ namespace junction {
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
-            static auto
-                Finalize = [&head, &tail, &length](
+            auto
+                Finalize = [&](
                     Referential< const Locational< Junctional< Elemental > > >
                         start,
                     Referential< const Locational< Junctional< Elemental > > >

@@ -669,14 +669,14 @@ namespace junction {
                 position;
             RelativePositional
                 opposition;
-            static auto
+            auto
                 RemainingBase = [&]{
                     BasicPositional
                         last;
                     basis.decrement.scale.begin( base_set, last );
                     return ProceedManyFromBase( operand, basis.increment, base_set, position, last );
                 };
-            static auto
+            auto
                 RemainingRelative = [&]{
                     RelativePositional
                         last;
@@ -842,14 +842,14 @@ namespace junction {
                 position;
             RelativePositional
                 apposition;
-            static auto
+            auto
                 RemainingBase = [&]{
                     BasicPositional
                         last;
                     basis.decrement.scale.begin( base_set, last );
                     return ProceedManyFromBase( operand, basis.increment, base_set, position, last );
                 };
-            static auto
+            auto
                 RemainingRelative = [&]{
                     RelativePositional
                         last;
