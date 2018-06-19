@@ -56,11 +56,11 @@ DisplayPrimes(
         count
 ) {
     using namespace ::localization;
-    static Referential< const Scalar< WriteLocal< Natural >, WritePositional< Natural >, Natural > >
-        Increment = WriteIncrementScale< Natural >;
+    static auto&
+        Increment = WriteIncrementScale< Natural, Natural >;
     WriteLocal< Natural >
         primes = new Natural[count];
-    WritePositional< Natural >
+    Natural
         position;
     if (count < 1)
         return false;
@@ -68,7 +68,7 @@ DisplayPrimes(
     Increment.begin( primes, position );
     while (true) {
         printf( "%u\n", Increment.go( primes, position ).to );
-        if (position == primes + count - 1)
+        if (position == count - 1)
             break;
         Increment.traverse( primes, position );
     }

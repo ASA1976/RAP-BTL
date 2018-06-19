@@ -2,12 +2,13 @@
 // Licensed under the Academic Free License version 3.0
 #ifndef TRAJECTION_MODULE
 #define TRAJECTION_MODULE
-#include "location.hpp"
+#include "comparison.hpp"
 #include <type_traits>
 
 namespace trajection {
 
     using namespace ::location;
+    using ::comparison::Comparative;
 
     template <
         typename Spatial
@@ -51,6 +52,9 @@ namespace trajection {
     >
     struct Vectorial {
 
+        Referential< const Comparative< Positional > >
+            order;
+
         Referential< Traversable< Spatial, Positional > >
             contains;
 
@@ -65,6 +69,9 @@ namespace trajection {
         typename Endemical
     >
     struct Scalar {
+
+        Referential< const Comparative< Positional > >
+            order;
 
         Referential< Trajectile< Spatial, Positional > >
             begin,
@@ -144,7 +151,7 @@ namespace trajection {
             is_integral< Natural >::value && is_unsigned< Natural >::value,
             "Natural:  Unsigned integer type required"
         );
-        static Referential< const Scalar< Spatial, Positional, Endemical > >
+        static auto&
             scale = direction.scale;
         if (!direction.begins( space ))
             return false;

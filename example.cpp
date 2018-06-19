@@ -78,7 +78,7 @@ ProceedSequence(
         list,
     Referential< const Sequent< Spatial, Positional, Natural, char > >
         sequencer,
-    Referential< const Conjoint< Spatial, Positional, const Locational< const char >, Locational< const char >, char > >
+    Referential< const Conjoint< Spatial, Positional, const Locational< const char >, Natural, char > >
         conjoiner
 ) {
     using namespace ::segmentation;
@@ -89,13 +89,13 @@ ProceedSequence(
     );
     static const Natural
         Length = 7;
-    static Referential< const Directional< ReadLocal< char >, ReadPositional< char >, const char > >
+    static auto&
         Direction = ReadIncrementDirection< Natural, Length, char >;
     static const char
         Message[Length] = {'M', 'E', 'S', 'S', 'A', 'G', 'E'};
-    static const ReadPositional< char >
-        First = Message,
-        Last = Message + Length - 1;
+    static const Natural
+        First = 0,
+        Last = Length - 1;
     sequencer.secede( list );
     sequencer.antecede( list, Length );
     return conjoiner.proceed( list, Direction, Message, First, Last );
@@ -157,14 +157,14 @@ DisplayMappings(
     Referential< const Directional< const Spatial, Positional, const Associational< char, int > > >
         direction
 ) {
-    Referential< const Scalar< const Spatial, Positional, const Associational< char, int > > >
+    auto&
         scale = direction.scale;
     Positional
         position;
     if (!direction.begins( map ))
         return false;
     for (scale.begin( map, position ); true; scale.traverse( map, position )) {
-        Referential< const Associational< char, int > >
+        auto&
             mapping = scale.go( map, position ).to;
         printf( "%c=%d", mapping.relator, mapping.value );
         if (!direction.traversable( map, position ))
@@ -178,9 +178,8 @@ static bool
 DemonstrateLocalization( void ) {
     using namespace ::localization;
     using Local = ReadLocal< char >;
-    using Positional = ReadPositional< char >;
-    static Referential< const Scalar< Local, Positional, const char > >
-        Scale = ReadIncrementScale< char >;
+    static auto&
+        Scale = ReadIncrementScale< size_t, char >;
     static Local
         locality = "ABCDE";
     puts( "Localization (Pointer Only)" );
@@ -194,30 +193,23 @@ static bool
 DemonstrateSegmentation( void ) {
     using namespace ::segmentation;
     using namespace ::sortation;
+    using namespace ::comparison;
     using Segmental = ReadLocal< char >;
-    using Positional = ReadPositional< char >;
-    using Bisectional = bool(
-        Referential< const Segmental >,
-        Referential< const Axial< const Segmental, Positional, const char > >,
-        Referential< const size_t >,
-        Referential< const char >,
-        Referential< Positional >
-    );
     static const size_t
         Length = 5;
-    static Referential< const Axial< Segmental, Positional, const char > >
+    static auto&
         Axis = ReadAxis< size_t, Length, char >;
-    static Referential< Bisectional >
-        FindCharacter = SearchBisectionally< Segmental, Positional, size_t, char, EquateRelationally, OrderRelationally >;
+    static auto&
+        FindCharacter = SearchBisectionally< Segmental, size_t, size_t, char, IsEqual, IsLesser >;
     static Segmental
         segment = "ABCDE";
-    Positional
-        position;
+    size_t
+        index;
     puts( "Segmentation (Pointer And Predetermined Length)" );
     printf( "segment := " );
     DisplayCharacters( segment, Axis.increment );
-    if (FindCharacter( segment, Axis, Length, segment[1], position )) {
-        printf( " (found '%c')\n", Refer( position ).to );
+    if (FindCharacter( segment, Axis, Length, segment[1], index )) {
+        printf( " (found '%c')\n", IndexicalGo( segment, index ).to );
         return true;
     }
     printf( " (not found)\n" );
@@ -228,21 +220,15 @@ static bool
 DemonstrateOrdination( void ) {
     using namespace ::ordination;
     using namespace ::sortation;
+    using namespace ::comparison;
     static const size_t
         Length = 5;
     using Ordinal = ReadOrdinal< size_t, Length, char >;
     using Positional = ReadPositional< char >;
-    using Bisectional = bool(
-        Referential< const Ordinal >,
-        Referential< const Axial< const Ordinal, Positional, const char > >,
-        Referential< const size_t >,
-        Referential< const char >,
-        Referential< Positional >
-    );
-    static Referential< const Axial< Ordinal, Positional, const char > >
+    static auto&
         Axis = ReadAxis< size_t, Length, char >;
-    static Referential< Bisectional >
-        FindCharacter = SearchBisectionally< Ordinal, Positional, size_t, char, EquateRelationally, OrderRelationally >;
+    static auto&
+        FindCharacter = SearchBisectionally< Ordinal, Positional, size_t, char, IsEqual, IsLesser >;
     static Ordinal
         array = {'A','B','C','D','E'};
     Positional
@@ -268,21 +254,22 @@ DemonstrateJunction( void ) {
     using namespace ::junction::association;
     using namespace ::junction::association::selection;
     using namespace ::junction::association::collection;
-    static Referential< const Sequent< Junctive< size_t, char >, Positional< char >, size_t, char > >
+    using namespace ::comparison;
+    static auto&
         ListSequencer = JunctionSequencer< size_t, char, DefaultCallocAdjunct< size_t, char > >;
-    static Referential< const Conjoint< Junctive< size_t, char >, Positional< char >, const Locational< const char >, Locational< const char >, char > >
-        ListConjoiner = JunctionConjoiner< const Locational< const char >, Locational< const char >, size_t, char, DefaultCallocAdjunct< size_t, char > >;
-    static Referential< const Selective< Junctive< size_t, char >, Positional< char >, size_t, char > >
-        ListSelector = JunctionSelector< size_t, char, DefaultCallocAdjunct< size_t, char >, EquateRelationally >;
-    static Referential< const Collective< Junctive< size_t, char >, Positional< char >, size_t, char > >
-        ListCollector = JunctionCollector< size_t, char, DefaultCallocAdjunct< size_t, char >, EquateRelationally, OrderRelationally >;
-    static Referential< const Axial< const Junctive< size_t, char >, Positional< char >, const char > >
+    static auto&
+        ListConjoiner = JunctionConjoiner< const Locational< const char >, size_t, size_t, char, DefaultCallocAdjunct< size_t, char > >;
+    static auto&
+        ListSelector = JunctionSelector< size_t, char, DefaultCallocAdjunct< size_t, char >, IsEqual >;
+    static auto&
+        ListCollector = JunctionCollector< size_t, char, DefaultCallocAdjunct< size_t, char >, IsEqual, IsLesser >;
+    static auto&
         ListAxis = ReadAxis< size_t, char >;
-    static Referential< const Associative< AssociativelyJunctive< size_t, char, int >, size_t, char, int > >
-        MapCorrelator = JunctionCorrelator< size_t, char, int, DefaultCallocAdjunct< size_t, Associational< char, int > >, EquateRelationally >;
-    static Referential< const Associative< AssociativelyJunctive< size_t, char, int >, size_t, char, int > >
-        MapAssociator = JunctionAssociator< size_t, char, int, DefaultCallocAdjunct< size_t, Associational< char, int > >, EquateRelationally, OrderRelationally >;
-    static Referential< const Directional< const AssociativelyJunctive< size_t, char, int >, AssociativelyPositional< char, int >, const Associational< char, int > > >
+    static auto&
+        MapCorrelator = JunctionCorrelator< size_t, char, int, DefaultCallocAdjunct< size_t, Associational< char, int > >, IsEqual >;
+    static auto&
+        MapAssociator = JunctionAssociator< size_t, char, int, DefaultCallocAdjunct< size_t, Associational< char, int > >, IsEqual, IsLesser >;
+    static auto&
         MapDirection = ReadIncrementDirection< size_t, Associational< char, int > >;
     struct LocalJunctive {
 

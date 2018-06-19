@@ -3,7 +3,6 @@
 #ifndef JUNCTION_ASSOCIATION_SELECTION_MODULE
 #define JUNCTION_ASSOCIATION_SELECTION_MODULE
 #include "../association.hpp"
-#include <type_traits>
 
 namespace junction {
 
@@ -44,11 +43,7 @@ namespace junction {
                     is_integral< Natural >::value && is_unsigned< Natural >::value,
                     "Natural:  Unsigned integer type required"
                 );
-                static Referential< bool(
-                    Referential< const AssociativelyJunctive< Natural, Correlative, Elemental > >,
-                    Referential< const Correlative >,
-                    Referential< AssociativelyPositional< Correlative, Elemental > >
-                ) >
+                static auto&
                     Search = SearchCorrelation< Natural, Correlative, Elemental, Equate >;
                 AssociativelyPositional< Correlative, Elemental >
                     position;
@@ -78,10 +73,7 @@ namespace junction {
                     is_integral< Natural >::value && is_unsigned< Natural >::value,
                     "Natural:  Unsigned integer type required"
                 );
-                static Referential< bool(
-                    Referential< const AssociativelyJunctive< Natural, Correlative, Elemental > >,
-                    Referential< const Correlative >
-                ) >
+                static auto&
                     CorrespondInMap = Correspond< Natural, Correlative, Elemental, Equate >;
                 const Associational< Correlative, Elemental >
                     associate = {relator, value};
@@ -117,16 +109,9 @@ namespace junction {
                 );
                 static const Natural
                     One = 1;
-                static Referential< bool(
-                    Referential< const AssociativelyJunctive< Natural, Correlative, Elemental > >,
-                    Referential< const Correlative >
-                ) >
+                static auto&
                     CorrespondInMap = Correspond< Natural, Correlative, Elemental, Equate >;
-                static Referential< bool(
-                    Referential< const AssociativelyJunctive< Natural, Correlative, Elemental > >,
-                    Referential< const Correlative >,
-                    Referential< AssociativelyPositional< Correlative, Elemental > >
-                ) >
+                static auto&
                     Search = SearchCorrelation< Natural, Correlative, Elemental, Equate >;
                 AssociativelyPositional< Correlative, Elemental >
                     position;
@@ -161,11 +146,7 @@ namespace junction {
                     is_integral< Natural >::value && is_unsigned< Natural >::value,
                     "Natural:  Unsigned integer type required"
                 );
-                static Referential< bool(
-                    Referential< const AssociativelyJunctive< Natural, Correlative, Elemental > >,
-                    Referential< const Correlative >,
-                    Referential< AssociativelyPositional< Correlative, Elemental > >
-                ) >
+                static auto&
                     Search = SearchCorrelation< Natural, Correlative, Elemental, Equate >;
                 static const Natural
                     One = 1;
@@ -194,11 +175,7 @@ namespace junction {
                     is_integral< Natural >::value && is_unsigned< Natural >::value,
                     "Natural:  Unsigned integer type required"
                 );
-                static Referential< bool(
-                    Referential< const AssociativelyJunctive< Natural, Correlative, Elemental > >,
-                    Referential< const Correlative >,
-                    Referential< AssociativelyPositional< Correlative, Elemental > >
-                ) >
+                static auto&
                     Search = SearchCorrelation< Natural, Correlative, Elemental, Equate >;
                 AssociativelyPositional< Correlative, Elemental >
                     position;
@@ -226,11 +203,7 @@ namespace junction {
                     is_integral< Natural >::value && is_unsigned< Natural >::value,
                     "Natural:  Unsigned integer type required"
                 );
-                static Referential< bool(
-                    Referential< const AssociativelyJunctive< Natural, Correlative, Elemental > >,
-                    Referential< const Correlative >,
-                    Referential< AssociativelyPositional< Correlative, Elemental > >
-                ) >
+                static auto&
                     Search = SearchCorrelation< Natural, Correlative, Elemental, Equate >;
                 AssociativelyPositional< Correlative, Elemental >
                     position;

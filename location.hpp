@@ -69,11 +69,7 @@ namespace location {
         Referential< Subjective >
             subject
     ) {
-        static Referential< Conferential< const Subjective >(
-            Referential< const Subjective >
-        ) >
-            Deter = Confer< const Subjective >;
-        return Deter( subject );
+        return Confer< const Subjective >( subject );
     }
 
     template <
@@ -85,6 +81,28 @@ namespace location {
             locality
     ) {
         return Confer( *locality );
+    }
+
+    template <
+        typename Subjective
+    >
+    static inline Conferential< Subjective >
+    Conform(
+        const Locational< void >
+            locality
+    ) {
+        return Confer( *(const Locational< Subjective >) locality );
+    }
+
+    template <
+        typename Subjective
+    >
+    static inline Conferential< const Subjective >
+    Observe(
+        const Locational< const void >
+            locality
+    ) {
+        return Confer( *(const Locational< const Subjective >) locality );
     }
 
 }

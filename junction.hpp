@@ -4,12 +4,14 @@
 #define JUNCTION_MODULE
 #include "allocation.hpp"
 #include "trajection.hpp"
-#include <type_traits>
 
 namespace junction {
 
     using namespace ::allocation;
     using namespace ::trajection;
+    using ::comparison::Equative;
+    using ::comparison::Relational;
+    using ::comparison::Comparative;
 
     template <
         typename Elemental
@@ -76,7 +78,7 @@ namespace junction {
         typename Elemental
     >
     static inline bool
-    operator==(
+    IsEqual(
         Referential< const Positional< Elemental > >
             base,
         Referential< const Positional< Elemental > >
@@ -89,7 +91,7 @@ namespace junction {
         typename Elemental
     >
     static inline bool
-    operator!=(
+    IsNotEqual(
         Referential< const Positional< Elemental > >
             base,
         Referential< const Positional< Elemental > >
@@ -102,7 +104,7 @@ namespace junction {
         typename Elemental
     >
     static inline bool
-    operator>(
+    IsGreater(
         Referential< const Positional< Elemental > >
             base,
         Referential< const Positional< Elemental > >
@@ -110,10 +112,6 @@ namespace junction {
     ) {
         Locational< Junctional< Elemental > >
             current;
-        if (!base.at)
-            throw base;
-        if (!relative.at)
-            throw relative;
         if (base.at == relative.at)
             return false;
         for (current = base.at->previous; current; current = current->previous)
@@ -126,7 +124,24 @@ namespace junction {
         typename Elemental
     >
     static inline bool
-    operator<(
+    IsGreaterChecksForNull(
+        Referential< const Positional< Elemental > >
+            base,
+        Referential< const Positional< Elemental > >
+            relative
+    ) {
+        if (!base.at)
+            throw base.at;
+        if (!relative.at)
+            throw relative.at;
+        return IsGreater( base, relative );
+    }
+
+    template <
+        typename Elemental
+    >
+    static inline bool
+    IsLesser(
         Referential< const Positional< Elemental > >
             base,
         Referential< const Positional< Elemental > >
@@ -134,10 +149,6 @@ namespace junction {
     ) {
         Locational< Junctional< Elemental > >
             current;
-        if (!base.at)
-            throw base;
-        if (!relative.at)
-            throw relative;
         if (base.at == relative.at)
             return false;
         for (current = base.at->next; current; current = current->next)
@@ -150,7 +161,24 @@ namespace junction {
         typename Elemental
     >
     static inline bool
-    operator>=(
+    IsLesserChecksForNull(
+        Referential< const Positional< Elemental > >
+            base,
+        Referential< const Positional< Elemental > >
+            relative
+    ) {
+        if (!base.at)
+            throw base.at;
+        if (!relative.at)
+            throw relative.at;
+        return IsLesser( base, relative );
+    }
+
+    template <
+        typename Elemental
+    >
+    static inline bool
+    IsNotLesser(
         Referential< const Positional< Elemental > >
             base,
         Referential< const Positional< Elemental > >
@@ -158,10 +186,6 @@ namespace junction {
     ) {
         Locational< Junctional< Elemental > >
             current;
-        if (!base.at)
-            throw base;
-        if (!relative.at)
-            throw relative;
         if (base.at == relative.at)
             return true;
         for (current = base.at->previous; current; current = current->previous)
@@ -174,7 +198,24 @@ namespace junction {
         typename Elemental
     >
     static inline bool
-    operator<=(
+    IsNotLesserChecksForNull(
+        Referential< const Positional< Elemental > >
+            base,
+        Referential< const Positional< Elemental > >
+            relative
+    ) {
+        if (!base.at)
+            throw base.at;
+        if (!relative.at)
+            throw relative.at;
+        return IsNotLesser( base, relative );
+    }
+
+    template <
+        typename Elemental
+    >
+    static inline bool
+    IsNotGreater(
         Referential< const Positional< Elemental > >
             base,
         Referential< const Positional< Elemental > >
@@ -182,16 +223,29 @@ namespace junction {
     ) {
         Locational< Junctional< Elemental > >
             current;
-        if (!base.at)
-            throw base;
-        if (!relative.at)
-            throw relative;
         if (base.at == relative.at)
             return true;
         for (current = base.at->next; current; current = current->next)
             if (current == relative.at)
                 return true;
         return false;
+    }
+
+    template <
+        typename Elemental
+    >
+    static inline bool
+    IsNotGreaterChecksForNull(
+        Referential< const Positional< Elemental > >
+            base,
+        Referential< const Positional< Elemental > >
+            relative
+    ) {
+        if (!base.at)
+            throw base.at;
+        if (!relative.at)
+            throw relative.at;
+        return IsNotGreater( base, relative );
     }
 
     template <
@@ -519,7 +573,7 @@ namespace junction {
             is_integral< Natural >::value && is_unsigned< Natural >::value,
             "Natural:  Unsigned integer type required"
         );
-        static Referential< Conferential< const Elemental >( Referential< Elemental > ) >
+        static auto&
             DoDefer = Defer< Elemental >;
         return DoDefer( position.at->element );
     }
@@ -561,7 +615,7 @@ namespace junction {
             is_integral< Natural >::value && is_unsigned< Natural >::value,
             "Natural:  Unsigned integer type required"
         );
-        static Referential< Conferential< Elemental >( Referential< Elemental > ) >
+        static auto&
             DoConfer = Confer< Elemental >;
         return DoConfer( position.at->element );
     }
@@ -1060,11 +1114,61 @@ namespace junction {
     };
 
     template <
+        typename Elemental
+    >
+    constexpr Equative< Positional< Elemental > >
+    Equality = {
+        IsEqual< Elemental >,
+        IsNotEqual< Elemental >
+    };
+
+    template <
+        typename Elemental
+    >
+    constexpr Relational< Positional< Elemental > >
+    Relation = {
+        IsLesser< Elemental >,
+        IsGreater< Elemental >,
+        IsNotGreater< Elemental >,
+        IsNotLesser< Elemental >
+    };
+
+    template <
+        typename Elemental
+    >
+    constexpr Relational< Positional< Elemental > >
+    RelationChecksForNull = {
+        IsLesserChecksForNull< Elemental >,
+        IsGreaterChecksForNull< Elemental >,
+        IsNotGreaterChecksForNull< Elemental >,
+        IsNotLesserChecksForNull< Elemental >
+    };
+
+    template <
+        typename Elemental
+    >
+    constexpr Comparative< Positional< Elemental >  >
+    Comparison = {
+        Equality< Elemental >,
+        Relation< Elemental >
+    };
+
+    template <
+        typename Elemental
+    >
+    constexpr Comparative< Positional< Elemental >  >
+    ComparisonChecksForNull = {
+        Equality< Elemental >,
+        RelationChecksForNull< Elemental >
+    };
+
+    template <
         typename Natural,
         typename Elemental
     >
     constexpr Vectorial< const Junctive< Natural, Elemental >, Positional< Elemental >, const Elemental >
     ReadVector = {
+        Comparison< Elemental >,
         Contains< Natural, Elemental >,
         GoRead< Natural, Elemental >
     };
@@ -1075,6 +1179,7 @@ namespace junction {
     >
     constexpr Vectorial< const Junctive< Natural, Elemental >, Positional< Elemental >, const Elemental >
     SafeReadVector = {
+        ComparisonChecksForNull< Elemental >,
         ContainsChecksForNull< Natural, Elemental >,
         GoReadSafely< Natural, Elemental >
     };
@@ -1085,6 +1190,7 @@ namespace junction {
     >
     constexpr Vectorial< Junctive< Natural, Elemental >, Positional< Elemental >, Elemental >
     WriteVector = {
+        Comparison< Elemental >,
         Contains< Natural, Elemental >,
         GoWrite< Natural, Elemental >
     };
@@ -1095,6 +1201,7 @@ namespace junction {
     >
     constexpr Vectorial< Junctive< Natural, Elemental >, Positional< Elemental >, Elemental >
     SafeWriteVector = {
+        ComparisonChecksForNull< Elemental >,
         ContainsChecksForNull< Natural, Elemental >,
         GoWriteSafely< Natural, Elemental >
     };
@@ -1105,6 +1212,7 @@ namespace junction {
     >
     constexpr Scalar< const Junctive< Natural, Elemental >, Positional< Elemental >, const Elemental >
     ReadIncrementScale = {
+        Comparison< Elemental >,
         BeginReadIncrement< Natural, Elemental >,
         TraverseReadIncrement< Natural, Elemental >,
         GoRead< Natural, Elemental >
@@ -1116,6 +1224,7 @@ namespace junction {
     >
     constexpr Scalar< const Junctive< Natural, Elemental >, Positional< Elemental >, const Elemental >
     SafeReadIncrementScale = {
+        ComparisonChecksForNull< Elemental >,
         BeginReadIncrementSafely< Natural, Elemental >,
         TraverseReadIncrementSafely< Natural, Elemental >,
         GoReadSafely< Natural, Elemental >
@@ -1127,6 +1236,7 @@ namespace junction {
     >
     constexpr Scalar< Junctive< Natural, Elemental >, Positional< Elemental >, Elemental >
     WriteIncrementScale = {
+        Comparison< Elemental >,
         BeginWriteIncrement< Natural, Elemental >,
         TraverseWriteIncrement< Natural, Elemental >,
         GoWrite< Natural, Elemental >
@@ -1138,6 +1248,7 @@ namespace junction {
     >
     constexpr Scalar< Junctive< Natural, Elemental >, Positional< Elemental >, Elemental >
     SafeWriteIncrementScale = {
+        ComparisonChecksForNull< Elemental >,
         BeginWriteIncrementSafely< Natural, Elemental >,
         TraverseWriteIncrementSafely< Natural, Elemental >,
         GoWriteSafely< Natural, Elemental >
@@ -1149,6 +1260,7 @@ namespace junction {
     >
     constexpr Scalar< const Junctive< Natural, Elemental >, Positional< Elemental >, const Elemental >
     ReadDecrementScale = {
+        Comparison< Elemental >,
         BeginReadDecrement< Natural, Elemental >,
         TraverseReadDecrement< Natural, Elemental >,
         GoRead< Natural, Elemental >
@@ -1160,6 +1272,7 @@ namespace junction {
     >
     constexpr Scalar< const Junctive< Natural, Elemental >, Positional< Elemental >, const Elemental >
     SafeReadDecrementScale = {
+        ComparisonChecksForNull< Elemental >,
         BeginReadDecrementSafely< Natural, Elemental >,
         TraverseReadDecrementSafely< Natural, Elemental >,
         GoReadSafely< Natural, Elemental >
@@ -1171,6 +1284,7 @@ namespace junction {
     >
     constexpr Scalar< Junctive< Natural, Elemental >, Positional< Elemental >, Elemental >
     WriteDecrementScale = {
+        Comparison< Elemental >,
         BeginWriteDecrement< Natural, Elemental >,
         TraverseWriteDecrement< Natural, Elemental >,
         GoWrite< Natural, Elemental >
@@ -1182,6 +1296,7 @@ namespace junction {
     >
     constexpr Scalar< Junctive< Natural, Elemental >, Positional< Elemental >, Elemental >
     SafeWriteDecrementScale = {
+        ComparisonChecksForNull< Elemental >,
         BeginWriteDecrementSafely< Natural, Elemental >,
         TraverseWriteDecrementSafely< Natural, Elemental >,
         GoWriteSafely< Natural, Elemental >

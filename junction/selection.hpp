@@ -4,7 +4,6 @@
 #define JUNCTION_SELECTION_MODULE
 #include "consecution.hpp"
 #include "../selection.hpp"
-#include <type_traits>
 
 namespace junction {
 
@@ -45,11 +44,7 @@ namespace junction {
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
-            static Referential< bool(
-                Referential< const Junctive< Natural, Elemental > >,
-                Referential< const Elemental >,
-                Referential< Positional< Elemental > >
-            ) >
+            static auto&
                 Search = SearchSelection< Natural, Elemental, Equate >;
             Positional< Elemental >
                 position;
@@ -76,11 +71,7 @@ namespace junction {
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
-            static Referential< bool(
-                Referential< const Junctive< Natural, Elemental > >,
-                Referential< const Elemental >,
-                Referential< Positional< Elemental > >
-            ) >
+            static auto&
                 Search = SearchSelection< Natural, Elemental, Equate >;
             Positional< Elemental >
                 position;
@@ -109,11 +100,7 @@ namespace junction {
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
-            static Referential< bool(
-                Referential< const Junctive< Natural, Elemental > >,
-                Referential< const Elemental >,
-                Referential< Positional< Elemental > >
-            ) >
+            static auto&
                 Search = SearchSelection< Natural, Elemental, Equate >;
             static const Natural
                 One = 1;
@@ -148,15 +135,9 @@ namespace junction {
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
-            static Referential< bool(
-                Referential< const Junctive< Natural, Elemental > >,
-                Referential< const Elemental >
-            ) >
+            static auto&
                 Accredit = AccreditSelection< Natural, Elemental, Equate >;
-            static Referential< bool(
-                Referential< Junctive< Natural, Elemental > >,
-                Referential< const Elemental >
-            ) >
+            static auto&
                 Discompose = DiscomposeSelection< Natural, Elemental, Concede, Equate >;
             if (Accredit( set, replacement ))
                 return false;
@@ -187,7 +168,7 @@ namespace junction {
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
-            Referential< const Scalar< const Basic, BasicPositional, const Elemental > >
+            auto&
                 scale = basis.scale;
             BasicPositional
                 position;
@@ -233,14 +214,9 @@ namespace junction {
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
-            static Referential< bool(
-                Referential< const Basic >,
-                Referential< const Directional< const Basic, BasicPositional, const Elemental > >,
-                Referential< const Elemental >,
-                Referential< BasicPositional >
-            ) >
+            static auto&
                 SearchInBase = SearchLinearly< Basic, BasicPositional, Elemental, Equate >;
-            Referential< const Scalar< const Relative, RelativePositional, const Elemental > >
+            auto&
                 scale = relativity.scale;
             BasicPositional
                 base_position;
@@ -289,19 +265,9 @@ namespace junction {
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
-            static Referential< bool(
-                Referential< const Basic >,
-                Referential< const Directional< const Basic, BasicPositional, const Elemental > >,
-                Referential< const Elemental >,
-                Referential< BasicPositional >
-            ) >
+            static auto&
                 SearchInBase = SearchLinearly< Basic, BasicPositional, Elemental, Equate >;
-            static Referential< bool(
-                Referential< const Relative >,
-                Referential< const Directional< const Relative, RelativePositional, const Elemental > >,
-                Referential< const Elemental >,
-                Referential< RelativePositional >
-            ) >
+            static auto&
                 SearchInRelative = SearchLinearly< Relative, RelativePositional, Elemental, Equate >;
             BasicPositional
                 base_position;
@@ -361,14 +327,9 @@ namespace junction {
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
-            static Referential< bool(
-                Referential< const Basic >,
-                Referential< const Directional< const Basic, BasicPositional, const Elemental > >,
-                Referential< const Elemental >,
-                Referential< BasicPositional >
-            ) >
+            static auto&
                 SearchInBase = SearchLinearly< Basic, BasicPositional, Elemental, Equate >;
-            Referential< const Scalar< const Relative, RelativePositional, const Elemental > >
+            auto&
                 scale = relativity.scale;
             BasicPositional
                 base_position;
@@ -418,10 +379,7 @@ namespace junction {
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
-            static Referential< bool(
-                Referential< Junctive< Natural, Elemental > >,
-                Referential< const Elemental >
-            ) >
+            static auto&
                 ComposeUnion = ComposeSelection< Natural, Elemental, Proceed, Equate >;
             BasicPositional
                 base_position;

@@ -3,11 +3,12 @@
 #ifndef ORDINATION_MODULE
 #define ORDINATION_MODULE
 #include "trajection.hpp"
-#include <type_traits>
+#include "comparison.hpp"
 
 namespace ordination {
 
     using namespace ::trajection;
+    using ::comparison::Comparison;
 
     template <
         typename Natural,
@@ -139,10 +140,7 @@ namespace ordination {
             is_integral< Natural >::value && is_unsigned< Natural >::value,
             "Natural:  Unsigned integer type required"
         );
-        static Referential< bool(
-            Referential< const Elemental[Length] >,
-            Referential< const Locational< Elemental > >
-        ) >
+        static auto&
             Contains = ContainsPosition< Natural, Length, Elemental >;
         if (!position)
             throw position;
@@ -188,15 +186,9 @@ namespace ordination {
             is_integral< Natural >::value && is_unsigned< Natural >::value,
             "Natural:  Unsigned integer type required"
         );
-        static Referential< bool(
-            Referential< const Elemental[Length] >,
-            Referential< const Locational< Elemental > >
-        ) >
+        static auto&
             Contains = ContainsPositionChecksForNull< Natural, Length, Elemental >;
-        static Referential< Conferential< Elemental >(
-            Referential< Elemental[Length] >,
-            Referential< const Locational< Elemental > >
-        ) >
+        static auto&
             Go = PositionalGo< Natural, Length, Elemental >;
         if (!Contains( array, position ))
             throw position;
@@ -305,10 +297,7 @@ namespace ordination {
             is_integral< Natural >::value && is_unsigned< Natural >::value,
             "Natural:  Unsigned integer type required"
         );
-        static Referential< bool(
-            Referential< const Elemental[Length] >,
-            Referential< const Locational< Elemental > >
-        ) >
+        static auto&
             Traversable = IncrementTraversable< Natural, Length, Elemental >;
         if (!position)
             throw position;
@@ -354,10 +343,7 @@ namespace ordination {
             is_integral< Natural >::value && is_unsigned< Natural >::value,
             "Natural:  Unsigned integer type required"
         );
-        static Referential< bool(
-            Referential< const Elemental[Length] >,
-            Referential< const Locational< Elemental > >
-        ) >
+        static auto&
             Traversable = DecrementTraversable< Natural, Length, Elemental >;
         if (!position)
             throw position;
@@ -404,15 +390,9 @@ namespace ordination {
             is_integral< Natural >::value && is_unsigned< Natural >::value,
             "Natural:  Unsigned integer type required"
         );
-        static Referential< bool(
-            Referential< const Elemental[Length] >,
-            Referential< const Locational< Elemental > >
-        ) >
+        static auto&
             Traversable = IncrementTraversableChecksForNull< Natural, Length, Elemental >;
-        static Referential< Referential< const Locational< Elemental > >(
-            Referential< Elemental[Length] >,
-            Referential< Locational< Elemental > >
-        ) >
+        static auto&
             Traverse = TraverseIncrement< Natural, Length, Elemental >;
         if (!Traversable( array, position ))
             throw position;
@@ -459,15 +439,9 @@ namespace ordination {
             is_integral< Natural >::value && is_unsigned< Natural >::value,
             "Natural:  Unsigned integer type required"
         );
-        static Referential< bool(
-            Referential< const Elemental[Length] >,
-            Referential< const Locational< Elemental > >
-        ) >
+        static auto&
             Traversable = DecrementTraversableChecksForNull< Natural, Length, Elemental >;
-        static Referential< Referential< const Locational< Elemental > >(
-            Referential< Elemental[Length] >,
-            Referential< Locational< Elemental > >
-        ) >
+        static auto&
             Traverse = TraverseDecrement< Natural, Length, Elemental >;
         if (!Traversable( array, position ))
             throw position;
@@ -530,6 +504,7 @@ namespace ordination {
     >
     constexpr Scalar< const Elemental[Length], Locational< const Elemental >, const Elemental >
     ReadIncrementScale = {
+        Comparison< Locational< const Elemental > >,
         BeginIncrement< Natural, Length, const Elemental >,
         TraverseIncrement< Natural, Length, const Elemental >,
         PositionalGo< Natural, Length, const Elemental >,
@@ -543,6 +518,7 @@ namespace ordination {
     >
     constexpr Scalar< const Elemental[Length], Locational< const Elemental >, const Elemental >
     SafeReadIncrementScale = {
+        Comparison< Locational< const Elemental > >,
         BeginIncrement< Natural, Length, const Elemental >,
         TraverseIncrementSafely< Natural, Length, const Elemental >,
         PositionalGoSafely< Natural, Length, const Elemental >,
@@ -556,6 +532,7 @@ namespace ordination {
     >
     constexpr Scalar< Elemental[Length], Locational< Elemental >, Elemental >
     WriteIncrementScale = {
+        Comparison< Locational< Elemental > >,
         BeginIncrement< Natural, Length, Elemental >,
         TraverseIncrement< Natural, Length, Elemental >,
         PositionalGo< Natural, Length, Elemental >,
@@ -569,6 +546,7 @@ namespace ordination {
     >
     constexpr Scalar< Elemental[Length], Locational< Elemental >, Elemental >
     SafeWriteIncrementScale = {
+        Comparison< Locational< Elemental > >,
         BeginIncrement< Natural, Length, Elemental >,
         TraverseIncrementSafely< Natural, Length, Elemental >,
         PositionalGoSafely< Natural, Length, Elemental >,
@@ -582,6 +560,7 @@ namespace ordination {
     >
     constexpr Scalar< const Elemental[Length], Locational< const Elemental >, const Elemental >
     ReadDecrementScale = {
+        Comparison< Locational< const Elemental > >,
         BeginDecrement< Natural, Length, const Elemental >,
         TraverseDecrement< Natural, Length, const Elemental >,
         PositionalGo< Natural, Length, const Elemental >,
@@ -595,6 +574,7 @@ namespace ordination {
     >
     constexpr Scalar< const Elemental[Length], Locational< const Elemental >, const Elemental >
     SafeReadDecrementScale = {
+        Comparison< Locational< const Elemental > >,
         BeginDecrement< Natural, Length, const Elemental >,
         TraverseDecrementSafely< Natural, Length, const Elemental >,
         PositionalGoSafely< Natural, Length, const Elemental >,
@@ -608,6 +588,7 @@ namespace ordination {
     >
     constexpr Scalar< Elemental[Length], Locational< Elemental >, Elemental >
     WriteDecrementScale = {
+        Comparison< Locational< Elemental > >,
         BeginDecrement< Natural, Length, Elemental >,
         TraverseDecrement< Natural, Length, Elemental >,
         PositionalGo< Natural, Length, Elemental >,
@@ -621,6 +602,7 @@ namespace ordination {
     >
     constexpr Scalar< Elemental[Length], Locational< Elemental >, Elemental >
     SafeWriteDecrementScale = {
+        Comparison< Locational< Elemental > >,
         BeginDecrement< Natural, Length, Elemental >,
         TraverseDecrementSafely< Natural, Length, Elemental >,
         PositionalGoSafely< Natural, Length, Elemental >,

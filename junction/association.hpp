@@ -5,7 +5,6 @@
 #include "consecution.hpp"
 #include "../association.hpp"
 #include "../sortation.hpp"
-#include <type_traits>
 
 namespace junction {
 
@@ -167,6 +166,7 @@ namespace junction {
         >
         constexpr Scalar< const AssociativelyJunctive< Natural, Correlative, Elemental >, AssociativelyPositional< Correlative, Elemental >, const Correlative >
         ReadRelatorIncrementScale = {
+            Comparison< Associational< Correlative, Elemental > >,
             BeginReadIncrement< Natural, Associational< Correlative, Elemental > >,
             TraverseReadIncrement< Natural, Associational< Correlative, Elemental > >,
             GoReadRelator< Natural, Correlative, Elemental >
@@ -179,6 +179,7 @@ namespace junction {
         >
         constexpr Scalar< const AssociativelyJunctive< Natural, Correlative, Elemental >, AssociativelyPositional< Correlative, Elemental >, const Correlative >
         SafeReadRelatorIncrementScale = {
+            Comparison< Associational< Correlative, Elemental > >,
             BeginReadIncrementSafely< Natural, Associational< Correlative, Elemental > >,
             TraverseReadIncrementSafely< Natural, Associational< Correlative, Elemental > >,
             GoReadRelatorSafely< Natural, Correlative, Elemental >
@@ -191,6 +192,7 @@ namespace junction {
         >
         constexpr Scalar< const AssociativelyJunctive< Natural, Correlative, Elemental >, AssociativelyPositional< Correlative, Elemental >, const Correlative >
         ReadRelatorDecrementScale = {
+            Comparison< Associational< Correlative, Elemental > >,
             BeginReadDecrement< Natural, Associational< Correlative, Elemental > >,
             TraverseReadDecrement< Natural, Associational< Correlative, Elemental > >,
             GoReadRelator< Natural, Correlative, Elemental >
@@ -203,6 +205,7 @@ namespace junction {
         >
         constexpr Scalar< const AssociativelyJunctive< Natural, Correlative, Elemental >, AssociativelyPositional< Correlative, Elemental >, const Correlative >
         SafeReadRelatorDecrementScale = {
+            Comparison< Associational< Correlative, Elemental > >,
             BeginReadDecrementSafely< Natural, Associational< Correlative, Elemental > >,
             TraverseReadDecrementSafely< Natural, Associational< Correlative, Elemental > >,
             GoReadRelatorSafely< Natural, Correlative, Elemental >
@@ -215,6 +218,7 @@ namespace junction {
         >
         constexpr Scalar< const AssociativelyJunctive< Natural, Correlative, Elemental >, AssociativelyPositional< Correlative, Elemental >, const Elemental >
         ReadElementIncrementScale = {
+            Comparison< Associational< Correlative, Elemental > >,
             BeginReadIncrement< Natural, Associational< Correlative, Elemental > >,
             TraverseReadIncrement< Natural, Associational< Correlative, Elemental > >,
             GoReadElement< Natural, Correlative, Elemental >
@@ -227,6 +231,7 @@ namespace junction {
         >
         constexpr Scalar< const AssociativelyJunctive< Natural, Correlative, Elemental >, AssociativelyPositional< Correlative, Elemental >, const Elemental >
         SafeReadElementIncrementScale = {
+            Comparison< Associational< Correlative, Elemental > >,
             BeginReadIncrementSafely< Natural, Associational< Correlative, Elemental > >,
             TraverseReadIncrementSafely< Natural, Associational< Correlative, Elemental > >,
             GoReadElementSafely< Natural, Correlative, Elemental >
@@ -239,6 +244,7 @@ namespace junction {
         >
         constexpr Scalar< const AssociativelyJunctive< Natural, Correlative, Elemental >, AssociativelyPositional< Correlative, Elemental >, const Elemental >
         ReadElementDecrementScale = {
+            Comparison< Associational< Correlative, Elemental > >,
             BeginReadDecrement< Natural, Associational< Correlative, Elemental > >,
             TraverseReadDecrement< Natural, Associational< Correlative, Elemental > >,
             GoReadElement< Natural, Correlative, Elemental >
@@ -251,6 +257,7 @@ namespace junction {
         >
         constexpr Scalar< const AssociativelyJunctive< Natural, Correlative, Elemental >, AssociativelyPositional< Correlative, Elemental >, const Elemental >
         SafeReadElementDecrementScale = {
+            Comparison< Associational< Correlative, Elemental > >,
             BeginReadDecrementSafely< Natural, Associational< Correlative, Elemental > >,
             TraverseReadDecrementSafely< Natural, Associational< Correlative, Elemental > >,
             GoReadElementSafely< Natural, Correlative, Elemental >
@@ -263,6 +270,7 @@ namespace junction {
         >
         constexpr Scalar< const AssociativelyJunctive< Natural, Correlative, Elemental >, AssociativelyPositional< Correlative, Elemental >, const Elemental >
         WriteElementIncrementScale = {
+            Comparison< Associational< Correlative, Elemental > >,
             BeginReadIncrement< Natural, Associational< Correlative, Elemental > >,
             TraverseReadIncrement< Natural, Associational< Correlative, Elemental > >,
             GoWriteElement< Natural, Correlative, Elemental >
@@ -275,6 +283,7 @@ namespace junction {
         >
         constexpr Scalar< const AssociativelyJunctive< Natural, Correlative, Elemental >, AssociativelyPositional< Correlative, Elemental >, const Elemental >
         SafeWriteElementIncrementScale = {
+            Comparison< Associational< Correlative, Elemental > >,
             BeginReadIncrementSafely< Natural, Associational< Correlative, Elemental > >,
             TraverseReadIncrementSafely< Natural, Associational< Correlative, Elemental > >,
             GoWriteElementSafely< Natural, Correlative, Elemental >
@@ -287,6 +296,7 @@ namespace junction {
         >
         constexpr Scalar< const AssociativelyJunctive< Natural, Correlative, Elemental >, AssociativelyPositional< Correlative, Elemental >, const Elemental >
         WriteElementDecrementScale = {
+            Comparison< Associational< Correlative, Elemental > >,
             BeginReadDecrement< Natural, Associational< Correlative, Elemental > >,
             TraverseReadDecrement< Natural, Associational< Correlative, Elemental > >,
             GoWriteElement< Natural, Correlative, Elemental >
@@ -299,6 +309,7 @@ namespace junction {
         >
         constexpr Scalar< const AssociativelyJunctive< Natural, Correlative, Elemental >, AssociativelyPositional< Correlative, Elemental >, const Elemental >
         SafeWriteElementDecrementScale = {
+            Comparison< Associational< Correlative, Elemental > >,
             BeginReadDecrementSafely< Natural, Associational< Correlative, Elemental > >,
             TraverseReadDecrementSafely< Natural, Associational< Correlative, Elemental > >,
             GoWriteElementSafely< Natural, Correlative, Elemental >

@@ -4,7 +4,6 @@
 #define JUNCTION_CONSECUTION_MODULE
 #include "../junction.hpp"
 #include "../consecution.hpp"
-#include <type_traits>
 
 namespace junction {
 
@@ -101,7 +100,7 @@ namespace junction {
                     length = counted;
                     return length > 0;
                 };
-            Referential< const Scalar< const Relative, Appositional, const Elemental > >
+            auto&
                 scale = direction.scale;
             Appositional
                 current;
@@ -115,7 +114,7 @@ namespace junction {
                 return Finalize( 0, 0, 0 );
             last = first;
             count = 1;
-            while (current != to) {
+            while (scale.order.equality.is_not_equal( current, to )) {
                 direction.scale.traverse( space, current );
                 last->next = Adjunct.proclaim( sequence, scale.go( space, current ).to );
                 if (!last->next) {
@@ -209,16 +208,7 @@ namespace junction {
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
-            static Referential< bool(
-                Referential< Junctive< Natural, Elemental > >,
-                Referential< Locational< Junctional< Elemental > > >,
-                Referential< Locational< Junctional< Elemental > > >,
-                Referential< Natural >,
-                Referential< const Directional< const Relative, Appositional, const Elemental > >,
-                Referential< const Relative >,
-                Referential< const Appositional >,
-                Referential< const Appositional >
-            ) >
+            static auto&
                 SequenceList = Sequence< Relative, Appositional, Natural, Elemental, Adjunct >;
             Locational< Junctional< Elemental > >
                 first, last;
@@ -292,11 +282,7 @@ namespace junction {
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
-            static Referential< bool(
-                Referential< Junctive< Natural, Elemental > >,
-                Referential< const Positional< Elemental > >,
-                Referential< const Elemental >
-            ) >
+            static auto&
                 PrecedeList = Precede< Natural, Elemental, Adjunct >;
             if (!rank.at)
                 throw rank;
@@ -331,16 +317,7 @@ namespace junction {
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
-            static Referential< bool(
-                Referential< Junctive< Natural, Elemental > >,
-                Referential< Locational< Junctional< Elemental > > >,
-                Referential< Locational< Junctional< Elemental > > >,
-                Referential< Natural >,
-                Referential< const Directional< const Relative, Appositional, const Elemental > >,
-                Referential< const Relative >,
-                Referential< const Appositional >,
-                Referential< const Appositional >
-            ) >
+            static auto&
                 SequenceList = Sequence< Relative, Appositional, Natural, Elemental, Adjunct >;
             Locational< Junctional< Elemental > >
                 first, last;
@@ -387,14 +364,7 @@ namespace junction {
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
-            static Referential< bool(
-                Referential< Junctive< Natural, Elemental > >,
-                Referential< const Positional< Elemental > >,
-                Referential< const Directional< const Relative, Appositional, const Elemental > >,
-                Referential< const Relative >,
-                Referential< const Appositional >,
-                Referential< const Appositional >
-            ) >
+            static auto&
                 PrecedeList = Precede< Relative, Appositional, Natural, Elemental, Adjunct >;
             if (!rank.at)
                 throw rank;
@@ -461,16 +431,7 @@ namespace junction {
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
-            static Referential< bool(
-                Referential< Junctive< Natural, Elemental > >,
-                Referential< Locational< Junctional< Elemental > > >,
-                Referential< Locational< Junctional< Elemental > > >,
-                Referential< Natural >,
-                Referential< const Directional< const Relative, Appositional, const Elemental > >,
-                Referential< const Relative >,
-                Referential< const Appositional >,
-                Referential< const Appositional >
-            ) >
+            static auto&
                 SequenceList = Sequence< Relative, Appositional, Natural, Elemental, Adjunct >;
             Locational< Junctional< Elemental > >
                 first, last;

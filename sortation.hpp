@@ -3,58 +3,17 @@
 #ifndef SORTATION_MODULE
 #define SORTATION_MODULE
 #include "trajection.hpp"
-#include <type_traits>
+#include "comparison.hpp"
 
 namespace sortation {
 
     using namespace ::trajection;
+    using ::comparison::BinaryComparative;
 
     template <
         typename Evaluative
     >
-    using Assortive = bool(
-		Referential< const Evaluative >,
-		Referential< const Evaluative >
-    );
-
-    template <
-        typename Relational
-    >
-    static inline bool
-    EquateRelationally(
-        Referential< const Relational >
-            base,
-        Referential< const Relational >
-            relative
-    ) {
-        return base == relative;
-    }
-
-    template <
-        typename Relational
-    >
-    static inline bool
-    OrderRelationally(
-        Referential< const Relational >
-            base,
-        Referential< const Relational >
-            relative
-    ) {
-        return base < relative;
-    }
-
-    template <
-        typename Relational
-    >
-    static inline bool
-    OrderInversely(
-        Referential< const Relational >
-            base,
-        Referential< const Relational >
-            relative
-    ) {
-        return base > relative;
-    }
+    using Assortive = BinaryComparative< Evaluative, Evaluative >;
 
     template <
         typename Spatial,
@@ -74,7 +33,7 @@ namespace sortation {
         Referential< Positional >
             position
     ) {
-        Referential< const Scalar< const Spatial, Positional, const Evaluative > >
+        auto&
             scale = direction.scale;
         if (!direction.begins( space ))
             return false;
@@ -103,12 +62,7 @@ namespace sortation {
         Referential< Positional >
             position
     ) {
-        static Referential< bool(
-            Referential< const Spatial >,
-            Referential< const Directional< const Spatial, Positional, const Evaluative > >,
-            Referential< const Evaluative >,
-            Referential< Positional >
-        ) >
+        static auto&
             Search = SearchLinearly< Spatial, Positional, Evaluative, Equate >;
         return Search( space, Direction, value, position );
     }
@@ -141,7 +95,7 @@ namespace sortation {
             is_integral< Natural >::value && is_unsigned< Natural >::value,
             "Natural:  Unsigned integer type required"
         );
-        static Referential< Expositive< const Spatial, Positional, const Evaluative > >
+        static auto&
             go = axis.increment.scale.go;
         Natural
             remaining, move, offset;
@@ -200,13 +154,7 @@ namespace sortation {
             is_integral< Natural >::value && is_unsigned< Natural >::value,
             "Natural:  Unsigned integer type required"
         );
-        static Referential< bool(
-            Referential< const Spatial >,
-            Referential< const Axial< const Spatial, Positional, const Evaluative > >,
-            Referential< const Natural >,
-            Referential< const Evaluative >,
-            Referential< Positional >
-        ) >
+        static auto&
             Search = SearchBisectionally< Spatial, Positional, Natural, Evaluative, Equate, Order >;
         return Search( space, Axis, count, value, position );
     }
