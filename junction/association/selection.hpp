@@ -44,7 +44,12 @@ namespace junction {
                     "Natural:  Unsigned integer type required"
                 );
                 static auto&
+#ifndef _MSC_VER
                     Search = SearchCorrelation< Natural, Correlative, Elemental, Equate >;
+#else
+                    // Problem 286153 filed July 3 2018
+					Search = SearchLinearly< AssociativelyJunctive< Natural, Correlative, Elemental >, AssociativelyPositional< Correlative, Elemental >, Correlative, ReadRelatorIncrementDirection< Natural, Correlative, Elemental >, Equate >;
+#endif
                 AssociativelyPositional< Correlative, Elemental >
                     position;
                 return Search( map, relator, position );
@@ -112,8 +117,13 @@ namespace junction {
                 static auto&
                     CorrespondInMap = Correspond< Natural, Correlative, Elemental, Equate >;
                 static auto&
-                    Search = SearchCorrelation< Natural, Correlative, Elemental, Equate >;
-                AssociativelyPositional< Correlative, Elemental >
+#ifndef _MSC_VER
+					Search = SearchCorrelation< Natural, Correlative, Elemental, Equate >;
+#else
+                    // Problem 286153 filed July 3 2018
+					Search = SearchLinearly< AssociativelyJunctive< Natural, Correlative, Elemental >, AssociativelyPositional< Correlative, Elemental >, Correlative, ReadRelatorIncrementDirection< Natural, Correlative, Elemental >, Equate >;
+#endif
+				AssociativelyPositional< Correlative, Elemental >
                     position;
                 if (CorrespondInMap( map, replacement ))
                     return false;
@@ -147,8 +157,13 @@ namespace junction {
                     "Natural:  Unsigned integer type required"
                 );
                 static auto&
-                    Search = SearchCorrelation< Natural, Correlative, Elemental, Equate >;
-                static const Natural
+#ifndef _MSC_VER
+					Search = SearchCorrelation< Natural, Correlative, Elemental, Equate >;
+#else
+                    // Problem 286153 filed July 3 2018
+					Search = SearchLinearly< AssociativelyJunctive< Natural, Correlative, Elemental >, AssociativelyPositional< Correlative, Elemental >, Correlative, ReadRelatorIncrementDirection< Natural, Correlative, Elemental >, Equate >;
+#endif
+				static const Natural
                     One = 1;
                 AssociativelyPositional< Correlative, Elemental >
                     position;
@@ -176,8 +191,13 @@ namespace junction {
                     "Natural:  Unsigned integer type required"
                 );
                 static auto&
-                    Search = SearchCorrelation< Natural, Correlative, Elemental, Equate >;
-                AssociativelyPositional< Correlative, Elemental >
+#ifndef _MSC_VER
+					Search = SearchCorrelation< Natural, Correlative, Elemental, Equate >;
+#else
+                    // Problem 286153 filed July 3 2018
+					Search = SearchLinearly< AssociativelyJunctive< Natural, Correlative, Elemental >, AssociativelyPositional< Correlative, Elemental >, Correlative, ReadRelatorIncrementDirection< Natural, Correlative, Elemental >, Equate >;
+#endif
+				AssociativelyPositional< Correlative, Elemental >
                     position;
                 if (!Search( map, relator, position ))
                     throw relator;
@@ -204,8 +224,13 @@ namespace junction {
                     "Natural:  Unsigned integer type required"
                 );
                 static auto&
-                    Search = SearchCorrelation< Natural, Correlative, Elemental, Equate >;
-                AssociativelyPositional< Correlative, Elemental >
+#ifndef _MSC_VER
+					Search = SearchCorrelation< Natural, Correlative, Elemental, Equate >;
+#else
+                    // Problem 286153 filed July 3 2018
+					Search = SearchLinearly< AssociativelyJunctive< Natural, Correlative, Elemental >, AssociativelyPositional< Correlative, Elemental >, Correlative, ReadRelatorIncrementDirection< Natural, Correlative, Elemental >, Equate >;
+#endif
+				AssociativelyPositional< Correlative, Elemental >
                     position;
                 if (!Search( map, relator, position ))
                     throw relator;

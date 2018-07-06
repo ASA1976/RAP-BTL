@@ -29,7 +29,7 @@ namespace selection {
         typename RelativePositional,
         typename Elemental
     >
-    using Equative = bool(
+    using Equipollent = bool(
         Referential< const Directional< const Basic, BasicPositional, const Elemental > >,
         Referential< const Basic >,
         Referential< const Directional< const Relative, RelativePositional, const Elemental > >,
@@ -77,7 +77,7 @@ namespace selection {
         Referential< Duplicative< Consolidative, Consolidative, Positional, Elemental > >
             duplicate;
 
-        Referential< Equative< Consolidative, Positional, Consolidative, Positional, Elemental > >
+        Referential< Equipollent< Consolidative, Positional, Consolidative, Positional, Elemental > >
             equate;
 
         Referential< Natural(

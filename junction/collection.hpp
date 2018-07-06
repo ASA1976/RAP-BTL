@@ -49,8 +49,13 @@ namespace junction {
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
-            static auto&
-                Search = SearchCollection< Natural, Elemental, Equate, Order >;
+			static auto&
+#ifndef _MSC_VER
+				Search = SearchCollection< Natural, Elemental, Equate, Order >;
+#else
+                // Problem 286153 filed July 3 2018
+				Search = SearchBisectionally< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental, ReadAxis< Natural, Elemental >, Equate, Order >;
+#endif
             Positional< Elemental >
                 position;
             return Search( set, set.count, value, position );
@@ -81,12 +86,17 @@ namespace junction {
                 "Natural:  Unsigned integer type required"
             );
             static auto&
-                Search = SearchCollection< Natural, Elemental, Equate, Order >;
-            Positional< Elemental >
+#ifndef _MSC_VER
+				Search = SearchCollection< Natural, Elemental, Equate, Order >;
+#else
+                // Problem 286153 filed July 3 2018
+				Search = SearchBisectionally< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental, ReadAxis< Natural, Elemental >, Equate, Order >;
+#endif
+			Positional< Elemental >
                 position;
             if (!set.last)
                 return Proceed( set, value );
-            if (Search( set, set.count, value, position ))
+			if (Search(set, set.count, value, position))
                 return false;
             if (Order( GoRead( set, position ).to, value ))
                 return Proceed( set, value );
@@ -116,8 +126,13 @@ namespace junction {
                 "Natural:  Unsigned integer type required"
             );
             static auto&
-                Search = SearchCollection< Natural, Elemental, Equate, Order >;
-            static const Natural
+#ifndef _MSC_VER
+				Search = SearchCollection< Natural, Elemental, Equate, Order >;
+#else
+                // Problem 286153 filed July 3 2018
+				Search = SearchBisectionally< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental, ReadAxis< Natural, Elemental >, Equate, Order >;
+#endif
+			static const Natural
                 One = 1;
             Positional< Elemental >
                 position;
@@ -155,8 +170,13 @@ namespace junction {
                 "Natural:  Unsigned integer type required"
             );
             static auto&
-                Search = SearchCollection< Natural, Elemental, Equate, Order >;
-            static auto&
+#ifndef _MSC_VER
+				Search = SearchCollection< Natural, Elemental, Equate, Order >;
+#else
+                // Problem 286153 filed July 3 2018
+				Search = SearchBisectionally< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental, ReadAxis< Natural, Elemental >, Equate, Order >;
+#endif
+			static auto&
                 Discompose = DiscomposeCollection< Natural, Elemental, Concede, Equate, Order >;
             Positional< Elemental >
                 position;
@@ -196,8 +216,13 @@ namespace junction {
                 "Natural:  Unsigned integer type required"
             );
             static auto&
-                Search = SearchCollection< Natural, Elemental, Equate, Order >;
-            auto&
+#ifndef _MSC_VER
+				Search = SearchCollection< Natural, Elemental, Equate, Order >;
+#else
+                // Problem 286153 filed July 3 2018
+				Search = SearchBisectionally< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental, ReadAxis< Natural, Elemental >, Equate, Order >;
+#endif
+			auto&
                 scale = basis.scale;
             Positional< Elemental >
                 operand_position;

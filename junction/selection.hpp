@@ -45,7 +45,12 @@ namespace junction {
                 "Natural:  Unsigned integer type required"
             );
             static auto&
-                Search = SearchSelection< Natural, Elemental, Equate >;
+#ifndef _MSC_VER
+				Search = SearchSelection< Natural, Elemental, Equate >;
+#else
+                // Problem 286153 filed July 3 2018
+				Search = SearchLinearly< Junctive< Natural, Elemental >, Positional< Elemental >, Elemental, ReadIncrementDirection< Natural, Elemental >, Equate >;
+#endif
             Positional< Elemental >
                 position;
             return Search( set, value, position );
@@ -72,8 +77,13 @@ namespace junction {
                 "Natural:  Unsigned integer type required"
             );
             static auto&
-                Search = SearchSelection< Natural, Elemental, Equate >;
-            Positional< Elemental >
+#ifndef _MSC_VER
+				Search = SearchSelection< Natural, Elemental, Equate >;
+#else
+                // Problem 286153 filed July 3 2018
+				Search = SearchLinearly< Junctive< Natural, Elemental >, Positional< Elemental >, Elemental, ReadIncrementDirection< Natural, Elemental >, Equate >;
+#endif
+			Positional< Elemental >
                 position;
             if (Search( set, value, position ))
                 return false;
@@ -101,8 +111,13 @@ namespace junction {
                 "Natural:  Unsigned integer type required"
             );
             static auto&
-                Search = SearchSelection< Natural, Elemental, Equate >;
-            static const Natural
+#ifndef _MSC_VER
+				Search = SearchSelection< Natural, Elemental, Equate >;
+#else
+                // Problem 286153 filed July 3 2018
+				Search = SearchLinearly< Junctive< Natural, Elemental >, Positional< Elemental >, Elemental, ReadIncrementDirection< Natural, Elemental >, Equate >;
+#endif
+			static const Natural
                 One = 1;
             Positional< Elemental >
                 position;

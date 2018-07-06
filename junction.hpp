@@ -70,6 +70,13 @@ namespace junction {
     };
 
     template <
+        typename Natural,
+        typename Elemental
+    >
+    constexpr Junctive< Natural, Elemental >
+    InitializedList = {0, 0, 0};
+
+    template <
         typename Elemental
     >
     using Positional = Positive< Junctional< Elemental > >;
@@ -262,8 +269,7 @@ namespace junction {
             is_integral< Natural >::value && is_unsigned< Natural >::value,
             "Natural:  Unsigned integer type required"
         );
-        list.count = list.total = 0;
-        list.first = list.last = list.unused = 0;
+        list = InitializedList< Natural, Elemental >;
         return list;
     }
 

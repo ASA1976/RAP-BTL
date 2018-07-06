@@ -138,11 +138,9 @@ DisplayCharacters(
     Referential< const Directional< const Spatial, Positional, const char > >
         direction
 ) {
-    Positional
-        position;
     size_t
         count;
-    return Count( list, direction, position, count )
+    return Count( list, direction, count )
         && DisplayCharacters( list, direction.scale, count );
 }
 

@@ -141,8 +141,6 @@ namespace trajection {
             space,
         Referential< const Directional< Spatial, Positional, Endemical > >
             direction,
-        Referential< Positional >
-            position,
         Referential< Natural >
             count
     ) {
@@ -153,6 +151,8 @@ namespace trajection {
         );
         static auto&
             scale = direction.scale;
+        Positional
+            position;
         if (!direction.begins( space ))
             return false;
         count = 0;
@@ -175,8 +175,6 @@ namespace trajection {
     Count(
         Referential< Spatial >
             space,
-        Referential< Positional >
-            position,
         Referential< Natural >
             count
     ) {
@@ -185,7 +183,7 @@ namespace trajection {
             is_integral< Natural >::value && is_unsigned< Natural >::value,
             "Natural:  Unsigned integer type required"
         );
-        return Count( space, Direction, position, count );
+        return Count( space, Direction, count );
     }
 
 }

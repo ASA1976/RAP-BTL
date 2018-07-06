@@ -49,7 +49,12 @@ namespace junction {
                     "Natural:  Unsigned integer type required"
                 );
                 static auto&
-                    Search = SearchAssociation< Natural, Correlative, Elemental, Equate, Order >;
+#ifndef _MSC_VER
+					Search = SearchAssociation< Natural, Correlative, Elemental, Equate, Order >;
+#else
+                    // Problem 286153 filed July 3 2018
+					Search = SearchBisectionally< AssociativelyJunctive< Natural, Correlative, Elemental >, AssociativelyPositional< Correlative, Elemental >, Natural, Correlative, ReadRelatorAxis< Natural, Correlative, Elemental >, Equate, Order >;
+#endif
                 AssociativelyPositional< Correlative, Elemental >
                     position;
                 return Search( map, map.count, relator, position );
@@ -83,8 +88,13 @@ namespace junction {
                     "Natural:  Unsigned integer type required"
                 );
                 static auto&
-                    Search = SearchAssociation< Natural, Correlative, Elemental, Equate, Order >;
-                const Associational< Correlative, Elemental >
+#ifndef _MSC_VER
+					Search = SearchAssociation< Natural, Correlative, Elemental, Equate, Order >;
+#else
+                    // Problem 286153 filed July 3 2018
+					Search = SearchBisectionally< AssociativelyJunctive< Natural, Correlative, Elemental >, AssociativelyPositional< Correlative, Elemental >, Natural, Correlative, ReadRelatorAxis< Natural, Correlative, Elemental >, Equate, Order >;
+#endif
+				const Associational< Correlative, Elemental >
                     associate = {relator, value};
                 AssociativelyPositional< Correlative, Elemental >
                     position;
@@ -137,8 +147,13 @@ namespace junction {
                 static auto&
                     Scale = ReadRelatorDecrementScale< Natural, Correlative, Elemental >;
                 static auto&
-                    Search = SearchAssociation< Natural, Correlative, Elemental, Equate, Order >;
-                static auto&
+#ifndef _MSC_VER
+					Search = SearchAssociation< Natural, Correlative, Elemental, Equate, Order >;
+#else
+                    // Problem 286153 filed July 3 2018
+					Search = SearchBisectionally< AssociativelyJunctive< Natural, Correlative, Elemental >, AssociativelyPositional< Correlative, Elemental >, Natural, Correlative, ReadRelatorAxis< Natural, Correlative, Elemental >, Equate, Order >;
+#endif
+				static auto&
                     CorrespondInMap = Correspond< Natural, Correlative, Elemental, Equate, Order >;
                 AssociativelyPositional< Correlative, Elemental >
                     position, last;
@@ -184,8 +199,13 @@ namespace junction {
                 static const Natural
                     One = 1;
                 static auto&
-                    Search = SearchAssociation< Natural, Correlative, Elemental, Equate, Order >;
-                AssociativelyPositional< Correlative, Elemental >
+#ifndef _MSC_VER
+					Search = SearchAssociation< Natural, Correlative, Elemental, Equate, Order >;
+#else
+                    // Problem 286153 filed July 3 2018
+					Search = SearchBisectionally< AssociativelyJunctive< Natural, Correlative, Elemental >, AssociativelyPositional< Correlative, Elemental >, Natural, Correlative, ReadRelatorAxis< Natural, Correlative, Elemental >, Equate, Order >;
+#endif
+				AssociativelyPositional< Correlative, Elemental >
                     position;
                 if (!Search( map, map.count, relator, position ))
                     return false;
@@ -214,8 +234,12 @@ namespace junction {
                     "Natural:  Unsigned integer type required"
                 );
                 static auto&
-                    Search = SearchAssociation< Natural, Correlative, Elemental, Equate, Order >;
-                AssociativelyPositional< Correlative, Elemental >
+#ifndef _MSC_VER
+					Search = SearchAssociation< Natural, Correlative, Elemental, Equate, Order >;
+#else
+					Search = SearchBisectionally< AssociativelyJunctive<  Natural, Correlative, Elemental >, AssociativelyPositional< Correlative, Elemental >, Natural, Correlative, ReadRelatorAxis< Natural, Correlative, Elemental >, Equate, Order >;
+#endif
+				AssociativelyPositional< Correlative, Elemental >
                     position;
                 if (!Search( map, map.count, relator, position ))
                     throw relator;
@@ -244,8 +268,13 @@ namespace junction {
                     "Natural:  Unsigned integer type required"
                 );
                 static auto&
-                    Search = SearchAssociation< Natural, Correlative, Elemental, Equate, Order >;
-                AssociativelyPositional< Correlative, Elemental >
+#ifndef _MSC_VER
+					Search = SearchAssociation< Natural, Correlative, Elemental, Equate, Order >;
+#else
+                    // Problem 286153 filed July 3 2018
+					Search = SearchBisectionally< AssociativelyJunctive< Natural, Correlative, Elemental >, AssociativelyPositional< Correlative, Elemental >, Natural, Correlative, ReadRelatorAxis< Natural, Correlative, Elemental >, Equate, Order >;
+#endif
+				AssociativelyPositional< Correlative, Elemental >
                     position;
                 if (!Search( map, map.count, relator, position ))
                     throw relator;

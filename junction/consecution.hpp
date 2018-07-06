@@ -469,6 +469,8 @@ namespace junction {
                 first, last;
             Natural
                 index;
+            if (!sequence.first)
+                return false;
             first.at = last.at = sequence.first;
             for (index = 1; index < count; index++) {
                 if (!last.at->next)
@@ -575,6 +577,8 @@ namespace junction {
                 first, last;
             Natural
                 index;
+            if (!sequence.last)
+                return false;
             first.at = last.at = sequence.last;
             for (index = 1; index < count; index++) {
                 if (!first.at->previous)

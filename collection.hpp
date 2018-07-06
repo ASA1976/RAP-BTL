@@ -61,7 +61,7 @@ namespace collection {
         Referential< Collative< Consolidative, Consolidative, Positional, Elemental > >
             collate;
 
-        Referential< Equative< Consolidative, Positional, Consolidative, Positional, Elemental > >
+        Referential< Equipollent< Consolidative, Positional, Consolidative, Positional, Elemental > >
             correlate;
 
     };
