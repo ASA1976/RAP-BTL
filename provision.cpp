@@ -1,3 +1,5 @@
+// © 2018 Aaron Sami Abassi
+// Licensed under the Academic Free License version 3.0
 #include "ration/elevation.hpp"
 #include "ration/contraction.hpp"
 #include "ration/contribution.hpp"
