@@ -25,7 +25,7 @@ TestElevation(
     Positional
         position;
     printf( "Stack limit: %u\n", elevator.survey( stack ) );
-    elevator.protract( stack, position );
+    elevator.protract( stack, position, 2 );
     printf( "Stack size: %u\n", elevator.account( stack ) );
     elevator.retract( stack, elevator.account( stack ) );
     printf( "Stack size: %u\n", elevator.account( stack ) );
@@ -45,7 +45,7 @@ TestContraction(
     Positional
         position;
     printf( "Queue limit: %u\n", contractor.survey( queue ) );
-    contractor.protract( queue, position );
+    contractor.protract( queue, position, 2 );
     printf( "Queue size: %u\n", contractor.account( queue ) );
     contractor.retract( queue, contractor.account( queue ) );
     printf( "Queue size: %u\n", contractor.account( queue ) );

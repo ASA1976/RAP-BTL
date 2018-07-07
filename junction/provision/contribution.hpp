@@ -16,6 +16,67 @@ namespace junction {
 
             template <
                 typename Natural,
+                typename Elemental,
+                Referential< const DefaultAllocative< Junctional< Elemental > > >
+                    Allocator
+            >
+            static inline bool
+            Distribute(
+                Referential< Junctive< Natural, Elemental > >
+                    list,
+                Referential< Positional< Elemental > >
+                    position
+            ) {
+                using namespace ::std;
+                static_assert(
+                    is_integral< Natural >::value && is_unsigned< Natural >::value,
+                    "Natural:  Unsigned integer type required"
+                );
+                position.at = Reclaim( list );
+                if (!position.at) {
+                    Allocator.claim( position.at );
+                    if (!position.at)
+                        return false;
+                    list.total++;
+                    position.at->next = 0;
+                }
+                position.at->previous = list.last;
+                if (list.last)
+                    list.last->next = position.at;
+                else
+                    list.first = position.at;
+                list.last = position.at;
+                list.count++;
+                return true;
+            }
+
+            template <
+            typename Natural,
+            Natural
+                Maximum,
+            typename Elemental,
+                Referential< const DefaultAllocative< Junctional< Elemental > > >
+                    Allocator
+            >
+            static inline bool
+            DistributeSafely(
+                Referential< Junctive< Natural, Elemental > >
+                    list,
+                Referential< Positional< Elemental > >
+                    position
+            ) {
+                using namespace ::std;
+                static_assert(
+                    is_integral< Natural >::value && is_unsigned< Natural >::value,
+                    "Natural:  Unsigned integer type required"
+                );
+                if (list.count >= Maximum)
+                    return false;
+                return Distribute( list, position );
+            }
+
+            template <
+                typename Natural,
                 typename Elemental
             >
             static inline bool
@@ -47,7 +108,7 @@ namespace junction {
             Contributor = {
                 Survey< Natural, Maximum, Elemental >,
                 consecution::Account< Natural, Elemental >,
-                Protract< Natural, Elemental, Allocator >,
+                Distribute< Natural, Elemental, Allocator >,
                 Retribute< Natural, Elemental >,
                 Empty< Natural, Elemental >
             };
@@ -64,7 +125,7 @@ namespace junction {
             SafeContributor = {
                 Survey< Natural, Maximum, Elemental >,
                 consecution::Account< Natural, Elemental >,
-                ProtractSafely< Natural, Maximum, Elemental, Allocator >,
+                DistributeSafely< Natural, Maximum, Elemental, Allocator >,
                 Retribute< Natural, Elemental >,
                 Empty< Natural, Elemental >
             };

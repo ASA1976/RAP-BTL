@@ -683,14 +683,17 @@ namespace ration {
             Referential< Elevatory< Natural, Maximum, Elemental > >
                 stack,
             Referential< Natural >
-                index
+                index,
+            Referential< const Natural >
+                count
         ) {
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
-            index = stack.allotment++;
+            index = stack.allotment;
+            stack.allotment += count;
             return true;
         }
 
@@ -705,7 +708,9 @@ namespace ration {
             Referential< Elevatory< Natural, Maximum, Elemental > >
                 stack,
             Referential< Natural >
-                index
+                index,
+            Referential< const Natural >
+                count
         ) {
             using namespace ::std;
             static_assert(
@@ -714,9 +719,9 @@ namespace ration {
             );
             static auto&
                 IncreaseStack = Increase< Natural, Maximum, Elemental >;
-            if (stack.allotment >= Maximum)
+            if (stack.allotment + count > Maximum)
                 return false;
-            return IncreaseStack( stack, index );
+            return IncreaseStack( stack, index, count );
         }
 
         template <

@@ -677,20 +677,23 @@ namespace ration {
             typename Elemental
         >
         static inline bool
-        Contract(
+        Protract(
             Referential< Contractional< Natural, Maximum, Elemental > >
                 queue,
             Referential< Natural >
-                index
+                index,
+            Referential< const Natural >
+                count
         ) {
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
-            index = queue.first + queue.resource.allotment++;
+            index = queue.first + queue.resource.allotment;
             if (index >= Maximum)
                 index -= Maximum;
+            queue.resource.allotment += count;
             return true;
         }
 
@@ -701,20 +704,22 @@ namespace ration {
             typename Elemental
         >
         static inline bool
-        ContractSafely(
+        ProtractSafely(
             Referential< Contractional< Natural, Maximum, Elemental > >
                 queue,
             Referential< Natural >
-                index
+                index,
+            Referential< const Natural >
+                count
         ) {
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
-            if (queue.resource.allotment >= Maximum)
+            if (queue.resource.allotment + count > Maximum)
                 return false;
-            return Contract( queue, index );
+            return Protract( queue, index, count );
         }
 
         template <
@@ -775,7 +780,7 @@ namespace ration {
         Contractor = {
             Survey< Natural, Maximum, Elemental >,
             Account< Natural, Maximum, Elemental >,
-            Contract< Natural, Maximum, Elemental >,
+            Protract< Natural, Maximum, Elemental >,
             Retract< Natural, Maximum, Elemental >,
             Empty< Natural, Maximum, Elemental >
         };
@@ -790,7 +795,7 @@ namespace ration {
         SafeContractor = {
             Survey< Natural, Maximum, Elemental >,
             Account< Natural, Maximum, Elemental >,
-            ContractSafely< Natural, Maximum, Elemental >,
+            ProtractSafely< Natural, Maximum, Elemental >,
             RetractSafely< Natural, Maximum, Elemental >,
             Empty< Natural, Maximum, Elemental >
         };

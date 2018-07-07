@@ -27,7 +27,8 @@ namespace traction {
 
         Referential< bool(
             Referential< Consolidative >,
-            Referential< Positional >
+            Referential< Positional >,
+            Referential< const Natural >
         ) >
             protract;
 

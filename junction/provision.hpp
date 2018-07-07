@@ -38,28 +38,52 @@ namespace junction {
             Referential< Junctive< Natural, Elemental > >
                 list,
             Referential< Positional< Elemental > >
-                position
+                position,
+            Referential< const Natural >
+                count
         ) {
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+            Locational< Junctional< Elemental > >
+                node;
+            Natural
+                index;
             position.at = Reclaim( list );
             if (!position.at) {
                 Allocator.claim( position.at );
                 if (!position.at)
                     return false;
-                position.at->next = 0;
+                list.total++;
             }
+            node = position.at;
+            for (index = 1; index < count; index++) {
+                node->next = Reclaim( list );
+                if (!node->next) {
+                    Allocator.claim( node->next );
+                    if (!node->next) {
+                        node->next = list.unused;
+                        if (list.unused)
+                            list.unused->previous = node;
+                        list.unused = position.at;
+                        list.unused->previous = 0;
+                        return false;
+                    }
+                    list.total++;
+                }
+                node->next->previous = node;
+                node = node->next;
+            }
+            node->next = 0;
             position.at->previous = list.last;
             if (list.last)
                 list.last->next = position.at;
             else
                 list.first = position.at;
             list.last = position.at;
-            list.total++;
-            list.count++;
+            list.count += count;
             return true;
         }
 
@@ -76,13 +100,15 @@ namespace junction {
             Referential< Junctive< Natural, Elemental > >
                 list,
             Referential< Positional< Elemental > >
-                position
+                position,
+            Referential< const Natural >
+                count
         ) {
             static auto&
                 ProtractList = Protract< Natural, Elemental, Allocator >;
             if (list.count >= Maximum)
                 return false;
-            return ProtractList( list, position );
+            return ProtractList( list, position, count );
         }
 
     };
