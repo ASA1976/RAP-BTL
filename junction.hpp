@@ -33,14 +33,14 @@ namespace junction {
     >
     struct Junctive {
 
-        Natural
-            count,
-            total;
-
         Locational< Junctional< Elemental > >
             first,
             last,
             unused;
+
+        Natural
+            count,
+            total;
 
     };
 
@@ -74,7 +74,7 @@ namespace junction {
         typename Elemental
     >
     constexpr Junctive< Natural, Elemental >
-    InitializedList = {0, 0, 0};
+    InitializedList = {0, 0, 0, 0, 0};
 
     template <
         typename Elemental
