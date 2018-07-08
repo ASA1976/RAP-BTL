@@ -22,11 +22,13 @@ namespace ration {
         >
         struct Contributory {
 
+            Natural
+                cycles;
+
             Resourceful< Natural, Maximum, Elemental >
                 resource;
 
             Natural
-                cycles,
                 recycle[Maximum];
 
         };
@@ -39,8 +41,8 @@ namespace ration {
         >
         constexpr Contributory< Natural, Maximum, Elemental >
         InitializedPool = {
-            InitializedResource< Natural, Maximum, Elemental >,
-            0
+            0,
+            InitializedResource< Natural, Maximum, Elemental >
         };
 
         template <

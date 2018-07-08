@@ -22,11 +22,11 @@ namespace ration {
         >
         struct Contractional {
 
-            Resourceful< Natural, Maximum, Elemental >
-                resource;
-
             Natural
                 first;
+
+            Resourceful< Natural, Maximum, Elemental >
+                resource;
 
         };
 
@@ -38,8 +38,8 @@ namespace ration {
         >
         constexpr Contractional< Natural, Maximum, Elemental >
         InitializedQueue = {
-            InitializedResource< Natural, Maximum, Elemental >,
-            0
+            0,
+            InitializedResource< Natural, Maximum, Elemental >
         };
 
         template <
