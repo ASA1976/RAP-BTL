@@ -1,5 +1,6 @@
 // © 2018 Aaron Sami Abassi
 // Licensed under the Academic Free License version 3.0
+// #define RAPBTL_NO_STD_CPLUSPLUS 1
 #include "segmentation.hpp"
 #include "ordination.hpp"
 #include "junction/stdlib.hpp"
@@ -7,8 +8,11 @@
 #include "junction/collection.hpp"
 #include "junction/association/selection.hpp"
 #include "junction/association/collection.hpp"
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
 #include <cstdio>
-#include <type_traits>
+#else
+#include <stdio.h>
+#endif
 
 using namespace ::composition;
 using namespace ::association;
@@ -27,11 +31,6 @@ ComposeSets(
     Referential< const Compositional< Spatial, Natural, char > >
         composer
 ) {
-    using namespace ::std;
-    static_assert(
-        is_integral< Natural >::value && is_unsigned< Natural >::value,
-        "Natural:  Unsigned integer type required"
-    );
     composer.decompose( base );
     composer.decompose( relative );
     composer.precompose( base, 3 );
@@ -55,11 +54,6 @@ AssociateMap(
     Referential< const Associative< Spatial, Natural, char, int > >
         associator
 ) {
-    using namespace ::std;
-    static_assert(
-        is_integral< Natural >::value && is_unsigned< Natural >::value,
-        "Natural:  Unsigned integer type required"
-    );
     associator.disband( map );
     associator.prepare( map, 3 );
     return associator.associate( map, 'y', 1 )
@@ -82,11 +76,6 @@ ProceedSequence(
         conjoiner
 ) {
     using namespace ::segmentation;
-    using namespace ::std;
-    static_assert(
-        is_integral< Natural >::value && is_unsigned< Natural >::value,
-        "Natural:  Unsigned integer type required"
-    );
     static const Natural
         Length = 7;
     static auto&

@@ -2,8 +2,12 @@
 // Licensed under the Academic Free License version 3.0
 #ifndef ALLOCATION_STDLIB_MODULE
 #define ALLOCATION_STDLIB_MODULE
-#include "../location.hpp"
+#include "../allocation.hpp"
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
 #include <cstdlib>
+#else
+#include <stdlib.h>
+#endif
 
 namespace allocation {
 

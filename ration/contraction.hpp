@@ -55,11 +55,13 @@ namespace ration {
             Referential< const Natural >
                 index
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             const Natural
                 terminal = queue.first + queue.resource.allotment;
             if (index < queue.first) {
@@ -87,11 +89,13 @@ namespace ration {
             Referential< const Natural >
                 index
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             return Confer( queue.resource.source[index] );
         }
 
@@ -108,11 +112,13 @@ namespace ration {
             Referential< const Natural >
                 index
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             if (!Contains( queue, index ))
                 throw index;
             return GoWrite( queue, index );
@@ -131,11 +137,13 @@ namespace ration {
             Referential< const Natural >
                 index
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             return Defer( queue.resource.source[index] );
         }
 
@@ -152,11 +160,13 @@ namespace ration {
             Referential< const Natural >
                 index
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             if (!Contains( queue, index ))
                 throw index;
             return Go( queue, index );
@@ -173,11 +183,13 @@ namespace ration {
             Referential< const Contractional< Natural, Maximum, Elemental > >
                 queue
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             return queue.resource.allotment > 0;
         }
 
@@ -194,11 +206,13 @@ namespace ration {
             Referential< Natural >
                 index
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             return index = queue.first;
         }
 
@@ -215,11 +229,13 @@ namespace ration {
             Referential< Natural >
                 index
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             if (!Begins( queue ))
                 throw queue.allotment;
             return BeginReadIncrement( queue, index );
@@ -238,11 +254,13 @@ namespace ration {
             Referential< Natural >
                 index
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             return index = queue.first;
         }
 
@@ -259,11 +277,13 @@ namespace ration {
             Referential< Natural >
                 index
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             if (!Begins( queue ))
                 throw queue.allotment;
             return BeginWriteIncrement( queue, index );
@@ -282,11 +302,13 @@ namespace ration {
             Referential< const Natural >
                 index
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             if (index + 1 >= Maximum)
                 return queue.first + queue.resource.allotment > Maximum;
             return index + 1 < queue.resource.allotment;
@@ -305,11 +327,13 @@ namespace ration {
             Referential< Natural >
                 index
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             if (index + 1 >= Maximum && queue.first + queue.resource.allotment > Maximum)
                 return index = 0;
             return ++index;
@@ -328,11 +352,13 @@ namespace ration {
             Referential< Natural >
                 index
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             if (!IncrementIsTraversable( queue, index ))
                 throw index;
             return TraverseReadIncrement( queue, index );
@@ -351,11 +377,13 @@ namespace ration {
             Referential< Natural >
                 index
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             if (index + 1 >= Maximum && queue.first + queue.resource.allotment > Maximum)
                 return index = 0;
             return ++index;
@@ -374,11 +402,13 @@ namespace ration {
             Referential< Natural >
                 index
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             if (!IncrementIsTraversable( queue, index ))
                 throw index;
             return TraverseWriteIncrement( queue, index );
@@ -397,11 +427,13 @@ namespace ration {
             Referential< Natural >
                 index
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             if (queue.first + queue.resource.allotment > Maximum)
                 return index = queue.first + queue.resource.allotment - Maximum - 1;
             return queue.first + queue.resource.allotment - 1;
@@ -420,11 +452,13 @@ namespace ration {
             Referential< Natural >
                 index
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             if (!Begins( queue ))
                 throw queue.allotment;
             return BeginReadDecrement( queue, index );
@@ -443,11 +477,13 @@ namespace ration {
             Referential< Natural >
                 index
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             if (queue.first + queue.resource.allotment > Maximum)
                 return index = queue.first + queue.resource.allotment - Maximum - 1;
             return queue.first + queue.resource.allotment - 1;
@@ -466,11 +502,13 @@ namespace ration {
             Referential< Natural >
                 index
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             if (!Begins( queue ))
                 throw queue.allotment;
             return BeginWriteDecrement( queue, index );
@@ -489,11 +527,13 @@ namespace ration {
             Referential< const Natural >
                 index
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             if (index == 0)
                 return queue.first + queue.resource.allotment > Maximum;
             return true;
@@ -512,11 +552,13 @@ namespace ration {
             Referential< Natural >
                 index
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             if (index == 0 && queue.first + queue.resource.allotment > Maximum)
                 return index = Maximum - 1;
             return --index;
@@ -535,11 +577,13 @@ namespace ration {
             Referential< Natural >
                 index
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             if (!DecrementIsTraversable( queue, index ))
                 throw index;
             return TraverseReadDecrement( queue, index );
@@ -558,11 +602,13 @@ namespace ration {
             Referential< Natural >
                 index
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             if (index == 0 && queue.first + queue.resource.allotment > Maximum)
                 return index = Maximum - 1;
             return --index;
@@ -581,11 +627,13 @@ namespace ration {
             Referential< Natural >
                 index
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             if (!DecrementIsTraversable( queue, index ))
                 throw index;
             return TraverseWriteDecrement( queue, index );
@@ -602,11 +650,13 @@ namespace ration {
             Referential< Contractional< Natural, Maximum, Elemental > >
                 queue
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             queue = InitializedQueue< Natural, Maximum, Elemental >;
         }
 
@@ -621,11 +671,13 @@ namespace ration {
             Referential< Contractional< Natural, Maximum, Elemental > >
                 queue
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             if (!queue.resource.allotment)
                 return false;
             Initialize( queue );
@@ -643,11 +695,13 @@ namespace ration {
             Referential< const Contractional< Natural, Maximum, Elemental > >
                 queue
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             return Maximum;
         }
 
@@ -662,11 +716,13 @@ namespace ration {
             Referential< const Contractional< Natural, Maximum, Elemental > >
                 queue
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             return queue.resource.allotment;
         }
 
@@ -685,11 +741,13 @@ namespace ration {
             Referential< const Natural >
                 count
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             index = queue.first + queue.resource.allotment;
             if (index >= Maximum)
                 index -= Maximum;
@@ -712,11 +770,13 @@ namespace ration {
             Referential< const Natural >
                 count
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             if (queue.resource.allotment + count > Maximum)
                 return false;
             return Protract( queue, index, count );
@@ -735,11 +795,13 @@ namespace ration {
             Referential< const Natural >
                 count
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             queue.resource.allotment -= count;
             queue.first += count;
             if (queue.first >= Maximum)
@@ -760,11 +822,13 @@ namespace ration {
             Referential< const Natural >
                 count
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             if (count > queue.resource.allotment)
                 return false;
             return Retract( queue, count );

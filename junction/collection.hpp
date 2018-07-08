@@ -44,11 +44,13 @@ namespace junction {
             Referential< const Elemental >
                 value
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
 			static auto&
 #ifndef _MSC_VER
 				Search = SearchCollection< Natural, Elemental, Equate, Order >;
@@ -80,11 +82,13 @@ namespace junction {
             Referential< const Elemental >
                 value
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             static auto&
 #ifndef _MSC_VER
 				Search = SearchCollection< Natural, Elemental, Equate, Order >;
@@ -120,11 +124,13 @@ namespace junction {
             Referential< const Elemental >
                 value
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             static auto&
 #ifndef _MSC_VER
 				Search = SearchCollection< Natural, Elemental, Equate, Order >;
@@ -164,11 +170,13 @@ namespace junction {
             Referential< const Elemental >
                 replacement
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             static auto&
 #ifndef _MSC_VER
 				Search = SearchCollection< Natural, Elemental, Equate, Order >;
@@ -210,11 +218,13 @@ namespace junction {
             Referential< const Basic >
                 base
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             static auto&
 #ifndef _MSC_VER
 				Search = SearchCollection< Natural, Elemental, Equate, Order >;
@@ -265,11 +275,13 @@ namespace junction {
             Referential< const Basic >
                 base
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             BasicPositional
                 first, last;
             Empty( operand );
@@ -309,11 +321,13 @@ namespace junction {
             Referential< const Relative >
                 relative_set
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             static auto&
                 SearchInBase = SearchLinearly< Basic, BasicPositional, Elemental, Equate >;
             static auto&
@@ -365,11 +379,13 @@ namespace junction {
             Referential< const Relative >
                 relative_set
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             static auto&
                 SearchInBase = SearchLinearly< Basic, BasicPositional, Elemental, Equate >;
             static auto&
@@ -430,11 +446,13 @@ namespace junction {
             Referential< const Relative >
                 relative_set
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             static auto&
                 SearchInBase = SearchLinearly< Basic, BasicPositional, Elemental, Equate >;
             static auto&
@@ -484,11 +502,13 @@ namespace junction {
             Referential< const Relative >
                 relative_set
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             static auto&
                 ComposeUnion = ComposeCollection< Natural, Elemental, Precede, Proceed, Equate, Order >;
             BasicPositional
@@ -543,11 +563,13 @@ namespace junction {
             Referential< const Relative >
                 relative_set
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             Referential< Expositive< const Basic, BasicPositional, const Elemental > >
                 go_basis = basis.increment.scale.go;
             Referential< Expositive< const Relative, RelativePositional, const Elemental > >
@@ -620,11 +642,13 @@ namespace junction {
             Referential< const Relative >
                 relative_set
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             Referential< Expositive< const Basic, BasicPositional, const Elemental > >
                 go_basis = basis.increment.scale.go;
             Referential< Expositive< const Relative, RelativePositional, const Elemental > >
@@ -721,11 +745,13 @@ namespace junction {
             Referential< const Relative >
                 relative_set
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             Referential< Expositive< const Basic, BasicPositional, const Elemental > >
                 go_basis = basis.increment.scale.go;
             Referential< Expositive< const Relative, RelativePositional, const Elemental > >
@@ -793,11 +819,13 @@ namespace junction {
             Referential< const Relative >
                 relative_set
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             Referential< Expositive< const Basic, BasicPositional, const Elemental > >
                 go_basis = basis.increment.scale.go;
             Referential< Expositive< const Relative, RelativePositional, const Elemental > >

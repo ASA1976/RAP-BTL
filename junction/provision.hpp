@@ -19,11 +19,13 @@ namespace junction {
             Referential< const Junctive< Natural, Elemental > >
                 list
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             return Maximum;
         }
 
@@ -42,11 +44,13 @@ namespace junction {
             Referential< const Natural >
                 count
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             Locational< Junctional< Elemental > >
                 node;
             Natural

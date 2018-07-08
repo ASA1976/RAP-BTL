@@ -38,11 +38,13 @@ namespace junction {
                 Referential< const Correlative >
                     relator
             ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
                 using namespace ::std;
                 static_assert(
                     is_integral< Natural >::value && is_unsigned< Natural >::value,
                     "Natural:  Unsigned integer type required"
                 );
+#endif
                 static auto&
 #ifndef _MSC_VER
                     Search = SearchCorrelation< Natural, Correlative, Elemental, Equate >;
@@ -73,11 +75,13 @@ namespace junction {
                 Referential< const Elemental >
                     value
             ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
                 using namespace ::std;
                 static_assert(
                     is_integral< Natural >::value && is_unsigned< Natural >::value,
                     "Natural:  Unsigned integer type required"
                 );
+#endif
                 static auto&
                     CorrespondInMap = Correspond< Natural, Correlative, Elemental, Equate >;
                 const Associational< Correlative, Elemental >
@@ -107,11 +111,13 @@ namespace junction {
                 Referential< const Correlative >
                     replacement
             ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
                 using namespace ::std;
                 static_assert(
                     is_integral< Natural >::value && is_unsigned< Natural >::value,
                     "Natural:  Unsigned integer type required"
                 );
+#endif
                 static const Natural
                     One = 1;
                 static auto&
@@ -151,11 +157,13 @@ namespace junction {
                 Referential< const Correlative >
                     relator
             ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
                 using namespace ::std;
                 static_assert(
                     is_integral< Natural >::value && is_unsigned< Natural >::value,
                     "Natural:  Unsigned integer type required"
                 );
+#endif
                 static auto&
 #ifndef _MSC_VER
 					Search = SearchCorrelation< Natural, Correlative, Elemental, Equate >;
@@ -185,11 +193,13 @@ namespace junction {
                 Referential< const Correlative >
                     relator
             ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
                 using namespace ::std;
                 static_assert(
                     is_integral< Natural >::value && is_unsigned< Natural >::value,
                     "Natural:  Unsigned integer type required"
                 );
+#endif
                 static auto&
 #ifndef _MSC_VER
 					Search = SearchCorrelation< Natural, Correlative, Elemental, Equate >;
@@ -218,11 +228,13 @@ namespace junction {
                 Referential< const Correlative >
                     relator
             ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
                 using namespace ::std;
                 static_assert(
                     is_integral< Natural >::value && is_unsigned< Natural >::value,
                     "Natural:  Unsigned integer type required"
                 );
+#endif
                 static auto&
 #ifndef _MSC_VER
 					Search = SearchCorrelation< Natural, Correlative, Elemental, Equate >;

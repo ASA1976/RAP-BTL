@@ -1,7 +1,12 @@
 // © 2018 Aaron Sami Abassi
 // Licensed under the Academic Free License version 3.0
+// #define RAPBTL_NO_STD_CPLUSPLUS 1
 #include "localization.hpp"
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
 #include <cstdio>
+#else
+#include <stdio.h>
+#endif
 
 using namespace ::trajection;
 

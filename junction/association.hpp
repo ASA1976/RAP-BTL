@@ -45,11 +45,13 @@ namespace junction {
             Referential< const AssociativelyPositional< Correlative, Elemental > >
                 position
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             return Confer( GoRead( map, position ).to.relator );
         }
 
@@ -65,11 +67,13 @@ namespace junction {
             Referential< const AssociativelyPositional< Correlative, Elemental > >
                 position
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             if (!ContainsChecksForNull( map, position ))
                 throw position;
             return GoReadRelator( map, position );
@@ -87,11 +91,13 @@ namespace junction {
             Referential< const AssociativelyPositional< Correlative, Elemental > >
                 position
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             return Confer( GoRead( map, position ).to.value );
         }
 
@@ -107,11 +113,13 @@ namespace junction {
             Referential< const AssociativelyPositional< Correlative, Elemental > >
                 position
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             if (!ContainsChecksForNull( map, position ))
                 throw position;
             return GoReadElement( map, position );
@@ -129,11 +137,13 @@ namespace junction {
             Referential< const AssociativelyPositional< Correlative, Elemental > >
                 position
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             return Confer( GoWrite( map, position ).to.value );
         }
 
@@ -149,11 +159,13 @@ namespace junction {
             Referential< const AssociativelyPositional< Correlative, Elemental > >
                 position
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             if (!ContainsChecksForNull( map, position ))
                 throw position;
             return GoWriteElement( map, position );

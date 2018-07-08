@@ -21,11 +21,13 @@ namespace segmentation {
         Referential< const Natural >
             index
     ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
         static_assert(
             is_integral< Natural >::value && is_unsigned< Natural >::value,
             "Natural:  Unsigned integer type required"
         );
+#endif
         return index < Length;
     }
 
@@ -42,11 +44,13 @@ namespace segmentation {
         Referential< const Natural >
             index
     ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
         static_assert(
             is_integral< Natural >::value && is_unsigned< Natural >::value,
             "Natural:  Unsigned integer type required"
         );
+#endif
         static auto&
             Contains = ContainsIndex< Natural, Length, Elemental >;
         if (!locality)
@@ -67,11 +71,13 @@ namespace segmentation {
         Referential< const Natural >
             index
     ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
         static_assert(
             is_integral< Natural >::value && is_unsigned< Natural >::value,
             "Natural:  Unsigned integer type required"
         );
+#endif
         static auto&
             Contains = ContainsIndexChecksForNull< Natural, Length, Elemental >;
         if (!Contains( locality, index ))
@@ -90,11 +96,13 @@ namespace segmentation {
         Referential< const Locational< Elemental > >
             locality
     ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
         static_assert(
             is_integral< Natural >::value && is_unsigned< Natural >::value,
             "Natural:  Unsigned integer type required"
         );
+#endif
         return Length > 0;
     }
 
@@ -109,11 +117,13 @@ namespace segmentation {
         Referential< const Locational< Elemental > >
             locality
     ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
         static_assert(
             is_integral< Natural >::value && is_unsigned< Natural >::value,
             "Natural:  Unsigned integer type required"
         );
+#endif
         static auto&
             SegmentBegins = Begins< Natural, Length, Elemental >;
         if (!locality)
@@ -134,11 +144,13 @@ namespace segmentation {
         Referential< Natural >
             index
     ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
         static_assert(
             is_integral< Natural >::value && is_unsigned< Natural >::value,
             "Natural:  Unsigned integer type required"
         );
+#endif
         if (Length < 1)
             throw Length;
         if (!locality)
@@ -159,11 +171,13 @@ namespace segmentation {
         Referential< Natural >
             index
     ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
         static_assert(
             is_integral< Natural >::value && is_unsigned< Natural >::value,
             "Natural:  Unsigned integer type required"
         );
+#endif
         index = Length - 1;
         return index;
     }
@@ -181,11 +195,13 @@ namespace segmentation {
         Referential< Natural >
             index
     ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
         static_assert(
             is_integral< Natural >::value && is_unsigned< Natural >::value,
             "Natural:  Unsigned integer type required"
         );
+#endif
         static auto&
             Descend = BeginDecrement< Natural, Length, Elemental >;
         if (Length < 1)
@@ -208,11 +224,13 @@ namespace segmentation {
         Referential< const Natural >
             index
     ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
         static_assert(
             is_integral< Natural >::value && is_unsigned< Natural >::value,
             "Natural:  Unsigned integer type required"
         );
+#endif
         return index < Length;
     }
 
@@ -229,11 +247,13 @@ namespace segmentation {
         Referential< const Natural >
             index
     ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
         static_assert(
             is_integral< Natural >::value && is_unsigned< Natural >::value,
             "Natural:  Unsigned integer type required"
         );
+#endif
         static auto&
             Traversable = IncrementTraversable< Natural, Length, Elemental >;
         if (!locality)
@@ -254,11 +274,13 @@ namespace segmentation {
         Referential< const Natural >
             index
     ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
         static_assert(
             is_integral< Natural >::value && is_unsigned< Natural >::value,
             "Natural:  Unsigned integer type required"
         );
+#endif
         return index > 0;
     }
 
@@ -275,11 +297,13 @@ namespace segmentation {
         Referential< const Natural >
             index
     ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
         static_assert(
             is_integral< Natural >::value && is_unsigned< Natural >::value,
             "Natural:  Unsigned integer type required"
         );
+#endif
         static auto&
             Traversable = DecrementTraversable< Natural, Length, Elemental >;
         if (!locality)
@@ -300,11 +324,13 @@ namespace segmentation {
         Referential< Natural >
             index
     ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
         static_assert(
             is_integral< Natural >::value && is_unsigned< Natural >::value,
             "Natural:  Unsigned integer type required"
         );
+#endif
         static auto&
             Traversable = IncrementTraversableChecksForNull< Natural, Length, Elemental >;
         if (!Traversable( locality, index ))
@@ -325,11 +351,13 @@ namespace segmentation {
         Referential< Natural >
             index
     ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
         static_assert(
             is_integral< Natural >::value && is_unsigned< Natural >::value,
             "Natural:  Unsigned integer type required"
         );
+#endif
         static auto&
             Traversable = DecrementTraversableChecksForNull< Natural, Length, Elemental >;
         if (!Traversable( locality, index ))

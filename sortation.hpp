@@ -90,11 +90,13 @@ namespace sortation {
         Referential< Positional >
             position
     ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
         static_assert(
             is_integral< Natural >::value && is_unsigned< Natural >::value,
             "Natural:  Unsigned integer type required"
         );
+#endif
         static auto&
             go = axis.increment.scale.go;
         Natural
@@ -149,11 +151,13 @@ namespace sortation {
         Referential< Positional >
             position
     ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
         static_assert(
             is_integral< Natural >::value && is_unsigned< Natural >::value,
             "Natural:  Unsigned integer type required"
         );
+#endif
         static auto&
             Search = SearchBisectionally< Spatial, Positional, Natural, Evaluative, Equate, Order >;
         return Search( space, Axis, count, value, position );

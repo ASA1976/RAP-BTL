@@ -27,11 +27,13 @@ namespace junction {
                 Referential< Positional< Elemental > >
                     position
             ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
                 using namespace ::std;
                 static_assert(
                     is_integral< Natural >::value && is_unsigned< Natural >::value,
                     "Natural:  Unsigned integer type required"
                 );
+#endif
                 position.at = Reclaim( list );
                 if (!position.at) {
                     Allocator.claim( position.at );
@@ -65,11 +67,13 @@ namespace junction {
                 Referential< Positional< Elemental > >
                     position
             ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
                 using namespace ::std;
                 static_assert(
                     is_integral< Natural >::value && is_unsigned< Natural >::value,
                     "Natural:  Unsigned integer type required"
                 );
+#endif
                 if (list.count >= Maximum)
                     return false;
                 return Distribute( list, position );
@@ -86,11 +90,13 @@ namespace junction {
                 Referential< const Positional< Elemental > >
                     position
             ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
                 using namespace ::std;
                 static_assert(
                     is_integral< Natural >::value && is_unsigned< Natural >::value,
                     "Natural:  Unsigned integer type required"
                 );
+#endif
                 static const Natural
                     Count = 1;
                 return consecution::Concede( list, position, Count );

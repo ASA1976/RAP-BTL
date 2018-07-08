@@ -3,7 +3,9 @@
 #ifndef TRAJECTION_MODULE
 #define TRAJECTION_MODULE
 #include "comparison.hpp"
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
 #include <type_traits>
+#endif
 
 namespace trajection {
 
@@ -144,11 +146,13 @@ namespace trajection {
         Referential< Natural >
             count
     ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
         static_assert(
             is_integral< Natural >::value && is_unsigned< Natural >::value,
             "Natural:  Unsigned integer type required"
         );
+#endif
         static auto&
             scale = direction.scale;
         Positional
@@ -178,11 +182,13 @@ namespace trajection {
         Referential< Natural >
             count
     ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
         static_assert(
             is_integral< Natural >::value && is_unsigned< Natural >::value,
             "Natural:  Unsigned integer type required"
         );
+#endif
         return Count( space, Direction, count );
     }
 

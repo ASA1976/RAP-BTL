@@ -24,11 +24,13 @@ namespace allocation {
             Referential< Locational< Subjective > >
                 locality
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             Natural
                 index;
             Distribute( Pool, index );
@@ -48,11 +50,13 @@ namespace allocation {
             Referential< Locational< Subjective > >
                 locality
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             Natural
                 index;
             if (DistributeSafely( Pool, index ))
@@ -74,11 +78,13 @@ namespace allocation {
             Referential< Locational< Subjective > >
                 locality
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             Natural
                 index;
             index = (Natural) (locality - Pool.resource.source);
@@ -98,11 +104,13 @@ namespace allocation {
             Referential< Locational< Subjective > >
                 locality
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             Natural
                 index;
             index = (Natural) (locality - Pool.resource.source);

@@ -1,12 +1,17 @@
 // © 2018 Aaron Sami Abassi
 // Licensed under the Academic Free License version 3.0
+// #define RAPBTL_NO_STD_CPLUSPLUS 1
 #include "ration/elevation.hpp"
 #include "ration/contraction.hpp"
 #include "ration/contribution.hpp"
 #include "junction/provision/elevation.hpp"
 #include "junction/provision/contraction.hpp"
 #include "junction/provision/contribution.hpp"
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
 #include <cstdio>
+#else
+#include <stdio.h>
+#endif
 
 using namespace ::traction;
 using namespace ::attribution;
@@ -100,11 +105,11 @@ TestRation( void ) {
 
 static inline void
 TestJunction( void ) {
+    using namespace ::allocation;
     using namespace ::junction;
     using namespace ::junction::provision::elevation;
     using namespace ::junction::provision::contraction;
     using namespace ::junction::provision::contribution;
-    using namespace ::allocation;
     static auto&
         StackElevator = Elevator< Natural, 16, char, FastDefaultNew< Junctional< char > > >;
     static auto&

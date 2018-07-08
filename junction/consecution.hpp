@@ -81,11 +81,13 @@ namespace junction {
             Referential< const Appositional >
                 to
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             auto
                 Finalize = [&](
                     Referential< const Locational< Junctional< Elemental > > >
@@ -140,11 +142,13 @@ namespace junction {
             Referential< const Junctive< Natural, Elemental > >
                 sequence
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             return sequence.count;
         }
 
@@ -161,11 +165,13 @@ namespace junction {
             Referential< const Elemental >
                 value
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             Locational< Junctional< Elemental > >
                 result;
             result = Adjunct.proclaim( sequence, value );
@@ -203,11 +209,13 @@ namespace junction {
             Referential< const Appositional >
                 to
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             static auto&
                 SequenceList = Sequence< Relative, Appositional, Natural, Elemental, Adjunct >;
             Locational< Junctional< Elemental > >
@@ -241,11 +249,13 @@ namespace junction {
             Referential< const Elemental >
                 value
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             Locational< Junctional< Elemental > >
                 result;
             result = Adjunct.proclaim( sequence, value );
@@ -277,11 +287,13 @@ namespace junction {
             Referential< const Elemental >
                 value
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             static auto&
                 PrecedeList = Precede< Natural, Elemental, Adjunct >;
             if (!rank.at)
@@ -312,11 +324,13 @@ namespace junction {
             Referential< const Appositional >
                 to
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             static auto&
                 SequenceList = Sequence< Relative, Appositional, Natural, Elemental, Adjunct >;
             Locational< Junctional< Elemental > >
@@ -359,11 +373,13 @@ namespace junction {
             Referential< const Appositional >
                 to
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             static auto&
                 PrecedeList = Precede< Relative, Appositional, Natural, Elemental, Adjunct >;
             if (!rank.at)
@@ -384,11 +400,13 @@ namespace junction {
             Referential< const Elemental >
                 value
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             Locational< Junctional< Elemental > >
                 result;
             result = Adjunct.proclaim( sequence, value );
@@ -426,11 +444,13 @@ namespace junction {
             Referential< const Appositional >
                 to
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             static auto&
                 SequenceList = Sequence< Relative, Appositional, Natural, Elemental, Adjunct >;
             Locational< Junctional< Elemental > >
@@ -460,11 +480,13 @@ namespace junction {
             Referential< const Natural >
                 count
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             Positional< Elemental >
                 first, last;
             Natural
@@ -503,11 +525,13 @@ namespace junction {
             Referential< const Natural >
                 count
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             Positional< Elemental >
                 last;
             Natural
@@ -547,11 +571,13 @@ namespace junction {
             Referential< const Natural >
                 count
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             if (!rank.at)
                 throw rank;
             return Concede( sequence, rank, count );
@@ -568,11 +594,13 @@ namespace junction {
             Referential< const Natural >
                 count
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             Positional< Elemental >
                 first, last;
             Natural

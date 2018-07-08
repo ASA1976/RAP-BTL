@@ -49,11 +49,13 @@ namespace ordination {
         Referential< const Natural >
             index
     ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
         static_assert(
             is_integral< Natural >::value && is_unsigned< Natural >::value,
             "Natural:  Unsigned integer type required"
         );
+#endif
         return index < Length;
     }
 
@@ -70,11 +72,13 @@ namespace ordination {
         Referential< const Natural >
             index
     ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
         static_assert(
             is_integral< Natural >::value && is_unsigned< Natural >::value,
             "Natural:  Unsigned integer type required"
         );
+#endif
         return Confer( array[index] );
     }
 
@@ -91,11 +95,13 @@ namespace ordination {
         Referential< const Natural >
             index
     ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
         static_assert(
             is_integral< Natural >::value && is_unsigned< Natural >::value,
             "Natural:  Unsigned integer type required"
         );
+#endif
         if (!ContainsIndex( array, index ))
             throw index;
         return NaturalGo( array, index );
@@ -114,11 +120,13 @@ namespace ordination {
         Referential< const Locational< Elemental > >
             position
     ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
         static_assert(
             is_integral< Natural >::value && is_unsigned< Natural >::value,
             "Natural:  Unsigned integer type required"
         );
+#endif
         return position >= array && position <= array + Length - 1;
     }
 
@@ -135,11 +143,13 @@ namespace ordination {
         Referential< const Locational< Elemental > >
             position
     ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
         static_assert(
             is_integral< Natural >::value && is_unsigned< Natural >::value,
             "Natural:  Unsigned integer type required"
         );
+#endif
         static auto&
             Contains = ContainsPosition< Natural, Length, Elemental >;
         if (!position)
@@ -160,11 +170,13 @@ namespace ordination {
         Referential< const Locational< Elemental > >
             position
     ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
         static_assert(
             is_integral< Natural >::value && is_unsigned< Natural >::value,
             "Natural:  Unsigned integer type required"
         );
+#endif
         return Refer( position );
     }
 
@@ -181,11 +193,13 @@ namespace ordination {
         Referential< const Locational< Elemental > >
             position
     ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
         static_assert(
             is_integral< Natural >::value && is_unsigned< Natural >::value,
             "Natural:  Unsigned integer type required"
         );
+#endif
         static auto&
             Contains = ContainsPositionChecksForNull< Natural, Length, Elemental >;
         static auto&
@@ -206,11 +220,13 @@ namespace ordination {
         Referential< const Elemental[Length] >
             array
     ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
         static_assert(
             is_integral< Natural >::value && is_unsigned< Natural >::value,
             "Natural:  Unsigned integer type required"
         );
+#endif
         return Length > 0;
     }
 
@@ -227,11 +243,13 @@ namespace ordination {
         Referential< Locational< Elemental > >
             position
     ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
         static_assert(
             is_integral< Natural >::value && is_unsigned< Natural >::value,
             "Natural:  Unsigned integer type required"
         );
+#endif
         position = array;
         return position;
     }
@@ -249,11 +267,13 @@ namespace ordination {
         Referential< Locational< Elemental > >
             position
     ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
         static_assert(
             is_integral< Natural >::value && is_unsigned< Natural >::value,
             "Natural:  Unsigned integer type required"
         );
+#endif
         position = array + Length - 1;
         return position;
     }
@@ -271,11 +291,13 @@ namespace ordination {
         Referential< const Locational< Elemental > >
             position
     ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
         static_assert(
             is_integral< Natural >::value && is_unsigned< Natural >::value,
             "Natural:  Unsigned integer type required"
         );
+#endif
         return position < array + Length - 1;
     }
 
@@ -292,11 +314,13 @@ namespace ordination {
         Referential< const Locational< Elemental > >
             position
     ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
         static_assert(
             is_integral< Natural >::value && is_unsigned< Natural >::value,
             "Natural:  Unsigned integer type required"
         );
+#endif
         static auto&
             Traversable = IncrementTraversable< Natural, Length, Elemental >;
         if (!position)
@@ -317,11 +341,13 @@ namespace ordination {
         Referential< const Locational< Elemental > >
             position
     ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
         static_assert(
             is_integral< Natural >::value && is_unsigned< Natural >::value,
             "Natural:  Unsigned integer type required"
         );
+#endif
         return position > array;
     }
 
@@ -338,11 +364,13 @@ namespace ordination {
         Referential< const Locational< Elemental > >
             position
     ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
         static_assert(
             is_integral< Natural >::value && is_unsigned< Natural >::value,
             "Natural:  Unsigned integer type required"
         );
+#endif
         static auto&
             Traversable = DecrementTraversable< Natural, Length, Elemental >;
         if (!position)
@@ -363,11 +391,13 @@ namespace ordination {
         Referential< Locational< Elemental > >
             position
     ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
         static_assert(
             is_integral< Natural >::value && is_unsigned< Natural >::value,
             "Natural:  Unsigned integer type required"
         );
+#endif
         position++;
         return position;
     }
@@ -385,11 +415,13 @@ namespace ordination {
         Referential< Locational< Elemental > >
             position
     ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
         static_assert(
             is_integral< Natural >::value && is_unsigned< Natural >::value,
             "Natural:  Unsigned integer type required"
         );
+#endif
         static auto&
             Traversable = IncrementTraversableChecksForNull< Natural, Length, Elemental >;
         static auto&
@@ -412,11 +444,13 @@ namespace ordination {
         Referential< Locational< Elemental > >
             position
     ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
         static_assert(
             is_integral< Natural >::value && is_unsigned< Natural >::value,
             "Natural:  Unsigned integer type required"
         );
+#endif
         position--;
         return position;
     }
@@ -434,11 +468,13 @@ namespace ordination {
         Referential< Locational< Elemental > >
             position
     ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
         static_assert(
             is_integral< Natural >::value && is_unsigned< Natural >::value,
             "Natural:  Unsigned integer type required"
         );
+#endif
         static auto&
             Traversable = DecrementTraversableChecksForNull< Natural, Length, Elemental >;
         static auto&

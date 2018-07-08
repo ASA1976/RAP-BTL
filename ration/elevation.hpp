@@ -44,11 +44,13 @@ namespace ration {
             Referential< const Natural >
                 index
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             return index < stack.allotment;
         }
 
@@ -65,11 +67,13 @@ namespace ration {
             Referential< const Natural >
                 index
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             return Confer( stack.source[index] );
         }
 
@@ -86,11 +90,13 @@ namespace ration {
             Referential< const Natural >
                 index
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             static auto&
                 StackContains = Contains< Natural, Maximum, Elemental >;
             static auto&
@@ -113,11 +119,13 @@ namespace ration {
             Referential< const Natural >
                 index
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             return Defer( stack.source[index] );
         }
 
@@ -134,11 +142,13 @@ namespace ration {
             Referential< const Natural >
                 index
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             static auto&
                 StackContains = Contains< Natural, Maximum, Elemental >;
             static auto&
@@ -159,11 +169,13 @@ namespace ration {
             Referential< const Elevatory< Natural, Maximum, Elemental > >
                 stack
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             return stack.allotment > 0;
         }
 
@@ -180,11 +192,13 @@ namespace ration {
             Referential< Natural >
                 index
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             return index = 0;
         }
 
@@ -201,11 +215,13 @@ namespace ration {
             Referential< Natural >
                 index
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             static auto&
                 StackBegins = Begins< Natural, Maximum, Elemental >;
             static auto&
@@ -228,11 +244,13 @@ namespace ration {
             Referential< Natural >
                 index
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             return index = 0;
         }
 
@@ -249,11 +267,13 @@ namespace ration {
             Referential< Natural >
                 index
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             static auto&
                 StackBegins = Begins< Natural, Maximum, Elemental >;
             static auto&
@@ -276,11 +296,13 @@ namespace ration {
             Referential< const Natural >
                 index
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             return index + 1 < stack.allotment;
         }
 
@@ -297,11 +319,13 @@ namespace ration {
             Referential< Natural >
                 index
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             return ++index;
         }
 
@@ -318,11 +342,13 @@ namespace ration {
             Referential< Natural >
                 index
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             static auto&
                 IsTraversable = IncrementIsTraversable< Natural, Maximum, Elemental >;
             static auto&
@@ -345,11 +371,13 @@ namespace ration {
             Referential< Natural >
                 index
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             return ++index;
         }
 
@@ -366,11 +394,13 @@ namespace ration {
             Referential< Natural >
                 index
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             static auto&
                 IsTraversable = IncrementIsTraversable< Natural, Maximum, Elemental >;
             static auto&
@@ -393,11 +423,13 @@ namespace ration {
             Referential< Natural >
                 index
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             return index = stack.allotment - 1;
         }
 
@@ -414,11 +446,13 @@ namespace ration {
             Referential< Natural >
                 index
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             static auto&
                 StackBegins = Begins< Natural, Maximum, Elemental >;
             static auto&
@@ -441,11 +475,13 @@ namespace ration {
             Referential< Natural >
                 index
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             return index = stack.allotment - 1;
         }
 
@@ -462,11 +498,13 @@ namespace ration {
             Referential< Natural >
                 index
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             static auto&
                 StackBegins = Begins< Natural, Maximum, Elemental >;
             static auto&
@@ -489,11 +527,13 @@ namespace ration {
             Referential< const Natural >
                 index
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             return index > 0;
         }
 
@@ -510,11 +550,13 @@ namespace ration {
             Referential< Natural >
                 index
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             return --index;
         }
 
@@ -531,11 +573,13 @@ namespace ration {
             Referential< Natural >
                 index
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             static auto&
                 IsTraversable = DecrementIsTraversable< Natural, Maximum, Elemental >;
             static auto&
@@ -558,11 +602,13 @@ namespace ration {
             Referential< Natural >
                 index
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             return --index;
         }
 
@@ -579,11 +625,13 @@ namespace ration {
             Referential< Natural >
                 index
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             static auto&
                 IsTraversable = DecrementIsTraversable< Natural, Maximum, Elemental >;
             static auto&
@@ -604,11 +652,13 @@ namespace ration {
             Referential< Elevatory< Natural, Maximum, Elemental > >
                 stack
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             stack = InitializedStack< Natural, Maximum, Elemental >;
         }
 
@@ -623,11 +673,13 @@ namespace ration {
             Referential< Elevatory< Natural, Maximum, Elemental > >
                 stack
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             if (!stack.allotment)
                 return false;
             Initialize( stack );
@@ -645,11 +697,13 @@ namespace ration {
             Referential< const Elevatory< Natural, Maximum, Elemental > >
                 stack
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             return Maximum;
         }
 
@@ -664,11 +718,13 @@ namespace ration {
             Referential< const Elevatory< Natural, Maximum, Elemental > >
                 stack
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             return stack.allotment;
         }
 
@@ -687,11 +743,13 @@ namespace ration {
             Referential< const Natural >
                 count
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             index = stack.allotment;
             stack.allotment += count;
             return true;
@@ -712,11 +770,13 @@ namespace ration {
             Referential< const Natural >
                 count
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             static auto&
                 IncreaseStack = Increase< Natural, Maximum, Elemental >;
             if (stack.allotment + count > Maximum)
@@ -737,11 +797,13 @@ namespace ration {
             Referential< const Natural >
                 count
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             stack.allotment -= count;
             return true;
         }
@@ -759,11 +821,13 @@ namespace ration {
             Referential< const Natural >
                 count
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             static auto&
                 DecreaseStack = Decrease< Natural, Maximum, Elemental >;
             if (count > stack.allotment)

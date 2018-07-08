@@ -58,11 +58,13 @@ namespace ration {
             Referential< const Natural >
                 index
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             if (index >= pool.resource.allotment)
                 return false;
             for (Natural count = 0; count < pool.cycles; count++)
@@ -84,11 +86,13 @@ namespace ration {
             Referential< const Natural >
                 index
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             return Confer( pool.resource.source[index] );
         }
 
@@ -105,11 +109,13 @@ namespace ration {
             Referential< const Natural >
                 index
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             if (!Contains( pool, index ))
                 throw index;
             return GoWrite( pool, index );
@@ -128,11 +134,13 @@ namespace ration {
             Referential< const Natural >
                 index
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             return Defer( pool.resource.source[index] );
         }
 
@@ -149,11 +157,13 @@ namespace ration {
             Referential< const Natural >
                 index
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             if (!Contains( pool, index ))
                 throw index;
             return GoRead( pool, index );
@@ -170,11 +180,13 @@ namespace ration {
             Referential< Contributory< Natural, Maximum, Elemental > >
                 pool
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             pool = InitializedPool< Natural, Maximum, Elemental >;
         }
 
@@ -189,11 +201,13 @@ namespace ration {
             Referential< Contributory< Natural, Maximum, Elemental > >
                 pool
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             if (!pool.resource.allotment)
                 return false;
             Initialize( pool );
@@ -211,11 +225,13 @@ namespace ration {
             Referential< const Contributory< Natural, Maximum, Elemental > >
                 pool
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             return Maximum;
         }
 
@@ -230,11 +246,13 @@ namespace ration {
             Referential< const Contributory< Natural, Maximum, Elemental > >
                 pool
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             return pool.resource.allotment - pool.cycles;
         }
 
@@ -251,11 +269,13 @@ namespace ration {
             Referential< Natural >
                 index
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             if (pool.cycles)
                 index = pool.recycle[--pool.cycles];
             else
@@ -276,11 +296,13 @@ namespace ration {
             Referential< Natural >
                 index
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             if (Account( pool ) >= Maximum)
                 return false;
             return Distribute( pool, index );
@@ -299,11 +321,13 @@ namespace ration {
             Referential< const Natural >
                 index
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             pool.recycle[pool.cycles++] = index;
             return true;
         }
@@ -321,11 +345,13 @@ namespace ration {
             Referential< const Natural >
                 index
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+#endif
             if (!Contains( pool, index ))
                 return false;
             if (pool.cycles >= Maximum)
