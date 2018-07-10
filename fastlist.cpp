@@ -84,11 +84,11 @@ DemonstrateSequence(
 int
 main() {
     using namespace ::junction::consecution;
-	static auto&
-		Sequencer = JunctionSequencer< Natural, char, NodePoolAdjunct >;
-	static auto&
-		Increment = ReadIncrementDirection< Natural, char >;
-	Junctive< Natural, char >
+    static auto&
+        Sequencer = JunctionSequencer< Natural, char, NodePoolAdjunct >;
+    static auto&
+        Increment = ReadIncrementDirection< Natural, char >;
+    Junctive< Natural, char >
         list;
     Initialize( list );
     DemonstrateSequence( list, Sequencer, Increment );
