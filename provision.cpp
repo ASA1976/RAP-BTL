@@ -1,6 +1,7 @@
 // © 2018 Aaron Sami Abassi
 // Licensed under the Academic Free License version 3.0
 // #define RAPBTL_NO_STD_CPLUSPLUS 1
+#include "allocation/stdlib.hpp"
 #include "ration/elevation.hpp"
 #include "ration/contraction.hpp"
 #include "ration/contribution.hpp"
@@ -16,7 +17,7 @@
 using namespace ::traction;
 using namespace ::attribution;
 
-using Natural = unsigned int;
+using Natural = unsigned short;
 
 template <
     typename Spatial,
@@ -83,17 +84,19 @@ TestRation( void ) {
     using namespace ::ration::elevation;
     using namespace ::ration::contraction;
     using namespace ::ration::contribution;
+    static const Natural
+        Maximum = 16;
     static auto&
-        StackElevator = Elevator< Natural, 16, char >;
+        StackElevator = Elevator< Natural, Maximum, char >;
     static auto&
-        QueueContractor = Contractor< Natural, 16, char >;
+        QueueContractor = Contractor< Natural, Maximum, char >;
     static auto&
-        PoolContributor = Contributor< Natural, 16, char >;
-    Elevatory< Natural, 16, char >
+        PoolContributor = Contributor< Natural, Maximum, char >;
+    Elevatory< Natural, Maximum, char >
         stack;
-    Contractional< Natural, 16, char >
+    Contractional< Natural, Maximum, char >
         queue;
-    Contributory< Natural, 16, char >
+    Contributory< Natural, Maximum, char >
         pool;
     Initialize( stack );
     Initialize( queue );
@@ -105,17 +108,20 @@ TestRation( void ) {
 
 static inline void
 TestJunction( void ) {
-    using namespace ::allocation;
     using namespace ::junction;
     using namespace ::junction::provision::elevation;
     using namespace ::junction::provision::contraction;
     using namespace ::junction::provision::contribution;
+    using namespace ::allocation::stdlib;
+    using Nodal = Junctional< char >;
+    static const Natural
+        Maximum = 16;
     static auto&
-        StackElevator = Elevator< Natural, 16, char, FastDefaultNew< Junctional< char > > >;
+        StackElevator = Elevator< Natural, Maximum, char, FastDefaultMalloc< Nodal > >;
     static auto&
-        QueueContractor = Contractor< Natural, 16, char, FastDefaultNew< Junctional< char > > >;
+        QueueContractor = Contractor< Natural, Maximum, char, FastDefaultMalloc< Nodal > >;
     static auto&
-        PoolContributor = Contributor< Natural, 16, char, FastDefaultNew< Junctional< char > > >;
+        PoolContributor = Contributor< Natural, Maximum, char, FastDefaultMalloc< Nodal > >;
     Junctive< Natural, char >
         list;
     Initialize( list );

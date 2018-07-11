@@ -18,6 +18,8 @@ using namespace ::composition;
 using namespace ::association;
 using namespace ::consecution;
 
+using MapAssociational = Associational< char, int >;
+
 template <
     typename Spatial,
     typename Natural
@@ -141,7 +143,7 @@ static bool
 DisplayMappings(
     Referential< const Spatial >
         map,
-    Referential< const Directional< const Spatial, Positional, const Associational< char, int > > >
+    Referential< const Directional< const Spatial, Positional, const MapAssociational > >
         direction
 ) {
     auto&
@@ -243,21 +245,21 @@ DemonstrateJunction( void ) {
     using namespace ::junction::association::collection;
     using namespace ::comparison;
     static auto&
-        ListSequencer = JunctionSequencer< size_t, char, DefaultCallocAdjunct< size_t, char > >;
+        ListSequencer = JunctionSequencer< size_t, char, DefaultMallocAdjunct< size_t, char > >;
     static auto&
-        ListConjoiner = JunctionConjoiner< const Locational< const char >, size_t, size_t, char, DefaultCallocAdjunct< size_t, char > >;
+        ListConjoiner = JunctionConjoiner< const Locational< const char >, size_t, size_t, char, DefaultMallocAdjunct< size_t, char > >;
     static auto&
-        ListSelector = JunctionSelector< size_t, char, DefaultCallocAdjunct< size_t, char >, IsEqual >;
+        ListSelector = JunctionSelector< size_t, char, DefaultMallocAdjunct< size_t, char >, IsEqual >;
     static auto&
-        ListCollector = JunctionCollector< size_t, char, DefaultCallocAdjunct< size_t, char >, IsEqual, IsLesser >;
+        ListCollector = JunctionCollector< size_t, char, DefaultMallocAdjunct< size_t, char >, IsEqual, IsLesser >;
     static auto&
         ListAxis = ReadAxis< size_t, char >;
     static auto&
-        MapCorrelator = JunctionCorrelator< size_t, char, int, DefaultCallocAdjunct< size_t, Associational< char, int > >, IsEqual >;
+        MapCorrelator = JunctionCorrelator< size_t, char, int, DefaultMallocAdjunct< size_t, MapAssociational >, IsEqual >;
     static auto&
-        MapAssociator = JunctionAssociator< size_t, char, int, DefaultCallocAdjunct< size_t, Associational< char, int > >, IsEqual, IsLesser >;
+        MapAssociator = JunctionAssociator< size_t, char, int, DefaultMallocAdjunct< size_t, MapAssociational >, IsEqual, IsLesser >;
     static auto&
-        MapDirection = ReadIncrementDirection< size_t, Associational< char, int > >;
+        MapDirection = ReadIncrementDirection< size_t, MapAssociational >;
     struct LocalJunctive {
 
         Junctive< size_t, char >
