@@ -18,6 +18,7 @@ using namespace ::composition;
 using namespace ::association;
 using namespace ::consecution;
 
+using MessageLocal = const Locational< const char >;
 using MapAssociational = Associational< char, int >;
 
 template <
@@ -74,7 +75,7 @@ ProceedSequence(
         list,
     Referential< const Sequent< Spatial, Positional, Natural, char > >
         sequencer,
-    Referential< const Conjoint< Spatial, Positional, const Locational< const char >, Natural, char > >
+    Referential< const Conjoint< Spatial, Positional, MessageLocal, Natural, char > >
         conjoiner
 ) {
     using namespace ::segmentation;

@@ -61,24 +61,24 @@ template <
 static inline void
 DemonstrateSequence(
     Referential< Spatial >
-        space,
+        sequence,
     Referential< const Sequent< Spatial, Positional, Natural, char > >
         sequencer,
     Referential< const Directional< const Spatial, Positional, const char > >
         increment
 ) {
-    sequencer.antecede( space, 3 );
-    sequencer.proceed( space, 'B' );
-    sequencer.accede( space, 'A' );
-    sequencer.proceed( space, 'C' );
-    DisplayCharacters( space, increment );
+    sequencer.antecede( sequence, 3 );
+    sequencer.proceed( sequence, 'B' );
+    sequencer.accede( sequence, 'A' );
+    sequencer.proceed( sequence, 'C' );
+    DisplayCharacters( sequence, increment );
     puts( " (should read 'A','B','C')" );
-    sequencer.succeed( space, 1 );
-    sequencer.recede( space, 1 );
-    DisplayCharacters( space, increment );
+    sequencer.succeed( sequence, 1 );
+    sequencer.recede( sequence, 1 );
+    DisplayCharacters( sequence, increment );
     puts( " (should read 'B')" );
-    sequencer.secede( space );
-    while (sequencer.condense( space ));
+    sequencer.secede( sequence );
+    while (sequencer.condense( sequence ));
 }
 
 int
