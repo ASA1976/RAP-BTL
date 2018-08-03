@@ -113,7 +113,7 @@ namespace junction {
             constexpr Tributary< Junctive< Natural, Elemental >, Positional< Elemental >, Natural >
             Contributor = {
                 Survey< Natural, Maximum, Elemental >,
-                consecution::Account< Natural, Elemental >,
+                Account< Natural, Elemental >,
                 Distribute< Natural, Elemental, Allocator >,
                 Retribute< Natural, Elemental >,
                 Empty< Natural, Elemental >
@@ -130,7 +130,7 @@ namespace junction {
             constexpr Tributary< Junctive< Natural, Elemental >, Positional< Elemental >, Natural >
             SafeContributor = {
                 Survey< Natural, Maximum, Elemental >,
-                consecution::Account< Natural, Elemental >,
+                Account< Natural, Elemental >,
                 DistributeSafely< Natural, Maximum, Elemental, Allocator >,
                 Retribute< Natural, Elemental >,
                 Empty< Natural, Elemental >

@@ -181,7 +181,9 @@ namespace ration {
         static inline bool
         Begins(
             Referential< const Contractional< Natural, Maximum, Elemental > >
-                queue
+                queue,
+            Referential< const Natural >
+                count
         ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
@@ -190,7 +192,7 @@ namespace ration {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            return queue.resource.allotment > 0;
+            return count < queue.resource.allotment;
         }
 
         template <
@@ -204,7 +206,9 @@ namespace ration {
             Referential< const Contractional< Natural, Maximum, Elemental > >
                 queue,
             Referential< Natural >
-                index
+                index,
+            Referential< const Natural >
+                count
         ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
@@ -213,7 +217,10 @@ namespace ration {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            return index = queue.first;
+            index = queue.first + count;
+            if (index >= Maximum)
+                index -= Maximum;
+            return index;
         }
 
         template <
@@ -227,7 +234,9 @@ namespace ration {
             Referential< const Contractional< Natural, Maximum, Elemental > >
                 queue,
             Referential< Natural >
-                index
+                index,
+            Referential< const Natural >
+                count
         ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
@@ -236,9 +245,9 @@ namespace ration {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            if (!Begins( queue ))
+            if (!Begins( queue, count ))
                 throw queue.allotment;
-            return BeginReadIncrement( queue, index );
+            return BeginReadIncrement( queue, index, count );
         }
 
         template <
@@ -252,7 +261,9 @@ namespace ration {
             Referential< Contractional< Natural, Maximum, Elemental > >
                 queue,
             Referential< Natural >
-                index
+                index,
+            Referential< const Natural >
+                count
         ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
@@ -261,7 +272,10 @@ namespace ration {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            return index = queue.first;
+            index = queue.first + count;
+            if (index >= Maximum)
+                index -= Maximum;
+            return index;
         }
 
         template <
@@ -275,7 +289,9 @@ namespace ration {
             Referential< Contractional< Natural, Maximum, Elemental > >
                 queue,
             Referential< Natural >
-                index
+                index,
+            Referential< const Natural >
+                count
         ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
@@ -284,9 +300,9 @@ namespace ration {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            if (!Begins( queue ))
+            if (!Begins( queue, count ))
                 throw queue.allotment;
-            return BeginWriteIncrement( queue, index );
+            return BeginWriteIncrement( queue, index, count );
         }
 
         template <
@@ -300,7 +316,9 @@ namespace ration {
             Referential< const Contractional< Natural, Maximum, Elemental > >
                 queue,
             Referential< const Natural >
-                index
+                index,
+            Referential< const Natural >
+                count
         ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
@@ -309,9 +327,16 @@ namespace ration {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            if (index + 1 >= Maximum)
-                return queue.first + queue.resource.allotment > Maximum;
-            return index + 1 < queue.resource.allotment;
+            Natural
+                extent;
+            extent = queue.first + queue.resource.allotment;
+            if (index < queue.first) {
+                if (extent <= Maximum)
+                    return false;
+                return index + count < extent - Maximum;
+            } else {
+                return index + count < extent;
+            }
         }
 
         template <
@@ -325,7 +350,9 @@ namespace ration {
             Referential< const Contractional< Natural, Maximum, Elemental > >
                 queue,
             Referential< Natural >
-                index
+                index,
+            Referential< const Natural >
+                count
         ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
@@ -334,9 +361,10 @@ namespace ration {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            if (index + 1 >= Maximum && queue.first + queue.resource.allotment > Maximum)
-                return index = 0;
-            return ++index;
+            Natural
+                offset;
+            offset = index + count;
+            return index = offset < Maximum ? offset : offset - Maximum;
         }
 
         template <
@@ -350,7 +378,9 @@ namespace ration {
             Referential< const Contractional< Natural, Maximum, Elemental > >
                 queue,
             Referential< Natural >
-                index
+                index,
+            Referential< const Natural >
+                count
         ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
@@ -359,9 +389,9 @@ namespace ration {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            if (!IncrementIsTraversable( queue, index ))
-                throw index;
-            return TraverseReadIncrement( queue, index );
+            if (!IncrementIsTraversable( queue, index, count ))
+                throw count;
+            return TraverseReadIncrement( queue, index, count );
         }
 
         template <
@@ -375,7 +405,9 @@ namespace ration {
             Referential< Contractional< Natural, Maximum, Elemental > >
                 queue,
             Referential< Natural >
-                index
+                index,
+            Referential< const Natural >
+                count
         ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
@@ -384,9 +416,10 @@ namespace ration {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            if (index + 1 >= Maximum && queue.first + queue.resource.allotment > Maximum)
-                return index = 0;
-            return ++index;
+            Natural
+                offset;
+            offset = index + count;
+            return index = offset < Maximum ? offset : offset - Maximum;
         }
 
         template <
@@ -400,7 +433,9 @@ namespace ration {
             Referential< Contractional< Natural, Maximum, Elemental > >
                 queue,
             Referential< Natural >
-                index
+                index,
+            Referential< const Natural >
+                count
         ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
@@ -409,9 +444,9 @@ namespace ration {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            if (!IncrementIsTraversable( queue, index ))
+            if (!IncrementIsTraversable( queue, index, count ))
                 throw index;
-            return TraverseWriteIncrement( queue, index );
+            return TraverseWriteIncrement( queue, index, count );
         }
 
         template <
@@ -425,7 +460,9 @@ namespace ration {
             Referential< const Contractional< Natural, Maximum, Elemental > >
                 queue,
             Referential< Natural >
-                index
+                index,
+            Referential< const Natural >
+                count
         ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
@@ -434,9 +471,12 @@ namespace ration {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            if (queue.first + queue.resource.allotment > Maximum)
-                return index = queue.first + queue.resource.allotment - Maximum - 1;
-            return queue.first + queue.resource.allotment - 1;
+            Natural
+                extent;
+            extent = queue.first + queue.resource.allotment;
+            if (extent > Maximum)
+                return index = extent - Maximum - 1 - count;
+            return extent - 1 - count;
         }
 
         template <
@@ -450,7 +490,9 @@ namespace ration {
             Referential< const Contractional< Natural, Maximum, Elemental > >
                 queue,
             Referential< Natural >
-                index
+                index,
+            Referential< const Natural >
+                count
         ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
@@ -459,9 +501,9 @@ namespace ration {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            if (!Begins( queue ))
+            if (!Begins( queue, count ))
                 throw queue.allotment;
-            return BeginReadDecrement( queue, index );
+            return BeginReadDecrement( queue, index, count );
         }
 
         template <
@@ -475,7 +517,9 @@ namespace ration {
             Referential< Contractional< Natural, Maximum, Elemental > >
                 queue,
             Referential< Natural >
-                index
+                index,
+            Referential< const Natural >
+                count
         ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
@@ -484,9 +528,12 @@ namespace ration {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            if (queue.first + queue.resource.allotment > Maximum)
-                return index = queue.first + queue.resource.allotment - Maximum - 1;
-            return queue.first + queue.resource.allotment - 1;
+            Natural
+                extent;
+            extent = queue.first + queue.resource.allotment;
+            if (extent > Maximum)
+                return index = extent - Maximum - 1 - count;
+            return extent - 1 - count;
         }
 
         template <
@@ -500,7 +547,9 @@ namespace ration {
             Referential< Contractional< Natural, Maximum, Elemental > >
                 queue,
             Referential< Natural >
-                index
+                index,
+            Referential< const Natural >
+                count
         ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
@@ -509,9 +558,9 @@ namespace ration {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            if (!Begins( queue ))
+            if (!Begins( queue, count ))
                 throw queue.allotment;
-            return BeginWriteDecrement( queue, index );
+            return BeginWriteDecrement( queue, index, count );
         }
 
         template <
@@ -525,7 +574,9 @@ namespace ration {
             Referential< const Contractional< Natural, Maximum, Elemental > >
                 queue,
             Referential< const Natural >
-                index
+                index,
+            Referential< const Natural >
+                count
         ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
@@ -534,9 +585,9 @@ namespace ration {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            if (index == 0)
-                return queue.first + queue.resource.allotment > Maximum;
-            return true;
+            if (count > index)
+                return Maximum + index - count >= queue.first;
+            return index - count >= queue.first;
         }
 
         template <
@@ -550,7 +601,9 @@ namespace ration {
             Referential< const Contractional< Natural, Maximum, Elemental > >
                 queue,
             Referential< Natural >
-                index
+                index,
+            Referential< const Natural >
+                count
         ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
@@ -559,9 +612,7 @@ namespace ration {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            if (index == 0 && queue.first + queue.resource.allotment > Maximum)
-                return index = Maximum - 1;
-            return --index;
+            return index = count > index ? Maximum + index - count : index - count;
         }
 
         template <
@@ -575,7 +626,9 @@ namespace ration {
             Referential< const Contractional< Natural, Maximum, Elemental > >
                 queue,
             Referential< Natural >
-                index
+                index,
+            Referential< const Natural >
+                count
         ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
@@ -584,9 +637,9 @@ namespace ration {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            if (!DecrementIsTraversable( queue, index ))
+            if (!DecrementIsTraversable( queue, index, count ))
                 throw index;
-            return TraverseReadDecrement( queue, index );
+            return TraverseReadDecrement( queue, index, count );
         }
 
         template <
@@ -600,7 +653,9 @@ namespace ration {
             Referential< Contractional< Natural, Maximum, Elemental > >
                 queue,
             Referential< Natural >
-                index
+                index,
+            Referential< const Natural >
+                count
         ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
@@ -609,9 +664,7 @@ namespace ration {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            if (index == 0 && queue.first + queue.resource.allotment > Maximum)
-                return index = Maximum - 1;
-            return --index;
+            return index = count > index ? Maximum + index - count : index - count;
         }
 
         template <
@@ -625,7 +678,9 @@ namespace ration {
             Referential< Contractional< Natural, Maximum, Elemental > >
                 queue,
             Referential< Natural >
-                index
+                index,
+            Referential< const Natural >
+                count
         ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
@@ -634,9 +689,9 @@ namespace ration {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            if (!DecrementIsTraversable( queue, index ))
+            if (!DecrementIsTraversable( queue, index, count ))
                 throw index;
-            return TraverseWriteDecrement( queue, index );
+            return TraverseWriteDecrement( queue, index, count );
         }
 
         template <
@@ -645,7 +700,7 @@ namespace ration {
                 Maximum,
             typename Elemental
         >
-        static inline void
+        static inline Referential< Contractional< Natural, Maximum, Elemental > >
         Initialize(
             Referential< Contractional< Natural, Maximum, Elemental > >
                 queue
@@ -657,7 +712,7 @@ namespace ration {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            queue = InitializedQueue< Natural, Maximum, Elemental >;
+            return queue = InitializedQueue< Natural, Maximum, Elemental >;
         }
 
         template <
@@ -724,6 +779,52 @@ namespace ration {
             );
 #endif
             return queue.resource.allotment;
+        }
+
+        template <
+            typename Natural,
+            Natural
+                Maximum,
+            typename Elemental
+        >
+        static inline Natural
+        CountIncrement(
+            Referential< const Contractional< Natural, Maximum, Elemental > >
+                queue,
+            Referential< const Natural >
+                index
+        ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
+            using namespace ::std;
+            static_assert(
+                is_integral< Natural >::value && is_unsigned< Natural >::value,
+                "Natural:  Unsigned integer type required"
+            );
+#endif
+            return queue.resource.allotment - 1 - index;
+        }
+
+        template <
+            typename Natural,
+            Natural
+                Maximum,
+            typename Elemental
+        >
+        static inline Natural
+        CountDecrement(
+            Referential< const Contractional< Natural, Maximum, Elemental > >
+                queue,
+            Referential< const Natural >
+                index
+        ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
+            using namespace ::std;
+            static_assert(
+                is_integral< Natural >::value && is_unsigned< Natural >::value,
+                "Natural:  Unsigned integer type required"
+            );
+#endif
+            return index;
         }
 
         template <
@@ -922,7 +1023,7 @@ namespace ration {
                 Maximum,
             typename Elemental
         >
-        constexpr Scalar< const Contractional< Natural, Maximum, Elemental >, Natural, const Elemental >
+        constexpr Scalar< const Contractional< Natural, Maximum, Elemental >, Natural, Natural, const Elemental >
         ReadIncrementScale = {
             Comparison< Natural >,
             BeginReadIncrement< Natural, Maximum, Elemental >,
@@ -936,7 +1037,7 @@ namespace ration {
                 Maximum,
             typename Elemental
         >
-        constexpr Scalar< const Contractional< Natural, Maximum, Elemental >, Natural, const Elemental >
+        constexpr Scalar< const Contractional< Natural, Maximum, Elemental >, Natural, Natural, const Elemental >
         SafeReadIncrementScale = {
             Comparison< Natural >,
             BeginReadIncrementSafely< Natural, Maximum, Elemental >,
@@ -950,7 +1051,7 @@ namespace ration {
                 Maximum,
             typename Elemental
         >
-        constexpr Scalar< Contractional< Natural, Maximum, Elemental >, Natural, Elemental >
+        constexpr Scalar< Contractional< Natural, Maximum, Elemental >, Natural, Natural, Elemental >
         WriteIncrementScale = {
             Comparison< Natural >,
             BeginWriteIncrement< Natural, Maximum, Elemental >,
@@ -964,7 +1065,7 @@ namespace ration {
                 Maximum,
             typename Elemental
         >
-        constexpr Scalar< Contractional< Natural, Maximum, Elemental >, Natural, Elemental >
+        constexpr Scalar< Contractional< Natural, Maximum, Elemental >, Natural, Natural, Elemental >
         SafeWriteIncrementScale = {
             Comparison< Natural >,
             BeginWriteIncrementSafely< Natural, Maximum, Elemental >,
@@ -978,7 +1079,7 @@ namespace ration {
                 Maximum,
             typename Elemental
         >
-        constexpr Scalar< const Contractional< Natural, Maximum, Elemental >, Natural, const Elemental >
+        constexpr Scalar< const Contractional< Natural, Maximum, Elemental >, Natural, Natural, const Elemental >
         ReadDecrementScale = {
             Comparison< Natural >,
             BeginReadDecrement< Natural, Maximum, Elemental >,
@@ -992,7 +1093,7 @@ namespace ration {
                 Maximum,
             typename Elemental
         >
-        constexpr Scalar< const Contractional< Natural, Maximum, Elemental >, Natural, const Elemental >
+        constexpr Scalar< const Contractional< Natural, Maximum, Elemental >, Natural, Natural, const Elemental >
         SafeReadDecrementScale = {
             Comparison< Natural >,
             BeginReadDecrementSafely< Natural, Maximum, Elemental >,
@@ -1006,7 +1107,7 @@ namespace ration {
                 Maximum,
             typename Elemental
         >
-        constexpr Scalar< Contractional< Natural, Maximum, Elemental >, Natural, Elemental >
+        constexpr Scalar< Contractional< Natural, Maximum, Elemental >, Natural, Natural, Elemental >
         WriteDecrementScale = {
             Comparison< Natural >,
             BeginWriteDecrement< Natural, Maximum, Elemental >,
@@ -1020,7 +1121,7 @@ namespace ration {
                 Maximum,
             typename Elemental
         >
-        constexpr Scalar< Contractional< Natural, Maximum, Elemental >, Natural, Elemental >
+        constexpr Scalar< Contractional< Natural, Maximum, Elemental >, Natural, Natural, Elemental >
         SafeWriteDecrementScale = {
             Comparison< Natural >,
             BeginWriteDecrementSafely< Natural, Maximum, Elemental >,
@@ -1034,7 +1135,7 @@ namespace ration {
                 Maximum,
             typename Elemental
         >
-        constexpr Lineal< const Contractional< Natural, Maximum, Elemental >, Natural, const Elemental >
+        constexpr Lineal< const Contractional< Natural, Maximum, Elemental >, Natural, Natural, const Elemental >
         ReadLiner = {
             ReadIncrementScale< Natural, Maximum, Elemental >,
             ReadDecrementScale< Natural, Maximum, Elemental >
@@ -1046,7 +1147,7 @@ namespace ration {
                 Maximum,
             typename Elemental
         >
-        constexpr Lineal< const Contractional< Natural, Maximum, Elemental >, Natural, const Elemental >
+        constexpr Lineal< const Contractional< Natural, Maximum, Elemental >, Natural, Natural, const Elemental >
         SafeReadLiner = {
             SafeReadIncrementScale< Natural, Maximum, Elemental >,
             SafeReadDecrementScale< Natural, Maximum, Elemental >
@@ -1058,7 +1159,7 @@ namespace ration {
                 Maximum,
             typename Elemental
         >
-        constexpr Lineal< Contractional< Natural, Maximum, Elemental >, Natural, Elemental >
+        constexpr Lineal< Contractional< Natural, Maximum, Elemental >, Natural, Natural, Elemental >
         WriteLiner = {
             WriteIncrementScale< Natural, Maximum, Elemental >,
             WriteDecrementScale< Natural, Maximum, Elemental >
@@ -1070,7 +1171,7 @@ namespace ration {
                 Maximum,
             typename Elemental
         >
-        constexpr Lineal< Contractional< Natural, Maximum, Elemental >, Natural, Elemental >
+        constexpr Lineal< Contractional< Natural, Maximum, Elemental >, Natural, Natural, Elemental >
         SafeWriteLiner = {
             SafeWriteIncrementScale< Natural, Maximum, Elemental >,
             SafeWriteDecrementScale< Natural, Maximum, Elemental >
@@ -1082,12 +1183,14 @@ namespace ration {
                 Maximum,
             typename Elemental
         >
-        constexpr Directional< const Contractional< Natural, Maximum, Elemental >, Natural, const Elemental >
+        constexpr Directional< const Contractional< Natural, Maximum, Elemental >, Natural, Natural, const Elemental >
         ReadIncrementDirection = {
             ReadIncrementScale< Natural, Maximum, Elemental >,
             Begins< Natural, Maximum, Elemental >,
             IncrementIsTraversable< Natural, Maximum, Elemental >,
-            Contains< Natural, Maximum, Elemental >
+            Contains< Natural, Maximum, Elemental >,
+            Account< Natural, Maximum, Elemental >,
+            CountIncrement< Natural, Maximum, Elemental >
         };
 
         template <
@@ -1096,12 +1199,14 @@ namespace ration {
                 Maximum,
             typename Elemental
         >
-        constexpr Directional< const Contractional< Natural, Maximum, Elemental >, Natural, const Elemental >
+        constexpr Directional< const Contractional< Natural, Maximum, Elemental >, Natural, Natural, const Elemental >
         SafeReadIncrementDirection = {
             SafeReadIncrementScale< Natural, Maximum, Elemental >,
             Begins< Natural, Maximum, Elemental >,
             IncrementIsTraversable< Natural, Maximum, Elemental >,
-            Contains< Natural, Maximum, Elemental >
+            Contains< Natural, Maximum, Elemental >,
+            Account< Natural, Maximum, Elemental >,
+            CountIncrement< Natural, Maximum, Elemental >
         };
 
         template <
@@ -1110,12 +1215,14 @@ namespace ration {
                 Maximum,
             typename Elemental
         >
-        constexpr Directional< Contractional< Natural, Maximum, Elemental >, Natural, Elemental >
+        constexpr Directional< Contractional< Natural, Maximum, Elemental >, Natural, Natural, Elemental >
         WriteIncrementDirection = {
             WriteIncrementScale< Natural, Maximum, Elemental >,
             Begins< Natural, Maximum, Elemental >,
             IncrementIsTraversable< Natural, Maximum, Elemental >,
-            Contains< Natural, Maximum, Elemental >
+            Contains< Natural, Maximum, Elemental >,
+            Account< Natural, Maximum, Elemental >,
+            CountIncrement< Natural, Maximum, Elemental >
         };
 
         template <
@@ -1124,12 +1231,14 @@ namespace ration {
                 Maximum,
             typename Elemental
         >
-        constexpr Directional< Contractional< Natural, Maximum, Elemental >, Natural, Elemental >
+        constexpr Directional< Contractional< Natural, Maximum, Elemental >, Natural, Natural, Elemental >
         SafeWriteIncrementDirection = {
             SafeWriteIncrementScale< Natural, Maximum, Elemental >,
             Begins< Natural, Maximum, Elemental >,
             IncrementIsTraversable< Natural, Maximum, Elemental >,
-            Contains< Natural, Maximum, Elemental >
+            Contains< Natural, Maximum, Elemental >,
+            Account< Natural, Maximum, Elemental >,
+            CountIncrement< Natural, Maximum, Elemental >
         };
 
         template <
@@ -1138,12 +1247,14 @@ namespace ration {
                 Maximum,
             typename Elemental
         >
-        constexpr Directional< const Contractional< Natural, Maximum, Elemental >, Natural, const Elemental >
+        constexpr Directional< const Contractional< Natural, Maximum, Elemental >, Natural, Natural, const Elemental >
         ReadDecrementDirection = {
             ReadDecrementScale< Natural, Maximum, Elemental >,
             Begins< Natural, Maximum, Elemental >,
             DecrementIsTraversable< Natural, Maximum, Elemental >,
-            Contains< Natural, Maximum, Elemental >
+            Contains< Natural, Maximum, Elemental >,
+            Account< Natural, Maximum, Elemental >,
+            CountDecrement< Natural, Maximum, Elemental >
         };
 
         template <
@@ -1152,12 +1263,14 @@ namespace ration {
                 Maximum,
             typename Elemental
         >
-        constexpr Directional< const Contractional< Natural, Maximum, Elemental >, Natural, const Elemental >
+        constexpr Directional< const Contractional< Natural, Maximum, Elemental >, Natural, Natural, const Elemental >
         SafeReadDecrementDirection = {
             SafeReadDecrementScale< Natural, Maximum, Elemental >,
             Begins< Natural, Maximum, Elemental >,
             DecrementIsTraversable< Natural, Maximum, Elemental >,
-            Contains< Natural, Maximum, Elemental >
+            Contains< Natural, Maximum, Elemental >,
+            Account< Natural, Maximum, Elemental >,
+            CountDecrement< Natural, Maximum, Elemental >
         };
 
         template <
@@ -1166,12 +1279,14 @@ namespace ration {
                 Maximum,
             typename Elemental
         >
-        constexpr Directional< Contractional< Natural, Maximum, Elemental >, Natural, Elemental >
+        constexpr Directional< Contractional< Natural, Maximum, Elemental >, Natural, Natural, Elemental >
         WriteDecrementDirection = {
             WriteDecrementScale< Natural, Maximum, Elemental >,
             Begins< Natural, Maximum, Elemental >,
             DecrementIsTraversable< Natural, Maximum, Elemental >,
-            Contains< Natural, Maximum, Elemental >
+            Contains< Natural, Maximum, Elemental >,
+            Account< Natural, Maximum, Elemental >,
+            CountDecrement< Natural, Maximum, Elemental >
         };
 
         template <
@@ -1180,12 +1295,14 @@ namespace ration {
                 Maximum,
             typename Elemental
         >
-        constexpr Directional< Contractional< Natural, Maximum, Elemental >, Natural, Elemental >
+        constexpr Directional< Contractional< Natural, Maximum, Elemental >, Natural, Natural, Elemental >
         SafeWriteDecrementDirection = {
             SafeWriteDecrementScale< Natural, Maximum, Elemental >,
             Begins< Natural, Maximum, Elemental >,
             DecrementIsTraversable< Natural, Maximum, Elemental >,
-            Contains< Natural, Maximum, Elemental >
+            Contains< Natural, Maximum, Elemental >,
+            Account< Natural, Maximum, Elemental >,
+            CountDecrement< Natural, Maximum, Elemental >
         };
 
         template <
@@ -1194,7 +1311,7 @@ namespace ration {
                 Maximum,
             typename Elemental
         >
-        constexpr Axial< const Contractional< Natural, Maximum, Elemental >, Natural, const Elemental >
+        constexpr Axial< const Contractional< Natural, Maximum, Elemental >, Natural, Natural, const Elemental >
         ReadAxis = {
             ReadIncrementDirection< Natural, Maximum, Elemental >,
             ReadDecrementDirection< Natural, Maximum, Elemental >
@@ -1206,7 +1323,7 @@ namespace ration {
                 Maximum,
             typename Elemental
         >
-        constexpr Axial< const Contractional< Natural, Maximum, Elemental >, Natural, const Elemental >
+        constexpr Axial< const Contractional< Natural, Maximum, Elemental >, Natural, Natural, const Elemental >
         SafeReadAxis = {
             SafeReadIncrementDirection< Natural, Maximum, Elemental >,
             SafeReadDecrementDirection< Natural, Maximum, Elemental >
@@ -1218,7 +1335,7 @@ namespace ration {
                 Maximum,
             typename Elemental
         >
-        constexpr Axial< Contractional< Natural, Maximum, Elemental >, Natural, Elemental >
+        constexpr Axial< Contractional< Natural, Maximum, Elemental >, Natural, Natural, Elemental >
         WriteAxis = {
             WriteIncrementDirection< Natural, Maximum, Elemental >,
             WriteDecrementDirection< Natural, Maximum, Elemental >
@@ -1230,7 +1347,7 @@ namespace ration {
                 Maximum,
             typename Elemental
         >
-        constexpr Axial< Contractional< Natural, Maximum, Elemental >, Natural, Elemental >
+        constexpr Axial< Contractional< Natural, Maximum, Elemental >, Natural, Natural, Elemental >
         SafeWriteAxis = {
             SafeWriteIncrementDirection< Natural, Maximum, Elemental >,
             SafeWriteDecrementDirection< Natural, Maximum, Elemental >

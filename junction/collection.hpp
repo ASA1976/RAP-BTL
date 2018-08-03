@@ -23,11 +23,12 @@ namespace junction {
         >
         Referential< bool(
             Referential< const Junctive< Natural, Elemental > >,
-            Referential< const Natural >,
             Referential< const Elemental >,
-            Referential< Positional< Elemental > >
+            Referential< Positional< Elemental > >,
+            Natural,
+            Natural
         ) >
-        SearchCollection = SearchBisectionally< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental, ReadAxis< Natural, Elemental >, Equate, Order >;
+        SearchCollection = SearchBisectionally< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental, ReadLiner< Natural, Elemental >, Equate, Order >;
 
         template <
             typename Natural,
@@ -56,11 +57,16 @@ namespace junction {
 				Search = SearchCollection< Natural, Elemental, Equate, Order >;
 #else
                 // Problem 286153 filed July 3 2018
-				Search = SearchBisectionally< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental, ReadAxis< Natural, Elemental >, Equate, Order >;
+				Search = SearchBisectionally< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental, ReadLiner< Natural, Elemental >, Equate, Order >;
 #endif
+            static const Natural
+                Zero = 0;
             Positional< Elemental >
                 position;
-            return Search( set, set.count, value, position );
+            if (!IncrementBegins( set, Zero ))
+                return false;
+            BeginReadIncrement( set, position, Zero );
+            return Search( set, value, position, Zero, Account( set ) - 1 );
         }
 
         template <
@@ -94,16 +100,23 @@ namespace junction {
 				Search = SearchCollection< Natural, Elemental, Equate, Order >;
 #else
                 // Problem 286153 filed July 3 2018
-				Search = SearchBisectionally< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental, ReadAxis< Natural, Elemental >, Equate, Order >;
+                Search = SearchBisectionally< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental, ReadLiner< Natural, Elemental >, Equate, Order >;
 #endif
+            static const Natural
+                Zero = 0,
+                One = 1;
 			Positional< Elemental >
                 position;
-            if (!set.last)
+            if (!IncrementBegins( set, Zero ))
                 return Proceed( set, value );
-			if (Search(set, set.count, value, position))
+            BeginWriteIncrement( set, position, Zero );
+            if (Search( set, value, position, Zero, Account( set ) - 1 ))
                 return false;
-            if (Order( GoRead( set, position ).to, value ))
-                return Proceed( set, value );
+            if (Order( GoRead( set, position ).to, value )) {
+                if (!IncrementTraversable( set, position, One ))
+                    return Proceed( set, value );
+                TraverseWriteIncrement( set, position, One );
+            }
             return Precede( set, position, value );
         }
 
@@ -136,13 +149,17 @@ namespace junction {
 				Search = SearchCollection< Natural, Elemental, Equate, Order >;
 #else
                 // Problem 286153 filed July 3 2018
-				Search = SearchBisectionally< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental, ReadAxis< Natural, Elemental >, Equate, Order >;
+                Search = SearchBisectionally< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental, ReadLiner< Natural, Elemental >, Equate, Order >;
 #endif
 			static const Natural
+                Zero = 0,
                 One = 1;
             Positional< Elemental >
                 position;
-            if (!Search( set, set.count, value, position ))
+            if (!IncrementBegins( set, Zero ))
+                return false;
+            BeginWriteIncrement( set, position, Zero );
+            if (!Search( set, value, position, Zero, Account( set ) - 1 ))
                 return false;
             return Concede( set, position, One );
         }
@@ -182,22 +199,43 @@ namespace junction {
 				Search = SearchCollection< Natural, Elemental, Equate, Order >;
 #else
                 // Problem 286153 filed July 3 2018
-				Search = SearchBisectionally< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental, ReadAxis< Natural, Elemental >, Equate, Order >;
+                Search = SearchBisectionally< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental, ReadLiner< Natural, Elemental >, Equate, Order >;
 #endif
-			static auto&
-                Discompose = DiscomposeCollection< Natural, Elemental, Concede, Equate, Order >;
+            static const Natural
+                Zero = 0,
+                One = 1;
             Positional< Elemental >
-                position;
-            if (Search( set, set.count, replacement, position ))
+                original_position,
+                replacement_position;
+            Natural
+                last;
+            if (!IncrementBegins( set, Zero ))
                 return false;
-            if (!Precede( set, position, replacement ))
+            BeginWriteIncrement( set, original_position, Zero );
+            BeginWriteIncrement( set, replacement_position, Zero );
+            last = Account( set ) - 1;
+            if (!Search( set, original, original_position, Zero, last ))
                 return false;
-            return Discompose( set, original );
+            if (Search( set, replacement, replacement_position, Zero, last ))
+                return false;
+            if (Order( GoRead( set, replacement_position ).to, replacement )) {
+                if (IncrementTraversable( set, replacement_position, One )) {
+                    TraverseWriteIncrement( set, replacement_position, One );
+                    if (!Precede( set, replacement_position, replacement ))
+                        return false;
+                } else if (!Proceed( set, replacement )) {
+                    return false;
+                }
+            } else if (!Precede( set, replacement_position, replacement )) {
+                return false;
+            }
+            return Concede( set, original_position, One );
         }
 
         template <
             typename Basic,
             typename BasicPositional,
+            typename BasicNatural,
             typename Natural,
             typename Elemental,
             Referential< Precedent< Natural, Elemental > >
@@ -213,7 +251,7 @@ namespace junction {
         CollateSelection(
             Referential< Junctive< Natural, Elemental > >
                 operand,
-            Referential< const Directional< const Basic, BasicPositional, const Elemental > >
+            Referential< const Directional< const Basic, BasicPositional, BasicNatural, const Elemental > >
                 basis,
             Referential< const Basic >
                 base
@@ -230,8 +268,11 @@ namespace junction {
 				Search = SearchCollection< Natural, Elemental, Equate, Order >;
 #else
                 // Problem 286153 filed July 3 2018
-				Search = SearchBisectionally< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental, ReadAxis< Natural, Elemental >, Equate, Order >;
+                Search = SearchBisectionally< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental, ReadLiner< Natural, Elemental >, Equate, Order >;
 #endif
+            static const Natural
+                Zero = 0,
+                One = 1;
 			auto&
                 scale = basis.scale;
             Positional< Elemental >
@@ -239,38 +280,47 @@ namespace junction {
             BasicPositional
                 base_position;
             Empty( operand );
-            scale.begin( base, base_position );
+            if (!basis.begins( base, 0 ))
+                return true;
+            scale.begin( base, base_position, 0 );
             if (!Proceed( operand, scale.go( base, base_position ).to ))
                 return false;
+            BeginWriteIncrement( operand, operand_position, Zero );
             while (true) {
-                if (!Search( operand, operand.count, scale.go( base, base_position ).to, operand_position )) {
+                if (!Search( operand, scale.go( base, base_position ).to, operand_position, Zero, Account( operand ) - 1 )) {
                     if (Order( GoRead( operand, operand_position ).to, scale.go( base, base_position ).to )) {
-                        if (!Proceed( operand, scale.go( base, base_position ).to ))
+                        if (!IncrementTraversable( operand, operand_position, One )) {
+                            TraverseWriteIncrement( operand, operand_position, One );
+                            if (!Precede( operand, operand_position, scale.go( base, base_position ).to ))
+                                return false;
+                        } else if (!Proceed( operand, scale.go( base, base_position ).to )) {
                             return false;
+                        }
                     } else {
                         if (!Precede( operand, operand_position, scale.go( base, base_position ).to ))
                             return false;
                     }
                 }
-                if (!basis.traversable( base, base_position ))
+                if (!basis.traversable( base, base_position, 1 ))
                     return true;
-                scale.traverse( base, base_position );
+                scale.traverse( base, base_position, 1 );
             }
         }
 
         template <
             typename Basic,
             typename BasicPositional,
+            typename BasicNatural,
             typename Natural,
             typename Elemental,
-            Referential< ConjointlyConsequent< Basic, BasicPositional, Natural, Elemental > >
+            Referential< ConjointlyConsequent< Basic, BasicPositional, BasicNatural, Natural, Elemental > >
                 ProceedMany
         >
         static inline bool
         CollateCollection(
             Referential< Junctive< Natural, Elemental > >
                 operand,
-            Referential< const Axial< const Basic, BasicPositional, const Elemental > >
+            Referential< const Axial< const Basic, BasicPositional, BasicNatural, const Elemental > >
                 basis,
             Referential< const Basic >
                 base
@@ -281,22 +331,28 @@ namespace junction {
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+            static_assert(
+                is_integral< BasicNatural >::value && is_unsigned< BasicNatural >::value,
+                "BasicNatural:  Unsigned integer type required"
+            );
 #endif
             BasicPositional
                 first, last;
             Empty( operand );
-            if (!basis.increment.begins( base ))
-                return false;
-            basis.increment.scale.begin( base, first );
-            basis.decrement.scale.begin( base, last );
+            if (!basis.increment.begins( base, 0 ))
+                return true;
+            basis.increment.scale.begin( base, first, 0 );
+            basis.decrement.scale.begin( base, last, 0 );
             return ProceedMany( operand, basis.increment, base, first, last );
         }
 
         template <
             typename Basic,
             typename BasicPositional,
+            typename BasicNatural,
             typename Relative,
             typename RelativePositional,
+            typename RelativeNatural,
             typename Natural,
             typename Elemental,
             Referential< Precedent< Natural, Elemental > >
@@ -312,11 +368,11 @@ namespace junction {
         ComplementSelections(
             Referential< Junctive< Natural, Elemental > >
                 operand,
-            Referential< const Directional< const Basic, BasicPositional, const Elemental > >
+            Referential< const Directional< const Basic, BasicPositional, BasicNatural, const Elemental > >
                 basis,
             Referential< const Basic >
                 base_set,
-            Referential< const Directional< const Relative, RelativePositional, const Elemental > >
+            Referential< const Directional< const Relative, RelativePositional, RelativeNatural, const Elemental > >
                 relativity,
             Referential< const Relative >
                 relative_set
@@ -327,9 +383,17 @@ namespace junction {
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+            static_assert(
+                is_integral< BasicNatural >::value && is_unsigned< BasicNatural >::value,
+                "BasicNatural:  Unsigned integer type required"
+            );
+            static_assert(
+                is_integral< RelativeNatural >::value && is_unsigned< RelativeNatural >::value,
+                "RelativeNatural:  Unsigned integer type required"
+            );
 #endif
             static auto&
-                SearchInBase = SearchLinearly< Basic, BasicPositional, Elemental, Equate >;
+                SearchInBase = SearchLinearly< Basic, BasicPositional, BasicNatural, Elemental, Equate >;
             static auto&
                 ComposeComplement = ComposeCollection< Natural, Elemental, Precede, Proceed, Equate, Order >;
             auto&
@@ -338,12 +402,16 @@ namespace junction {
                 base_position;
             RelativePositional
                 relative_position;
+            BasicNatural
+                extent;
             Empty( operand );
-            if (relativity.begins( relative_set )) {
-                for (scale.begin( relative_set, relative_position); true; scale.traverse( relative_set, relative_position )) {
-                    if (!SearchInBase( base_set, basis, scale.go( relative_set, relative_position ).to, base_position ))
+            if (relativity.begins( relative_set, 0 )) {
+                extent = basis.survey( base_set ) - 1;
+                for (scale.begin( relative_set, relative_position, 0 ); true; scale.traverse( relative_set, relative_position, 1 )) {
+                    basis.scale.begin( base_set, base_position, 0 );
+                    if (!SearchInBase( base_set, basis.scale, scale.go( relative_set, relative_position ).to, base_position, extent ))
                         ComposeComplement( operand, scale.go( relative_set, relative_position ).to );
-                    if (!relativity.traversable( relative_set, relative_position ))
+                    if (!relativity.traversable( relative_set, relative_position, 1 ))
                         break;
                 }
             }
@@ -353,8 +421,10 @@ namespace junction {
         template <
             typename Basic,
             typename BasicPositional,
+            typename BasicNatural,
             typename Relative,
             typename RelativePositional,
+            typename RelativeNatural,
             typename Natural,
             typename Elemental,
             Referential< Precedent< Natural, Elemental > >
@@ -370,11 +440,11 @@ namespace junction {
         DifferentiateSelections(
             Referential< Junctive< Natural, Elemental > >
                 operand,
-            Referential< const Directional< const Basic, BasicPositional, const Elemental > >
+            Referential< const Directional< const Basic, BasicPositional, BasicNatural, const Elemental > >
                 basis,
             Referential< const Basic >
                 base_set,
-            Referential< const Directional< const Relative, RelativePositional, const Elemental > >
+            Referential< const Directional< const Relative, RelativePositional, RelativeNatural, const Elemental > >
                 relativity,
             Referential< const Relative >
                 relative_set
@@ -385,32 +455,46 @@ namespace junction {
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+            static_assert(
+                is_integral< BasicNatural >::value && is_unsigned< BasicNatural >::value,
+                "BasicNatural:  Unsigned integer type required"
+            );
+            static_assert(
+                is_integral< RelativeNatural >::value && is_unsigned< RelativeNatural >::value,
+                "RelativeNatural:  Unsigned integer type required"
+            );
 #endif
             static auto&
-                SearchInBase = SearchLinearly< Basic, BasicPositional, Elemental, Equate >;
+                SearchInBase = SearchLinearly< Basic, BasicPositional, BasicNatural, Elemental, Equate >;
             static auto&
-                SearchInRelative = SearchLinearly< Relative, RelativePositional, Elemental, Equate >;
+                SearchInRelative = SearchLinearly< Relative, RelativePositional, RelativeNatural, Elemental, Equate >;
             static auto&
                 ComposeDifference = ComposeCollection< Natural, Elemental, Precede, Proceed, Equate, Order >;
             BasicPositional
                 base_position;
             RelativePositional
                 relative_position;
+            BasicNatural
+                base_extent;
+            RelativeNatural
+                relative_extent;
             Empty( operand );
-            if (basis.begins( base_set )) {
-                for (basis.scale.begin( base_set, base_position ); true; basis.scale.traverse( base_set, base_position )) {
-                    if (!SearchInRelative( relative_set, relativity, basis.scale.go( base_set, base_position ).to, relative_position ))
+            if (basis.begins( base_set, 0 )) {
+                relative_extent = relativity.survey( relative_set ) - 1;
+                for (basis.scale.begin( base_set, base_position, 0 ); true; basis.scale.traverse( base_set, base_position, 1 )) {
+                    if (!SearchInRelative( relative_set, relativity.scale, basis.scale.go( base_set, base_position ).to, relative_position, relative_extent ))
                         if (!Proceed( operand, basis.scale.go( base_set, base_position ).to ))
                             return false;
-                    if (!basis.traversable( base_set, base_position ))
+                    if (!basis.traversable( base_set, base_position, 1 ))
                         break;
                 }
             }
-            if (relativity.begins( relative_set )) {
-                for (relativity.scale.begin( relative_set, relative_position); true; relativity.scale.traverse( relative_set, relative_position )) {
-                    if (!SearchInBase( base_set, basis, relativity.scale.go( relative_set, relative_position ).to, base_position ))
+            if (relativity.begins( relative_set, 0 )) {
+                base_extent = basis.survey( base_set ) - 1;
+                for (relativity.scale.begin( relative_set, relative_position, 0 ); true; relativity.scale.traverse( relative_set, relative_position, 1 )) {
+                    if (!SearchInBase( base_set, basis.scale, relativity.scale.go( relative_set, relative_position ).to, base_position, base_extent ))
                         ComposeDifference( operand, relativity.scale.go( relative_set, relative_position ).to );
-                    if (!relativity.traversable( relative_set, relative_position ))
+                    if (!relativity.traversable( relative_set, relative_position, 1 ))
                         break;
                 }
             }
@@ -420,8 +504,10 @@ namespace junction {
         template <
             typename Basic,
             typename BasicPositional,
+            typename BasicNatural,
             typename Relative,
             typename RelativePositional,
+            typename RelativeNatural,
             typename Natural,
             typename Elemental,
             Referential< Precedent< Natural, Elemental > >
@@ -437,11 +523,11 @@ namespace junction {
         IntersectSelections(
             Referential< Junctive< Natural, Elemental > >
                 operand,
-            Referential< const Directional< const Basic, BasicPositional, const Elemental > >
+            Referential< const Directional< const Basic, BasicPositional, BasicNatural, const Elemental > >
                 basis,
             Referential< const Basic >
                 base_set,
-            Referential< const Directional< const Relative, RelativePositional, const Elemental > >
+            Referential< const Directional< const Relative, RelativePositional, RelativeNatural, const Elemental > >
                 relativity,
             Referential< const Relative >
                 relative_set
@@ -452,21 +538,32 @@ namespace junction {
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+            static_assert(
+                is_integral< BasicNatural >::value && is_unsigned< BasicNatural >::value,
+                "BasicNatural:  Unsigned integer type required"
+            );
+            static_assert(
+                is_integral< RelativeNatural >::value && is_unsigned< RelativeNatural >::value,
+                "RelativeNatural:  Unsigned integer type required"
+            );
 #endif
             static auto&
-                SearchInBase = SearchLinearly< Basic, BasicPositional, Elemental, Equate >;
+                SearchInBase = SearchLinearly< Basic, BasicPositional, BasicNatural, Elemental, Equate >;
             static auto&
                 ComposeIntersection = ComposeCollection< Natural, Elemental, Precede, Proceed, Equate, Order >;
             BasicPositional
                 base_position;
             RelativePositional
                 relative_position;
+            BasicNatural
+                extent;
             Empty( operand );
-            if (relativity.begins( relative_set )) {
-                for (relativity.scale.begin( relative_set, relative_position ); true; relativity.scale.traverse( relative_set, relative_position )) {
-                    if (SearchInBase( base_set, relativity, relativity.scale.go( relative_set, relative_position ).to, base_position ))
+            if (relativity.begins( relative_set, 0 )) {
+                extent = basis.survey( base_set ) - 1;
+                for (relativity.scale.begin( relative_set, relative_position, 0 ); true; relativity.scale.traverse( relative_set, relative_position, 1 )) {
+                    if (SearchInBase( base_set, relativity.scale, relativity.scale.go( relative_set, relative_position ).to, base_position, extent ))
                         ComposeIntersection( operand, relativity.scale.go( relative_set, relative_position ).to );
-                    if (!relativity.traversable( relative_set, relative_position ))
+                    if (!relativity.traversable( relative_set, relative_position, 1 ))
                         break;
                 }
             }
@@ -476,8 +573,10 @@ namespace junction {
         template <
             typename Basic,
             typename BasicPositional,
+            typename BasicNatural,
             typename Relative,
             typename RelativePositional,
+            typename RelativeNatural,
             typename Natural,
             typename Elemental,
             Referential< Precedent< Natural, Elemental > >
@@ -493,11 +592,11 @@ namespace junction {
         UniteSelections(
             Referential< Junctive< Natural, Elemental > >
                 operand,
-            Referential< const Directional< const Basic, BasicPositional, const Elemental > >
+            Referential< const Directional< const Basic, BasicPositional, BasicNatural, const Elemental > >
                 basis,
             Referential< const Basic >
                 base_set,
-            Referential< const Directional< const Relative, RelativePositional, const Elemental > >
+            Referential< const Directional< const Relative, RelativePositional, RelativeNatural, const Elemental > >
                 relativity,
             Referential< const Relative >
                 relative_set
@@ -508,6 +607,14 @@ namespace junction {
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+            static_assert(
+                is_integral< BasicNatural >::value && is_unsigned< BasicNatural >::value,
+                "BasicNatural:  Unsigned integer type required"
+            );
+            static_assert(
+                is_integral< RelativeNatural >::value && is_unsigned< RelativeNatural >::value,
+                "RelativeNatural:  Unsigned integer type required"
+            );
 #endif
             static auto&
                 ComposeUnion = ComposeCollection< Natural, Elemental, Precede, Proceed, Equate, Order >;
@@ -516,18 +623,18 @@ namespace junction {
             RelativePositional
                 relative_position;
             Empty( operand );
-            if (basis.begins( base_set )) {
-                for (basis.scale.begin( base_set, base_position ); true; basis.scale.traverse( base_set, base_position )) {
+            if (basis.begins( base_set, 0 )) {
+                for (basis.scale.begin( base_set, base_position, 0 ); true; basis.scale.traverse( base_set, base_position, 1 )) {
                     if (!Proceed( operand, basis.scale.go( base_set, base_position ).to ))
                         return false;
-                    if (!basis.traversable( base_set, base_position ))
+                    if (!basis.traversable( base_set, base_position, 1 ))
                         break;
                 }
             }
-            if (relativity.begins( relative_set )) {
-                for (relativity.scale.begin( relative_set, relative_position ); true; relativity.scale.traverse( relative_set, relative_position )) {
+            if (relativity.begins( relative_set, 0 )) {
+                for (relativity.scale.begin( relative_set, relative_position, 0 ); true; relativity.scale.traverse( relative_set, relative_position, 1 )) {
                     ComposeUnion( operand, relativity.scale.go( relative_set, relative_position ).to );
-                    if (!relativity.traversable( relative_set, relative_position ))
+                    if (!relativity.traversable( relative_set, relative_position, 1 ))
                         break;
                 }
             }
@@ -537,13 +644,15 @@ namespace junction {
         template <
             typename Basic,
             typename BasicPositional,
+            typename BasicNatural,
             typename Relative,
             typename RelativePositional,
+            typename RelativeNatural,
             typename Natural,
             typename Elemental,
             Referential< Consequent< Natural, Elemental > >
                 ProceedOne,
-            Referential< ConjointlyConsequent< Relative, RelativePositional, Natural, Elemental > >
+            Referential< ConjointlyConsequent< Relative, RelativePositional, RelativeNatural, Natural, Elemental > >
                 ProceedMany,
             Referential< Assortive< Elemental > >
                 Equate,
@@ -554,11 +663,11 @@ namespace junction {
         ComplementCollections(
             Referential< Junctive< Natural, Elemental > >
                 operand,
-            Referential< const Axial< const Basic, BasicPositional, const Elemental > >
+            Referential< const Axial< const Basic, BasicPositional, BasicNatural, const Elemental > >
                 basis,
             Referential< const Basic >
                 base_set,
-            Referential< const Axial< const Relative, RelativePositional, const Elemental > >
+            Referential< const Axial< const Relative, RelativePositional, RelativeNatural, const Elemental > >
                 relativity,
             Referential< const Relative >
                 relative_set
@@ -568,6 +677,14 @@ namespace junction {
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
+            );
+            static_assert(
+                is_integral< BasicNatural >::value && is_unsigned< BasicNatural >::value,
+                "BasicNatural:  Unsigned integer type required"
+            );
+            static_assert(
+                is_integral< RelativeNatural >::value && is_unsigned< RelativeNatural >::value,
+                "RelativeNatural:  Unsigned integer type required"
             );
 #endif
             Referential< Expositive< const Basic, BasicPositional, const Elemental > >
@@ -579,32 +696,32 @@ namespace junction {
             RelativePositional
                 opposition, last;
             Empty( operand );
-            if (relativity.increment.begins( relative_set )) {
-                relativity.increment.scale.begin( relative_set, opposition );
-                if (basis.increment.begins( base_set )) {
-                    basis.increment.scale.begin( base_set, position );
+            if (relativity.increment.begins( relative_set, 0 )) {
+                relativity.increment.scale.begin( relative_set, opposition, 0 );
+                if (basis.increment.begins( base_set, 0 )) {
+                    basis.increment.scale.begin( base_set, position, 0 );
                     while (true) {
                         if (Equate( go_basis( base_set, position ).to, go_relativity( relative_set, opposition ).to )) {
-                            if (!relativity.increment.traversable( relative_set, opposition ))
+                            if (!relativity.increment.traversable( relative_set, opposition, 1 ))
                                 return true;
-                            relativity.increment.scale.traverse( relative_set, opposition );
-                            if (!basis.increment.traversable( base_set, position ))
+                            relativity.increment.scale.traverse( relative_set, opposition, 1 );
+                            if (!basis.increment.traversable( base_set, position, 1 ))
                                 break;
-                            basis.increment.scale.traverse( base_set, position );
+                            basis.increment.scale.traverse( base_set, position, 1 );
                         } else if (Order( go_basis( base_set, position ).to, go_relativity( relative_set, opposition ).to )) {
-                            if (!basis.increment.traversable( base_set, position ))
+                            if (!basis.increment.traversable( base_set, position, 1 ))
                                 break;
-                            basis.increment.scale.traverse( base_set, position );
+                            basis.increment.scale.traverse( base_set, position, 1 );
                         } else {
                             if (!ProceedOne( operand, go_relativity( relative_set, opposition ).to ) )
                                 return false;
-                            if (!relativity.increment.traversable( relative_set, opposition ))
+                            if (!relativity.increment.traversable( relative_set, opposition, 1 ))
                                 return true;
-                            relativity.increment.scale.traverse( relative_set, opposition );
+                            relativity.increment.scale.traverse( relative_set, opposition, 1 );
                         }
                     }
                 }
-                relativity.decrement.scale.begin( relative_set, last );
+                relativity.decrement.scale.begin( relative_set, last, 0 );
                 if (!ProceedMany( operand, relativity.increment, relative_set, opposition, last ))
                     return false;
             }
@@ -614,15 +731,17 @@ namespace junction {
         template <
             typename Basic,
             typename BasicPositional,
+            typename BasicNatural,
             typename Relative,
             typename RelativePositional,
+            typename RelativeNatural,
             typename Natural,
             typename Elemental,
             Referential< Consequent< Natural, Elemental > >
                 ProceedOne,
-            Referential< ConjointlyConsequent< Basic, BasicPositional, Natural, Elemental > >
+            Referential< ConjointlyConsequent< Basic, BasicPositional, BasicNatural, Natural, Elemental > >
                 ProceedManyFromBase,
-            Referential< ConjointlyConsequent< Relative, RelativePositional, Natural, Elemental > >
+            Referential< ConjointlyConsequent< Relative, RelativePositional, RelativeNatural, Natural, Elemental > >
                 ProceedManyFromRelative,
             Referential< Assortive< Elemental > >
                 Equate,
@@ -633,11 +752,11 @@ namespace junction {
         DifferentiateCollections(
             Referential< Junctive< Natural, Elemental > >
                 operand,
-            Referential< const Axial< const Basic, BasicPositional, const Elemental > >
+            Referential< const Axial< const Basic, BasicPositional, BasicNatural, const Elemental > >
                 basis,
             Referential< const Basic >
                 base_set,
-            Referential< const Axial< const Relative, RelativePositional, const Elemental > >
+            Referential< const Axial< const Relative, RelativePositional, RelativeNatural, const Elemental > >
                 relativity,
             Referential< const Relative >
                 relative_set
@@ -647,6 +766,14 @@ namespace junction {
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
+            );
+            static_assert(
+                is_integral< BasicNatural >::value && is_unsigned< BasicNatural >::value,
+                "BasicNatural:  Unsigned integer type required"
+            );
+            static_assert(
+                is_integral< RelativeNatural >::value && is_unsigned< RelativeNatural >::value,
+                "RelativeNatural:  Unsigned integer type required"
             );
 #endif
             Referential< Expositive< const Basic, BasicPositional, const Elemental > >
@@ -661,57 +788,55 @@ namespace junction {
                 RemainingBase = [&]{
                     BasicPositional
                         last;
-                    basis.decrement.scale.begin( base_set, last );
+                    basis.decrement.scale.begin( base_set, last, 0 );
                     return ProceedManyFromBase( operand, basis.increment, base_set, position, last );
                 };
             auto
                 RemainingRelative = [&]{
                     RelativePositional
                         last;
-                    relativity.decrement.scale.begin( relative_set, last );
+                    relativity.decrement.scale.begin( relative_set, last, 0 );
                     return ProceedManyFromRelative( operand, relativity.increment, relative_set, opposition, last );
                 };
             Empty( operand );
-            if (!basis.increment.begins( base_set )) {
-                if (relativity.increment.begins( relative_set )) {
-                    relativity.increment.scale.begin( relative_set, opposition );
+            if (!basis.increment.begins( base_set, 0 )) {
+                if (relativity.increment.begins( relative_set, 0 )) {
+                    relativity.increment.scale.begin( relative_set, opposition, 0 );
                     return RemainingRelative();
                 }
-            } else if (!relativity.increment.begins( relative_set )) {
-                if (basis.increment.begins( base_set )) {
-                    basis.increment.scale.begin( base_set, position );
+            } else if (!relativity.increment.begins( relative_set, 0 )) {
+                if (basis.increment.begins( base_set, 0 )) {
+                    basis.increment.scale.begin( base_set, position, 0 );
                     return RemainingBase();
                 }
             } else {
-                basis.increment.scale.begin( base_set, position );
-                relativity.increment.scale.begin( relative_set, opposition );
+                basis.increment.scale.begin( base_set, position, 0 );
+                relativity.increment.scale.begin( relative_set, opposition, 0 );
                 while (true) {
                     if (Equate( go_basis( base_set, position ).to, go_relativity( relative_set, opposition ).to )) {
-                        if (!basis.increment.traversable( base_set, position )) {
-                            if (!relativity.increment.traversable( relative_set, opposition ))
+                        if (!basis.increment.traversable( base_set, position, 1 )) {
+                            if (!relativity.increment.traversable( relative_set, opposition, 1 ))
                                 return true;
-                            basis.increment.scale.traverse( base_set, position );
-                            return RemainingBase();
-                        } else if (!relativity.increment.traversable( relative_set, opposition )) {
-                            if (!basis.increment.traversable( base_set, position ))
-                                return true;
-                            relativity.increment.scale.traverse( relative_set, opposition );
+                            relativity.increment.scale.traverse( relative_set, opposition, 1 );
                             return RemainingRelative();
+                        } else if (!relativity.increment.traversable( relative_set, opposition, 1 )) {
+                            basis.increment.scale.traverse( base_set, position, 1 );
+                            return RemainingBase();
                         }
-                        basis.increment.scale.traverse( base_set, opposition );
-                        relativity.increment.scale.traverse( relative_set, opposition );
+                        basis.increment.scale.traverse( base_set, position, 1 );
+                        relativity.increment.scale.traverse( relative_set, opposition, 1 );
                     } else if (Order( go_basis( base_set, position ).to, go_relativity( relative_set, opposition ).to )) {
                         if (!ProceedOne( operand, go_basis( base_set, position ).to ))
                             return false;
-                        if (!basis.increment.traversable( base_set, position ))
+                        if (!basis.increment.traversable( base_set, position, 1 ))
                             return RemainingRelative();
-                        basis.increment.scale.traverse( base_set, position );
+                        basis.increment.scale.traverse( base_set, position, 1 );
                     } else {
                         if (!ProceedOne( operand, go_relativity( relative_set, opposition ).to ))
                             return false;
-                        if (!relativity.increment.traversable( relative_set, opposition ))
+                        if (!relativity.increment.traversable( relative_set, opposition, 1 ))
                             return RemainingBase();
-                        relativity.increment.scale.traverse( relative_set, opposition );
+                        relativity.increment.scale.traverse( relative_set, opposition, 1 );
                     }
                 }
             }
@@ -721,8 +846,10 @@ namespace junction {
         template <
             typename Basic,
             typename BasicPositional,
+            typename BasicNatural,
             typename Relative,
             typename RelativePositional,
+            typename RelativeNatural,
             typename Natural,
             typename Elemental,
             Referential< Consequent< Natural, Elemental > >
@@ -736,11 +863,11 @@ namespace junction {
         IntersectCollections(
             Referential< Junctive< Natural, Elemental > >
                 operand,
-            Referential< const Axial< const Basic, BasicPositional, const Elemental > >
+            Referential< const Axial< const Basic, BasicPositional, BasicNatural, const Elemental > >
                 basis,
             Referential< const Basic >
                 base_set,
-            Referential< const Axial< const Relative, RelativePositional, const Elemental > >
+            Referential< const Axial< const Relative, RelativePositional, RelativeNatural, const Elemental > >
                 relativity,
             Referential< const Relative >
                 relative_set
@@ -750,6 +877,14 @@ namespace junction {
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
+            );
+            static_assert(
+                is_integral< BasicNatural >::value && is_unsigned< BasicNatural >::value,
+                "BasicNatural:  Unsigned integer type required"
+            );
+            static_assert(
+                is_integral< RelativeNatural >::value && is_unsigned< RelativeNatural >::value,
+                "RelativeNatural:  Unsigned integer type required"
             );
 #endif
             Referential< Expositive< const Basic, BasicPositional, const Elemental > >
@@ -761,28 +896,28 @@ namespace junction {
             RelativePositional
                 opposition;
             Empty( operand );
-            if (!basis.increment.begins( base_set ) || !relativity.increment.begins( relative_set ))
+            if (!basis.increment.begins( base_set, 0 ) || !relativity.increment.begins( relative_set, 0 ))
                 return true;
-            basis.increment.scale.begin( base_set, position );
-            relativity.increment.scale.begin( relative_set, opposition );
+            basis.increment.scale.begin( base_set, position, 0 );
+            relativity.increment.scale.begin( relative_set, opposition, 0 );
             while (true) {
                 if (Equate( go_basis( base_set, position ).to, go_relativity( relative_set, opposition ).to )) {
                     if (!Proceed( operand, go_basis( base_set, position ).to ))
                         return false;
-                    if (!basis.increment.traversable( base_set, position ))
+                    if (!basis.increment.traversable( base_set, position, 1 ))
                         return true;
-                    if (!relativity.increment.traversable( relative_set, opposition ))
+                    if (!relativity.increment.traversable( relative_set, opposition, 1 ))
                         return true;
-                    basis.increment.scale.traverse( base_set, position );
-                    relativity.increment.scale.traverse( relative_set, opposition );
+                    basis.increment.scale.traverse( base_set, position, 1 );
+                    relativity.increment.scale.traverse( relative_set, opposition, 1 );
                 } else if (Order( go_basis( base_set, position ).to, go_relativity( relative_set, opposition ).to )) {
-                    if (!basis.increment.traversable( base_set, position ))
+                    if (!basis.increment.traversable( base_set, position, 1 ))
                         return true;
-                    basis.increment.scale.traverse( base_set, position );
+                    basis.increment.scale.traverse( base_set, position, 1 );
                 } else {
-                    if (!relativity.increment.traversable( relative_set, opposition ))
+                    if (!relativity.increment.traversable( relative_set, opposition, 1 ))
                         return true;
-                    relativity.increment.scale.traverse( relative_set, opposition );
+                    relativity.increment.scale.traverse( relative_set, opposition, 1 );
                 }
             }
             return true;
@@ -791,15 +926,17 @@ namespace junction {
         template <
             typename Basic,
             typename BasicPositional,
+            typename BasicNatural,
             typename Relative,
             typename RelativePositional,
+            typename RelativeNatural,
             typename Natural,
             typename Elemental,
             Referential< Consequent< Natural, Elemental > >
                 ProceedOne,
-            Referential< ConjointlyConsequent< Basic, BasicPositional, Natural, Elemental > >
+            Referential< ConjointlyConsequent< Basic, BasicPositional, BasicNatural, Natural, Elemental > >
                 ProceedManyFromBase,
-            Referential< ConjointlyConsequent< Relative, RelativePositional, Natural, Elemental > >
+            Referential< ConjointlyConsequent< Relative, RelativePositional, RelativeNatural, Natural, Elemental > >
                 ProceedManyFromRelative,
             Referential< Assortive< Elemental > >
                 Equate,
@@ -810,11 +947,11 @@ namespace junction {
         UniteCollections(
             Referential< Junctive< Natural, Elemental > >
                 operand,
-            Referential< const Axial< const Basic, BasicPositional, const Elemental > >
+            Referential< const Axial< const Basic, BasicPositional, BasicNatural, const Elemental > >
                 basis,
             Referential< const Basic >
                 base_set,
-            Referential< const Axial< const Relative, RelativePositional, const Elemental > >
+            Referential< const Axial< const Relative, RelativePositional, RelativeNatural, const Elemental > >
                 relativity,
             Referential< const Relative >
                 relative_set
@@ -824,6 +961,14 @@ namespace junction {
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
+            );
+            static_assert(
+                is_integral< BasicNatural >::value && is_unsigned< BasicNatural >::value,
+                "BasicNatural:  Unsigned integer type required"
+            );
+            static_assert(
+                is_integral< RelativeNatural >::value && is_unsigned< RelativeNatural >::value,
+                "RelativeNatural:  Unsigned integer type required"
             );
 #endif
             Referential< Expositive< const Basic, BasicPositional, const Elemental > >
@@ -838,52 +983,55 @@ namespace junction {
                 RemainingBase = [&]{
                     BasicPositional
                         last;
-                    basis.decrement.scale.begin( base_set, last );
+                    basis.decrement.scale.begin( base_set, last, 0 );
                     return ProceedManyFromBase( operand, basis.increment, base_set, position, last );
                 };
             auto
                 RemainingRelative = [&]{
                     RelativePositional
                         last;
-                    relativity.decrement.scale.begin( relative_set, last );
+                    relativity.decrement.scale.begin( relative_set, last, 0 );
                     return ProceedManyFromRelative( operand, relativity.increment, relative_set, apposition, last );
                 };
             Empty( operand );
-            if (!basis.increment.begins( base_set )) {
-                if (!relativity.increment.begins( relative_set ))
+            if (!basis.increment.begins( base_set, 0 )) {
+                if (!relativity.increment.begins( relative_set, 0 ))
                     return true;
-                relativity.increment.scale.begin( relative_set, apposition );
+                relativity.increment.scale.begin( relative_set, apposition, 0 );
                 return RemainingRelative();
-            } else if (!relativity.increment.begins( relative_set )) {
-                basis.increment.scale.begin( base_set, position );
+            } else if (!relativity.increment.begins( relative_set, 0 )) {
+                basis.increment.scale.begin( base_set, position, 0 );
                 return RemainingBase();
             }
-            basis.increment.scale.begin( base_set, position );
-            relativity.increment.scale.begin( relative_set, apposition );
+            basis.increment.scale.begin( base_set, position, 0 );
+            relativity.increment.scale.begin( relative_set, apposition, 0 );
             while (true) {
                 if (Equate( go_basis( base_set, position ).to, go_relativity( relative_set, apposition ).to )) {
                     if (!ProceedOne( operand, go_basis( base_set, position ).to ))
                         return false;
-                    if (!basis.increment.traversable( base_set, position )) {
-                        if (!relativity.increment.traversable( relative_set, apposition ))
+                    if (!basis.increment.traversable( base_set, position, 1 )) {
+                        if (!relativity.increment.traversable( relative_set, apposition, 1 ))
                             return true;
+                        relativity.increment.scale.traverse( relative_set, apposition, 1 );
                         return RemainingRelative();
-                    } else if (!relativity.increment.traversable( relative_set, apposition ))
+                    } else if (!relativity.increment.traversable( relative_set, apposition, 1 )) {
+                        basis.increment.scale.traverse( base_set, position, 1 );
                         return RemainingBase();
-                    basis.increment.scale.traverse( base_set, position );
-                    relativity.increment.scale.traverse( relative_set, apposition );
+                    }
+                    basis.increment.scale.traverse( base_set, position, 1 );
+                    relativity.increment.scale.traverse( relative_set, apposition, 1 );
                 } else if (Order( go_basis( base_set, position ).to, go_relativity( relative_set, apposition ).to )) {
                     if (!ProceedOne( operand, go_basis( base_set, position ).to ))
                         return false;
-                    if (!basis.increment.traversable( base_set, position ))
+                    if (!basis.increment.traversable( base_set, position, 1 ))
                         return RemainingRelative();
-                    basis.increment.scale.traverse( base_set, position );
+                    basis.increment.scale.traverse( base_set, position, 1 );
                 } else {
                     if (!ProceedOne( operand, go_relativity( relative_set, apposition ).to ))
                         return false;
-                    if (!relativity.increment.traversable( relative_set, apposition ))
+                    if (!relativity.increment.traversable( relative_set, apposition, 1 ))
                         return RemainingBase();
-                    relativity.increment.scale.traverse( relative_set, apposition );
+                    relativity.increment.scale.traverse( relative_set, apposition, 1 );
                 }
             }
         }
@@ -933,8 +1081,10 @@ namespace junction {
         template <
             typename Basic,
             typename BasicPositional,
+            typename BasicNatural,
             typename Relative,
             typename RelativePositional,
+            typename RelativeNatural,
             typename Natural,
             typename Elemental,
             Referential< const Adjunctive< Natural, Elemental > >
@@ -944,19 +1094,21 @@ namespace junction {
             Referential< Assortive< Elemental > >
                 Order
         >
-        constexpr Sectional< Junctive< Natural, Elemental >, Basic, BasicPositional, Relative, RelativePositional, Elemental >
+        constexpr Sectional< Junctive< Natural, Elemental >, Basic, BasicPositional, BasicNatural, Relative, RelativePositional, RelativeNatural, Elemental >
         JunctionOrderSection = {
-            ComplementSelections< Basic, BasicPositional, Relative, RelativePositional, Natural, Elemental, Precede< Natural, Elemental, Adjunct >, Proceed< Natural, Elemental, Adjunct >, Equate, Order >,
-            DifferentiateSelections< Basic, BasicPositional, Relative, RelativePositional, Natural, Elemental, Precede< Natural, Elemental, Adjunct >, Proceed< Natural, Elemental, Adjunct >, Equate, Order >,
-            IntersectSelections< Basic, BasicPositional, Relative, RelativePositional, Natural, Elemental, Precede< Natural, Elemental, Adjunct >, Proceed< Natural, Elemental, Adjunct >, Equate, Order >,
-            UniteSelections< Basic, BasicPositional, Relative, RelativePositional, Natural, Elemental, Precede< Natural, Elemental, Adjunct >, Proceed< Natural, Elemental, Adjunct >, Equate, Order >
+            ComplementSelections< Basic, BasicPositional, BasicNatural, Relative, RelativePositional, RelativeNatural, Natural, Elemental, Precede< Natural, Elemental, Adjunct >, Proceed< Natural, Elemental, Adjunct >, Equate, Order >,
+            DifferentiateSelections< Basic, BasicPositional, BasicNatural, Relative, RelativePositional, RelativeNatural, Natural, Elemental, Precede< Natural, Elemental, Adjunct >, Proceed< Natural, Elemental, Adjunct >, Equate, Order >,
+            IntersectSelections< Basic, BasicPositional, BasicNatural, Relative, RelativePositional, RelativeNatural, Natural, Elemental, Precede< Natural, Elemental, Adjunct >, Proceed< Natural, Elemental, Adjunct >, Equate, Order >,
+            UniteSelections< Basic, BasicPositional, BasicNatural, Relative, RelativePositional, RelativeNatural, Natural, Elemental, Precede< Natural, Elemental, Adjunct >, Proceed< Natural, Elemental, Adjunct >, Equate, Order >
         };
 
         template <
             typename Basic,
             typename BasicPositional,
+            typename BasicNatural,
             typename Relative,
             typename RelativePositional,
+            typename RelativeNatural,
             typename Natural,
             typename Elemental,
             Referential< const Adjunctive< Natural, Elemental > >
@@ -966,12 +1118,12 @@ namespace junction {
             Referential< Assortive< Elemental > >
                 Order
         >
-        constexpr Sectional< Junctive< Natural, Elemental >, Basic, BasicPositional, Relative, RelativePositional, Elemental >
+        constexpr Sectional< Junctive< Natural, Elemental >, Basic, BasicPositional, BasicNatural, Relative, RelativePositional, RelativeNatural, Elemental >
         SafeJunctionOrderSection = {
-            ComplementSelections< Basic, BasicPositional, Relative, RelativePositional, Natural, Elemental, PrecedeSafely< Natural, Elemental, Adjunct >, Proceed< Natural, Elemental, Adjunct >, Equate, Order >,
-            DifferentiateSelections< Basic, BasicPositional, Relative, RelativePositional, Natural, Elemental, PrecedeSafely< Natural, Elemental, Adjunct >, Proceed< Natural, Elemental, Adjunct >, Equate, Order >,
-            IntersectSelections< Basic, BasicPositional, Relative, RelativePositional, Natural, Elemental, PrecedeSafely< Natural, Elemental, Adjunct >, Proceed< Natural, Elemental, Adjunct >, Equate, Order >,
-            UniteSelections< Basic, BasicPositional, Relative, RelativePositional, Natural, Elemental, PrecedeSafely< Natural, Elemental, Adjunct >, Proceed< Natural, Elemental, Adjunct >, Equate, Order >
+            ComplementSelections< Basic, BasicPositional, BasicNatural, Relative, RelativePositional, RelativeNatural, Natural, Elemental, PrecedeSafely< Natural, Elemental, Adjunct >, Proceed< Natural, Elemental, Adjunct >, Equate, Order >,
+            DifferentiateSelections< Basic, BasicPositional, BasicNatural, Relative, RelativePositional, RelativeNatural, Natural, Elemental, PrecedeSafely< Natural, Elemental, Adjunct >, Proceed< Natural, Elemental, Adjunct >, Equate, Order >,
+            IntersectSelections< Basic, BasicPositional, BasicNatural, Relative, RelativePositional, RelativeNatural, Natural, Elemental, PrecedeSafely< Natural, Elemental, Adjunct >, Proceed< Natural, Elemental, Adjunct >, Equate, Order >,
+            UniteSelections< Basic, BasicPositional, BasicNatural, Relative, RelativePositional, RelativeNatural, Natural, Elemental, PrecedeSafely< Natural, Elemental, Adjunct >, Proceed< Natural, Elemental, Adjunct >, Equate, Order >
         };
 
         template <
@@ -987,9 +1139,9 @@ namespace junction {
         constexpr Selective< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental >
         JunctionOrderSelector = {
             JunctionOrderComposer< Natural, Elemental, Adjunct, Equate, Order >,
-            JunctionOrderSection< Junctive< Natural, Elemental >, Positional< Elemental >, Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental, Adjunct, Equate, Order >,
-            CollateSelection< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental, Precede< Natural, Elemental, Adjunct >, Proceed< Natural, Elemental, Adjunct >, Equate, Order >,
-            EquateSelections< Junctive< Natural, Elemental >, Positional< Elemental >, Junctive< Natural, Elemental >, Positional< Elemental >, Elemental, Equate >,
+            JunctionOrderSection< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Natural, Elemental, Adjunct, Equate, Order >,
+            CollateSelection< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Natural, Elemental, Precede< Natural, Elemental, Adjunct >, Proceed< Natural, Elemental, Adjunct >, Equate, Order >,
+            EquateSelections< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental, Equate >,
             Account< Natural, Elemental >
        };
 
@@ -1006,17 +1158,19 @@ namespace junction {
         constexpr Selective< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental >
         SafeJunctionOrderSelector = {
             SafeJunctionOrderComposer< Natural, Elemental, Adjunct, Equate, Order >,
-            SafeJunctionOrderSection< Junctive< Natural, Elemental >, Positional< Elemental >, Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental, Adjunct, Equate, Order >,
-            CollateSelection< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental, PrecedeSafely< Natural, Elemental, Adjunct >, Proceed< Natural, Elemental, Adjunct >, Equate, Order >,
-            EquateSelections< Junctive< Natural, Elemental >, Positional< Elemental >, Junctive< Natural, Elemental >, Positional< Elemental >, Elemental, Equate >,
+            SafeJunctionOrderSection< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Natural, Elemental, Adjunct, Equate, Order >,
+            CollateSelection< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Natural, Elemental, PrecedeSafely< Natural, Elemental, Adjunct >, Proceed< Natural, Elemental, Adjunct >, Equate, Order >,
+            EquateSelections< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental, Equate >,
             Account< Natural, Elemental >
         };
 
         template <
             typename Basic,
             typename BasicPositional,
+            typename BasicNatural,
             typename Relative,
             typename RelativePositional,
+            typename RelativeNatural,
             typename Natural,
             typename Elemental,
             Referential< const Adjunctive< Natural, Elemental > >
@@ -1026,12 +1180,12 @@ namespace junction {
             Referential< Assortive< Elemental > >
                 Order
         >
-        constexpr Bisectional< Junctive< Natural, Elemental >, Basic, BasicPositional, Relative, RelativePositional, Elemental >
+        constexpr Bisectional< Junctive< Natural, Elemental >, Basic, BasicPositional, BasicNatural, Relative, RelativePositional, RelativeNatural, Elemental >
         JunctionBisection = {
-            ComplementCollections< Basic, BasicPositional, Relative, RelativePositional, Natural, Elemental, Proceed< Natural, Elemental, Adjunct >, Proceed< Relative, RelativePositional, Natural, Elemental, Adjunct >, Equate, Order >,
-            DifferentiateCollections< Basic, BasicPositional, Relative, RelativePositional, Natural, Elemental, Proceed< Natural, Elemental, Adjunct >, Proceed< Basic, BasicPositional, Natural, Elemental, Adjunct >, Proceed< Relative, RelativePositional, Natural, Elemental, Adjunct >, Equate, Order >,
-            IntersectCollections< Basic, BasicPositional, Relative, RelativePositional, Natural, Elemental, Proceed< Natural, Elemental, Adjunct >, Equate, Order >,
-            UniteCollections< Basic, BasicPositional, Relative, RelativePositional, Natural, Elemental, Proceed< Natural, Elemental, Adjunct >, Proceed< Basic, BasicPositional, Natural, Elemental, Adjunct >, Proceed< Relative, RelativePositional, Natural, Elemental, Adjunct >, Equate, Order >
+            ComplementCollections< Basic, BasicPositional, BasicNatural, Relative, RelativePositional, RelativeNatural, Natural, Elemental, Proceed< Natural, Elemental, Adjunct >, Proceed< Relative, RelativePositional, RelativeNatural, Natural, Elemental, Adjunct >, Equate, Order >,
+            DifferentiateCollections< Basic, BasicPositional, BasicNatural, Relative, RelativePositional, RelativeNatural, Natural, Elemental, Proceed< Natural, Elemental, Adjunct >, Proceed< Basic, BasicPositional, BasicNatural, Natural, Elemental, Adjunct >, Proceed< Relative, RelativePositional, RelativeNatural, Natural, Elemental, Adjunct >, Equate, Order >,
+            IntersectCollections< Basic, BasicPositional, BasicNatural, Relative, RelativePositional, RelativeNatural, Natural, Elemental, Proceed< Natural, Elemental, Adjunct >, Equate, Order >,
+            UniteCollections< Basic, BasicPositional, BasicNatural, Relative, RelativePositional, RelativeNatural, Natural, Elemental, Proceed< Natural, Elemental, Adjunct >, Proceed< Basic, BasicPositional, BasicNatural, Natural, Elemental, Adjunct >, Proceed< Relative, RelativePositional, RelativeNatural, Natural, Elemental, Adjunct >, Equate, Order >
         };
 
         template <
@@ -1047,9 +1201,9 @@ namespace junction {
         constexpr Collective< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental >
         JunctionCollector = {
             JunctionOrderSelector< Natural, Elemental, Adjunct, Equate, Order >,
-            JunctionBisection< Junctive< Natural, Elemental >, Positional< Elemental >, Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental, Adjunct, Equate, Order >,
-            CollateCollection< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental, Proceed< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental, Adjunct > >,
-            EquateCollections< Junctive< Natural, Elemental >, Positional< Elemental >, Junctive< Natural, Elemental >, Positional< Elemental >, Elemental, Equate >
+            JunctionBisection< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Natural, Elemental, Adjunct, Equate, Order >,
+            CollateCollection< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Natural, Elemental, Proceed< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Natural, Elemental, Adjunct > >,
+            EquateCollections< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental, Equate >
         };
 
         template <
@@ -1065,9 +1219,9 @@ namespace junction {
         constexpr Collective< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental >
         SafeJunctionCollector = {
             SafeJunctionOrderSelector< Natural, Elemental, Adjunct, Equate, Order >,
-            JunctionBisection< Junctive< Natural, Elemental >, Positional< Elemental >, Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental, Adjunct, Equate, Order >,
-            CollateCollection< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental, Proceed< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental, Adjunct > >,
-            EquateCollections< Junctive< Natural, Elemental >, Positional< Elemental >, Junctive< Natural, Elemental >, Positional< Elemental >, Elemental, Equate >
+            JunctionBisection< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Natural, Elemental, Adjunct, Equate, Order >,
+            CollateCollection< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Natural, Elemental, Proceed< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental, Adjunct > >,
+            EquateCollections< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental, Equate >
         };
 
     }

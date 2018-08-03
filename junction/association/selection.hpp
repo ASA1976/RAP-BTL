@@ -20,9 +20,10 @@ namespace junction {
             Referential< bool(
                 Referential< const AssociativelyJunctive< Natural, Correlative, Elemental > >,
                 Referential< const Correlative >,
-                Referential< AssociativelyPositional< Correlative, Elemental > >
+                Referential< AssociativelyPositional< Correlative, Elemental > >,
+                Natural
             ) >
-            SearchCorrelation = SearchLinearly< AssociativelyJunctive< Natural, Correlative, Elemental >, AssociativelyPositional< Correlative, Elemental >, Correlative, ReadRelatorIncrementDirection< Natural, Correlative, Elemental >, Equate >;
+            SearchCorrelation = SearchLinearly< AssociativelyJunctive< Natural, Correlative, Elemental >, AssociativelyPositional< Correlative, Elemental >, Natural, Correlative, ReadRelatorIncrementScale< Natural, Correlative, Elemental >, Equate >;
 
             template <
                 typename Natural,
@@ -50,11 +51,16 @@ namespace junction {
                     Search = SearchCorrelation< Natural, Correlative, Elemental, Equate >;
 #else
                     // Problem 286153 filed July 3 2018
-					Search = SearchLinearly< AssociativelyJunctive< Natural, Correlative, Elemental >, AssociativelyPositional< Correlative, Elemental >, Correlative, ReadRelatorIncrementDirection< Natural, Correlative, Elemental >, Equate >;
+					Search = SearchLinearly< AssociativelyJunctive< Natural, Correlative, Elemental >, AssociativelyPositional< Correlative, Elemental >, Natural, Correlative, ReadRelatorIncrementScale< Natural, Correlative, Elemental >, Equate >;
 #endif
+                static const Natural
+                    Zero = 0;
                 AssociativelyPositional< Correlative, Elemental >
                     position;
-                return Search( map, relator, position );
+                if (!IncrementBegins( map, Zero ))
+                    return false;
+                BeginReadIncrement( map, position, Zero );
+                return Search( map, relator, position, Account( map ) - 1 );
             }
 
             template <
@@ -118,22 +124,26 @@ namespace junction {
                     "Natural:  Unsigned integer type required"
                 );
 #endif
-                static const Natural
-                    One = 1;
-                static auto&
-                    CorrespondInMap = Correspond< Natural, Correlative, Elemental, Equate >;
                 static auto&
 #ifndef _MSC_VER
 					Search = SearchCorrelation< Natural, Correlative, Elemental, Equate >;
 #else
                     // Problem 286153 filed July 3 2018
-					Search = SearchLinearly< AssociativelyJunctive< Natural, Correlative, Elemental >, AssociativelyPositional< Correlative, Elemental >, Correlative, ReadRelatorIncrementDirection< Natural, Correlative, Elemental >, Equate >;
+                    Search = SearchLinearly< AssociativelyJunctive< Natural, Correlative, Elemental >, AssociativelyPositional< Correlative, Elemental >, Natural, Correlative, ReadRelatorIncrementScale< Natural, Correlative, Elemental >, Equate >;
 #endif
-				AssociativelyPositional< Correlative, Elemental >
+                static auto&
+                    CorrespondInMap = Correspond< Natural, Correlative, Elemental, Equate >;
+                static const Natural
+                    Zero = 0,
+                    One = 1;
+                AssociativelyPositional< Correlative, Elemental >
                     position;
                 if (CorrespondInMap( map, replacement ))
                     return false;
-                if (Search( map, original, position )) {
+                if (!IncrementBegins( map, Zero ))
+                    return false;
+                BeginWriteIncrement( map, position, Zero );
+                if (Search( map, original, position, Account( map ) - 1 )) {
                     const Associational< Correlative, Elemental >
                         associate = {replacement, GoWriteElement( map, position ).to};
                     return Concede( map, position, One ) && Proceed( map, associate );
@@ -169,13 +179,17 @@ namespace junction {
 					Search = SearchCorrelation< Natural, Correlative, Elemental, Equate >;
 #else
                     // Problem 286153 filed July 3 2018
-					Search = SearchLinearly< AssociativelyJunctive< Natural, Correlative, Elemental >, AssociativelyPositional< Correlative, Elemental >, Correlative, ReadRelatorIncrementDirection< Natural, Correlative, Elemental >, Equate >;
+                    Search = SearchLinearly< AssociativelyJunctive< Natural, Correlative, Elemental >, AssociativelyPositional< Correlative, Elemental >, Natural, Correlative, ReadRelatorIncrementScale< Natural, Correlative, Elemental >, Equate >;
 #endif
 				static const Natural
+                    Zero = 0,
                     One = 1;
                 AssociativelyPositional< Correlative, Elemental >
                     position;
-                return Search( map, relator, position )
+                if (!IncrementBegins( map, Zero ))
+                    return false;
+                BeginWriteIncrement( map, position, Zero );
+                return Search( map, relator, position, Account( map ) - 1 )
                     && Concede( map, position, One );
             }
 
@@ -205,11 +219,16 @@ namespace junction {
 					Search = SearchCorrelation< Natural, Correlative, Elemental, Equate >;
 #else
                     // Problem 286153 filed July 3 2018
-					Search = SearchLinearly< AssociativelyJunctive< Natural, Correlative, Elemental >, AssociativelyPositional< Correlative, Elemental >, Correlative, ReadRelatorIncrementDirection< Natural, Correlative, Elemental >, Equate >;
+                    Search = SearchLinearly< AssociativelyJunctive< Natural, Correlative, Elemental >, AssociativelyPositional< Correlative, Elemental >, Natural, Correlative, ReadRelatorIncrementScale< Natural, Correlative, Elemental >, Equate >;
 #endif
+                static const Natural
+                    Zero = 0;
 				AssociativelyPositional< Correlative, Elemental >
                     position;
-                if (!Search( map, relator, position ))
+                if (!IncrementBegins( map, Zero ))
+                    throw relator;
+                BeginReadIncrement( map, position, Zero );
+                if (!Search( map, relator, position, Account( map ) - 1 ))
                     throw relator;
                 return GoReadElement( map, position );
             }
@@ -240,11 +259,16 @@ namespace junction {
 					Search = SearchCorrelation< Natural, Correlative, Elemental, Equate >;
 #else
                     // Problem 286153 filed July 3 2018
-					Search = SearchLinearly< AssociativelyJunctive< Natural, Correlative, Elemental >, AssociativelyPositional< Correlative, Elemental >, Correlative, ReadRelatorIncrementDirection< Natural, Correlative, Elemental >, Equate >;
+                    Search = SearchLinearly< AssociativelyJunctive< Natural, Correlative, Elemental >, AssociativelyPositional< Correlative, Elemental >, Natural, Correlative, ReadRelatorIncrementScale< Natural, Correlative, Elemental >, Equate >;
 #endif
+                static const Natural
+                    Zero = 0;
 				AssociativelyPositional< Correlative, Elemental >
                     position;
-                if (!Search( map, relator, position ))
+                if (!IncrementBegins( map, Zero ))
+                    throw relator;
+                BeginWriteIncrement( map, position, Zero );
+                if (!Search( map, relator, position, Account( map ) - 1 ))
                     throw relator;
                 return GoWriteElement( map, position );
             }

@@ -13,13 +13,14 @@ namespace consecution {
         typename Positional,
         typename Relative,
         typename Appositional,
+        typename RelativeNatural,
         typename Elemental
     >
     struct Conjoint {
 
         Referential< bool(
             Referential< Consolidative >,
-            Referential< const Directional< const Relative, Appositional, const Elemental > >,
+            Referential< const Directional< const Relative, Appositional, RelativeNatural, const Elemental > >,
             Referential< const Relative >,
             Referential< const Appositional >,
             Referential< const Appositional >
@@ -29,7 +30,7 @@ namespace consecution {
         Referential< bool(
             Referential< Consolidative >,
             Referential< const Positional >,
-            Referential< const Directional< const Relative, Appositional, const Elemental > >,
+            Referential< const Directional< const Relative, Appositional, RelativeNatural, const Elemental > >,
             Referential< const Relative >,
             Referential< const Appositional >,
             Referential< const Appositional >
@@ -38,7 +39,7 @@ namespace consecution {
 
         Referential< bool(
             Referential< Consolidative >,
-            Referential< const Directional< const Relative, Appositional, const Elemental > >,
+            Referential< const Directional< const Relative, Appositional, RelativeNatural, const Elemental > >,
             Referential< const Relative >,
             Referential< const Appositional >,
             Referential< const Appositional >
@@ -114,7 +115,7 @@ namespace consecution {
         ) >
             condense;
 
-        Referential< const Conjoint< Consolidative, Positional, Consolidative, Positional, Elemental > >
+        Referential< const Conjoint< Consolidative, Positional, Consolidative, Positional, Natural, Elemental > >
             conjoiner;
 
     };

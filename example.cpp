@@ -75,7 +75,7 @@ ProceedSequence(
         list,
     Referential< const Sequent< Spatial, Positional, Natural, char > >
         sequencer,
-    Referential< const Conjoint< Spatial, Positional, MessageLocal, Natural, char > >
+    Referential< const Conjoint< Spatial, Positional, MessageLocal, Natural, Natural, char > >
         conjoiner
 ) {
     using namespace ::segmentation;
@@ -95,24 +95,27 @@ ProceedSequence(
 
 template <
     typename Spatial,
-    typename Positional
+    typename Positional,
+    typename Natural
 >
 static bool
 DisplayCharacters(
     Referential< const Spatial >
         list,
-    Referential< const Scalar< const Spatial, Positional, const char > >
+    Referential< const Scalar< const Spatial, Positional, Natural, const char > >
         scale,
     Referential< const size_t >
         count
 ) {
     Positional
         position;
-    scale.begin( list, position );
-    for (size_t current = 0; current < count; current++) {
+    size_t
+        current;
+    scale.begin( list, position, 0 );
+    for (current = 0; current < count; current++) {
         printf( "'%c'", scale.go( list, position ).to );
         if (current < count - 1) {
-            scale.traverse( list, position );
+            scale.traverse( list, position, 1 );
             printf( "," );
         }
     }
@@ -121,43 +124,42 @@ DisplayCharacters(
 
 template <
     typename Spatial,
-    typename Positional
+    typename Positional,
+    typename Natural
 >
 static bool
 DisplayCharacters(
     Referential< const Spatial >
         list,
-    Referential< const Directional< const Spatial, Positional, const char > >
+    Referential< const Directional< const Spatial, Positional, Natural, const char > >
         direction
 ) {
-    size_t
-        count;
-    return Count( list, direction, count )
-        && DisplayCharacters( list, direction.scale, count );
+    return DisplayCharacters( list, direction.scale, direction.survey( list ) );
 }
 
 template <
     typename Spatial,
-    typename Positional
+    typename Positional,
+    typename Natural
 >
 static bool
 DisplayMappings(
     Referential< const Spatial >
         map,
-    Referential< const Directional< const Spatial, Positional, const MapAssociational > >
+    Referential< const Directional< const Spatial, Positional, Natural, const MapAssociational > >
         direction
 ) {
     auto&
         scale = direction.scale;
     Positional
         position;
-    if (!direction.begins( map ))
+    if (!direction.begins( map, 0 ))
         return false;
-    for (scale.begin( map, position ); true; scale.traverse( map, position )) {
+    for (scale.begin( map, position, 0 ); true; scale.traverse( map, position, 1 )) {
         auto&
             mapping = scale.go( map, position ).to;
         printf( "%c=%d", mapping.relator, mapping.value );
-        if (!direction.traversable( map, position ))
+        if (!direction.traversable( map, position, 1 ))
             break;
         printf( " " );
     }
@@ -168,13 +170,15 @@ static bool
 DemonstrateLocalization( void ) {
     using namespace ::localization;
     using Local = ReadLocal< char >;
+    static const size_t
+        Length = 5;
     static auto&
-        Scale = ReadIncrementScale< size_t, char >;
+        Scale = ReadIncrementScale< size_t, size_t, char >;
     static Local
         locality = "ABCDE";
     puts( "Localization (Pointer Only)" );
     printf( "locality := " );
-    DisplayCharacters( locality, Scale, 5 );
+    DisplayCharacters( locality, Scale, Length );
     puts( "" );
     return true;
 }
@@ -188,7 +192,9 @@ DemonstrateSegmentation( void ) {
     static const size_t
         Length = 5;
     static auto&
-        Axis = ReadAxis< size_t, Length, char >;
+        Liner = ReadLiner< size_t, size_t, char >;
+    static auto&
+        Increment = ReadIncrementDirection< size_t, Length, char >;
     static auto&
         FindCharacter = SearchBisectionally< Segmental, size_t, size_t, char, IsEqual, IsLesser >;
     static Segmental
@@ -197,9 +203,10 @@ DemonstrateSegmentation( void ) {
         index;
     puts( "Segmentation (Pointer And Predetermined Length)" );
     printf( "segment := " );
-    DisplayCharacters( segment, Axis.increment );
-    if (FindCharacter( segment, Axis, Length, segment[1], index )) {
-        printf( " (found '%c')\n", IndexicalGo( segment, index ).to );
+    DisplayCharacters( segment, Increment );
+    index = 2;
+    if (FindCharacter( segment, Liner, segment[1], index, 2, 2 )) {
+        printf( " (found '%c')\n", Increment.scale.go( segment, index ).to );
         return true;
     }
     printf( " (not found)\n" );
@@ -216,7 +223,9 @@ DemonstrateOrdination( void ) {
     using Ordinal = ReadOrdinal< size_t, Length, char >;
     using Positional = ReadPositional< char >;
     static auto&
-        Axis = ReadAxis< size_t, Length, char >;
+        Liner = ReadLiner< size_t, Length, char >;
+    static auto&
+        Increment = ReadIncrementDirection< size_t, Length, char >;
     static auto&
         FindCharacter = SearchBisectionally< Ordinal, Positional, size_t, char, IsEqual, IsLesser >;
     static Ordinal
@@ -225,9 +234,10 @@ DemonstrateOrdination( void ) {
         position;
     puts( "Ordination (Array)" );
     printf( "array := " );
-    DisplayCharacters( array, Axis.increment );
-    if (FindCharacter( array, Axis, Length, array[3], position )) {
-        printf( " (found '%c')\n", Refer( position ).to );
+    DisplayCharacters( array, Increment );
+    position = Locate( array[2] ).at;
+    if (FindCharacter( array, Liner, array[3], position, 2, 2 )) {
+        printf( " (found '%c')\n", Increment.scale.go( array, position ).to );
         return true;
     }
     printf( " (not found)\n" );
@@ -248,7 +258,7 @@ DemonstrateJunction( void ) {
     static auto&
         ListSequencer = JunctionSequencer< size_t, char, DefaultMallocAdjunct< size_t, char > >;
     static auto&
-        ListConjoiner = JunctionConjoiner< const Locational< const char >, size_t, size_t, char, DefaultMallocAdjunct< size_t, char > >;
+        ListConjoiner = JunctionConjoiner< const Locational< const char >, size_t, size_t, size_t, char, DefaultMallocAdjunct< size_t, char > >;
     static auto&
         ListSelector = JunctionSelector< size_t, char, DefaultMallocAdjunct< size_t, char >, IsEqual >;
     static auto&

@@ -175,7 +175,7 @@ namespace ration {
                 Maximum,
             typename Elemental
         >
-        static inline void
+        static inline Referential< Contributory< Natural, Maximum, Elemental > >
         Initialize(
             Referential< Contributory< Natural, Maximum, Elemental > >
                 pool
@@ -187,7 +187,7 @@ namespace ration {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            pool = InitializedPool< Natural, Maximum, Elemental >;
+            return pool = InitializedPool< Natural, Maximum, Elemental >;
         }
 
         template <

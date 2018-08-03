@@ -14,25 +14,28 @@ namespace selection {
         typename Consolidative,
         typename Basic,
         typename BasicPositional,
+        typename BasicNatural,
         typename Elemental
     >
     using Duplicative = bool(
         Referential< Consolidative >,
-        Referential< const Directional< const Basic, BasicPositional, const Elemental > >,
+        Referential< const Directional< const Basic, BasicPositional, BasicNatural, const Elemental > >,
         Referential< const Basic >
     );
 
     template <
         typename Basic,
         typename BasicPositional,
+        typename BasicNatural,
         typename Relative,
         typename RelativePositional,
+        typename RelativeNatural,
         typename Elemental
     >
     using Equipollent = bool(
-        Referential< const Directional< const Basic, BasicPositional, const Elemental > >,
+        Referential< const Directional< const Basic, BasicPositional, BasicNatural, const Elemental > >,
         Referential< const Basic >,
-        Referential< const Directional< const Relative, RelativePositional, const Elemental > >,
+        Referential< const Directional< const Relative, RelativePositional, RelativeNatural, const Elemental > >,
         Referential< const Relative >
     );
 
@@ -40,17 +43,19 @@ namespace selection {
         typename Consolidative,
         typename Basic,
         typename BasicPositional,
+        typename BasicNatural,
         typename Relative,
         typename RelativePositional,
+        typename RelativeNatural,
         typename Elemental
     >
     struct Sectional {
 
         Referential< bool(
             Referential< Consolidative >,
-            Referential< const Directional< const Basic, BasicPositional, const Elemental > >,
+            Referential< const Directional< const Basic, BasicPositional, BasicNatural, const Elemental > >,
             Referential< const Basic >,
-            Referential< const Directional< const Relative, RelativePositional, const Elemental > >,
+            Referential< const Directional< const Relative, RelativePositional, RelativeNatural, const Elemental > >,
             Referential< const Relative >
         ) >
             complement,
@@ -71,13 +76,13 @@ namespace selection {
         Referential< const Compositional< Consolidative, Natural, Elemental > >
             composer;
 
-        Referential< const Sectional< Consolidative, Consolidative, Positional, Consolidative, Positional, Elemental > >
+        Referential< const Sectional< Consolidative, Consolidative, Positional, Natural, Consolidative, Positional, Natural, Elemental > >
             section;
 
-        Referential< Duplicative< Consolidative, Consolidative, Positional, Elemental > >
+        Referential< Duplicative< Consolidative, Consolidative, Positional, Natural, Elemental > >
             duplicate;
 
-        Referential< Equipollent< Consolidative, Positional, Consolidative, Positional, Elemental > >
+        Referential< Equipollent< Consolidative, Positional, Natural, Consolidative, Positional, Natural, Elemental > >
             equate;
 
         Referential< Natural(
@@ -90,39 +95,57 @@ namespace selection {
     template <
         typename Basic,
         typename BasicPositional,
+        typename BasicNatural,
         typename Relative,
         typename RelativePositional,
+        typename RelativeNatural,
         typename Elemental,
         Referential< Assortive< Elemental > >
             Equate
     >
     static inline bool
     EquateSelections(
-        Referential< const Directional< const Basic, BasicPositional, const Elemental > >
+        Referential< const Directional< const Basic, BasicPositional, BasicNatural, const Elemental > >
             basis,
         Referential< const Basic >
             base_set,
-        Referential< const Directional< const Relative, RelativePositional, const Elemental > >
+        Referential< const Directional< const Relative, RelativePositional, RelativeNatural, const Elemental > >
             relativity,
         Referential< const Relative >
             relative_set
     ) {
-        static auto&
-            SearchInRelative = SearchLinearly< Relative, RelativePositional, Elemental, Equate >;
-        auto&
-            scale = basis.scale;
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
+        using namespace ::std;
+        static_assert(
+            is_integral< BasicNatural >::value && is_unsigned< BasicNatural >::value,
+            "BasicNatural:  Unsigned integer type required"
+        );
+        static_assert(
+            is_integral< RelativeNatural >::value && is_unsigned< RelativeNatural >::value,
+            "RelativeNatural:  Unsigned integer type required"
+        );
+#endif
         BasicPositional
             base_position;
         RelativePositional
             relative_position;
-        if (basis.begins( base_set )) {
-            for (scale.begin( base_set, base_position ); true; scale.traverse( base_set, base_position )) {
-                if (!SearchInRelative( relative_set, relativity, scale.go( base_set, base_position ).to, relative_position ))
+        bool
+            found;
+        if (basis.begins( base_set, 0 )) {
+            if (!relativity.begins( relative_set, 0 ))
+                return false;
+            for (basis.scale.begin( base_set, base_position, 0 ); true; basis.scale.traverse( base_set, base_position, 1 )) {
+                found = false;
+                for (relativity.scale.begin( relative_set, relative_position, 0 ); true; relativity.scale.traverse( relative_set, relative_position, 1 )) {
+                    if (Equate( basis.scale.go( base_set, base_position ).to, relativity.scale.go( relative_set, relative_position ).to )) {
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) 
                     return false;
-                if (!basis.traversable( base_set, base_position ))
-                    break;
             }
-        } else if (relativity.begins( relative_set ))
+        } else if (relativity.begins( relative_set, 0 ))
             return false;
         return true;
     }

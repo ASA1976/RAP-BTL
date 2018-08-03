@@ -13,6 +13,7 @@ namespace junction {
         namespace elevation {
 
             using namespace ::traction;
+            using consecution::Succeed;
 
             template <
                 typename Natural,
@@ -25,9 +26,9 @@ namespace junction {
             constexpr Tractile< Junctive< Natural, Elemental >, Positional< Elemental >, Natural >
             Elevator = {
                 Survey< Natural, Maximum, Elemental >,
-                consecution::Account< Natural, Elemental >,
+                Account< Natural, Elemental >,
                 Protract< Natural, Elemental, Allocator >,
-                consecution::Succeed< Natural, Elemental >,
+                Succeed< Natural, Elemental >,
                 Empty< Natural, Elemental >
             };
 
@@ -42,9 +43,9 @@ namespace junction {
             constexpr Tractile< Junctive< Natural, Elemental >, Positional< Elemental >, Natural >
             SafeElevator = {
                 Survey< Natural, Maximum, Elemental >,
-                consecution::Account< Natural, Elemental >,
+                Account< Natural, Elemental >,
                 ProtractSafely< Natural, Maximum, Elemental, Allocator >,
-                consecution::Succeed< Natural, Elemental >,
+                Succeed< Natural, Elemental >,
                 Empty< Natural, Elemental >
             };
 

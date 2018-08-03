@@ -28,26 +28,27 @@ NodePoolAdjunct = FastPoolAdjunct< Natural, NodePoolSize, char, NodePool >;
 
 template <
     typename Spatial,
-    typename Positional
+    typename Positional,
+    typename Natural
 >
 static inline bool
 DisplayCharacters(
     Referential< const Spatial >
         list,
-    Referential< const Directional< const Spatial, Positional, const char > >
+    Referential< const Directional< const Spatial, Positional, Natural, const char > >
         direction
 ) {
     Positional
         position;
-    if (!direction.begins( list ))
+    if (!direction.begins( list, 0 ))
         return false;
     for (
-        direction.scale.begin( list, position );
+        direction.scale.begin( list, position, 0 );
         true;
-        direction.scale.traverse( list, position )
+        direction.scale.traverse( list, position, 1 )
     ) {
         printf( "'%c'", direction.scale.go( list, position ).to );
-        if (!direction.traversable( list, position ))
+        if (!direction.traversable( list, position, 1 ))
             break;
         printf( "," );
     }
@@ -56,7 +57,8 @@ DisplayCharacters(
 
 template <
     typename Spatial,
-    typename Positional
+    typename Positional,
+    typename Natural
 >
 static inline void
 DemonstrateSequence(
@@ -64,7 +66,7 @@ DemonstrateSequence(
         sequence,
     Referential< const Sequent< Spatial, Positional, Natural, char > >
         sequencer,
-    Referential< const Directional< const Spatial, Positional, const char > >
+    Referential< const Directional< const Spatial, Positional, Natural, const char > >
         increment
 ) {
     sequencer.antecede( sequence, 3 );

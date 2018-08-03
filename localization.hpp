@@ -31,11 +31,13 @@ namespace localization {
         Referential< const Integral >
             index
     ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
         static_assert(
             is_integral< Integral >::value,
             "Integral:  Integer type required"
         );
+#endif
         return Confer( locality[index] );
     }
 
@@ -50,11 +52,13 @@ namespace localization {
         Referential< const Integral >
             index
     ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
         static_assert(
             is_integral< Integral >::value,
             "Integral:  Integer type required"
         );
+#endif
         if (!locality)
             throw locality;
         return IndexicalGo( locality, index );
@@ -62,25 +66,63 @@ namespace localization {
 
     template <
         typename Integral,
+        typename Natural,
         typename Elemental
     >
     static inline Referential< const Integral >
-    Begin(
+    BeginIncrement(
         Referential< const Locational< Elemental > >
             locality,
         Referential< Integral >
-            index
+            index,
+        Referential< const Natural >
+            count
     ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
         static_assert(
             is_integral< Integral >::value,
             "Integral:  Integer type required"
         );
-        return index = 0;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
+#endif
+        return index = count;
     }
 
     template <
         typename Integral,
+        typename Natural,
+        typename Elemental
+    >
+    static inline Referential< const Integral >
+    BeginDecrement(
+        Referential< const Locational< Elemental > >
+            locality,
+        Referential< Integral >
+            index,
+        Referential< const Natural >
+            count
+    ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
+        using namespace ::std;
+        static_assert(
+            is_integral< Integral >::value,
+            "Integral:  Integer type required"
+        );
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
+#endif
+        return index = -count;
+    }
+
+    template <
+        typename Integral,
+        typename Natural,
         typename Elemental
     >
     static inline Referential< const Integral >
@@ -88,18 +130,27 @@ namespace localization {
         Referential< const Locational< Elemental > >
             locality,
         Referential< Integral >
-            index
+            index,
+        Referential< const Natural >
+            count
     ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
         static_assert(
             is_integral< Integral >::value,
             "Integral:  Integer type required"
         );
-        return ++index;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
+#endif
+        return index += count;
     }
 
     template <
         typename Integral,
+        typename Natural,
         typename Elemental
     >
     static inline Referential< const Integral >
@@ -107,150 +158,170 @@ namespace localization {
         Referential< const Locational< Elemental > >
             locality,
         Referential< Integral >
-            index
+            index,
+        Referential< const Natural >
+            count
     ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
         static_assert(
             is_integral< Integral >::value,
             "Integral:  Integer type required"
         );
-        return --index;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
+#endif
+        return index -= count;
     }
 
     template <
         typename Integral,
+        typename Natural,
         typename Elemental
     >
-    constexpr Scalar< const Locational< const Elemental >, Integral, const Elemental >
+    constexpr Scalar< const Locational< const Elemental >, Integral, Natural, const Elemental >
     ReadIncrementScale = {
         Comparison< Integral >,
-        Begin< Integral, const Elemental >,
-        TraverseIncrement< Integral, const Elemental >,
+        BeginIncrement< Integral, Natural, const Elemental >,
+        TraverseIncrement< Integral, Natural, const Elemental >,
         IndexicalGo< Integral, const Elemental >
     };
 
     template <
         typename Integral,
+        typename Natural,
         typename Elemental
     >
-    constexpr Scalar< const Locational< const Elemental >, Integral, const Elemental >
+    constexpr Scalar< const Locational< const Elemental >, Integral, Natural, const Elemental >
     ReadIncrementScaleChecksForNull = {
         Comparison< Integral >,
-        Begin< Integral, const Elemental >,
-        TraverseIncrement< Integral, const Elemental >,
+        BeginIncrement< Integral, Natural, const Elemental >,
+        TraverseIncrement< Integral, Natural, const Elemental >,
         IndexicalGoChecksForNull< Integral, const Elemental >
     };
 
     template <
         typename Integral,
+        typename Natural,
         typename Elemental
     >
-    constexpr Scalar< const Locational< Elemental >, Integral, Elemental >
+    constexpr Scalar< const Locational< Elemental >, Integral, Natural, Elemental >
     WriteIncrementScale = {
         Comparison< Integral >,
-        Begin< Integral, Elemental >,
-        TraverseIncrement< Integral, Elemental >,
+        BeginIncrement< Integral, Natural, Elemental >,
+        TraverseIncrement< Integral, Natural, Elemental >,
         IndexicalGo< Integral, Elemental >
     };
 
     template <
         typename Integral,
+        typename Natural,
         typename Elemental
     >
-    constexpr Scalar< const Locational< Elemental >, Integral, Elemental >
+    constexpr Scalar< const Locational< Elemental >, Integral, Natural, Elemental >
     WriteIncrementScaleChecksForNull = {
         Comparison< Integral >,
-        Begin< Integral, Elemental >,
-        TraverseIncrement< Integral, Elemental >,
+        BeginIncrement< Integral, Natural, Elemental >,
+        TraverseIncrement< Integral, Natural, Elemental >,
         IndexicalGoChecksForNull< Integral, Elemental >
     };
 
     template <
         typename Integral,
+        typename Natural,
         typename Elemental
     >
-    constexpr Scalar< const Locational< const Elemental >, Integral, const Elemental >
+    constexpr Scalar< const Locational< const Elemental >, Integral, Natural, const Elemental >
     ReadDecrementScale = {
         Comparison< Integral >,
-        Begin< Integral, const Elemental >,
-        TraverseDecrement< Integral, const Elemental >,
+        BeginDecrement< Integral, Natural, const Elemental >,
+        TraverseDecrement< Integral, Natural, const Elemental >,
         IndexicalGo< Integral, const Elemental >
     };
 
     template <
         typename Integral,
+        typename Natural,
         typename Elemental
     >
-    constexpr Scalar< const Locational< const Elemental >, Integral, const Elemental >
+    constexpr Scalar< const Locational< const Elemental >, Integral, Natural, const Elemental >
     ReadDecrementScaleChecksForNull = {
         Comparison< Integral >,
-        Begin< Integral, const Elemental >,
-        TraverseDecrement< Integral, const Elemental >,
+        BeginDecrement< Integral, Natural, const Elemental >,
+        TraverseDecrement< Integral, Natural, const Elemental >,
         IndexicalGoChecksForNull< Integral, const Elemental >
     };
 
     template <
         typename Integral,
+        typename Natural,
         typename Elemental
     >
-    constexpr Scalar< const Locational< Elemental >, Integral, Elemental >
+    constexpr Scalar< const Locational< Elemental >, Integral, Natural, Elemental >
     WriteDecrementScale = {
         Comparison< Integral >,
-        Begin< Integral, Elemental >,
-        TraverseDecrement< Integral, Elemental >,
+        BeginDecrement< Integral, Natural, Elemental >,
+        TraverseDecrement< Integral, Natural, Elemental >,
         IndexicalGo< Integral, Elemental >
     };
 
     template <
         typename Integral,
+        typename Natural,
         typename Elemental
     >
-    constexpr Scalar< const Locational< Elemental >, Integral, Elemental >
+    constexpr Scalar< const Locational< Elemental >, Integral, Natural, Elemental >
     WriteDecrementScaleChecksForNull = {
         Comparison< Integral >,
-        Begin< Integral, Elemental >,
-        TraverseDecrement< Integral, Elemental >,
+        BeginDecrement< Integral, Natural, Elemental >,
+        TraverseDecrement< Integral, Natural, Elemental >,
         IndexicalGoChecksForNull< Integral, Elemental >
     };
 
     template <
         typename Integral,
+        typename Natural,
         typename Elemental
     >
-    constexpr Lineal< const Locational< const Elemental >, Integral, const Elemental >
+    constexpr Lineal< const Locational< const Elemental >, Integral, Natural, const Elemental >
     ReadLiner = {
-        ReadIncrementScale< Integral, Elemental >,
-        ReadDecrementScale< Integral, Elemental >
+        ReadIncrementScale< Integral, Natural, Elemental >,
+        ReadDecrementScale< Integral, Natural, Elemental >
     };
 
     template <
         typename Integral,
+        typename Natural,
         typename Elemental
     >
-    constexpr Lineal< const Locational< const Elemental >, Integral, const Elemental >
+    constexpr Lineal< const Locational< const Elemental >, Integral, Natural, const Elemental >
     ReadLinerChecksForNull = {
-        ReadIncrementScaleChecksForNull< Integral, Elemental >,
-        ReadDecrementScaleChecksForNull< Integral, Elemental >
+        ReadIncrementScaleChecksForNull< Integral, Natural, Elemental >,
+        ReadDecrementScaleChecksForNull< Integral, Natural, Elemental >
     };
 
     template <
         typename Integral,
+        typename Natural,
         typename Elemental
     >
-    constexpr Lineal< const Locational< Elemental >, Integral, Elemental >
+    constexpr Lineal< const Locational< Elemental >, Integral, Natural, Elemental >
     WriteLiner = {
-        WriteIncrementScale< Integral, Elemental >,
-        WriteDecrementScale< Integral, Elemental >
+        WriteIncrementScale< Integral, Natural, Elemental >,
+        WriteDecrementScale< Integral, Natural, Elemental >
     };
 
     template <
         typename Integral,
+        typename Natural,
         typename Elemental
     >
-    constexpr Lineal< const Locational< Elemental >, Integral, Elemental >
+    constexpr Lineal< const Locational< Elemental >, Integral, Natural, Elemental >
     WriteLinerChecksForNull = {
-        WriteIncrementScaleChecksForNull< Integral, Elemental >,
-        WriteDecrementScaleChecksForNull< Integral, Elemental >
+        WriteIncrementScaleChecksForNull< Integral, Natural, Elemental >,
+        WriteDecrementScaleChecksForNull< Integral, Natural, Elemental >
     };
 
 }

@@ -82,6 +82,81 @@ namespace junction {
     using Positional = Positive< Junctional< Elemental > >;
 
     template <
+        typename Natural,
+        typename Elemental
+    >
+    static inline Natural
+    Account(
+        Referential< const Junctive< Natural, Elemental > >
+            sequence
+    ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
+#endif
+        return sequence.count;
+    }
+
+    template <
+        typename Natural,
+        typename Elemental
+    >
+    static inline Natural
+    CountIncrement(
+        Referential< const Junctive< Natural, Elemental > >
+            sequence,
+        Referential< const Positional< Elemental > >
+            position
+    ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
+#endif
+        Locational< Junctional< Elemental > >
+            current;
+        Natural
+            count;
+        count = 0;
+        for (current = position.at; current->next; current = current->next)
+            count++;
+        return count;
+    }
+
+    template <
+        typename Natural,
+        typename Elemental
+    >
+    static inline Natural
+    CountDecrement(
+        Referential< const Junctive< Natural, Elemental > >
+            sequence,
+        Referential< const Positional< Elemental > >
+            position
+    ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
+#endif
+        Locational< Junctional< Elemental > >
+            current;
+        Natural
+            count;
+        count = 0;
+        for (current = position.at; current->previous; current = current->previous)
+            count++;
+        return count;
+    }
+
+    template <
         typename Elemental
     >
     static inline bool
@@ -271,8 +346,7 @@ namespace junction {
             "Natural:  Unsigned integer type required"
         );
 #endif
-        list = InitializedList< Natural, Elemental >;
-        return list;
+        return list = InitializedList< Natural, Elemental >;
     }
 
     template <
@@ -688,7 +762,9 @@ namespace junction {
         Referential< const Junctive< Natural, Elemental > >
             list,
         Referential< Positional< Elemental > >
-            position
+            position,
+        Referential< const Natural >
+            count
     ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
@@ -697,7 +773,11 @@ namespace junction {
             "Natural:  Unsigned integer type required"
         );
 #endif
+        Natural
+            index;
         position.at = list.first;
+        for (index = 0; index < count; index++)
+            position.at = position.at->next;
         return position;
     }
 
@@ -710,7 +790,9 @@ namespace junction {
         Referential< const Junctive< Natural, Elemental > >
             list,
         Referential< Positional< Elemental > >
-            position
+            position,
+        Referential< const Natural >
+            count
     ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
@@ -719,9 +801,17 @@ namespace junction {
             "Natural:  Unsigned integer type required"
         );
 #endif
+        Natural
+            index;
         if (!list.first)
             throw list;
-        return BeginReadIncrement( list, position );
+        position.at = list.first;
+        for (index = 0; index < count; index++) {
+            if (!position.at->next)
+                throw count;
+            position.at = position.at->next;
+        }
+        return position;
     }
 
     template <
@@ -733,7 +823,9 @@ namespace junction {
         Referential< Junctive< Natural, Elemental > >
             list,
         Referential< Positional< Elemental > >
-            position
+            position,
+        Referential< const Natural >
+            count
     ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
@@ -742,7 +834,11 @@ namespace junction {
             "Natural:  Unsigned integer type required"
         );
 #endif
+        Natural
+            index;
         position.at = list.first;
+        for (index = 0; index < count; index++)
+            position.at = position.at->next;
         return position;
     }
 
@@ -755,7 +851,9 @@ namespace junction {
         Referential< Junctive< Natural, Elemental > >
             list,
         Referential< Positional< Elemental > >
-            position
+            position,
+        Referential< const Natural >
+            count
     ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
@@ -764,9 +862,17 @@ namespace junction {
             "Natural:  Unsigned integer type required"
         );
 #endif
+        Natural
+            index;
         if (!list.first)
             throw list;
-        return BeginWriteIncrement( list, position );
+        position.at = list.first;
+        for (index = 0; index < count; index++) {
+            if (!position.at->next)
+                throw count;
+            position.at = position.at->next;
+        }
+        return position;
     }
 
     template <
@@ -776,7 +882,9 @@ namespace junction {
     static inline bool
     IncrementBegins(
         Referential< const Junctive< Natural, Elemental > >
-            list
+            list,
+        Referential< const Natural >
+            count
     ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
@@ -785,7 +893,17 @@ namespace junction {
             "Natural:  Unsigned integer type required"
         );
 #endif
-        return list.first;
+        Natural
+            index;
+        Positional< Elemental >
+            position;
+        if (!list.first)
+            return false;
+        position.at = list.first;
+        for (index = 0; index < count; index++)
+            if (!position.at->next)
+                return false;
+        return true;
     }
 
     template <
@@ -797,7 +915,9 @@ namespace junction {
         Referential< const Junctive< Natural, Elemental > >
             list,
         Referential< Positional< Elemental > >
-            position
+            position,
+        Referential< const Natural >
+            count
     ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
@@ -806,7 +926,10 @@ namespace junction {
             "Natural:  Unsigned integer type required"
         );
 #endif
-        position.at = position.at->next;
+        Natural
+            index;
+        for (index = 0; index < count; index++)
+            position.at = position.at->next;
         return position;
     }
 
@@ -819,7 +942,9 @@ namespace junction {
         Referential< const Junctive< Natural, Elemental > >
             list,
         Referential< Positional< Elemental > >
-            position
+            position,
+        Referential< const Natural >
+            count
     ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
@@ -828,11 +953,16 @@ namespace junction {
             "Natural:  Unsigned integer type required"
         );
 #endif
+        Natural
+            index;
         if (!position.at)
             throw position;
-        if (!position.at->next)
-            throw position;
-        return TraverseReadIncrement( list, position );
+        for (index = 0; index < count; index++) {
+            if (!position.at->next)
+                throw position;
+            position.at = position.at->next;
+        }
+        return position;
     }
 
     template <
@@ -844,7 +974,9 @@ namespace junction {
         Referential< Junctive< Natural, Elemental > >
             list,
         Referential< Positional< Elemental > >
-            position
+            position,
+        Referential< const Natural >
+            count
     ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
@@ -853,7 +985,10 @@ namespace junction {
             "Natural:  Unsigned integer type required"
         );
 #endif
-        position.at = position.at->next;
+        Natural
+            index;
+        for (index = 0; index < count; index++)
+            position.at = position.at->next;
         return position;
     }
 
@@ -866,7 +1001,9 @@ namespace junction {
         Referential< Junctive< Natural, Elemental > >
             list,
         Referential< Positional< Elemental > >
-            position
+            position,
+        Referential< const Natural >
+            count
     ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
@@ -875,11 +1012,16 @@ namespace junction {
             "Natural:  Unsigned integer type required"
         );
 #endif
+        Natural
+            index;
         if (!position.at)
             throw position;
-        if (!position.at->next)
-            throw position;
-        return TraverseWriteIncrement( list, position );
+        for (index = 0; index < count; index++) {
+            if (!position.at->next)
+                throw position;
+            position.at = position.at->next;
+        }
+        return position;
     }
 
     template <
@@ -891,7 +1033,9 @@ namespace junction {
         Referential< const Junctive< Natural, Elemental > >
             list,
         Referential< const Positional< Elemental > >
-            position
+            position,
+        Referential< const Natural >
+            count
     ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
@@ -900,7 +1044,17 @@ namespace junction {
             "Natural:  Unsigned integer type required"
         );
 #endif
-        return position.at->next;
+        Natural
+            index;
+        Positional< Elemental >
+            current;
+        current = position;
+        for (index = 0; index < count; index++) {
+            if (!current.at->next)
+                return false;
+            current.at = current.at->next;
+        }
+        return true;
     }
 
     template <
@@ -912,7 +1066,9 @@ namespace junction {
         Referential< const Junctive< Natural, Elemental > >
             list,
         Referential< const Positional< Elemental > >
-            position
+            position,
+        Referential< const Natural >
+            count
     ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
@@ -923,7 +1079,7 @@ namespace junction {
 #endif
         if (!position.at)
             throw position;
-        return IncrementTraversable( list, position );
+        return IncrementTraversable( list, position, count );
     }
 
     template <
@@ -935,7 +1091,9 @@ namespace junction {
         Referential< const Junctive< Natural, Elemental > >
             list,
         Referential< Positional< Elemental > >
-            position
+            position,
+        Referential< const Natural >
+            count
     ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
@@ -944,7 +1102,11 @@ namespace junction {
             "Natural:  Unsigned integer type required"
         );
 #endif
+        Natural
+            index;
         position.at = list.last;
+        for (index = 0; index < count; index++)
+            position.at = position.at->previous;
         return position;
     }
 
@@ -957,7 +1119,9 @@ namespace junction {
         Referential< const Junctive< Natural, Elemental > >
             list,
         Referential< Positional< Elemental > >
-            position
+            position,
+        Referential< const Natural >
+            count
     ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
@@ -966,9 +1130,17 @@ namespace junction {
             "Natural:  Unsigned integer type required"
         );
 #endif
+        Natural
+            index;
         if (!list.last)
             throw list;
-        return BeginReadDecrement( list, position );
+        position.at = list.last;
+        for (index = 0; index < count; index++) {
+            if (!position.at->previous)
+                throw count;
+            position.at = position.at->previous;
+        }
+        return position;
     }
 
     template <
@@ -980,7 +1152,9 @@ namespace junction {
         Referential< Junctive< Natural, Elemental > >
             list,
         Referential< Positional< Elemental > >
-            position
+            position,
+        Referential< const Natural >
+            count
     ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
@@ -989,7 +1163,11 @@ namespace junction {
             "Natural:  Unsigned integer type required"
         );
 #endif
+        Natural
+            index;
         position.at = list.last;
+        for (index = 0; index < count; index++)
+            position.at = position.at->previous;
         return position;
     }
 
@@ -1002,7 +1180,9 @@ namespace junction {
         Referential< Junctive< Natural, Elemental > >
             list,
         Referential< Positional< Elemental > >
-            position
+            position,
+        Referential< const Natural >
+            count
     ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
@@ -1011,9 +1191,17 @@ namespace junction {
             "Natural:  Unsigned integer type required"
         );
 #endif
+        Natural
+            index;
         if (!list.last)
             throw list;
-        return BeginWriteDecrement( list, position );
+        position.at = list.last;
+        for (index = 0; index < count; index++) {
+            if (!position.at->previous)
+                throw count;
+            position.at = position.at->previous;
+        }
+        return position;
     }
 
     template <
@@ -1023,7 +1211,9 @@ namespace junction {
     static inline bool
     DecrementBegins(
         Referential< const Junctive< Natural, Elemental > >
-            list
+            list,
+        Referential< const Natural >
+            count
     ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
@@ -1032,7 +1222,17 @@ namespace junction {
             "Natural:  Unsigned integer type required"
         );
 #endif
-        return list.last;
+        Natural
+            index;
+        Positional< Elemental >
+            position;
+        if (!list.last)
+            return false;
+        position.at = list.last;
+        for (index = 0; index < count; index++)
+            if (!position.at->previous)
+                return false;
+        return true;
     }
 
     template <
@@ -1044,7 +1244,9 @@ namespace junction {
         Referential< const Junctive< Natural, Elemental > >
             list,
         Referential< Positional< Elemental > >
-            position
+            position,
+        Referential< const Natural >
+            count
     ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
@@ -1053,7 +1255,10 @@ namespace junction {
             "Natural:  Unsigned integer type required"
         );
 #endif
-        position.at = position.at->previous;
+        Natural
+            index;
+        for (index = 0; index < count; index++)
+            position.at = position.at->previous;
         return position;
     }
 
@@ -1066,7 +1271,9 @@ namespace junction {
         Referential< const Junctive< Natural, Elemental > >
             list,
         Referential< Positional< Elemental > >
-            position
+            position,
+        Referential< const Natural >
+            count
     ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
@@ -1075,11 +1282,16 @@ namespace junction {
             "Natural:  Unsigned integer type required"
         );
 #endif
+        Natural
+            index;
         if (!position.at)
             throw position;
-        if (!position.at->previous)
-            throw position;
-        return TraverseReadDecrement( list, position );
+        for (index = 0; index < count; index++) {
+            if (!position.at->previous)
+                throw position;
+            position.at = position.at->previous;
+        }
+        return position;
     }
 
     template <
@@ -1091,7 +1303,9 @@ namespace junction {
         Referential< Junctive< Natural, Elemental > >
             list,
         Referential< Positional< Elemental > >
-            position
+            position,
+        Referential< const Natural >
+            count
     ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
@@ -1100,7 +1314,10 @@ namespace junction {
             "Natural:  Unsigned integer type required"
         );
 #endif
-        position.at = position.at->previous;
+        Natural
+            index;
+        for (index = 0; index < count; index++)
+            position.at = position.at->previous;
         return position;
     }
 
@@ -1113,7 +1330,9 @@ namespace junction {
         Referential< Junctive< Natural, Elemental > >
             list,
         Referential< Positional< Elemental > >
-            position
+            position,
+        Referential< const Natural >
+            count
     ) {
         using namespace ::std;
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
@@ -1122,11 +1341,16 @@ namespace junction {
             "Natural:  Unsigned integer type required"
         );
 #endif
+        Natural
+            index;
         if (!position.at)
             throw position;
-        if (!position.at->previous)
-            throw position;
-        return TraverseWriteDecrement( list, position );
+        for (index = 0; index < count; index++) {
+            if (!position.at->previous)
+                throw position;
+            position.at = position.at->previous;
+        }
+        return position;
     }
 
     template <
@@ -1138,7 +1362,9 @@ namespace junction {
         Referential< const Junctive< Natural, Elemental > >
             list,
         Referential< const Positional< Elemental > >
-            position
+            position,
+        Referential< const Natural >
+            count
     ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
@@ -1147,7 +1373,17 @@ namespace junction {
             "Natural:  Unsigned integer type required"
         );
 #endif
-        return position.at->previous;
+        Natural
+            index;
+        Positional< Elemental >
+            current;
+        current = position;
+        for (index = 0; index < count; index++) {
+            if (!current.at->previous)
+                return false;
+            current.at = current.at->previous;
+        }
+        return true;
     }
 
     template <
@@ -1159,7 +1395,9 @@ namespace junction {
         Referential< const Junctive< Natural, Elemental > >
             list,
         Referential< const Positional< Elemental > >
-            position
+            position,
+        Referential< const Natural >
+            count
     ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
@@ -1170,7 +1408,7 @@ namespace junction {
 #endif
         if (!position.at)
             throw position;
-        return DecrementTraversable( list, position );
+        return DecrementTraversable( list, position, count );
     }
 
     template <
@@ -1292,7 +1530,7 @@ namespace junction {
         typename Natural,
         typename Elemental
     >
-    constexpr Scalar< const Junctive< Natural, Elemental >, Positional< Elemental >, const Elemental >
+    constexpr Scalar< const Junctive< Natural, Elemental >, Positional< Elemental >, Natural, const Elemental >
     ReadIncrementScale = {
         Comparison< Elemental >,
         BeginReadIncrement< Natural, Elemental >,
@@ -1304,7 +1542,7 @@ namespace junction {
         typename Natural,
         typename Elemental
     >
-    constexpr Scalar< const Junctive< Natural, Elemental >, Positional< Elemental >, const Elemental >
+    constexpr Scalar< const Junctive< Natural, Elemental >, Positional< Elemental >, Natural, const Elemental >
     SafeReadIncrementScale = {
         ComparisonChecksForNull< Elemental >,
         BeginReadIncrementSafely< Natural, Elemental >,
@@ -1316,7 +1554,7 @@ namespace junction {
         typename Natural,
         typename Elemental
     >
-    constexpr Scalar< Junctive< Natural, Elemental >, Positional< Elemental >, Elemental >
+    constexpr Scalar< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental >
     WriteIncrementScale = {
         Comparison< Elemental >,
         BeginWriteIncrement< Natural, Elemental >,
@@ -1328,7 +1566,7 @@ namespace junction {
         typename Natural,
         typename Elemental
     >
-    constexpr Scalar< Junctive< Natural, Elemental >, Positional< Elemental >, Elemental >
+    constexpr Scalar< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental >
     SafeWriteIncrementScale = {
         ComparisonChecksForNull< Elemental >,
         BeginWriteIncrementSafely< Natural, Elemental >,
@@ -1340,7 +1578,7 @@ namespace junction {
         typename Natural,
         typename Elemental
     >
-    constexpr Scalar< const Junctive< Natural, Elemental >, Positional< Elemental >, const Elemental >
+    constexpr Scalar< const Junctive< Natural, Elemental >, Positional< Elemental >, Natural, const Elemental >
     ReadDecrementScale = {
         Comparison< Elemental >,
         BeginReadDecrement< Natural, Elemental >,
@@ -1352,7 +1590,7 @@ namespace junction {
         typename Natural,
         typename Elemental
     >
-    constexpr Scalar< const Junctive< Natural, Elemental >, Positional< Elemental >, const Elemental >
+    constexpr Scalar< const Junctive< Natural, Elemental >, Positional< Elemental >, Natural, const Elemental >
     SafeReadDecrementScale = {
         ComparisonChecksForNull< Elemental >,
         BeginReadDecrementSafely< Natural, Elemental >,
@@ -1364,7 +1602,7 @@ namespace junction {
         typename Natural,
         typename Elemental
     >
-    constexpr Scalar< Junctive< Natural, Elemental >, Positional< Elemental >, Elemental >
+    constexpr Scalar< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental >
     WriteDecrementScale = {
         Comparison< Elemental >,
         BeginWriteDecrement< Natural, Elemental >,
@@ -1376,7 +1614,7 @@ namespace junction {
         typename Natural,
         typename Elemental
     >
-    constexpr Scalar< Junctive< Natural, Elemental >, Positional< Elemental >, Elemental >
+    constexpr Scalar< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental >
     SafeWriteDecrementScale = {
         ComparisonChecksForNull< Elemental >,
         BeginWriteDecrementSafely< Natural, Elemental >,
@@ -1388,7 +1626,7 @@ namespace junction {
         typename Natural,
         typename Elemental
     >
-    constexpr Lineal< const Junctive< Natural, Elemental >, Positional< Elemental >, const Elemental >
+    constexpr Lineal< const Junctive< Natural, Elemental >, Positional< Elemental >, Natural, const Elemental >
     ReadLiner = {
         ReadIncrementScale< Natural, Elemental >,
         ReadDecrementScale< Natural, Elemental >
@@ -1398,7 +1636,7 @@ namespace junction {
         typename Natural,
         typename Elemental
     >
-    constexpr Lineal< const Junctive< Natural, Elemental >, Positional< Elemental >, const Elemental >
+    constexpr Lineal< const Junctive< Natural, Elemental >, Positional< Elemental >, Natural, const Elemental >
     SafeReadLiner = {
         SafeReadIncrementScale< Natural, Elemental >,
         SafeReadDecrementScale< Natural, Elemental >
@@ -1408,7 +1646,7 @@ namespace junction {
         typename Natural,
         typename Elemental
     >
-    constexpr Lineal< Junctive< Natural, Elemental >, Positional< Elemental >, Elemental >
+    constexpr Lineal< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental >
     WriteLiner = {
         WriteIncrementScale< Natural, Elemental >,
         WriteDecrementScale< Natural, Elemental >
@@ -1418,7 +1656,7 @@ namespace junction {
         typename Natural,
         typename Elemental
     >
-    constexpr Lineal< Junctive< Natural, Elemental >, Positional< Elemental >, Elemental >
+    constexpr Lineal< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental >
     SafeWriteLiner = {
         SafeWriteIncrementScale< Natural, Elemental >,
         SafeWriteDecrementScale< Natural, Elemental >
@@ -1428,103 +1666,119 @@ namespace junction {
         typename Natural,
         typename Elemental
     >
-    constexpr Directional< const Junctive< Natural, Elemental >, Positional< Elemental >, const Elemental >
+    constexpr Directional< const Junctive< Natural, Elemental >, Positional< Elemental >, Natural, const Elemental >
     ReadIncrementDirection = {
         ReadIncrementScale< Natural, Elemental >,
         IncrementBegins< Natural, Elemental >,
         IncrementTraversable< Natural, Elemental >,
-        Contains< Natural, Elemental >
+        Contains< Natural, Elemental >,
+        Account< Natural, Elemental >,
+        CountIncrement< Natural, Elemental >
     };
 
     template <
         typename Natural,
         typename Elemental
     >
-    constexpr Directional< const Junctive< Natural, Elemental >, Positional< Elemental >, const Elemental >
+    constexpr Directional< const Junctive< Natural, Elemental >, Positional< Elemental >, Natural, const Elemental >
     SafeReadIncrementDirection = {
         SafeReadIncrementScale< Natural, Elemental >,
         IncrementBegins< Natural, Elemental >,
         IncrementTraversableChecksForNull< Natural, Elemental >,
-        ContainsChecksForNull< Natural, Elemental >
+        ContainsChecksForNull< Natural, Elemental >,
+        Account< Natural, Elemental >,
+        CountIncrement< Natural, Elemental >
     };
 
     template <
         typename Natural,
         typename Elemental
     >
-    constexpr Directional< Junctive< Natural, Elemental >, Positional< Elemental >, Elemental >
+    constexpr Directional< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental >
     WriteIncrementDirection = {
         WriteIncrementScale< Natural, Elemental >,
         IncrementBegins< Natural, Elemental >,
         IncrementTraversable< Natural, Elemental >,
-        Contains< Natural, Elemental >
+        Contains< Natural, Elemental >,
+        Account< Natural, Elemental >,
+        CountIncrement< Natural, Elemental >
     };
 
     template <
         typename Natural,
         typename Elemental
     >
-    constexpr Directional< Junctive< Natural, Elemental >, Positional< Elemental >, Elemental >
+    constexpr Directional< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental >
     SafeWriteIncrementDirection = {
         SafeWriteIncrementScale< Natural, Elemental >,
         IncrementBegins< Natural, Elemental >,
         IncrementTraversableChecksForNull< Natural, Elemental >,
-        ContainsChecksForNull< Natural, Elemental >
+        ContainsChecksForNull< Natural, Elemental >,
+        Account< Natural, Elemental >,
+        CountIncrement< Natural, Elemental >
     };
 
     template <
         typename Natural,
         typename Elemental
     >
-    constexpr Directional< const Junctive< Natural, Elemental >, Positional< Elemental >, const Elemental >
+    constexpr Directional< const Junctive< Natural, Elemental >, Positional< Elemental >, Natural, const Elemental >
     ReadDecrementDirection = {
         ReadDecrementScale< Natural, Elemental >,
         DecrementBegins< Natural, Elemental >,
         DecrementTraversable< Natural, Elemental >,
-        Contains< Natural, Elemental >
+        Contains< Natural, Elemental >,
+        Account< Natural, Elemental >,
+        CountIncrement< Natural, Elemental >
     };
 
     template <
         typename Natural,
         typename Elemental
     >
-    constexpr Directional< const Junctive< Natural, Elemental >, Positional< Elemental >, const Elemental >
+    constexpr Directional< const Junctive< Natural, Elemental >, Positional< Elemental >, Natural, const Elemental >
     SafeReadDecrementDirection = {
         SafeReadDecrementScale< Natural, Elemental >,
         DecrementBegins< Natural, Elemental >,
         DecrementTraversableChecksForNull< Natural, Elemental >,
-        ContainsChecksForNull< Natural, Elemental >
+        ContainsChecksForNull< Natural, Elemental >,
+        Account< Natural, Elemental >,
+        CountIncrement< Natural, Elemental >
     };
 
     template <
         typename Natural,
         typename Elemental
     >
-    constexpr Directional< Junctive< Natural, Elemental >, Positional< Elemental >, Elemental >
+    constexpr Directional< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental >
     WriteDecrementDirection = {
         WriteDecrementScale< Natural, Elemental >,
         DecrementBegins< Natural, Elemental >,
         DecrementTraversable< Natural, Elemental >,
-        ContainsChecksForNull< Natural, Elemental >
+        ContainsChecksForNull< Natural, Elemental >,
+        Account< Natural, Elemental >,
+        CountIncrement< Natural, Elemental >
     };
 
     template <
         typename Natural,
         typename Elemental
     >
-    constexpr Directional< Junctive< Natural, Elemental >, Positional< Elemental >, Elemental >
+    constexpr Directional< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental >
     SafeWriteDecrementDirection = {
         SafeWriteDecrementScale< Natural, Elemental >,
         DecrementBegins< Natural, Elemental >,
         DecrementTraversableChecksForNull< Natural, Elemental >,
-        ContainsChecksForNull< Natural, Elemental >
+        ContainsChecksForNull< Natural, Elemental >,
+        Account< Natural, Elemental >,
+        CountIncrement< Natural, Elemental >
     };
 
     template <
         typename Natural,
         typename Elemental
     >
-    constexpr Axial< const Junctive< Natural, Elemental >, Positional< Elemental >, const Elemental >
+    constexpr Axial< const Junctive< Natural, Elemental >, Positional< Elemental >, Natural, const Elemental >
     ReadAxis = {
         ReadIncrementDirection< Natural, Elemental >,
         ReadDecrementDirection< Natural, Elemental >
@@ -1534,7 +1788,7 @@ namespace junction {
         typename Natural,
         typename Elemental
     >
-    constexpr Axial< const Junctive< Natural, Elemental >, Positional< Elemental >, const Elemental >
+    constexpr Axial< const Junctive< Natural, Elemental >, Positional< Elemental >, Natural, const Elemental >
     SafeReadAxis = {
         SafeReadIncrementDirection< Natural, Elemental >,
         SafeReadDecrementDirection< Natural, Elemental >
@@ -1544,7 +1798,7 @@ namespace junction {
         typename Natural,
         typename Elemental
     >
-    constexpr Axial< Junctive< Natural, Elemental >, Positional< Elemental >, Elemental >
+    constexpr Axial< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental >
     WriteAxis = {
         WriteIncrementDirection< Natural, Elemental >,
         WriteDecrementDirection< Natural, Elemental >
@@ -1554,7 +1808,7 @@ namespace junction {
         typename Natural,
         typename Elemental
     >
-    constexpr Axial< Junctive< Natural, Elemental >, Positional< Elemental >, Elemental >
+    constexpr Axial< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental >
     SafeWriteAxis = {
         SafeWriteIncrementDirection< Natural, Elemental >,
         SafeWriteDecrementDirection< Natural, Elemental >

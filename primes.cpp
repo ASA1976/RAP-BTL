@@ -19,7 +19,7 @@ static inline bool
 SequencePrimes(
     Referential< Spatial >
         primes,
-    Referential< const Scalar< Spatial, Positional, Natural > >
+    Referential< const Scalar< Spatial, Positional, Natural, Natural > >
         increment,
     Referential< const Natural >
         count
@@ -33,20 +33,20 @@ SequencePrimes(
     if (count < 1)
         return false;
     value = 2;
-    increment.begin( primes, write_position );
+    increment.begin( primes, write_position, 0 );
     increment.go( primes, write_position ).to = value++;
     for (added = 1; added < count; value++) {
-        increment.begin( primes, read_position );
+        increment.begin( primes, read_position, 0 );
         while (true) {
             if (value % increment.go( primes, read_position ).to == 0)
                 break;
             if (read_position == write_position) {
-                increment.traverse( primes, write_position );
+                increment.traverse( primes, write_position, 1 );
                 increment.go( primes, write_position ).to = value;
                 added++;
                 break;
             }
-            increment.traverse( primes, read_position );
+            increment.traverse( primes, read_position, 1 );
         }
     }
     return true;
@@ -62,7 +62,7 @@ DisplayPrimes(
 ) {
     using namespace ::localization;
     static auto&
-        Increment = WriteIncrementScale< Natural, Natural >;
+        Increment = WriteIncrementScale< Natural, Natural, Natural >;
     WriteLocal< Natural >
         primes = new Natural[count];
     Natural
@@ -70,12 +70,12 @@ DisplayPrimes(
     if (count < 1)
         return false;
     SequencePrimes( primes, Increment, count );
-    Increment.begin( primes, position );
+    Increment.begin( primes, position, 0 );
     while (true) {
         printf( "%u\n", Increment.go( primes, position ).to );
         if (position == count - 1)
             break;
-        Increment.traverse( primes, position );
+        Increment.traverse( primes, position, 1 );
     }
     return true;
 }

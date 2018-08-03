@@ -69,7 +69,9 @@ namespace location {
         Referential< Subjective >
             subject
     ) {
-        return Confer< const Subjective >( subject );
+		static auto&
+			View = Confer< const Subjective >;
+        return View( subject );
     }
 
     template <

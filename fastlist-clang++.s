@@ -45,48 +45,51 @@ main:                                   # @main
 .LBB0_5:
 	movzwl	%dx, %edx
 	testw	%ax, %ax
-	leal	(,%edx,4), %edi
-	leal	NodePool+8(%edi,%edi,2), %esi
-	movl	%ecx, NodePool+12(%edi,%edi,2)
-	movl	%esi, (%ecx)
-	je	.LBB0_45
+	leal	(,%edx,4), %esi
+	leal	NodePool+8(%esi,%esi,2), %edi
+	movl	%ecx, NodePool+12(%esi,%esi,2)
+	movl	%edi, 16(%esp)          # 4-byte Spill
+	movl	%edi, (%ecx)
+	je	.LBB0_44
 # %bb.6:
 	decl	%eax
 	movw	%ax, NodePool
 	movzwl	%ax, %ecx
 	movzwl	NodePool+44(%ecx,%ecx), %ecx
 	jmp	.LBB0_7
-.LBB0_45:
+.LBB0_44:
 	movzwl	NodePool+4, %ecx
-	movl	%ecx, %edi
-	incl	%edi
-	movw	%di, NodePool+4
+	movl	%ecx, %esi
+	incl	%esi
+	movw	%si, NodePool+4
 .LBB0_7:
+	movl	16(%esp), %esi          # 4-byte Reload
 	movzwl	%cx, %ebx
-	leal	(%edx,%edx,2), %ebp
-	movl	$0, (%esi)
 	shll	$2, %ebx
-	leal	NodePool+12(,%ebp,4), %edx
+	leal	NodePool+8(%ebx,%ebx,2), %ecx
+	movl	$0, (%esi)
+	leal	(%edx,%edx,2), %esi
 	movb	$66, NodePool+16(%ebx,%ebx,2)
 	movl	$0, NodePool+8(%ebx,%ebx,2)
 	movl	$0, NodePool+12(%ebx,%ebx,2)
-	leal	NodePool+8(%ebx,%ebx,2), %ecx
+	movl	NodePool+12(,%esi,4), %edi
+	leal	NodePool+12(,%esi,4), %edx
 	movl	%edx, 20(%esp)          # 4-byte Spill
-	movl	NodePool+12(,%ebp,4), %edi
 	testl	%edi, %edi
 	je	.LBB0_9
 # %bb.8:
 	movl	$0, (%edi)
 .LBB0_9:
 	leal	NodePool+12(%ebx,%ebx,2), %edx
-	leal	NodePool+16(,%ebp,4), %ebx
+	movl	16(%esp), %ebx          # 4-byte Reload
+	leal	NodePool+16(,%esi,4), %ebp
 	testl	%edi, %edi
-	movb	$65, NodePool+16(,%ebp,4)
-	movl	$0, (%esi)
-	movl	%ebx, 24(%esp)          # 4-byte Spill
-	movl	20(%esp), %ebx          # 4-byte Reload
-	movl	%ecx, (%ebx)
-	movl	%esi, (%ecx)
+	movb	$65, NodePool+16(,%esi,4)
+	movl	%edx, 24(%esp)          # 4-byte Spill
+	movl	20(%esp), %edx          # 4-byte Reload
+	movl	$0, (%ebx)
+	movl	%ecx, (%edx)
+	movl	%ebx, (%ecx)
 	je	.LBB0_13
 # %bb.10:
 	movl	4(%edi), %ebx
@@ -123,26 +126,25 @@ main:                                   # @main
 	movl	%ecx, (%edi)
 	movl	$0, (%eax)
 	movl	24(%esp), %eax          # 4-byte Reload
-	movl	%edi, (%edx)
 	movl	$.L.str.3, (%esp)
-	movsbl	(%eax), %eax
+	movl	%edi, (%eax)
+	movsbl	(%ebp), %eax
 	movl	%eax, 4(%esp)
 	calll	printf
-	cmpl	$0, NodePool+12(,%ebp,4)
+	cmpl	$0, NodePool+12(,%esi,4)
 	je	.LBB0_20
 # %bb.18:
-	movl	20(%esp), %ebp          # 4-byte Reload
+	movl	16(%esp), %esi          # 4-byte Reload
 	.p2align	4, 0x90
 .LBB0_19:                               # =>This Inner Loop Header: Depth=1
 	movl	$44, (%esp)
 	calll	putchar
-	movl	(%ebp), %ebp
-	movsbl	8(%ebp), %eax
+	movl	4(%esi), %esi
+	movsbl	8(%esi), %eax
 	movl	$.L.str.3, (%esp)
 	movl	%eax, 4(%esp)
 	calll	printf
-	cmpl	$0, 4(%ebp)
-	leal	4(%ebp), %ebp
+	cmpl	$0, 4(%esi)
 	jne	.LBB0_19
 .LBB0_20:
 	movl	$.L.str, (%esp)
@@ -162,85 +164,80 @@ main:                                   # @main
 	movl	%ebx, (%eax)
 	je	.LBB0_25
 # %bb.24:
-	movl	%esi, (%ebx)
+	movl	16(%esp), %eax          # 4-byte Reload
+	movl	%eax, (%ebx)
 .LBB0_25:
 	testl	%edi, %edi
 	je	.LBB0_26
 # %bb.27:
-	movl	(%edi), %ebx
-	testl	%ebx, %ebx
+	movl	(%edi), %esi
+	testl	%esi, %esi
 	je	.LBB0_28
 # %bb.29:
-	movl	$0, 4(%ebx)
+	movl	%ebp, %ebx
+	movl	$0, 4(%esi)
 	movl	$0, (%edi)
 	jmp	.LBB0_30
 .LBB0_26:
-	xorl	%ebx, %ebx
-	movl	%esi, %edi
-	testl	%ebp, %ebp
-	jne	.LBB0_32
-	jmp	.LBB0_35
+	movl	16(%esp), %edi          # 4-byte Reload
+	xorl	%esi, %esi
+	movl	%ebp, %ebx
+	jmp	.LBB0_31
 .LBB0_28:
+	xorl	%ebx, %ebx
 	xorl	%ebp, %ebp
 .LBB0_30:
-	movl	%esi, 4(%edi)
-	movl	%edi, (%esi)
+	movl	16(%esp), %eax          # 4-byte Reload
+	movl	%eax, 4(%edi)
+	movl	%edi, (%eax)
+.LBB0_31:
 	testl	%ebp, %ebp
-	je	.LBB0_35
-.LBB0_32:
+	jne	.LBB0_33
+	jmp	.LBB0_34
+	.p2align	4, 0x90
+.LBB0_32:                               #   in Loop: Header=BB0_33 Depth=1
+	movl	$44, (%esp)
+	calll	putchar
+	movl	4(%ebp), %ebp
+.LBB0_33:                               # =>This Inner Loop Header: Depth=1
 	movsbl	8(%ebp), %eax
 	movl	$.L.str.3, (%esp)
 	movl	%eax, 4(%esp)
 	calll	printf
 	cmpl	$0, 4(%ebp)
-	je	.LBB0_35
-# %bb.33:
-	movl	%ebp, %esi
-	addl	$4, %esi
-	.p2align	4, 0x90
-.LBB0_34:                               # =>This Inner Loop Header: Depth=1
-	movl	$44, (%esp)
-	calll	putchar
-	movl	(%esi), %esi
-	movsbl	8(%esi), %eax
-	movl	$.L.str.3, (%esp)
-	movl	%eax, 4(%esp)
-	calll	printf
-	cmpl	$0, 4(%esi)
-	leal	4(%esi), %esi
-	jne	.LBB0_34
-.LBB0_35:
+	jne	.LBB0_32
+.LBB0_34:
 	movl	$.L.str.2, (%esp)
 	calll	puts
-	testl	%ebx, %ebx
-	je	.LBB0_36
-# %bb.37:
+	testl	%esi, %esi
+	je	.LBB0_35
+# %bb.36:
 	testl	%edi, %edi
-	movl	%edi, 4(%ebx)
-	je	.LBB0_39
-# %bb.38:
-	movl	%ebx, (%edi)
+	movl	%edi, 4(%esi)
+	je	.LBB0_38
+# %bb.37:
+	movl	%esi, (%edi)
+.LBB0_38:
+	testl	%ebx, %ebx
+	jne	.LBB0_39
+	jmp	.LBB0_43
+.LBB0_35:
+	movl	%edi, %ebx
+	testl	%ebx, %ebx
+	je	.LBB0_43
 .LBB0_39:
-	testl	%ebp, %ebp
-	jne	.LBB0_40
-	jmp	.LBB0_44
-.LBB0_36:
-	movl	%edi, %ebp
-	testl	%ebp, %ebp
-	je	.LBB0_44
-.LBB0_40:
 	movzwl	NodePool, %edi
-	movl	4(%ebp), %ecx
+	movl	4(%ebx), %ecx
 	movl	$NodePool+8, %eax
-	subl	%eax, %ebp
-	shrl	$2, %ebp
-	imull	$-1431655765, %ebp, %esi # imm = 0xAAAAAAAB
+	subl	%eax, %ebx
+	shrl	$2, %ebx
+	imull	$-1431655765, %ebx, %esi # imm = 0xAAAAAAAB
 	leal	1(%edi), %edx
 	testl	%ecx, %ecx
 	movw	%si, NodePool+44(%edi,%edi)
-	je	.LBB0_41
+	je	.LBB0_40
 	.p2align	4, 0x90
-.LBB0_42:                               # =>This Inner Loop Header: Depth=1
+.LBB0_41:                               # =>This Inner Loop Header: Depth=1
 	movl	$0, (%ecx)
 	leal	1(%edx), %esi
 	movzwl	%dx, %edx
@@ -252,13 +249,13 @@ main:                                   # @main
 	movl	%esi, %edx
 	testl	%edi, %edi
 	movl	%edi, %ecx
-	jne	.LBB0_42
-	jmp	.LBB0_43
-.LBB0_41:
+	jne	.LBB0_41
+	jmp	.LBB0_42
+.LBB0_40:
 	movl	%edx, %esi
-.LBB0_43:
+.LBB0_42:
 	movw	%si, NodePool
-.LBB0_44:
+.LBB0_43:
 	xorl	%eax, %eax
 	addl	$28, %esp
 	popl	%esi

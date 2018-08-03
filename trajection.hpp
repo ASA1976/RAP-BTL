@@ -13,28 +13,43 @@ namespace trajection {
     using ::comparison::Comparative;
 
     template <
-        typename Spatial
+        typename Spatial,
+        typename Natural
     >
-    using Reachable = bool(
-        Referential< const Spatial >
+    using Enterable = bool(
+        Referential< const Spatial >,
+        Referential< const Natural >
     );
 
     template <
         typename Spatial,
         typename Positional
     >
-    using Traversable = bool(
+    using Attainable = bool(
         Referential< const Spatial >,
         Referential< const Positional >
     );
 
     template <
         typename Spatial,
-        typename Positional
+        typename Positional,
+        typename Natural
+    >
+    using Traversable = bool(
+        Referential< const Spatial >,
+        Referential< const Positional >,
+        Referential< const Natural >
+    );
+
+    template <
+        typename Spatial,
+        typename Positional,
+        typename Natural
     >
     using Trajectile = Referential< const Positional >(
         Referential< Spatial >,
-        Referential< Positional >
+        Referential< Positional >,
+        Referential< const Natural >
     );
 
     template <
@@ -49,6 +64,24 @@ namespace trajection {
 
     template <
         typename Spatial,
+        typename Natural
+    >
+    using Aggregate = Natural(
+        Referential< const Spatial >
+    );
+
+    template <
+        typename Spatial,
+        typename Positional,
+        typename Natural
+    >
+    using Cumulative = Natural(
+        Referential< const Spatial >,
+        Referential< const Positional >
+    );
+
+    template <
+        typename Spatial,
         typename Positional,
         typename Endemical
     >
@@ -57,7 +90,7 @@ namespace trajection {
         Referential< const Comparative< Positional > >
             order;
 
-        Referential< Traversable< Spatial, Positional > >
+        Referential< Attainable< Spatial, Positional > >
             contains;
 
         Referential< Expositive< Spatial, Positional, Endemical > >
@@ -68,6 +101,7 @@ namespace trajection {
     template <
         typename Spatial,
         typename Positional,
+        typename Natural,
         typename Endemical
     >
     struct Scalar {
@@ -75,7 +109,7 @@ namespace trajection {
         Referential< const Comparative< Positional > >
             order;
 
-        Referential< Trajectile< Spatial, Positional > >
+        Referential< Trajectile< Spatial, Positional, Natural > >
             begin,
             traverse;
 
@@ -87,11 +121,12 @@ namespace trajection {
     template <
         typename Spatial,
         typename Positional,
+        typename Natural,
         typename Endemical
     >
     struct Lineal {
 
-        Referential< const Scalar< Spatial, Positional, Endemical > >
+        Referential< const Scalar< Spatial, Positional, Natural, Endemical > >
             increment,
             decrement;
 
@@ -100,97 +135,44 @@ namespace trajection {
     template <
         typename Spatial,
         typename Positional,
+        typename Natural,
         typename Endemical
     >
     struct Directional {
 
-        Referential< const Scalar< Spatial, Positional, Endemical > >
+        Referential< const Scalar< Spatial, Positional, Natural, Endemical > >
             scale;
 
-        Referential< Reachable< Spatial > >
+        Referential< Enterable< Spatial, Natural > >
             begins;
 
-        Referential< Traversable< Spatial, Positional > >
+        Referential< Traversable< Spatial, Positional, Natural > >
             traversable;
 
-        Referential< Traversable< Spatial, Positional > >
+        Referential< Attainable< Spatial, Positional > >
             meets;
+
+        Referential< Aggregate< Spatial, Natural > >
+            survey;
+
+        Referential< Cumulative< Spatial, Positional, Natural > >
+            count;
 
     };
 
     template <
         typename Spatial,
         typename Positional,
+        typename Natural,
         typename Endemical
     >
     struct Axial {
 
-        Referential< const Directional< Spatial, Positional, Endemical > >
+        Referential< const Directional< Spatial, Positional, Natural, Endemical > >
             increment,
             decrement;
 
     };
-
-    template <
-        typename Spatial,
-        typename Positional,
-        typename Endemical,
-        typename Natural
-    >
-    static inline bool
-    Count(
-        Referential< Spatial >
-            space,
-        Referential< const Directional< Spatial, Positional, Endemical > >
-            direction,
-        Referential< Natural >
-            count
-    ) {
-#ifndef RAPBTL_NO_STD_CPLUSPLUS
-        using namespace ::std;
-        static_assert(
-            is_integral< Natural >::value && is_unsigned< Natural >::value,
-            "Natural:  Unsigned integer type required"
-        );
-#endif
-        static auto&
-            scale = direction.scale;
-        Positional
-            position;
-        if (!direction.begins( space ))
-            return false;
-        count = 0;
-        for (scale.begin( space, position ); true; scale.traverse( space, position )) {
-            count++;
-            if (!direction.traversable( space, position ))
-                return true;
-        }
-    }
-
-    template <
-        typename Spatial,
-        typename Positional,
-        typename Endemical,
-        typename Natural,
-        Referential< const Directional< Spatial, Positional, Endemical > >
-            Direction
-    >
-    static inline bool
-    Count(
-        Referential< Spatial >
-            space,
-        Referential< Natural >
-            count
-    ) {
-#ifndef RAPBTL_NO_STD_CPLUSPLUS
-        using namespace ::std;
-        static_assert(
-            is_integral< Natural >::value && is_unsigned< Natural >::value,
-            "Natural:  Unsigned integer type required"
-        );
-#endif
-        return Count( space, Direction, count );
-    }
 
 }
 

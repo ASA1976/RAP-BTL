@@ -94,7 +94,9 @@ namespace segmentation {
     static inline bool
     Begins(
         Referential< const Locational< Elemental > >
-            locality
+            locality,
+        Referential< const Natural >
+            count
     ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
@@ -103,7 +105,7 @@ namespace segmentation {
             "Natural:  Unsigned integer type required"
         );
 #endif
-        return Length > 0;
+        return Length > 0 && count < Length;
     }
 
     template <
@@ -115,7 +117,9 @@ namespace segmentation {
     static inline bool
     BeginsChecksForNull(
         Referential< const Locational< Elemental > >
-            locality
+            locality,
+        Referential< const Natural >
+            count
     ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
@@ -128,7 +132,7 @@ namespace segmentation {
             SegmentBegins = Begins< Natural, Length, Elemental >;
         if (!locality)
             throw locality;
-        return SegmentBegins( locality );
+        return SegmentBegins( locality, count );
     }
 
     template <
@@ -142,7 +146,9 @@ namespace segmentation {
         Referential< const Locational< Elemental > >
             locality,
         Referential< Natural >
-            index
+            index,
+        Referential< const Natural >
+            count
     ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
@@ -155,7 +161,9 @@ namespace segmentation {
             throw Length;
         if (!locality)
             throw locality;
-        return Begin( locality, index );
+        if (count >= Length)
+            throw count;
+        return Begin( locality, index, count );
     }
 
     template <
@@ -169,7 +177,9 @@ namespace segmentation {
         Referential< const Locational< Elemental > >
             locality,
         Referential< Natural >
-            index
+            index,
+        Referential< const Natural >
+            count
     ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
@@ -178,8 +188,7 @@ namespace segmentation {
             "Natural:  Unsigned integer type required"
         );
 #endif
-        index = Length - 1;
-        return index;
+        return index = Length ? Length - 1 - count : 0;
     }
 
     template <
@@ -193,7 +202,9 @@ namespace segmentation {
         Referential< const Locational< Elemental > >
             locality,
         Referential< Natural >
-            index
+            index,
+        Referential< const Natural >
+            count
     ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
@@ -208,7 +219,9 @@ namespace segmentation {
             throw Length;
         if (!locality)
             throw locality;
-        return Descend( locality, index );
+        if (count >= Length)
+            throw count;
+        return Descend( locality, index, count );
     }
 
     template <
@@ -222,7 +235,9 @@ namespace segmentation {
         Referential< const Locational< Elemental > >
             locality,
         Referential< const Natural >
-            index
+            index,
+        Referential< const Natural >
+            count
     ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
@@ -231,7 +246,7 @@ namespace segmentation {
             "Natural:  Unsigned integer type required"
         );
 #endif
-        return index < Length;
+        return index + count < Length;
     }
 
     template <
@@ -245,7 +260,9 @@ namespace segmentation {
         Referential< const Locational< Elemental > >
             locality,
         Referential< const Natural >
-            index
+            index,
+        Referential< const Natural >
+            count
     ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
@@ -258,7 +275,7 @@ namespace segmentation {
             Traversable = IncrementTraversable< Natural, Length, Elemental >;
         if (!locality)
             throw locality;
-        return Traversable( locality, index );
+        return Traversable( locality, index, count );
     }
 
     template <
@@ -272,7 +289,9 @@ namespace segmentation {
         Referential< const Locational< Elemental > >
             locality,
         Referential< const Natural >
-            index
+            index,
+        Referential< const Natural >
+            count
     ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
@@ -281,7 +300,7 @@ namespace segmentation {
             "Natural:  Unsigned integer type required"
         );
 #endif
-        return index > 0;
+        return count <= index;
     }
 
     template <
@@ -295,7 +314,9 @@ namespace segmentation {
         Referential< const Locational< Elemental > >
             locality,
         Referential< const Natural >
-            index
+            index,
+        Referential< const Natural >
+            count
     ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
@@ -308,7 +329,7 @@ namespace segmentation {
             Traversable = DecrementTraversable< Natural, Length, Elemental >;
         if (!locality)
             throw locality;
-        return Traversable( locality, index );
+        return Traversable( locality, index, count );
     }
 
     template <
@@ -322,7 +343,9 @@ namespace segmentation {
         Referential< const Locational< Elemental > >
             locality,
         Referential< Natural >
-            index
+            index,
+        Referential< Natural >
+            count
     ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
@@ -333,9 +356,9 @@ namespace segmentation {
 #endif
         static auto&
             Traversable = IncrementTraversableChecksForNull< Natural, Length, Elemental >;
-        if (!Traversable( locality, index ))
-            throw index;
-        return TraverseIncrement( locality, index );
+        if (!Traversable( locality, index, count ))
+            throw count;
+        return TraverseIncrement( locality, index, count );
     }
 
     template <
@@ -349,7 +372,9 @@ namespace segmentation {
         Referential< const Locational< Elemental > >
             locality,
         Referential< Natural >
-            index
+            index,
+        Referential< const Natural >
+            count
     ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
@@ -360,9 +385,76 @@ namespace segmentation {
 #endif
         static auto&
             Traversable = DecrementTraversableChecksForNull< Natural, Length, Elemental >;
-        if (!Traversable( locality, index ))
-            throw index;
-        return TraverseDecrement( locality, index );
+        if (!Traversable( locality, index, count ))
+            throw count;
+        return TraverseDecrement( locality, index, count );
+    }
+
+    template <
+        typename Natural,
+        Natural
+            Length,
+        typename Elemental
+    >
+    static inline Natural
+    Account(
+        Referential< const Locational< Elemental > >
+            locality
+    ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
+#endif
+        return Length;
+    }
+
+    template <
+        typename Natural,
+        Natural
+            Length,
+        typename Elemental
+    >
+    static inline Natural
+    CountIncrement(
+        Referential< const Locational< Elemental > >
+            locality,
+        Referential< const Natural >
+            index
+    ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
+#endif
+        return Length - 1 - index;
+    }
+
+    template <
+        typename Natural,
+        Natural
+            Length,
+        typename Elemental
+    >
+    static inline Natural
+    CountDecrement(
+        Referential< const Locational< Elemental > >
+            locality,
+        Referential< const Natural >
+            index
+    ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
+#endif
+        return index;
     }
 
     template <
@@ -423,7 +515,7 @@ namespace segmentation {
             Length,
         typename Elemental
     >
-    constexpr Scalar< const Locational< const Elemental >, Natural, const Elemental >
+    constexpr Scalar< const Locational< const Elemental >, Natural, Natural, const Elemental >
     SafeReadIncrementScale = {
         Comparison< Natural >,
         BeginIncrementSafely< Natural, Length, const Elemental >,
@@ -437,7 +529,7 @@ namespace segmentation {
             Length,
         typename Elemental
     >
-    constexpr Scalar< const Locational< Elemental >, Natural, Elemental >
+    constexpr Scalar< const Locational< Elemental >, Natural, Natural, Elemental >
     SafeWriteIncrementScale = {
         Comparison< Natural >,
         BeginIncrementSafely< Natural, Length, Elemental >,
@@ -451,7 +543,7 @@ namespace segmentation {
             Length,
         typename Elemental
     >
-    constexpr Scalar< const Locational< const Elemental >, Natural, const Elemental >
+    constexpr Scalar< const Locational< const Elemental >, Natural, Natural, const Elemental >
     ReadDecrementScale = {
         Comparison< Natural >,
         BeginDecrement< Natural, Length, const Elemental >,
@@ -465,7 +557,7 @@ namespace segmentation {
             Length,
         typename Elemental
     >
-    constexpr Scalar< const Locational< const Elemental >, Natural, const Elemental >
+    constexpr Scalar< const Locational< const Elemental >, Natural, Natural, const Elemental >
     SafeReadDecrementScale = {
         Comparison< Natural >,
         BeginDecrementSafely< Natural, Length, const Elemental >,
@@ -479,7 +571,7 @@ namespace segmentation {
             Length,
         typename Elemental
     >
-    constexpr Scalar< const Locational< Elemental >, Natural, Elemental >
+    constexpr Scalar< const Locational< Elemental >, Natural, Natural, Elemental >
     WriteDecrementScale = {
         Comparison< Natural >,
         BeginDecrement< Natural, Length, Elemental >,
@@ -493,7 +585,7 @@ namespace segmentation {
             Length,
         typename Elemental
     >
-    constexpr Scalar< const Locational< Elemental >, Natural, Elemental >
+    constexpr Scalar< const Locational< Elemental >, Natural, Natural, Elemental >
     SafeWriteDecrementScale = {
         Comparison< Natural >,
         BeginDecrementSafely< Natural, Length, Elemental >,
@@ -507,7 +599,7 @@ namespace segmentation {
             Length,
         typename Elemental
     >
-    constexpr Lineal< const Locational< const Elemental >, Natural, const Elemental >
+    constexpr Lineal< const Locational< const Elemental >, Natural, Natural, const Elemental >
     SafeReadLiner = {
         SafeReadIncrementScale< Natural, Length, Elemental >,
         SafeReadDecrementScale< Natural, Length, Elemental >
@@ -519,7 +611,7 @@ namespace segmentation {
             Length,
         typename Elemental
     >
-    constexpr Lineal< const Locational< Elemental >, Natural, Elemental >
+    constexpr Lineal< const Locational< Elemental >, Natural, Natural, Elemental >
     SafeWriteLiner = {
         SafeWriteIncrementScale< Natural, Length, Elemental >,
         SafeWriteDecrementScale< Natural, Length, Elemental >
@@ -531,12 +623,14 @@ namespace segmentation {
             Length,
         typename Elemental
     >
-    constexpr Directional< const Locational< const Elemental >, Natural, const Elemental >
+    constexpr Directional< const Locational< const Elemental >, Natural, Natural, const Elemental >
     ReadIncrementDirection = {
-        ReadIncrementScale< Natural, Elemental >,
+        ReadIncrementScale< Natural, Natural, Elemental >,
         Begins< Natural, Length, const Elemental >,
         IncrementTraversable< Natural, Length, const Elemental >,
-        ContainsIndex< Natural, Length, const Elemental >
+        ContainsIndex< Natural, Length, const Elemental >,
+        Account< Natural, Length, const Elemental >,
+        CountIncrement< Natural, Length, const Elemental >
     };
 
     template <
@@ -545,12 +639,14 @@ namespace segmentation {
             Length,
         typename Elemental
     >
-    constexpr Directional< const Locational< const Elemental >, Natural, const Elemental >
+    constexpr Directional< const Locational< const Elemental >, Natural, Natural, const Elemental >
     SafeReadIncrementDirection = {
         SafeReadIncrementScale< Natural, Length, Elemental >,
         BeginsChecksForNull< Natural, Length, const Elemental >,
         IncrementTraversableChecksForNull< Natural, Length, const Elemental >,
-        ContainsIndexChecksForNull< Natural, Length, const Elemental >
+        ContainsIndexChecksForNull< Natural, Length, const Elemental >,
+        Account< Natural, Length, const Elemental >,
+        CountIncrement< Natural, Length, const Elemental >
     };
 
     template <
@@ -559,12 +655,14 @@ namespace segmentation {
             Length,
         typename Elemental
     >
-    constexpr Directional< const Locational< Elemental >, Natural, Elemental >
+    constexpr Directional< const Locational< Elemental >, Natural, Natural, Elemental >
     WriteIncrementDirection = {
         WriteIncrementScale< Natural, Elemental >,
         Begins< Natural, Length, Elemental >,
         IncrementTraversable< Natural, Length, Elemental >,
-        ContainsIndex< Natural, Length, Elemental >
+        ContainsIndex< Natural, Length, Elemental >,
+        Account< Natural, Length, Elemental >,
+        CountIncrement< Natural, Length, Elemental >
     };
 
     template <
@@ -573,12 +671,14 @@ namespace segmentation {
             Length,
         typename Elemental
     >
-    constexpr Directional< const Locational< Elemental >, Natural, Elemental >
+    constexpr Directional< const Locational< Elemental >, Natural, Natural, Elemental >
     SafeWriteIncrementDirection = {
         SafeWriteIncrementScale< Natural, Length, Elemental >,
         BeginsChecksForNull< Natural, Length, Elemental >,
         IncrementTraversableChecksForNull< Natural, Length, Elemental >,
-        ContainsIndexChecksForNull< Natural, Length, const Elemental >
+        ContainsIndexChecksForNull< Natural, Length, const Elemental >,
+        Account< Natural, Length, Elemental >,
+        CountIncrement< Natural, Length, Elemental >
     };
 
     template <
@@ -587,12 +687,14 @@ namespace segmentation {
             Length,
         typename Elemental
     >
-    constexpr Directional< const Locational< const Elemental >, Natural, const Elemental >
+    constexpr Directional< const Locational< const Elemental >, Natural, Natural, const Elemental >
     ReadDecrementDirection = {
         ReadDecrementScale< Natural, Length, Elemental >,
         Begins< Natural, Length, const Elemental >,
         DecrementTraversable< Natural, Length, const Elemental >,
-        ContainsIndex< Natural, Length, const Elemental >
+        ContainsIndex< Natural, Length, const Elemental >,
+        Account< Natural, Length, const Elemental >,
+        CountDecrement< Natural, Length, const Elemental >
     };
 
     template <
@@ -601,12 +703,14 @@ namespace segmentation {
             Length,
         typename Elemental
     >
-    constexpr Directional< const Locational< const Elemental >, Natural, const Elemental >
+    constexpr Directional< const Locational< const Elemental >, Natural, Natural, const Elemental >
     SafeReadDecrementDirection = {
         SafeReadDecrementScale< Natural, Length, Elemental >,
         BeginsChecksForNull< Natural, Length, const Elemental >,
         DecrementTraversableChecksForNull< Natural, Length, const Elemental >,
-        ContainsIndexChecksForNull< Natural, Length, const Elemental >
+        ContainsIndexChecksForNull< Natural, Length, const Elemental >,
+        Account< Natural, Length, const Elemental >,
+        CountDecrement< Natural, Length, const Elemental >
     };
 
     template <
@@ -615,12 +719,14 @@ namespace segmentation {
             Length,
         typename Elemental
     >
-    constexpr Directional< const Locational< Elemental >, Natural, Elemental >
+    constexpr Directional< const Locational< Elemental >, Natural, Natural, Elemental >
     WriteDecrementDirection = {
         WriteDecrementScale< Natural, Length, Elemental >,
         Begins< Natural, Length, Elemental >,
         DecrementTraversable< Natural, Length, Elemental >,
-        ContainsIndex< Natural, Length, Elemental >
+        ContainsIndex< Natural, Length, Elemental >,
+        Account< Natural, Length, Elemental >,
+        CountDecrement< Natural, Length, Elemental >
     };
 
     template <
@@ -629,12 +735,14 @@ namespace segmentation {
             Length,
         typename Elemental
     >
-    constexpr Directional< const Locational< Elemental >, Natural, Elemental >
+    constexpr Directional< const Locational< Elemental >, Natural, Natural, Elemental >
     SafeWriteDecrementDirection = {
         SafeWriteDecrementScale< Natural, Length, Elemental >,
         BeginsChecksForNull< Natural, Length, Elemental >,
         DecrementTraversableChecksForNull< Natural, Length, Elemental >,
-        ContainsIndexChecksForNull< Natural, Length, Elemental >
+        ContainsIndexChecksForNull< Natural, Length, Elemental >,
+        Account< Natural, Length, Elemental >,
+        CountDecrement< Natural, Length, Elemental >
     };
 
     template <
@@ -643,7 +751,7 @@ namespace segmentation {
             Length,
         typename Elemental
     >
-    constexpr Axial< const Locational< const Elemental >, Natural, const Elemental >
+    constexpr Axial< const Locational< const Elemental >, Natural, Natural, const Elemental >
     ReadAxis = {
         ReadIncrementDirection< Natural, Length, Elemental >,
         ReadDecrementDirection< Natural, Length, Elemental >
@@ -655,7 +763,7 @@ namespace segmentation {
             Length,
         typename Elemental
     >
-    constexpr Axial< const Locational< const Elemental >, Natural, const Elemental >
+    constexpr Axial< const Locational< const Elemental >, Natural, Natural, const Elemental >
     SafeReadAxis = {
         SafeReadIncrementDirection< Natural, Length, Elemental >,
         SafeReadDecrementDirection< Natural, Length, Elemental >
@@ -667,7 +775,7 @@ namespace segmentation {
             Length,
         typename Elemental
     >
-    constexpr Axial< const Locational< Elemental >, Natural, Elemental >
+    constexpr Axial< const Locational< Elemental >, Natural, Natural, Elemental >
     WriteAxis = {
         WriteIncrementDirection< Natural, Length, Elemental >,
         WriteDecrementDirection< Natural, Length, Elemental >
@@ -679,7 +787,7 @@ namespace segmentation {
             Length,
         typename Elemental
     >
-    constexpr Axial< const Locational< Elemental >, Natural, Elemental >
+    constexpr Axial< const Locational< Elemental >, Natural, Natural, Elemental >
     SafeWriteAxis = {
         SafeWriteIncrementDirection< Natural, Length, Elemental >,
         SafeWriteDecrementDirection< Natural, Length, Elemental >

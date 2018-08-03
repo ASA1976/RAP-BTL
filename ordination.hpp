@@ -218,7 +218,9 @@ namespace ordination {
     static inline bool
     Begins(
         Referential< const Elemental[Length] >
-            array
+            array,
+        Referential< const Natural >
+            count
     ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
@@ -227,7 +229,7 @@ namespace ordination {
             "Natural:  Unsigned integer type required"
         );
 #endif
-        return Length > 0;
+        return count < Length;
     }
 
     template <
@@ -241,7 +243,9 @@ namespace ordination {
         Referential< Elemental[Length] >
             array,
         Referential< Locational< Elemental > >
-            position
+            position,
+        Referential< const Natural >
+            count
     ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
@@ -250,8 +254,7 @@ namespace ordination {
             "Natural:  Unsigned integer type required"
         );
 #endif
-        position = array;
-        return position;
+        return position = array + count;
     }
 
     template <
@@ -265,7 +268,9 @@ namespace ordination {
         Referential< Elemental[Length] >
             array,
         Referential< Locational< Elemental > >
-            position
+            position,
+        Referential< const Natural >
+            count
     ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
@@ -274,8 +279,7 @@ namespace ordination {
             "Natural:  Unsigned integer type required"
         );
 #endif
-        position = array + Length - 1;
-        return position;
+        return position = array + Length - 1 - count;
     }
 
     template <
@@ -289,7 +293,9 @@ namespace ordination {
         Referential< const Elemental[Length] >
             array,
         Referential< const Locational< Elemental > >
-            position
+            position,
+        Referential< const Natural >
+            count
     ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
@@ -298,7 +304,7 @@ namespace ordination {
             "Natural:  Unsigned integer type required"
         );
 #endif
-        return position < array + Length - 1;
+        return count < Length && position < array + Length - count;
     }
 
     template <
@@ -312,7 +318,9 @@ namespace ordination {
         Referential< const Elemental[Length] >
             array,
         Referential< const Locational< Elemental > >
-            position
+            position,
+        Referential< const Natural >
+            count
     ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
@@ -325,7 +333,7 @@ namespace ordination {
             Traversable = IncrementTraversable< Natural, Length, Elemental >;
         if (!position)
             throw position;
-        return Traversable( array, position );
+        return Traversable( array, position, count );
     }
 
     template <
@@ -339,7 +347,9 @@ namespace ordination {
         Referential< const Elemental[Length] >
             array,
         Referential< const Locational< Elemental > >
-            position
+            position,
+        Referential< const Natural >
+            count
     ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
@@ -348,7 +358,7 @@ namespace ordination {
             "Natural:  Unsigned integer type required"
         );
 #endif
-        return position > array;
+        return count < Length && position > array + Length - 1 - count;
     }
 
     template <
@@ -362,7 +372,9 @@ namespace ordination {
         Referential< const Elemental[Length] >
             array,
         Referential< const Locational< Elemental > >
-            position
+            position,
+        Referential< const Natural >
+            count
     ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
@@ -375,7 +387,7 @@ namespace ordination {
             Traversable = DecrementTraversable< Natural, Length, Elemental >;
         if (!position)
             throw position;
-        return Traversable( array, position );
+        return Traversable( array, position, count );
     }
 
     template <
@@ -389,7 +401,9 @@ namespace ordination {
         Referential< Elemental[Length] >
             array,
         Referential< Locational< Elemental > >
-            position
+            position,
+        Referential< const Natural >
+            count
     ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
@@ -398,8 +412,7 @@ namespace ordination {
             "Natural:  Unsigned integer type required"
         );
 #endif
-        position++;
-        return position;
+        return position += count;
     }
 
     template <
@@ -413,7 +426,9 @@ namespace ordination {
         Referential< Elemental[Length] >
             array,
         Referential< Locational< Elemental > >
-            position
+            position,
+        Referential< const Natural >
+            count
     ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
@@ -426,9 +441,9 @@ namespace ordination {
             Traversable = IncrementTraversableChecksForNull< Natural, Length, Elemental >;
         static auto&
             Traverse = TraverseIncrement< Natural, Length, Elemental >;
-        if (!Traversable( array, position ))
-            throw position;
-        return Traverse( array, position );
+        if (!Traversable( array, position, count ))
+            throw count;
+        return Traverse( array, position, count );
     }
 
     template <
@@ -442,7 +457,9 @@ namespace ordination {
         Referential< Elemental[Length] >
             array,
         Referential< Locational< Elemental > >
-            position
+            position,
+        Referential< const Natural >
+            count
     ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
@@ -451,8 +468,7 @@ namespace ordination {
             "Natural:  Unsigned integer type required"
         );
 #endif
-        position--;
-        return position;
+        return position -= count;
     }
 
     template <
@@ -466,7 +482,9 @@ namespace ordination {
         Referential< Elemental[Length] >
             array,
         Referential< Locational< Elemental > >
-            position
+            position,
+        Referential< const Natural >
+            count
     ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
@@ -479,9 +497,76 @@ namespace ordination {
             Traversable = DecrementTraversableChecksForNull< Natural, Length, Elemental >;
         static auto&
             Traverse = TraverseDecrement< Natural, Length, Elemental >;
-        if (!Traversable( array, position ))
-            throw position;
-        return Traverse( array, position );
+        if (!Traversable( array, position, count ))
+            throw count;
+        return Traverse( array, position, count );
+    }
+
+    template <
+        typename Natural,
+        Natural
+            Length,
+        typename Elemental
+    >
+    static inline Natural
+    Account(
+        Referential< Elemental[Length] >
+            array
+    ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
+#endif
+        return Length;
+    }
+
+template <
+        typename Natural,
+        Natural
+            Length,
+        typename Elemental
+    >
+    static inline Natural
+    CountIncrement(
+        Referential< const Elemental[Length] >
+            array,
+        Referential< const Locational< Elemental > >
+            position
+    ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
+#endif
+        return (Natural) (array + Length - position);
+    }
+
+    template <
+        typename Natural,
+        Natural
+            Length,
+        typename Elemental
+    >
+    static inline Natural
+    CountDecrement(
+        Referential< const Elemental[Length] >
+            array,
+        Referential< const Locational< Elemental > >
+            position
+    ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
+#endif
+        return (Natural) (position - array);
     }
 
     template <
@@ -538,7 +623,7 @@ namespace ordination {
             Length,
         typename Elemental
     >
-    constexpr Scalar< const Elemental[Length], Locational< const Elemental >, const Elemental >
+    constexpr Scalar< const Elemental[Length], Locational< const Elemental >, Natural, const Elemental >
     ReadIncrementScale = {
         Comparison< Locational< const Elemental > >,
         BeginIncrement< Natural, Length, const Elemental >,
@@ -552,7 +637,7 @@ namespace ordination {
             Length,
         typename Elemental
     >
-    constexpr Scalar< const Elemental[Length], Locational< const Elemental >, const Elemental >
+    constexpr Scalar< const Elemental[Length], Locational< const Elemental >, Natural, const Elemental >
     SafeReadIncrementScale = {
         Comparison< Locational< const Elemental > >,
         BeginIncrement< Natural, Length, const Elemental >,
@@ -566,7 +651,7 @@ namespace ordination {
             Length,
         typename Elemental
     >
-    constexpr Scalar< Elemental[Length], Locational< Elemental >, Elemental >
+    constexpr Scalar< Elemental[Length], Locational< Elemental >, Natural, Elemental >
     WriteIncrementScale = {
         Comparison< Locational< Elemental > >,
         BeginIncrement< Natural, Length, Elemental >,
@@ -580,7 +665,7 @@ namespace ordination {
             Length,
         typename Elemental
     >
-    constexpr Scalar< Elemental[Length], Locational< Elemental >, Elemental >
+    constexpr Scalar< Elemental[Length], Locational< Elemental >, Natural, Elemental >
     SafeWriteIncrementScale = {
         Comparison< Locational< Elemental > >,
         BeginIncrement< Natural, Length, Elemental >,
@@ -594,7 +679,7 @@ namespace ordination {
             Length,
         typename Elemental
     >
-    constexpr Scalar< const Elemental[Length], Locational< const Elemental >, const Elemental >
+    constexpr Scalar< const Elemental[Length], Locational< const Elemental >, Natural, const Elemental >
     ReadDecrementScale = {
         Comparison< Locational< const Elemental > >,
         BeginDecrement< Natural, Length, const Elemental >,
@@ -608,7 +693,7 @@ namespace ordination {
             Length,
         typename Elemental
     >
-    constexpr Scalar< const Elemental[Length], Locational< const Elemental >, const Elemental >
+    constexpr Scalar< const Elemental[Length], Locational< const Elemental >, Natural, const Elemental >
     SafeReadDecrementScale = {
         Comparison< Locational< const Elemental > >,
         BeginDecrement< Natural, Length, const Elemental >,
@@ -622,7 +707,7 @@ namespace ordination {
             Length,
         typename Elemental
     >
-    constexpr Scalar< Elemental[Length], Locational< Elemental >, Elemental >
+    constexpr Scalar< Elemental[Length], Locational< Elemental >, Natural, Elemental >
     WriteDecrementScale = {
         Comparison< Locational< Elemental > >,
         BeginDecrement< Natural, Length, Elemental >,
@@ -636,7 +721,7 @@ namespace ordination {
             Length,
         typename Elemental
     >
-    constexpr Scalar< Elemental[Length], Locational< Elemental >, Elemental >
+    constexpr Scalar< Elemental[Length], Locational< Elemental >, Natural, Elemental >
     SafeWriteDecrementScale = {
         Comparison< Locational< Elemental > >,
         BeginDecrement< Natural, Length, Elemental >,
@@ -650,7 +735,7 @@ namespace ordination {
             Length,
         typename Elemental
     >
-    constexpr Lineal< const Elemental[Length], Locational< const Elemental >, const Elemental >
+    constexpr Lineal< const Elemental[Length], Locational< const Elemental >, Natural, const Elemental >
     ReadLiner = {
         ReadIncrementScale< Natural, Length, Elemental >,
         ReadDecrementScale< Natural, Length, Elemental >
@@ -662,7 +747,7 @@ namespace ordination {
             Length,
         typename Elemental
     >
-    constexpr Lineal< const Elemental[Length], Locational< const Elemental >, const Elemental >
+    constexpr Lineal< const Elemental[Length], Locational< const Elemental >, Natural, const Elemental >
     SafeReadLiner = {
         SafeReadIncrementScale< Natural, Length, Elemental >,
         SafeReadDecrementScale< Natural, Length, Elemental >
@@ -674,7 +759,7 @@ namespace ordination {
             Length,
         typename Elemental
     >
-    constexpr Lineal< Elemental[Length], Locational< Elemental >, Elemental >
+    constexpr Lineal< Elemental[Length], Locational< Elemental >, Natural, Elemental >
     WriteLiner = {
         WriteIncrementScale< Natural, Length, Elemental >,
         WriteDecrementScale< Natural, Length, Elemental >
@@ -686,7 +771,7 @@ namespace ordination {
             Length,
         typename Elemental
     >
-    constexpr Lineal< Elemental[Length], Locational< Elemental >, Elemental >
+    constexpr Lineal< Elemental[Length], Locational< Elemental >, Natural, Elemental >
     SafeWriteLiner = {
         SafeWriteIncrementScale< Natural, Length, Elemental >,
         SafeWriteDecrementScale< Natural, Length, Elemental >
@@ -698,12 +783,14 @@ namespace ordination {
             Length,
         typename Elemental
     >
-    constexpr Directional< const Elemental[Length], Locational< const Elemental >, const Elemental >
+    constexpr Directional< const Elemental[Length], Locational< const Elemental >, Natural, const Elemental >
     ReadIncrementDirection = {
         ReadIncrementScale< Natural, Length, Elemental >,
         Begins< Natural, Length, const Elemental >,
         IncrementTraversable< Natural, Length, const Elemental >,
-        ContainsPosition< Natural, Length, const Elemental >
+        ContainsPosition< Natural, Length, const Elemental >,
+        Account< Natural, Length, const Elemental >,
+        CountIncrement< Natural, Length, const Elemental >
     };
 
     template <
@@ -712,12 +799,14 @@ namespace ordination {
             Length,
         typename Elemental
     >
-    constexpr Directional< const Elemental[Length], Locational< const Elemental >, const Elemental >
+    constexpr Directional< const Elemental[Length], Locational< const Elemental >, Natural, const Elemental >
     SafeReadIncrementDirection = {
         SafeReadIncrementScale< Natural, Length, Elemental >,
         Begins< Natural, Length, const Elemental >,
         IncrementTraversableChecksForNull< Natural, Length, const Elemental >,
-        ContainsPositionChecksForNull< Natural, Length, const Elemental >
+        ContainsPositionChecksForNull< Natural, Length, const Elemental >,
+        Account< Natural, Length, const Elemental >,
+        CountIncrement< Natural, Length, const Elemental >
     };
 
     template <
@@ -726,12 +815,14 @@ namespace ordination {
             Length,
         typename Elemental
     >
-    constexpr Directional< Elemental[Length], Locational< Elemental >, Elemental >
+    constexpr Directional< Elemental[Length], Locational< Elemental >, Natural, Elemental >
     WriteIncrementDirection = {
         WriteIncrementScale< Natural, Length, Elemental >,
         Begins< Natural, Length, Elemental >,
         IncrementTraversable< Natural, Length, Elemental >,
-        ContainsPosition< Natural, Length, Elemental >
+        ContainsPosition< Natural, Length, Elemental >,
+        Account< Natural, Length, Elemental >,
+        CountIncrement< Natural, Length, Elemental >
     };
 
     template <
@@ -740,12 +831,14 @@ namespace ordination {
             Length,
         typename Elemental
     >
-    constexpr Directional< Elemental[Length], Locational< Elemental >, Elemental >
+    constexpr Directional< Elemental[Length], Locational< Elemental >, Natural, Elemental >
     SafeWriteIncrementDirection = {
         SafeWriteIncrementScale< Natural, Length, Elemental >,
         Begins< Natural, Length, Elemental >,
         IncrementTraversableChecksForNull< Natural, Length, Elemental >,
-        ContainsPositionChecksForNull< Natural, Length, Elemental >
+        ContainsPositionChecksForNull< Natural, Length, Elemental >,
+        Account< Natural, Length, Elemental >,
+        CountIncrement< Natural, Length, Elemental >
     };
 
     template <
@@ -754,12 +847,14 @@ namespace ordination {
             Length,
         typename Elemental
     >
-    constexpr Directional< const Elemental[Length], Locational< const Elemental >, const Elemental >
+    constexpr Directional< const Elemental[Length], Locational< const Elemental >, Natural, const Elemental >
     ReadDecrementDirection = {
         ReadDecrementScale< Natural, Length, Elemental >,
         Begins< Natural, Length, const Elemental >,
         DecrementTraversable< Natural, Length, const Elemental >,
-        ContainsPosition< Natural, Length, const Elemental >
+        ContainsPosition< Natural, Length, const Elemental >,
+        Account< Natural, Length, const Elemental >,
+        CountDecrement< Natural, Length, const Elemental >
     };
 
     template <
@@ -768,12 +863,14 @@ namespace ordination {
             Length,
         typename Elemental
     >
-    constexpr Directional< const Elemental[Length], Locational< const Elemental >, const Elemental >
+    constexpr Directional< const Elemental[Length], Locational< const Elemental >, Natural, const Elemental >
     SafeReadDecrementDirection = {
         SafeReadDecrementScale< Natural, Length, Elemental >,
         Begins< Natural, Length, const Elemental >,
         DecrementTraversableChecksForNull< Natural, Length, const Elemental >,
-        ContainsPositionChecksForNull< Natural, Length, const Elemental >
+        ContainsPositionChecksForNull< Natural, Length, const Elemental >,
+        Account< Natural, Length, const Elemental >,
+        CountDecrement< Natural, Length, const Elemental >
     };
 
     template <
@@ -782,12 +879,14 @@ namespace ordination {
             Length,
         typename Elemental
     >
-    constexpr Directional< Elemental[Length], Locational< Elemental >, Elemental >
+    constexpr Directional< Elemental[Length], Locational< Elemental >, Natural, Elemental >
     WriteDecrementDirection = {
         WriteDecrementScale< Natural, Length, Elemental >,
         Begins< Natural, Length, Elemental >,
         DecrementTraversable< Natural, Length, Elemental >,
-        ContainsPosition< Natural, Length, Elemental >
+        ContainsPosition< Natural, Length, Elemental >,
+        Account< Natural, Length, Elemental >,
+        CountDecrement< Natural, Length, Elemental >
     };
 
     template <
@@ -796,12 +895,14 @@ namespace ordination {
             Length,
         typename Elemental
     >
-    constexpr Directional< Elemental[Length], Locational< Elemental >, Elemental >
+    constexpr Directional< Elemental[Length], Locational< Elemental >, Natural, Elemental >
     SafeWriteDecrementDirection = {
         SafeWriteDecrementScale< Natural, Length, Elemental >,
         Begins< Natural, Length, Elemental >,
         DecrementTraversableChecksForNull< Natural, Length, Elemental >,
-        ContainsPositionChecksForNull< Natural, Length, Elemental >
+        ContainsPositionChecksForNull< Natural, Length, Elemental >,
+        Account< Natural, Length, Elemental >,
+        CountDecrement< Natural, Length, Elemental >
     };
 
     template <
@@ -810,7 +911,7 @@ namespace ordination {
             Length,
         typename Elemental
     >
-    constexpr Axial< const Elemental[Length], Locational< const Elemental >, const Elemental >
+    constexpr Axial< const Elemental[Length], Locational< const Elemental >, Natural, const Elemental >
     ReadAxis = {
         ReadIncrementDirection< Natural, Length, Elemental >,
         ReadDecrementDirection< Natural, Length, Elemental >
@@ -822,7 +923,7 @@ namespace ordination {
             Length,
         typename Elemental
     >
-    constexpr Axial< const Elemental[Length], Locational< const Elemental >, const Elemental >
+    constexpr Axial< const Elemental[Length], Locational< const Elemental >, Natural, const Elemental >
     SafeReadAxis = {
         SafeReadIncrementDirection< Natural, Length, Elemental >,
         SafeReadDecrementDirection< Natural, Length, Elemental >
@@ -834,7 +935,7 @@ namespace ordination {
             Length,
         typename Elemental
     >
-    constexpr Axial< Elemental[Length], Locational< Elemental >, Elemental >
+    constexpr Axial< Elemental[Length], Locational< Elemental >, Natural, Elemental >
     WriteAxis = {
         WriteIncrementDirection< Natural, Length, Elemental >,
         WriteDecrementDirection< Natural, Length, Elemental >
@@ -846,7 +947,7 @@ namespace ordination {
             Length,
         typename Elemental
     >
-    constexpr Axial< Elemental[Length], Locational< Elemental >, Elemental >
+    constexpr Axial< Elemental[Length], Locational< Elemental >, Natural, Elemental >
     SafeWriteAxis = {
         SafeWriteIncrementDirection< Natural, Length, Elemental >,
         SafeWriteDecrementDirection< Natural, Length, Elemental >

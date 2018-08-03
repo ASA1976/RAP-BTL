@@ -43,12 +43,13 @@ namespace junction {
         template <
             typename Relative,
             typename Appositional,
+            typename RelativeNatural,
             typename Natural,
             typename Elemental
         >
         using ConjointlyConsequent = bool(
             Referential< Junctive< Natural, Elemental > >,
-            Referential< const Directional< const Relative, Appositional, const Elemental > >,
+            Referential< const Directional< const Relative, Appositional, RelativeNatural, const Elemental > >,
             Referential< const Relative >,
             Referential< const Appositional >,
             Referential< const Appositional >
@@ -57,6 +58,7 @@ namespace junction {
         template <
             typename Relative,
             typename Appositional,
+            typename RelativeNatural,
             typename Natural,
             typename Elemental,
             Referential< const Adjunctive< Natural, Elemental > >
@@ -72,7 +74,7 @@ namespace junction {
                 tail,
             Referential< Natural >
                 length,
-            Referential< const Directional< const Relative, Appositional, const Elemental > >
+            Referential< const Directional< const Relative, Appositional, RelativeNatural, const Elemental > >
                 direction,
             Referential< const Relative >
                 space,
@@ -86,6 +88,10 @@ namespace junction {
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
+            );
+            static_assert(
+                is_integral< RelativeNatural >::value && is_unsigned< RelativeNatural >::value,
+                "RelativeNatural:  Unsigned integer type required"
             );
 #endif
             auto
@@ -117,7 +123,7 @@ namespace junction {
             last = first;
             count = 1;
             while (scale.order.equality.is_not_equal( current, to )) {
-                direction.scale.traverse( space, current );
+                direction.scale.traverse( space, current, 1 );
                 last->next = Adjunct.proclaim( sequence, scale.go( space, current ).to );
                 if (!last->next) {
                     if (sequence.unused)
@@ -131,25 +137,6 @@ namespace junction {
                 count++;
             }
             return Finalize( first, last, count );
-        }
-
-        template <
-            typename Natural,
-            typename Elemental
-        >
-        static inline Natural
-        Account(
-            Referential< const Junctive< Natural, Elemental > >
-                sequence
-        ) {
-#ifndef RAPBTL_NO_STD_CPLUSPLUS
-            using namespace ::std;
-            static_assert(
-                is_integral< Natural >::value && is_unsigned< Natural >::value,
-                "Natural:  Unsigned integer type required"
-            );
-#endif
-            return sequence.count;
         }
 
         template <
@@ -191,6 +178,7 @@ namespace junction {
         template <
             typename Relative,
             typename Appositional,
+            typename RelativeNatural,
             typename Natural,
             typename Elemental,
             Referential< const Adjunctive< Natural, Elemental > >
@@ -200,7 +188,7 @@ namespace junction {
         Accede(
             Referential< Junctive< Natural, Elemental > >
                 sequence,
-            Referential< const Directional< const Relative, Appositional, const Elemental > >
+            Referential< const Directional< const Relative, Appositional, RelativeNatural, const Elemental > >
                 direction,
             Referential< const Relative >
                 space,
@@ -215,9 +203,13 @@ namespace junction {
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+            static_assert(
+                is_integral< RelativeNatural >::value && is_unsigned< RelativeNatural >::value,
+                "RelativeNatural:  Unsigned integer type required"
+            );
 #endif
             static auto&
-                SequenceList = Sequence< Relative, Appositional, Natural, Elemental, Adjunct >;
+                SequenceList = Sequence< Relative, Appositional, RelativeNatural, Natural, Elemental, Adjunct >;
             Locational< Junctional< Elemental > >
                 first, last;
             Natural
@@ -304,6 +296,7 @@ namespace junction {
         template <
             typename Relative,
             typename Appositional,
+            typename RelativeNatural,
             typename Natural,
             typename Elemental,
             Referential< const Adjunctive< Natural, Elemental > >
@@ -315,7 +308,7 @@ namespace junction {
                 sequence,
             Referential< const Positional< Elemental > >
                 rank,
-            Referential< const Directional< const Relative, Appositional, const Elemental > >
+            Referential< const Directional< const Relative, Appositional, RelativeNatural, const Elemental > >
                 direction,
             Referential< const Relative >
                 space,
@@ -330,9 +323,13 @@ namespace junction {
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+            static_assert(
+                is_integral< RelativeNatural >::value && is_unsigned< RelativeNatural >::value,
+                "RelativeNatural:  Unsigned integer type required"
+            );
 #endif
             static auto&
-                SequenceList = Sequence< Relative, Appositional, Natural, Elemental, Adjunct >;
+                SequenceList = Sequence< Relative, Appositional, RelativeNatural, Natural, Elemental, Adjunct >;
             Locational< Junctional< Elemental > >
                 first, last;
             Natural
@@ -353,6 +350,7 @@ namespace junction {
         template <
             typename Relative,
             typename Appositional,
+            typename RelativeNatural,
             typename Natural,
             typename Elemental,
             Referential< const Adjunctive< Natural, Elemental > >
@@ -364,7 +362,7 @@ namespace junction {
                 sequence,
             Referential< const Positional< Elemental > >
                 rank,
-            Referential< const Directional< const Relative, Appositional, const Elemental > >
+            Referential< const Directional< const Relative, Appositional, RelativeNatural, const Elemental > >
                 direction,
             Referential< const Relative >
                 space,
@@ -378,6 +376,10 @@ namespace junction {
             static_assert(
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
+            );
+            static_assert(
+                is_integral< RelativeNatural >::value && is_unsigned< RelativeNatural >::value,
+                "RelativeNatural:  Unsigned integer type required"
             );
 #endif
             static auto&
@@ -426,6 +428,7 @@ namespace junction {
         template <
             typename Relative,
             typename Appositional,
+            typename RelativeNatural,
             typename Natural,
             typename Elemental,
             Referential< const Adjunctive< Natural, Elemental > >
@@ -435,7 +438,7 @@ namespace junction {
         Proceed(
             Referential< Junctive< Natural, Elemental > >
                 sequence,
-            Referential< const Directional< const Relative, Appositional, const Elemental > >
+            Referential< const Directional< const Relative, Appositional, RelativeNatural, const Elemental > >
                 direction,
             Referential< const Relative >
                 space,
@@ -450,9 +453,13 @@ namespace junction {
                 is_integral< Natural >::value && is_unsigned< Natural >::value,
                 "Natural:  Unsigned integer type required"
             );
+            static_assert(
+                is_integral< RelativeNatural >::value && is_unsigned< RelativeNatural >::value,
+                "RelativeNatural:  Unsigned integer type required"
+            );
 #endif
             static auto&
-                SequenceList = Sequence< Relative, Appositional, Natural, Elemental, Adjunct >;
+                SequenceList = Sequence< Relative, Appositional, RelativeNatural, Natural, Elemental, Adjunct >;
             Locational< Junctional< Elemental > >
                 first, last;
             Natural
@@ -630,27 +637,29 @@ namespace junction {
         template <
             typename Relative,
             typename Appositional,
+            typename RelativeNatural,
             typename Natural,
             typename Elemental,
             Referential< const Adjunctive< Natural, Elemental > >
                 Adjunct
         >
-        constexpr Conjoint< Junctive< Natural, Elemental >, Positional< Elemental >, Relative, Appositional, Elemental >
+        constexpr Conjoint< Junctive< Natural, Elemental >, Positional< Elemental >, Relative, Appositional, RelativeNatural, Elemental >
         JunctionConjoiner = {
-            Accede< Relative, Appositional, Natural, Elemental, Adjunct >,
-            Precede< Relative, Appositional, Natural, Elemental, Adjunct >,
-            Proceed< Relative, Appositional, Natural, Elemental, Adjunct >
+            Accede< Relative, Appositional, RelativeNatural, Natural, Elemental, Adjunct >,
+            Precede< Relative, Appositional, RelativeNatural, Natural, Elemental, Adjunct >,
+            Proceed< Relative, Appositional, RelativeNatural, Natural, Elemental, Adjunct >
         };
 
         template <
             typename Relative,
             typename Appositional,
+            typename RelativeNatural,
             typename Natural,
             typename Elemental,
             Referential< const Adjunctive< Natural, Elemental > >
                 Adjunct
         >
-        constexpr Conjoint< Junctive< Natural, Elemental >, Positional< Elemental >, Relative, Appositional, Elemental >
+        constexpr Conjoint< Junctive< Natural, Elemental >, Positional< Elemental >, Relative, Appositional, RelativeNatural, Elemental >
         SafeJunctionConjoiner = {
             Accede< Relative, Appositional, Natural, Elemental, Adjunct >,
             PrecedeSafely< Relative, Appositional, Natural, Elemental, Adjunct >,
@@ -675,7 +684,7 @@ namespace junction {
             Recede< Natural, Elemental >,
             Empty< Natural, Elemental >,
             Free< Natural, Elemental, Adjunct >,
-            JunctionConjoiner< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental, Adjunct >
+            JunctionConjoiner< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Natural, Elemental, Adjunct >
         };
 
         template <
