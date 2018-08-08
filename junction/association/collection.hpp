@@ -165,8 +165,6 @@ namespace junction {
                     // Problem 286153 filed July 3 2018
                     Search = SearchBisectionally< AssociativelyJunctive<  Natural, Correlative, Elemental >, AssociativelyPositional< Correlative, Elemental >, Natural, Correlative, ReadRelatorLiner< Natural, Correlative, Elemental >, Equate, Order >;
 #endif
-                static auto&
-                    CorrespondInMap = Correspond< Natural, Correlative, Elemental, Equate, Order >;
                 static const Natural
                     Zero = 0,
                     One = 1;
