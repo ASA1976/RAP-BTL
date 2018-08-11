@@ -192,7 +192,7 @@ DemonstrateSegmentation( void ) {
     static const size_t
         Length = 5;
     static auto&
-        Liner = ReadLiner< size_t, size_t, char >;
+        Liner = ReadLiner< size_t, Length, char >;
     static auto&
         Increment = ReadIncrementDirection< size_t, Length, char >;
     static auto&
@@ -353,31 +353,31 @@ DemonstrateJunction( void ) {
     return true;
 }
 
-static bool
-QueueDemonstrations( void ) {
+int
+main() {
+    enum Erroneous {
+        Localization = -1,
+        Segmentation = -2,
+        Ordination = -3,
+        Junction = -4
+    };
     if (!DemonstrateLocalization()) {
         fprintf( stderr, "ERROR during localization demonstration\n" );
-        return false;
+        return Erroneous::Localization;
     }
     puts( "" );
     if (!DemonstrateSegmentation()) {
         fprintf( stderr, "ERROR during segmentation demonstration\n" );
-        return false;
+        return Erroneous::Segmentation;
     }
     puts( "" );
     if (!DemonstrateOrdination()) {
         fprintf( stderr, "ERROR during ordination demonstration\n" );
-        return false;
+        return Erroneous::Ordination;
     }
     puts( "" );
     if (!DemonstrateJunction()) {
         fprintf( stderr, "ERROR during junction demonstration\n" );
-        return false;
+        return Erroneous::Junction;
     }
-    return true;
-}
-
-int
-main() {
-    return QueueDemonstrations() ? 0 : -1;
 }

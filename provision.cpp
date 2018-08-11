@@ -24,7 +24,7 @@ template <
     typename Positional
 >
 static inline void
-TestElevation(
+DemonstrateElevation(
     Referential< Spatial >
         stack,
     Referential< const Tractile< Spatial, Positional, Natural > >
@@ -44,7 +44,7 @@ template <
     typename Positional
 >
 static inline void
-TestContraction(
+DemonstrateContraction(
     Referential< Spatial >
         queue,
     Referential< const Tractile< Spatial, Positional, Natural > >
@@ -64,7 +64,7 @@ template <
     typename Positional
 >
 static inline void
-TestContribution(
+DemonstrateContribution(
     Referential< Spatial >
         pool,
     Referential< const Tributary< Spatial, Positional, Natural > >
@@ -80,7 +80,7 @@ TestContribution(
 }
 
 static inline void
-TestRation( void ) {
+DemonstrateRation( void ) {
     using namespace ::ration::elevation;
     using namespace ::ration::contraction;
     using namespace ::ration::contribution;
@@ -101,13 +101,13 @@ TestRation( void ) {
     Initialize( stack );
     Initialize( queue );
     Initialize( pool );
-    TestElevation( stack, StackElevator );
-    TestContraction( queue, QueueContractor );
-    TestContribution( pool, PoolContributor );
+    DemonstrateElevation( stack, StackElevator );
+    DemonstrateContraction( queue, QueueContractor );
+    DemonstrateContribution( pool, PoolContributor );
 }
 
 static inline void
-TestJunction( void ) {
+DemonstrateJunction( void ) {
     using namespace ::junction;
     using namespace ::junction::provision::elevation;
     using namespace ::junction::provision::contraction;
@@ -125,14 +125,14 @@ TestJunction( void ) {
     Junctive< Natural, char >
         list;
     Initialize( list );
-    TestElevation( list, StackElevator );
-    TestContraction( list, QueueContractor );
-    TestContribution( list, PoolContributor );
+    DemonstrateElevation( list, StackElevator );
+    DemonstrateContraction( list, QueueContractor );
+    DemonstrateContribution( list, PoolContributor );
 }
 
 int
 main() {
-    TestRation();
+    DemonstrateRation();
     puts( "" );
-    TestJunction();
+    DemonstrateJunction();
 }

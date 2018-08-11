@@ -67,9 +67,8 @@ DisplayPrimes(
         primes = new Natural[count];
     Natural
         position;
-    if (count < 1)
+    if (!SequencePrimes( primes, Increment, count ))
         return false;
-    SequencePrimes( primes, Increment, count );
     Increment.begin( primes, position, 0 );
     while (true) {
         printf( "%u\n", Increment.go( primes, position ).to );
@@ -96,14 +95,19 @@ main(
     Locational< Locational< char > >
         argv
 ) {
+    enum Erroneous {
+        Arguments = -1,
+        CountParsing = -2,
+        ZeroPrimes = -3
+    };
     long
         test;
-    unsigned
+    size_t
         count;
     if (argc != 2) {
         PrintTitle( argv[0] );
-        printf( "Where COUNT is a natural integer number of primes to generate\n" );
-        return 0;
+        fprintf( stderr, "Where COUNT is a natural integer number of primes to generate\n" );
+        return Erroneous::Arguments;
     }
     if (
         sscanf( argv[1], "%ld", Locate( test ).at ) < 1
@@ -112,7 +116,10 @@ main(
     ) {
         PrintTitle( argv[0] );
         fprintf( stderr, "Error parsing COUNT '%s' as a natural integer\n", argv[1] );
-        return -1;
+        return Erroneous::CountParsing;
     }
-    return DisplayPrimes( count ) ? 0 : -1;
+    if (!DisplayPrimes( count )) {
+        fprintf( stderr, "No prime numbers to display\n" );
+        return Erroneous::ZeroPrimes;
+    }
 }

@@ -6,7 +6,16 @@
 
 namespace segmentation {
 
-    using namespace ::localization;
+    //using namespace ::localization;
+    using namespace ::location;
+    using namespace ::trajection;
+    using namespace ::comparison;
+    using ::localization::IndexicalGo;
+    using ::localization::TraverseDecrement;
+    using ::localization::ReadIncrementScale;
+    using ::localization::WriteIncrementScale;
+    using ::localization::ReadLocal;
+    using ::localization::WriteLocal;
 
     template <
         typename Natural,
@@ -547,7 +556,7 @@ namespace segmentation {
     ReadDecrementScale = {
         Comparison< Natural >,
         BeginDecrement< Natural, Length, const Elemental >,
-        TraverseDecrement< Natural, const Elemental >,
+        TraverseDecrement< Natural, Natural, const Elemental >,
         IndexicalGo< Natural, const Elemental >
     };
 
@@ -575,7 +584,7 @@ namespace segmentation {
     WriteDecrementScale = {
         Comparison< Natural >,
         BeginDecrement< Natural, Length, Elemental >,
-        TraverseDecrement< Natural, Elemental >,
+        TraverseDecrement< Natural, Natural,  Elemental >,
         IndexicalGo< Natural, Elemental >,
     };
 
@@ -591,6 +600,30 @@ namespace segmentation {
         BeginDecrementSafely< Natural, Length, Elemental >,
         TraverseDecrementSafely< Natural, Length, Elemental >,
         IndexicalGoSafely< Natural, Length, Elemental >,
+    };
+
+    template <
+        typename Natural,
+        Natural
+            Length,
+        typename Elemental
+    >
+    constexpr Lineal< const Locational< const Elemental >, Natural, Natural, const Elemental >
+    ReadLiner = {
+        ReadIncrementScale< Natural, Natural, Elemental >,
+        ReadDecrementScale< Natural, Length, Elemental >
+    };
+
+    template <
+        typename Natural,
+        Natural
+            Length,
+        typename Elemental
+    >
+    constexpr Lineal< const Locational< Elemental >, Natural, Natural, Elemental >
+    WriteLiner = {
+        WriteIncrementScale< Natural, Natural, Elemental >,
+        WriteDecrementScale< Natural, Length, Elemental >
     };
 
     template <
