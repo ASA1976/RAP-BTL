@@ -85,28 +85,6 @@ namespace location {
         return Confer( *locality );
     }
 
-    template <
-        typename Subjective
-    >
-    static inline Conferential< Subjective >
-    Conform(
-        const Locational< void >
-            locality
-    ) {
-        return Confer( *(const Locational< Subjective >) locality );
-    }
-
-    template <
-        typename Subjective
-    >
-    static inline Conferential< const Subjective >
-    Observe(
-        const Locational< const void >
-            locality
-    ) {
-        return Confer( *(const Locational< const Subjective >) locality );
-    }
-
 }
 
 #endif
