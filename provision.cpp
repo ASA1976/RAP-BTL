@@ -1,7 +1,7 @@
 // © 2018 Aaron Sami Abassi
 // Licensed under the Academic Free License version 3.0
 // #define RAPBTL_NO_STD_CPLUSPLUS 1
-#include "allocation/stdlib.hpp"
+#include "allocation/alignment.hpp"
 #include "ration/elevation.hpp"
 #include "ration/contraction.hpp"
 #include "ration/contribution.hpp"
@@ -112,16 +112,16 @@ DemonstrateJunction( void ) {
     using namespace ::junction::provision::elevation;
     using namespace ::junction::provision::contraction;
     using namespace ::junction::provision::contribution;
-    using namespace ::allocation::stdlib;
+    using namespace ::allocation::alignment;
     using Nodal = Junctional< char >;
     static const Natural
         Maximum = 16;
     static auto&
-        StackElevator = Elevator< Natural, Maximum, char, FastDefaultMalloc< Nodal > >;
+        StackElevator = Elevator< Natural, Maximum, char, FastDefaultAligned< Nodal > >;
     static auto&
-        QueueContractor = Contractor< Natural, Maximum, char, FastDefaultMalloc< Nodal > >;
+        QueueContractor = Contractor< Natural, Maximum, char, FastDefaultAligned< Nodal > >;
     static auto&
-        PoolContributor = Contributor< Natural, Maximum, char, FastDefaultMalloc< Nodal > >;
+        PoolContributor = Contributor< Natural, Maximum, char, FastDefaultAligned< Nodal > >;
     Junctive< Natural, char >
         list;
     Initialize( list );
