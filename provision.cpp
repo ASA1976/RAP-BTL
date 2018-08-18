@@ -87,16 +87,16 @@ DemonstrateRation( void ) {
     static const Natural
         Maximum = 16;
     static auto&
-        StackElevator = Elevator< Natural, Maximum, char >;
+        StackElevator = Elevator< Natural, Maximum, int >;
     static auto&
-        QueueContractor = Contractor< Natural, Maximum, char >;
+        QueueContractor = Contractor< Natural, Maximum, int >;
     static auto&
-        PoolContributor = Contributor< Natural, Maximum, char >;
-    Elevatory< Natural, Maximum, char >
+        PoolContributor = Contributor< Natural, Maximum, int >;
+    Elevatory< Natural, Maximum, int >
         stack;
-    Contractional< Natural, Maximum, char >
+    Contractional< Natural, Maximum, int >
         queue;
-    Contributory< Natural, Maximum, char >
+    Contributory< Natural, Maximum, int >
         pool;
     Initialize( stack );
     Initialize( queue );
@@ -113,16 +113,16 @@ DemonstrateJunction( void ) {
     using namespace ::junction::provision::contraction;
     using namespace ::junction::provision::contribution;
     using namespace ::allocation::alignment;
-    using Nodal = Junctional< char >;
+    using Nodal = Junctional< int >;
     static const Natural
         Maximum = 16;
     static auto&
-        StackElevator = Elevator< Natural, Maximum, char, FastDefaultAligned< Nodal > >;
+        StackElevator = Elevator< Natural, Maximum, int, FastDefaultAligned< Nodal > >;
     static auto&
-        QueueContractor = Contractor< Natural, Maximum, char, FastDefaultAligned< Nodal > >;
+        QueueContractor = Contractor< Natural, Maximum, int, FastDefaultAligned< Nodal > >;
     static auto&
-        PoolContributor = Contributor< Natural, Maximum, char, FastDefaultAligned< Nodal > >;
-    Junctive< Natural, char >
+        PoolContributor = Contributor< Natural, Maximum, int, FastDefaultAligned< Nodal > >;
+    Junctive< Natural, int >
         list;
     Initialize( list );
     DemonstrateElevation( list, StackElevator );
