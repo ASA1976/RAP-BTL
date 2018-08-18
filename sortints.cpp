@@ -12,15 +12,18 @@
 using namespace ::junction;
 using namespace ::junction::contribution;
 
+using Nodal = Junctional< int >;
+
 const unsigned short
 CacheLimit = 0x2000;
 
 const unsigned short
-NodePoolSize = CacheLimit / sizeof( Junctional< int > ) - 1;
+NodePoolSize = CacheLimit / sizeof( Nodal ) - 1;
 
-Contributory< unsigned short, NodePoolSize, Junctional< int > >
+Contributory< unsigned short, NodePoolSize, Nodal >
 NodePool;
 
+// Use SafePoolAdjunct if overflowing the pool is a possibility
 constexpr Adjunctive< unsigned short, int >
 NodePoolAdjunct = FastPoolAdjunct< unsigned short, NodePoolSize, int, NodePool >;
 
@@ -109,7 +112,10 @@ main(
         if (fscanf( input, "%d", Locate( value ).at ) == 1) {
             if (count == NodePoolSize) {
                 fprintf( stderr, "Maximum number of integers is %u\n", NodePoolSize );
-                fclose( input );
+                if (input != stdin)
+                    fclose( input );
+                if (output != stdout)
+                    fclose( output );
                 return Erroneous::IntegerCount;
             }
             Collector.selector.composer.compose( set, value );
