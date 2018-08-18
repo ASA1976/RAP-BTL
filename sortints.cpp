@@ -86,7 +86,6 @@ main(
         count;
     int
         value;
-    input = stdin;
     output = stdout;
     switch (argc) {
     case 3:
@@ -112,8 +111,6 @@ main(
         if (fscanf( input, "%d", Locate( value ).at ) == 1) {
             if (count == NodePoolSize) {
                 fprintf( stderr, "Maximum number of integers is %u\n", NodePoolSize );
-                if (input != stdin)
-                    fclose( input );
                 if (output != stdout)
                     fclose( output );
                 return Erroneous::IntegerCount;
@@ -122,8 +119,6 @@ main(
             count++;
         }
     }
-    if (input != stdin)
-        fclose( input );
     OutputIntegers( set, Increment, output );
     if (output != stdout)
         fclose( output );
