@@ -75,7 +75,7 @@ main(
         Composition = -5
     };
     static auto&
-        Collector = JunctionCollector< unsigned short, int, NodePoolAdjunct, IsEqual< int >, IsLesser< int > >;
+        Composer = JunctionOrderedComposer< unsigned short, int, NodePoolAdjunct, IsEqual< int >, IsLesser< int > >;
     static auto&
         Increment = ReadIncrementDirection< unsigned short, int >;
     Locational< FILE >
@@ -113,7 +113,7 @@ main(
                     fclose( output );
                 return Erroneous::IntegerCount;
             }
-            if (!Collector.selector.composer.compose( set, value )) {
+            if (!Composer.compose( set, value )) {
                 fprintf( stderr, "Error composing set currently containing %u integers\n", Account( set ) );
                 if (output != stdout)
                     fclose( output );

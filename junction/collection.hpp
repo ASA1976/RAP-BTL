@@ -1047,7 +1047,7 @@ namespace junction {
                 Order
         >
         constexpr Compositional< Junctive< Natural, Elemental >, Natural, Elemental >
-        JunctionOrderComposer = {
+        JunctionOrderedComposer = {
             Instantiate< Natural, Elemental, Adjunct >,
             AccreditCollection< Natural, Elemental, Equate, Order >,
             ComposeCollection< Natural, Elemental, Precede< Natural, Elemental, Adjunct >, Proceed< Natural, Elemental, Adjunct >, Equate, Order >,
@@ -1068,7 +1068,7 @@ namespace junction {
                 Order
         >
         constexpr Compositional< Junctive< Natural, Elemental >, Natural, Elemental >
-        SafeJunctionOrderComposer = {
+        SafeJunctionOrderedComposer = {
             Instantiate< Natural, Elemental, Adjunct >,
             AccreditCollection< Natural, Elemental, Equate, Order >,
             ComposeCollection< Natural, Elemental, PrecedeSafely< Natural, Elemental, Adjunct >, Proceed< Natural, Elemental, Adjunct >, Equate, Order >,
@@ -1095,7 +1095,7 @@ namespace junction {
                 Order
         >
         constexpr Sectional< Junctive< Natural, Elemental >, Basic, BasicPositional, BasicNatural, Relative, RelativePositional, RelativeNatural, Elemental >
-        JunctionOrderSection = {
+        JunctionOrderedSection = {
             ComplementSelections< Basic, BasicPositional, BasicNatural, Relative, RelativePositional, RelativeNatural, Natural, Elemental, Precede< Natural, Elemental, Adjunct >, Proceed< Natural, Elemental, Adjunct >, Equate, Order >,
             DifferentiateSelections< Basic, BasicPositional, BasicNatural, Relative, RelativePositional, RelativeNatural, Natural, Elemental, Precede< Natural, Elemental, Adjunct >, Proceed< Natural, Elemental, Adjunct >, Equate, Order >,
             IntersectSelections< Basic, BasicPositional, BasicNatural, Relative, RelativePositional, RelativeNatural, Natural, Elemental, Precede< Natural, Elemental, Adjunct >, Proceed< Natural, Elemental, Adjunct >, Equate, Order >,
@@ -1119,7 +1119,7 @@ namespace junction {
                 Order
         >
         constexpr Sectional< Junctive< Natural, Elemental >, Basic, BasicPositional, BasicNatural, Relative, RelativePositional, RelativeNatural, Elemental >
-        SafeJunctionOrderSection = {
+        SafeJunctionOrderedSection = {
             ComplementSelections< Basic, BasicPositional, BasicNatural, Relative, RelativePositional, RelativeNatural, Natural, Elemental, PrecedeSafely< Natural, Elemental, Adjunct >, Proceed< Natural, Elemental, Adjunct >, Equate, Order >,
             DifferentiateSelections< Basic, BasicPositional, BasicNatural, Relative, RelativePositional, RelativeNatural, Natural, Elemental, PrecedeSafely< Natural, Elemental, Adjunct >, Proceed< Natural, Elemental, Adjunct >, Equate, Order >,
             IntersectSelections< Basic, BasicPositional, BasicNatural, Relative, RelativePositional, RelativeNatural, Natural, Elemental, PrecedeSafely< Natural, Elemental, Adjunct >, Proceed< Natural, Elemental, Adjunct >, Equate, Order >,
@@ -1137,9 +1137,9 @@ namespace junction {
                 Order
         >
         constexpr Selective< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental >
-        JunctionOrderSelector = {
-            JunctionOrderComposer< Natural, Elemental, Adjunct, Equate, Order >,
-            JunctionOrderSection< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Natural, Elemental, Adjunct, Equate, Order >,
+        JunctionOrderedSelector = {
+            JunctionOrderedComposer< Natural, Elemental, Adjunct, Equate, Order >,
+            JunctionOrderedSection< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Natural, Elemental, Adjunct, Equate, Order >,
             CollateSelection< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Natural, Elemental, Precede< Natural, Elemental, Adjunct >, Proceed< Natural, Elemental, Adjunct >, Equate, Order >,
             EquateSelections< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental, Equate >,
             Account< Natural, Elemental >
@@ -1156,9 +1156,9 @@ namespace junction {
                 Order
         >
         constexpr Selective< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental >
-        SafeJunctionOrderSelector = {
-            SafeJunctionOrderComposer< Natural, Elemental, Adjunct, Equate, Order >,
-            SafeJunctionOrderSection< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Natural, Elemental, Adjunct, Equate, Order >,
+        SafeJunctionOrderedSelector = {
+            SafeJunctionOrderedComposer< Natural, Elemental, Adjunct, Equate, Order >,
+            SafeJunctionOrderedSection< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Natural, Elemental, Adjunct, Equate, Order >,
             CollateSelection< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Natural, Elemental, PrecedeSafely< Natural, Elemental, Adjunct >, Proceed< Natural, Elemental, Adjunct >, Equate, Order >,
             EquateSelections< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental, Equate >,
             Account< Natural, Elemental >
@@ -1200,7 +1200,7 @@ namespace junction {
         >
         constexpr Collective< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental >
         JunctionCollector = {
-            JunctionOrderSelector< Natural, Elemental, Adjunct, Equate, Order >,
+            JunctionOrderedSelector< Natural, Elemental, Adjunct, Equate, Order >,
             JunctionBisection< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Natural, Elemental, Adjunct, Equate, Order >,
             CollateCollection< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Natural, Elemental, Proceed< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Natural, Elemental, Adjunct > >,
             EquateCollections< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental, Equate >
@@ -1218,7 +1218,7 @@ namespace junction {
         >
         constexpr Collective< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental >
         SafeJunctionCollector = {
-            SafeJunctionOrderSelector< Natural, Elemental, Adjunct, Equate, Order >,
+            SafeJunctionOrderedSelector< Natural, Elemental, Adjunct, Equate, Order >,
             JunctionBisection< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Natural, Elemental, Adjunct, Equate, Order >,
             CollateCollection< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Natural, Elemental, Proceed< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental, Adjunct > >,
             EquateCollections< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental, Equate >
