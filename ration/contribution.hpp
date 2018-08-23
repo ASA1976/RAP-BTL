@@ -5,6 +5,9 @@
 #include "../ration.hpp"
 #include "../attribution.hpp"
 #include "../trajection.hpp"
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
+#include <type_traits>
+#endif
 
 namespace ration {
 

@@ -3,9 +3,6 @@
 #ifndef TRAJECTION_MODULE
 #define TRAJECTION_MODULE
 #include "comparison.hpp"
-#ifndef RAPBTL_NO_STD_CPLUSPLUS
-#include <type_traits>
-#endif
 
 namespace trajection {
 

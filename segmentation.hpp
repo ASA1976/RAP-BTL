@@ -6,7 +6,6 @@
 
 namespace segmentation {
 
-    //using namespace ::localization;
     using namespace ::location;
     using namespace ::trajection;
     using namespace ::comparison;

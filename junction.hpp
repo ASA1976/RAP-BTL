@@ -88,7 +88,7 @@ namespace junction {
     static inline Natural
     Account(
         Referential< const Junctive< Natural, Elemental > >
-            sequence
+            list
     ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
@@ -97,7 +97,7 @@ namespace junction {
             "Natural:  Unsigned integer type required"
         );
 #endif
-        return sequence.count;
+        return list.count;
     }
 
     template <
@@ -107,7 +107,7 @@ namespace junction {
     static inline Natural
     CountIncrement(
         Referential< const Junctive< Natural, Elemental > >
-            sequence,
+            list,
         Referential< const Positional< Elemental > >
             position
     ) {
@@ -135,7 +135,7 @@ namespace junction {
     static inline Natural
     CountDecrement(
         Referential< const Junctive< Natural, Elemental > >
-            sequence,
+            list,
         Referential< const Positional< Elemental > >
             position
     ) {
