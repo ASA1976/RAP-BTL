@@ -45,9 +45,9 @@ PrintNatural(
 
 int main() {
     static auto&
-        ScheduleReadString = ScheduleByPointer< EventContractional, Natural, Natural, const char, EventContractor, EventVisitor, PrintString >;
+        ScheduleReadString = ScheduleNullRefused< EventContractional, Natural, Natural, const char, EventContractor, EventVisitor, PrintString >;
     static auto&
-        ScheduleReadNatural = ScheduleByReference< EventContractional, Natural, Natural, const Natural, EventContractor, EventVisitor, PrintNatural >;
+        ScheduleReadNatural = ScheduleNullRefused< EventContractional, Natural, Natural, const Natural, EventContractor, EventVisitor, PrintNatural >;
     static auto&
         ProcessEvent = Process< EventContractional, Natural, Natural, EventContractor, EventVisitor >;
     static const Locational< const char >
@@ -59,7 +59,7 @@ int main() {
         queue;
     Initialize( queue );
     ScheduleReadString( queue, Hello );
-    ScheduleReadNatural( queue, Size );
+    ScheduleReadNatural( queue, Locate( Size ).at );
     ScheduleReadString( queue, Goodbye );
     while (ProcessEvent( queue ));
 }

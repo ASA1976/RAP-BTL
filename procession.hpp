@@ -31,16 +31,7 @@ namespace procession {
         typename Spatial,
         typename Subjective
     >
-    using ReferenceSchedular = bool(
-        Referential< Spatial >,
-        Referential< Subjective >
-    );
-
-    template <
-        typename Spatial,
-        typename Subjective
-    >
-    using PointerSchedular = bool(
+    using Schedular = bool(
         Referential< Spatial >,
         const Locational< Subjective >
     );
@@ -65,7 +56,7 @@ namespace procession {
             Function
     >
     static inline bool
-    ScheduleByPointer(
+    ScheduleNullAllowed(
         Referential< Spatial >
             space,
         const Locational< Subjective >
@@ -101,10 +92,10 @@ namespace procession {
             Function
     >
     static inline bool
-    ScheduleByReference(
+    ScheduleNullRefused(
         Referential< Spatial >
             space,
-        Referential< Subjective >
+        const Locational< Subjective >
             subject
     ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
@@ -114,9 +105,12 @@ namespace procession {
             "Natural:  Unsigned integer type required"
         );
 #endif
+        
         static auto&
-            Schedule = ScheduleByPointer< Spatial, Positional, Natural, Subjective, Contractor, Visitor, Function >;
-        return Schedule( space, Locate( subject ).at );
+            Schedule = ScheduleNullAllowed< Spatial, Positional, Natural, Subjective, Contractor, Visitor, Function >;
+        if (subject == 0)
+            return false;
+        return Schedule( space, subject );
     }
 
     template <
