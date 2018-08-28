@@ -105,7 +105,6 @@ namespace procession {
             "Natural:  Unsigned integer type required"
         );
 #endif
-        
         static auto&
             Schedule = ScheduleNullAllowed< Spatial, Positional, Natural, Subjective, Contractor, Visitor, Function >;
         if (subject == 0)

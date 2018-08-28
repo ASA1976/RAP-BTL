@@ -45,9 +45,9 @@ PrintNatural(
 
 int main() {
     static auto&
-        ScheduleReadString = ScheduleNullRefused< EventContractional, Natural, Natural, const char, EventContractor, EventVisitor, PrintString >;
+        SchedulePrintString = ScheduleNullRefused< EventContractional, Natural, Natural, const char, EventContractor, EventVisitor, PrintString >;
     static auto&
-        ScheduleReadNatural = ScheduleNullRefused< EventContractional, Natural, Natural, const Natural, EventContractor, EventVisitor, PrintNatural >;
+        SchedulePrintNatural = ScheduleNullRefused< EventContractional, Natural, Natural, const Natural, EventContractor, EventVisitor, PrintNatural >;
     static auto&
         ProcessEvent = Process< EventContractional, Natural, Natural, EventContractor, EventVisitor >;
     static const Locational< const char >
@@ -58,8 +58,8 @@ int main() {
     EventContractional
         queue;
     Initialize( queue );
-    ScheduleReadString( queue, Hello );
-    ScheduleReadNatural( queue, Locate( Size ).at );
-    ScheduleReadString( queue, Goodbye );
+    SchedulePrintString( queue, Hello );
+    SchedulePrintNatural( queue, Locate( Size ).at );
+    SchedulePrintString( queue, Goodbye );
     while (ProcessEvent( queue ));
 }
