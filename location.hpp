@@ -18,6 +18,11 @@ namespace location {
     template <
         typename Subjective
     >
+    using Deferential = Subjective&&;
+
+    template <
+        typename Subjective
+    >
     struct Positive {
 
         Locational< Subjective >
@@ -31,6 +36,16 @@ namespace location {
     struct Conferential {
 
         Referential< Subjective >
+            to;
+
+    };
+
+    template <
+        typename Subjective
+    >
+    struct Deferent {
+
+        Deferential< Subjective >
             to;
 
     };
@@ -64,8 +79,21 @@ namespace location {
     template <
         typename Subjective
     >
-    static inline Conferential< const Subjective >
+    static inline Conferential< Subjective >
     Defer(
+        Referential< Subjective >
+            subject
+    ) {
+        const Deferent< Subjective >
+            deferment = {subject};
+        return deferment;
+    }
+
+    template <
+        typename Subjective
+    >
+    static inline Conferential< const Subjective >
+    Deter(
         Referential< Subjective >
             subject
     ) {

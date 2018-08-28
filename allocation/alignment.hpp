@@ -23,9 +23,9 @@ namespace allocation {
         template <
             typename Subjective,
             size_t
-                Alignment = alignof( Subjective ),
+                Alignment = alignof(Subjective),
             size_t
-                Size = sizeof( Subjective )
+                Size = sizeof(Subjective)
         >
         static inline void
         AlignedAlloc(
@@ -36,18 +36,18 @@ namespace allocation {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
 #endif
-            locality = (Locational< Subjective >) aligned_alloc( Alignment, Size );
+            locality = static_cast< Locational< Subjective > >(aligned_alloc( Alignment, Size ));
 #else
-            locality = (Locational< Subjective >) _aligned_malloc( Size, Alignment );
+            locality = static_cast< Locational< Subjective > >(_aligned_malloc( Size, Alignment ));
 #endif
         }
 
         template <
             typename Subjective,
             size_t
-                Alignment = alignof( Subjective ),
+                Alignment = alignof(Subjective),
             size_t
-                Size = sizeof( Subjective )
+                Size = sizeof(Subjective)
         >
         static inline void
         AlignedAlloc(
@@ -60,9 +60,9 @@ namespace allocation {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
 #endif
-            locality = (Locational< Subjective >) aligned_alloc( Alignment, count * Size );
+            locality = static_cast< Locational< Subjective > >(aligned_alloc( Alignment, count * Size ));
 #else
-            locality = (Locational< Subjective >) _aligned_malloc( count * Size, Alignment );
+            locality = static_cast< Locational< Subjective > >(_aligned_malloc( count * Size, Alignment ));
 #endif
         }
 
@@ -99,9 +99,9 @@ namespace allocation {
         template <
             typename Subjective,
             size_t
-                Alignment = alignof( Subjective ),
+                Alignment = alignof(Subjective),
             size_t
-                Size = sizeof( Subjective )
+                Size = sizeof(Subjective)
         >
         constexpr DefaultAllocative< Subjective >
         DefaultAligned = {
@@ -112,9 +112,9 @@ namespace allocation {
         template <
             typename Subjective,
             size_t
-                Alignment = alignof( Subjective ),
+                Alignment = alignof(Subjective),
             size_t
-                Size = sizeof( Subjective )
+                Size = sizeof(Subjective)
         >
         constexpr DefaultAllocative< Subjective >
         FastDefaultAligned = {
@@ -125,9 +125,9 @@ namespace allocation {
         template <
             typename Subjective,
             size_t
-                Alignment = alignof( Subjective ),
+                Alignment = alignof(Subjective),
             size_t
-                Size = sizeof( Subjective )
+                Size = sizeof(Subjective)
         >
         constexpr ArrayAllocative< Subjective, size_t >
         ArrayAligned = {
@@ -138,9 +138,9 @@ namespace allocation {
         template <
             typename Subjective,
             size_t
-                Alignment = alignof( Subjective ),
+                Alignment = alignof(Subjective),
             size_t
-                Size = sizeof( Subjective )
+                Size = sizeof(Subjective)
         >
         constexpr ArrayAllocative< Subjective, size_t >
         FastArrayAligned = {

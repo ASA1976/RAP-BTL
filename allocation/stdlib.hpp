@@ -23,7 +23,7 @@ namespace allocation {
             Referential< const size_t >
                 count
         ) {
-            locality = (Locational< Subjective >) malloc( sizeof( Subjective ) * count );
+            locality = static_cast< Locational< Subjective > >(malloc( sizeof(Subjective) * count ));
         }
 
         template <
@@ -47,7 +47,7 @@ namespace allocation {
             Referential< const size_t >
                 count
         ) {
-            locality = (Locational< Subjective >) calloc( count, sizeof( Subjective ) );
+            locality = static_cast< Locational< Subjective > >(calloc( count, sizeof(Subjective) ));
         }
 
         template <

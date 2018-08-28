@@ -129,7 +129,7 @@ namespace ration {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            return Defer( stack.source[index] );
+            return Deter( stack.source[index] );
         }
 
         template <

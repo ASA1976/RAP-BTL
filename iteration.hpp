@@ -57,7 +57,7 @@ namespace iteration {
             "Integral:  Integer type required"
         );
 #endif
-        return Defer( space.subject );
+        return Deter( space.subject );
     }
 
     template <
@@ -83,7 +83,7 @@ namespace iteration {
             "Natural:  Unsigned integer type required"
         );
 #endif
-        return space.lower + (Integral) count <= space.upper;
+        return space.lower + static_cast< Integral>(count <= space.upper);
     }
 
     template <
@@ -111,7 +111,7 @@ namespace iteration {
             "Natural:  Unsigned integer type required"
         );
 #endif
-        return index + (Integral) count <= space.upper;
+        return index + static_cast< Integral >(count <= space.upper);
     }
 
     template <
@@ -170,7 +170,7 @@ namespace iteration {
         );
 #endif
         const Integral
-            to = space.lower + (Integral) count;
+            to = space.lower + static_cast< Integral >(count);
         for (index = space.lower; index < to; index++)
             Operate( space.subject, index, space.lower, space.upper );
         Operate( space.subject, index, space.lower, space.upper );
@@ -205,7 +205,7 @@ namespace iteration {
         );
 #endif
         const Integral
-            to = space.upper - (Integral) count;
+            to = space.upper - static_cast< Integral >(count);
         for (index = space.upper; index > to; index++)
             Operate( space.subject, index, space.lower, space.upper );
         Operate( space.subject, index, space.lower, space.upper );
@@ -240,7 +240,7 @@ namespace iteration {
         );
 #endif
         const Integral
-            to = index + (Integral) count;
+            to = index + static_cast< Integral >(count);
         while (index < to)
             Operate( space.subject, ++index, space.lower, space.upper );
         return index;
@@ -274,7 +274,7 @@ namespace iteration {
         );
 #endif
         const Integral
-            to = index - (Integral) count;
+            to = index - static_cast< Integral >(count);
         while (index > to)
             Operate( space.subject, --index, space.lower, space.upper );
         return index;
@@ -322,7 +322,7 @@ namespace iteration {
             "Natural:  Unsigned integer type required"
         );
 #endif
-        return (Natural) (space.upper - space.lower + 1);
+        return static_cast< Natural>(space.upper - space.lower + 1);
     }
 
     template <
@@ -348,7 +348,7 @@ namespace iteration {
             "Natural:  Unsigned integer type required"
         );
 #endif
-        return (Natural) (space.upper - index);
+        return static_cast< Natural >(space.upper - index);
     }
 
     template <
@@ -374,7 +374,7 @@ namespace iteration {
             "Natural:  Unsigned integer type required"
         );
 #endif
-        return (Natural) (index - space.lower);
+        return static_cast< Natural >(index - space.lower);
     }
 
     template <

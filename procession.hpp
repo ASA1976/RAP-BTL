@@ -69,12 +69,11 @@ namespace procession {
             "Natural:  Unsigned integer type required"
         );
 #endif
-        using General = const Locational< void >;
         Positional
             position;
         if (!Contractor.protract( space, position, 1 ))
             return false;
-        Visitor.scale.go( space, position ).to.location = (General) subject;
+        Visitor.scale.go( space, position ).to.location = (Locational< void >) subject;
         Visitor.scale.go( space, position ).to.objective = Function;
         return true;
     }

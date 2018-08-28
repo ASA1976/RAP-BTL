@@ -87,7 +87,7 @@ namespace allocation {
 #endif
             Natural
                 index;
-            index = (Natural) (locality - Pool.resource.source);
+            index = static_cast< Natural >(locality - Pool.resource.source);
             Retribute( Pool, index );
         }
 
@@ -113,7 +113,7 @@ namespace allocation {
 #endif
             Natural
                 index;
-            index = (Natural) (locality - Pool.resource.source);
+            index = static_cast< Natural >(locality - Pool.resource.source);
             if (RetributeSafely( Pool, index ))
                 locality = 0;
         }

@@ -18,7 +18,7 @@ const unsigned short
 CacheLimit = 0x2000;
 
 const unsigned short
-NodePoolSize = CacheLimit / sizeof( Nodal ) - 1;
+NodePoolSize = CacheLimit / sizeof(Nodal) - 1;
 
 Contributory< unsigned short, NodePoolSize, Nodal >
 NodePool;

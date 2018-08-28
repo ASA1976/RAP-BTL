@@ -147,7 +147,7 @@ namespace ration {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            return Defer( queue.resource.source[index] );
+            return Deter( queue.resource.source[index] );
         }
 
         template <

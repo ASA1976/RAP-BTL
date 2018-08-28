@@ -30,8 +30,8 @@ PrintString(
     const Locational< void >
         location
 ) {
-    using Contextual = const Locational< const char >;
-    printf( "%s\n", (Contextual) location );
+    using Specific = const Locational< const char >;
+    printf( "%s\n", static_cast< Specific >(location) );
 }
 
 static inline void
@@ -39,8 +39,8 @@ PrintNatural(
     const Locational< void >
         location
 ) {
-    using Contextual = const Locational< const Natural >;
-    printf( "%u\n", *(Contextual) location );
+    using Specific = const Locational< const Natural >;
+    printf( "%u\n", *static_cast< Specific >(location) );
 }
 
 int main() {
@@ -54,7 +54,7 @@ int main() {
         Hello = "Hello world!",
         Goodbye = "Goodbye";
     static const Natural
-        Size = sizeof( EventContractional );
+        Size = sizeof(EventContractional);
     EventContractional
         queue;
     Initialize( queue );

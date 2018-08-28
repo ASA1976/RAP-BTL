@@ -546,7 +546,7 @@ template <
             "Natural:  Unsigned integer type required"
         );
 #endif
-        return (Natural) (array + Length - position);
+        return static_cast< Natural >(array + Length - position);
     }
 
     template <
@@ -569,7 +569,7 @@ template <
             "Natural:  Unsigned integer type required"
         );
 #endif
-        return (Natural) (position - array);
+        return static_cast< Natural >(position - array);
     }
 
     template <

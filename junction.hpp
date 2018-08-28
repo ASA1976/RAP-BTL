@@ -680,8 +680,8 @@ namespace junction {
         );
 #endif
         static auto&
-            DoDefer = Defer< Elemental >;
-        return DoDefer( position.at->element );
+            DoDeter = Deter< Elemental >;
+        return DoDeter( position.at->element );
     }
 
     template <
