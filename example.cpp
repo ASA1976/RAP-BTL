@@ -169,17 +169,30 @@ DisplayMappings(
 static bool
 DemonstrateLocalization( void ) {
     using namespace ::localization;
+    using namespace ::sortation;
+    using namespace ::comparison;
     using Local = ReadLocal< char >;
     static const size_t
         Length = 5;
     static auto&
+        Liner = ReadLiner< size_t, size_t, char >;
+    static auto&
         Scale = ReadIncrementScale< size_t, size_t, char >;
+    static auto&
+        FindCharacter = SearchBisectionally< Local, size_t, size_t, char, IsEqual, IsLesser >;
     static Local
         locality = "ABCDE";
+    size_t
+        index;
     puts( "Localization (Pointer Only)" );
     printf( "locality := " );
     DisplayCharacters( locality, Scale, Length );
-    puts( "" );
+    index = 2;
+    if (FindCharacter( locality, Liner, locality[0], index, 2, 2 )) {
+        printf( " (found '%c')\n", Scale.go( locality, index ).to );
+        return true;
+    }
+    printf( " (not found)\n" );
     return true;
 }
 
