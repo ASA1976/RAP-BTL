@@ -292,7 +292,7 @@ namespace ordination {
         typename Elemental
     >
     static inline bool
-    IncrementTraversable(
+    IncrementTraverses(
         Referential< const Elemental[Length] >
             array,
         Referential< const Locational< Elemental > >
@@ -317,7 +317,7 @@ namespace ordination {
         typename Elemental
     >
     static inline bool
-    IncrementTraversableChecksForNull(
+    IncrementTraversesChecksForNull(
         Referential< const Elemental[Length] >
             array,
         Referential< const Locational< Elemental > >
@@ -333,10 +333,10 @@ namespace ordination {
         );
 #endif
         static auto&
-            Traversable = IncrementTraversable< Natural, Length, Elemental >;
+            Traverses = IncrementTraverses< Natural, Length, Elemental >;
         if (!position)
             throw position;
-        return Traversable( array, position, count );
+        return Traverses( array, position, count );
     }
 
     template <
@@ -346,7 +346,7 @@ namespace ordination {
         typename Elemental
     >
     static inline bool
-    DecrementTraversable(
+    DecrementTraverses(
         Referential< const Elemental[Length] >
             array,
         Referential< const Locational< Elemental > >
@@ -371,7 +371,7 @@ namespace ordination {
         typename Elemental
     >
     static inline bool
-    DecrementTraversableChecksForNull(
+    DecrementTraversesChecksForNull(
         Referential< const Elemental[Length] >
             array,
         Referential< const Locational< Elemental > >
@@ -387,10 +387,10 @@ namespace ordination {
         );
 #endif
         static auto&
-            Traversable = DecrementTraversable< Natural, Length, Elemental >;
+            Traverses = DecrementTraverses< Natural, Length, Elemental >;
         if (!position)
             throw position;
-        return Traversable( array, position, count );
+        return Traverses( array, position, count );
     }
 
     template <
@@ -441,10 +441,10 @@ namespace ordination {
         );
 #endif
         static auto&
-            Traversable = IncrementTraversableChecksForNull< Natural, Length, Elemental >;
+            Traverses = IncrementTraversesChecksForNull< Natural, Length, Elemental >;
         static auto&
             Traverse = TraverseIncrement< Natural, Length, Elemental >;
-        if (!Traversable( array, position, count ))
+        if (!Traverses( array, position, count ))
             throw count;
         return Traverse( array, position, count );
     }
@@ -497,10 +497,10 @@ namespace ordination {
         );
 #endif
         static auto&
-            Traversable = DecrementTraversableChecksForNull< Natural, Length, Elemental >;
+            Traverses = DecrementTraversesChecksForNull< Natural, Length, Elemental >;
         static auto&
             Traverse = TraverseDecrement< Natural, Length, Elemental >;
-        if (!Traversable( array, position, count ))
+        if (!Traverses( array, position, count ))
             throw count;
         return Traverse( array, position, count );
     }
@@ -790,7 +790,7 @@ template <
     ReadIncrementDirection = {
         ReadIncrementScale< Natural, Length, Elemental >,
         Begins< Natural, Length, const Elemental >,
-        IncrementTraversable< Natural, Length, const Elemental >,
+        IncrementTraverses< Natural, Length, const Elemental >,
         ContainsPosition< Natural, Length, const Elemental >,
         Account< Natural, Length, const Elemental >,
         CountIncrement< Natural, Length, const Elemental >
@@ -806,7 +806,7 @@ template <
     SafeReadIncrementDirection = {
         SafeReadIncrementScale< Natural, Length, Elemental >,
         Begins< Natural, Length, const Elemental >,
-        IncrementTraversableChecksForNull< Natural, Length, const Elemental >,
+        IncrementTraversesChecksForNull< Natural, Length, const Elemental >,
         ContainsPositionChecksForNull< Natural, Length, const Elemental >,
         Account< Natural, Length, const Elemental >,
         CountIncrement< Natural, Length, const Elemental >
@@ -822,7 +822,7 @@ template <
     WriteIncrementDirection = {
         WriteIncrementScale< Natural, Length, Elemental >,
         Begins< Natural, Length, Elemental >,
-        IncrementTraversable< Natural, Length, Elemental >,
+        IncrementTraverses< Natural, Length, Elemental >,
         ContainsPosition< Natural, Length, Elemental >,
         Account< Natural, Length, Elemental >,
         CountIncrement< Natural, Length, Elemental >
@@ -838,7 +838,7 @@ template <
     SafeWriteIncrementDirection = {
         SafeWriteIncrementScale< Natural, Length, Elemental >,
         Begins< Natural, Length, Elemental >,
-        IncrementTraversableChecksForNull< Natural, Length, Elemental >,
+        IncrementTraversesChecksForNull< Natural, Length, Elemental >,
         ContainsPositionChecksForNull< Natural, Length, Elemental >,
         Account< Natural, Length, Elemental >,
         CountIncrement< Natural, Length, Elemental >
@@ -854,7 +854,7 @@ template <
     ReadDecrementDirection = {
         ReadDecrementScale< Natural, Length, Elemental >,
         Begins< Natural, Length, const Elemental >,
-        DecrementTraversable< Natural, Length, const Elemental >,
+        DecrementTraverses< Natural, Length, const Elemental >,
         ContainsPosition< Natural, Length, const Elemental >,
         Account< Natural, Length, const Elemental >,
         CountDecrement< Natural, Length, const Elemental >
@@ -870,7 +870,7 @@ template <
     SafeReadDecrementDirection = {
         SafeReadDecrementScale< Natural, Length, Elemental >,
         Begins< Natural, Length, const Elemental >,
-        DecrementTraversableChecksForNull< Natural, Length, const Elemental >,
+        DecrementTraversesChecksForNull< Natural, Length, const Elemental >,
         ContainsPositionChecksForNull< Natural, Length, const Elemental >,
         Account< Natural, Length, const Elemental >,
         CountDecrement< Natural, Length, const Elemental >
@@ -886,7 +886,7 @@ template <
     WriteDecrementDirection = {
         WriteDecrementScale< Natural, Length, Elemental >,
         Begins< Natural, Length, Elemental >,
-        DecrementTraversable< Natural, Length, Elemental >,
+        DecrementTraverses< Natural, Length, Elemental >,
         ContainsPosition< Natural, Length, Elemental >,
         Account< Natural, Length, Elemental >,
         CountDecrement< Natural, Length, Elemental >
@@ -902,7 +902,7 @@ template <
     SafeWriteDecrementDirection = {
         SafeWriteDecrementScale< Natural, Length, Elemental >,
         Begins< Natural, Length, Elemental >,
-        DecrementTraversableChecksForNull< Natural, Length, Elemental >,
+        DecrementTraversesChecksForNull< Natural, Length, Elemental >,
         ContainsPositionChecksForNull< Natural, Length, Elemental >,
         Account< Natural, Length, Elemental >,
         CountDecrement< Natural, Length, Elemental >

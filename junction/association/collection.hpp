@@ -117,7 +117,7 @@ namespace junction {
                 if (Search( map, relator, position, Zero, Account( map ) - 1 ))
                     return false;
                 if (Order( GoReadRelator( map, position ).to, relator )) {
-                    if (IncrementTraversable( map, position, One )) {
+                    if (IncrementTraverses( map, position, One )) {
                         TraverseWriteIncrement( map, position, One );
                         return Precede( map, position, associate );
                     } else {
@@ -185,7 +185,7 @@ namespace junction {
                 if (Order( GoReadRelator( map, replacement_position ).to, replacement )) {
                     const Associational< Correlative, Elemental >
                         associate = {replacement, GoWriteElement( map, original_position ).to};
-                    if (IncrementTraversable( map, replacement_position, One )) {
+                    if (IncrementTraverses( map, replacement_position, One )) {
                         TraverseWriteIncrement( map, replacement_position, One );
                         if (!Precede( map, replacement_position, associate ))
                             return false;

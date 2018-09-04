@@ -1029,7 +1029,7 @@ namespace junction {
         typename Elemental
     >
     static inline bool
-    IncrementTraversable(
+    IncrementTraverses(
         Referential< const Junctive< Natural, Elemental > >
             list,
         Referential< const Positional< Elemental > >
@@ -1062,7 +1062,7 @@ namespace junction {
         typename Elemental
     >
     static inline bool
-    IncrementTraversableChecksForNull(
+    IncrementTraversesChecksForNull(
         Referential< const Junctive< Natural, Elemental > >
             list,
         Referential< const Positional< Elemental > >
@@ -1079,7 +1079,7 @@ namespace junction {
 #endif
         if (!position.at)
             throw position;
-        return IncrementTraversable( list, position, count );
+        return IncrementTraverses( list, position, count );
     }
 
     template <
@@ -1358,7 +1358,7 @@ namespace junction {
         typename Elemental
     >
     static inline bool
-    DecrementTraversable(
+    DecrementTraverses(
         Referential< const Junctive< Natural, Elemental > >
             list,
         Referential< const Positional< Elemental > >
@@ -1391,7 +1391,7 @@ namespace junction {
         typename Elemental
     >
     static inline bool
-    DecrementTraversableChecksForNull(
+    DecrementTraversesChecksForNull(
         Referential< const Junctive< Natural, Elemental > >
             list,
         Referential< const Positional< Elemental > >
@@ -1408,7 +1408,7 @@ namespace junction {
 #endif
         if (!position.at)
             throw position;
-        return DecrementTraversable( list, position, count );
+        return DecrementTraverses( list, position, count );
     }
 
     template <
@@ -1670,7 +1670,7 @@ namespace junction {
     ReadIncrementDirection = {
         ReadIncrementScale< Natural, Elemental >,
         IncrementBegins< Natural, Elemental >,
-        IncrementTraversable< Natural, Elemental >,
+        IncrementTraverses< Natural, Elemental >,
         Contains< Natural, Elemental >,
         Account< Natural, Elemental >,
         CountIncrement< Natural, Elemental >
@@ -1684,7 +1684,7 @@ namespace junction {
     SafeReadIncrementDirection = {
         SafeReadIncrementScale< Natural, Elemental >,
         IncrementBegins< Natural, Elemental >,
-        IncrementTraversableChecksForNull< Natural, Elemental >,
+        IncrementTraversesChecksForNull< Natural, Elemental >,
         ContainsChecksForNull< Natural, Elemental >,
         Account< Natural, Elemental >,
         CountIncrement< Natural, Elemental >
@@ -1698,7 +1698,7 @@ namespace junction {
     WriteIncrementDirection = {
         WriteIncrementScale< Natural, Elemental >,
         IncrementBegins< Natural, Elemental >,
-        IncrementTraversable< Natural, Elemental >,
+        IncrementTraverses< Natural, Elemental >,
         Contains< Natural, Elemental >,
         Account< Natural, Elemental >,
         CountIncrement< Natural, Elemental >
@@ -1712,7 +1712,7 @@ namespace junction {
     SafeWriteIncrementDirection = {
         SafeWriteIncrementScale< Natural, Elemental >,
         IncrementBegins< Natural, Elemental >,
-        IncrementTraversableChecksForNull< Natural, Elemental >,
+        IncrementTraversesChecksForNull< Natural, Elemental >,
         ContainsChecksForNull< Natural, Elemental >,
         Account< Natural, Elemental >,
         CountIncrement< Natural, Elemental >
@@ -1726,7 +1726,7 @@ namespace junction {
     ReadDecrementDirection = {
         ReadDecrementScale< Natural, Elemental >,
         DecrementBegins< Natural, Elemental >,
-        DecrementTraversable< Natural, Elemental >,
+        DecrementTraverses< Natural, Elemental >,
         Contains< Natural, Elemental >,
         Account< Natural, Elemental >,
         CountIncrement< Natural, Elemental >
@@ -1740,7 +1740,7 @@ namespace junction {
     SafeReadDecrementDirection = {
         SafeReadDecrementScale< Natural, Elemental >,
         DecrementBegins< Natural, Elemental >,
-        DecrementTraversableChecksForNull< Natural, Elemental >,
+        DecrementTraversesChecksForNull< Natural, Elemental >,
         ContainsChecksForNull< Natural, Elemental >,
         Account< Natural, Elemental >,
         CountIncrement< Natural, Elemental >
@@ -1754,7 +1754,7 @@ namespace junction {
     WriteDecrementDirection = {
         WriteDecrementScale< Natural, Elemental >,
         DecrementBegins< Natural, Elemental >,
-        DecrementTraversable< Natural, Elemental >,
+        DecrementTraverses< Natural, Elemental >,
         ContainsChecksForNull< Natural, Elemental >,
         Account< Natural, Elemental >,
         CountIncrement< Natural, Elemental >
@@ -1768,7 +1768,7 @@ namespace junction {
     SafeWriteDecrementDirection = {
         SafeWriteDecrementScale< Natural, Elemental >,
         DecrementBegins< Natural, Elemental >,
-        DecrementTraversableChecksForNull< Natural, Elemental >,
+        DecrementTraversesChecksForNull< Natural, Elemental >,
         ContainsChecksForNull< Natural, Elemental >,
         Account< Natural, Elemental >,
         CountIncrement< Natural, Elemental >

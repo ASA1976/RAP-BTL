@@ -159,7 +159,7 @@ DisplayMappings(
         auto&
             mapping = scale.go( map, position ).to;
         printf( "%c=%d", mapping.relator, mapping.value );
-        if (!direction.traversable( map, position, 1 ))
+        if (!direction.traverses( map, position, 1 ))
             break;
         printf( " " );
     }
@@ -175,21 +175,21 @@ DemonstrateLocalization( void ) {
     static const size_t
         Length = 5;
     static auto&
-        Liner = ReadLiner< size_t, size_t, char >;
+        Liner = ReadLiner< int, size_t, char >;
     static auto&
-        Scale = ReadIncrementScale< size_t, size_t, char >;
+        Increment = ReadIncrementScale< int, size_t, char >;
     static auto&
-        FindCharacter = SearchBisectionally< Local, size_t, size_t, char, IsEqual, IsLesser >;
+        FindCharacter = SearchBisectionally< Local, int, size_t, char, IsEqual, IsLesser >;
     static Local
         locality = "ABCDE";
-    size_t
+    int
         index;
     puts( "Localization (Pointer Only)" );
     printf( "locality := " );
-    DisplayCharacters( locality, Scale, Length );
+    DisplayCharacters( locality, Increment, Length );
     index = 2;
     if (FindCharacter( locality, Liner, locality[0], index, 2, 2 )) {
-        printf( " (found '%c')\n", Scale.go( locality, index ).to );
+        printf( " (found '%c')\n", Increment.go( locality, index ).to );
         return true;
     }
     printf( " (not found)\n" );

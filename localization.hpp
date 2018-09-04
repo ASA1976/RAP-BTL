@@ -92,7 +92,7 @@ namespace localization {
             "Natural:  Unsigned integer type required"
         );
 #endif
-        return index = count;
+        return index = static_cast< Integral >(count);
     }
 
     template <
@@ -120,7 +120,7 @@ namespace localization {
             "Natural:  Unsigned integer type required"
         );
 #endif
-        return index = -count;
+        return index = -static_cast< Integral >(count);
     }
 
     template <
@@ -148,7 +148,7 @@ namespace localization {
             "Natural:  Unsigned integer type required"
         );
 #endif
-        return index += count;
+        return index += static_cast< Integral >(count);
     }
 
     template <
@@ -176,7 +176,7 @@ namespace localization {
             "Natural:  Unsigned integer type required"
         );
 #endif
-        return index -= count;
+        return index -= static_cast< Integral >(count);
     }
 
     template <

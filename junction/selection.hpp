@@ -225,7 +225,7 @@ namespace junction {
             for (scale.begin( base, position, 0 ); true; scale.traverse( base, position, 1 )) {
                 if (!Proceed( operand, scale.go( base, position ).to ))
                     return false;
-                if (!basis.traversable( base, position, 1 ))
+                if (!basis.traverses( base, position, 1 ))
                     break;
             }
             return true;
@@ -293,7 +293,7 @@ namespace junction {
                     if (!SearchInBase( base_set, basis.scale, scale.go( relative_set, relative_position ).to, base_position, extent ))
                         if (!Proceed( operand, scale.go( relative_set, relative_position ).to ))
                             return false;
-                    if (!relativity.traversable( relative_set, relative_position, 1 ))
+                    if (!relativity.traverses( relative_set, relative_position, 1 ))
                         break;
                 }
             }
@@ -363,7 +363,7 @@ namespace junction {
                         if (!Proceed( operand, basis.scale.go( base_set, base_position ).to ))
                             return false;
                     }
-                    if (!basis.traversable( base_set, base_position, 1 ))
+                    if (!basis.traverses( base_set, base_position, 1 ))
                         break;
                 }
             }
@@ -375,7 +375,7 @@ namespace junction {
                         if (!Proceed( operand, relativity.scale.go( relative_set, relative_position ).to ))
                             return false;
                     }
-                    if (!relativity.traversable( relative_set, relative_position, 1 ))
+                    if (!relativity.traverses( relative_set, relative_position, 1 ))
                         break;
                 }
             }
@@ -443,7 +443,7 @@ namespace junction {
                         if (!Proceed( operand, scale.go( relative_set, relative_position ).to ))
                             return false;
                     }
-                    if (!relativity.traversable( relative_set, relative_position, 1 ))
+                    if (!relativity.traverses( relative_set, relative_position, 1 ))
                         break;
                 }
             }
@@ -503,14 +503,14 @@ namespace junction {
                 for (basis.scale.begin( base_set, base_position, 0 ); true; basis.scale.traverse( base_set, base_position, 1 )) {
                     if (!Proceed( operand, basis.scale.go( base_set, base_position ).to ))
                         return false;
-                    if (!basis.traversable( base_set, base_position, 1 ))
+                    if (!basis.traverses( base_set, base_position, 1 ))
                         break;
                 }
             }
             if (relativity.begins( relative_set, 0 )) {
                 for (relativity.scale.begin( relative_set, relative_position, 0 ); true; relativity.scale.traverse( relative_set, relative_position, 1 )) {
                     ComposeUnion( operand, relativity.scale.go( relative_set, relative_position ).to );
-                    if (!relativity.traversable( relative_set, relative_position, 1 ))
+                    if (!relativity.traverses( relative_set, relative_position, 1 ))
                         break;
                 }
             }

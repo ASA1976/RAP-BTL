@@ -239,7 +239,7 @@ namespace segmentation {
         typename Elemental
     >
     static inline bool
-    IncrementTraversable(
+    IncrementTraverses(
         Referential< const Locational< Elemental > >
             locality,
         Referential< const Natural >
@@ -264,7 +264,7 @@ namespace segmentation {
         typename Elemental
     >
     static inline bool
-    IncrementTraversableChecksForNull(
+    IncrementTraversesChecksForNull(
         Referential< const Locational< Elemental > >
             locality,
         Referential< const Natural >
@@ -280,10 +280,10 @@ namespace segmentation {
         );
 #endif
         static auto&
-            Traversable = IncrementTraversable< Natural, Length, Elemental >;
+            Traverses = IncrementTraverses< Natural, Length, Elemental >;
         if (!locality)
             throw locality;
-        return Traversable( locality, index, count );
+        return Traverses( locality, index, count );
     }
 
     template <
@@ -293,7 +293,7 @@ namespace segmentation {
         typename Elemental
     >
     static inline bool
-    DecrementTraversable(
+    DecrementTraverses(
         Referential< const Locational< Elemental > >
             locality,
         Referential< const Natural >
@@ -318,7 +318,7 @@ namespace segmentation {
         typename Elemental
     >
     static inline bool
-    DecrementTraversableChecksForNull(
+    DecrementTraversesChecksForNull(
         Referential< const Locational< Elemental > >
             locality,
         Referential< const Natural >
@@ -334,10 +334,10 @@ namespace segmentation {
         );
 #endif
         static auto&
-            Traversable = DecrementTraversable< Natural, Length, Elemental >;
+            Traverses = DecrementTraverses< Natural, Length, Elemental >;
         if (!locality)
             throw locality;
-        return Traversable( locality, index, count );
+        return Traverses( locality, index, count );
     }
 
     template <
@@ -363,8 +363,8 @@ namespace segmentation {
         );
 #endif
         static auto&
-            Traversable = IncrementTraversableChecksForNull< Natural, Length, Elemental >;
-        if (!Traversable( locality, index, count ))
+            Traverses = IncrementTraversesChecksForNull< Natural, Length, Elemental >;
+        if (!Traverses( locality, index, count ))
             throw count;
         return TraverseIncrement( locality, index, count );
     }
@@ -392,8 +392,8 @@ namespace segmentation {
         );
 #endif
         static auto&
-            Traversable = DecrementTraversableChecksForNull< Natural, Length, Elemental >;
-        if (!Traversable( locality, index, count ))
+            Traverses = DecrementTraversesChecksForNull< Natural, Length, Elemental >;
+        if (!Traverses( locality, index, count ))
             throw count;
         return TraverseDecrement( locality, index, count );
     }
@@ -659,7 +659,7 @@ namespace segmentation {
     ReadIncrementDirection = {
         ReadIncrementScale< Natural, Natural, Elemental >,
         Begins< Natural, Length, const Elemental >,
-        IncrementTraversable< Natural, Length, const Elemental >,
+        IncrementTraverses< Natural, Length, const Elemental >,
         ContainsIndex< Natural, Length, const Elemental >,
         Account< Natural, Length, const Elemental >,
         CountIncrement< Natural, Length, const Elemental >
@@ -675,7 +675,7 @@ namespace segmentation {
     SafeReadIncrementDirection = {
         SafeReadIncrementScale< Natural, Length, Elemental >,
         BeginsChecksForNull< Natural, Length, const Elemental >,
-        IncrementTraversableChecksForNull< Natural, Length, const Elemental >,
+        IncrementTraversesChecksForNull< Natural, Length, const Elemental >,
         ContainsIndexChecksForNull< Natural, Length, const Elemental >,
         Account< Natural, Length, const Elemental >,
         CountIncrement< Natural, Length, const Elemental >
@@ -691,7 +691,7 @@ namespace segmentation {
     WriteIncrementDirection = {
         WriteIncrementScale< Natural, Elemental >,
         Begins< Natural, Length, Elemental >,
-        IncrementTraversable< Natural, Length, Elemental >,
+        IncrementTraverses< Natural, Length, Elemental >,
         ContainsIndex< Natural, Length, Elemental >,
         Account< Natural, Length, Elemental >,
         CountIncrement< Natural, Length, Elemental >
@@ -707,7 +707,7 @@ namespace segmentation {
     SafeWriteIncrementDirection = {
         SafeWriteIncrementScale< Natural, Length, Elemental >,
         BeginsChecksForNull< Natural, Length, Elemental >,
-        IncrementTraversableChecksForNull< Natural, Length, Elemental >,
+        IncrementTraversesChecksForNull< Natural, Length, Elemental >,
         ContainsIndexChecksForNull< Natural, Length, const Elemental >,
         Account< Natural, Length, Elemental >,
         CountIncrement< Natural, Length, Elemental >
@@ -723,7 +723,7 @@ namespace segmentation {
     ReadDecrementDirection = {
         ReadDecrementScale< Natural, Length, Elemental >,
         Begins< Natural, Length, const Elemental >,
-        DecrementTraversable< Natural, Length, const Elemental >,
+        DecrementTraverses< Natural, Length, const Elemental >,
         ContainsIndex< Natural, Length, const Elemental >,
         Account< Natural, Length, const Elemental >,
         CountDecrement< Natural, Length, const Elemental >
@@ -739,7 +739,7 @@ namespace segmentation {
     SafeReadDecrementDirection = {
         SafeReadDecrementScale< Natural, Length, Elemental >,
         BeginsChecksForNull< Natural, Length, const Elemental >,
-        DecrementTraversableChecksForNull< Natural, Length, const Elemental >,
+        DecrementTraversesChecksForNull< Natural, Length, const Elemental >,
         ContainsIndexChecksForNull< Natural, Length, const Elemental >,
         Account< Natural, Length, const Elemental >,
         CountDecrement< Natural, Length, const Elemental >
@@ -755,7 +755,7 @@ namespace segmentation {
     WriteDecrementDirection = {
         WriteDecrementScale< Natural, Length, Elemental >,
         Begins< Natural, Length, Elemental >,
-        DecrementTraversable< Natural, Length, Elemental >,
+        DecrementTraverses< Natural, Length, Elemental >,
         ContainsIndex< Natural, Length, Elemental >,
         Account< Natural, Length, Elemental >,
         CountDecrement< Natural, Length, Elemental >
@@ -771,7 +771,7 @@ namespace segmentation {
     SafeWriteDecrementDirection = {
         SafeWriteDecrementScale< Natural, Length, Elemental >,
         BeginsChecksForNull< Natural, Length, Elemental >,
-        DecrementTraversableChecksForNull< Natural, Length, Elemental >,
+        DecrementTraversesChecksForNull< Natural, Length, Elemental >,
         ContainsIndexChecksForNull< Natural, Length, Elemental >,
         Account< Natural, Length, Elemental >,
         CountDecrement< Natural, Length, Elemental >

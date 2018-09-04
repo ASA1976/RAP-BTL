@@ -83,7 +83,7 @@ namespace iteration {
             "Natural:  Unsigned integer type required"
         );
 #endif
-        return space.lower + static_cast< Integral>(count <= space.upper);
+        return space.lower + static_cast< Integral >(count) <= space.upper;
     }
 
     template <
@@ -92,7 +92,7 @@ namespace iteration {
         typename Subjective
     >
     static inline bool
-    IncrementTraversable(
+    IncrementTraverses(
         Referential< const Iterative< Integral, Subjective > >
             space,
         Referential< const Integral >
@@ -111,7 +111,7 @@ namespace iteration {
             "Natural:  Unsigned integer type required"
         );
 #endif
-        return index + static_cast< Integral >(count <= space.upper);
+        return index + static_cast< Integral >(count) <= space.upper;
     }
 
     template <
@@ -120,7 +120,7 @@ namespace iteration {
         typename Subjective
     >
     static inline bool
-    DecrementTraversable(
+    DecrementTraverses(
         Referential< const Iterative< Integral, Subjective > >
             space,
         Referential< const Integral >
@@ -139,7 +139,7 @@ namespace iteration {
             "Natural:  Unsigned integer type required"
         );
 #endif
-        return index >= space.lower + count;
+        return index >= space.lower + static_cast< Integral >(count);
     }
 
     template <
@@ -431,7 +431,7 @@ namespace iteration {
     IncrementIteratingDirection = {
         IncrementIteratingScale< Integral, Natural, Subjective, Operate >,
         Begins< Integral, Natural, Subjective >,
-        IncrementTraversable< Integral, Natural, Subjective >,
+        IncrementTraverses< Integral, Natural, Subjective >,
         Meets< Integral, Subjective >,
         Survey< Integral, Natural, Subjective >,
         CountIncrement< Integral, Natural, Subjective >
@@ -448,7 +448,7 @@ namespace iteration {
     DecrementIteratingDirection = {
         DecrementIteratingScale< Integral, Natural, Subjective, Operate >,
         Begins< Integral, Natural, Subjective >,
-        DecrementTraversable< Integral, Natural, Subjective >,
+        DecrementTraverses< Integral, Natural, Subjective >,
         Meets< Integral, Subjective >,
         Survey< Integral, Natural, Subjective >,
         CountDecrement< Integral, Natural, Subjective >

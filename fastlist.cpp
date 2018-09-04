@@ -48,7 +48,7 @@ DisplayCharacters(
         direction.scale.traverse( list, position, 1 )
     ) {
         printf( "'%c'", direction.scale.go( list, position ).to );
-        if (!direction.traversable( list, position, 1 ))
+        if (!direction.traverses( list, position, 1 ))
             break;
         printf( "," );
     }

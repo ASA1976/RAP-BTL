@@ -32,7 +32,7 @@ namespace trajection {
         typename Positional,
         typename Natural
     >
-    using Traversable = bool(
+    using Traverses = bool(
         Referential< const Spatial >,
         Referential< const Positional >,
         Referential< const Natural >
@@ -143,8 +143,8 @@ namespace trajection {
         Referential< Enterable< Spatial, Natural > >
             begins;
 
-        Referential< Traversable< Spatial, Positional, Natural > >
-            traversable;
+        Referential< Traverses< Spatial, Positional, Natural > >
+            traverses;
 
         Referential< Attainable< Spatial, Positional > >
             meets;

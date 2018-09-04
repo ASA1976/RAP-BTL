@@ -402,7 +402,7 @@ namespace junction {
         ReadRelatorIncrementDirection = {
             ReadRelatorIncrementScale< Natural, Correlative, Elemental >,
             IncrementBegins< Natural, Associational< Correlative, Elemental > >,
-            IncrementTraversable< Natural, Associational< Correlative, Elemental > >,
+            IncrementTraverses< Natural, Associational< Correlative, Elemental > >,
             Contains< Natural, Associational< Correlative, Elemental > >
         };
 
@@ -415,7 +415,7 @@ namespace junction {
         SafeReadRelatorIncrementDirection = {
             SafeReadRelatorIncrementScale< Natural, Correlative, Elemental >,
             IncrementBegins< Natural, Associational< Correlative, Elemental > >,
-            IncrementTraversableChecksForNull< Natural, Associational< Correlative, Elemental > >,
+            IncrementTraversesChecksForNull< Natural, Associational< Correlative, Elemental > >,
             ContainsChecksForNull< Natural, Associational< Correlative, Elemental > >
         };
 
@@ -428,7 +428,7 @@ namespace junction {
         ReadRelatorDecrementDirection = {
             ReadRelatorDecrementScale< Natural, Correlative, Elemental >,
             DecrementBegins< Natural, Associational< Correlative, Elemental > >,
-            DecrementTraversable< Natural, Associational< Correlative, Elemental > >,
+            DecrementTraverses< Natural, Associational< Correlative, Elemental > >,
             Contains< Natural, Associational< Correlative, Elemental > >
         };
 
@@ -441,7 +441,7 @@ namespace junction {
         SafeReadRelatorDecrementDirection = {
             SafeReadRelatorDecrementScale< Natural, Correlative, Elemental >,
             DecrementBegins< Natural, Associational< Correlative, Elemental > >,
-            DecrementTraversableChecksForNull< Natural, Associational< Correlative, Elemental > >,
+            DecrementTraversesChecksForNull< Natural, Associational< Correlative, Elemental > >,
             ContainsChecksForNull< Natural, Associational< Correlative, Elemental > >
         };
 
@@ -454,7 +454,7 @@ namespace junction {
         ReadElementIncrementDirection = {
             ReadElementIncrementScale< Natural, Correlative, Elemental >,
             IncrementBegins< Natural, Associational< Correlative, Elemental > >,
-            IncrementTraversable< Natural, Associational< Correlative, Elemental > >,
+            IncrementTraverses< Natural, Associational< Correlative, Elemental > >,
             Contains< Natural, Associational< Correlative, Elemental > >
         };
 
@@ -467,7 +467,7 @@ namespace junction {
         SafeReadElementIncrementDirection = {
             SafeReadElementIncrementScale< Natural, Correlative, Elemental >,
             IncrementBegins< Natural, Associational< Correlative, Elemental > >,
-            IncrementTraversableChecksForNull< Natural, Associational< Correlative, Elemental > >,
+            IncrementTraversesChecksForNull< Natural, Associational< Correlative, Elemental > >,
             ContainsChecksForNull< Natural, Associational< Correlative, Elemental > >
         };
 
@@ -480,7 +480,7 @@ namespace junction {
         ReadElementDecrementDirection = {
             ReadElementDecrementScale< Natural, Correlative, Elemental >,
             DecrementBegins< Natural, Associational< Correlative, Elemental > >,
-            DecrementTraversable< Natural, Associational< Correlative, Elemental > >,
+            DecrementTraverses< Natural, Associational< Correlative, Elemental > >,
             Contains< Natural, Associational< Correlative, Elemental > >
         };
 
@@ -493,7 +493,7 @@ namespace junction {
         SafeReadElementDecrementDirection = {
             SafeReadElementDecrementScale< Natural, Correlative, Elemental >,
             DecrementBegins< Natural, Associational< Correlative, Elemental > >,
-            DecrementTraversableChecksForNull< Natural, Associational< Correlative, Elemental > >,
+            DecrementTraversesChecksForNull< Natural, Associational< Correlative, Elemental > >,
             ContainsChecksForNull< Natural, Associational< Correlative, Elemental > >
         };
 
@@ -506,7 +506,7 @@ namespace junction {
         WriteElementIncrementDirection = {
             WriteElementIncrementScale< Natural, Correlative, Elemental >,
             IncrementBegins< Natural, Associational< Correlative, Elemental > >,
-            IncrementTraversable< Natural, Associational< Correlative, Elemental > >,
+            IncrementTraverses< Natural, Associational< Correlative, Elemental > >,
             Contains< Natural, Associational< Correlative, Elemental > >
         };
 
@@ -519,7 +519,7 @@ namespace junction {
         SafeWriteElementIncrementDirection = {
             SafeWriteElementIncrementScale< Natural, Correlative, Elemental >,
             IncrementBegins< Natural, Associational< Correlative, Elemental > >,
-            IncrementTraversableChecksForNull< Natural, Associational< Correlative, Elemental > >,
+            IncrementTraversesChecksForNull< Natural, Associational< Correlative, Elemental > >,
             ContainsChecksForNull< Natural, Associational< Correlative, Elemental > >
         };
 
@@ -532,7 +532,7 @@ namespace junction {
         WriteElementDecrementDirection = {
             WriteElementDecrementScale< Natural, Correlative, Elemental >,
             DecrementBegins< Natural, Associational< Correlative, Elemental > >,
-            DecrementTraversable< Natural, Associational< Correlative, Elemental > >,
+            DecrementTraverses< Natural, Associational< Correlative, Elemental > >,
             Contains< Natural, Associational< Correlative, Elemental > >
         };
 
@@ -545,7 +545,7 @@ namespace junction {
         SafeWriteElementDecrementDirection = {
             SafeWriteElementDecrementScale< Natural, Correlative, Elemental >,
             DecrementBegins< Natural, Associational< Correlative, Elemental > >,
-            DecrementTraversableChecksForNull< Natural, Associational< Correlative, Elemental > >,
+            DecrementTraversesChecksForNull< Natural, Associational< Correlative, Elemental > >,
             ContainsChecksForNull< Natural, Associational< Correlative, Elemental > >
         };
 

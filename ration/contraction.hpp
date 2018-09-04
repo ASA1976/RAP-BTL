@@ -315,7 +315,7 @@ namespace ration {
             typename Elemental
         >
         static inline bool
-        IncrementIsTraversable(
+        IncrementIsTraverses(
             Referential< const Contractional< Natural, Maximum, Elemental > >
                 queue,
             Referential< const Natural >
@@ -392,7 +392,7 @@ namespace ration {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            if (!IncrementIsTraversable( queue, index, count ))
+            if (!IncrementIsTraverses( queue, index, count ))
                 throw count;
             return TraverseReadIncrement( queue, index, count );
         }
@@ -447,7 +447,7 @@ namespace ration {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            if (!IncrementIsTraversable( queue, index, count ))
+            if (!IncrementIsTraverses( queue, index, count ))
                 throw index;
             return TraverseWriteIncrement( queue, index, count );
         }
@@ -573,7 +573,7 @@ namespace ration {
             typename Elemental
         >
         static inline bool
-        DecrementIsTraversable(
+        DecrementIsTraverses(
             Referential< const Contractional< Natural, Maximum, Elemental > >
                 queue,
             Referential< const Natural >
@@ -640,7 +640,7 @@ namespace ration {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            if (!DecrementIsTraversable( queue, index, count ))
+            if (!DecrementIsTraverses( queue, index, count ))
                 throw index;
             return TraverseReadDecrement( queue, index, count );
         }
@@ -692,7 +692,7 @@ namespace ration {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            if (!DecrementIsTraversable( queue, index, count ))
+            if (!DecrementIsTraverses( queue, index, count ))
                 throw index;
             return TraverseWriteDecrement( queue, index, count );
         }
@@ -1190,7 +1190,7 @@ namespace ration {
         ReadIncrementDirection = {
             ReadIncrementScale< Natural, Maximum, Elemental >,
             Begins< Natural, Maximum, Elemental >,
-            IncrementIsTraversable< Natural, Maximum, Elemental >,
+            IncrementIsTraverses< Natural, Maximum, Elemental >,
             Contains< Natural, Maximum, Elemental >,
             Account< Natural, Maximum, Elemental >,
             CountIncrement< Natural, Maximum, Elemental >
@@ -1206,7 +1206,7 @@ namespace ration {
         SafeReadIncrementDirection = {
             SafeReadIncrementScale< Natural, Maximum, Elemental >,
             Begins< Natural, Maximum, Elemental >,
-            IncrementIsTraversable< Natural, Maximum, Elemental >,
+            IncrementIsTraverses< Natural, Maximum, Elemental >,
             Contains< Natural, Maximum, Elemental >,
             Account< Natural, Maximum, Elemental >,
             CountIncrement< Natural, Maximum, Elemental >
@@ -1222,7 +1222,7 @@ namespace ration {
         WriteIncrementDirection = {
             WriteIncrementScale< Natural, Maximum, Elemental >,
             Begins< Natural, Maximum, Elemental >,
-            IncrementIsTraversable< Natural, Maximum, Elemental >,
+            IncrementIsTraverses< Natural, Maximum, Elemental >,
             Contains< Natural, Maximum, Elemental >,
             Account< Natural, Maximum, Elemental >,
             CountIncrement< Natural, Maximum, Elemental >
@@ -1238,7 +1238,7 @@ namespace ration {
         SafeWriteIncrementDirection = {
             SafeWriteIncrementScale< Natural, Maximum, Elemental >,
             Begins< Natural, Maximum, Elemental >,
-            IncrementIsTraversable< Natural, Maximum, Elemental >,
+            IncrementIsTraverses< Natural, Maximum, Elemental >,
             Contains< Natural, Maximum, Elemental >,
             Account< Natural, Maximum, Elemental >,
             CountIncrement< Natural, Maximum, Elemental >
@@ -1254,7 +1254,7 @@ namespace ration {
         ReadDecrementDirection = {
             ReadDecrementScale< Natural, Maximum, Elemental >,
             Begins< Natural, Maximum, Elemental >,
-            DecrementIsTraversable< Natural, Maximum, Elemental >,
+            DecrementIsTraverses< Natural, Maximum, Elemental >,
             Contains< Natural, Maximum, Elemental >,
             Account< Natural, Maximum, Elemental >,
             CountDecrement< Natural, Maximum, Elemental >
@@ -1270,7 +1270,7 @@ namespace ration {
         SafeReadDecrementDirection = {
             SafeReadDecrementScale< Natural, Maximum, Elemental >,
             Begins< Natural, Maximum, Elemental >,
-            DecrementIsTraversable< Natural, Maximum, Elemental >,
+            DecrementIsTraverses< Natural, Maximum, Elemental >,
             Contains< Natural, Maximum, Elemental >,
             Account< Natural, Maximum, Elemental >,
             CountDecrement< Natural, Maximum, Elemental >
@@ -1286,7 +1286,7 @@ namespace ration {
         WriteDecrementDirection = {
             WriteDecrementScale< Natural, Maximum, Elemental >,
             Begins< Natural, Maximum, Elemental >,
-            DecrementIsTraversable< Natural, Maximum, Elemental >,
+            DecrementIsTraverses< Natural, Maximum, Elemental >,
             Contains< Natural, Maximum, Elemental >,
             Account< Natural, Maximum, Elemental >,
             CountDecrement< Natural, Maximum, Elemental >
@@ -1302,7 +1302,7 @@ namespace ration {
         SafeWriteDecrementDirection = {
             SafeWriteDecrementScale< Natural, Maximum, Elemental >,
             Begins< Natural, Maximum, Elemental >,
-            DecrementIsTraversable< Natural, Maximum, Elemental >,
+            DecrementIsTraverses< Natural, Maximum, Elemental >,
             Contains< Natural, Maximum, Elemental >,
             Account< Natural, Maximum, Elemental >,
             CountDecrement< Natural, Maximum, Elemental >

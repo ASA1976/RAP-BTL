@@ -113,7 +113,7 @@ namespace junction {
             if (Search( set, value, position, Zero, Account( set ) - 1 ))
                 return false;
             if (Order( GoRead( set, position ).to, value )) {
-                if (!IncrementTraversable( set, position, One ))
+                if (!IncrementTraverses( set, position, One ))
                     return Proceed( set, value );
                 TraverseWriteIncrement( set, position, One );
             }
@@ -219,7 +219,7 @@ namespace junction {
             if (Search( set, replacement, replacement_position, Zero, last ))
                 return false;
             if (Order( GoRead( set, replacement_position ).to, replacement )) {
-                if (IncrementTraversable( set, replacement_position, One )) {
+                if (IncrementTraverses( set, replacement_position, One )) {
                     TraverseWriteIncrement( set, replacement_position, One );
                     if (!Precede( set, replacement_position, replacement ))
                         return false;
@@ -289,7 +289,7 @@ namespace junction {
             while (true) {
                 if (!Search( operand, scale.go( base, base_position ).to, operand_position, Zero, Account( operand ) - 1 )) {
                     if (Order( GoRead( operand, operand_position ).to, scale.go( base, base_position ).to )) {
-                        if (!IncrementTraversable( operand, operand_position, One )) {
+                        if (!IncrementTraverses( operand, operand_position, One )) {
                             TraverseWriteIncrement( operand, operand_position, One );
                             if (!Precede( operand, operand_position, scale.go( base, base_position ).to ))
                                 return false;
@@ -301,7 +301,7 @@ namespace junction {
                             return false;
                     }
                 }
-                if (!basis.traversable( base, base_position, 1 ))
+                if (!basis.traverses( base, base_position, 1 ))
                     return true;
                 scale.traverse( base, base_position, 1 );
             }
@@ -411,7 +411,7 @@ namespace junction {
                     basis.scale.begin( base_set, base_position, 0 );
                     if (!SearchInBase( base_set, basis.scale, scale.go( relative_set, relative_position ).to, base_position, extent ))
                         ComposeComplement( operand, scale.go( relative_set, relative_position ).to );
-                    if (!relativity.traversable( relative_set, relative_position, 1 ))
+                    if (!relativity.traverses( relative_set, relative_position, 1 ))
                         break;
                 }
             }
@@ -485,7 +485,7 @@ namespace junction {
                     if (!SearchInRelative( relative_set, relativity.scale, basis.scale.go( base_set, base_position ).to, relative_position, relative_extent ))
                         if (!Proceed( operand, basis.scale.go( base_set, base_position ).to ))
                             return false;
-                    if (!basis.traversable( base_set, base_position, 1 ))
+                    if (!basis.traverses( base_set, base_position, 1 ))
                         break;
                 }
             }
@@ -494,7 +494,7 @@ namespace junction {
                 for (relativity.scale.begin( relative_set, relative_position, 0 ); true; relativity.scale.traverse( relative_set, relative_position, 1 )) {
                     if (!SearchInBase( base_set, basis.scale, relativity.scale.go( relative_set, relative_position ).to, base_position, base_extent ))
                         ComposeDifference( operand, relativity.scale.go( relative_set, relative_position ).to );
-                    if (!relativity.traversable( relative_set, relative_position, 1 ))
+                    if (!relativity.traverses( relative_set, relative_position, 1 ))
                         break;
                 }
             }
@@ -563,7 +563,7 @@ namespace junction {
                 for (relativity.scale.begin( relative_set, relative_position, 0 ); true; relativity.scale.traverse( relative_set, relative_position, 1 )) {
                     if (SearchInBase( base_set, relativity.scale, relativity.scale.go( relative_set, relative_position ).to, base_position, extent ))
                         ComposeIntersection( operand, relativity.scale.go( relative_set, relative_position ).to );
-                    if (!relativity.traversable( relative_set, relative_position, 1 ))
+                    if (!relativity.traverses( relative_set, relative_position, 1 ))
                         break;
                 }
             }
@@ -627,14 +627,14 @@ namespace junction {
                 for (basis.scale.begin( base_set, base_position, 0 ); true; basis.scale.traverse( base_set, base_position, 1 )) {
                     if (!Proceed( operand, basis.scale.go( base_set, base_position ).to ))
                         return false;
-                    if (!basis.traversable( base_set, base_position, 1 ))
+                    if (!basis.traverses( base_set, base_position, 1 ))
                         break;
                 }
             }
             if (relativity.begins( relative_set, 0 )) {
                 for (relativity.scale.begin( relative_set, relative_position, 0 ); true; relativity.scale.traverse( relative_set, relative_position, 1 )) {
                     ComposeUnion( operand, relativity.scale.go( relative_set, relative_position ).to );
-                    if (!relativity.traversable( relative_set, relative_position, 1 ))
+                    if (!relativity.traverses( relative_set, relative_position, 1 ))
                         break;
                 }
             }
@@ -702,20 +702,20 @@ namespace junction {
                     basis.increment.scale.begin( base_set, position, 0 );
                     while (true) {
                         if (Equate( go_basis( base_set, position ).to, go_relativity( relative_set, opposition ).to )) {
-                            if (!relativity.increment.traversable( relative_set, opposition, 1 ))
+                            if (!relativity.increment.traverses( relative_set, opposition, 1 ))
                                 return true;
                             relativity.increment.scale.traverse( relative_set, opposition, 1 );
-                            if (!basis.increment.traversable( base_set, position, 1 ))
+                            if (!basis.increment.traverses( base_set, position, 1 ))
                                 break;
                             basis.increment.scale.traverse( base_set, position, 1 );
                         } else if (Order( go_basis( base_set, position ).to, go_relativity( relative_set, opposition ).to )) {
-                            if (!basis.increment.traversable( base_set, position, 1 ))
+                            if (!basis.increment.traverses( base_set, position, 1 ))
                                 break;
                             basis.increment.scale.traverse( base_set, position, 1 );
                         } else {
                             if (!ProceedOne( operand, go_relativity( relative_set, opposition ).to ) )
                                 return false;
-                            if (!relativity.increment.traversable( relative_set, opposition, 1 ))
+                            if (!relativity.increment.traverses( relative_set, opposition, 1 ))
                                 return true;
                             relativity.increment.scale.traverse( relative_set, opposition, 1 );
                         }
@@ -814,12 +814,12 @@ namespace junction {
                 relativity.increment.scale.begin( relative_set, opposition, 0 );
                 while (true) {
                     if (Equate( go_basis( base_set, position ).to, go_relativity( relative_set, opposition ).to )) {
-                        if (!basis.increment.traversable( base_set, position, 1 )) {
-                            if (!relativity.increment.traversable( relative_set, opposition, 1 ))
+                        if (!basis.increment.traverses( base_set, position, 1 )) {
+                            if (!relativity.increment.traverses( relative_set, opposition, 1 ))
                                 return true;
                             relativity.increment.scale.traverse( relative_set, opposition, 1 );
                             return RemainingRelative();
-                        } else if (!relativity.increment.traversable( relative_set, opposition, 1 )) {
+                        } else if (!relativity.increment.traverses( relative_set, opposition, 1 )) {
                             basis.increment.scale.traverse( base_set, position, 1 );
                             return RemainingBase();
                         }
@@ -828,13 +828,13 @@ namespace junction {
                     } else if (Order( go_basis( base_set, position ).to, go_relativity( relative_set, opposition ).to )) {
                         if (!ProceedOne( operand, go_basis( base_set, position ).to ))
                             return false;
-                        if (!basis.increment.traversable( base_set, position, 1 ))
+                        if (!basis.increment.traverses( base_set, position, 1 ))
                             return RemainingRelative();
                         basis.increment.scale.traverse( base_set, position, 1 );
                     } else {
                         if (!ProceedOne( operand, go_relativity( relative_set, opposition ).to ))
                             return false;
-                        if (!relativity.increment.traversable( relative_set, opposition, 1 ))
+                        if (!relativity.increment.traverses( relative_set, opposition, 1 ))
                             return RemainingBase();
                         relativity.increment.scale.traverse( relative_set, opposition, 1 );
                     }
@@ -904,18 +904,18 @@ namespace junction {
                 if (Equate( go_basis( base_set, position ).to, go_relativity( relative_set, opposition ).to )) {
                     if (!Proceed( operand, go_basis( base_set, position ).to ))
                         return false;
-                    if (!basis.increment.traversable( base_set, position, 1 ))
+                    if (!basis.increment.traverses( base_set, position, 1 ))
                         return true;
-                    if (!relativity.increment.traversable( relative_set, opposition, 1 ))
+                    if (!relativity.increment.traverses( relative_set, opposition, 1 ))
                         return true;
                     basis.increment.scale.traverse( base_set, position, 1 );
                     relativity.increment.scale.traverse( relative_set, opposition, 1 );
                 } else if (Order( go_basis( base_set, position ).to, go_relativity( relative_set, opposition ).to )) {
-                    if (!basis.increment.traversable( base_set, position, 1 ))
+                    if (!basis.increment.traverses( base_set, position, 1 ))
                         return true;
                     basis.increment.scale.traverse( base_set, position, 1 );
                 } else {
-                    if (!relativity.increment.traversable( relative_set, opposition, 1 ))
+                    if (!relativity.increment.traverses( relative_set, opposition, 1 ))
                         return true;
                     relativity.increment.scale.traverse( relative_set, opposition, 1 );
                 }
@@ -1009,12 +1009,12 @@ namespace junction {
                 if (Equate( go_basis( base_set, position ).to, go_relativity( relative_set, apposition ).to )) {
                     if (!ProceedOne( operand, go_basis( base_set, position ).to ))
                         return false;
-                    if (!basis.increment.traversable( base_set, position, 1 )) {
-                        if (!relativity.increment.traversable( relative_set, apposition, 1 ))
+                    if (!basis.increment.traverses( base_set, position, 1 )) {
+                        if (!relativity.increment.traverses( relative_set, apposition, 1 ))
                             return true;
                         relativity.increment.scale.traverse( relative_set, apposition, 1 );
                         return RemainingRelative();
-                    } else if (!relativity.increment.traversable( relative_set, apposition, 1 )) {
+                    } else if (!relativity.increment.traverses( relative_set, apposition, 1 )) {
                         basis.increment.scale.traverse( base_set, position, 1 );
                         return RemainingBase();
                     }
@@ -1023,13 +1023,13 @@ namespace junction {
                 } else if (Order( go_basis( base_set, position ).to, go_relativity( relative_set, apposition ).to )) {
                     if (!ProceedOne( operand, go_basis( base_set, position ).to ))
                         return false;
-                    if (!basis.increment.traversable( base_set, position, 1 ))
+                    if (!basis.increment.traverses( base_set, position, 1 ))
                         return RemainingRelative();
                     basis.increment.scale.traverse( base_set, position, 1 );
                 } else {
                     if (!ProceedOne( operand, go_relativity( relative_set, apposition ).to ))
                         return false;
-                    if (!relativity.increment.traversable( relative_set, apposition, 1 ))
+                    if (!relativity.increment.traverses( relative_set, apposition, 1 ))
                         return RemainingBase();
                     relativity.increment.scale.traverse( relative_set, apposition, 1 );
                 }

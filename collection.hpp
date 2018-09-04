@@ -114,8 +114,8 @@ namespace collection {
             while (true) {
                 if (!Equate( basis.scale.go( base_set, base_position ).to, relativity.scale.go( relative_set, relative_position ).to ))
                     return false;
-                if (!basis.traversable( base_set, base_position, 1 )) {
-                    if (relativity.traversable( relative_set, relative_position, 1 ))
+                if (!basis.traverses( base_set, base_position, 1 )) {
+                    if (relativity.traverses( relative_set, relative_position, 1 ))
                         return false;
                     break;
                 }

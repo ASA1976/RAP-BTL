@@ -303,7 +303,7 @@ namespace ration {
             typename Elemental
         >
         static inline bool
-        IncrementIsTraversable(
+        IncrementIsTraverses(
             Referential< const Elevatory< Natural, Maximum, Elemental > >
                 stack,
             Referential< const Natural >
@@ -369,10 +369,10 @@ namespace ration {
             );
 #endif
             static auto&
-                IsTraversable = IncrementIsTraversable< Natural, Maximum, Elemental >;
+                IsTraverses = IncrementIsTraverses< Natural, Maximum, Elemental >;
             static auto&
                 Traverse = TraverseReadIncrement< Natural, Maximum, Elemental >;
-            if (!IsTraversable( stack, index, count ))
+            if (!IsTraverses( stack, index, count ))
                 throw index;
             return Traverse( stack, index, count );
         }
@@ -425,10 +425,10 @@ namespace ration {
             );
 #endif
             static auto&
-                IsTraversable = IncrementIsTraversable< Natural, Maximum, Elemental >;
+                IsTraverses = IncrementIsTraverses< Natural, Maximum, Elemental >;
             static auto&
                 Traverse = TraverseWriteIncrement< Natural, Maximum, Elemental >;
-            if (!IsTraversable( stack, index, count ))
+            if (!IsTraverses( stack, index, count ))
                 throw index;
             return Traverse( stack, index, count );
         }
@@ -552,7 +552,7 @@ namespace ration {
             typename Elemental
         >
         static inline bool
-        DecrementIsTraversable(
+        DecrementIsTraverses(
             Referential< const Elevatory< Natural, Maximum, Elemental > >
                 stack,
             Referential< const Natural >
@@ -618,10 +618,10 @@ namespace ration {
             );
 #endif
             static auto&
-                IsTraversable = DecrementIsTraversable< Natural, Maximum, Elemental >;
+                IsTraverses = DecrementIsTraverses< Natural, Maximum, Elemental >;
             static auto&
                 Traverse = TraverseReadDecrement< Natural, Maximum, Elemental >;
-            if (!IsTraversable( stack, index, count ))
+            if (!IsTraverses( stack, index, count ))
                 throw index;
             return Traverse( stack, index, count );
         }
@@ -674,10 +674,10 @@ namespace ration {
             );
 #endif
             static auto&
-                IsTraversable = DecrementIsTraversable< Natural, Maximum, Elemental >;
+                IsTraverses = DecrementIsTraverses< Natural, Maximum, Elemental >;
             static auto&
                 Traverse = TraverseWriteDecrement< Natural, Maximum, Elemental >;
-            if (!IsTraversable( stack, index, count ))
+            if (!IsTraverses( stack, index, count ))
                 throw index;
             return Traverse( stack, index, count );
         }
@@ -1174,7 +1174,7 @@ namespace ration {
         ReadIncrementDirection = {
             ReadIncrementScale< Natural, Maximum, Elemental >,
             Begins< Natural, Maximum, Elemental >,
-            IncrementIsTraversable< Natural, Maximum, Elemental >,
+            IncrementIsTraverses< Natural, Maximum, Elemental >,
             Contains< Natural, Maximum, Elemental >,
             Account< Natural, Maximum, Elemental >,
             CountIncrement< Natural, Maximum, Elemental >
@@ -1190,7 +1190,7 @@ namespace ration {
         SafeReadIncrementDirection = {
             SafeReadIncrementScale< Natural, Maximum, Elemental >,
             Begins< Natural, Maximum, Elemental >,
-            IncrementIsTraversable< Natural, Maximum, Elemental >,
+            IncrementIsTraverses< Natural, Maximum, Elemental >,
             Contains< Natural, Maximum, Elemental >,
             Account< Natural, Maximum, Elemental >,
             CountIncrement< Natural, Maximum, Elemental >
@@ -1206,7 +1206,7 @@ namespace ration {
         WriteIncrementDirection = {
             WriteIncrementScale< Natural, Maximum, Elemental >,
             Begins< Natural, Maximum, Elemental >,
-            IncrementIsTraversable< Natural, Maximum, Elemental >,
+            IncrementIsTraverses< Natural, Maximum, Elemental >,
             Contains< Natural, Maximum, Elemental >,
             Account< Natural, Maximum, Elemental >,
             CountIncrement< Natural, Maximum, Elemental >
@@ -1222,7 +1222,7 @@ namespace ration {
         SafeWriteIncrementDirection = {
             SafeWriteIncrementScale< Natural, Maximum, Elemental >,
             Begins< Natural, Maximum, Elemental >,
-            IncrementIsTraversable< Natural, Maximum, Elemental >,
+            IncrementIsTraverses< Natural, Maximum, Elemental >,
             Contains< Natural, Maximum, Elemental >,
             Account< Natural, Maximum, Elemental >,
             CountIncrement< Natural, Maximum, Elemental >
@@ -1238,7 +1238,7 @@ namespace ration {
         ReadDecrementDirection = {
             ReadDecrementScale< Natural, Maximum, Elemental >,
             Begins< Natural, Maximum, Elemental >,
-            DecrementIsTraversable< Natural, Maximum, Elemental >,
+            DecrementIsTraverses< Natural, Maximum, Elemental >,
             Contains< Natural, Maximum, Elemental >,
             Account< Natural, Maximum, Elemental >,
             CountDecrement< Natural, Maximum, Elemental >
@@ -1254,7 +1254,7 @@ namespace ration {
         SafeReadDecrementDirection = {
             SafeReadDecrementScale< Natural, Maximum, Elemental >,
             Begins< Natural, Maximum, Elemental >,
-            DecrementIsTraversable< Natural, Maximum, Elemental >,
+            DecrementIsTraverses< Natural, Maximum, Elemental >,
             Contains< Natural, Maximum, Elemental >,
             Account< Natural, Maximum, Elemental >,
             CountDecrement< Natural, Maximum, Elemental >
@@ -1270,7 +1270,7 @@ namespace ration {
         WriteDecrementDirection = {
             WriteDecrementScale< Natural, Maximum, Elemental >,
             Begins< Natural, Maximum, Elemental >,
-            DecrementIsTraversable< Natural, Maximum, Elemental >,
+            DecrementIsTraverses< Natural, Maximum, Elemental >,
             Contains< Natural, Maximum, Elemental >,
             Account< Natural, Maximum, Elemental >,
             CountDecrement< Natural, Maximum, Elemental >
@@ -1286,7 +1286,7 @@ namespace ration {
         SafeWriteDecrementDirection = {
             SafeWriteDecrementScale< Natural, Maximum, Elemental >,
             Begins< Natural, Maximum, Elemental >,
-            DecrementIsTraversable< Natural, Maximum, Elemental >,
+            DecrementIsTraverses< Natural, Maximum, Elemental >,
             Contains< Natural, Maximum, Elemental >,
             Account< Natural, Maximum, Elemental >,
             CountDecrement< Natural, Maximum, Elemental >
