@@ -79,7 +79,7 @@ namespace location {
     template <
         typename Subjective
     >
-    static inline Conferential< Subjective >
+    static inline Deferent< Subjective >
     Defer(
         Referential< Subjective >
             subject
