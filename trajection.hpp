@@ -6,7 +6,8 @@
 
 namespace trajection {
 
-    using namespace ::location;
+    using ::location::Referential;
+    using ::location::Conferential;
     using ::comparison::Comparative;
 
     template <

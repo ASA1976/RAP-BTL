@@ -9,7 +9,8 @@
 
 namespace allocation {
 
-    using namespace ::location;
+    using ::location::Referential;
+    using ::location::Locational;
 
     template <
         typename Claimable,

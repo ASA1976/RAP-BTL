@@ -14,6 +14,8 @@
 #include <stdio.h>
 #endif
 
+using namespace ::location;
+using namespace ::trajection;
 using namespace ::composition;
 using namespace ::association;
 using namespace ::consecution;
@@ -228,6 +230,7 @@ DemonstrateSegmentation( void ) {
 
 static bool
 DemonstrateOrdination( void ) {
+    using namespace ::location;
     using namespace ::ordination;
     using namespace ::sortation;
     using namespace ::comparison;

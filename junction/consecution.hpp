@@ -9,7 +9,8 @@ namespace junction {
 
     namespace consecution {
 
-        using namespace ::consecution;
+        using ::consecution::Conjoint;
+        using ::consecution::Sequent;
 
         template <
             typename Natural,

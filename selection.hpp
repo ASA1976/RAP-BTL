@@ -7,8 +7,10 @@
 
 namespace selection {
 
-    using namespace ::composition;
-    using namespace ::sortation;
+    using ::location::Referential;
+    using ::trajection::Directional;
+    using ::composition::Compositional;
+    using ::sortation::Assortive;
 
     template <
         typename Consolidative,

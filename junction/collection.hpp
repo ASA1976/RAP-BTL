@@ -9,9 +9,26 @@ namespace junction {
 
     namespace collection {
 
-        using namespace ::collection;
-        using namespace ::sortation;
-        using namespace ::junction::consecution;
+        using ::trajection::Expositive;
+        using ::composition::Compositional;
+        using ::selection::Selective;
+        using ::selection::Sectional;
+        using ::selection::EquateSelections;
+        using ::collection::Collective;
+        using ::collection::Bisectional;
+        using ::collection::EquateCollections;
+        using ::sortation::Assortive;
+        using ::sortation::SearchLinearly;
+        using ::sortation::SearchBisectionally;
+        using ::junction::consecution::Precedent;
+        using ::junction::consecution::Consequent;
+        using ::junction::consecution::Concessive;
+        using ::junction::consecution::ConjointlyConsequent;
+        using ::junction::consecution::Precede;
+        using ::junction::consecution::PrecedeSafely;
+        using ::junction::consecution::Proceed;
+        using ::junction::consecution::Concede;
+        using ::junction::consecution::ConcedeSafely;
 
         template <
             typename Natural,

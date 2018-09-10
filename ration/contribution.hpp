@@ -13,9 +13,11 @@ namespace ration {
 
     namespace contribution {
 
-        using namespace ::attribution;
-        using namespace ::trajection;
-        using namespace ::comparison;
+        using ::location::Referential;
+        using ::location::Conferential;
+        using ::trajection::Vectorial;
+        using ::attribution::Tributary;
+        using ::comparison::Comparison;
 
         template <
             typename Natural,
@@ -89,6 +91,7 @@ namespace ration {
             Referential< const Natural >
                 index
         ) {
+            using ::location::Confer;
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
@@ -137,6 +140,7 @@ namespace ration {
             Referential< const Natural >
                 index
         ) {
+            using ::location::Deter;
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(

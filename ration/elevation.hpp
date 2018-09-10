@@ -13,9 +13,15 @@ namespace ration {
 
     namespace elevation {
 
-        using namespace ::traction;
-        using namespace ::trajection;
-        using namespace ::comparison;
+        using ::location::Referential;
+        using ::location::Conferential;
+        using ::trajection::Vectorial;
+        using ::trajection::Scalar;
+        using ::trajection::Lineal;
+        using ::trajection::Directional;
+        using ::trajection::Axial;
+        using ::traction::Tractile;
+        using ::comparison::Comparison;
 
         template <
             typename Natural,
@@ -70,6 +76,7 @@ namespace ration {
             Referential< const Natural >
                 index
         ) {
+            using ::location::Confer;
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
@@ -100,13 +107,9 @@ namespace ration {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            static auto&
-                StackContains = Contains< Natural, Maximum, Elemental >;
-            static auto&
-                Go = GoWrite< Natural, Maximum, Elemental >;
-            if (!StackContains( stack, index ))
+            if (!Contains( stack, index ))
                 throw index;
-            return Go( stack, index );
+            return GoWrite( stack, index );
         }
 
         template <
@@ -122,6 +125,7 @@ namespace ration {
             Referential< const Natural >
                 index
         ) {
+            using ::location::Deter;
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
@@ -152,13 +156,9 @@ namespace ration {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            static auto&
-                StackContains = Contains< Natural, Maximum, Elemental >;
-            static auto&
-                Go = GoRead< Natural, Maximum, Elemental >;
-            if (!StackContains( stack, index ))
+            if (!Contains( stack, index ))
                 throw index;
-            return Go( stack, index );
+            return GoRead( stack, index );
         }
 
         template <
@@ -231,13 +231,9 @@ namespace ration {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            static auto&
-                StackBegins = Begins< Natural, Maximum, Elemental >;
-            static auto&
-                Begin = BeginReadIncrement< Natural, Maximum, Elemental >;
-            if (!StackBegins( stack, count ))
+            if (!Begins( stack, count ))
                 throw stack.allotment;
-            return Begin( stack, index, count );
+            return BeginReadIncrement( stack, index, count );
         }
 
         template <
@@ -287,13 +283,9 @@ namespace ration {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            static auto&
-                StackBegins = Begins< Natural, Maximum, Elemental >;
-            static auto&
-                Begin = BeginWriteIncrement< Natural, Maximum, Elemental >;
-            if (!StackBegins( stack, count ))
+            if (!Begins( stack, count ))
                 throw stack.allotment;
-            return Begin( stack, index, count );
+            return BeginWriteIncrement( stack, index, count );
         }
 
         template <
@@ -303,7 +295,7 @@ namespace ration {
             typename Elemental
         >
         static inline bool
-        IncrementIsTraverses(
+        IncrementTraverses(
             Referential< const Elevatory< Natural, Maximum, Elemental > >
                 stack,
             Referential< const Natural >
@@ -368,13 +360,9 @@ namespace ration {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            static auto&
-                IsTraverses = IncrementIsTraverses< Natural, Maximum, Elemental >;
-            static auto&
-                Traverse = TraverseReadIncrement< Natural, Maximum, Elemental >;
-            if (!IsTraverses( stack, index, count ))
+            if (!IncrementTraverses( stack, index, count ))
                 throw index;
-            return Traverse( stack, index, count );
+            return TraverseReadIncrement( stack, index, count );
         }
 
         template <
@@ -424,13 +412,9 @@ namespace ration {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            static auto&
-                IsTraverses = IncrementIsTraverses< Natural, Maximum, Elemental >;
-            static auto&
-                Traverse = TraverseWriteIncrement< Natural, Maximum, Elemental >;
-            if (!IsTraverses( stack, index, count ))
+            if (!IncrementTraverses( stack, index, count ))
                 throw index;
-            return Traverse( stack, index, count );
+            return TraverseWriteIncrement( stack, index, count );
         }
 
         template <
@@ -480,13 +464,9 @@ namespace ration {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            static auto&
-                StackBegins = Begins< Natural, Maximum, Elemental >;
-            static auto&
-                Begin = BeginReadDecrement< Natural, Maximum, Elemental >;
-            if (!StackBegins( stack, count ))
+            if (!Begins( stack, count ))
                 throw stack.allotment;
-            return Begin( stack, index, count );
+            return BeginReadDecrement( stack, index, count );
         }
 
         template <
@@ -536,13 +516,9 @@ namespace ration {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            static auto&
-                StackBegins = Begins< Natural, Maximum, Elemental >;
-            static auto&
-                Begin = BeginWriteDecrement< Natural, Maximum, Elemental >;
-            if (!StackBegins( stack, count ))
+            if (!Begins( stack, count ))
                 throw stack.allotment;
-            return Begin( stack, index, count );
+            return BeginWriteDecrement( stack, index, count );
         }
 
         template <
@@ -552,7 +528,7 @@ namespace ration {
             typename Elemental
         >
         static inline bool
-        DecrementIsTraverses(
+        DecrementTraverses(
             Referential< const Elevatory< Natural, Maximum, Elemental > >
                 stack,
             Referential< const Natural >
@@ -617,13 +593,9 @@ namespace ration {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            static auto&
-                IsTraverses = DecrementIsTraverses< Natural, Maximum, Elemental >;
-            static auto&
-                Traverse = TraverseReadDecrement< Natural, Maximum, Elemental >;
-            if (!IsTraverses( stack, index, count ))
+            if (!DecrementTraverses( stack, index, count ))
                 throw index;
-            return Traverse( stack, index, count );
+            return TraverseReadDecrement( stack, index, count );
         }
 
         template <
@@ -673,13 +645,9 @@ namespace ration {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            static auto&
-                IsTraverses = DecrementIsTraverses< Natural, Maximum, Elemental >;
-            static auto&
-                Traverse = TraverseWriteDecrement< Natural, Maximum, Elemental >;
-            if (!IsTraverses( stack, index, count ))
+            if (!DecrementTraverses( stack, index, count ))
                 throw index;
-            return Traverse( stack, index, count );
+            return TraverseWriteDecrement( stack, index, count );
         }
 
         template <
@@ -864,11 +832,9 @@ namespace ration {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            static auto&
-                IncreaseStack = Increase< Natural, Maximum, Elemental >;
             if (stack.allotment + count > Maximum)
                 return false;
-            return IncreaseStack( stack, index, count );
+            return Increase( stack, index, count );
         }
 
         template <
@@ -915,11 +881,9 @@ namespace ration {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            static auto&
-                DecreaseStack = Decrease< Natural, Maximum, Elemental >;
             if (count > stack.allotment)
                 return false;
-            return DecreaseStack( stack, count );
+            return Decrease( stack, count );
         }
 
         template <
@@ -1174,7 +1138,7 @@ namespace ration {
         ReadIncrementDirection = {
             ReadIncrementScale< Natural, Maximum, Elemental >,
             Begins< Natural, Maximum, Elemental >,
-            IncrementIsTraverses< Natural, Maximum, Elemental >,
+            IncrementTraverses< Natural, Maximum, Elemental >,
             Contains< Natural, Maximum, Elemental >,
             Account< Natural, Maximum, Elemental >,
             CountIncrement< Natural, Maximum, Elemental >
@@ -1190,7 +1154,7 @@ namespace ration {
         SafeReadIncrementDirection = {
             SafeReadIncrementScale< Natural, Maximum, Elemental >,
             Begins< Natural, Maximum, Elemental >,
-            IncrementIsTraverses< Natural, Maximum, Elemental >,
+            IncrementTraverses< Natural, Maximum, Elemental >,
             Contains< Natural, Maximum, Elemental >,
             Account< Natural, Maximum, Elemental >,
             CountIncrement< Natural, Maximum, Elemental >
@@ -1206,7 +1170,7 @@ namespace ration {
         WriteIncrementDirection = {
             WriteIncrementScale< Natural, Maximum, Elemental >,
             Begins< Natural, Maximum, Elemental >,
-            IncrementIsTraverses< Natural, Maximum, Elemental >,
+            IncrementTraverses< Natural, Maximum, Elemental >,
             Contains< Natural, Maximum, Elemental >,
             Account< Natural, Maximum, Elemental >,
             CountIncrement< Natural, Maximum, Elemental >
@@ -1222,7 +1186,7 @@ namespace ration {
         SafeWriteIncrementDirection = {
             SafeWriteIncrementScale< Natural, Maximum, Elemental >,
             Begins< Natural, Maximum, Elemental >,
-            IncrementIsTraverses< Natural, Maximum, Elemental >,
+            IncrementTraverses< Natural, Maximum, Elemental >,
             Contains< Natural, Maximum, Elemental >,
             Account< Natural, Maximum, Elemental >,
             CountIncrement< Natural, Maximum, Elemental >
@@ -1238,7 +1202,7 @@ namespace ration {
         ReadDecrementDirection = {
             ReadDecrementScale< Natural, Maximum, Elemental >,
             Begins< Natural, Maximum, Elemental >,
-            DecrementIsTraverses< Natural, Maximum, Elemental >,
+            DecrementTraverses< Natural, Maximum, Elemental >,
             Contains< Natural, Maximum, Elemental >,
             Account< Natural, Maximum, Elemental >,
             CountDecrement< Natural, Maximum, Elemental >
@@ -1254,7 +1218,7 @@ namespace ration {
         SafeReadDecrementDirection = {
             SafeReadDecrementScale< Natural, Maximum, Elemental >,
             Begins< Natural, Maximum, Elemental >,
-            DecrementIsTraverses< Natural, Maximum, Elemental >,
+            DecrementTraverses< Natural, Maximum, Elemental >,
             Contains< Natural, Maximum, Elemental >,
             Account< Natural, Maximum, Elemental >,
             CountDecrement< Natural, Maximum, Elemental >
@@ -1270,7 +1234,7 @@ namespace ration {
         WriteDecrementDirection = {
             WriteDecrementScale< Natural, Maximum, Elemental >,
             Begins< Natural, Maximum, Elemental >,
-            DecrementIsTraverses< Natural, Maximum, Elemental >,
+            DecrementTraverses< Natural, Maximum, Elemental >,
             Contains< Natural, Maximum, Elemental >,
             Account< Natural, Maximum, Elemental >,
             CountDecrement< Natural, Maximum, Elemental >
@@ -1286,7 +1250,7 @@ namespace ration {
         SafeWriteDecrementDirection = {
             SafeWriteDecrementScale< Natural, Maximum, Elemental >,
             Begins< Natural, Maximum, Elemental >,
-            DecrementIsTraverses< Natural, Maximum, Elemental >,
+            DecrementTraverses< Natural, Maximum, Elemental >,
             Contains< Natural, Maximum, Elemental >,
             Account< Natural, Maximum, Elemental >,
             CountDecrement< Natural, Maximum, Elemental >

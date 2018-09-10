@@ -10,7 +10,14 @@
 
 namespace ordination {
 
-    using namespace ::trajection;
+    using ::location::Locational;
+    using ::location::Referential;
+    using ::location::Conferential;
+    using ::trajection::Vectorial;
+    using ::trajection::Scalar;
+    using ::trajection::Lineal;
+    using ::trajection::Directional;
+    using ::trajection::Axial;
     using ::comparison::Comparison;
 
     template <
@@ -173,6 +180,7 @@ namespace ordination {
         Referential< const Locational< Elemental > >
             position
     ) {
+        using ::location::Refer;
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
         static_assert(

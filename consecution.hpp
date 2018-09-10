@@ -6,7 +6,8 @@
 
 namespace consecution {
 
-    using namespace ::trajection;
+    using ::location::Referential;
+    using ::trajection::Directional;
 
     template <
         typename Consolidative,

@@ -6,7 +6,14 @@
 
 namespace collection {
 
-    using namespace ::selection;
+    using ::location::Referential;
+    using ::trajection::Directional;
+    using ::trajection::Axial;
+    using ::composition::Compositional;
+    using ::selection::Selective;
+    using ::selection::Sectional;
+    using ::selection::Equipollent;
+    using ::sortation::Assortive;
 
     template <
         typename Consolidative,

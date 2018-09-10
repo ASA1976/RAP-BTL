@@ -6,7 +6,7 @@
 
 namespace traction {
 
-    using namespace ::location;
+    using ::location::Referential;
 
     template <
         typename Consolidative,

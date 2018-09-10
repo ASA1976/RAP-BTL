@@ -12,7 +12,7 @@ namespace junction {
 
         namespace contraction {
 
-            using namespace ::traction;
+            using ::traction::Tractile;
             using consecution::Succeed;
 
             template <

@@ -10,7 +10,9 @@
 
 namespace sortation {
 
-    using namespace ::trajection;
+    using ::location::Referential;
+    using ::trajection::Scalar;
+    using ::trajection::Lineal;
     using ::comparison::BinaryComparative;
 
     template <

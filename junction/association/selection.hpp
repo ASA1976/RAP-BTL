@@ -3,12 +3,21 @@
 #ifndef JUNCTION_ASSOCIATION_SELECTION_MODULE
 #define JUNCTION_ASSOCIATION_SELECTION_MODULE
 #include "../association.hpp"
+#include "../consecution.hpp"
+#include "../../sortation.hpp"
 
 namespace junction {
 
     namespace association {
 
         namespace selection {
+
+            using ::sortation::Assortive;
+            using ::sortation::SearchLinearly;
+            using ::junction::consecution::Consequent;
+            using ::junction::consecution::Concessive;
+            using ::junction::consecution::Proceed;
+            using ::junction::consecution::Concede;
 
             template <
                 typename Natural,

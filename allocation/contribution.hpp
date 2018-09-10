@@ -9,7 +9,7 @@ namespace allocation {
 
     namespace contribution {
 
-        using namespace ::ration::contribution;
+        using ::ration::contribution::Contributory;
 
         template <
             typename Natural,
@@ -24,6 +24,7 @@ namespace allocation {
             Referential< Locational< Subjective > >
                 locality
         ) {
+            using ::location::Locate;
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(

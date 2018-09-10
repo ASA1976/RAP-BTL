@@ -8,6 +8,7 @@
 #include <stdio.h>
 #endif
 
+using namespace ::location;
 using namespace ::iteration;
 
 static inline void

@@ -12,7 +12,7 @@ namespace junction {
 
         namespace contribution {
 
-            using namespace ::attribution;
+            using ::attribution::Tributary;
 
             template <
                 typename Natural,

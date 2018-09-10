@@ -10,7 +10,11 @@
 
 namespace localization {
 
-    using namespace ::trajection;
+    using ::location::Locational;
+    using ::location::Referential;
+    using ::location::Conferential;
+    using ::trajection::Scalar;
+    using ::trajection::Lineal;
     using ::comparison::Comparison;
 
     template <
@@ -34,6 +38,7 @@ namespace localization {
         Referential< const Integral >
             index
     ) {
+        using ::location::Confer;
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
         static_assert(

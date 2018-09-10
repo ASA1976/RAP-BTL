@@ -6,7 +6,7 @@
 
 namespace comparison {
 
-    using namespace ::location;
+    using ::location::Referential;
 
     template <
         typename Subjective,

@@ -10,8 +10,10 @@
 
 namespace procession {
 
-    using namespace ::traction;
-    using namespace ::trajection;
+    using ::location::Locational;
+    using ::location::Referential;
+    using ::trajection::Directional;
+    using ::traction::Tractile;
 
     using Contractual = void(
         const Locational< void >

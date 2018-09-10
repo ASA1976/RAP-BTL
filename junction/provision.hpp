@@ -8,6 +8,8 @@ namespace junction {
 
     namespace provision {
 
+        using ::allocation::DefaultAllocative;
+
         template <
             typename Natural,
             Natural

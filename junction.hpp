@@ -7,11 +7,24 @@
 
 namespace junction {
 
-    using namespace ::allocation;
-    using namespace ::trajection;
+    using ::location::Locational;
+    using ::location::Referential;
+    using ::location::Conferential;
+    using ::location::Positive;
+    using ::trajection::Vectorial;
+    using ::trajection::Scalar;
+    using ::trajection::Lineal;
+    using ::trajection::Directional;
+    using ::trajection::Axial;
     using ::comparison::Equative;
     using ::comparison::Relational;
     using ::comparison::Comparative;
+    using ::allocation::Allocative;
+    using ::allocation::DefaultClaimable;
+    using ::allocation::DefaultDisclaimable;
+    using ::allocation::CopyClaimable;
+    using ::allocation::FastDefaultNew;
+    using ::allocation::FastCopyNew;
 
     template <
         typename Elemental
@@ -672,6 +685,7 @@ namespace junction {
         Referential< const Positional< Elemental > >
             position
     ) {
+        using ::location::Deter;
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
         static_assert(
@@ -718,6 +732,7 @@ namespace junction {
         Referential< const Positional< Elemental > >
             position
     ) {
+        using ::location::Confer;
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
         static_assert(

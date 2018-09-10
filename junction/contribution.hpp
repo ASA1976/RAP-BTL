@@ -9,7 +9,9 @@ namespace junction {
 
     namespace contribution {
 
-        using namespace ::allocation::contribution;
+        using ::ration::contribution::Contributory;
+        using ::allocation::contribution::FastPoolAllocator;
+        using ::allocation::contribution::SafePoolAllocator;
 
         template <
             typename Natural,

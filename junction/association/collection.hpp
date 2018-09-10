@@ -3,12 +3,25 @@
 #ifndef JUNCTION_ASSOCIATION_COLLECTION_MODULE
 #define JUNCTION_ASSOCIATION_COLLECTION_MODULE
 #include "../association.hpp"
+#include "../consecution.hpp"
+#include "../../sortation.hpp"
 
 namespace junction {
 
     namespace association {
 
         namespace collection {
+
+            using ::sortation::Assortive;
+            using ::sortation::SearchBisectionally;
+            using ::junction::consecution::Precedent;
+            using ::junction::consecution::Consequent;
+            using ::junction::consecution::Concessive;
+            using ::junction::consecution::Precede;
+            using ::junction::consecution::PrecedeSafely;
+            using ::junction::consecution::Proceed;
+            using ::junction::consecution::Concede;
+            using ::junction::consecution::ConcedeSafely;
 
             template <
                 typename Natural,

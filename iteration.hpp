@@ -10,7 +10,12 @@
 
 namespace iteration {
 
-    using namespace ::trajection;
+    using ::location::Referential;
+    using ::location::Conferential;
+    using ::trajection::Scalar;
+    using ::trajection::Lineal;
+    using ::trajection::Directional;
+    using ::trajection::Axial;
     using ::comparison::Comparison;
 
     template <
@@ -50,6 +55,7 @@ namespace iteration {
         Referential< const Integral >
             index
     ) {
+        using ::location::Deter;
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
         static_assert(

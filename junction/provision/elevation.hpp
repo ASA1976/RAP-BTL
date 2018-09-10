@@ -12,7 +12,7 @@ namespace junction {
 
         namespace elevation {
 
-            using namespace ::traction;
+            using ::traction::Tractile;
             using consecution::Succeed;
 
             template <

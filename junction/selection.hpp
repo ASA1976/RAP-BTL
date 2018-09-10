@@ -9,9 +9,17 @@ namespace junction {
 
     namespace selection {
 
-        using namespace ::selection;
-        using namespace ::sortation;
-        using namespace ::junction::consecution;
+        using ::composition::Compositional;
+        using ::selection::Selective;
+        using ::selection::Sectional;
+        using ::selection::EquateSelections;
+        using ::sortation::Assortive;
+        using ::sortation::SearchLinearly;
+        using ::junction::consecution::Consequent;
+        using ::junction::consecution::Concessive;
+        using ::junction::consecution::Proceed;
+        using ::junction::consecution::Concede;
+        using ::junction::consecution::ConcedeSafely;
 
         template <
             typename Natural,

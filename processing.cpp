@@ -9,6 +9,7 @@
 #include <stdio.h>
 #endif
 
+using namespace ::location;
 using namespace ::procession;
 using namespace ::ration::contraction;
 

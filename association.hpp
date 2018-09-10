@@ -6,7 +6,7 @@
 
 namespace association {
 
-    using namespace ::location;
+    using ::location::Referential;
 
     template <
         typename Consolidative,

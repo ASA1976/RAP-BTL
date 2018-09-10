@@ -6,15 +6,21 @@
 
 namespace segmentation {
 
-    using namespace ::location;
-    using namespace ::trajection;
-    using namespace ::comparison;
+    using ::location::Locational;
+    using ::location::Referential;
+    using ::location::Conferential;
+    using ::trajection::Vectorial;
+    using ::trajection::Scalar;
+    using ::trajection::Lineal;
+    using ::trajection::Directional;
+    using ::trajection::Axial;
     using ::localization::IndexicalGo;
     using ::localization::TraverseDecrement;
     using ::localization::ReadIncrementScale;
     using ::localization::WriteIncrementScale;
     using ::localization::ReadLocal;
     using ::localization::WriteLocal;
+    using ::comparison::Comparison;
 
     template <
         typename Natural,

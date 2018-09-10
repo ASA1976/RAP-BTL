@@ -2,17 +2,16 @@
 // Licensed under the Academic Free License version 3.0
 #ifndef JUNCTION_ASSOCIATION_MODULE
 #define JUNCTION_ASSOCIATION_MODULE
-#include "consecution.hpp"
+//#include "consecution.hpp"
 #include "../association.hpp"
-#include "../sortation.hpp"
+//#include "../sortation.hpp"
 
 namespace junction {
 
     namespace association {
 
-        using namespace ::association;
-        using namespace ::sortation;
-        using namespace ::junction::consecution;
+        using ::association::Associative;
+        using ::association::Associational;
 
         template <
             typename Correlative,
@@ -45,6 +44,7 @@ namespace junction {
             Referential< const AssociativelyPositional< Correlative, Elemental > >
                 position
         ) {
+            using ::location::Confer;
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
@@ -137,6 +137,7 @@ namespace junction {
             Referential< const AssociativelyPositional< Correlative, Elemental > >
                 position
         ) {
+            using ::location::Confer;
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(

@@ -9,7 +9,8 @@ namespace junction {
 
     namespace stdlib {
 
-        using namespace ::allocation::stdlib;
+        using ::allocation::stdlib::FastDefaultMalloc;
+        using ::allocation::stdlib::FastDefaultCalloc;
 
         template <
             typename Natural,

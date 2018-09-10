@@ -9,6 +9,7 @@
 #include <stdio.h>
 #endif
 
+using namespace ::location;
 using namespace ::junction;
 using namespace ::junction::contribution;
 
