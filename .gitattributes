@@ -15,3 +15,7 @@
 *.PDF	 diff=astextplain
 *.rtf	 diff=astextplain
 *.RTF	 diff=astextplain
+
+# Compiler Assembly output should not be included in repository stats
+*.s linguist-vendored
+
