@@ -28,6 +28,12 @@ NodePool;
 constexpr Adjunctive< unsigned short, int >
 NodePoolAdjunct = FastPoolAdjunct< unsigned short, NodePoolSize, int, NodePool >;
 
+#ifdef _MSC_VER
+// Problem 255118 filed May 17 2018
+template bool ::comparison::IsLesser( Referential< const int >, Referential< const int > );
+template bool ::comparison::IsEqual( Referential< const int >, Referential< const int > );
+#endif
+
 template <
     typename Spatial,
     typename Positional,
@@ -66,8 +72,7 @@ main(
         argv
 ) {
     using namespace ::junction::collection;
-    using ::comparison::IsEqual;
-    using ::comparison::IsLesser;
+    using namespace ::comparison;
     enum Erroneous {
         NumberOfArguments = -1,
         InputFile = -2,
@@ -76,7 +81,7 @@ main(
         Composition = -5
     };
     static auto&
-        Composer = JunctionOrderedComposer< unsigned short, int, NodePoolAdjunct, IsEqual< int >, IsLesser< int > >;
+        Composer = JunctionOrderedComposer< unsigned short, int, NodePoolAdjunct, IsEqual, IsLesser >;
     static auto&
         Increment = ReadIncrementDirection< unsigned short, int >;
     Locational< FILE >
