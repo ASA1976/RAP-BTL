@@ -19,7 +19,7 @@ namespace allocation {
             Referential< Contributory< Natural, Maximum, Subjective > >
                 Pool
         >
-        static inline void
+        static inline const Locational< Subjective >
         Assign(
             Referential< Locational< Subjective > >
                 locality
@@ -35,7 +35,7 @@ namespace allocation {
             Natural
                 index;
             Distribute( Pool, index );
-            locality = Locate( GoWrite( Pool, index ).to ).at;
+            return locality = Locate( GoWrite( Pool, index ).to ).at;
         }
 
         template <
@@ -46,7 +46,7 @@ namespace allocation {
             Referential< Contributory< Natural, Maximum, Subjective > >
                 Pool
         >
-        static inline void
+        static inline const Locational< Subjective >
         AssignSafely(
             Referential< Locational< Subjective > >
                 locality
@@ -64,6 +64,7 @@ namespace allocation {
                 locality = Locate( GoWrite( Pool, index ).to ).at;
             else
                 locality = 0;
+            return locality;
         }
 
         template <

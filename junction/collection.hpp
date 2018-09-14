@@ -296,7 +296,7 @@ namespace junction {
                 operand_position;
             BasicPositional
                 base_position;
-            Empty( operand );
+            RemoveAllNodes( operand );
             if (!basis.begins( base, 0 ))
                 return true;
             scale.begin( base, base_position, 0 );
@@ -355,7 +355,7 @@ namespace junction {
 #endif
             BasicPositional
                 first, last;
-            Empty( operand );
+            RemoveAllNodes( operand );
             if (!basis.increment.begins( base, 0 ))
                 return true;
             basis.increment.scale.begin( base, first, 0 );
@@ -421,7 +421,7 @@ namespace junction {
                 relative_position;
             BasicNatural
                 extent;
-            Empty( operand );
+            RemoveAllNodes( operand );
             if (relativity.begins( relative_set, 0 )) {
                 extent = basis.survey( base_set ) - 1;
                 for (scale.begin( relative_set, relative_position, 0 ); true; scale.traverse( relative_set, relative_position, 1 )) {
@@ -495,7 +495,7 @@ namespace junction {
                 base_extent;
             RelativeNatural
                 relative_extent;
-            Empty( operand );
+            RemoveAllNodes( operand );
             if (basis.begins( base_set, 0 )) {
                 relative_extent = relativity.survey( relative_set ) - 1;
                 for (basis.scale.begin( base_set, base_position, 0 ); true; basis.scale.traverse( base_set, base_position, 1 )) {
@@ -574,7 +574,7 @@ namespace junction {
                 relative_position;
             BasicNatural
                 extent;
-            Empty( operand );
+            RemoveAllNodes( operand );
             if (relativity.begins( relative_set, 0 )) {
                 extent = basis.survey( base_set ) - 1;
                 for (relativity.scale.begin( relative_set, relative_position, 0 ); true; relativity.scale.traverse( relative_set, relative_position, 1 )) {
@@ -639,7 +639,7 @@ namespace junction {
                 base_position;
             RelativePositional
                 relative_position;
-            Empty( operand );
+            RemoveAllNodes( operand );
             if (basis.begins( base_set, 0 )) {
                 for (basis.scale.begin( base_set, base_position, 0 ); true; basis.scale.traverse( base_set, base_position, 1 )) {
                     if (!Proceed( operand, basis.scale.go( base_set, base_position ).to ))
@@ -712,7 +712,7 @@ namespace junction {
                 position;
             RelativePositional
                 opposition, last;
-            Empty( operand );
+            RemoveAllNodes( operand );
             if (relativity.increment.begins( relative_set, 0 )) {
                 relativity.increment.scale.begin( relative_set, opposition, 0 );
                 if (basis.increment.begins( base_set, 0 )) {
@@ -815,7 +815,7 @@ namespace junction {
                     relativity.decrement.scale.begin( relative_set, last, 0 );
                     return ProceedManyFromRelative( operand, relativity.increment, relative_set, opposition, last );
                 };
-            Empty( operand );
+            RemoveAllNodes( operand );
             if (!basis.increment.begins( base_set, 0 )) {
                 if (relativity.increment.begins( relative_set, 0 )) {
                     relativity.increment.scale.begin( relative_set, opposition, 0 );
@@ -912,7 +912,7 @@ namespace junction {
                 position;
             RelativePositional
                 opposition;
-            Empty( operand );
+            RemoveAllNodes( operand );
             if (!basis.increment.begins( base_set, 0 ) || !relativity.increment.begins( relative_set, 0 ))
                 return true;
             basis.increment.scale.begin( base_set, position, 0 );
@@ -1010,7 +1010,7 @@ namespace junction {
                     relativity.decrement.scale.begin( relative_set, last, 0 );
                     return ProceedManyFromRelative( operand, relativity.increment, relative_set, apposition, last );
                 };
-            Empty( operand );
+            RemoveAllNodes( operand );
             if (!basis.increment.begins( base_set, 0 )) {
                 if (!relativity.increment.begins( relative_set, 0 ))
                     return true;
@@ -1070,8 +1070,8 @@ namespace junction {
             ComposeCollection< Natural, Elemental, Precede< Natural, Elemental, Adjunct >, Proceed< Natural, Elemental, Adjunct >, Equate, Order >,
             RecomposeCollection< Natural, Elemental, Precede< Natural, Elemental, Adjunct >, Proceed< Natural, Elemental, Adjunct >, Concede, Equate, Order >,
             DiscomposeCollection< Natural, Elemental, Concede, Equate, Order >,
-            Empty< Natural, Elemental >,
-            Free< Natural, Elemental, Adjunct >
+            RemoveAllNodes< Natural, Elemental >,
+            DeleteOneNode< Natural, Elemental, Adjunct >
         };
 
         template <
@@ -1091,8 +1091,8 @@ namespace junction {
             ComposeCollection< Natural, Elemental, PrecedeSafely< Natural, Elemental, Adjunct >, Proceed< Natural, Elemental, Adjunct >, Equate, Order >,
             RecomposeCollection< Natural, Elemental, PrecedeSafely< Natural, Elemental, Adjunct >, Proceed< Natural, Elemental, Adjunct >, ConcedeSafely, Equate, Order >,
             DiscomposeCollection< Natural, Elemental, ConcedeSafely, Equate, Order >,
-            Empty< Natural, Elemental >,
-            Free< Natural, Elemental, Adjunct >
+            RemoveAllNodes< Natural, Elemental >,
+            DeleteOneNode< Natural, Elemental, Adjunct >
         };
 
         template <

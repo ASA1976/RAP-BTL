@@ -116,7 +116,7 @@ namespace junction {
                 Account< Natural, Elemental >,
                 Distribute< Natural, Elemental, Allocator >,
                 Retribute< Natural, Elemental >,
-                Empty< Natural, Elemental >
+                RemoveAllNodes< Natural, Elemental >
             };
 
             template <
@@ -133,7 +133,7 @@ namespace junction {
                 Account< Natural, Elemental >,
                 DistributeSafely< Natural, Maximum, Elemental, Allocator >,
                 Retribute< Natural, Elemental >,
-                Empty< Natural, Elemental >
+                RemoveAllNodes< Natural, Elemental >
             };
 
         }

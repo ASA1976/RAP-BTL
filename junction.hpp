@@ -367,7 +367,7 @@ namespace junction {
         typename Elemental
     >
     static inline bool
-    Empty(
+    RemoveAllNodes(
         Referential< Junctive< Natural, Elemental > >
             list
     ) {
@@ -427,7 +427,7 @@ namespace junction {
             Adjunct
     >
     static inline bool
-    Free(
+    DeleteOneNode(
         Referential< Junctive< Natural, Elemental > >
             list
     ) {

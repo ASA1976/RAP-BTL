@@ -29,20 +29,22 @@ namespace allocation {
     template <
         typename Subjective
     >
-    using DefaultClaimable = void(
+    using DefaultClaimable = const Locational< Subjective >(
         Referential< Locational< Subjective > >
     );
 
     template <
         typename Subjective
     >
-    using DefaultDisclaimable = DefaultClaimable< Subjective >;
+    using DefaultDisclaimable = void(
+        Referential< Locational< Subjective > >
+    );
 
     template <
         typename Natural,
         typename Subjective
     >
-    using ArrayClaimable = void(
+    using ArrayClaimable = const Locational< Subjective >(
         Referential< Locational< Subjective > >,
         Referential< const Natural >
     );
@@ -50,7 +52,7 @@ namespace allocation {
     template <
         typename Subjective
     >
-    using CopyClaimable = void(
+    using CopyClaimable = const Locational< Subjective >(
         Referential< Locational< Subjective > >,
         Referential< const Subjective >
     );
@@ -74,20 +76,20 @@ namespace allocation {
     template <
         typename Subjective
     >
-    static inline void
-    New(
+    static inline const Locational< Subjective >
+    AllocateNewElement(
         Referential< Locational< Subjective > >
             locality
     ) {
-        locality = new Subjective;
+        return locality = new Subjective;
     }
 
     template <
         typename Natural,
         typename Subjective
     >
-    static inline void
-    NewArray(
+    static inline const Locational< Subjective >
+    AllocateNewArray(
         Referential< Locational< Subjective > >
             locality,
         Referential< const Natural >
@@ -100,27 +102,27 @@ namespace allocation {
             "Natural:  Unsigned integer type required"
         );
 #endif
-        locality = new Subjective[count];
+        return locality = new Subjective[count];
     }
 
     template <
         typename Subjective
     >
-    static inline void
-    NewCopy(
+    static inline const Locational< Subjective >
+    AllocateNewCopy(
         Referential< Locational< Subjective > >
             locality,
         Referential< const Subjective >
             subject
     ) {
-        locality = new Subjective( subject );
+        return locality = new Subjective( subject );
     }
 
     template <
         typename Subjective
     >
     static inline void
-    SetNull(
+    SetToNull(
         Referential< Locational< Subjective > >
             locality
     ) {
@@ -131,7 +133,7 @@ namespace allocation {
         typename Subjective
     >
     static inline void
-    Delete(
+    DeleteElement(
         Referential< Locational< Subjective > >
             locality
     ) {
@@ -142,12 +144,12 @@ namespace allocation {
         typename Subjective
     >
     static inline void
-    DeleteAndNull(
+    DeleteAndSetToNull(
         Referential< Locational< Subjective > >
             locality
     ) {
-        Delete( locality );
-        SetNull( locality );
+        DeleteElement( locality );
+        SetToNull( locality );
     }
 
     template <
@@ -165,51 +167,69 @@ namespace allocation {
         typename Subjective
     >
     static inline void
-    DeleteArrayAndNull(
+    DeleteArrayAndSetToNull(
         Referential< Locational< Subjective > >
             locality
     ) {
         DeleteArray( locality );
-        SetNull( locality );
+        SetToNull( locality );
     }
 
     template <
         typename Subjective
     >
     constexpr DefaultAllocative< Subjective >
-    DefaultNew = {New, DeleteAndNull};
+    DefaultNew = {
+        AllocateNewElement< Subjective >, 
+        DeleteAndSetToNull< Subjective >
+    };
 
     template <
         typename Subjective
     >
     constexpr DefaultAllocative< Subjective >
-    FastDefaultNew = {New, Delete};
+    FastDefaultNew = {
+        AllocateNewElement< Subjective >, 
+        DeleteElement< Subjective >
+    };
 
     template <
         typename Natural,
         typename Subjective
     >
     constexpr ArrayAllocative< Natural, Subjective >
-    ArrayNew = {NewArray, DeleteArrayAndNull};
+    ArrayNew = {
+        AllocateNewArray< Natural, Subjective >, 
+        DeleteArrayAndSetToNull< Natural, Subjective >
+    };
 
     template <
         typename Natural,
         typename Subjective
     >
     constexpr ArrayAllocative< Natural, Subjective >
-    FastArrayNew = {NewArray, DeleteArray};
+    FastArrayNew = {
+        AllocateNewArray< Natural, Subjective >, 
+        DeleteArray< Natural, Subjective >
+    };
 
     template <
         typename Subjective
     >
     constexpr CopyAllocative< Subjective >
-    CopyNew = {NewCopy, DeleteAndNull};
+    CopyNew = {
+        AllocateNewCopy< Subjective >, 
+        DeleteAndSetToNull< Subjective >
+    };
 
     template <
         typename Subjective
     >
     constexpr CopyAllocative< Subjective >
-    FastCopyNew = {NewCopy, Delete};
+    FastCopyNew = {
+        AllocateNewCopy< Subjective >, 
+        DeleteElement< Subjective >
+    };
 
 }
 

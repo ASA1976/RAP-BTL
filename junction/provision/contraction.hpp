@@ -29,7 +29,7 @@ namespace junction {
                 Account< Natural, Elemental >,
                 Protract< Natural, Elemental, Allocator >,
                 Succeed< Natural, Elemental >,
-                Empty< Natural, Elemental >
+                RemoveAllNodes< Natural, Elemental >
             };
 
             template <
@@ -46,7 +46,7 @@ namespace junction {
                 Account< Natural, Elemental >,
                 ProtractSafely< Natural, Maximum, Elemental, Allocator >,
                 Succeed< Natural, Elemental >,
-                Empty< Natural, Elemental >
+                RemoveAllNodes< Natural, Elemental >
             };
 
         }

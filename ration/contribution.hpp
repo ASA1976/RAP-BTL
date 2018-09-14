@@ -204,7 +204,7 @@ namespace ration {
             typename Elemental
         >
         static inline bool
-        Empty(
+        Contribute(
             Referential< Contributory< Natural, Maximum, Elemental > >
                 pool
         ) {
@@ -378,7 +378,7 @@ namespace ration {
             Account< Natural, Maximum, Elemental >,
             Distribute< Natural, Maximum, Elemental >,
             Retribute< Natural, Maximum, Elemental >,
-            Empty< Natural, Maximum, Elemental >
+            Contribute< Natural, Maximum, Elemental >
         };
 
         template <
@@ -393,7 +393,7 @@ namespace ration {
             Account< Natural, Maximum, Elemental >,
             DistributeSafely< Natural, Maximum, Elemental >,
             RetributeSafely< Natural, Maximum, Elemental >,
-            Empty< Natural, Maximum, Elemental >
+            Contribute< Natural, Maximum, Elemental >
         };
 
         template <

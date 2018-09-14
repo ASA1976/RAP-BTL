@@ -678,7 +678,7 @@ namespace ration {
             typename Elemental
         >
         static inline bool
-        Empty(
+        Contract(
             Referential< Elevatory< Natural, Maximum, Elemental > >
                 stack
         ) {
@@ -898,7 +898,7 @@ namespace ration {
             Account< Natural, Maximum, Elemental >,
             Increase< Natural, Maximum, Elemental >,
             Decrease< Natural, Maximum, Elemental >,
-            Empty< Natural, Maximum, Elemental >
+            Contract< Natural, Maximum, Elemental >
         };
 
         template <
@@ -913,7 +913,7 @@ namespace ration {
             Account< Natural, Maximum, Elemental >,
             IncreaseSafely< Natural, Maximum, Elemental >,
             DecreaseSafely< Natural, Maximum, Elemental >,
-            Empty< Natural, Maximum, Elemental >
+            Contract< Natural, Maximum, Elemental >
         };
 
         template <

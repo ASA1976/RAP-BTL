@@ -733,7 +733,7 @@ namespace ration {
             typename Elemental
         >
         static inline bool
-        Empty(
+        Contract(
             Referential< Contractional< Natural, Maximum, Elemental > >
                 queue
         ) {
@@ -958,7 +958,7 @@ namespace ration {
             Account< Natural, Maximum, Elemental >,
             Protract< Natural, Maximum, Elemental >,
             Retract< Natural, Maximum, Elemental >,
-            Empty< Natural, Maximum, Elemental >
+            Contract< Natural, Maximum, Elemental >
         };
 
         template <
@@ -973,7 +973,7 @@ namespace ration {
             Account< Natural, Maximum, Elemental >,
             ProtractSafely< Natural, Maximum, Elemental >,
             RetractSafely< Natural, Maximum, Elemental >,
-            Empty< Natural, Maximum, Elemental >
+            Contract< Natural, Maximum, Elemental >
         };
 
         template <

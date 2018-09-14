@@ -325,8 +325,8 @@ namespace junction {
                 Associate< Natural, Correlative, Elemental, Proceed< Natural, Associational< Correlative, Elemental >, Adjunct >, Equate >,
                 Reassociate< Natural, Correlative, Elemental, Proceed< Natural, Associational< Correlative, Elemental >, Adjunct >, Concede, Equate >,
                 Disassociate< Natural, Correlative, Elemental, Concede, Equate >,
-                Empty< Natural, Associational< Correlative, Elemental > >,
-                Free< Natural, Associational< Correlative, Elemental >, Adjunct >
+                RemoveAllNodes< Natural, Associational< Correlative, Elemental > >,
+                DeleteOneNode< Natural, Associational< Correlative, Elemental >, Adjunct >
             };
 
             template <
@@ -345,8 +345,8 @@ namespace junction {
                 Associate< Natural, Correlative, Elemental, Proceed< Natural, Associational< Correlative, Elemental >, Adjunct >, Equate >,
                 Reassociate< Natural, Correlative, Elemental, Proceed< Natural, Associational< Correlative, Elemental >, Adjunct >, Concede, Equate >,
                 Disassociate< Natural, Correlative, Elemental, Concede, Equate >,
-                Empty< Natural, Associational< Correlative, Elemental > >,
-                Free< Natural, Associational< Correlative, Elemental >, Adjunct >
+                RemoveAllNodes< Natural, Associational< Correlative, Elemental > >,
+                DeleteOneNode< Natural, Associational< Correlative, Elemental >, Adjunct >
             };
 
         }

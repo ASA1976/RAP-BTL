@@ -27,8 +27,8 @@ namespace allocation {
             size_t
                 Size = sizeof(Subjective)
         >
-        static inline void
-        AlignedAlloc(
+        static inline const Locational< Subjective >
+        AllocateAlignedElement(
             Referential< Locational< Subjective > >
                 locality
         ) {
@@ -36,9 +36,9 @@ namespace allocation {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
 #endif
-            locality = static_cast< Locational< Subjective > >(aligned_alloc( Alignment, Size ));
+            return locality = static_cast< Locational< Subjective > >(aligned_alloc( Alignment, Size ));
 #else
-            locality = static_cast< Locational< Subjective > >(_aligned_malloc( Size, Alignment ));
+            return locality = static_cast< Locational< Subjective > >(_aligned_malloc( Size, Alignment ));
 #endif
         }
 
@@ -49,8 +49,8 @@ namespace allocation {
             size_t
                 Size = sizeof(Subjective)
         >
-        static inline void
-        AlignedAlloc(
+        static inline const Locational< Subjective >
+        AllocateAlignedArray(
             Referential< Locational< Subjective > >
                 locality,
             Referential< const size_t >
@@ -60,9 +60,9 @@ namespace allocation {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
 #endif
-            locality = static_cast< Locational< Subjective > >(aligned_alloc( Alignment, count * Size ));
+            return locality = static_cast< Locational< Subjective > >(aligned_alloc( Alignment, count * Size ));
 #else
-            locality = static_cast< Locational< Subjective > >(_aligned_malloc( count * Size, Alignment ));
+            return locality = static_cast< Locational< Subjective > >(_aligned_malloc( count * Size, Alignment ));
 #endif
         }
 
@@ -70,7 +70,7 @@ namespace allocation {
             typename Subjective
         >
         static inline void
-        AlignedFree(
+        DeleteAlignedSubject(
             Referential< Locational< Subjective > >
                 locality
         ) {
@@ -88,12 +88,12 @@ namespace allocation {
             typename Subjective
         >
         static inline void
-        AlignedFreeAndNull(
+        DeleteAlignedSubjectAndSetToNull(
             Referential< Locational< Subjective > >
                 locality
         ) {
-            AlignedFree( locality );
-            SetNull( locality );
+            DeleteAlignedSubject( locality );
+            SetToNull( locality );
         }
 
         template <
@@ -105,8 +105,8 @@ namespace allocation {
         >
         constexpr DefaultAllocative< Subjective >
         DefaultAligned = {
-            AlignedAlloc< Subjective, Alignment, Size >, 
-            AlignedFreeAndNull< Subjective >
+            AllocateAlignedElement< Subjective, Alignment, Size >, 
+            DeleteAlignedSubjectAndSetToNull< Subjective >
         };
 
         template <
@@ -118,8 +118,8 @@ namespace allocation {
         >
         constexpr DefaultAllocative< Subjective >
         FastDefaultAligned = {
-            AlignedAlloc< Subjective, Alignment, Size >, 
-            AlignedFree< Subjective >
+            AllocateAlignedElement< Subjective, Alignment, Size >, 
+            DeleteAlignedSubject< Subjective >
         };
 
         template <
@@ -131,8 +131,8 @@ namespace allocation {
         >
         constexpr ArrayAllocative< Subjective, size_t >
         ArrayAligned = {
-            AlignedAlloc< Subjective, Alignment, Size >, 
-            AlignedFreeAndNull< Subjective >
+            AllocateAlignedArray< Subjective, Alignment, Size >, 
+            DeleteAlignedSubjectAndSetToNull< Subjective >
         };
 
         template <
@@ -144,8 +144,8 @@ namespace allocation {
         >
         constexpr ArrayAllocative< Subjective, size_t >
         FastArrayAligned = {
-            AlignedAlloc< Subjective, Alignment, Size >, 
-            AlignedFree< Subjective >
+            AllocateAlignedArray< Subjective, Alignment, Size >, 
+            DeleteAlignedSubject< Subjective >
         };
 
     }

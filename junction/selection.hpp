@@ -227,7 +227,7 @@ namespace junction {
                 scale = basis.scale;
             BasicPositional
                 position;
-            Empty( operand );
+            RemoveAllNodes( operand );
             if (!basis.begins( base, 0 ))
                 return false;
             for (scale.begin( base, position, 0 ); true; scale.traverse( base, position, 1 )) {
@@ -291,7 +291,7 @@ namespace junction {
                 relative_position;
             BasicNatural
                 extent;
-            Empty( operand );
+            RemoveAllNodes( operand );
             if (relativity.begins( relative_set, 0 )) {
                 if (!basis.begins( base_set, 0 ))
                     return true;
@@ -362,7 +362,7 @@ namespace junction {
                 base_extent;
             RelativeNatural
                 relative_extent;
-            Empty( operand );
+            RemoveAllNodes( operand );
             if (basis.begins( base_set, 0 )) {
                 relative_extent = relativity.survey( relative_set ) - 1;
                 for (basis.scale.begin( base_set, base_position, 0 ); true; basis.scale.traverse( base_set, base_position, 1 )) {
@@ -442,7 +442,7 @@ namespace junction {
                 relative_position;
             BasicNatural
                 extent;
-            Empty( operand );
+            RemoveAllNodes( operand );
             if (relativity.begins( relative_set, 0 )) {
                 extent = basis.survey( base_set ) - 1;
                 for (scale.begin( relative_set, relative_position, 0 ); true; scale.traverse( relative_set, relative_position, 1 )) {
@@ -506,7 +506,7 @@ namespace junction {
                 base_position;
             RelativePositional
                 relative_position;
-            Empty( operand );
+            RemoveAllNodes( operand );
             if (basis.begins( base_set, 0 )) {
                 for (basis.scale.begin( base_set, base_position, 0 ); true; basis.scale.traverse( base_set, base_position, 1 )) {
                     if (!Proceed( operand, basis.scale.go( base_set, base_position ).to ))
@@ -540,8 +540,8 @@ namespace junction {
             ComposeSelection< Natural, Elemental, Proceed< Natural, Elemental, Adjunct >, Equate >,
             RecomposeSelection< Natural, Elemental, Proceed< Natural, Elemental, Adjunct >, Concede, Equate >,
             DiscomposeSelection< Natural, Elemental, Concede, Equate >,
-            Empty,
-            Free< Natural, Elemental, Adjunct >
+            RemoveAllNodes< Natural, Elemental >,
+            DeleteOneNode< Natural, Elemental, Adjunct >
         };
 
         template <
@@ -559,8 +559,8 @@ namespace junction {
             ComposeSelection< Natural, Elemental, Proceed< Natural, Elemental, Adjunct >, Equate >,
             RecomposeSelection< Natural, Elemental, Proceed< Natural, Elemental, Adjunct >, ConcedeSafely, Equate >,
             DiscomposeSelection< Natural, Elemental, ConcedeSafely, Equate >,
-            Empty,
-            Free< Natural, Elemental, Adjunct >
+            RemoveAllNodes< Natural, Elemental >,
+            DeleteOneNode< Natural, Elemental, Adjunct >
         };
 
         template <

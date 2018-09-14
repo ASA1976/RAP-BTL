@@ -683,8 +683,8 @@ namespace junction {
             Succeed< Natural, Elemental >,
             Concede< Natural, Elemental >,
             Recede< Natural, Elemental >,
-            Empty< Natural, Elemental >,
-            Free< Natural, Elemental, Adjunct >,
+            RemoveAllNodes< Natural, Elemental >,
+            DeleteOneNode< Natural, Elemental, Adjunct >,
             JunctionConjoiner< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Natural, Elemental, Adjunct >
         };
 
@@ -704,8 +704,8 @@ namespace junction {
             Succeed< Natural, Elemental >,
             ConcedeSafely< Natural, Elemental >,
             Recede< Natural, Elemental >,
-            Empty< Natural, Elemental >,
-            Free< Natural, Elemental, Adjunct >,
+            RemoveAllNodes< Natural, Elemental >,
+            DeleteOneNode< Natural, Elemental, Adjunct >,
             SafeJunctionConjoiner< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental, Adjunct >
         };
 
