@@ -21,7 +21,7 @@ using namespace ::association;
 using namespace ::consecution;
 
 using MessageLocal = const Locational< const char >;
-using MapAssociational = Associational< char, int >;
+using MapComplementary = Complementary< char, int >;
 
 template <
     typename Spatial,
@@ -148,22 +148,22 @@ static bool
 DisplayMappings(
     Referential< const Spatial >
         map,
-    Referential< const Directional< const Spatial, Positional, Natural, const MapAssociational > >
+    Referential< const Directional< const Spatial, Positional, Natural, const MapComplementary > >
         direction
 ) {
-    auto&
-        scale = direction.scale;
     Positional
         position;
     if (!direction.begins( map, 0 ))
         return false;
-    for (scale.begin( map, position, 0 ); true; scale.traverse( map, position, 1 )) {
+    direction.scale.begin( map, position, 0 );
+    while (true) {
         auto&
-            mapping = scale.go( map, position ).to;
+            mapping = direction.scale.go( map, position ).to;
         printf( "%c=%d", mapping.relator, mapping.value );
         if (!direction.traverses( map, position, 1 ))
             break;
         printf( " " );
+        direction.scale.traverse( map, position, 1 );
     }
     return true;
 }
@@ -181,7 +181,7 @@ DemonstrateLocalization( void ) {
     static auto&
         Increment = ReadIncrementScale< int, size_t, char >;
     static auto&
-        FindCharacter = SearchBisectionally< Local, int, size_t, char, IsEqual, IsLesser >;
+        FindCharacter = SearchBisection< Local, int, size_t, char, IsEqual, IsLesser >;
     static Local
         locality = "ABCDE";
     int
@@ -211,7 +211,7 @@ DemonstrateSegmentation( void ) {
     static auto&
         Increment = ReadIncrementDirection< size_t, Length, char >;
     static auto&
-        FindCharacter = SearchBisectionally< Segmental, size_t, size_t, char, IsEqual, IsLesser >;
+        FindCharacter = SearchBisection< Segmental, size_t, size_t, char, IsEqual, IsLesser >;
     static Segmental
         segment = "ABCDE";
     size_t
@@ -243,7 +243,7 @@ DemonstrateOrdination( void ) {
     static auto&
         Increment = ReadIncrementDirection< size_t, Length, char >;
     static auto&
-        FindCharacter = SearchBisectionally< Ordinal, Positional, size_t, char, IsEqual, IsLesser >;
+        FindCharacter = SearchBisection< Ordinal, Positional, size_t, char, IsEqual, IsLesser >;
     static Ordinal
         array = {'A','B','C','D','E'};
     Positional
@@ -272,29 +272,29 @@ DemonstrateJunction( void ) {
     using namespace ::junction::association::collection;
     using namespace ::comparison;
     static auto&
-        ListSequencer = JunctionSequencer< size_t, char, DefaultMallocAdjunct< size_t, char > >;
+        ListSequencer = DoubleSequencer< size_t, char, DefaultMallocDoubleAdjunct< size_t, char > >;
     static auto&
-        ListConjoiner = JunctionConjoiner< const Locational< const char >, size_t, size_t, size_t, char, DefaultMallocAdjunct< size_t, char > >;
+        ListConjoiner = DoubleConjoiner< const Locational< const char >, size_t, size_t, size_t, char, DefaultMallocDoubleAdjunct< size_t, char > >;
     static auto&
-        ListSelector = JunctionSelector< size_t, char, DefaultMallocAdjunct< size_t, char >, IsEqual >;
+        ListSelector = DoubleSelector< size_t, char, IsEqual, DefaultMallocDoubleAdjunct< size_t, char > >;
     static auto&
-        ListCollector = JunctionCollector< size_t, char, DefaultMallocAdjunct< size_t, char >, IsEqual, IsLesser >;
+        ListCollector = DoubleCollector< size_t, char, IsEqual, IsLesser, DefaultMallocDoubleAdjunct< size_t, char > >;
     static auto&
-        ListAxis = ReadAxis< size_t, char >;
+        ListAxis = ReadDoubleAxis< size_t, char >;
     static auto&
-        MapCorrelator = JunctionCorrelator< size_t, char, int, DefaultMallocAdjunct< size_t, MapAssociational >, IsEqual >;
+        MapCorrelator = DoubleCorrelator< size_t, char, int, IsEqual, DefaultMallocDoubleAdjunct< size_t, MapComplementary > >;
     static auto&
-        MapAssociator = JunctionAssociator< size_t, char, int, DefaultMallocAdjunct< size_t, MapAssociational >, IsEqual, IsLesser >;
+        MapAssociator = DoubleAssociator< size_t, char, int, IsEqual, IsLesser, DefaultMallocDoubleAdjunct< size_t, MapComplementary > >;
     static auto&
-        MapDirection = ReadIncrementDirection< size_t, MapAssociational >;
+        MapDirection = ReadIncrementDoubleDirection< size_t, MapComplementary >;
     struct LocalJunctive {
 
-        Junctive< size_t, char >
+        DoublyJunctive< size_t, char >
             list,
             base,
             relative;
 
-        AssociativelyJunctive< size_t, char, int >
+        AssociativelyDoubleJunctive< size_t, char, int >
             map;
 
         LocalJunctive() {

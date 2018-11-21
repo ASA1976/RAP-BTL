@@ -13,18 +13,15 @@ using namespace ::junction;
 using namespace ::junction::contribution;
 using namespace ::consecution;
 
-using Natural = unsigned short;
-using Nodal = Junctional< char >;
-
-const Natural
+const unsigned short
 NodePoolSize = 3;
 
-Contributory< Natural, NodePoolSize, Nodal >
+Contributory< unsigned short, NodePoolSize, SinglyNodal< char > >
 NodePool;
 
 // Use SafePoolAdjunct if overflowing the pool is a possibility
-constexpr Adjunctive< Natural, char >
-NodePoolAdjunct = FastPoolAdjunct< Natural, NodePoolSize, char, NodePool >;
+constexpr SinglyAdjunctive< unsigned short, char >
+NodePoolAdjunct = FastPoolSingleAdjunct< unsigned short, NodePoolSize, char, NodePool >;
 
 template <
     typename Spatial,
@@ -42,14 +39,12 @@ DisplayCharacters(
         position;
     if (!direction.begins( list, 0 ))
         return false;
-    for (
-        direction.scale.begin( list, position, 0 );
-        true;
-        direction.scale.traverse( list, position, 1 )
-    ) {
+    direction.scale.begin( list, position, 0 );
+    while (true) {
         printf( "'%c'", direction.scale.go( list, position ).to );
         if (!direction.traverses( list, position, 1 ))
             break;
+        direction.scale.traverse( list, position, 1 );
         printf( "," );
     }
     return true;
@@ -87,10 +82,10 @@ int
 main() {
     using namespace ::junction::consecution;
     static auto&
-        Sequencer = JunctionSequencer< Natural, char, NodePoolAdjunct >;
+        Sequencer = SingleSequencer< unsigned short, char, NodePoolAdjunct >;
     static auto&
-        Increment = ReadIncrementDirection< Natural, char >;
-    Junctive< Natural, char >
+        Increment = ReadIncrementSingleDirection< unsigned short, char >;
+    SinglyJunctive< unsigned short, char >
         list;
     Initialize( list );
     DemonstrateSequence( list, Sequencer, Increment );

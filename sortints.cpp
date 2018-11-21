@@ -1,7 +1,6 @@
 // © 2018 Aaron Sami Abassi
 // Licensed under the Academic Free License version 3.0
 // #define RAPBTL_NO_STD_CPLUSPLUS 1
-#include "junction/contribution.hpp"
 #include "junction/collection.hpp"
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
 #include <cstdio>
@@ -11,25 +10,12 @@
 
 using namespace ::location;
 using namespace ::junction;
-using namespace ::junction::contribution;
 
-using Nodal = Junctional< int >;
-
-const unsigned short
-CacheLimit = 0x2000;
-
-const unsigned short
-NodePoolSize = CacheLimit / sizeof(Nodal) - 1;
-
-Contributory< unsigned short, NodePoolSize, Nodal >
-NodePool;
-
-// Use SafePoolAdjunct if overflowing the pool is a possibility
-constexpr Adjunctive< unsigned short, int >
-NodePoolAdjunct = FastPoolAdjunct< unsigned short, NodePoolSize, int, NodePool >;
+constexpr SinglyAdjunctive< unsigned, int >
+StaticAdjunct = DefaultStaticSingleAdjunct< unsigned, int >;
 
 #ifdef _MSC_VER
-// Problem 255118 filed May 17 2018
+// Problem 255118 filed May 17 2018 (same error, may be a different issue)
 template bool ::comparison::IsLesser( Referential< const int >, Referential< const int > );
 template bool ::comparison::IsEqual( Referential< const int >, Referential< const int > );
 #endif
@@ -52,14 +38,12 @@ OutputIntegers(
         position;
     if (!direction.begins( list, 0 ))
         return false;
-    for (
-        direction.scale.begin( list, position, 0 );
-        true;
-        direction.scale.traverse( list, position, 1 )
-    ) {
+    direction.scale.begin( list, position, 0 );
+    while (true) {
         fprintf( handle, "%d\n", direction.scale.go( list, position ).to );
         if (!direction.traverses( list, position, 1 ))
             break;
+        direction.scale.traverse( list, position, 1 );
     }
     return true;
 }
@@ -73,22 +57,30 @@ main(
 ) {
     using namespace ::junction::collection;
     using namespace ::comparison;
+    using IntegerNodal = SinglyNodal< int >;
     enum Erroneous {
         NumberOfArguments = -1,
         InputFile = -2,
         OutputFile = -3,
-        IntegerCount = -4,
-        Composition = -5
+        IntegerCount = -4
     };
+    static const unsigned
+        CacheLimit = 0x10000,
+        CacheReserve = 0x400;
+    static const unsigned
+        MaximumNodes = (CacheLimit - CacheReserve) / sizeof(IntegerNodal);
     static auto&
-        Composer = JunctionOrderedComposer< unsigned short, int, NodePoolAdjunct, IsEqual, IsLesser >;
+        // Problem 347511 filed Oct 2 2018 (same error, may be a different issue)
+        Composer = OrderedSingleComposer< unsigned, int, IsEqual, IsLesser, StaticAdjunct >;
     static auto&
-        Increment = ReadIncrementDirection< unsigned short, int >;
+        Increment = ReadIncrementSingleDirection< unsigned, int >;
     Locational< FILE >
         input,
         output;
-    Junctive< unsigned short, int >
+    SinglyJunctive< unsigned, int >
         set;
+    IntegerNodal
+        nodes[MaximumNodes];
     int
         value;
     output = stdout;
@@ -111,23 +103,22 @@ main(
         return Erroneous::NumberOfArguments;
     }
     Initialize( set );
+    IntegrateNodes( set, nodes );
     while (!feof( input )) {
         if (fscanf( input, "%d", Locate( value ).at ) == 1) {
-            if (Account( set ) == NodePoolSize) {
-                fprintf( stderr, "Maximum number of integers is %u\n", NodePoolSize );
+            if (Account( set ) == MaximumNodes) {
+                fprintf( stderr, "Maximum number of integers is %u\n", MaximumNodes );
                 if (output != stdout)
                     fclose( output );
+                fclose( input );
                 return Erroneous::IntegerCount;
             }
-            if (!Composer.compose( set, value )) {
-                fprintf( stderr, "Error composing set currently containing %u integers\n", Account( set ) );
-                if (output != stdout)
-                    fclose( output );
-                return Erroneous::Composition;
-            }
+            if (!Composer.compose( set, value ))
+                fprintf( stderr, "Duplicate integer %d ignored\n", value );
         }
     }
     OutputIntegers( set, Increment, output );
     if (output != stdout)
         fclose( output );
+    fclose( input );
 }

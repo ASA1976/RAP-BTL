@@ -18,14 +18,14 @@ namespace junction {
             Natural
                 Maximum,
             typename Elemental,
-            Referential< Contributory< Natural, Maximum, Junctional< Elemental > > >
+            Referential< Contributory< Natural, Maximum, SinglyNodal< Elemental > > >
                 Pool
         >
-        constexpr Adjunctive< Natural, Elemental >
-        FastPoolAdjunct = {
-            AllocateDefault< DefaultDisclaimable< Junctional< Elemental > >, Natural, Elemental, FastPoolAllocator< Natural, Maximum, Junctional< Elemental >, Pool > >,
-            DeallocateDefault< DefaultClaimable< Junctional< Elemental > >, Natural, Elemental, FastPoolAllocator< Natural, Maximum, Junctional< Elemental >, Pool > >,
-            ProclaimDefault< DefaultDisclaimable< Junctional< Elemental > >, Natural, Elemental, FastPoolAllocator< Natural, Maximum, Junctional< Elemental >, Pool > >
+        constexpr SinglyAdjunctive< Natural, Elemental >
+        FastPoolSingleAdjunct = {
+            AllocateDefault< SinglyLinked< Elemental >, DefaultDisclaimable< SinglyNodal< Elemental > >, Natural, Elemental, FastPoolAllocator< Natural, Maximum, SinglyNodal< Elemental >, Pool > >,
+            DeallocateDefault< SinglyLinked< Elemental >, DefaultClaimable< SinglyNodal< Elemental > >, Natural, Elemental, FastPoolAllocator< Natural, Maximum, SinglyNodal< Elemental >, Pool > >,
+            ProclaimDefault< SinglyLinked< Elemental >, DefaultDisclaimable< SinglyNodal< Elemental > >, Natural, Elemental, FastPoolAllocator< Natural, Maximum, SinglyNodal< Elemental >, Pool > >
         };
 
         template <
@@ -33,14 +33,44 @@ namespace junction {
             Natural
                 Maximum,
             typename Elemental,
-            Referential< Contributory< Natural, Maximum, Junctional< Elemental > > >
+            Referential< Contributory< Natural, Maximum, DoublyNodal< Elemental > > >
                 Pool
         >
-        constexpr Adjunctive< Natural, Elemental >
-        SafePoolAdjunct = {
-            AllocateDefault< DefaultDisclaimable< Junctional< Elemental > >, Natural, Elemental, SafePoolAllocator< Natural, Maximum, Junctional< Elemental >, Pool > >,
-            DeallocateDefault< DefaultClaimable< Junctional< Elemental > >, Natural, Elemental, SafePoolAllocator< Natural, Maximum, Junctional< Elemental >, Pool > >,
-            ProclaimDefault< DefaultDisclaimable< Junctional< Elemental > >, Natural, Elemental, SafePoolAllocator< Natural, Maximum, Junctional< Elemental >, Pool > >
+        constexpr DoublyAdjunctive< Natural, Elemental >
+        FastPoolDoubleAdjunct = {
+            AllocateDefault< DoublyLinked< Elemental >, DefaultDisclaimable< DoublyNodal< Elemental > >, Natural, Elemental, FastPoolAllocator< Natural, Maximum, DoublyNodal< Elemental >, Pool > >,
+            DeallocateDefault< DoublyLinked< Elemental >, DefaultClaimable< DoublyNodal< Elemental > >, Natural, Elemental, FastPoolAllocator< Natural, Maximum, DoublyNodal< Elemental >, Pool > >,
+            ProclaimDefault< DoublyLinked< Elemental >, DefaultDisclaimable< DoublyNodal< Elemental > >, Natural, Elemental, FastPoolAllocator< Natural, Maximum, DoublyNodal< Elemental >, Pool > >
+        };
+
+        template <
+            typename Natural,
+            Natural
+                Maximum,
+            typename Elemental,
+            Referential< Contributory< Natural, Maximum, SinglyNodal< Elemental > > >
+                Pool
+        >
+        constexpr SinglyAdjunctive< Natural, Elemental >
+        SafePoolSingleAdjunct = {
+            AllocateDefault< SinglyLinked< Elemental >, DefaultDisclaimable< SinglyNodal< Elemental > >, Natural, Elemental, SafePoolAllocator< Natural, Maximum, SinglyNodal< Elemental >, Pool > >,
+            DeallocateDefault< SinglyLinked< Elemental >, DefaultClaimable< SinglyNodal< Elemental > >, Natural, Elemental, SafePoolAllocator< Natural, Maximum, SinglyNodal< Elemental >, Pool > >,
+            ProclaimDefault< SinglyLinked< Elemental >, DefaultDisclaimable< SinglyNodal< Elemental > >, Natural, Elemental, SafePoolAllocator< Natural, Maximum, SinglyNodal< Elemental >, Pool > >
+        };
+
+        template <
+            typename Natural,
+            Natural
+                Maximum,
+            typename Elemental,
+            Referential< Contributory< Natural, Maximum, DoublyNodal< Elemental > > >
+                Pool
+        >
+        constexpr DoublyAdjunctive< Natural, Elemental >
+        SafePoolDoubleAdjunct = {
+            AllocateDefault< DoublyLinked< Elemental >, DefaultDisclaimable< DoublyNodal< Elemental > >, Natural, Elemental, SafePoolAllocator< Natural, Maximum, DoublyNodal< Elemental >, Pool > >,
+            DeallocateDefault< DoublyLinked< Elemental >, DefaultClaimable< DoublyNodal< Elemental > >, Natural, Elemental, SafePoolAllocator< Natural, Maximum, DoublyNodal< Elemental >, Pool > >,
+            ProclaimDefault< DoublyLinked< Elemental >, DefaultDisclaimable< DoublyNodal< Elemental > >, Natural, Elemental, SafePoolAllocator< Natural, Maximum, DoublyNodal< Elemental >, Pool > >
         };
 
     }

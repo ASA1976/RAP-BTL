@@ -7,71 +7,156 @@
 
 namespace junction {
 
+    /**
+     * @brief         
+     *     Linked list sequence management implementation.
+     * @details       
+     *     Association
+     *     -----------
+     *     Linked list sequence management implementation.
+     */
     namespace consecution {
 
         using ::consecution::Conjoint;
         using ::consecution::Sequent;
 
+        /**
+         * @brief 
+         *     Function abstract used to add an element to either pole.
+         * @details  
+         *     Abstraction Template
+         *     --------------------
+         *     This function type alias is used to declare function references 
+         *     which add one element either before the first or after the last 
+         *     node in the linked list.
+         * @tparam Connective
+         *     Type of the node linkage.
+         * @tparam Natural
+         *     Type of unsigned integer.
+         * @tparam Elemental
+         *     Type of the elements.
+         */
         template <
+            typename Connective,
             typename Natural,
             typename Elemental
         >
         using Consequent = bool(
-            Referential< Junctive< Natural, Elemental > >,
+            Referential< Junctive< Connective, Natural, Elemental > >
+                sequence, 
             Referential< const Elemental >
+                value 
         );
 
+        /**
+         * @brief 
+         *     Function abstract used to add an element to either pole.
+         * @details  
+         *     Abstraction Template
+         *     --------------------
+         *     This function type alias is used to declare function references 
+         *     which add one element either before or after the provided position.
+         * @tparam Connective
+         *     Type of the node linkage.
+         * @tparam Natural
+         *     Type of unsigned integer.
+         * @tparam Elemental
+         *     Type of the elements.
+         */
         template <
+            typename Connective,
             typename Natural,
             typename Elemental
         >
         using Precedent = bool(
-            Referential< Junctive< Natural, Elemental > >,
-            Referential< const Positional< Elemental > >,
+            Referential< Junctive< Connective, Natural, Elemental > >
+                sequence, 
+            Referential< const Positional< Connective, Elemental > >
+                position, 
             Referential< const Elemental >
+                value 
         );
 
+        /**
+         * @brief 
+         *     Function abstract used to remove elements from either pole.
+         * @details  
+         *     Abstraction Template
+         *     --------------------
+         *     This function type alias is used to declare function references 
+         *     which remove one or more elements including either the first or 
+         *     last elements in the list.
+         * @tparam Connective
+         *     Type of the node linkage.
+         * @tparam Natural
+         *     Type of unsigned integer.
+         * @tparam Elemental
+         *     Type of the elements.
+         */
         template <
+            typename Connective,
+            typename Natural,
+            typename Elemental
+        >
+        using Recessive = bool(
+            Referential< Junctive< Connective, Natural, Elemental > >
+                sequence, 
+            Referential< const Natural >
+                count 
+        );
+
+        /**
+         * @brief 
+         *     Function abstract used to remove elements relative to a position.
+         * @details  
+         *     Abstraction Template
+         *     --------------------
+         *     This function type alias is used to declare function references 
+         *     which remove one or more elements including the provided 
+         *     position.
+         * @tparam Connective
+         *     Type of the node linkage.
+         * @tparam Natural
+         *     Type of unsigned integer.
+         * @tparam Elemental
+         *     Type of the elements.
+         */
+        template <
+            typename Connective,
             typename Natural,
             typename Elemental
         >
         using Concessive = bool(
-            Referential< Junctive< Natural, Elemental > >,
-            Referential< const Positional< Elemental > >,
+            Referential< Junctive< Connective, Natural, Elemental > >
+                sequence, 
+            Referential< const Positional< Connective, Elemental > >
+                position, 
             Referential< const Natural >
+                count 
         );
 
+        // It is the responsibility of the calling function to terminate or
+        // attach each directional end of the resulting sequence of nodes
+        // (before head and after tail where applicable).
         template <
-            typename Relative,
-            typename Appositional,
-            typename RelativeNatural,
-            typename Natural,
-            typename Elemental
-        >
-        using ConjointlyConsequent = bool(
-            Referential< Junctive< Natural, Elemental > >,
-            Referential< const Directional< const Relative, Appositional, RelativeNatural, const Elemental > >,
-            Referential< const Relative >,
-            Referential< const Appositional >,
-            Referential< const Appositional >
-        );
-
-        template <
+            typename Connective,
             typename Relative,
             typename Appositional,
             typename RelativeNatural,
             typename Natural,
             typename Elemental,
-            Referential< const Adjunctive< Natural, Elemental > >
-                Adjunct
+            Referential< const Adjunctive< Connective, Natural, Elemental > >
+                Adjunct,
+            const bool
+                Safety
         >
         static inline bool
         Sequence(
-            Referential< Junctive< Natural, Elemental > >
+            Referential< Junctive< Connective, Natural, Elemental > >
                 sequence,
-            Referential< Locational< Junctional< Elemental > > >
+            Referential< Locational< Nodal< Connective, Elemental > > >
                 head,
-            Referential< Locational< Junctional< Elemental > > >
+            Referential< Locational< Nodal< Connective, Elemental > > >
                 tail,
             Referential< Natural >
                 length,
@@ -97,9 +182,9 @@ namespace junction {
 #endif
             auto
                 Finalize = [&](
-                    Referential< const Locational< Junctional< Elemental > > >
+                    Referential< const Locational< Nodal< Connective, Elemental > > >
                         start,
-                    Referential< const Locational< Junctional< Elemental > > >
+                    Referential< const Locational< Nodal< Connective, Elemental > > >
                         finish,
                     Referential< const Natural >
                         counted
@@ -109,32 +194,33 @@ namespace junction {
                     length = counted;
                     return length > 0;
                 };
-            auto&
-                scale = direction.scale;
             Appositional
                 current;
-            Locational< Junctional< Elemental > >
-                first, last;
+            Locational< Nodal< Connective, Elemental > >
+                first, last, next;
             Natural
                 count;
             current = from;
-            first = Adjunct.proclaim( sequence, scale.go( space, current ).to );
-            if (!first)
+            first = Adjunct.proclaim( sequence, direction.scale.go( space, current ).to );
+            if (Safety && !first)
                 return Finalize( 0, 0, 0 );
             last = first;
             count = 1;
-            while (scale.order.equality.is_not_equal( current, to )) {
-                direction.scale.traverse( space, current, 1 );
-                last->next = Adjunct.proclaim( sequence, scale.go( space, current ).to );
-                if (!last->next) {
-                    if (sequence.unused)
-                        sequence.unused->previous = last;
-                    last->next = sequence.unused;
+            while (direction.scale.order.equality.is_not_equal( current, to )) {
+                if (Safety && !direction.traverses( space, current, 1 )) {
+                    ConnectNext( last, sequence.unused );
                     sequence.unused = first;
                     return Finalize( 0, 0, 0 );
                 }
-                last->next->previous = last;
-                last = last->next;
+                direction.scale.traverse( space, current, 1 );
+                next = Adjunct.proclaim( sequence, direction.scale.go( space, current ).to );
+                if (Safety && !next) {
+                    ConnectNext( last, sequence.unused );
+                    sequence.unused = first;
+                    return Finalize( 0, 0, 0 );
+                }
+                ConnectNext( last, next );
+                last = next;
                 count++;
             }
             return Finalize( first, last, count );
@@ -143,12 +229,14 @@ namespace junction {
         template <
             typename Natural,
             typename Elemental,
-            Referential< const Adjunctive< Natural, Elemental > >
-                Adjunct
+            Referential< const SinglyAdjunctive< Natural, Elemental > >
+                Adjunct,
+            const bool
+                Safety
         >
         static inline bool
         Accede(
-            Referential< Junctive< Natural, Elemental > >
+            Referential< SinglyJunctive< Natural, Elemental > >
                 sequence,
             Referential< const Elemental >
                 value
@@ -160,15 +248,50 @@ namespace junction {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            Locational< Junctional< Elemental > >
+            Locational< SinglyNodal< Elemental > >
                 result;
             result = Adjunct.proclaim( sequence, value );
-            if (!result)
+            if (Safety && !result)
                 return false;
-            result->previous = 0;
-            result->next = sequence.first;
+            SetNext( result, sequence.first );
+            if (!sequence.first)
+                sequence.last = result;
+            sequence.first = result;
+            sequence.count++;
+            return true;
+        }
+
+        template <
+            typename Natural,
+            typename Elemental,
+            Referential< const DoublyAdjunctive< Natural, Elemental > >
+                Adjunct,
+            const bool
+                Safety
+        >
+        static inline bool
+        Accede(
+            Referential< DoublyJunctive< Natural, Elemental > >
+                sequence,
+            Referential< const Elemental >
+                value
+        ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
+            using namespace ::std;
+            static_assert(
+                is_integral< Natural >::value && is_unsigned< Natural >::value,
+                "Natural:  Unsigned integer type required"
+            );
+#endif
+            Locational< DoublyNodal< Elemental > >
+                result;
+            result = Adjunct.proclaim( sequence, value );
+            if (Safety && !result)
+                return false;
+            UnsetPrevious( result );
+            SetNext( result, sequence.first );
             if (sequence.first)
-                sequence.first->previous = result;
+                SetPrevious( sequence.first, result );
             else
                 sequence.last = result;
             sequence.first = result;
@@ -182,12 +305,14 @@ namespace junction {
             typename RelativeNatural,
             typename Natural,
             typename Elemental,
-            Referential< const Adjunctive< Natural, Elemental > >
-                Adjunct
+            Referential< const SinglyAdjunctive< Natural, Elemental > >
+                Adjunct,
+            const bool
+                Safety
         >
         static inline bool
         Accede(
-            Referential< Junctive< Natural, Elemental > >
+            Referential< SinglyJunctive< Natural, Elemental > >
                 sequence,
             Referential< const Directional< const Relative, Appositional, RelativeNatural, const Elemental > >
                 direction,
@@ -210,16 +335,68 @@ namespace junction {
             );
 #endif
             static auto&
-                SequenceList = Sequence< Relative, Appositional, RelativeNatural, Natural, Elemental, Adjunct >;
-            Locational< Junctional< Elemental > >
+                SequenceList = Sequence< SinglyLinked< Elemental >, Relative, Appositional, RelativeNatural, Natural, Elemental, Adjunct, Safety >;
+            Locational< SinglyNodal< Elemental > >
                 first, last;
             Natural
                 length;
             if (!SequenceList( sequence, first, last, length, direction, space, from, to ))
                 return false;
-            last->next = sequence.first;
+            SetNext( last, sequence.first );
+            if (!sequence.first)
+                sequence.last = last;
+            sequence.first = first;
+            sequence.count += length;
+            return true;
+        }
+
+        template <
+            typename Relative,
+            typename Appositional,
+            typename RelativeNatural,
+            typename Natural,
+            typename Elemental,
+            Referential< const DoublyAdjunctive< Natural, Elemental > >
+                Adjunct,
+            const bool
+                Safety
+        >
+        static inline bool
+        Accede(
+            Referential< DoublyJunctive< Natural, Elemental > >
+                sequence,
+            Referential< const Directional< const Relative, Appositional, RelativeNatural, const Elemental > >
+                direction,
+            Referential< const Relative >
+                space,
+            Referential< const Appositional >
+                from,
+            Referential< const Appositional >
+                to
+        ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
+            using namespace ::std;
+            static_assert(
+                is_integral< Natural >::value && is_unsigned< Natural >::value,
+                "Natural:  Unsigned integer type required"
+            );
+            static_assert(
+                is_integral< RelativeNatural >::value && is_unsigned< RelativeNatural >::value,
+                "RelativeNatural:  Unsigned integer type required"
+            );
+#endif
+            static auto&
+                SequenceList = Sequence< DoublyLinked< Elemental >, Relative, Appositional, RelativeNatural, Natural, Elemental, Adjunct, Safety >;
+            Locational< DoublyNodal< Elemental > >
+                first, last;
+            Natural
+                length;
+            if (!SequenceList( sequence, first, last, length, direction, space, from, to ))
+                return false;
+            UnsetPrevious( first );
+            SetNext( last, sequence.first );
             if (sequence.first)
-                sequence.first->previous = last;
+                SetPrevious( sequence.first, last );
             else
                 sequence.last = last;
             sequence.first = first;
@@ -230,14 +407,16 @@ namespace junction {
         template <
             typename Natural,
             typename Elemental,
-            Referential< const Adjunctive< Natural, Elemental > >
-                Adjunct
+            Referential< const SinglyAdjunctive< Natural, Elemental > >
+                Adjunct,
+            const bool
+                Safety
         >
         static inline bool
         Precede(
-            Referential< Junctive< Natural, Elemental > >
+            Referential< SinglyJunctive< Natural, Elemental > >
                 sequence,
-            Referential< const Positional< Elemental > >
+            Referential< const SinglyPositional< Elemental > >
                 rank,
             Referential< const Elemental >
                 value
@@ -249,18 +428,30 @@ namespace junction {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            Locational< Junctional< Elemental > >
-                result;
+            Locational< SinglyNodal< Elemental > >
+                result, previous;
+            if (Safety && !rank.at)
+                throw rank;
             result = Adjunct.proclaim( sequence, value );
-            if (!result)
+            if (Safety && !result)
                 return false;
-            if (rank.at->previous)
-                rank.at->previous->next = result;
-            else
+            if (sequence.first == rank.at) {
+                SetNext( result, sequence.first );
                 sequence.first = result;
-            result->previous = rank.at->previous;
-            result->next = rank.at;
-            rank.at->previous = result;
+                sequence.count++;
+                return true;
+            }
+            previous = sequence.first;
+            while (GetNext( previous ) != rank.at) {
+                if (Safety && !previous) {
+                    SetNext( result, sequence.unused );
+                    sequence.unused = result;
+                    return false;
+                }
+                previous = GetNext( previous );
+            }
+            SetNext( previous, result );
+            SetNext( result, rank.at );
             sequence.count++;
             return true;
         }
@@ -268,14 +459,16 @@ namespace junction {
         template <
             typename Natural,
             typename Elemental,
-            Referential< const Adjunctive< Natural, Elemental > >
-                Adjunct
+            Referential< const DoublyAdjunctive< Natural, Elemental > >
+                Adjunct,
+            const bool
+                Safety
         >
         static inline bool
-        PrecedeSafely(
-            Referential< Junctive< Natural, Elemental > >
+        Precede(
+            Referential< DoublyJunctive< Natural, Elemental > >
                 sequence,
-            Referential< const Positional< Elemental > >
+            Referential< const DoublyPositional< Elemental > >
                 rank,
             Referential< const Elemental >
                 value
@@ -287,11 +480,30 @@ namespace junction {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            static auto&
-                PrecedeList = Precede< Natural, Elemental, Adjunct >;
-            if (!rank.at)
+            Locational< DoublyNodal< Elemental > >
+                result, current;
+            if (Safety && !rank.at)
                 throw rank;
-            return PrecedeList( sequence, rank, value );
+            result = Adjunct.proclaim( sequence, value );
+            if (Safety) {
+                if (!result)
+                    return false;
+                current = sequence.first; 
+                while (current != rank.at) {
+                    if (!current)
+                        throw rank;
+                    current = GetNext( current );
+                }
+            }
+            if (GetPrevious( rank.at ))
+                SetNext( GetPrevious( rank.at ), result );
+            else
+                sequence.first = result;
+            SetPrevious( result, GetPrevious( rank.at ) );
+            SetNext( result, rank.at );
+            SetPrevious( rank.at, result );
+            sequence.count++;
+            return true;
         }
 
         template <
@@ -300,14 +512,16 @@ namespace junction {
             typename RelativeNatural,
             typename Natural,
             typename Elemental,
-            Referential< const Adjunctive< Natural, Elemental > >
-                Adjunct
+            Referential< const SinglyAdjunctive< Natural, Elemental > >
+                Adjunct,
+            const bool
+                Safety
         >
         static inline bool
         Precede(
-            Referential< Junctive< Natural, Elemental > >
+            Referential< SinglyJunctive< Natural, Elemental > >
                 sequence,
-            Referential< const Positional< Elemental > >
+            Referential< const SinglyPositional< Elemental > >
                 rank,
             Referential< const Directional< const Relative, Appositional, RelativeNatural, const Elemental > >
                 direction,
@@ -330,20 +544,31 @@ namespace junction {
             );
 #endif
             static auto&
-                SequenceList = Sequence< Relative, Appositional, RelativeNatural, Natural, Elemental, Adjunct >;
-            Locational< Junctional< Elemental > >
-                first, last;
+                SequenceList = Sequence< SinglyLinked< Elemental >, Relative, Appositional, RelativeNatural, Natural, Elemental, Adjunct, Safety >;
+            Locational< SinglyNodal< Elemental > >
+                first, last, previous;
             Natural
                 length;
+            if (Safety && (!rank.at || !sequence.first))
+                throw rank;
+            if (sequence.first == rank.at) {
+                if (!SequenceList( sequence, first, last, length, direction, space, from, to ))
+                    return false;
+                SetNext( last, sequence.first );
+                sequence.first = first;
+                sequence.count += length;
+                return true;
+            }
+            previous = sequence.first;
+            while (GetNext( previous ) != rank.at) {
+                if (Safety && !previous)
+                    throw rank;
+                previous = GetNext( previous );
+            }
             if (!SequenceList( sequence, first, last, length, direction, space, from, to ))
                 return false;
-            first->previous = rank.at->previous;
-            if (first->previous)
-                first->previous->next = first;
-            else
-                sequence.first = first;
-            last->next = rank.at;
-            rank.at->previous = last;
+            SetNext( previous, first );
+            SetNext( last, rank.at );
             sequence.count += length;
             return true;
         }
@@ -354,14 +579,16 @@ namespace junction {
             typename RelativeNatural,
             typename Natural,
             typename Elemental,
-            Referential< const Adjunctive< Natural, Elemental > >
-                Adjunct
+            Referential< const DoublyAdjunctive< Natural, Elemental > >
+                Adjunct,
+            const bool
+                Safety
         >
         static inline bool
-        PrecedeSafely(
-            Referential< Junctive< Natural, Elemental > >
+        Precede(
+            Referential< DoublyJunctive< Natural, Elemental > >
                 sequence,
-            Referential< const Positional< Elemental > >
+            Referential< const DoublyPositional< Elemental > >
                 rank,
             Referential< const Directional< const Relative, Appositional, RelativeNatural, const Elemental > >
                 direction,
@@ -384,21 +611,231 @@ namespace junction {
             );
 #endif
             static auto&
-                PrecedeList = Precede< Relative, Appositional, Natural, Elemental, Adjunct >;
-            if (!rank.at)
+                SequenceList = Sequence< DoublyLinked< Elemental >, Relative, Appositional, RelativeNatural, Natural, Elemental, Adjunct, Safety >;
+            Locational< DoublyNodal< Elemental > >
+                first, last;
+            Natural
+                length;
+            if (Safety && (!rank.at || !sequence.first))
                 throw rank;
-            return PrecedeList( sequence, rank, direction, space, from, to );
+            if (!SequenceList( sequence, first, last, length, direction, space, from, to ))
+                return false;
+            SetPrevious( first, GetPrevious( rank.at ) );
+            if (GetPrevious( first ))
+                SetNext( GetPrevious( first ), first );
+            else
+                sequence.first = first;
+            SetNext( last, rank.at );
+            SetPrevious( rank.at, last );
+            sequence.count += length;
+            return true;
         }
 
         template <
             typename Natural,
             typename Elemental,
-            Referential< const Adjunctive< Natural, Elemental > >
-                Adjunct
+            Referential< const SinglyAdjunctive< Natural, Elemental > >
+                Adjunct,
+            const bool
+                Safety
+        >
+        static inline bool
+        Cede(
+            Referential< SinglyJunctive< Natural, Elemental > >
+                sequence,
+            Referential< const SinglyPositional< Elemental > >
+                rank,
+            Referential< const Elemental >
+                value
+        ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
+            using namespace ::std;
+            static_assert(
+                is_integral< Natural >::value && is_unsigned< Natural >::value,
+                "Natural:  Unsigned integer type required"
+            );
+#endif
+            Locational< SinglyNodal< Elemental > >
+                result;
+            if (Safety && !rank.at)
+                throw rank;
+            result = Adjunct.proclaim( sequence, value );
+            if (Safety && !result)
+                return false;
+            SetNext( result, GetNext( rank.at ) );
+            SetNext( rank.at, result );
+            if (!GetNext( result ))
+                sequence.last = result;
+            sequence.count++;
+            return true;
+        }
+
+        template <
+            typename Natural,
+            typename Elemental,
+            Referential< const DoublyAdjunctive< Natural, Elemental > >
+                Adjunct,
+            const bool
+                Safety
+        >
+        static inline bool
+        Cede(
+            Referential< DoublyJunctive< Natural, Elemental > >
+                sequence,
+            Referential< const DoublyPositional< Elemental > >
+                rank,
+            Referential< const Elemental >
+                value
+        ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
+            using namespace ::std;
+            static_assert(
+                is_integral< Natural >::value && is_unsigned< Natural >::value,
+                "Natural:  Unsigned integer type required"
+            );
+#endif
+            Locational< DoublyNodal< Elemental > >
+                result;
+            if (Safety && !rank.at)
+                throw rank;
+            result = Adjunct.proclaim( sequence, value );
+            if (Safety && !result)
+                return false;
+            SetNext( result, GetNext( rank.at ) );
+            SetPrevious( result, rank.at );
+            SetNext( rank.at, result );
+            if (GetNext( result ))
+                SetPrevious( GetNext( result ), result );
+            else
+                sequence.last = result;
+            sequence.count++;
+            return true;
+        }
+
+        template <
+            typename Relative,
+            typename Appositional,
+            typename RelativeNatural,
+            typename Natural,
+            typename Elemental,
+            Referential< const SinglyAdjunctive< Natural, Elemental > >
+                Adjunct,
+            const bool
+                Safety
+        >
+        static inline bool
+        Cede(
+            Referential< SinglyJunctive< Natural, Elemental > >
+                sequence,
+            Referential< const SinglyPositional< Elemental > >
+                rank,
+            Referential< const Directional< const Relative, Appositional, RelativeNatural, const Elemental > >
+                direction,
+            Referential< const Relative >
+                space,
+            Referential< const Appositional >
+                from,
+            Referential< const Appositional >
+                to
+        ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
+            using namespace ::std;
+            static_assert(
+                is_integral< Natural >::value && is_unsigned< Natural >::value,
+                "Natural:  Unsigned integer type required"
+            );
+            static_assert(
+                is_integral< RelativeNatural >::value && is_unsigned< RelativeNatural >::value,
+                "RelativeNatural:  Unsigned integer type required"
+            );
+#endif
+            static auto&
+                SequenceList = Sequence< SinglyLinked< Elemental >, Relative, Appositional, RelativeNatural, Natural, Elemental, Adjunct, Safety >;
+            Locational< SinglyNodal< Elemental > >
+                first, last;
+            Natural
+                length;
+            if (Safety && !rank.at)
+                throw rank;
+            if (!SequenceList( sequence, first, last, length, direction, space, from, to ))
+                return false;
+            SetNext( last, GetNext( rank.at ) );
+            if (!GetNext( last ))
+                sequence.last = last;
+            SetNext( rank.at, first );
+            sequence.count += length;
+            return true;
+        }
+
+        template <
+            typename Relative,
+            typename Appositional,
+            typename RelativeNatural,
+            typename Natural,
+            typename Elemental,
+            Referential< const DoublyAdjunctive< Natural, Elemental > >
+                Adjunct,
+            const bool
+                Safety
+        >
+        static inline bool
+        Cede(
+            Referential< DoublyJunctive< Natural, Elemental > >
+                sequence,
+            Referential< const DoublyPositional< Elemental > >
+                rank,
+            Referential< const Directional< const Relative, Appositional, RelativeNatural, const Elemental > >
+                direction,
+            Referential< const Relative >
+                space,
+            Referential< const Appositional >
+                from,
+            Referential< const Appositional >
+                to
+        ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
+            using namespace ::std;
+            static_assert(
+                is_integral< Natural >::value && is_unsigned< Natural >::value,
+                "Natural:  Unsigned integer type required"
+            );
+            static_assert(
+                is_integral< RelativeNatural >::value && is_unsigned< RelativeNatural >::value,
+                "RelativeNatural:  Unsigned integer type required"
+            );
+#endif
+            static auto&
+                SequenceList = Sequence< DoublyLinked< Elemental >, Relative, Appositional, RelativeNatural, Natural, Elemental, Adjunct, Safety >;
+            Locational< DoublyNodal< Elemental > >
+                first, last;
+            Natural
+                length;
+            if (Safety && !rank.at)
+                throw rank;
+            if (!SequenceList( sequence, first, last, length, direction, space, from, to ))
+                return false;
+            SetPrevious( first, rank.at );
+            SetNext( last, GetNext( rank.at ) );
+            if (GetNext( last ))
+                SetPrevious( GetNext( last ), last );
+            else
+                sequence.last = last;
+            SetNext( rank.at, first );
+            sequence.count += length;
+            return true;
+        }
+
+        template <
+            typename Natural,
+            typename Elemental,
+            Referential< const SinglyAdjunctive< Natural, Elemental > >
+                Adjunct,
+            const bool
+                Safety
         >
         static inline bool
         Proceed(
-            Referential< Junctive< Natural, Elemental > >
+            Referential< SinglyJunctive< Natural, Elemental > >
                 sequence,
             Referential< const Elemental >
                 value
@@ -410,15 +847,52 @@ namespace junction {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            Locational< Junctional< Elemental > >
+            Locational< SinglyNodal< Elemental > >
                 result;
             result = Adjunct.proclaim( sequence, value );
-            if (!result)
+            if (Safety && !result)
                 return false;
-            result->previous = sequence.last;
-            result->next = 0;
+            UnsetNext( result );
             if (sequence.last)
-                sequence.last->next = result;
+                SetNext( sequence.last, result );
+            else
+                sequence.first = result;
+            sequence.last = result;
+            sequence.count++;
+            return true;
+        }
+
+        template <
+            typename Natural,
+            typename Elemental,
+            Referential< const DoublyAdjunctive< Natural, Elemental > >
+                Adjunct,
+            const bool
+                Safety
+        >
+        static inline bool
+        Proceed(
+            Referential< DoublyJunctive< Natural, Elemental > >
+                sequence,
+            Referential< const Elemental >
+                value
+        ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
+            using namespace ::std;
+            static_assert(
+                is_integral< Natural >::value && is_unsigned< Natural >::value,
+                "Natural:  Unsigned integer type required"
+            );
+#endif
+            Locational< DoublyNodal< Elemental > >
+                result;
+            result = Adjunct.proclaim( sequence, value );
+            if (Safety && !result)
+                return false;
+            SetPrevious( result, sequence.last );
+            UnsetNext( result );
+            if (sequence.last)
+                SetNext( sequence.last, result );
             else
                 sequence.first = result;
             sequence.last = result;
@@ -432,12 +906,14 @@ namespace junction {
             typename RelativeNatural,
             typename Natural,
             typename Elemental,
-            Referential< const Adjunctive< Natural, Elemental > >
-                Adjunct
+            Referential< const SinglyAdjunctive< Natural, Elemental > >
+                Adjunct,
+            const bool
+                Safety
         >
         static inline bool
         Proceed(
-            Referential< Junctive< Natural, Elemental > >
+            Referential< SinglyJunctive< Natural, Elemental > >
                 sequence,
             Referential< const Directional< const Relative, Appositional, RelativeNatural, const Elemental > >
                 direction,
@@ -460,16 +936,70 @@ namespace junction {
             );
 #endif
             static auto&
-                SequenceList = Sequence< Relative, Appositional, RelativeNatural, Natural, Elemental, Adjunct >;
-            Locational< Junctional< Elemental > >
+                SequenceList = Sequence< SinglyLinked< Elemental >, Relative, Appositional, RelativeNatural, Natural, Elemental, Adjunct, Safety >;
+            Locational< SinglyNodal< Elemental > >
                 first, last;
             Natural
                 length;
             if (!SequenceList( sequence, first, last, length, direction, space, from, to ))
                 return false;
-            first->previous = sequence.last;
+            UnsetNext( last );
             if (sequence.last)
-                sequence.last->next = first;
+                SetNext( sequence.last, first );
+            else
+                sequence.first = first;
+            sequence.last = last;
+            sequence.count += length;
+            return true;
+        }
+
+        template <
+            typename Relative,
+            typename Appositional,
+            typename RelativeNatural,
+            typename Natural,
+            typename Elemental,
+            Referential< const DoublyAdjunctive< Natural, Elemental > >
+                Adjunct,
+            const bool
+                Safety
+        >
+        static inline bool
+        Proceed(
+            Referential< DoublyJunctive< Natural, Elemental > >
+                sequence,
+            Referential< const Directional< const Relative, Appositional, RelativeNatural, const Elemental > >
+                direction,
+            Referential< const Relative >
+                space,
+            Referential< const Appositional >
+                from,
+            Referential< const Appositional >
+                to
+        ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
+            using namespace ::std;
+            static_assert(
+                is_integral< Natural >::value && is_unsigned< Natural >::value,
+                "Natural:  Unsigned integer type required"
+            );
+            static_assert(
+                is_integral< RelativeNatural >::value && is_unsigned< RelativeNatural >::value,
+                "RelativeNatural:  Unsigned integer type required"
+            );
+#endif
+            static auto&
+                SequenceList = Sequence< DoublyLinked< Elemental >, Relative, Appositional, RelativeNatural, Natural, Elemental, Adjunct, Safety >;
+            Locational< DoublyNodal< Elemental > >
+                first, last;
+            Natural
+                length;
+            if (!SequenceList( sequence, first, last, length, direction, space, from, to ))
+                return false;
+            UnsetNext( last );
+            SetPrevious( first, sequence.last );
+            if (sequence.last)
+                SetNext( sequence.last, first );
             else
                 sequence.first = first;
             sequence.last = last;
@@ -479,11 +1009,13 @@ namespace junction {
 
         template <
             typename Natural,
-            typename Elemental
+            typename Elemental,
+            const bool
+                Safety
         >
         static inline bool
         Succeed(
-            Referential< Junctive< Natural, Elemental > >
+            Referential< SinglyJunctive< Natural, Elemental > >
                 sequence,
             Referential< const Natural >
                 count
@@ -495,40 +1027,83 @@ namespace junction {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            Positional< Elemental >
+            Locational< SinglyNodal< Elemental > >
                 first, last;
             Natural
                 index;
-            if (!sequence.first)
+            if (Safety && (!count || !sequence.first))
                 return false;
-            first.at = last.at = sequence.first;
+            first = last = sequence.first;
             for (index = 1; index < count; index++) {
-                if (!last.at->next)
+                if (Safety && !GetNext( last ))
                     return false;
-                last.at = last.at->next;
+                last = GetNext( last );
             }
-            sequence.first = last.at->next;
-            if (sequence.first)
-                sequence.first->previous = 0;
-            else
+            sequence.first = GetNext( last );
+            if (!sequence.first)
                 sequence.last = 0;
-            last.at->next = sequence.unused;
-            if (sequence.unused)
-                sequence.unused->previous = last.at;
-            sequence.unused = first.at;
+            SetNext( last, sequence.unused );
+            sequence.unused = first;
             sequence.count -= count;
             return true;
         }
 
         template <
             typename Natural,
-            typename Elemental
+            typename Elemental,
+            const bool
+                Safety
         >
         static inline bool
-        Concede(
-            Referential< Junctive< Natural, Elemental > >
+        Succeed(
+            Referential< DoublyJunctive< Natural, Elemental > >
                 sequence,
-            Referential< const Positional< Elemental > >
+            Referential< const Natural >
+                count
+        ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
+            using namespace ::std;
+            static_assert(
+                is_integral< Natural >::value && is_unsigned< Natural >::value,
+                "Natural:  Unsigned integer type required"
+            );
+#endif
+            Locational< DoublyNodal< Elemental > >
+                first, last;
+            Natural
+                index;
+            if (Safety && (!count || !sequence.first))
+                return false;
+            first = last = sequence.first;
+            for (index = 1; index < count; index++) {
+                if (Safety && !GetNext( last ))
+                    return false;
+                last = GetNext( last );
+            }
+            sequence.first = GetNext( last );
+            if (sequence.first)
+                UnsetPrevious( sequence.first );
+            else
+                sequence.last = 0;
+            SetNext( last, sequence.unused );
+            if (sequence.unused)
+                SetPrevious( sequence.unused, last );
+            sequence.unused = first;
+            sequence.count -= count;
+            return true;
+        }
+
+        template <
+            typename Natural,
+            typename Elemental,
+            const bool
+                Safety
+        >
+        static inline bool
+        Supersede(
+            Referential< SinglyJunctive< Natural, Elemental > >
+                sequence,
+            Referential< const SinglyPositional< Elemental > >
                 rank,
             Referential< const Natural >
                 count
@@ -540,27 +1115,141 @@ namespace junction {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            Positional< Elemental >
-                last;
+            Locational< SinglyNodal< Elemental > >
+                first, last, previous;
             Natural
                 index;
-            last = rank;
+            if (Safety && !rank.at)
+                return false;
+            previous = sequence.first;
+            last = previous;
             for (index = 1; index < count; index++) {
-                if (!last.at->next)
-                    return false;
-                last.at = last.at->next;
+                if (Safety && (!last || last == rank.at))
+                    throw count;
+                last = GetNext( last );
             }
-            if (rank.at->previous)
-                rank.at->previous->next = last.at->next;
+            if (last == rank.at) {
+                sequence.first = GetNext( rank.at );
+                if (!sequence.first)
+                    sequence.last = sequence.first;
+                SetNext( rank.at, sequence.unused );
+                sequence.unused = previous;
+                sequence.count -= count;
+                return true;
+            }
+            while (GetNext( last ) != rank.at) {
+                if (Safety && !last)
+                    throw rank;
+                previous = GetNext( previous );
+                last = GetNext( last );
+            }
+            first = GetNext( previous );
+            SetNext( previous, GetNext( rank.at ) );
+            SetNext( rank.at, sequence.unused );
+            sequence.unused = first;
+            sequence.count -= count;
+            return true;
+        }
+
+        template <
+            typename Natural,
+            typename Elemental,
+            const bool
+                Safety
+        >
+        static inline bool
+        Supersede(
+            Referential< DoublyJunctive< Natural, Elemental > >
+                sequence,
+            Referential< const DoublyPositional< Elemental > >
+                rank,
+            Referential< const Natural >
+                count
+        ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
+            using namespace ::std;
+            static_assert(
+                is_integral< Natural >::value && is_unsigned< Natural >::value,
+                "Natural:  Unsigned integer type required"
+            );
+#endif
+            Locational< DoublyNodal< Elemental > >
+                first;
+            Natural
+                index;
+            first = rank.at;
+            for (index = 1; index < count; index++) {
+                if (Safety && !first)
+                    throw count;
+                first = GetPrevious( first );
+            }
+            if (first == sequence.first) {
+                sequence.first = GetNext( rank.at );
+            } else {
+                SetNext( GetPrevious( first ), GetNext( rank.at ) );
+                UnsetPrevious( first );
+            }
+            if (GetNext( rank.at ))
+                SetPrevious( GetNext( rank.at ), GetPrevious( first ) );
             else
-                sequence.first = last.at->next;
-            if (last.at->next)
-                last.at->next->previous = rank.at->previous;
-            else
-                sequence.last = rank.at->previous;
-            last.at->next = sequence.unused;
+                sequence.last = GetPrevious( first );
+            SetNext( rank.at, sequence.unused );
             if (sequence.unused)
-                sequence.unused->previous = last.at;
+                SetPrevious( sequence.unused, rank.at );
+            sequence.unused = first;
+            sequence.count -= count;
+            return true;
+        }
+
+        template <
+            typename Natural,
+            typename Elemental,
+            const bool
+                Safety
+        >
+        static inline bool
+        Concede(
+            Referential< SinglyJunctive< Natural, Elemental > >
+                sequence,
+            Referential< const SinglyPositional< Elemental > >
+                rank,
+            Referential< const Natural >
+                count
+        ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
+            using namespace ::std;
+            static_assert(
+                is_integral< Natural >::value && is_unsigned< Natural >::value,
+                "Natural:  Unsigned integer type required"
+            );
+#endif
+            Locational< SinglyNodal< Elemental > >
+                last, previous;
+            Natural
+                index;
+            if (Safety && (!rank.at || !count || !sequence.first))
+                return false;
+            last = rank.at;
+            for (index = 1; index < count; index++) {
+                if (Safety && !GetNext( last ))
+                    return false;
+                last = GetNext( last );
+            }
+            if (rank.at == sequence.first) {
+                sequence.first = GetNext( last );
+                previous = 0;
+            } else {
+                previous = sequence.first;
+                while (GetNext( previous ) != rank.at) {
+                    if (Safety && !previous)
+                        throw rank;
+                    previous = GetNext( previous );
+                }
+                SetNext( previous, GetNext( last ) );
+            }
+            if (!GetNext( last ))
+                sequence.last = previous;
+            SetNext( last, sequence.unused );
             sequence.unused = rank.at;
             sequence.count -= count;
             return true;
@@ -568,13 +1257,15 @@ namespace junction {
 
         template <
             typename Natural,
-            typename Elemental
+            typename Elemental,
+            const bool
+                Safety
         >
         static inline bool
-        ConcedeSafely(
-            Referential< Junctive< Natural, Elemental > >
+        Concede(
+            Referential< DoublyJunctive< Natural, Elemental > >
                 sequence,
-            Referential< const Positional< Elemental > >
+            Referential< const DoublyPositional< Elemental > >
                 rank,
             Referential< const Natural >
                 count
@@ -586,18 +1277,51 @@ namespace junction {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            if (!rank.at)
-                throw rank;
-            return Concede( sequence, rank, count );
+            Locational< DoublyNodal< Elemental > >
+                last;
+            Natural
+                index;
+            if (Safety) {
+                if (!rank.at || !count || !sequence.first)
+                    return false;
+                last = sequence.first;
+                while (last != rank.at) {
+                    if (!last)
+                        throw rank;
+                    last = GetNext( last );
+                }
+            }
+            last = rank.at;
+            for (index = 1; index < count; index++) {
+                if (Safety && !GetNext( last ))
+                    return false;
+                last = GetNext( last );
+            }
+            if (GetPrevious( rank.at ))
+                SetNext( GetPrevious( rank.at ), GetNext( last ) );
+            else
+                sequence.first = GetNext( last );
+            if (GetNext( last ))
+                SetPrevious( GetNext( last ), GetPrevious( rank.at ) );
+            else
+                sequence.last = GetPrevious( rank.at );
+            SetNext( last, sequence.unused );
+            if (sequence.unused)
+                SetPrevious( sequence.unused, last );
+            sequence.unused = rank.at;
+            sequence.count -= count;
+            return true;
         }
 
         template <
             typename Natural,
-            typename Elemental
+            typename Elemental,
+            const bool
+                Safety
         >
         static inline bool
         Recede(
-            Referential< Junctive< Natural, Elemental > >
+            Referential< SinglyJunctive< Natural, Elemental > >
                 sequence,
             Referential< const Natural >
                 count
@@ -609,28 +1333,75 @@ namespace junction {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            Positional< Elemental >
+            Locational< SinglyNodal< Elemental > >
+                previous;
+            Natural
+                index, offset;
+            if (Safety && (!count || !sequence.last || count > sequence.count))
+                return false;
+            if (count == sequence.count) {
+                SetNext( sequence.last, sequence.unused );
+                sequence.unused = sequence.first;
+                sequence.first = sequence.last = 0;
+                sequence.count = 0;
+                return true;
+            }
+            offset = sequence.count - count - 1;
+            previous = sequence.first;
+            for (index = 0; index < offset; index++) {
+                if (Safety && !GetNext( previous ))
+                    return false;
+                previous = GetNext( previous );
+            }
+            SetNext( sequence.last, sequence.unused );
+            sequence.unused = GetNext( previous );
+            UnsetNext( previous );
+            sequence.count -= count;
+            return true;
+        }
+
+        template <
+            typename Natural,
+            typename Elemental,
+            const bool
+                Safety
+        >
+        static inline bool
+        Recede(
+            Referential< DoublyJunctive< Natural, Elemental > >
+                sequence,
+            Referential< const Natural >
+                count
+        ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
+            using namespace ::std;
+            static_assert(
+                is_integral< Natural >::value && is_unsigned< Natural >::value,
+                "Natural:  Unsigned integer type required"
+            );
+#endif
+            Locational< DoublyNodal< Elemental > >
                 first, last;
             Natural
                 index;
-            if (!sequence.last)
+            if (Safety && (!count || !sequence.last))
                 return false;
-            first.at = last.at = sequence.last;
+            first = last = sequence.last;
             for (index = 1; index < count; index++) {
-                if (!first.at->previous)
+                if (Safety && !GetPrevious( first ))
                     return false;
-                first.at = first.at->previous;
+                first = GetPrevious( first );
             }
-            sequence.last = first.at->previous;
+            sequence.last = GetPrevious( first );
             if (sequence.last) {
-                sequence.last->next = 0;
-                first.at->previous = 0;
+                UnsetNext( sequence.last );
+                UnsetPrevious( first );
             } else
                 sequence.first = 0;
-            last.at->next = sequence.unused;
+            SetNext( last, sequence.unused );
             if (sequence.unused)
-                sequence.unused->previous = last.at;
-            sequence.unused = first.at;
+                SetPrevious( sequence.unused, last );
+            sequence.unused = first;
             sequence.count -= count;
             return true;
         }
@@ -641,14 +1412,15 @@ namespace junction {
             typename RelativeNatural,
             typename Natural,
             typename Elemental,
-            Referential< const Adjunctive< Natural, Elemental > >
+            Referential< const SinglyAdjunctive< Natural, Elemental > >
                 Adjunct
         >
-        constexpr Conjoint< Junctive< Natural, Elemental >, Positional< Elemental >, Relative, Appositional, RelativeNatural, Elemental >
-        JunctionConjoiner = {
-            Accede< Relative, Appositional, RelativeNatural, Natural, Elemental, Adjunct >,
-            Precede< Relative, Appositional, RelativeNatural, Natural, Elemental, Adjunct >,
-            Proceed< Relative, Appositional, RelativeNatural, Natural, Elemental, Adjunct >
+        constexpr Conjoint< SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, Relative, Appositional, RelativeNatural, Elemental >
+        SingleConjoiner = {
+            Accede< Relative, Appositional, RelativeNatural, Natural, Elemental, Adjunct, false >,
+            Precede< Relative, Appositional, RelativeNatural, Natural, Elemental, Adjunct, false >,
+            Cede< Relative, Appositional, RelativeNatural, Natural, Elemental, Adjunct, false >,
+            Proceed< Relative, Appositional, RelativeNatural, Natural, Elemental, Adjunct, false >
         };
 
         template <
@@ -657,56 +1429,141 @@ namespace junction {
             typename RelativeNatural,
             typename Natural,
             typename Elemental,
-            Referential< const Adjunctive< Natural, Elemental > >
+            Referential< const DoublyAdjunctive< Natural, Elemental > >
                 Adjunct
         >
-        constexpr Conjoint< Junctive< Natural, Elemental >, Positional< Elemental >, Relative, Appositional, RelativeNatural, Elemental >
-        SafeJunctionConjoiner = {
-            Accede< Relative, Appositional, Natural, Elemental, Adjunct >,
-            PrecedeSafely< Relative, Appositional, Natural, Elemental, Adjunct >,
-            Proceed< Relative, Appositional, Natural, Elemental, Adjunct >
+        constexpr Conjoint< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Relative, Appositional, RelativeNatural, Elemental >
+        DoubleConjoiner = {
+            Accede< Relative, Appositional, RelativeNatural, Natural, Elemental, Adjunct, false >,
+            Precede< Relative, Appositional, RelativeNatural, Natural, Elemental, Adjunct, false >,
+            Cede< Relative, Appositional, RelativeNatural, Natural, Elemental, Adjunct, false >,
+            Proceed< Relative, Appositional, RelativeNatural, Natural, Elemental, Adjunct, false >
+        };
+
+        template <
+            typename Relative,
+            typename Appositional,
+            typename RelativeNatural,
+            typename Natural,
+            typename Elemental,
+            Referential< const SinglyAdjunctive< Natural, Elemental > >
+                Adjunct
+        >
+        constexpr Conjoint< SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, Relative, Appositional, RelativeNatural, Elemental >
+        SafeSingleConjoiner = {
+            Accede< Relative, Appositional, RelativeNatural, Elemental, Adjunct, true >,
+            Precede< Relative, Appositional, RelativeNatural, Elemental, Adjunct, true >,
+            Cede< Relative, Appositional, RelativeNatural, Natural, Elemental, Adjunct, true >,
+            Proceed< Relative, Appositional, RelativeNatural, Elemental, Adjunct, true >
+        };
+
+        template <
+            typename Relative,
+            typename Appositional,
+            typename RelativeNatural,
+            typename Natural,
+            typename Elemental,
+            Referential< const DoublyAdjunctive< Natural, Elemental > >
+                Adjunct
+        >
+        constexpr Conjoint< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Relative, Appositional, RelativeNatural, Elemental >
+        SafeDoubleConjoiner = {
+            Accede< Relative, Appositional, RelativeNatural, Elemental, Adjunct, true >,
+            Precede< Relative, Appositional, RelativeNatural, Elemental, Adjunct, true >,
+            Cede< Relative, Appositional, RelativeNatural, Natural, Elemental, Adjunct, true >,
+            Proceed< Relative, Appositional, RelativeNatural, Elemental, Adjunct, true >
         };
 
         template <
             typename Natural,
             typename Elemental,
-            Referential< const Adjunctive< Natural, Elemental > >
+            Referential< const SinglyAdjunctive< Natural, Elemental > >
                 Adjunct
         >
-        constexpr Sequent< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental >
-        JunctionSequencer = {
-            Instantiate< Natural, Elemental, Adjunct >,
-            Account< Natural, Elemental >,
-            Accede< Natural, Elemental, Adjunct >,
-            Precede< Natural, Elemental, Adjunct >,
-            Proceed< Natural, Elemental, Adjunct >,
-            Succeed< Natural, Elemental >,
-            Concede< Natural, Elemental >,
-            Recede< Natural, Elemental >,
-            RemoveAllNodes< Natural, Elemental >,
+        constexpr Sequent< SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, Natural, Elemental >
+        SingleSequencer = {
+            Instantiate< SinglyLinked< Elemental >, Natural, Elemental, Adjunct >,
+            Account< SinglyLinked< Elemental >, Natural, Elemental >,
+            Accede< Natural, Elemental, Adjunct, false >,
+            Precede< Natural, Elemental, Adjunct, false >,
+            Cede< Natural, Elemental, Adjunct, false >,
+            Proceed< Natural, Elemental, Adjunct, false >,
+            Succeed< Natural, Elemental, false >,
+            Supersede< Natural, Elemental, false >,
+            Concede< Natural, Elemental, false >,
+            Recede< Natural, Elemental, false >,
+            RemoveAll< SinglyLinked< Elemental >, Natural, Elemental >,
             DeleteOneNode< Natural, Elemental, Adjunct >,
-            JunctionConjoiner< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Natural, Elemental, Adjunct >
+            SingleConjoiner< SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, Natural, Natural, Elemental, Adjunct >
         };
 
         template <
             typename Natural,
             typename Elemental,
-            Referential< const Adjunctive< Natural, Elemental > >
+            Referential< const DoublyAdjunctive< Natural, Elemental > >
                 Adjunct
         >
-        constexpr Sequent< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental >
-        SafeJunctionSequencer = {
-            Instantiate< Natural, Elemental, Adjunct >,
-            Account< Natural, Elemental >,
-            Accede< Natural, Elemental, Adjunct >,
-            PrecedeSafely< Natural, Elemental, Adjunct >,
-            Proceed< Natural, Elemental, Adjunct >,
-            Succeed< Natural, Elemental >,
-            ConcedeSafely< Natural, Elemental >,
-            Recede< Natural, Elemental >,
-            RemoveAllNodes< Natural, Elemental >,
+        constexpr Sequent< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, Elemental >
+        DoubleSequencer = {
+            Instantiate< DoublyLinked< Elemental >, Natural, Elemental, Adjunct >,
+            Account< DoublyLinked< Elemental >, Natural, Elemental >,
+            Accede< Natural, Elemental, Adjunct, false >,
+            Precede< Natural, Elemental, Adjunct, false >,
+            Cede< Natural, Elemental, Adjunct, false >,
+            Proceed< Natural, Elemental, Adjunct, false >,
+            Succeed< Natural, Elemental, false >,
+            Supersede< Natural, Elemental, false >,
+            Concede< Natural, Elemental, false >,
+            Recede< Natural, Elemental, false >,
+            RemoveAll< DoublyLinked< Elemental >, Natural, Elemental >,
             DeleteOneNode< Natural, Elemental, Adjunct >,
-            SafeJunctionConjoiner< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental, Adjunct >
+            DoubleConjoiner< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, Natural, Elemental, Adjunct >
+        };
+
+        template <
+            typename Natural,
+            typename Elemental,
+            Referential< const SinglyAdjunctive< Natural, Elemental > >
+                Adjunct
+        >
+        constexpr Sequent< SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, Natural, Elemental >
+        SafeSingleSequencer = {
+            Instantiate< SinglyLinked< Elemental >, Natural, Elemental, Adjunct >,
+            Account< SinglyLinked< Elemental >, Natural, Elemental >,
+            Accede< Natural, Elemental, Adjunct, true >,
+            Precede< Natural, Elemental, Adjunct, true >,
+            Cede< Natural, Elemental, Adjunct, true >,
+            Proceed< Natural, Elemental, Adjunct, true >,
+            Succeed< Natural, Elemental, true >,
+            Supersede< Natural, Elemental, true >,
+            Concede< Natural, Elemental, true >,
+            Recede< Natural, Elemental, true >,
+            RemoveAll< SinglyLinked< Elemental >, Natural, Elemental >,
+            DeleteOneNode< Natural, Elemental, Adjunct >,
+            SafeSingleConjoiner< SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, Natural, Natural, Elemental, Adjunct >
+        };
+
+        template <
+            typename Natural,
+            typename Elemental,
+            Referential< const DoublyAdjunctive< Natural, Elemental > >
+                Adjunct
+        >
+        constexpr Sequent< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, Elemental >
+        SafeDoubleSequencer = {
+            Instantiate< DoublyLinked< Elemental >, Natural, Elemental, Adjunct >,
+            Account< DoublyLinked< Elemental >, Natural, Elemental >,
+            Accede< Natural, Elemental, Adjunct, true >,
+            Precede< Natural, Elemental, Adjunct, true >,
+            Cede< Natural, Elemental, Adjunct, true >,
+            Proceed< Natural, Elemental, Adjunct, true >,
+            Succeed< Natural, Elemental, true >,
+            Supersede< Natural, Elemental, true >,
+            Concede< Natural, Elemental, true >,
+            Recede< Natural, Elemental, true >,
+            RemoveAll< DoublyLinked< Elemental >, Natural, Elemental >,
+            DeleteOneNode< Natural, Elemental, Adjunct >,
+            SafeDoubleConjoiner< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, Natural, Elemental, Adjunct >
         };
 
     }

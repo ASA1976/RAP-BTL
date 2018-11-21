@@ -10,23 +10,24 @@
 #endif
 
 using namespace ::location;
-using namespace ::procession;
 using namespace ::ration::contraction;
+using namespace ::procession;
 
-using Natural = unsigned short;
+using FunctionDemonstrative = void( void );
+using FunctionSituational = Locational< FunctionDemonstrative >;
 
-const Natural
+const unsigned
 MaximumEvents = 127;
 
-using EventContractional = Contractional< Natural, MaximumEvents, Contextual >;
+using EventSchedular = Contractional< unsigned, MaximumEvents, Contextual >;
 
-constexpr Tractile< EventContractional, Natural, Natural >
-EventContractor = Contractor< Natural, MaximumEvents, Contextual >;
+constexpr Tractile< EventSchedular, unsigned, unsigned >
+EventContractor = Contractor< unsigned, MaximumEvents, Contextual >;
 
-constexpr Directional< EventContractional, Natural, Natural, Contextual >
-EventVisitor = WriteIncrementDirection< Natural, MaximumEvents, Contextual >;
+constexpr Directional< EventSchedular, unsigned, unsigned, Contextual >
+EventVisitor = WriteIncrementDirection< unsigned, MaximumEvents, Contextual >;
 
-static inline void
+static void
 PrintString(
     const Locational< void >
         location
@@ -35,32 +36,76 @@ PrintString(
     printf( "%s\n", static_cast< Specific >(location) );
 }
 
-static inline void
+static void
 PrintNatural(
     const Locational< void >
         location
 ) {
-    using Specific = const Locational< const Natural >;
-    printf( "%u\n", *static_cast< Specific >(location) );
+    using Specific = const Locational< const unsigned >;
+    printf( "%u\n", Refer( static_cast< Specific >(location) ).to );
 }
 
+static void
+RunFunction(
+    const Locational< void >
+        location
+) {
+    using Specific = const Locational< const FunctionSituational >;
+    Refer( static_cast< Specific >(location) ).to();
+}
+
+static void
+Demonstrate( void ) {
+    puts( "Demonstrate()" );
+}
+
+struct {
+
+    struct {
+
+        Referential< Programmatic< EventSchedular, const char > >
+            print_string;
+
+        Referential< Programmatic< EventSchedular, const unsigned > >
+            print_natural;
+
+        Referential< Programmatic< EventSchedular, const FunctionSituational > >
+            run_function;
+
+    } schedule;
+    
+    Referential< Processive< EventSchedular > >
+        process;
+
+} Program = {
+    {
+        ScheduleNullRefused< EventSchedular, unsigned, unsigned, const char, EventContractor, EventVisitor, PrintString >,
+        ScheduleNullRefused< EventSchedular, unsigned, unsigned, const unsigned, EventContractor, EventVisitor, PrintNatural >,
+        ScheduleNullRefused< EventSchedular, unsigned, unsigned, const FunctionSituational, EventContractor, EventVisitor, RunFunction >
+    },
+    ProcessOneEvent< EventSchedular, unsigned, unsigned, EventContractor, EventVisitor >
+};
+
 int main() {
-    static auto&
-        SchedulePrintString = ScheduleNullRefused< EventContractional, Natural, Natural, const char, EventContractor, EventVisitor, PrintString >;
-    static auto&
-        SchedulePrintNatural = ScheduleNullRefused< EventContractional, Natural, Natural, const Natural, EventContractor, EventVisitor, PrintNatural >;
-    static auto&
-        ProcessEvent = Process< EventContractional, Natural, Natural, EventContractor, EventVisitor >;
     static const Locational< const char >
         Hello = "Hello world!",
         Goodbye = "Goodbye";
-    static const Natural
-        Size = sizeof(EventContractional);
-    EventContractional
-        queue;
-    Initialize( queue );
-    SchedulePrintString( queue, Hello );
-    SchedulePrintNatural( queue, Locate( Size ).at );
-    SchedulePrintString( queue, Goodbye );
-    while (ProcessEvent( queue ));
+    static const FunctionSituational
+        Objective = Locate( Demonstrate ).at;
+    static const unsigned
+        QueueLength = sizeof(EventSchedular);
+    EventSchedular
+        event_queue;
+    unsigned
+        count;
+    Initialize( event_queue );
+    Program.schedule.print_string( event_queue, Hello );
+    Program.schedule.print_natural( event_queue, Locate( QueueLength ).at );
+    Program.schedule.run_function( event_queue, Locate( Objective ).at );
+    Program.schedule.print_string( event_queue, Goodbye );
+    puts( "Processing event(s):" );
+    puts( "--------------------" );
+    for (count = 0; Program.process( event_queue ); count++);
+    puts( "--------------------" );
+    printf( "Processed %u event(s).\n", count );
 }

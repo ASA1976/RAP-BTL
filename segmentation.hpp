@@ -4,6 +4,15 @@
 #define SEGMENTATION_MODULE
 #include "localization.hpp"
 
+/**
+ * @brief         
+ *     Segment space trajection implementation.
+ * @details       
+ *     Association
+ *     -----------
+ *     Implements vectorial and sequential trajection between a pointer base and
+ *     positive relative offsets of a compile-time known length.
+ */
 namespace segmentation {
 
     using ::location::Locational;
@@ -22,6 +31,27 @@ namespace segmentation {
     using ::localization::WriteLocal;
     using ::comparison::Comparison;
 
+    /**
+     * @brief
+     *     Check if index is within the segment.
+     * @details
+     *     Function Template
+     *     -----------------
+     *     Checks if index is within the segment.  This version does not check
+     *     if locality is null.
+     * @tparam Natural
+     *     Type of natural integer for index.
+     * @tparam Length
+     *     The length of the segment.
+     * @tparam Elemental
+     *     Type of the elements.
+     * @param[in] locality
+     *     Reference to the pointer.
+     * @param[in] index
+     *     Reference to the index.
+     * @return
+     *     True if index is less than length.
+     */
     template <
         typename Natural,
         Natural
@@ -45,6 +75,27 @@ namespace segmentation {
         return index < Length;
     }
 
+    /**
+     * @brief
+     *     Check if index is within the segment.
+     * @details
+     *     Function Template
+     *     -----------------
+     *     Checks if index is within the segment.  This version throws an 
+     *     exception if locality is null.
+     * @tparam Natural
+     *     Type of natural integer for index.
+     * @tparam Length
+     *     The length of the segment.
+     * @tparam Elemental
+     *     Type of the elements.
+     * @param[in] locality
+     *     Reference to the pointer.
+     * @param[in] index
+     *     Reference to the index.
+     * @return
+     *     True if index is less than length.
+     */
     template <
         typename Natural,
         Natural
@@ -52,7 +103,7 @@ namespace segmentation {
         typename Elemental
     >
     static inline bool
-    ContainsIndexChecksForNull(
+    SafelyContainsIndex(
         Referential< const Locational< Elemental > >
             locality,
         Referential< const Natural >
@@ -69,9 +120,33 @@ namespace segmentation {
             Contains = ContainsIndex< Natural, Length, Elemental >;
         if (!locality)
             throw locality;
+        if (index < 0)
+            throw index;
         return Contains( locality, index );
     }
 
+    /**
+     * @brief 
+     *     Confers the element at index.
+     * @details
+     *     Function Template
+     *     -----------------
+     *     Returns a reference to the element at the specified index.  This
+     *     version throws an exception if the pointer is null or the index
+     *     is out of bounds.
+     * @tparam Natural
+     *     Type of natural integer for index.
+     * @tparam Length
+     *     The length of the segment.
+     * @tparam Elemental
+     *     Type of the elements.
+     * @param[in] locality
+     *     Reference to the pointer.
+     * @param[in] index
+     *     Reference to the index.
+     * @return
+     *     The reference conferment.
+     */
     template <
         typename Natural,
         Natural
@@ -93,12 +168,34 @@ namespace segmentation {
         );
 #endif
         static auto&
-            Contains = ContainsIndexChecksForNull< Natural, Length, Elemental >;
+            Contains = SafelyContainsIndex< Natural, Length, Elemental >;
         if (!Contains( locality, index ))
             throw index;
         return IndexicalGo( locality, index );
     }
 
+    /**
+     * @brief
+     *     Checks if sequential trajection can begin.
+     * @details
+     *     Function Template
+     *     -----------------
+     *     Checks if sequential trajection can begin at the specified offset
+     *     count.
+     * @tparam Natural
+     *     Type of natural integer for count.
+     * @tparam Length
+     *     The length of the segment.
+     * @tparam Elemental 
+     *     Type of the elements.
+     * @param[in] locality
+     *     Reference to the pointer.
+     * @param[in] count
+     *     Reference to the offset count.
+     * @return 
+     *     True if the segment's length is greater than zero and count is less
+     *     than length.
+     */
     template <
         typename Natural,
         Natural
@@ -119,9 +216,31 @@ namespace segmentation {
             "Natural:  Unsigned integer type required"
         );
 #endif
-        return Length > 0 && count < Length;
+        return count < Length;
     }
 
+    /**
+     * @brief
+     *     Checks if sequential trajection can begin.
+     * @details
+     *     Function Template
+     *     -----------------
+     *     Checks if sequential trajection can begin at the specified offset
+     *     count.  This version throws an exception if the pointer is null.
+     * @tparam Natural
+     *     Type of natural integer for count.
+     * @tparam Length
+     *     The length of the segment.
+     * @tparam Elemental 
+     *     Type of the elements.
+     * @param[in] locality
+     *     Reference to the pointer.
+     * @param[in] count
+     *     Reference to the offset count.
+     * @return 
+     *     True if the segment's length is greater than zero and count is less
+     *     than length.
+     */
     template <
         typename Natural,
         Natural
@@ -129,7 +248,7 @@ namespace segmentation {
         typename Elemental
     >
     static inline bool
-    BeginsChecksForNull(
+    SafelyBegins(
         Referential< const Locational< Elemental > >
             locality,
         Referential< const Natural >
@@ -146,9 +265,35 @@ namespace segmentation {
             SegmentBegins = Begins< Natural, Length, Elemental >;
         if (!locality)
             throw locality;
+        if (count < 0)
+            throw count;
         return SegmentBegins( locality, count );
     }
 
+    /**
+     * @brief
+     *     Begins increment trajection.
+     * @details
+     *     Function Template
+     *     -----------------
+     *     Assigns to index the count positive offset from zero.  This version
+     *     throws an exception if the segment length is zero, the pointer is 
+     *     null or count is greater than or equal to the segment length.
+     * @tparam Natural
+     *     Type of natural integer for index and count.
+     * @tparam Length
+     *     The length of the segment.
+     * @tparam Elemental 
+     *     Type of the elements.
+     * @param[in] locality 
+     *     Reference to the pointer.
+     * @param[out] index
+     *     Reference to the index.
+     * @param[in] count
+     *     Reference to the offset count.
+     * @return 
+     *     A reference to the index as a constant.
+     */
     template <
         typename Natural,
         Natural
@@ -180,6 +325,31 @@ namespace segmentation {
         return Begin( locality, index, count );
     }
 
+    /**
+     * @brief
+     *     Begins increment trajection.
+     * @details
+     *     Function Template
+     *     -----------------
+     *     Assigns to index the count negative offset from the length of the 
+     *     segment minus one.  This version does not check if the segment length
+     *     is zero, if the pointer is null or if count is greater than or equal
+     *     to the segment length.
+     * @tparam Natural
+     *     Type of natural integer for index and count.
+     * @tparam Length
+     *     The length of the segment.
+     * @tparam Elemental 
+     *     Type of the elements.
+     * @param[in] locality 
+     *     Reference to the pointer.
+     * @param[out] index
+     *     Reference to the index.
+     * @param[in] count
+     *     Reference to the offset count.
+     * @return 
+     *     A reference to the index as a constant.
+     */
     template <
         typename Natural,
         Natural
@@ -202,9 +372,34 @@ namespace segmentation {
             "Natural:  Unsigned integer type required"
         );
 #endif
-        return index = Length ? Length - 1 - count : 0;
+        return index = Length - 1 - count;
     }
 
+    /**
+     * @brief
+     *     Begins decrement trajection.
+     * @details
+     *     Function Template
+     *     -----------------
+     *     Assigns to index the count negative offset from the length of the 
+     *     segment minus one.  This version throws an exception if the segment 
+     *     length is zero, the pointer is null or count is greater than or equal
+     *     to the segment length.
+     * @tparam Natural
+     *     Type of natural integer for index and count.
+     * @tparam Length
+     *     The length of the segment.
+     * @tparam Elemental 
+     *     Type of the elements.
+     * @param[in] locality 
+     *     Reference to the pointer.
+     * @param[out] index
+     *     Reference to the index.
+     * @param[in] count
+     *     Reference to the offset count.
+     * @return 
+     *     A reference to the index as a constant.
+     */
     template <
         typename Natural,
         Natural
@@ -238,6 +433,30 @@ namespace segmentation {
         return Descend( locality, index, count );
     }
 
+    /**
+     * @brief
+     *     Checks if sequential trajection can continue.
+     * @details
+     *     Function Template
+     *     -----------------
+     *     Checks if sequential trajection can traverse from index to the
+     *     specified count offset.  This version does not check if the pointer
+     *     is null.
+     * @tparam Natural
+     *     Type of natural integer for index and count.
+     * @tparam Length
+     *     The length of the segment.
+     * @tparam Elemental 
+     *     Type of the elements.
+     * @param[in] locality
+     *     Reference to the pointer.
+     * @param[in] index
+     *     Reference to the index.
+     * @param[in] count
+     *     Reference to the offset count.
+     * @return 
+     *     True if the offset can be reached from index.
+     */
     template <
         typename Natural,
         Natural
@@ -263,6 +482,30 @@ namespace segmentation {
         return index + count < Length;
     }
 
+    /**
+     * @brief
+     *     Checks if sequential trajection can continue.
+     * @details
+     *     Function Template
+     *     -----------------
+     *     Checks if sequential trajection can traverse from index to the
+     *     specified count offset.  This version throws an exception if the 
+     *     pointer is null.
+     * @tparam Natural
+     *     Type of natural integer for index and count.
+     * @tparam Length
+     *     The length of the segment.
+     * @tparam Elemental 
+     *     Type of the elements.
+     * @param[in] locality
+     *     Reference to the pointer.
+     * @param[in] index
+     *     Reference to the index.
+     * @param[in] count
+     *     Reference to the offset count.
+     * @return 
+     *     True if the offset can be reached from index.
+     */
     template <
         typename Natural,
         Natural
@@ -270,7 +513,7 @@ namespace segmentation {
         typename Elemental
     >
     static inline bool
-    IncrementTraversesChecksForNull(
+    IncrementTraversesSafely(
         Referential< const Locational< Elemental > >
             locality,
         Referential< const Natural >
@@ -289,9 +532,35 @@ namespace segmentation {
             Traverses = IncrementTraverses< Natural, Length, Elemental >;
         if (!locality)
             throw locality;
+        if (count < 0)
+            throw count;
         return Traverses( locality, index, count );
     }
 
+    /**
+     * @brief
+     *     Checks if sequential trajection can continue.
+     * @details
+     *     Function Template
+     *     -----------------
+     *     Checks if sequential trajection can traverse from index to the
+     *     specified count offset.  This version does not check if the pointer
+     *     is null.
+     * @tparam Natural
+     *     Type of natural integer for index and count.
+     * @tparam Length
+     *     The length of the segment.
+     * @tparam Elemental 
+     *     Type of the elements.
+     * @param[in] locality
+     *     Reference to the pointer.
+     * @param[in] index
+     *     Reference to the index.
+     * @param[in] count
+     *     Reference to the offset count.
+     * @return 
+     *     True if the offset can be reached from index.
+     */
     template <
         typename Natural,
         Natural
@@ -317,6 +586,30 @@ namespace segmentation {
         return count <= index;
     }
 
+    /**
+     * @brief
+     *     Checks if sequential trajection can continue.
+     * @details
+     *     Function Template
+     *     -----------------
+     *     Checks if sequential trajection can traverse from index to the
+     *     specified count offset.  This version throws an exception if the 
+     *     pointer is null.
+     * @tparam Natural
+     *     Type of natural integer for index and count.
+     * @tparam Length
+     *     The length of the segment.
+     * @tparam Elemental 
+     *     Type of the elements.
+     * @param[in] locality
+     *     Reference to the pointer.
+     * @param[in] index
+     *     Reference to the index.
+     * @param[in] count
+     *     Reference to the offset count.
+     * @return 
+     *     True if the offset can be reached from index.
+     */
     template <
         typename Natural,
         Natural
@@ -324,7 +617,7 @@ namespace segmentation {
         typename Elemental
     >
     static inline bool
-    DecrementTraversesChecksForNull(
+    DecrementTraversesSafely(
         Referential< const Locational< Elemental > >
             locality,
         Referential< const Natural >
@@ -343,9 +636,34 @@ namespace segmentation {
             Traverses = DecrementTraverses< Natural, Length, Elemental >;
         if (!locality)
             throw locality;
+        if (count < 0)
+            throw count;
         return Traverses( locality, index, count );
     }
 
+    /**
+     * @brief 
+     *     Traverses increment.
+     * @details
+     *     Function Template
+     *     -----------------
+     *     Increases index by count offset.  This version throws an exception if
+     *     index would become greater than or equal to the segment length.
+     * @tparam Natural
+     *     Type of natural integer for index and count.
+     * @tparam Length
+     *     The length of the segment.
+     * @tparam Elemental 
+     *     Type of the elements.
+     * @param[in] locality 
+     *     Reference to the pointer.
+     * @param[in,out] index
+     *     Reference to the index.
+     * @param[in] count
+     *     Reference to the offset count.
+     * @return 
+     *     A reference to the index as a constant.
+     */
     template <
         typename Natural,
         Natural
@@ -358,7 +676,7 @@ namespace segmentation {
             locality,
         Referential< Natural >
             index,
-        Referential< Natural >
+        Referential< const Natural >
             count
     ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
@@ -369,12 +687,35 @@ namespace segmentation {
         );
 #endif
         static auto&
-            Traverses = IncrementTraversesChecksForNull< Natural, Length, Elemental >;
+            Traverses = IncrementTraversesSafely< Natural, Length, Elemental >;
         if (!Traverses( locality, index, count ))
             throw count;
         return TraverseIncrement( locality, index, count );
     }
 
+    /**
+     * @brief 
+     *     Traverses decrement.
+     * @details
+     *     Function Template
+     *     -----------------
+     *     Decreases index by count offset.  This version throws an exception if
+     *     index would become less than zero.
+     * @tparam Natural
+     *     Type of natural integer for index and count.
+     * @tparam Length
+     *     The length of the segment.
+     * @tparam Elemental 
+     *     Type of the elements.
+     * @param[in] locality 
+     *     Reference to the pointer.
+     * @param[in,out] index
+     *     Reference to the index.
+     * @param[in] count
+     *     Reference to the offset count.
+     * @return 
+     *     A reference to the index as a constant.
+     */
     template <
         typename Natural,
         Natural
@@ -398,12 +739,30 @@ namespace segmentation {
         );
 #endif
         static auto&
-            Traverses = DecrementTraversesChecksForNull< Natural, Length, Elemental >;
+            Traverses = DecrementTraversesSafely< Natural, Length, Elemental >;
         if (!Traverses( locality, index, count ))
             throw count;
         return TraverseDecrement( locality, index, count );
     }
 
+    /**
+     * @brief 
+     *     Returns the number of elements in the segment.
+     * @details
+     *     Function Template
+     *     -----------------
+     *     Returns the number of elements in the segment.
+     * @tparam Natural
+     *     Type of natural integer for index and result.
+     * @tparam Length
+     *     The length of the segment.
+     * @tparam Elemental 
+     *     Type of the elements.
+     * @param[in] locality 
+     *     Reference to the pointer.
+     * @return 
+     *     The number of elements in the segment.
+     */
     template <
         typename Natural,
         Natural
@@ -425,6 +784,27 @@ namespace segmentation {
         return Length;
     }
 
+    /**
+     * @brief 
+     *     Returns the number of elements in the segment __after__ index.
+     * @details
+     *     Function Template
+     *     -----------------
+     *     Returns the number of elements in the segment __after__
+     *     the specified index (does not include the element at index).
+     * @tparam Natural
+     *     Type of natural integer for index.
+     * @tparam Length
+     *     The length of the segment.
+     * @tparam Elemental 
+     *     Type of the elements.
+     * @param[in] locality 
+     *     Reference to the pointer.
+     * @param[in] index
+     *     Reference to the index.
+     * @return 
+     *     The number of elements __after__ index.
+     */
     template <
         typename Natural,
         Natural
@@ -448,6 +828,27 @@ namespace segmentation {
         return Length - 1 - index;
     }
 
+    /**
+     * @brief 
+     *     Returns the number of elements in the segment __before__ index.
+     * @details
+     *     Function Template
+     *     -----------------
+     *     Returns the number of elements in the segment __before__
+     *     the specified index (does not include the element at index).
+     * @tparam Natural
+     *     Type of natural integer for index.
+     * @tparam Length
+     *     The length of the segment.
+     * @tparam Elemental 
+     *     Type of the elements.
+     * @param[in] locality 
+     *     Reference to the pointer.
+     * @param[in] index
+     *     Reference to the index.
+     * @return 
+     *     The number of elements __before__ index.
+     */
     template <
         typename Natural,
         Natural
@@ -471,6 +872,23 @@ namespace segmentation {
         return index;
     }
 
+    /**
+     * @brief 
+     *     Vectorial read trajection implementation.
+     * @details
+     *     Objectification Template
+     *     ------------------------
+     *     Objective table which provides vectorial trajection into the segment.
+     *     Use this version if performance is stringent and requests for invalid 
+     *     index positions will not occur, as this version does not perform any 
+     *     run-time checks.
+     * @tparam Natural
+     *     Type of natural integer for index.
+     * @tparam Length
+     *     The length of the segment.
+     * @tparam Elemental 
+     *     Type of the elements.
+     */
     template <
         typename Natural,
         Natural
@@ -484,6 +902,23 @@ namespace segmentation {
         IndexicalGo< Natural, const Elemental >
     };
 
+    /**
+     * @brief 
+     *     Vectorial read trajection implementation.
+     * @details
+     *     Objectification Template
+     *     ------------------------
+     *     Objective table which provides vectorial trajection into the segment.
+     *     Use this version if performance is not stringent and requests for 
+     *     invalid index positions might occur, as this version does perform 
+     *     run-time checks.
+     * @tparam Natural
+     *     Type of natural integer for index.
+     * @tparam Length
+     *     The length of the segment.
+     * @tparam Elemental 
+     *     Type of the elements.
+     */
     template <
         typename Natural,
         Natural
@@ -493,10 +928,27 @@ namespace segmentation {
     constexpr Vectorial< const Locational< const Elemental >, Natural, const Elemental >
     SafeReadVector = {
         Comparison< Natural >,
-        ContainsIndexChecksForNull< Natural, Length, const Elemental >,
+        SafelyContainsIndex< Natural, Length, const Elemental >,
         IndexicalGoSafely< Natural, Length, const Elemental >
     };
 
+    /**
+     * @brief 
+     *     Vectorial write trajection implementation.
+     * @details
+     *     Objectification Template
+     *     ------------------------
+     *     Objective table which provides vectorial trajection into the segment.
+     *     Use this version if performance is stringent and requests for invalid 
+     *     index positions will not occur, as this version does not perform any 
+     *     run-time checks.
+     * @tparam Natural
+     *     Type of natural integer for index.
+     * @tparam Length
+     *     The length of the segment.
+     * @tparam Elemental 
+     *     Type of the elements.
+     */
     template <
         typename Natural,
         Natural
@@ -510,6 +962,23 @@ namespace segmentation {
         IndexicalGo< Natural, Elemental >
     };
 
+    /**
+     * @brief 
+     *     Vectorial read trajection implementation.
+     * @details
+     *     Objectification Template
+     *     ------------------------
+     *     Objective table which provides vectorial trajection into the segment.
+     *     Use this version if performance is not stringent and requests for 
+     *     invalid index positions might occur, as this version does perform 
+     *     run-time checks.
+     * @tparam Natural
+     *     Type of natural integer for index.
+     * @tparam Length
+     *     The length of the segment.
+     * @tparam Elemental 
+     *     Type of the elements.
+     */
     template <
         typename Natural,
         Natural
@@ -519,10 +988,26 @@ namespace segmentation {
     constexpr Vectorial< const Locational< Elemental >, Natural, Elemental >
     SafeWriteVector = {
         Comparison< Natural >,
-        ContainsIndexChecksForNull< Natural, Length, Elemental >,
+        SafelyContainsIndex< Natural, Length, Elemental >,
         IndexicalGoSafely< Natural, Length, Elemental >
     };
 
+    /**
+     * @brief 
+     *     Sequential read trajection implementation.
+     * @details
+     *     Objectification Template
+     *     ------------------------
+     *     Objective table which provides sequential positive trajection from a 
+     *     pointer.  Use this version if performance is not stringent and the 
+     *     pointer is not prevented from being null.
+     * @tparam Natural
+     *     Type of natural integer for index.
+     * @tparam Length
+     *     The length of the segment.
+     * @tparam Elemental 
+     *     Type of the elements.
+     */
     template <
         typename Natural,
         Natural
@@ -537,6 +1022,22 @@ namespace segmentation {
         IndexicalGoSafely< Natural, Length, const Elemental >,
     };
 
+    /**
+     * @brief 
+     *     Sequential write trajection implementation.
+     * @details
+     *     Objectification Template
+     *     ------------------------
+     *     Objective table which provides sequential positive trajection from a 
+     *     pointer.  Use this version if performance is not stringent and the 
+     *     pointer is not prevented from being null.
+     * @tparam Natural
+     *     Type of natural integer for index.
+     * @tparam Length
+     *     The length of the segment.
+     * @tparam Elemental 
+     *     Type of the elements.
+     */
     template <
         typename Natural,
         Natural
@@ -551,6 +1052,22 @@ namespace segmentation {
         IndexicalGoSafely< Natural, Length, Elemental >,
     };
 
+    /**
+     * @brief 
+     *     Sequential read trajection implementation.
+     * @details
+     *     Objectification Template
+     *     ------------------------
+     *     Objective table which provides sequential negative trajection from a 
+     *     pointer.  Use this version if performance is stringent and the 
+     *     pointer is prevented from being null.
+     * @tparam Natural
+     *     Type of natural integer for index.
+     * @tparam Length
+     *     The length of the segment.
+     * @tparam Elemental 
+     *     Type of the elements.
+     */
     template <
         typename Natural,
         Natural
@@ -565,6 +1082,22 @@ namespace segmentation {
         IndexicalGo< Natural, const Elemental >
     };
 
+    /**
+     * @brief 
+     *     Sequential read trajection implementation.
+     * @details
+     *     Objectification Template
+     *     ------------------------
+     *     Objective table which provides sequential negative trajection from a 
+     *     pointer.  Use this version if performance is not stringent and the 
+     *     pointer is not prevented from being null.
+     * @tparam Natural
+     *     Type of natural integer for index.
+     * @tparam Length
+     *     The length of the segment.
+     * @tparam Elemental 
+     *     Type of the elements.
+     */
     template <
         typename Natural,
         Natural
@@ -579,6 +1112,22 @@ namespace segmentation {
         IndexicalGoSafely< Natural, Length, const Elemental >,
     };
 
+    /**
+     * @brief 
+     *     Sequential write trajection implementation.
+     * @details
+     *     Objectification Template
+     *     ------------------------
+     *     Objective table which provides sequential negative trajection from a 
+     *     pointer.  Use this version if performance is stringent and the 
+     *     pointer is prevented from being null.
+     * @tparam Natural
+     *     Type of natural integer for index.
+     * @tparam Length
+     *     The length of the segment.
+     * @tparam Elemental 
+     *     Type of the elements.
+     */
     template <
         typename Natural,
         Natural
@@ -593,6 +1142,22 @@ namespace segmentation {
         IndexicalGo< Natural, Elemental >,
     };
 
+    /**
+     * @brief 
+     *     Sequential read trajection implementation.
+     * @details
+     *     Objectification Template
+     *     ------------------------
+     *     Objective table which provides sequential negative trajection from a 
+     *     pointer.  Use this version if performance is not stringent and the 
+     *     pointer is not prevented from being null.
+     * @tparam Natural
+     *     Type of natural integer for index.
+     * @tparam Length
+     *     The length of the segment.
+     * @tparam Elemental 
+     *     Type of the elements.
+     */
     template <
         typename Natural,
         Natural
@@ -607,6 +1172,22 @@ namespace segmentation {
         IndexicalGoSafely< Natural, Length, Elemental >,
     };
 
+    /**
+     * @brief 
+     *     Sequential read trajection implementation.
+     * @details
+     *     Objectification Template
+     *     ------------------------
+     *     Objective table which provides sequential trajection from a pointer.
+     *     Use this version if performance is stringent and the pointer is 
+     *     prevented from being null.
+     * @tparam Natural
+     *     Type of natural integer for index.
+     * @tparam Length
+     *     The length of the segment.
+     * @tparam Elemental 
+     *     Type of the elements.
+     */
     template <
         typename Natural,
         Natural
@@ -619,6 +1200,22 @@ namespace segmentation {
         ReadDecrementScale< Natural, Length, Elemental >
     };
 
+    /**
+     * @brief 
+     *     Sequential write trajection implementation.
+     * @details
+     *     Objectification Template
+     *     ------------------------
+     *     Objective table which provides sequential trajection from a pointer.
+     *     Use this version if performance is stringent and the pointer is 
+     *     prevented from being null.
+     * @tparam Natural
+     *     Type of natural integer for index.
+     * @tparam Length
+     *     The length of the segment.
+     * @tparam Elemental 
+     *     Type of the elements.
+     */
     template <
         typename Natural,
         Natural
@@ -631,6 +1228,22 @@ namespace segmentation {
         WriteDecrementScale< Natural, Length, Elemental >
     };
 
+    /**
+     * @brief 
+     *     Sequential read trajection implementation.
+     * @details
+     *     Objectification Template
+     *     ------------------------
+     *     Objective table which provides sequential trajection from a pointer.
+     *     Use this version if performance is not stringent and the pointer is 
+     *     not prevented from being null.
+     * @tparam Natural
+     *     Type of natural integer for index.
+     * @tparam Length
+     *     The length of the segment.
+     * @tparam Elemental 
+     *     Type of the elements.
+     */
     template <
         typename Natural,
         Natural
@@ -643,6 +1256,22 @@ namespace segmentation {
         SafeReadDecrementScale< Natural, Length, Elemental >
     };
 
+    /**
+     * @brief 
+     *     Sequential write trajection implementation.
+     * @details
+     *     Objectification Template
+     *     ------------------------
+     *     Objective table which provides sequential trajection from a pointer.
+     *     Use this version if performance is not stringent and the pointer is 
+     *     not prevented from being null.
+     * @tparam Natural
+     *     Type of natural integer for index.
+     * @tparam Length
+     *     The length of the segment.
+     * @tparam Elemental 
+     *     Type of the elements.
+     */
     template <
         typename Natural,
         Natural
@@ -655,6 +1284,22 @@ namespace segmentation {
         SafeWriteDecrementScale< Natural, Length, Elemental >
     };
 
+    /**
+     * @brief 
+     *     Sequential read trajection implementation.
+     * @details
+     *     Objectification Template
+     *     ------------------------
+     *     Objective table which provides sequential positive trajection from a
+     *     pointer.  Use this version if performance is stringent and the 
+     *     pointer is prevented from being null.
+     * @tparam Natural
+     *     Type of natural integer for index.
+     * @tparam Length
+     *     The length of the segment.
+     * @tparam Elemental 
+     *     Type of the elements.
+     */
     template <
         typename Natural,
         Natural
@@ -671,6 +1316,22 @@ namespace segmentation {
         CountIncrement< Natural, Length, const Elemental >
     };
 
+    /**
+     * @brief 
+     *     Sequential read trajection implementation.
+     * @details
+     *     Objectification Template
+     *     ------------------------
+     *     Objective table which provides sequential positive trajection from a 
+     *     pointer.  Use this version if performance is not stringent and the 
+     *     pointer is not prevented from being null.
+     * @tparam Natural
+     *     Type of natural integer for index.
+     * @tparam Length
+     *     The length of the segment.
+     * @tparam Elemental 
+     *     Type of the elements.
+     */
     template <
         typename Natural,
         Natural
@@ -680,13 +1341,29 @@ namespace segmentation {
     constexpr Directional< const Locational< const Elemental >, Natural, Natural, const Elemental >
     SafeReadIncrementDirection = {
         SafeReadIncrementScale< Natural, Length, Elemental >,
-        BeginsChecksForNull< Natural, Length, const Elemental >,
-        IncrementTraversesChecksForNull< Natural, Length, const Elemental >,
-        ContainsIndexChecksForNull< Natural, Length, const Elemental >,
+        SafelyBegins< Natural, Length, const Elemental >,
+        IncrementTraversesSafely< Natural, Length, const Elemental >,
+        SafelyContainsIndex< Natural, Length, const Elemental >,
         Account< Natural, Length, const Elemental >,
         CountIncrement< Natural, Length, const Elemental >
     };
 
+    /**
+     * @brief 
+     *     Sequential write trajection implementation.
+     * @details
+     *     Objectification Template
+     *     ------------------------
+     *     Objective table which provides sequential positive trajection from a
+     *     pointer.  Use this version if performance is stringent and the 
+     *     pointer is prevented from being null.
+     * @tparam Natural
+     *     Type of natural integer for index.
+     * @tparam Length
+     *     The length of the segment.
+     * @tparam Elemental 
+     *     Type of the elements.
+     */
     template <
         typename Natural,
         Natural
@@ -703,6 +1380,22 @@ namespace segmentation {
         CountIncrement< Natural, Length, Elemental >
     };
 
+    /**
+     * @brief 
+     *     Sequential write trajection implementation.
+     * @details
+     *     Objectification Template
+     *     ------------------------
+     *     Objective table which provides sequential positive trajection from a 
+     *     pointer.  Use this version if performance is not stringent and the 
+     *     pointer is not prevented from being null.
+     * @tparam Natural
+     *     Type of natural integer for index.
+     * @tparam Length
+     *     The length of the segment.
+     * @tparam Elemental 
+     *     Type of the elements.
+     */
     template <
         typename Natural,
         Natural
@@ -712,13 +1405,29 @@ namespace segmentation {
     constexpr Directional< const Locational< Elemental >, Natural, Natural, Elemental >
     SafeWriteIncrementDirection = {
         SafeWriteIncrementScale< Natural, Length, Elemental >,
-        BeginsChecksForNull< Natural, Length, Elemental >,
-        IncrementTraversesChecksForNull< Natural, Length, Elemental >,
-        ContainsIndexChecksForNull< Natural, Length, const Elemental >,
+        SafelyBegins< Natural, Length, Elemental >,
+        IncrementTraversesSafely< Natural, Length, Elemental >,
+        SafelyContainsIndex< Natural, Length, const Elemental >,
         Account< Natural, Length, Elemental >,
         CountIncrement< Natural, Length, Elemental >
     };
 
+    /**
+     * @brief 
+     *     Sequential read trajection implementation.
+     * @details
+     *     Objectification Template
+     *     ------------------------
+     *     Objective table which provides sequential negative trajection from a
+     *     pointer.  Use this version if performance is stringent and the 
+     *     pointer is prevented from being null.
+     * @tparam Natural
+     *     Type of natural integer for index.
+     * @tparam Length
+     *     The length of the segment.
+     * @tparam Elemental 
+     *     Type of the elements.
+     */
     template <
         typename Natural,
         Natural
@@ -735,6 +1444,22 @@ namespace segmentation {
         CountDecrement< Natural, Length, const Elemental >
     };
 
+    /**
+     * @brief 
+     *     Sequential read trajection implementation.
+     * @details
+     *     Objectification Template
+     *     ------------------------
+     *     Objective table which provides sequential negative trajection from a 
+     *     pointer.  Use this version if performance is not stringent and the 
+     *     pointer is not prevented from being null.
+     * @tparam Natural
+     *     Type of natural integer for index.
+     * @tparam Length
+     *     The length of the segment.
+     * @tparam Elemental 
+     *     Type of the elements.
+     */
     template <
         typename Natural,
         Natural
@@ -744,13 +1469,29 @@ namespace segmentation {
     constexpr Directional< const Locational< const Elemental >, Natural, Natural, const Elemental >
     SafeReadDecrementDirection = {
         SafeReadDecrementScale< Natural, Length, Elemental >,
-        BeginsChecksForNull< Natural, Length, const Elemental >,
-        DecrementTraversesChecksForNull< Natural, Length, const Elemental >,
-        ContainsIndexChecksForNull< Natural, Length, const Elemental >,
+        SafelyBegins< Natural, Length, const Elemental >,
+        DecrementTraversesSafely< Natural, Length, const Elemental >,
+        SafelyContainsIndex< Natural, Length, const Elemental >,
         Account< Natural, Length, const Elemental >,
         CountDecrement< Natural, Length, const Elemental >
     };
 
+    /**
+     * @brief 
+     *     Sequential write trajection implementation.
+     * @details
+     *     Objectification Template
+     *     ------------------------
+     *     Objective table which provides sequential negative trajection from a
+     *     pointer.  Use this version if performance is stringent and the 
+     *     pointer is prevented from being null.
+     * @tparam Natural
+     *     Type of natural integer for index.
+     * @tparam Length
+     *     The length of the segment.
+     * @tparam Elemental 
+     *     Type of the elements.
+     */
     template <
         typename Natural,
         Natural
@@ -767,6 +1508,22 @@ namespace segmentation {
         CountDecrement< Natural, Length, Elemental >
     };
 
+    /**
+     * @brief 
+     *     Sequential write trajection implementation.
+     * @details
+     *     Objectification Template
+     *     ------------------------
+     *     Objective table which provides sequential negative trajection from a 
+     *     pointer.  Use this version if performance is not stringent and the 
+     *     pointer is not prevented from being null.
+     * @tparam Natural
+     *     Type of natural integer for index.
+     * @tparam Length
+     *     The length of the segment.
+     * @tparam Elemental 
+     *     Type of the elements.
+     */
     template <
         typename Natural,
         Natural
@@ -776,13 +1533,29 @@ namespace segmentation {
     constexpr Directional< const Locational< Elemental >, Natural, Natural, Elemental >
     SafeWriteDecrementDirection = {
         SafeWriteDecrementScale< Natural, Length, Elemental >,
-        BeginsChecksForNull< Natural, Length, Elemental >,
-        DecrementTraversesChecksForNull< Natural, Length, Elemental >,
-        ContainsIndexChecksForNull< Natural, Length, Elemental >,
+        SafelyBegins< Natural, Length, Elemental >,
+        DecrementTraversesSafely< Natural, Length, Elemental >,
+        SafelyContainsIndex< Natural, Length, Elemental >,
         Account< Natural, Length, Elemental >,
         CountDecrement< Natural, Length, Elemental >
     };
 
+    /**
+     * @brief 
+     *     Sequential read trajection implementation.
+     * @details
+     *     Objectification Template
+     *     ------------------------
+     *     Objective table which provides sequential trajection from a pointer.
+     *     Use this version if performance is stringent and the pointer is 
+     *     prevented from being null.
+     * @tparam Natural
+     *     Type of natural integer for index.
+     * @tparam Length
+     *     The length of the segment.
+     * @tparam Elemental 
+     *     Type of the elements.
+     */
     template <
         typename Natural,
         Natural
@@ -795,6 +1568,22 @@ namespace segmentation {
         ReadDecrementDirection< Natural, Length, Elemental >
     };
 
+    /**
+     * @brief 
+     *     Sequential read trajection implementation.
+     * @details
+     *     Objectification Template
+     *     ------------------------
+     *     Objective table which provides sequential trajection from a pointer.
+     *     Use this version if performance is not stringent and the pointer is 
+     *     not prevented from being null.
+     * @tparam Natural
+     *     Type of natural integer for index.
+     * @tparam Length
+     *     The length of the segment.
+     * @tparam Elemental 
+     *     Type of the elements.
+     */
     template <
         typename Natural,
         Natural
@@ -807,6 +1596,22 @@ namespace segmentation {
         SafeReadDecrementDirection< Natural, Length, Elemental >
     };
 
+    /**
+     * @brief 
+     *     Sequential write trajection implementation.
+     * @details
+     *     Objectification Template
+     *     ------------------------
+     *     Objective table which provides sequential trajection from a pointer.
+     *     Use this version if performance is stringent and the pointer is 
+     *     prevented from being null.
+     * @tparam Natural
+     *     Type of natural integer for index.
+     * @tparam Length
+     *     The length of the segment.
+     * @tparam Elemental 
+     *     Type of the elements.
+     */
     template <
         typename Natural,
         Natural
@@ -819,6 +1624,22 @@ namespace segmentation {
         WriteDecrementDirection< Natural, Length, Elemental >
     };
 
+    /**
+     * @brief 
+     *     Sequential write trajection implementation.
+     * @details
+     *     Objectification Template
+     *     ------------------------
+     *     Objective table which provides sequential trajection from a pointer.
+     *     Use this version if performance is not stringent and the pointer is 
+     *     not prevented from being null.
+     * @tparam Natural
+     *     Type of natural integer for index.
+     * @tparam Length
+     *     The length of the segment.
+     * @tparam Elemental 
+     *     Type of the elements.
+     */
     template <
         typename Natural,
         Natural

@@ -6,11 +6,20 @@
 
 namespace junction {
 
+    /**
+     * @brief         
+     *     Linked list resource management common functionality.
+     * @details       
+     *     Association
+     *     -----------
+     *     Linked list resource management common functionality.
+     */
     namespace provision {
 
         using ::allocation::DefaultAllocative;
 
         template <
+            typename Connective,
             typename Natural,
             Natural
                 Maximum,
@@ -18,7 +27,7 @@ namespace junction {
         >
         static inline Natural
         Survey(
-            Referential< const Junctive< Natural, Elemental > >
+            Referential< const Junctive< Connective, Natural, Elemental > >
                 list
         ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
@@ -33,15 +42,19 @@ namespace junction {
 
         template <
             typename Natural,
+            Natural
+                Maximum,
             typename Elemental,
-            Referential< const DefaultAllocative< Junctional< Elemental > > >
-                Allocator
+            Referential< const DefaultAllocative< SinglyNodal< Elemental > > >
+                Allocator,
+            const bool
+                Safety
         >
         static inline bool
         Protract(
-            Referential< Junctive< Natural, Elemental > >
+            Referential< SinglyJunctive< Natural, Elemental > >
                 list,
-            Referential< Positional< Elemental > >
+            Referential< SinglyPositional< Elemental > >
                 position,
             Referential< const Natural >
                 count
@@ -53,10 +66,12 @@ namespace junction {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            Locational< Junctional< Elemental > >
-                node;
+            Locational< SinglyNodal< Elemental > >
+                node, result;
             Natural
                 index;
+            if (Safety && list.count >= Maximum)
+                return false;
             position.at = Reclaim( list );
             if (!position.at) {
                 Allocator.claim( position.at );
@@ -66,26 +81,22 @@ namespace junction {
             }
             node = position.at;
             for (index = 1; index < count; index++) {
-                node->next = Reclaim( list );
-                if (!node->next) {
-                    Allocator.claim( node->next );
-                    if (!node->next) {
-                        node->next = list.unused;
-                        if (list.unused)
-                            list.unused->previous = node;
+                SetNext( node, Reclaim( list ) );
+                if (!GetNext( node )) {
+                    Allocator.claim( result );
+                    if (!result) {
+                        SetNext( node, list.unused );
                         list.unused = position.at;
-                        list.unused->previous = 0;
                         return false;
                     }
+                    SetNext( node, result );
                     list.total++;
                 }
-                node->next->previous = node;
-                node = node->next;
+                node = GetNext( node );
             }
-            node->next = 0;
-            position.at->previous = list.last;
+            UnsetNext( node );
             if (list.last)
-                list.last->next = position.at;
+                SetNext( list.last, position.at );
             else
                 list.first = position.at;
             list.last = position.at;
@@ -98,23 +109,66 @@ namespace junction {
             Natural
                 Maximum,
             typename Elemental,
-            Referential< const DefaultAllocative< Junctional< Elemental > > >
-                Allocator
+            Referential< const DefaultAllocative< DoublyNodal< Elemental > > >
+                Allocator,
+            const bool
+                Safety
         >
         static inline bool
-        ProtractSafely(
-            Referential< Junctive< Natural, Elemental > >
+        Protract(
+            Referential< DoublyJunctive< Natural, Elemental > >
                 list,
-            Referential< Positional< Elemental > >
+            Referential< DoublyPositional< Elemental > >
                 position,
             Referential< const Natural >
                 count
         ) {
-            static auto&
-                ProtractList = Protract< Natural, Elemental, Allocator >;
-            if (list.count >= Maximum)
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
+            using namespace ::std;
+            static_assert(
+                is_integral< Natural >::value && is_unsigned< Natural >::value,
+                "Natural:  Unsigned integer type required"
+            );
+#endif
+            Locational< DoublyNodal< Elemental > >
+                node, result;
+            Natural
+                index;
+            if (Safety && list.count >= Maximum)
                 return false;
-            return ProtractList( list, position, count );
+            position.at = Reclaim( list );
+            if (!position.at) {
+                Allocator.claim( position.at );
+                if (!position.at)
+                    return false;
+                list.total++;
+            }
+            node = position.at;
+            for (index = 1; index < count; index++) {
+                SetNext( node, Reclaim( list ) );
+                if (!GetNext( node )) {
+                    Allocator.claim( result );
+                    if (!result) {
+                        ConnectNext( node, list.unused );
+                        list.unused = position.at;
+                        UnsetPrevious( list.unused );
+                        return false;
+                    }
+                    SetNext( node, result );
+                    list.total++;
+                }
+                SetPrevious( GetNext( node ), node );
+                node = GetNext( node );
+            }
+            UnsetNext( node );
+            SetPrevious( position.at, list.last );
+            if (list.last)
+                SetNext( list.last, position.at );
+            else
+                list.first = position.at;
+            list.last = position.at;
+            list.count += count;
+            return true;
         }
 
     };

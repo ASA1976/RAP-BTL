@@ -1,7 +1,7 @@
 // © 2018 Aaron Sami Abassi
 // Licensed under the Academic Free License version 3.0
-#ifndef JUNCTION_CONTRIBUTION_PROVISION_MODULE
-#define JUNCTION_CONTRIBUTION_PROVISION_MODULE
+#ifndef JUNCTION_PROVISION_CONTRIBUTION_MODULE
+#define JUNCTION_PROVISION_CONTRIBUTION_MODULE
 #include "../consecution.hpp"
 #include "../provision.hpp"
 #include "../../attribution.hpp"
@@ -10,21 +10,35 @@ namespace junction {
 
     namespace provision {
 
+        /**
+         * @brief         
+         *     Linked list pool resource management implementation.
+         * @details       
+         *     Association
+         *     -----------
+         *     Linked list pool resource management implementation.
+         */
         namespace contribution {
 
             using ::attribution::Tributary;
+            using consecution::Concessive;
+            using consecution::Concede;
 
             template <
                 typename Natural,
+                Natural
+                    Maximum,
                 typename Elemental,
-                Referential< const DefaultAllocative< Junctional< Elemental > > >
-                    Allocator
+                Referential< const DefaultAllocative< SinglyNodal< Elemental > > >
+                    Allocator,
+                const bool
+                    Safety
             >
             static inline bool
             Distribute(
-                Referential< Junctive< Natural, Elemental > >
+                Referential< SinglyJunctive< Natural, Elemental > >
                     list,
-                Referential< Positional< Elemental > >
+                Referential< SinglyPositional< Elemental > >
                     position
             ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
@@ -34,17 +48,18 @@ namespace junction {
                     "Natural:  Unsigned integer type required"
                 );
 #endif
+                if (Safety && list.count >= Maximum)
+                    return false;
                 position.at = Reclaim( list );
                 if (!position.at) {
                     Allocator.claim( position.at );
                     if (!position.at)
                         return false;
                     list.total++;
-                    position.at->next = 0;
                 }
-                position.at->previous = list.last;
+                UnsetNext( position.at );
                 if (list.last)
-                    list.last->next = position.at;
+                    SetNext( list.last, position.at );
                 else
                     list.first = position.at;
                 list.last = position.at;
@@ -53,18 +68,20 @@ namespace junction {
             }
 
             template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental,
-                Referential< const DefaultAllocative< Junctional< Elemental > > >
-                    Allocator
+                typename Natural,
+                Natural
+                    Maximum,
+                typename Elemental,
+                Referential< const DefaultAllocative< DoublyNodal< Elemental > > >
+                    Allocator,
+                const bool
+                    Safety
             >
             static inline bool
-            DistributeSafely(
-                Referential< Junctive< Natural, Elemental > >
+            Distribute(
+                Referential< DoublyJunctive< Natural, Elemental > >
                     list,
-                Referential< Positional< Elemental > >
+                Referential< DoublyPositional< Elemental > >
                     position
             ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
@@ -74,20 +91,38 @@ namespace junction {
                     "Natural:  Unsigned integer type required"
                 );
 #endif
-                if (list.count >= Maximum)
+                if (Safety && list.count >= Maximum)
                     return false;
-                return Distribute( list, position );
+                position.at = Reclaim( list );
+                if (!position.at) {
+                    Allocator.claim( position.at );
+                    if (!position.at)
+                        return false;
+                    list.total++;
+                }
+                UnsetNext( position.at );
+                SetPrevious( position.at, list.last );
+                if (list.last)
+                    SetNext( list.last, position.at );
+                else
+                    list.first = position.at;
+                list.last = position.at;
+                list.count++;
+                return true;
             }
 
             template <
+                typename Connective,
                 typename Natural,
-                typename Elemental
+                typename Elemental,
+                Referential< Concessive< Connective, Natural, Elemental > >
+                    Concede
             >
             static inline bool
             Retribute(
-                Referential< Junctive< Natural, Elemental > >
+                Referential< Junctive< Connective, Natural, Elemental > >
                     list,
-                Referential< const Positional< Elemental > >
+                Referential< const Positional< Connective, Elemental > >
                     position
             ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
@@ -97,9 +132,7 @@ namespace junction {
                     "Natural:  Unsigned integer type required"
                 );
 #endif
-                static const Natural
-                    Count = 1;
-                return consecution::Concede( list, position, Count );
+                return Concede( list, position, 1 );
             }
 
             template <
@@ -107,16 +140,16 @@ namespace junction {
                 Natural
                     Maximum,
                 typename Elemental,
-                Referential< const DefaultAllocative< Junctional< Elemental > > >
+                Referential< const DefaultAllocative< SinglyNodal< Elemental > > >
                     Allocator
             >
-            constexpr Tributary< Junctive< Natural, Elemental >, Positional< Elemental >, Natural >
-            Contributor = {
-                Survey< Natural, Maximum, Elemental >,
-                Account< Natural, Elemental >,
-                Distribute< Natural, Elemental, Allocator >,
-                Retribute< Natural, Elemental >,
-                RemoveAllNodes< Natural, Elemental >
+            constexpr Tributary< SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, Natural >
+            SingleContributor = {
+                Survey< SinglyLinked< Elemental >, Natural, Maximum, Elemental >,
+                Account< SinglyLinked< Elemental >, Natural, Elemental >,
+                Distribute< Natural, Maximum, Elemental, Allocator, false >,
+                Retribute< SinglyLinked< Elemental >, Natural, Elemental, Concede< Natural, Elemental, false > >,
+                RemoveAll< SinglyLinked< Elemental >, Natural, Elemental >
             };
 
             template <
@@ -124,16 +157,50 @@ namespace junction {
                 Natural
                     Maximum,
                 typename Elemental,
-                Referential< const DefaultAllocative< Junctional< Elemental > > >
+                Referential< const DefaultAllocative< DoublyNodal< Elemental > > >
                     Allocator
             >
-            constexpr Tributary< Junctive< Natural, Elemental >, Positional< Elemental >, Natural >
-            SafeContributor = {
-                Survey< Natural, Maximum, Elemental >,
-                Account< Natural, Elemental >,
-                DistributeSafely< Natural, Maximum, Elemental, Allocator >,
-                Retribute< Natural, Elemental >,
-                RemoveAllNodes< Natural, Elemental >
+            constexpr Tributary< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural >
+            DoubleContributor = {
+                Survey< DoublyLinked< Elemental >, Natural, Maximum, Elemental >,
+                Account< DoublyLinked< Elemental >, Natural, Elemental >,
+                Distribute< Natural, Maximum, Elemental, Allocator, false >,
+                Retribute< DoublyLinked< Elemental >, Natural, Elemental, Concede< Natural, Elemental, false > >,
+                RemoveAll< DoublyLinked< Elemental >, Natural, Elemental >
+            };
+
+            template <
+                typename Natural,
+                Natural
+                    Maximum,
+                typename Elemental,
+                Referential< const DefaultAllocative< SinglyNodal< Elemental > > >
+                    Allocator
+            >
+            constexpr Tributary< SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, Natural >
+            SafeSingleContributor = {
+                Survey< SinglyLinked< Elemental >, Natural, Maximum, Elemental >,
+                Account< SinglyLinked< Elemental >, Natural, Elemental >,
+                Distribute< Natural, Maximum, Elemental, Allocator, true >,
+                Retribute< SinglyLinked< Elemental >, Natural, Elemental, Concede< Natural, Elemental, true > >,
+                RemoveAll< SinglyLinked< Elemental >, Natural, Elemental >
+            };
+
+            template <
+                typename Natural,
+                Natural
+                    Maximum,
+                typename Elemental,
+                Referential< const DefaultAllocative< DoublyNodal< Elemental > > >
+                    Allocator
+            >
+            constexpr Tributary< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural >
+            SafeDoubleContributor = {
+                Survey< DoublyLinked< Elemental >, Natural, Maximum, Elemental >,
+                Account< DoublyLinked< Elemental >, Natural, Elemental >,
+                Distribute< Natural, Maximum, Elemental, Allocator, true >,
+                Retribute< DoublyLinked< Elemental >, Natural, Elemental, Concede< Natural, Elemental, true > >,
+                RemoveAll< DoublyLinked< Elemental >, Natural, Elemental >
             };
 
         }

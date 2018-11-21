@@ -1,7 +1,7 @@
 // © 2018 Aaron Sami Abassi
 // Licensed under the Academic Free License version 3.0
-#ifndef ELEVATION_MODULE
-#define ELEVATION_MODULE
+#ifndef RATION_ELEVATION_MODULE
+#define RATION_ELEVATION_MODULE
 #include "../ration.hpp"
 #include "../traction.hpp"
 #include "../trajection.hpp"
@@ -11,6 +11,15 @@
 
 namespace ration {
 
+    /**
+     * @brief
+     *     Stack rationing.
+     * @details 
+     *     Association
+     *     -----------
+     *     Array based stack rationing conformity, initialization facility, 
+     *     tractile management and sequential trajection implementations.
+     */
     namespace elevation {
 
         using ::location::Referential;
@@ -23,6 +32,20 @@ namespace ration {
         using ::traction::Tractile;
         using ::comparison::Comparison;
 
+        /**
+         * @brief
+         *     Stack resource conformity.
+         * @details
+         *     Conformation Template
+         *     ---------------------
+         *     Type alias which defines stack data as a memory resource.
+         * @tparam Natural 
+         *     Type of natural integer for sizes.
+         * @tparam Maximum 
+         *     The maximum number of elements.
+         * @tparam Elemental
+         *     Type of the elements.
+         */
         template <
             typename Natural,
             Natural
@@ -31,6 +54,21 @@ namespace ration {
         >
         using Elevatory = Resourceful< Natural, Maximum, Elemental >;
 
+        /**
+         * @brief
+         *     Initialized stack.
+         * @details 
+         *     Information Template
+         *     --------------------
+         *     Initialized stack value which can be used to initialize an 
+         *     instance of the same stack type.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum 
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         */
         template <
             typename Natural,
             Natural
@@ -40,6 +78,26 @@ namespace ration {
         constexpr Elevatory< Natural, Maximum, Elemental >
         InitializedStack = InitializedResource< Natural, Maximum, Elemental >;
 
+        /**
+         * @brief
+         *     Check if index is an allotted stack position.
+         * @details
+         *     Function Template
+         *     -----------------
+         *     Checks if index is a currently allotted stack element.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum
+         *     The maximum number of elements.
+         * @tparam Elemental
+         *     Type of the elements.
+         * @param[in] stack
+         *     Reference to the stack.
+         * @param[in] index
+         *     Reference to the index.
+         * @return
+         *     True if index is allotted.
+         */
         template <
             typename Natural,
             Natural
@@ -63,6 +121,27 @@ namespace ration {
             return index < stack.allotment;
         }
 
+        /**
+         * @brief 
+         *     Confers the element at index.
+         * @details
+         *     Function Template
+         *     -----------------
+         *     Returns a modifiable reference to the element at the specified 
+         *     index.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum 
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         * @param[in] stack
+         *     Reference to the stack.
+         * @param[in] index
+         *     Reference to the index.
+         * @return
+         *     The reference conferment.
+         */
         template <
             typename Natural,
             Natural
@@ -87,6 +166,28 @@ namespace ration {
             return Confer( stack.source[index] );
         }
 
+        /**
+         * @brief
+         *     Confers the element at index.
+         * @details
+         *     Function Template
+         *     -----------------
+         *     Returns a modifiable reference to the element at the specified 
+         *     index.  Throws an exception if the index is not currently 
+         *     allotted.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum
+         *     The maximum number of elements.
+         * @tparam Elemental
+         *     Type of the elements.
+         * @param[in] stack
+         *     Reference to the stack.
+         * @param[in] index
+         *     Reference to the index.
+         * @return 
+         *     The reference conferment.
+         */
         template <
             typename Natural,
             Natural
@@ -112,6 +213,28 @@ namespace ration {
             return GoWrite( stack, index );
         }
 
+        /**
+         * @brief
+         *     Deters the element at index.
+         * @details
+         *     Function Template
+         *     -----------------
+         *     Returns a constant reference to the element at the specified 
+         *     positional index.  Throws an exception if the index is not 
+         *     currently allotted.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum
+         *     The maximum number of elements.
+         * @tparam Elemental
+         *     Type of the elements.
+         * @param[in] stack
+         *     Reference to the stack.
+         * @param[in] index
+         *     Reference to the index.
+         * @return
+         *     The reference determent.
+         */
         template <
             typename Natural,
             Natural
@@ -136,6 +259,28 @@ namespace ration {
             return Deter( stack.source[index] );
         }
 
+        /**
+         * @brief 
+         *     Deters the element at index.
+         * @details
+         *     Function Template
+         *     -----------------
+         *     Returns a constant reference to the element at the specified 
+         *     positional index.  Throws an exception if the index is not 
+         *     currently allotted.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         * @param[in] stack
+         *     Reference to the stack.
+         * @param[in] index
+         *     Reference to the index.
+         * @return 
+         *     The reference determent.
+         */
         template <
             typename Natural,
             Natural
@@ -161,6 +306,28 @@ namespace ration {
             return GoRead( stack, index );
         }
 
+        /**
+         * @brief
+         *     Checks if sequential trajection can begin.
+         * @details
+         *     Function Template
+         *     -----------------
+         *     Checks if sequential trajection can begin at the specified offset
+         *     count.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         * @param[in] stack
+         *     Reference to the stack.
+         * @param[in] count
+         *     Reference to the offset count.
+         * @return 
+         *     True if the offset can be reached from the either the increment
+         *     or decrement beginnings.
+         */
         template <
             typename Natural,
             Natural
@@ -184,6 +351,29 @@ namespace ration {
             return count < stack.allotment;
         }
 
+        /**
+         * @brief
+         *     Begins read increment trajection.
+         * @details
+         *     Function Template
+         *     -----------------
+         *     Assigns to index the count offset from the beginning of the 
+         *     stack, which begins at the first protracted element.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         * @param[in] stack 
+         *     Reference to the stack.
+         * @param[out] index
+         *     Reference to the index.
+         * @param[in] count
+         *     Reference to the offset count.
+         * @return 
+         *     A reference to the index as a constant.
+         */
         template <
             typename Natural,
             Natural
@@ -209,6 +399,30 @@ namespace ration {
             return index = count;
         }
 
+        /**
+         * @brief 
+         *     Begins read increment trajection.
+         * @details
+         *     Function Template
+         *     -----------------
+         *     Assigns to index the count offset from the beginning of the 
+         *     stack, which begins at the first protracted element.  Throws
+         *     an exception if there are no allotted elements.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum
+         *     The maximum number of elements.
+         * @tparam Elemental
+         *     Type of the elements.
+         * @param[in] stack
+         *     Reference to the stack.
+         * @param[out] index
+         *     Reference to the index.
+         * @param[in] count 
+         *     Reference to the offset count.
+         * @return
+         *     A reference to the index as a constant.
+         */
         template <
             typename Natural,
             Natural
@@ -236,6 +450,29 @@ namespace ration {
             return BeginReadIncrement( stack, index, count );
         }
 
+        /**
+         * @brief
+         *     Begins write increment trajection.
+         * @details
+         *     Function Template
+         *     -----------------
+         *     Assigns to index the count offset from the beginning of the 
+         *     stack, which begins at the first protracted element.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         * @param[in] stack
+         *     Reference to the stack.
+         * @param[out] index
+         *     Reference to the index.
+         * @param[in] count
+         *     Reference to the offset count.
+         * @return
+         *     A reference to the index as a constant.
+         */
         template <
             typename Natural,
             Natural
@@ -261,6 +498,30 @@ namespace ration {
             return index = count;
         }
 
+        /**
+         * @brief
+         *     Begins write increment trajection.
+         * @details
+         *     Function Template
+         *     -----------------
+         *     Assigns to index the count offset from the beginning of the 
+         *     stack, which begins at the first protracted element. Throws 
+         *     an exception if there are no allotted elements.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         * @param[in] stack
+         *     Reference to the stack.
+         * @param[out] index
+         *     Reference to the index.
+         * @param[in] count
+         *     Reference to the offset count.
+         * @return 
+         *     A reference to the index as a constant.
+         */
         template <
             typename Natural,
             Natural
@@ -288,6 +549,29 @@ namespace ration {
             return BeginWriteIncrement( stack, index, count );
         }
 
+        /**
+         * @brief
+         *     Checks if sequential trajection can continue.
+         * @details
+         *     Function Template
+         *     -----------------
+         *     Checks if sequential trajection can traverse from index to the
+         *     specified count offset.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         * @param[in] stack
+         *     Reference to the stack.
+         * @param[in] index
+         *     Reference to the index.
+         * @param[in] count
+         *     Reference to the offset count.
+         * @return 
+         *     True if the offset can be reached from index.
+         */
         template <
             typename Natural,
             Natural
@@ -313,6 +597,28 @@ namespace ration {
             return index + count < stack.allotment;
         }
 
+        /**
+         * @brief 
+         *     Traverses read increment.
+         * @details
+         *     Function Template
+         *     -----------------
+         *     Increases index by count offset.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum 
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         * @param[in] stack
+         *     Reference to the stack.
+         * @param[in,out] index
+         *     Reference to the index.
+         * @param[in] count
+         *     Reference to the offset count.
+         * @return 
+         *     A reference to the index as a constant.
+         */
         template <
             typename Natural,
             Natural
@@ -338,6 +644,29 @@ namespace ration {
             return index += count;
         }
 
+        /**
+         * @brief 
+         *     Traverses read increment.
+         * @details
+         *     Function Template
+         *     -----------------
+         *     Increases index by count offset.  Throws an exception if the 
+         *     count offset would move index beyond the end of the stack.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum 
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         * @param[in] stack 
+         *     Reference to the stack.
+         * @param[in,out] index
+         *     Reference to the index.
+         * @param[in] count
+         *     Reference to the offset count.
+         * @return 
+         *     A reference to the index as a constant.
+         */
         template <
             typename Natural,
             Natural
@@ -365,6 +694,28 @@ namespace ration {
             return TraverseReadIncrement( stack, index, count );
         }
 
+        /**
+         * @brief 
+         *     Traverses write increment.
+         * @details
+         *     Function Template
+         *     -----------------
+         *     Increases index by count offset.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum 
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         * @param[in] stack
+         *     Reference to the stack.
+         * @param[in,out] index
+         *     Reference to the index.
+         * @param[in] count
+         *     Reference to the offset count.
+         * @return 
+         *     A reference to the index as a constant.
+         */
         template <
             typename Natural,
             Natural
@@ -390,6 +741,29 @@ namespace ration {
             return index += count;
         }
 
+        /**
+         * @brief 
+         *     Traverses write increment.
+         * @details
+         *     Function Template
+         *     -----------------
+         *     Increases index by count offset.  Throws an exception if the 
+         *     count offset would move index beyond the end of the stack.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum 
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         * @param[in] stack 
+         *     Reference to the stack.
+         * @param[in,out] index
+         *     Reference to the index.
+         * @param[in] count
+         *     Reference to the offset count.
+         * @return 
+         *     A reference to the index as a constant.
+         */
         template <
             typename Natural,
             Natural
@@ -417,6 +791,29 @@ namespace ration {
             return TraverseWriteIncrement( stack, index, count );
         }
 
+        /**
+         * @brief
+         *     Begins read decrement trajection.
+         * @details
+         *     Function Template
+         *     -----------------
+         *     Assigns to index the count offset from the end of the stack, 
+         *     which ends at the last protracted element.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         * @param[in] stack 
+         *     Reference to the stack.
+         * @param[out] index
+         *     Reference to the index.
+         * @param[in] count
+         *     Reference to the offset count.
+         * @return 
+         *     A reference to the index as a constant.
+         */
         template <
             typename Natural,
             Natural
@@ -442,6 +839,30 @@ namespace ration {
             return index = stack.allotment - 1 - count;
         }
 
+        /**
+         * @brief 
+         *     Begins read decrement trajection.
+         * @details
+         *     Function Template
+         *     -----------------
+         *     Assigns to index the count offset from the end of the stack, 
+         *     which ends at the last protracted element. Throws an exception 
+         *     if there are no allotted elements.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum
+         *     The maximum number of elements.
+         * @tparam Elemental
+         *     Type of the elements.
+         * @param[in] stack
+         *     Reference to the stack.
+         * @param[out] index
+         *     Reference to the index.
+         * @param[in] count 
+         *     Reference to the offset count.
+         * @return
+         *     A reference to the index as a constant.
+         */
         template <
             typename Natural,
             Natural
@@ -469,6 +890,29 @@ namespace ration {
             return BeginReadDecrement( stack, index, count );
         }
 
+        /**
+         * @brief
+         *     Begins write decrement trajection.
+         * @details
+         *     Function Template
+         *     -----------------
+         *     Assigns to index the count offset from the end of the stack, 
+         *     which ends at the last protracted element.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         * @param[in] stack 
+         *     Reference to the stack.
+         * @param[out] index
+         *     Reference to the index.
+         * @param[in] count
+         *     Reference to the offset count.
+         * @return 
+         *     A reference to the index as a constant.
+         */
         template <
             typename Natural,
             Natural
@@ -494,6 +938,30 @@ namespace ration {
             return index = stack.allotment - 1 - count;
         }
 
+        /**
+         * @brief 
+         *     Begins write decrement trajection.
+         * @details
+         *     Function Template
+         *     -----------------
+         *     Assigns to index the count offset from the end of the stack, 
+         *     which ends at the last protracted element. Throws an exception 
+         *     if there are no allotted elements.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         * @param[in] stack
+         *     Reference to the stack.
+         * @param[out] index
+         *     Reference to the index.
+         * @param[in] count 
+         *     Reference to the offset count.
+         * @return
+         *     A reference to the index as a constant.
+         */
         template <
             typename Natural,
             Natural
@@ -521,6 +989,29 @@ namespace ration {
             return BeginWriteDecrement( stack, index, count );
         }
 
+        /**
+         * @brief
+         *     Checks if sequential trajection can continue.
+         * @details
+         *     Function Template
+         *     -----------------
+         *     Checks if sequential trajection can traverse from index to the
+         *     specified count offset.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         * @param[in] stack
+         *     Reference to the stack.
+         * @param[in] index
+         *     Reference to the index.
+         * @param[in] count
+         *     Reference to the offset count.
+         * @return 
+         *     True if the offset can be reached from index.
+         */
         template <
             typename Natural,
             Natural
@@ -546,6 +1037,28 @@ namespace ration {
             return count <= index;
         }
 
+        /**
+         * @brief 
+         *     Traverses read decrement.
+         * @details
+         *     Function Template
+         *     -----------------
+         *     Decreases index by count offset.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum 
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         * @param[in] stack
+         *     Reference to the stack.
+         * @param[in,out] index
+         *     Reference to the index.
+         * @param[in] count
+         *     Reference to the offset count.
+         * @return 
+         *     A reference to the index as a constant.
+         */
         template <
             typename Natural,
             Natural
@@ -571,6 +1084,29 @@ namespace ration {
             return index -= count;
         }
 
+        /**
+         * @brief 
+         *     Traverses read decrement.
+         * @details
+         *     Function Template
+         *     -----------------
+         *     Decreases index by count offset.  Throws an exception if the 
+         *     count offset would move index beyond the beginning of the stack.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum 
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         * @param[in] stack 
+         *     Reference to the stack.
+         * @param[in,out] index
+         *     Reference to the index.
+         * @param[in] count
+         *     Reference to the offset count.
+         * @return 
+         *     A reference to the index as a constant.
+         */
         template <
             typename Natural,
             Natural
@@ -598,6 +1134,28 @@ namespace ration {
             return TraverseReadDecrement( stack, index, count );
         }
 
+        /**
+         * @brief 
+         *     Traverses write decrement.
+         * @details
+         *     Function Template
+         *     -----------------
+         *     Decreases index by count offset.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum 
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         * @param[in] stack
+         *     Reference to the stack.
+         * @param[in,out] index
+         *     Reference to the index.
+         * @param[in] count
+         *     Reference to the offset count.
+         * @return 
+         *     A reference to the index as a constant.
+         */
         template <
             typename Natural,
             Natural
@@ -623,6 +1181,29 @@ namespace ration {
             return index -= count;
         }
 
+        /**
+         * @brief 
+         *     Traverses read decrement.
+         * @details
+         *     Function Template
+         *     -----------------
+         *     Decreases index by count offset.  Throws an exception if the 
+         *     count offset would move index beyond the beginning of the stack.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum 
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         * @param[in] stack 
+         *     Reference to the stack.
+         * @param[in,out] index
+         *     Reference to the index.
+         * @param[in] count
+         *     Reference to the offset count.
+         * @return 
+         *     A reference to the index as a constant.
+         */
         template <
             typename Natural,
             Natural
@@ -650,6 +1231,24 @@ namespace ration {
             return TraverseWriteDecrement( stack, index, count );
         }
 
+        /**
+         * @brief 
+         *     Initializes the stack.
+         * @details
+         *     Function Template
+         *     -----------------
+         *     Initializes the stack allotment to zero.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum 
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         * @param[in] stack 
+         *     Reference to the stack.
+         * @return 
+         *     A reference to the stack.
+         */
         template <
             typename Natural,
             Natural
@@ -671,6 +1270,25 @@ namespace ration {
             return stack = InitializedStack< Natural, Maximum, Elemental >;
         }
 
+        /**
+         * @brief 
+         *     Empties the stack.
+         * @details
+         *     Function Template
+         *     -----------------
+         *     Retracts all protracted elements in the stack.  Returns true only
+         *     if there were allotted elements in the stack before the call.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum 
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         * @param[in] stack 
+         *     Reference to the stack.
+         * @return 
+         *     True if the stack was altered by this operation.
+         */
         template <
             typename Natural,
             Natural
@@ -695,6 +1313,25 @@ namespace ration {
             return true;
         }
 
+        /**
+         * @brief 
+         *     Returns the maximum size of the stack.
+         * @details
+         *     Function Template
+         *     -----------------
+         *     Returns the maximum size of the stack.  This function may or may
+         *     not incur run-time overhead depending on the invocation context.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum 
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         * @param[in] stack 
+         *     Reference to the stack.
+         * @return 
+         *     The maximum number of stack elements.
+         */
         template <
             typename Natural,
             Natural
@@ -716,6 +1353,25 @@ namespace ration {
             return Maximum;
         }
 
+        /**
+         * @brief 
+         *     Returns the number of protracted elements in the stack.
+         * @details
+         *     Function Template
+         *     -----------------
+         *     Returns the number of protracted elements in the stack which
+         *     defaults to zero if the stack was properly initialized.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum 
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         * @param[in] stack 
+         *     Reference to the stack.
+         * @return 
+         *     The number of allotted elements.
+         */
         template <
             typename Natural,
             Natural
@@ -737,6 +1393,27 @@ namespace ration {
             return stack.allotment;
         }
 
+        /**
+         * @brief 
+         *     Returns the number of protracted elements __after__ index.
+         * @details
+         *     Function Template
+         *     -----------------
+         *     Returns the number of protracted elements in the stack __after__
+         *     the specified index (does not include the element at index).
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum 
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         * @param[in] stack 
+         *     Reference to the stack.
+         * @param[in] index 
+         *     Reference to the index.
+         * @return 
+         *     The number of elements __after__ index.
+         */
         template <
             typename Natural,
             Natural
@@ -760,6 +1437,28 @@ namespace ration {
             return stack.allotment - 1 - index;
         }
 
+        /**
+         * @brief 
+         *     Returns the number of protracted elements __before__ index.
+         * @details
+         *     Function Template
+         *     -----------------
+         *     Returns the number of protracted elements in the stack 
+         *     __before__ the specified index (does not include the element at
+         *     index).
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum 
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         * @param[in] stack 
+         *     Reference to the stack.
+         * @param[in] index 
+         *     Reference to the index.
+         * @return 
+         *     The number of elements __before__ index.
+         */
         template <
             typename Natural,
             Natural
@@ -783,6 +1482,31 @@ namespace ration {
             return index;
         }
 
+        /**
+         * @brief 
+         *     Protracts elements to the end of the stack.
+         * @details
+         *     Function Template
+         *     -----------------
+         *     Protracts elements to the end of the stack.  This version does
+         *     not verify if count is zero or if more elements have been 
+         *     requested than are available in the stack.  Use this version only
+         *     if stringent performance is required.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum 
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         * @param[in] stack 
+         *     Reference to the stack.
+         * @param[out] index 
+         *     Reference to the index.
+         * @param[in] count 
+         *     Reference to the count.
+         * @return 
+         *     Always returns true.
+         */
         template <
             typename Natural,
             Natural
@@ -810,6 +1534,30 @@ namespace ration {
             return true;
         }
 
+        /**
+         * @brief 
+         *     Protracts elements to the end of the stack.
+         * @details
+         *     Function Template
+         *     -----------------
+         *     Protracts elements to the end of the stack.  This version will
+         *     return false is count is zero or more elements have been 
+         *     requested than are available in the stack.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum 
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         * @param[in] stack 
+         *     Reference to the stack.
+         * @param[out] index 
+         *     Reference to the index.
+         * @param[in] count 
+         *     Reference to the count.
+         * @return 
+         *     Returns true if the number of requested elements were protracted.
+         */
         template <
             typename Natural,
             Natural
@@ -832,11 +1580,34 @@ namespace ration {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            if (stack.allotment + count > Maximum)
+            if (!count || stack.allotment + count > Maximum)
                 return false;
             return Increase( stack, index, count );
         }
 
+        /**
+         * @brief 
+         *     Retracts elements from the end of the stack.
+         * @details
+         *     Function Template
+         *     -----------------
+         *     Retracts elements from the end of the stack.  This version does
+         *     not verify if count is zero or if count is larger than the number
+         *     of protracted elements.  Use this version only if stringent 
+         *     performance is required.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum 
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         * @param[in] stack 
+         *     Reference to the stack.
+         * @param[in] count 
+         *     Reference to the count.
+         * @return 
+         *     Always returns true.
+         */
         template <
             typename Natural,
             Natural
@@ -861,6 +1632,29 @@ namespace ration {
             return true;
         }
 
+        /**
+         * @brief 
+         *     Retracts elements from the end of the stack.
+         * @details
+         *     Function Template
+         *     -----------------
+         *     Retracts elements from the end of the stack.  This version 
+         *     returns false if count is zero or if count is larger than the
+         *     number of protracted elements.  Use this version only if 
+         *     stringent performance is required.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum 
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         * @param[in] stack 
+         *     Reference to the stack.
+         * @param[in] count 
+         *     Reference to the count.
+         * @return 
+         *     Returns true if the number of requested elements were retracted.
+         */
         template <
             typename Natural,
             Natural
@@ -881,11 +1675,29 @@ namespace ration {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            if (count > stack.allotment)
+            if (!count || count > stack.allotment)
                 return false;
             return Decrease( stack, count );
         }
 
+        /**
+         * @brief 
+         *     Tractile stack management implementation.
+         * @details
+         *     Objectification Template
+         *     ------------------------
+         *     Objective table which provides fast tractile stack management.  
+         *     Use this version if performance is stringent, however care should
+         *     be taken to understand how each function works in order to 
+         *     prevent overflowing the stack or attempting to protract zero
+         *     elements, which could cause bugs.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum 
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         */
         template <
             typename Natural,
             Natural
@@ -901,6 +1713,23 @@ namespace ration {
             Contract< Natural, Maximum, Elemental >
         };
 
+        /**
+         * @brief 
+         *     Tractile stack management implementation.
+         * @details
+         *     Objectification Template
+         *     ------------------------
+         *     Objective table which provides safe tractile stack management.  
+         *     Use this version if overflowing the stack or protraction
+         *     requests of zero elements are not prevented, where this version
+         *     will perform the run-time checks for you.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum 
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         */
         template <
             typename Natural,
             Natural
@@ -916,6 +1745,23 @@ namespace ration {
             Contract< Natural, Maximum, Elemental >
         };
 
+        /**
+         * @brief 
+         *     Vectorial read trajection implementation.
+         * @details
+         *     Objectification Template
+         *     ------------------------
+         *     Objective table which provides fast vectorial trajection into the
+         *     stack.  Use this version if performance is stringent and requests
+         *     for invalid index positions will not occur, as this version does
+         *     not perform any run-time checks.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum 
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         */
         template <
             typename Natural,
             Natural
@@ -929,6 +1775,23 @@ namespace ration {
             GoRead< Natural, Maximum, Elemental >
         };
 
+        /**
+         * @brief 
+         *     Vectorial read trajection implementation.
+         * @details
+         *     Objectification Template
+         *     ------------------------
+         *     Objective table which provides safe vectorial trajection into the
+         *     stack.  Use this version if performance is not stringent and 
+         *     requests for invalid index positions might occur, as this version
+         *     does perform run-time checks.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum 
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         */
         template <
             typename Natural,
             Natural
@@ -942,6 +1805,23 @@ namespace ration {
             GoReadSafely< Natural, Maximum, Elemental >
         };
 
+        /**
+         * @brief 
+         *     Vectorial write trajection implementation.
+         * @details
+         *     Objectification Template
+         *     ------------------------
+         *     Objective table which provides fast vectorial trajection into the
+         *     stack.  Use this version if performance is stringent and requests
+         *     for invalid index positions will not occur, as this version does
+         *     not perform any run-time checks.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum 
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         */
         template <
             typename Natural,
             Natural
@@ -955,6 +1835,23 @@ namespace ration {
             GoWrite< Natural, Maximum, Elemental >
         };
 
+        /**
+         * @brief 
+         *     Vectorial write trajection implementation.
+         * @details
+         *     Objectification Template
+         *     ------------------------
+         *     Objective table which provides safe vectorial trajection into the
+         *     stack.  Use this version if performance is not stringent and 
+         *     requests for invalid index positions might occur, as this version
+         *     does perform run-time checks.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum 
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         */
         template <
             typename Natural,
             Natural
@@ -968,6 +1865,22 @@ namespace ration {
             GoWriteSafely< Natural, Maximum, Elemental >
         };
 
+        /**
+         * @brief 
+         *     Sequential read trajection implementation.
+         * @details
+         *     Objectification Template
+         *     ------------------------
+         *     Objective table which provides fast sequential trajection into 
+         *     the stack.  Use this version if performance is stringent and 
+         *     the index is prevented from being moved out of bounds.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum 
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         */
         template <
             typename Natural,
             Natural
@@ -982,6 +1895,22 @@ namespace ration {
             GoRead< Natural, Maximum, Elemental >
         };
 
+        /**
+         * @brief 
+         *     Sequential read trajection implementation.
+         * @details
+         *     Objectification Template
+         *     ------------------------
+         *     Objective table which provides safe sequential trajection into 
+         *     the stack.  Use this version if performance is not stringent and
+         *     the index might be moved out of bounds.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum 
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         */
         template <
             typename Natural,
             Natural
@@ -996,6 +1925,22 @@ namespace ration {
             GoReadSafely< Natural, Maximum, Elemental >
         };
 
+        /**
+         * @brief 
+         *     Sequential write trajection implementation.
+         * @details
+         *     Objectification Template
+         *     ------------------------
+         *     Objective table which provides fast sequential trajection into 
+         *     the stack.  Use this version if performance is stringent and 
+         *     the index is prevented from being moved out of bounds.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum 
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         */
         template <
             typename Natural,
             Natural
@@ -1010,6 +1955,22 @@ namespace ration {
             GoWrite< Natural, Maximum, Elemental >
         };
 
+        /**
+         * @brief 
+         *     Sequential write trajection implementation.
+         * @details
+         *     Objectification Template
+         *     ------------------------
+         *     Objective table which provides safe sequential trajection into 
+         *     the stack.  Use this version if performance is not stringent and
+         *     the index might be moved out of bounds.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum 
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         */
         template <
             typename Natural,
             Natural
@@ -1024,6 +1985,22 @@ namespace ration {
             GoWriteSafely< Natural, Maximum, Elemental >
         };
 
+        /**
+         * @brief 
+         *     Sequential read trajection implementation.
+         * @details
+         *     Objectification Template
+         *     ------------------------
+         *     Objective table which provides fast sequential trajection into 
+         *     the stack.  Use this version if performance is stringent and 
+         *     the index is prevented from being moved out of bounds.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum 
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         */
         template <
             typename Natural,
             Natural
@@ -1038,6 +2015,22 @@ namespace ration {
             GoRead< Natural, Maximum, Elemental >
         };
 
+        /**
+         * @brief 
+         *     Sequential read trajection implementation.
+         * @details
+         *     Objectification Template
+         *     ------------------------
+         *     Objective table which provides safe sequential trajection into 
+         *     the stack.  Use this version if performance is not stringent and
+         *     the index might be moved out of bounds.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum 
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         */
         template <
             typename Natural,
             Natural
@@ -1052,6 +2045,22 @@ namespace ration {
             GoReadSafely< Natural, Maximum, Elemental >
         };
 
+        /**
+         * @brief 
+         *     Sequential write trajection implementation.
+         * @details
+         *     Objectification Template
+         *     ------------------------
+         *     Objective table which provides fast sequential trajection into 
+         *     the stack.  Use this version if performance is stringent and 
+         *     the index is prevented from being moved out of bounds.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum 
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         */
         template <
             typename Natural,
             Natural
@@ -1066,6 +2075,22 @@ namespace ration {
             GoWrite< Natural, Maximum, Elemental >
         };
 
+        /**
+         * @brief 
+         *     Sequential write trajection implementation.
+         * @details
+         *     Objectification Template
+         *     ------------------------
+         *     Objective table which provides safe sequential trajection into 
+         *     the stack.  Use this version if performance is not stringent and
+         *     the index might be moved out of bounds.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum 
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         */
         template <
             typename Natural,
             Natural
@@ -1080,6 +2105,22 @@ namespace ration {
             GoWriteSafely< Natural, Maximum, Elemental >
         };
 
+        /**
+         * @brief 
+         *     Sequential read trajection implementation.
+         * @details
+         *     Objectification Template
+         *     ------------------------
+         *     Objective table which provides fast sequential trajection into 
+         *     the stack.  Use this version if performance is stringent and 
+         *     the index is prevented from being moved out of bounds.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum 
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         */
         template <
             typename Natural,
             Natural
@@ -1092,6 +2133,22 @@ namespace ration {
             ReadDecrementScale< Natural, Maximum, Elemental >
         };
 
+        /**
+         * @brief 
+         *     Sequential read trajection implementation.
+         * @details
+         *     Objectification Template
+         *     ------------------------
+         *     Objective table which provides safe sequential trajection into 
+         *     the stack.  Use this version if performance is not stringent and
+         *     the index might be moved out of bounds.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum 
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         */
         template <
             typename Natural,
             Natural
@@ -1104,6 +2161,22 @@ namespace ration {
             SafeReadDecrementScale< Natural, Maximum, Elemental >
         };
 
+        /**
+         * @brief 
+         *     Sequential write trajection implementation.
+         * @details
+         *     Objectification Template
+         *     ------------------------
+         *     Objective table which provides fast sequential trajection into 
+         *     the stack.  Use this version if performance is stringent and 
+         *     the index is prevented from being moved out of bounds.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum 
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         */
         template <
             typename Natural,
             Natural
@@ -1116,6 +2189,22 @@ namespace ration {
             WriteDecrementScale< Natural, Maximum, Elemental >
         };
 
+        /**
+         * @brief 
+         *     Sequential write trajection implementation.
+         * @details
+         *     Objectification Template
+         *     ------------------------
+         *     Objective table which provides safe sequential trajection into 
+         *     the stack.  Use this version if performance is not stringent and
+         *     the index might be moved out of bounds.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum 
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         */
         template <
             typename Natural,
             Natural
@@ -1128,6 +2217,22 @@ namespace ration {
             SafeWriteDecrementScale< Natural, Maximum, Elemental >
         };
 
+        /**
+         * @brief 
+         *     Sequential read trajection implementation.
+         * @details
+         *     Objectification Template
+         *     ------------------------
+         *     Objective table which provides fast sequential trajection into 
+         *     the stack.  Use this version if performance is stringent and 
+         *     the index is prevented from being moved out of bounds.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum 
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         */
         template <
             typename Natural,
             Natural
@@ -1144,6 +2249,22 @@ namespace ration {
             CountIncrement< Natural, Maximum, Elemental >
         };
 
+        /**
+         * @brief 
+         *     Sequential read trajection implementation.
+         * @details
+         *     Objectification Template
+         *     ------------------------
+         *     Objective table which provides safe sequential trajection into 
+         *     the stack.  Use this version if performance is not stringent and
+         *     the index might be moved out of bounds.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum 
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         */
         template <
             typename Natural,
             Natural
@@ -1160,6 +2281,22 @@ namespace ration {
             CountIncrement< Natural, Maximum, Elemental >
         };
 
+        /**
+         * @brief 
+         *     Sequential write trajection implementation.
+         * @details
+         *     Objectification Template
+         *     ------------------------
+         *     Objective table which provides fast sequential trajection into 
+         *     the stack.  Use this version if performance is stringent and 
+         *     the index is prevented from being moved out of bounds.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum 
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         */
         template <
             typename Natural,
             Natural
@@ -1176,6 +2313,22 @@ namespace ration {
             CountIncrement< Natural, Maximum, Elemental >
         };
 
+        /**
+         * @brief 
+         *     Sequential write trajection implementation.
+         * @details
+         *     Objectification Template
+         *     ------------------------
+         *     Objective table which provides safe sequential trajection into 
+         *     the stack.  Use this version if performance is not stringent and
+         *     the index might be moved out of bounds.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum 
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         */
         template <
             typename Natural,
             Natural
@@ -1192,6 +2345,22 @@ namespace ration {
             CountIncrement< Natural, Maximum, Elemental >
         };
 
+        /**
+         * @brief 
+         *     Sequential read trajection implementation.
+         * @details
+         *     Objectification Template
+         *     ------------------------
+         *     Objective table which provides fast sequential trajection into 
+         *     the stack.  Use this version if performance is stringent and 
+         *     the index is prevented from being moved out of bounds.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum 
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         */
         template <
             typename Natural,
             Natural
@@ -1208,6 +2377,22 @@ namespace ration {
             CountDecrement< Natural, Maximum, Elemental >
         };
 
+        /**
+         * @brief 
+         *     Sequential read trajection implementation.
+         * @details
+         *     Objectification Template
+         *     ------------------------
+         *     Objective table which provides safe sequential trajection into 
+         *     the stack.  Use this version if performance is not stringent and
+         *     the index might be moved out of bounds.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum 
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         */
         template <
             typename Natural,
             Natural
@@ -1224,6 +2409,22 @@ namespace ration {
             CountDecrement< Natural, Maximum, Elemental >
         };
 
+        /**
+         * @brief 
+         *     Sequential write trajection implementation.
+         * @details
+         *     Objectification Template
+         *     ------------------------
+         *     Objective table which provides fast sequential trajection into 
+         *     the stack.  Use this version if performance is stringent and 
+         *     the index is prevented from being moved out of bounds.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum 
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         */
         template <
             typename Natural,
             Natural
@@ -1240,6 +2441,22 @@ namespace ration {
             CountDecrement< Natural, Maximum, Elemental >
         };
 
+        /**
+         * @brief 
+         *     Sequential write trajection implementation.
+         * @details
+         *     Objectification Template
+         *     ------------------------
+         *     Objective table which provides safe sequential trajection into 
+         *     the stack.  Use this version if performance is not stringent and
+         *     the index might be moved out of bounds.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum 
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         */
         template <
             typename Natural,
             Natural
@@ -1256,6 +2473,22 @@ namespace ration {
             CountDecrement< Natural, Maximum, Elemental >
         };
 
+        /**
+         * @brief 
+         *     Sequential read trajection implementation.
+         * @details
+         *     Objectification Template
+         *     ------------------------
+         *     Objective table which provides fast sequential trajection into 
+         *     the stack.  Use this version if performance is stringent and 
+         *     the index is prevented from being moved out of bounds.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum 
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         */
         template <
             typename Natural,
             Natural
@@ -1268,6 +2501,22 @@ namespace ration {
             ReadDecrementDirection< Natural, Maximum, Elemental >
         };
 
+        /**
+         * @brief 
+         *     Sequential read trajection implementation.
+         * @details
+         *     Objectification Template
+         *     ------------------------
+         *     Objective table which provides safe sequential trajection into 
+         *     the stack.  Use this version if performance is not stringent and
+         *     the index might be moved out of bounds.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum 
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         */
         template <
             typename Natural,
             Natural
@@ -1280,6 +2529,22 @@ namespace ration {
             SafeReadDecrementDirection< Natural, Maximum, Elemental >
         };
 
+        /**
+         * @brief 
+         *     Sequential write trajection implementation.
+         * @details
+         *     Objectification Template
+         *     ------------------------
+         *     Objective table which provides fast sequential trajection into 
+         *     the stack.  Use this version if performance is stringent and 
+         *     the index is prevented from being moved out of bounds.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum 
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         */
         template <
             typename Natural,
             Natural
@@ -1292,6 +2557,22 @@ namespace ration {
             WriteDecrementDirection< Natural, Maximum, Elemental >
         };
 
+        /**
+         * @brief 
+         *     Sequential write trajection implementation.
+         * @details
+         *     Objectification Template
+         *     ------------------------
+         *     Objective table which provides safe sequential trajection into 
+         *     the stack.  Use this version if performance is not stringent and
+         *     the index might be moved out of bounds.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum 
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         */
         template <
             typename Natural,
             Natural

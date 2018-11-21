@@ -1,7 +1,7 @@
 // © 2018 Aaron Sami Abassi
 // Licensed under the Academic Free License version 3.0
-#ifndef CONTRIBUTION_MODULE
-#define CONTRIBUTION_MODULE
+#ifndef RATION_CONTRIBUTION_MODULE
+#define RATION_CONTRIBUTION_MODULE
 #include "../ration.hpp"
 #include "../attribution.hpp"
 #include "../trajection.hpp"
@@ -11,6 +11,15 @@
 
 namespace ration {
 
+    /**
+     * @brief
+     *     Pool rationing.
+     * @details 
+     *     Association
+     *     -----------
+     *     Array based pool rationing conformity, initialization facility, 
+     *     tractile management and direct trajection implementations.
+     */
     namespace contribution {
 
         using ::location::Referential;
@@ -19,6 +28,21 @@ namespace ration {
         using ::attribution::Tributary;
         using ::comparison::Comparison;
 
+        /**
+         * @brief
+         *     Pool resource conformity.
+         * @details 
+         *     Conformation Template
+         *     ---------------------
+         *     Type definition which contains a cycles count, memory resource 
+         *     definition and array of recycled indexes.
+         * @tparam Natural 
+         *     Type of natural integer for sizes.
+         * @tparam Maximum
+         *     The maximum number of elements.
+         * @tparam Elemental  
+         *     Type of the elements.
+         */
         template <
             typename Natural,
             Natural
@@ -28,16 +52,31 @@ namespace ration {
         struct Contributory {
 
             Natural
-                cycles;
+                cycles; /**< Number of recycled indexes. */
 
             Resourceful< Natural, Maximum, Elemental >
-                resource;
+                resource; /**< Memory resource. */
 
             Natural
-                recycle[Maximum];
+                recycle[Maximum]; /**< Array of recycled indexes. */
 
         };
 
+        /**
+         * @brief 
+         *     Initialized pool.
+         * @details 
+         *     Information Template
+         *     --------------------
+         *     Initialized pool value which can be used to initialize an 
+         *     instance of the same pool type.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum
+         *     The maximum number of elements.
+         * @tparam Elemental
+         *     Type of the elements.
+         */
         template <
             typename Natural,
             Natural
@@ -50,6 +89,26 @@ namespace ration {
             InitializedResource< Natural, Maximum, Elemental >
         };
 
+        /**
+         * @brief
+         *     Check if index is an allotted pool position.
+         * @details
+         *     Function Template
+         *     -----------------
+         *     Checks if index is a currently allotted pool element.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum
+         *     The maximum number of elements.
+         * @tparam Elemental
+         *     Type of the elements.
+         * @param[in] pool
+         *     Reference to the pool.
+         * @param[in] index
+         *     Reference to the index.
+         * @return
+         *     True if index is allotted.
+         */
         template <
             typename Natural,
             Natural
@@ -78,6 +137,27 @@ namespace ration {
             return true;
         }
 
+        /**
+         * @brief 
+         *     Confers the element at index.
+         * @details
+         *     Function Template
+         *     -----------------
+         *     Returns a modifiable reference to the element at the specified 
+         *     index.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum 
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         * @param[in] pool
+         *     Reference to the pool.
+         * @param[in] index
+         *     Reference to the index.
+         * @return
+         *     The reference conferment.
+         */
         template <
             typename Natural,
             Natural
@@ -102,6 +182,28 @@ namespace ration {
             return Confer( pool.resource.source[index] );
         }
 
+        /**
+         * @brief
+         *     Confers the element at index.
+         * @details
+         *     Function Template
+         *     -----------------
+         *     Returns a modifiable reference to the element at the specified 
+         *     index.  Throws an exception if the index is not currently 
+         *     allotted.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum
+         *     The maximum number of elements.
+         * @tparam Elemental
+         *     Type of the elements.
+         * @param[in] pool
+         *     Reference to the pool.
+         * @param[in] index
+         *     Reference to the index.
+         * @return 
+         *     The reference conferment.
+         */
         template <
             typename Natural,
             Natural
@@ -127,6 +229,28 @@ namespace ration {
             return GoWrite( pool, index );
         }
 
+        /**
+         * @brief
+         *     Deters the element at index.
+         * @details
+         *     Function Template
+         *     -----------------
+         *     Returns a constant reference to the element at the specified 
+         *     positional index.  Throws an exception if the index is not 
+         *     currently allotted.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum
+         *     The maximum number of elements.
+         * @tparam Elemental
+         *     Type of the elements.
+         * @param[in] pool
+         *     Reference to the pool.
+         * @param[in] index
+         *     Reference to the index.
+         * @return
+         *     The reference determent.
+         */
         template <
             typename Natural,
             Natural
@@ -151,6 +275,28 @@ namespace ration {
             return Deter( pool.resource.source[index] );
         }
 
+        /**
+         * @brief 
+         *     Deters the element at index.
+         * @details
+         *     Function Template
+         *     -----------------
+         *     Returns a constant reference to the element at the specified 
+         *     positional index.  Throws an exception if the index is not 
+         *     currently allotted.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         * @param[in] pool
+         *     Reference to the pool.
+         * @param[in] index
+         *     Reference to the index.
+         * @return 
+         *     The reference determent.
+         */
         template <
             typename Natural,
             Natural
@@ -176,6 +322,24 @@ namespace ration {
             return GoRead( pool, index );
         }
 
+        /**
+         * @brief 
+         *     Initializes the pool.
+         * @details
+         *     Function Template
+         *     -----------------
+         *     Initializes the pool allotment and cycles count to zero.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum 
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         * @param[in,out] pool 
+         *     Reference to the pool.
+         * @return 
+         *     A reference to the pool.
+         */
         template <
             typename Natural,
             Natural
@@ -197,6 +361,25 @@ namespace ration {
             return pool = InitializedPool< Natural, Maximum, Elemental >;
         }
 
+        /**
+         * @brief 
+         *     Empties the pool.
+         * @details
+         *     Function Template
+         *     -----------------
+         *     Retributes all distributed elements in the pool.  Returns true only
+         *     if there were allotted elements in the pool before the call.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum 
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         * @param[in,out] pool 
+         *     Reference to the pool.
+         * @return 
+         *     True if the pool was altered by this operation.
+         */
         template <
             typename Natural,
             Natural
@@ -215,12 +398,31 @@ namespace ration {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            if (!pool.resource.allotment)
+            if (pool.cycles >= pool.resource.allotment)
                 return false;
             Initialize( pool );
             return true;
         }
 
+        /**
+         * @brief 
+         *     Returns the maximum size of the pool.
+         * @details
+         *     Function Template
+         *     -----------------
+         *     Returns the maximum size of the pool.  This function may or may
+         *     not incur run-time overhead depending on the invocation context.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum 
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         * @param[in] pool 
+         *     Reference to the pool.
+         * @return 
+         *     The maximum number of pool elements.
+         */
         template <
             typename Natural,
             Natural
@@ -242,6 +444,25 @@ namespace ration {
             return Maximum;
         }
 
+        /**
+         * @brief 
+         *     Returns the number of distributed elements in the pool.
+         * @details
+         *     Function Template
+         *     -----------------
+         *     Returns the number of distributed elements in the pool which
+         *     defaults to zero if the pool was properly initialized.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum 
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         * @param[in] pool 
+         *     Reference to the pool.
+         * @return 
+         *     The number of allotted elements.
+         */
         template <
             typename Natural,
             Natural
@@ -263,6 +484,29 @@ namespace ration {
             return pool.resource.allotment - pool.cycles;
         }
 
+        /**
+         * @brief 
+         *     Distributes an available element from the pool.
+         * @details
+         *     Function Template
+         *     -----------------
+         *     Distributes an element from the pool.  This version does
+         *     not verify if more elements have been requested than are 
+         *     available in the pool.  Use this version only if stringent 
+         *     performance is required.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum 
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         * @param[in,out] pool 
+         *     Reference to the pool.
+         * @param[out] index 
+         *     Reference to the index.
+         * @return 
+         *     Always returns true.
+         */
         template <
             typename Natural,
             Natural
@@ -290,6 +534,28 @@ namespace ration {
             return true;
         }
 
+        /**
+         * @brief 
+         *     Distributes an element from the pool.
+         * @details
+         *     Function Template
+         *     -----------------
+         *     Distributes an element from the pool.  This version will
+         *     return false if more elements have been requested than are 
+         *     available in the pool.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum 
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         * @param[in,out] pool 
+         *     Reference to the pool.
+         * @param[out] index 
+         *     Reference to the index.
+         * @return 
+         *     Returns true if the number of requested elements were protracted.
+         */
         template <
             typename Natural,
             Natural
@@ -315,6 +581,28 @@ namespace ration {
             return Distribute( pool, index );
         }
 
+        /**
+         * @brief 
+         *     Retributes an element to the pool.
+         * @details
+         *     Function Template
+         *     -----------------
+         *     Retributes an element to the pool.  This version does not verify
+         *     if index is currently allotted or even a valid index.  Use this 
+         *     version only if stringent performance is required.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum 
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         * @param[in,out] pool
+         *     Reference to the pool.
+         * @param[in] index 
+         *     Reference to the index.
+         * @return 
+         *     Always returns true.
+         */
         template <
             typename Natural,
             Natural
@@ -339,6 +627,27 @@ namespace ration {
             return true;
         }
 
+        /**
+         * @brief 
+         *     Retributes an element to the pool.
+         * @details
+         *     Function Template
+         *     -----------------
+         *     Retributes an element to the pool.  This version returns false 
+         *     if index is not currently allotted or is an invalid index.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum 
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         * @param[in,out] pool 
+         *     Reference to the pool.
+         * @param[in] index 
+         *     Reference to the index.
+         * @return 
+         *     Returns true if the index was retracted.
+         */
         template <
             typename Natural,
             Natural
@@ -366,6 +675,23 @@ namespace ration {
             return Retribute( pool, index );
         }
 
+        /**
+         * @brief 
+         *     Tributary pool management implementation.
+         * @details
+         *     Objectification Template
+         *     ------------------------
+         *     Objective table which provides fast tributary pool management.  
+         *     Use this version if performance is stringent, however care should
+         *     be taken to understand how each function works in order to 
+         *     prevent overflowing the pool, which could cause bugs.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum 
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         */
         template <
             typename Natural,
             Natural
@@ -381,6 +707,22 @@ namespace ration {
             Contribute< Natural, Maximum, Elemental >
         };
 
+        /**
+         * @brief 
+         *     Tributary pool management implementation.
+         * @details
+         *     Objectification Template
+         *     ------------------------
+         *     Objective table which provides safe tributary pool management.  
+         *     Use this version if overflowing the pool is not prevented, where
+         *     this version will perform the run-time checks for you.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum 
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         */
         template <
             typename Natural,
             Natural
@@ -396,6 +738,23 @@ namespace ration {
             Contribute< Natural, Maximum, Elemental >
         };
 
+        /**
+         * @brief 
+         *     Vectorial read trajection implementation.
+         * @details
+         *     Objectification Template
+         *     ------------------------
+         *     Objective table which provides fast vectorial trajection into the
+         *     pool.  Use this version if performance is stringent and requests
+         *     for invalid index positions will not occur, as this version does
+         *     not perform any run-time checks.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum 
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         */
         template <
             typename Natural,
             Natural
@@ -409,6 +768,23 @@ namespace ration {
             GoRead< Natural, Maximum, Elemental >
         };
 
+        /**
+         * @brief 
+         *     Vectorial read trajection implementation.
+         * @details
+         *     Objectification Template
+         *     ------------------------
+         *     Objective table which provides safe vectorial trajection into the
+         *     pool.  Use this version if performance is not stringent and 
+         *     requests for invalid index positions might occur, as this version
+         *     does perform run-time checks.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum 
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         */
         template <
             typename Natural,
             Natural
@@ -422,6 +798,23 @@ namespace ration {
             GoReadSafely< Natural, Maximum, Elemental >
         };
 
+        /**
+         * @brief 
+         *     Vectorial write trajection implementation.
+         * @details
+         *     Objectification Template
+         *     ------------------------
+         *     Objective table which provides fast vectorial trajection into the
+         *     pool.  Use this version if performance is stringent and requests
+         *     for invalid index positions will not occur, as this version does
+         *     not perform any run-time checks.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum 
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         */
         template <
             typename Natural,
             Natural
@@ -435,6 +828,23 @@ namespace ration {
             GoWrite< Natural, Maximum, Elemental >
         };
 
+        /**
+         * @brief 
+         *     Vectorial write trajection implementation.
+         * @details
+         *     Objectification Template
+         *     ------------------------
+         *     Objective table which provides safe vectorial trajection into the
+         *     pool.  Use this version if performance is not stringent and 
+         *     requests for invalid index positions might occur, as this version
+         *     does perform run-time checks.
+         * @tparam Natural
+         *     Type of natural integer for sizes.
+         * @tparam Maximum 
+         *     The maximum number of elements.
+         * @tparam Elemental 
+         *     Type of the elements.
+         */
         template <
             typename Natural,
             Natural

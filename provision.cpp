@@ -17,8 +17,6 @@
 using namespace ::traction;
 using namespace ::attribution;
 
-using Natural = unsigned short;
-
 template <
     typename Spatial,
     typename Positional
@@ -27,7 +25,7 @@ static inline void
 DemonstrateElevation(
     Referential< Spatial >
         stack,
-    Referential< const Tractile< Spatial, Positional, Natural > >
+    Referential< const Tractile< Spatial, Positional, unsigned > >
         elevator
 ) {
     Positional
@@ -47,7 +45,7 @@ static inline void
 DemonstrateContraction(
     Referential< Spatial >
         queue,
-    Referential< const Tractile< Spatial, Positional, Natural > >
+    Referential< const Tractile< Spatial, Positional, unsigned > >
         contractor
 ) {
     Positional
@@ -67,7 +65,7 @@ static inline void
 DemonstrateContribution(
     Referential< Spatial >
         pool,
-    Referential< const Tributary< Spatial, Positional, Natural > >
+    Referential< const Tributary< Spatial, Positional, unsigned > >
         contributor
 ) {
     Positional
@@ -84,19 +82,19 @@ DemonstrateRation( void ) {
     using namespace ::ration::elevation;
     using namespace ::ration::contraction;
     using namespace ::ration::contribution;
-    static const Natural
+    static const unsigned
         Maximum = 16;
     static auto&
-        StackElevator = Elevator< Natural, Maximum, int >;
+        StackElevator = Elevator< unsigned, Maximum, int >;
     static auto&
-        QueueContractor = Contractor< Natural, Maximum, int >;
+        QueueContractor = Contractor< unsigned, Maximum, int >;
     static auto&
-        PoolContributor = Contributor< Natural, Maximum, int >;
-    Elevatory< Natural, Maximum, int >
+        PoolContributor = Contributor< unsigned, Maximum, int >;
+    Elevatory< unsigned, Maximum, int >
         stack;
-    Contractional< Natural, Maximum, int >
+    Contractional< unsigned, Maximum, int >
         queue;
-    Contributory< Natural, Maximum, int >
+    Contributory< unsigned, Maximum, int >
         pool;
     Initialize( stack );
     Initialize( queue );
@@ -113,16 +111,16 @@ DemonstrateJunction( void ) {
     using namespace ::junction::provision::contraction;
     using namespace ::junction::provision::contribution;
     using namespace ::allocation::alignment;
-    using Nodal = Junctional< int >;
-    static const Natural
+    using IntegerNodal = DoublyNodal< int >;
+    static const unsigned
         Maximum = 16;
     static auto&
-        StackElevator = Elevator< Natural, Maximum, int, FastDefaultAligned< Nodal > >;
+        StackElevator = DoubleElevator< unsigned, Maximum, int, FastDefaultAligned< IntegerNodal > >;
     static auto&
-        QueueContractor = Contractor< Natural, Maximum, int, FastDefaultAligned< Nodal > >;
+        QueueContractor = DoubleContractor< unsigned, Maximum, int, FastDefaultAligned< IntegerNodal > >;
     static auto&
-        PoolContributor = Contributor< Natural, Maximum, int, FastDefaultAligned< Nodal > >;
-    Junctive< Natural, int >
+        PoolContributor = DoubleContributor< unsigned, Maximum, int, FastDefaultAligned< IntegerNodal > >;
+    DoublyJunctive< unsigned, int >
         list;
     Initialize( list );
     DemonstrateElevation( list, StackElevator );

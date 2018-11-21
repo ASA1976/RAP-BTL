@@ -18,8 +18,43 @@
 
 namespace allocation {
 
+    /**
+     * @brief   
+     *     Aligned memory allocation implementations using one of either the 
+     *     C++17, C11 or MSC CRT library functions.
+     * @details
+     *     Association
+     *     -----------
+     *     Aligned memory allocation functions and objectives are provided in 
+     *     order to use the C++17 standard library, C11 standard library or MSC
+     *     CRT library to implement aligned memory allocation.  If MSC is 
+     *     detected it is used, otherwise C11 or C++17 are used depending on the
+     *     presence of the RAPBTL_NO_STD_CPLUSPLUS macro.
+     */
     namespace alignment {
 
+        /**
+         * @brief
+         *     Allocates memory space for an instance of the specified type at a
+         *     specified memory boundary.
+         * @details
+         *     Function Template
+         *     -----------------
+         *     With this function, memory is allocated at a memory boundary and
+         *     no constructor is invoked.
+         * @tparam Subjective
+         *     Type of the data object.
+         * @tparam Alignment
+         *     Byte boundary the allocated memory should be aligned to.
+         * @tparam Size
+         *     Size of the memory space to be allocated.
+         * @param[out] locality
+         *     Reference to a pointer which will receive the address of the 
+         *     allocated data object.
+         * @return
+         *     The same address as stored in the pointer which was bound to 
+         *     locality.
+         */
         template <
             typename Subjective,
             size_t
@@ -42,6 +77,30 @@ namespace allocation {
 #endif
         }
 
+        /**
+         * @brief
+         *     Allocates memory space for an array of instances of the specified
+         *     type at a specified memory boundary.
+         * @details
+         *     Function Template
+         *     -----------------
+         *     With this function, memory is allocated at a memory boundary and
+         *     no constructor is invoked.
+         * @tparam Subjective
+         *     Type of the data object to be allocated.
+         * @tparam Alignment
+         *     Byte boundary the allocated memory should align to.
+         * @tparam Size
+         *     Size of the memory space to be allocated.
+         * @param[out] locality
+         *     Reference to a pointer which will receive the address of the 
+         *     allocated array of data objects.
+         * @param[in] count
+         *     The number of objects to be allocated.
+         * @return
+         *     The same address as stored in the pointer which was bound to
+         *     locality.
+         */
         template <
             typename Subjective,
             size_t
@@ -66,6 +125,23 @@ namespace allocation {
 #endif
         }
 
+        /**
+         * @brief
+         *     Frees the memory space for an aligned instance of the specified 
+         *     type.
+         * @details
+         *     Function Template
+         *     -----------------
+         *     With this function, the aligned memory space is freed, no 
+         *     destructor is invoked and the pointer will not be set to null.
+         * @tparam Subjective
+         *     Type of the data object.
+         * @param[in] locality 
+         *     Reference to a pointer containing the address which will be 
+         *     freed.
+         * @return
+         *     Does not return any value.
+         */
         template <
             typename Subjective
         >
@@ -84,6 +160,23 @@ namespace allocation {
 #endif
         }
 
+        /**
+         * @brief
+         *     Frees the memory space for an aligned instance of the specified
+         *     type.
+         * @details
+         *     Function Template
+         *     -----------------
+         *     With this function, the aligned memory space is freed, no 
+         *     destructor is invoked and the pointer is set to null.
+         * @tparam Subjective
+         *     Type of the data object.
+         * @param[in,out] locality
+         *     Reference to a pointer containing the address which will be 
+         *     freed.
+         * @return
+         *     Does not return any value.
+         */
         template <
             typename Subjective
         >
@@ -96,6 +189,22 @@ namespace allocation {
             SetToNull( locality );
         }
 
+        /**
+         * @brief
+         *     Default aligned memory allocation.
+         * @details
+         *     Objectification Template
+         *     ------------------------
+         *     Objective table which uses aligned allocate and free functions.
+         *     Disclaim frees the aligned memory space and then sets the pointer
+         *     to null.
+         * @tparam Subjective
+         *     Type of the data objects.
+         * @tparam Alignment
+         *     Byte boundary the allocated memory should align to.
+         * @tparam Size
+         *     Size of the memory space to be allocated.
+         */
         template <
             typename Subjective,
             size_t
@@ -109,6 +218,22 @@ namespace allocation {
             DeleteAlignedSubjectAndSetToNull< Subjective >
         };
 
+        /**
+         * @brief
+         *     Default aligned memory allocation.
+         * @details
+         *     Objectification Template
+         *     ------------------------
+         *     Objective table which uses aligned allocate and free functions.
+         *     Disclaim frees the aligned memory space but does not set the 
+         *     pointer to null.
+         * @tparam Subjective
+         *     Type of the data objects.
+         * @tparam Alignment
+         *     Byte boundary the allocated memory should align to.
+         * @tparam Size
+         *     Size of the memory space to be allocated.
+         */
         template <
             typename Subjective,
             size_t
@@ -122,6 +247,22 @@ namespace allocation {
             DeleteAlignedSubject< Subjective >
         };
 
+        /**
+         * @brief
+         *     Array aligned memory allocation.
+         * @details
+         *     Objectification Template
+         *     ------------------------
+         *     Objective table which allocates uninitialized aligned memory for
+         *     an array.  Disclaim frees the aligned memory space and then sets
+         *     the pointer to null.
+         * @tparam Subjective
+         *     Type of the data objects.
+         * @tparam Alignment
+         *     Byte boundary the allocated memory should align to.
+         * @tparam Size 
+         *     Size of the memory space to be allocated.
+         */
         template <
             typename Subjective,
             size_t
@@ -135,6 +276,22 @@ namespace allocation {
             DeleteAlignedSubjectAndSetToNull< Subjective >
         };
 
+        /**
+         * @brief
+         *     Array aligned memory allocation.
+         * @details
+         *     Objectification Template
+         *     ------------------------
+         *     Objective table which allocates uninitialized aligned memory for
+         *     an array.  Disclaim frees the aligned memory space but does not 
+         *     set the pointer to null.
+         * @tparam Subjective
+         *     Type of the data objects.
+         * @tparam Alignment
+         *     Byte boundary the allocated memory should align to.
+         * @tparam Size
+         *     Size of the memory space to be allocated.
+         */
         template <
             typename Subjective,
             size_t

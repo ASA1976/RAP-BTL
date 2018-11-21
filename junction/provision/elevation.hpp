@@ -1,7 +1,7 @@
 // © 2018 Aaron Sami Abassi
 // Licensed under the Academic Free License version 3.0
-#ifndef JUNCTION_ELEVATION_PROVISION_MODULE
-#define JUNCTION_ELEVATION_PROVISION_MODULE
+#ifndef JUNCTION_PROVISION_ELEVATION_MODULE
+#define JUNCTION_PROVISION_ELEVATION_MODULE
 #include "../consecution.hpp"
 #include "../provision.hpp"
 #include "../../traction.hpp"
@@ -10,6 +10,14 @@ namespace junction {
 
     namespace provision {
 
+        /**
+         * @brief         
+         *     Linked list stack resource management implementation.
+         * @details       
+         *     Association
+         *     -----------
+         *     Linked list stack resource management implementation.
+         */
         namespace elevation {
 
             using ::traction::Tractile;
@@ -20,16 +28,16 @@ namespace junction {
                 Natural
                     Maximum,
                 typename Elemental,
-                Referential< const DefaultAllocative< Junctional< Elemental > > >
+                Referential< const DefaultAllocative< SinglyNodal< Elemental > > >
                     Allocator
             >
-            constexpr Tractile< Junctive< Natural, Elemental >, Positional< Elemental >, Natural >
-            Elevator = {
-                Survey< Natural, Maximum, Elemental >,
-                Account< Natural, Elemental >,
-                Protract< Natural, Elemental, Allocator >,
-                Succeed< Natural, Elemental >,
-                RemoveAllNodes< Natural, Elemental >
+            constexpr Tractile< SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, Natural >
+            SingleElevator = {
+                Survey< SinglyLinked< Elemental >, Natural, Maximum, Elemental >,
+                Account< SinglyLinked< Elemental >, Natural, Elemental >,
+                Protract< Natural, Maximum, Elemental, Allocator, false >,
+                Succeed< Natural, Elemental, false >,
+                RemoveAll< SinglyLinked< Elemental >, Natural, Elemental >
             };
 
             template <
@@ -37,16 +45,50 @@ namespace junction {
                 Natural
                     Maximum,
                 typename Elemental,
-                Referential< const DefaultAllocative< Junctional< Elemental > > >
+                Referential< const DefaultAllocative< DoublyNodal< Elemental > > >
                     Allocator
             >
-            constexpr Tractile< Junctive< Natural, Elemental >, Positional< Elemental >, Natural >
-            SafeElevator = {
-                Survey< Natural, Maximum, Elemental >,
-                Account< Natural, Elemental >,
-                ProtractSafely< Natural, Maximum, Elemental, Allocator >,
-                Succeed< Natural, Elemental >,
-                RemoveAllNodes< Natural, Elemental >
+            constexpr Tractile< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural >
+            DoubleElevator = {
+                Survey< DoublyLinked< Elemental >, Natural, Maximum, Elemental >,
+                Account< DoublyLinked< Elemental >, Natural, Elemental >,
+                Protract< Natural, Maximum, Elemental, Allocator, false >,
+                Succeed< Natural, Elemental, false >,
+                RemoveAll< DoublyLinked< Elemental >, Natural, Elemental >
+            };
+
+            template <
+                typename Natural,
+                Natural
+                    Maximum,
+                typename Elemental,
+                Referential< const DefaultAllocative< SinglyNodal< Elemental > > >
+                    Allocator
+            >
+            constexpr Tractile< SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, Natural >
+            SafeSingleElevator = {
+                Survey< SinglyLinked< Elemental >, Natural, Maximum, Elemental >,
+                Account< SinglyLinked< Elemental >, Natural, Elemental >,
+                Protract< Natural, Maximum, Elemental, Allocator, true >,
+                Succeed< Natural, Elemental, true >,
+                RemoveAll< SinglyLinked< Elemental >, Natural, Elemental >
+            };
+
+            template <
+                typename Natural,
+                Natural
+                    Maximum,
+                typename Elemental,
+                Referential< const DefaultAllocative< DoublyNodal< Elemental > > >
+                    Allocator
+            >
+            constexpr Tractile< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural >
+            SafeDoubleElevator = {
+                Survey< DoublyLinked< Elemental >, Natural, Maximum, Elemental >,
+                Account< DoublyLinked< Elemental >, Natural, Elemental >,
+                Protract< Natural, Maximum, Elemental, Allocator, true >,
+                Succeed< Natural, Elemental, true >,
+                RemoveAll< DoublyLinked< Elemental >, Natural, Elemental >
             };
 
         }

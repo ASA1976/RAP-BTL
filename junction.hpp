@@ -5,6 +5,14 @@
 #include "allocation.hpp"
 #include "trajection.hpp"
 
+/**
+ * @brief         
+ *     Linked list management and trajection implementation.
+ * @details       
+ *     Association
+ *     -----------
+ *     Linked list management and trajection implementation.
+ */
 namespace junction {
 
     using ::location::Locational;
@@ -26,81 +34,636 @@ namespace junction {
     using ::allocation::FastDefaultNew;
     using ::allocation::FastCopyNew;
 
+    /**
+     * @brief 
+     *     Linked list node conformity.
+     * @details  
+     *     Conformation Template
+     *     ---------------------
+     *     This type is used to represent a linked list node.
+     * @tparam Connective
+     *     Type of the node linkage.
+     * @tparam Elemental
+     *     Type of the elements.
+     */
     template <
+        typename Connective,
         typename Elemental
     >
-    struct Junctional {
+    struct Nodal {
 
-        Locational< Junctional< Elemental > >
-            previous,
-            next;
+        Connective
+            link; /**< Node link(s) substructure. */
 
         Elemental
-            element;
+            element; /**< Instance of the element at this node. */
 
     };
 
+    /**
+     * @brief 
+     *     Single link conformity.
+     * @details  
+     *     Conformation Template
+     *     ---------------------
+     *     This type is used to represent a singly connective list node link.
+     * @tparam Elemental
+     *     Type of the elements.
+     */
     template <
+        typename Elemental
+    >
+    struct SinglyLinked {
+
+        Locational< Nodal< SinglyLinked< Elemental >, Elemental > >
+            node; /**< Single node link. */
+
+    };
+
+    /**
+     * @brief 
+     *     Double link conformity.
+     * @details  
+     *     Conformation Template
+     *     ---------------------
+     *     This type is used to represent a doubly connective list node link.
+     * @tparam Elemental
+     *     Type of the elements.
+     */
+    template <
+        typename Elemental
+    >
+    struct DoublyLinked {
+
+        Locational< Nodal< DoublyLinked< Elemental >, Elemental > >
+            previous, /**< Link to previous node. */
+            next; /**< Link to next node. */
+
+    };
+
+    /**
+     * @brief 
+     *     Singly linked node conformity.
+     * @details  
+     *     Conformation Template
+     *     ---------------------
+     *     This type alias is used to represent a singly linked list node.
+     * @tparam Elemental
+     *     Type of the elements.
+     */
+    template <
+        typename Elemental
+    >
+    using SinglyNodal = Nodal< SinglyLinked< Elemental >, Elemental >;
+
+    /**
+     * @brief 
+     *     Doubly linked node conformity.
+     * @details  
+     *     Conformation Template
+     *     ---------------------
+     *     This type alias is used to represent a doubly linked list node.
+     * @tparam Elemental
+     *     Type of the elements.
+     */
+    template <
+        typename Elemental
+    >
+    using DoublyNodal = Nodal< DoublyLinked< Elemental >, Elemental >;
+
+    /**
+     * @brief 
+     *     Linked list conformity.
+     * @details  
+     *     Conformation Template
+     *     ---------------------
+     *     This type is used to represent a linked list.
+     * @tparam Connective
+     *     Type of the node linkage.
+     * @tparam Natural
+     *     Type of unsigned integer.
+     * @tparam Elemental
+     *     Type of the elements.
+     */
+    template <
+        typename Connective,
         typename Natural,
         typename Elemental
     >
     struct Junctive {
 
-        Locational< Junctional< Elemental > >
-            first,
-            last,
-            unused;
+        Locational< Nodal< Connective, Elemental > >
+            first, /**< First node in the list. */
+            last, /**< Last node in the list. */
+            unused; /**< First unused node in a sublist of unused nodes. */
 
         Natural
-            count,
-            total;
+            count, /**< Number of nodes in the active list. */
+            total; /**< Total number of nodes in the active and unused sublists. */
 
     };
 
+    /**
+     * @brief 
+     *     Singly linked list conformity.
+     * @details  
+     *     Conformation Template
+     *     ---------------------
+     *     This type alias is used to represent a singly linked list.
+     * @tparam Natural
+     *     Type of unsigned integer.
+     * @tparam Elemental
+     *     Type of the elements.
+     */
     template <
+        typename Natural,
+        typename Elemental
+    >
+    using SinglyJunctive = Junctive< SinglyLinked< Elemental >, Natural, Elemental >;
+
+    /**
+     * @brief 
+     *     Doubly linked list conformity.
+     * @details  
+     *     Conformation Template
+     *     ---------------------
+     *     This type alias is used to represent a doubly linked list.
+     * @tparam Natural
+     *     Type of unsigned integer.
+     * @tparam Elemental
+     *     Type of the elements.
+     */
+    template <
+        typename Natural,
+        typename Elemental
+    >
+    using DoublyJunctive = Junctive< DoublyLinked< Elemental >, Natural, Elemental >;
+
+    /**
+     * @brief
+     *     Linked list node management classifier.
+     * @details
+     *     Classification Template
+     *     -----------------------
+     *     This type is used to manage linked list nodes, including enforcement
+     *     of recycling policy.
+     * @tparam Connective
+     *     Type of the node linkage.
+     * @tparam Natural
+     *     Type of unsigned integer.
+     * @tparam Elemental
+     *     Type of the elements.
+     */
+    template <
+        typename Connective,
         typename Natural,
         typename Elemental
     >
     struct Adjunctive {
 
-        Referential< Locational< Junctional< Elemental > >(
-            Referential< Junctive< Natural, Elemental > >
+        Referential< Locational< Nodal< Connective, Elemental > >(
+            Referential< Junctive< Connective, Natural, Elemental > >
         ) >
-            allocate;
+            allocate; /**< Allocates one or more uninitialized nodes.  
+                       *   Implementations may simply return null if this 
+                       *   operation is not supported.
+                       */
 
         Referential< bool(
-            Referential< Junctive< Natural, Elemental > >,
-            Referential< Locational< Junctional< Elemental > > >
+            Referential< Junctive< Connective, Natural, Elemental > >,
+            Referential< Locational< Nodal< Connective, Elemental > > >
         ) >
-            deallocate;
+            deallocate; /**< Frees the memory used by one linked list node which
+                         *   has already been removed from either the active 
+                         *   node list or unused node sublist.
+                         */
 
-        Referential< Locational< Junctional< Elemental > >(
-            Referential< Junctive< Natural, Elemental > >,
+        Referential< Locational< Nodal< Connective, Elemental > >(
+            Referential< Junctive< Connective, Natural, Elemental > >,
             Referential< const Elemental >
         ) >
-            proclaim;
+            proclaim; /**< Proclaims an element with the specified value.  
+                       *   Implementations may recycle an unused node and assign
+                       *   it the provided value or allocate and initialize a 
+                       *   new node to the provided value.
+                       */
 
     };
 
+    /**
+     * @brief 
+     *     Singly linked list node management classifier.
+     * @details  
+     *     Classification Template
+     *     -----------------------
+     *     This type alias is used to represent a singly linked list node 
+     *     management adjunct.
+     * @tparam Natural
+     *     Type of unsigned integer.
+     * @tparam Elemental
+     *     Type of the elements.
+     */
     template <
         typename Natural,
         typename Elemental
     >
-    constexpr Junctive< Natural, Elemental >
+    using SinglyAdjunctive = Adjunctive< SinglyLinked< Elemental >, Natural, Elemental >;
+
+    /**
+     * @brief 
+     *     Doubly linked list node management classifier.
+     * @details  
+     *     Classification Template
+     *     -----------------------
+     *     This type alias is used to represent a doubly linked list node 
+     *     management adjunct.
+     * @tparam Natural
+     *     Type of unsigned integer.
+     * @tparam Elemental
+     *     Type of the elements.
+     */
+    template <
+        typename Natural,
+        typename Elemental
+    >
+    using DoublyAdjunctive = Adjunctive< DoublyLinked< Elemental >, Natural, Elemental >;
+
+    /**
+     * @brief
+     *     Linked list position conformity.
+     * @details
+     *     Conformation Template
+     *     ---------------------
+     *     This type alias is used to represent a position in the linked list.
+     * @tparam Connective
+     *     Type of the node linkage.
+     * @tparam Elemental
+     *     Type of the elements.
+     */
+    template <
+        typename Connective,
+        typename Elemental
+    >
+    using Positional = Positive< Nodal< Connective, Elemental > >;
+
+    /**
+     * @brief 
+     *     Singly linked list position conformity.
+     * @details  
+     *     Conformation Template
+     *     ---------------------
+     *     This type alias is used to represent a position in singly linked 
+     *     list.
+     * @tparam Elemental
+     *     Type of the elements.
+     */
+    template <
+        typename Elemental
+    >
+    using SinglyPositional = Positional< SinglyLinked< Elemental >, Elemental >;
+
+    /**
+     * @brief 
+     *     Doubly linked list position conformity.
+     * @details  
+     *     Conformation Template
+     *     ---------------------
+     *     This type alias is used to represent a position in doubly linked 
+     *     list.
+     * @tparam Elemental
+     *     Type of the elements.
+     */
+    template <
+        typename Elemental
+    >
+    using DoublyPositional = Positional< DoublyLinked< Elemental >, Elemental >;
+
+    /**
+     * @brief 
+     *     Function abstract used to get a polar position in the list.
+     * @details  
+     *     Abstraction Template
+     *     --------------------
+     *     This function type alias is used to declare function references which
+     *     return either the first or last node in the linked list.
+     * @tparam Connective
+     *     Type of the node linkage.
+     * @tparam Natural
+     *     Type of unsigned integer.
+     * @tparam Elemental
+     *     Type of the elements.
+     */
+    template <
+        typename Connective,
+        typename Natural,
+        typename Elemental
+    >
+    using Original = Locational< Nodal< Connective, Elemental > >(
+        Referential< const Junctive< Connective, Natural, Elemental > >
+            list 
+    );
+
+    /**
+     * @brief 
+     *     Function abstract used to get a node subsequent to another node.
+     * @details  
+     *     Abstraction Template
+     *     --------------------
+     *     This function type alias is used to declare function references which
+     *     return either the next or previous node in the linked list.
+     * @tparam Connective
+     *     Type of the node linkage.
+     * @tparam Elemental
+     *     Type of the elements.
+     */
+    template <
+        typename Connective,
+        typename Elemental
+    >
+    using Subsequent = Locational< Nodal< Connective, Elemental > >(
+        const Locational< Nodal< Connective, Elemental > >
+            node 
+    );
+
+    template <
+        typename Connective,
+        typename Natural,
+        typename Elemental
+    >
+    constexpr Junctive< Connective, Natural, Elemental >
     InitializedList = {0, 0, 0, 0, 0};
 
     template <
         typename Elemental
     >
-    using Positional = Positive< Junctional< Elemental > >;
+    static inline Locational< SinglyNodal< Elemental > >
+    GetNext(
+        const Locational< SinglyNodal< Elemental > >
+            node
+    ) {
+        return node->link.node;
+    }
+
+    template <
+        typename Elemental
+    >
+    static inline Locational< DoublyNodal< Elemental > >
+    GetNext(
+        const Locational< DoublyNodal< Elemental > >
+            node
+    ) {
+        return node->link.next;
+    }
+
+    template <
+        typename Elemental
+    >
+    static inline Locational< DoublyNodal< Elemental > >
+    GetPrevious(
+        const Locational< DoublyNodal< Elemental > >
+            node
+    ) {
+        return node->link.previous;
+    }
+
+    template <
+        typename Elemental
+    >
+    static inline void
+    SetNext(
+        const Locational< SinglyNodal< Elemental > >
+            node,
+        const Locational< SinglyNodal< Elemental > >
+            next
+    ) {
+        node->link.node = next;
+    }
+
+    template <
+        typename Elemental
+    >
+    static inline void
+    SetNext(
+        const Locational< DoublyNodal< Elemental > >
+            node,
+        const Locational< DoublyNodal< Elemental > >
+            next
+    ) {
+        node->link.next = next;
+    }
+
+    template <
+        typename Elemental
+    >
+    static inline void
+    SetPrevious(
+        const Locational< DoublyNodal< Elemental > >
+            node,
+        const Locational< DoublyNodal< Elemental > >
+            previous
+    ) {
+        node->link.previous = previous;
+    }
+
+    template <
+        typename Elemental
+    >
+    static inline void
+    UnsetNext(
+        const Locational< SinglyNodal< Elemental > >
+            node
+    ) {
+        node->link.node = 0;
+    }
+
+    template <
+        typename Elemental
+    >
+    static inline void
+    UnsetNext(
+        const Locational< DoublyNodal< Elemental > >
+            node
+    ) {
+        node->link.next = 0;
+    }
+
+    template <
+        typename Elemental
+    >
+    static inline void
+    UnsetPrevious(
+        const Locational< DoublyNodal< Elemental > >
+            node
+    ) {
+        node->link.previous = 0;
+    }
+
+    template <
+        typename Elemental
+    >
+    static inline void
+    ConnectNext(
+        const Locational< SinglyNodal< Elemental > >
+            first,
+        const Locational< SinglyNodal< Elemental > >
+            second
+    ) {
+        SetNext( first, second );
+    }
+
+    template <
+        typename Elemental
+    >
+    static inline void
+    ConnectNext(
+        const Locational< DoublyNodal< Elemental > >
+            first,
+        const Locational< DoublyNodal< Elemental > >
+            second
+    ) {
+        SetNext( first, second );
+        if (second)
+            SetPrevious( second, first );
+    }
+
+    template <
+        typename Elemental
+    >
+    static inline void
+    ConnectPrevious(
+        const Locational< DoublyNodal< Elemental > >
+            first,
+        const Locational< DoublyNodal< Elemental > >
+            second
+    ) {
+        SetPrevious( first, second );
+        if (second)
+            SetNext( second, first );
+    }
+
+    template <
+        typename Elemental
+    >
+    static inline void
+    DisconnectNext(
+        const Locational< SinglyNodal< Elemental > >
+            node
+    ) {
+        UnsetNext( node );
+    }
+
+    template <
+        typename Elemental
+    >
+    static inline void
+    DisconnectNext(
+        const Locational< DoublyNodal< Elemental > >
+            node
+    ) {
+        if (GetNext( node )) {
+            UnsetPrevious( GetNext( node ) );
+            UnsetNext( node );
+        }
+    }
+
+    template <
+        typename Elemental
+    >
+    static inline void
+    DisconnectPrevious(
+        const Locational< DoublyNodal< Elemental > >
+            node
+    ) {
+        if (GetPrevious( node )) {
+            UnsetNext( GetPrevious( node ) );
+            UnsetPrevious( node );
+        }
+    }
 
     template <
         typename Natural,
         typename Elemental
     >
+    static inline Locational< SinglyNodal< Elemental > >
+    GetFirst(
+        Referential < const SinglyJunctive< Natural, Elemental > >
+            list
+    ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
+#endif
+        return list.first;
+    }
+
+    template <
+        typename Natural,
+        typename Elemental
+    >
+    static inline Locational< DoublyNodal< Elemental > >
+    GetFirst(
+        Referential < const DoublyJunctive< Natural, Elemental > >
+            list
+    ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
+#endif
+        return list.first;
+    }
+
+    template <
+        typename Natural,
+        typename Elemental
+    >
+    static inline Locational< SinglyNodal< Elemental > >
+    GetLast(
+        Referential < const SinglyJunctive< Natural, Elemental > >
+            list
+    ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
+#endif
+        return list.last;
+    }
+
+    template <
+        typename Natural,
+        typename Elemental
+    >
+    static inline Locational< DoublyNodal< Elemental > >
+    GetLast(
+        Referential < const DoublyJunctive< Natural, Elemental > >
+            list
+    ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
+#endif
+        return list.last;
+    }
+
+    template <
+        typename Connective,
+        typename Natural,
+        typename Elemental
+    >
     static inline Natural
     Account(
-        Referential< const Junctive< Natural, Elemental > >
+        Referential< const Junctive< Connective, Natural, Elemental > >
             list
     ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
@@ -114,14 +677,17 @@ namespace junction {
     }
 
     template <
+        typename Connective,
         typename Natural,
-        typename Elemental
+        typename Elemental,
+        Referential< Subsequent< Connective, Elemental > >
+            GetSubsequent
     >
     static inline Natural
-    CountIncrement(
-        Referential< const Junctive< Natural, Elemental > >
+    Count(
+        Referential< const Junctive< Connective, Natural, Elemental > >
             list,
-        Referential< const Positional< Elemental > >
+        Referential< const Positional< Connective, Elemental > >
             position
     ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
@@ -131,225 +697,175 @@ namespace junction {
             "Natural:  Unsigned integer type required"
         );
 #endif
-        Locational< Junctional< Elemental > >
+        Locational< Nodal< Connective, Elemental > >
             current;
         Natural
             count;
         count = 0;
-        for (current = position.at; current->next; current = current->next)
+        current = position.at;
+        while (GetSubsequent( current )) {
             count++;
+            current = GetSubsequent( current );
+        }
         return count;
     }
 
     template <
-        typename Natural,
-        typename Elemental
-    >
-    static inline Natural
-    CountDecrement(
-        Referential< const Junctive< Natural, Elemental > >
-            list,
-        Referential< const Positional< Elemental > >
-            position
-    ) {
-#ifndef RAPBTL_NO_STD_CPLUSPLUS
-        using namespace ::std;
-        static_assert(
-            is_integral< Natural >::value && is_unsigned< Natural >::value,
-            "Natural:  Unsigned integer type required"
-        );
-#endif
-        Locational< Junctional< Elemental > >
-            current;
-        Natural
-            count;
-        count = 0;
-        for (current = position.at; current->previous; current = current->previous)
-            count++;
-        return count;
-    }
-
-    template <
+        typename Connective,
         typename Elemental
     >
     static inline bool
     IsEqual(
-        Referential< const Positional< Elemental > >
+        Referential< const Positional< Connective, Elemental > >
             base,
-        Referential< const Positional< Elemental > >
+        Referential< const Positional< Connective, Elemental > >
             relative
     ) {
         return base.at == relative.at;
     }
 
     template <
+        typename Connective,
         typename Elemental
     >
     static inline bool
     IsNotEqual(
-        Referential< const Positional< Elemental > >
+        Referential< const Positional< Connective, Elemental > >
             base,
-        Referential< const Positional< Elemental > >
+        Referential< const Positional< Connective, Elemental > >
             relative
     ) {
         return base.at != relative.at;
     }
 
     template <
-        typename Elemental
+        typename Connective,
+        typename Elemental,
+        const bool 
+            Safety
     >
     static inline bool
     IsGreater(
-        Referential< const Positional< Elemental > >
+        Referential< const Positional< Connective, Elemental > >
             base,
-        Referential< const Positional< Elemental > >
+        Referential< const Positional< Connective, Elemental > >
             relative
     ) {
-        Locational< Junctional< Elemental > >
+        Locational< Nodal< Connective, Elemental > >
             current;
-        if (base.at == relative.at)
-            return false;
-        for (current = base.at->previous; current; current = current->previous)
+        if (Safety) {
+            if (!base.at)
+                throw base;
+            if (!relative.at)
+                throw relative;
+        }
+        current = GetNext( relative.at );
+        while (current) {
             if (current == relative.at)
                 return true;
+            current = GetNext( current );
+        }
         return false;
     }
 
     template <
-        typename Elemental
-    >
-    static inline bool
-    IsGreaterChecksForNull(
-        Referential< const Positional< Elemental > >
-            base,
-        Referential< const Positional< Elemental > >
-            relative
-    ) {
-        if (!base.at)
-            throw base.at;
-        if (!relative.at)
-            throw relative.at;
-        return IsGreater( base, relative );
-    }
-
-    template <
-        typename Elemental
+        typename Connective,
+        typename Elemental,
+        const bool
+            Safety
     >
     static inline bool
     IsLesser(
-        Referential< const Positional< Elemental > >
+        Referential< const Positional< Connective, Elemental > >
             base,
-        Referential< const Positional< Elemental > >
+        Referential< const Positional< Connective, Elemental > >
             relative
     ) {
-        Locational< Junctional< Elemental > >
+        Locational< Nodal< Connective, Elemental > >
             current;
-        if (base.at == relative.at)
-            return false;
-        for (current = base.at->next; current; current = current->next)
+        if (Safety) {
+            if (!base.at)
+                throw base;
+            if (!relative.at)
+                throw relative;
+        }
+        current = GetNext( base.at );
+        while (current) {
             if (current == relative.at)
                 return true;
+            current = GetNext( current );
+        }
         return false;
     }
 
     template <
-        typename Elemental
-    >
-    static inline bool
-    IsLesserChecksForNull(
-        Referential< const Positional< Elemental > >
-            base,
-        Referential< const Positional< Elemental > >
-            relative
-    ) {
-        if (!base.at)
-            throw base.at;
-        if (!relative.at)
-            throw relative.at;
-        return IsLesser( base, relative );
-    }
-
-    template <
-        typename Elemental
+        typename Connective,
+        typename Elemental,
+        const bool
+            Safety
     >
     static inline bool
     IsNotLesser(
-        Referential< const Positional< Elemental > >
+        Referential< const Positional< Connective, Elemental > >
             base,
-        Referential< const Positional< Elemental > >
+        Referential< const Positional< Connective, Elemental > >
             relative
     ) {
-        Locational< Junctional< Elemental > >
+        Locational< Nodal< Connective, Elemental > >
             current;
-        if (base.at == relative.at)
-            return true;
-        for (current = base.at->previous; current; current = current->previous)
+        if (Safety) {
+            if (!base.at)
+                throw base;
+            if (!relative.at)
+                throw relative;
+        }
+        current = relative.at; 
+        while (current) {
             if (current == relative.at)
                 return true;
+            current = GetNext( current );
+        }
         return false;
     }
 
     template <
-        typename Elemental
-    >
-    static inline bool
-    IsNotLesserChecksForNull(
-        Referential< const Positional< Elemental > >
-            base,
-        Referential< const Positional< Elemental > >
-            relative
-    ) {
-        if (!base.at)
-            throw base.at;
-        if (!relative.at)
-            throw relative.at;
-        return IsNotLesser( base, relative );
-    }
-
-    template <
-        typename Elemental
+        typename Connective,
+        typename Elemental,
+        const bool
+            Safety
     >
     static inline bool
     IsNotGreater(
-        Referential< const Positional< Elemental > >
+        Referential< const Positional< Connective, Elemental > >
             base,
-        Referential< const Positional< Elemental > >
+        Referential< const Positional< Connective, Elemental > >
             relative
     ) {
-        Locational< Junctional< Elemental > >
+        Locational< Nodal< Connective, Elemental > >
             current;
-        if (base.at == relative.at)
-            return true;
-        for (current = base.at->next; current; current = current->next)
+        if (Safety) {
+            if (!base.at)
+                throw base;
+            if (!relative.at)
+                throw relative;
+        }
+        current = base.at;
+        while (current) {
             if (current == relative.at)
                 return true;
+            current = GetNext( current );
+        }
         return false;
     }
 
     template <
-        typename Elemental
-    >
-    static inline bool
-    IsNotGreaterChecksForNull(
-        Referential< const Positional< Elemental > >
-            base,
-        Referential< const Positional< Elemental > >
-            relative
-    ) {
-        if (!base.at)
-            throw base.at;
-        if (!relative.at)
-            throw relative.at;
-        return IsNotGreater( base, relative );
-    }
-
-    template <
+        typename Connective,
         typename Natural,
         typename Elemental
     >
-    static inline Referential< Junctive< Natural, Elemental > >
+    static inline Referential< Junctive< Connective, Natural, Elemental > >
     Initialize(
-        Referential< Junctive< Natural, Elemental > >
+        Referential< Junctive< Connective, Natural, Elemental > >
             list
     ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
@@ -359,16 +875,74 @@ namespace junction {
             "Natural:  Unsigned integer type required"
         );
 #endif
-        return list = InitializedList< Natural, Elemental >;
+        return list = InitializedList< Connective, Natural, Elemental >;
     }
 
     template <
+        typename Connective,
+        typename Natural,
+        typename Elemental
+    >
+    static inline Referential< Junctive< Connective, Natural, Elemental > >
+    IntegrateNodes(
+        Referential< Junctive< Connective, Natural, Elemental > >
+            list,
+        Locational< Nodal< Connective, Elemental > >
+            nodes,
+        Referential< const Natural >
+            count
+    ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
+#endif
+        Natural 
+            offset;
+        if (count < 1)
+            return list;
+        for (offset = 1; offset < count; offset++)
+            ConnectNext( nodes + offset - 1, nodes + offset );
+        ConnectNext( nodes + count - 1, list.unused );
+        list.unused = nodes;
+        list.total += count;
+        return list;
+    }
+
+    template <
+        typename Connective,
+        typename Natural,
+        typename Elemental,
+        Natural
+            Count
+    >
+    static inline Referential< Junctive< Connective, Natural, Elemental > >
+    IntegrateNodes(
+        Referential< Junctive< Connective, Natural, Elemental > >
+            list,
+        Referential< Nodal< Connective, Elemental >[Count] >
+            nodes
+    ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
+#endif
+        return IntegrateNodes( list, nodes, Count );
+    }
+
+    template <
+        typename Connective,
         typename Natural,
         typename Elemental
     >
     static inline bool
-    RemoveAllNodes(
-        Referential< Junctive< Natural, Elemental > >
+    RemoveAll(
+        Referential< Junctive< Connective, Natural, Elemental > >
             list
     ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
@@ -381,9 +955,7 @@ namespace junction {
         bool
             actioned = false;
         if (list.last) {
-            list.last->next = list.unused;
-            if (list.unused)
-                list.unused->previous = list.last;
+            ConnectNext( list.last, list.unused );
             list.unused = list.first;
             actioned = true;
         }
@@ -393,12 +965,13 @@ namespace junction {
     }
 
     template <
+        typename Connective,
         typename Natural,
         typename Elemental
     >
-    static inline Locational< Junctional < Elemental > >
+    static inline Locational< Nodal< Connective, Elemental > >
     Reclaim(
-        Referential< Junctive< Natural, Elemental > >
+        Referential< Junctive< Connective, Natural, Elemental > >
             list
     ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
@@ -408,27 +981,26 @@ namespace junction {
             "Natural:  Unsigned integer type required"
         );
 #endif
-        Locational< Junctional< Elemental > >
+        Locational< Nodal< Connective, Elemental > >
             result;
         result = list.unused;
-        if (result) {
-            list.unused = result->next;
-            if (list.unused)
-                list.unused->previous = 0;
-            result->next = 0;
-        }
+        if (result)
+            list.unused = GetNext( result );
         return result;
     }
 
+    // Returns false if deallocate returned false to prevent infinite loops.
+    // Verification of memory cleanup can be achieved by sampling the total 
+    // node counts before and after the call to this function.
     template <
         typename Natural,
         typename Elemental,
-        Referential< const Adjunctive< Natural, Elemental > >
+        Referential< const SinglyAdjunctive< Natural, Elemental > >
             Adjunct
     >
     static inline bool
     DeleteOneNode(
-        Referential< Junctive< Natural, Elemental > >
+        Referential< SinglyJunctive< Natural, Elemental > >
             list
     ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
@@ -438,26 +1010,59 @@ namespace junction {
             "Natural:  Unsigned integer type required"
         );
 #endif
-        Locational< Junctional< Elemental > >
+        Locational< SinglyNodal< Elemental > >
             next;
         if (!list.unused)
             return false;
-        next = list.unused->next;
+        next = GetNext( list.unused );
+        if (!Adjunct.deallocate( list, list.unused ))
+            return false;
+        list.unused = next;
+        return list.unused;
+    }
+
+    // Returns false if deallocate returned false to prevent infinite loops.
+    // Verification of memory cleanup can be achieved by sampling the total 
+    // node counts before and after the call to this function.
+    template <
+        typename Natural,
+        typename Elemental,
+        Referential< const DoublyAdjunctive< Natural, Elemental > >
+            Adjunct
+    >
+    static inline bool
+    DeleteOneNode(
+        Referential< DoublyJunctive< Natural, Elemental > >
+            list
+    ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
+#endif
+        Locational< DoublyNodal< Elemental > >
+            next;
+        if (!list.unused)
+            return false;
+        next = GetNext( list.unused );
         if (!Adjunct.deallocate( list, list.unused ))
             return false;
         list.unused = next;
         if (next)
-            next->previous = 0;
+            UnsetPrevious( next );
         return list.unused;
     }
 
     template <
+        typename Connective,
         typename Natural,
         typename Elemental
     >
-    static inline Locational< Junctional< Elemental > >
+    static inline Locational< Nodal< Connective, Elemental > >
     AllocateNothing(
-        Referential< Junctive< Natural, Elemental > >
+        Referential< Junctive< Connective, Natural, Elemental > >
             list
     ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
@@ -471,15 +1076,16 @@ namespace junction {
     }
 
     template <
+        typename Connective,
         typename Disclaimable,
         typename Natural,
         typename Elemental,
-        Referential< const Allocative< DefaultClaimable< Junctional< Elemental > >, Disclaimable > >
+        Referential< const Allocative< DefaultClaimable< Nodal< Connective, Elemental > >, Disclaimable > >
             Allocator
     >
-    static inline Locational< Junctional< Elemental > >
+    static inline Locational< Nodal< Connective, Elemental > >
     AllocateDefault(
-        Referential< Junctive< Natural, Elemental > >
+        Referential< Junctive< Connective, Natural, Elemental > >
             list
     ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
@@ -489,7 +1095,7 @@ namespace junction {
             "Natural:  Unsigned integer type required"
         );
 #endif
-        Locational< Junctional< Elemental > >
+        Locational< Nodal< Connective, Elemental > >
             result;
         Allocator.claim( result );
         if (result)
@@ -498,17 +1104,40 @@ namespace junction {
     }
 
     template <
+        typename Connective,
+        typename Natural,
+        typename Elemental
+    >
+    static inline bool
+    DeallocateNothing(
+        Referential< Junctive< Connective, Natural, Elemental > >
+            list,
+        Referential< Locational< Nodal< Connective, Elemental > > >
+            node
+    ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
+#endif
+        return false;
+    }
+
+    template <
+        typename Connective,
         typename Claimable,
         typename Natural,
         typename Elemental,
-        Referential< const Allocative< Claimable, DefaultDisclaimable< Junctional< Elemental > > > >
+        Referential< const Allocative< Claimable, DefaultDisclaimable< Nodal< Connective, Elemental > > > >
             Allocator
     >
     static inline bool
     DeallocateDefault(
-        Referential< Junctive< Natural, Elemental > >
+        Referential< Junctive< Connective, Natural, Elemental > >
             list,
-        Referential< Locational< Junctional< Elemental > > >
+        Referential< Locational< Nodal< Connective, Elemental > > >
             node
     ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
@@ -527,15 +1156,16 @@ namespace junction {
     }
 
     template <
+        typename Connective,
         typename Disclaimable,
         typename Natural,
         typename Elemental,
-        Referential< const Allocative< DefaultClaimable< Junctional< Elemental > >, Disclaimable > >
+        Referential< const Allocative< DefaultClaimable< Nodal< Connective, Elemental > >, Disclaimable > >
             Allocator
     >
-    static inline Locational< Junctional< Elemental > >
+    static inline Locational< Nodal< Connective, Elemental > >
     ProclaimDefault(
-        Referential< Junctive< Natural, Elemental > >
+        Referential< Junctive< Connective, Natural, Elemental > >
             list,
         Referential< const Elemental >
             value
@@ -547,7 +1177,7 @@ namespace junction {
             "Natural:  Unsigned integer type required"
         );
 #endif
-        Locational< Junctional< Elemental > >
+        Locational< Nodal< Connective, Elemental > >
             result;
         result = Reclaim( list );
         if (!result) {
@@ -561,15 +1191,13 @@ namespace junction {
     }
 
     template <
-        typename Disclaimable,
+        typename Connective,
         typename Natural,
-        typename Elemental,
-        Referential< const Allocative< CopyClaimable< Junctional< Elemental > >, Disclaimable > >
-            Allocator
+        typename Elemental
     >
-    static inline Locational< Junctional< Elemental > >
-    ProclaimCopy(
-        Referential< Junctive< Natural, Elemental > >
+    static inline Locational< Nodal< Connective, Elemental > >
+    ProclaimCyclic(
+        Referential< Junctive< Connective, Natural, Elemental > >
             list,
         Referential< const Elemental >
             value
@@ -581,9 +1209,38 @@ namespace junction {
             "Natural:  Unsigned integer type required"
         );
 #endif
-        const Junctional< Elemental >
-            copy = {0, 0, value};
-        Locational< Junctional < Elemental > >
+        Locational< Nodal< Connective, Elemental > >
+            result;
+        result = Reclaim( list );
+        if (result)
+            result->element = value;
+        return result;
+    }
+
+    template <
+        typename Disclaimable,
+        typename Natural,
+        typename Elemental,
+        Referential< const Allocative< CopyClaimable< SinglyNodal< Elemental > >, Disclaimable > >
+            Allocator
+    >
+    static inline Locational< SinglyNodal< Elemental > >
+    ProclaimCopy(
+        Referential< SinglyJunctive< Natural, Elemental > >
+            list,
+        Referential< const Elemental >
+            value
+    ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
+#endif
+        const SinglyNodal< Elemental >
+            copy = {{0}, value};
+        Locational< SinglyNodal< Elemental > >
             result;
         Allocator.claim( result, copy );
         if (result)
@@ -592,14 +1249,46 @@ namespace junction {
     }
 
     template <
+        typename Disclaimable,
         typename Natural,
         typename Elemental,
-        Referential< const Adjunctive< Natural, Elemental > >
+        Referential< const Allocative< CopyClaimable< DoublyNodal< Elemental > >, Disclaimable > >
+            Allocator
+    >
+    static inline Locational< DoublyNodal<Elemental > >
+    ProclaimCopy(
+        Referential< DoublyJunctive< Natural, Elemental > >
+            list,
+        Referential< const Elemental >
+            value
+    ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
+#endif
+        const DoublyNodal< Elemental >
+            copy = {{0, 0}, value};
+        Locational< DoublyNodal< Elemental > >
+            result;
+        Allocator.claim( result, copy );
+        if (result)
+            list.total++;
+        return result;
+    }
+
+    template <
+        typename Connective,
+        typename Natural,
+        typename Elemental,
+        Referential< const Adjunctive< Connective, Natural, Elemental > >
             Adjunct
     >
     static inline bool
     Instantiate(
-        Referential< Junctive< Natural, Elemental > >
+        Referential< Junctive< Connective, Natural, Elemental > >
             list,
         Referential< const Natural >
             count
@@ -611,29 +1300,30 @@ namespace junction {
             "Natural:  Unsigned integer type required"
         );
 #endif
-        Locational< Junctional< Elemental > >
-            current;
+        Locational< Nodal< Connective, Elemental > >
+            result;
         while (list.total - list.count < count) {
-            current = Adjunct.allocate( list );
-            if (!current)
+            result = Adjunct.allocate( list );
+            if (!result)
                 return false;
-            current->next = list.unused;
-            if (list.unused)
-                list.unused->previous = current;
-            list.unused = current;
+            ConnectNext( result, list.unused );
+            list.unused = result;
         }
         return true;
     }
 
     template <
+        typename Connective,
         typename Natural,
-        typename Elemental
+        typename Elemental,
+        const bool 
+            Safety
     >
     static inline bool
     Contains(
-        Referential< const Junctive< Natural, Elemental > >
+        Referential< const Junctive< Connective, Natural, Elemental > >
             list,
-        Referential< const Positional< Elemental > >
+        Referential< const Positional< Connective, Elemental > >
             position
     ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
@@ -643,46 +1333,29 @@ namespace junction {
             "Natural:  Unsigned integer type required"
         );
 #endif
-        Locational< Junctional< Elemental > >
+        Locational< Nodal< Connective, Elemental > >
             current;
-        for (current = list.first; current; current = current->next)
+        if (Safety && !position.at)
+            throw position;
+        current = list.first; 
+        while (current) {
             if (current == position.at)
                 return true;
+            current = GetNext( current );
+        }
         return false;
     }
 
     template <
-        typename Natural,
-        typename Elemental
-    >
-    static inline bool
-    ContainsChecksForNull(
-        Referential< const Junctive< Natural, Elemental > >
-            list,
-        Referential< const Positional< Elemental > >
-            position
-    ) {
-#ifndef RAPBTL_NO_STD_CPLUSPLUS
-        using namespace ::std;
-        static_assert(
-            is_integral< Natural >::value && is_unsigned< Natural >::value,
-            "Natural:  Unsigned integer type required"
-        );
-#endif
-        if (!position.at)
-            throw position;
-        return Contains( list, position );
-    }
-
-    template <
+        typename Connective,
         typename Natural,
         typename Elemental
     >
     static inline Conferential< const Elemental >
     GoRead(
-        Referential< const Junctive< Natural, Elemental > >
+        Referential< const Junctive< Connective, Natural, Elemental > >
             list,
-        Referential< const Positional< Elemental > >
+        Referential< const Positional< Connective, Elemental > >
             position
     ) {
         using ::location::Deter;
@@ -694,21 +1367,23 @@ namespace junction {
         );
 #endif
         static auto&
-            DoDeter = Deter< Elemental >;
-        return DoDeter( position.at->element );
+            DeterElement = Deter< Elemental >;
+        return DeterElement( position.at->element );
     }
 
     template <
+        typename Connective,
         typename Natural,
         typename Elemental
     >
     static inline Conferential< const Elemental >
     GoReadSafely(
-        Referential< const Junctive< Natural, Elemental > >
+        Referential< const Junctive< Connective, Natural, Elemental > >
             list,
-        Referential< const Positional< Elemental > >
+        Referential< const Positional< Connective, Elemental > >
             position
     ) {
+        using ::location::Deter;
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
         static_assert(
@@ -716,20 +1391,23 @@ namespace junction {
             "Natural:  Unsigned integer type required"
         );
 #endif
-        if (!ContainsChecksForNull( list, position ))
+        static auto&
+            ContainsPosition = Contains< Connective, Natural, Elemental, true >;
+        if (!ContainsPosition( list, position ))
             throw position;
         return GoRead( list, position );
     }
 
     template <
+        typename Connective,
         typename Natural,
         typename Elemental
     >
     static inline Conferential< Elemental >
     GoWrite(
-        Referential< Junctive< Natural, Elemental > >
+        Referential< Junctive< Connective, Natural, Elemental > >
             list,
-        Referential< const Positional< Elemental > >
+        Referential< const Positional< Connective, Elemental > >
             position
     ) {
         using ::location::Confer;
@@ -741,21 +1419,23 @@ namespace junction {
         );
 #endif
         static auto&
-            DoConfer = Confer< Elemental >;
-        return DoConfer( position.at->element );
+            ConferElement = Confer< Elemental >;
+        return ConferElement( position.at->element );
     }
 
     template <
+        typename Connective,
         typename Natural,
         typename Elemental
     >
     static inline Conferential< Elemental >
     GoWriteSafely(
-        Referential< Junctive< Natural, Elemental > >
+        Referential< Junctive< Connective, Natural, Elemental > >
             list,
-        Referential< const Positional< Elemental > >
+        Referential< const Positional< Connective, Elemental > >
             position
     ) {
+        using ::location::Confer;
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
         static_assert(
@@ -763,20 +1443,29 @@ namespace junction {
             "Natural:  Unsigned integer type required"
         );
 #endif
-        if (!ContainsChecksForNull( list, position ))
+        static auto&
+            ContainsPosition = Contains< Connective, Natural, Elemental, true >;
+        if (!ContainsPosition( list, position ))
             throw position;
         return GoWrite( list, position );
     }
 
     template <
+        typename Connective,
         typename Natural,
-        typename Elemental
+        typename Elemental,
+        Referential< Original< Connective, Natural, Elemental > >
+            GetOrigin,
+        Referential< Subsequent< Connective, Elemental > >
+            GetSubsequent,
+        const bool
+            Safety
     >
-    static inline Referential< const Positional< Elemental > >
-    BeginReadIncrement(
-        Referential< const Junctive< Natural, Elemental > >
+    static inline Referential< const Positional< Connective, Elemental > >
+    BeginReadScale(
+        Referential< const Junctive< Connective, Natural, Elemental > >
             list,
-        Referential< Positional< Elemental > >
+        Referential< Positional< Connective, Elemental > >
             position,
         Referential< const Natural >
             count
@@ -788,385 +1477,39 @@ namespace junction {
             "Natural:  Unsigned integer type required"
         );
 #endif
-        Natural
-            index;
-        position.at = list.first;
-        for (index = 0; index < count; index++)
-            position.at = position.at->next;
-        return position;
-    }
-
-    template <
-        typename Natural,
-        typename Elemental
-    >
-    static inline Referential< const Positional< Elemental > >
-    BeginReadIncrementSafely(
-        Referential< const Junctive< Natural, Elemental > >
-            list,
-        Referential< Positional< Elemental > >
-            position,
-        Referential< const Natural >
-            count
-    ) {
-#ifndef RAPBTL_NO_STD_CPLUSPLUS
-        using namespace ::std;
-        static_assert(
-            is_integral< Natural >::value && is_unsigned< Natural >::value,
-            "Natural:  Unsigned integer type required"
-        );
-#endif
-        Natural
-            index;
-        if (!list.first)
-            throw list;
-        position.at = list.first;
-        for (index = 0; index < count; index++) {
-            if (!position.at->next)
-                throw count;
-            position.at = position.at->next;
-        }
-        return position;
-    }
-
-    template <
-        typename Natural,
-        typename Elemental
-    >
-    static inline Referential< const Positional< Elemental > >
-    BeginWriteIncrement(
-        Referential< Junctive< Natural, Elemental > >
-            list,
-        Referential< Positional< Elemental > >
-            position,
-        Referential< const Natural >
-            count
-    ) {
-#ifndef RAPBTL_NO_STD_CPLUSPLUS
-        using namespace ::std;
-        static_assert(
-            is_integral< Natural >::value && is_unsigned< Natural >::value,
-            "Natural:  Unsigned integer type required"
-        );
-#endif
-        Natural
-            index;
-        position.at = list.first;
-        for (index = 0; index < count; index++)
-            position.at = position.at->next;
-        return position;
-    }
-
-    template <
-        typename Natural,
-        typename Elemental
-    >
-    static inline Referential< const Positional< Elemental > >
-    BeginWriteIncrementSafely(
-        Referential< Junctive< Natural, Elemental > >
-            list,
-        Referential< Positional< Elemental > >
-            position,
-        Referential< const Natural >
-            count
-    ) {
-#ifndef RAPBTL_NO_STD_CPLUSPLUS
-        using namespace ::std;
-        static_assert(
-            is_integral< Natural >::value && is_unsigned< Natural >::value,
-            "Natural:  Unsigned integer type required"
-        );
-#endif
-        Natural
-            index;
-        if (!list.first)
-            throw list;
-        position.at = list.first;
-        for (index = 0; index < count; index++) {
-            if (!position.at->next)
-                throw count;
-            position.at = position.at->next;
-        }
-        return position;
-    }
-
-    template <
-        typename Natural,
-        typename Elemental
-    >
-    static inline bool
-    IncrementBegins(
-        Referential< const Junctive< Natural, Elemental > >
-            list,
-        Referential< const Natural >
-            count
-    ) {
-#ifndef RAPBTL_NO_STD_CPLUSPLUS
-        using namespace ::std;
-        static_assert(
-            is_integral< Natural >::value && is_unsigned< Natural >::value,
-            "Natural:  Unsigned integer type required"
-        );
-#endif
-        Natural
-            index;
-        Positional< Elemental >
-            position;
-        if (!list.first)
-            return false;
-        position.at = list.first;
-        for (index = 0; index < count; index++)
-            if (!position.at->next)
-                return false;
-        return true;
-    }
-
-    template <
-        typename Natural,
-        typename Elemental
-    >
-    static inline Referential< const Positional< Elemental > >
-    TraverseReadIncrement(
-        Referential< const Junctive< Natural, Elemental > >
-            list,
-        Referential< Positional< Elemental > >
-            position,
-        Referential< const Natural >
-            count
-    ) {
-#ifndef RAPBTL_NO_STD_CPLUSPLUS
-        using namespace ::std;
-        static_assert(
-            is_integral< Natural >::value && is_unsigned< Natural >::value,
-            "Natural:  Unsigned integer type required"
-        );
-#endif
-        Natural
-            index;
-        for (index = 0; index < count; index++)
-            position.at = position.at->next;
-        return position;
-    }
-
-    template <
-        typename Natural,
-        typename Elemental
-    >
-    static inline Referential< const Positional< Elemental > >
-    TraverseReadIncrementSafely(
-        Referential< const Junctive< Natural, Elemental > >
-            list,
-        Referential< Positional< Elemental > >
-            position,
-        Referential< const Natural >
-            count
-    ) {
-#ifndef RAPBTL_NO_STD_CPLUSPLUS
-        using namespace ::std;
-        static_assert(
-            is_integral< Natural >::value && is_unsigned< Natural >::value,
-            "Natural:  Unsigned integer type required"
-        );
-#endif
-        Natural
-            index;
-        if (!position.at)
-            throw position;
-        for (index = 0; index < count; index++) {
-            if (!position.at->next)
-                throw position;
-            position.at = position.at->next;
-        }
-        return position;
-    }
-
-    template <
-        typename Natural,
-        typename Elemental
-    >
-    static inline Referential< const Positional< Elemental > >
-    TraverseWriteIncrement(
-        Referential< Junctive< Natural, Elemental > >
-            list,
-        Referential< Positional< Elemental > >
-            position,
-        Referential< const Natural >
-            count
-    ) {
-#ifndef RAPBTL_NO_STD_CPLUSPLUS
-        using namespace ::std;
-        static_assert(
-            is_integral< Natural >::value && is_unsigned< Natural >::value,
-            "Natural:  Unsigned integer type required"
-        );
-#endif
-        Natural
-            index;
-        for (index = 0; index < count; index++)
-            position.at = position.at->next;
-        return position;
-    }
-
-    template <
-        typename Natural,
-        typename Elemental
-    >
-    static inline Referential< const Positional< Elemental > >
-    TraverseWriteIncrementSafely(
-        Referential< Junctive< Natural, Elemental > >
-            list,
-        Referential< Positional< Elemental > >
-            position,
-        Referential< const Natural >
-            count
-    ) {
-#ifndef RAPBTL_NO_STD_CPLUSPLUS
-        using namespace ::std;
-        static_assert(
-            is_integral< Natural >::value && is_unsigned< Natural >::value,
-            "Natural:  Unsigned integer type required"
-        );
-#endif
-        Natural
-            index;
-        if (!position.at)
-            throw position;
-        for (index = 0; index < count; index++) {
-            if (!position.at->next)
-                throw position;
-            position.at = position.at->next;
-        }
-        return position;
-    }
-
-    template <
-        typename Natural,
-        typename Elemental
-    >
-    static inline bool
-    IncrementTraverses(
-        Referential< const Junctive< Natural, Elemental > >
-            list,
-        Referential< const Positional< Elemental > >
-            position,
-        Referential< const Natural >
-            count
-    ) {
-#ifndef RAPBTL_NO_STD_CPLUSPLUS
-        using namespace ::std;
-        static_assert(
-            is_integral< Natural >::value && is_unsigned< Natural >::value,
-            "Natural:  Unsigned integer type required"
-        );
-#endif
-        Natural
-            index;
-        Positional< Elemental >
+        Locational< Nodal< Connective, Elemental > >
             current;
-        current = position;
-        for (index = 0; index < count; index++) {
-            if (!current.at->next)
-                return false;
-            current.at = current.at->next;
-        }
-        return true;
-    }
-
-    template <
-        typename Natural,
-        typename Elemental
-    >
-    static inline bool
-    IncrementTraversesChecksForNull(
-        Referential< const Junctive< Natural, Elemental > >
-            list,
-        Referential< const Positional< Elemental > >
-            position,
-        Referential< const Natural >
-            count
-    ) {
-#ifndef RAPBTL_NO_STD_CPLUSPLUS
-        using namespace ::std;
-        static_assert(
-            is_integral< Natural >::value && is_unsigned< Natural >::value,
-            "Natural:  Unsigned integer type required"
-        );
-#endif
-        if (!position.at)
-            throw position;
-        return IncrementTraverses( list, position, count );
-    }
-
-    template <
-        typename Natural,
-        typename Elemental
-    >
-    static inline Referential< const Positional< Elemental > >
-    BeginReadDecrement(
-        Referential< const Junctive< Natural, Elemental > >
-            list,
-        Referential< Positional< Elemental > >
-            position,
-        Referential< const Natural >
-            count
-    ) {
-#ifndef RAPBTL_NO_STD_CPLUSPLUS
-        using namespace ::std;
-        static_assert(
-            is_integral< Natural >::value && is_unsigned< Natural >::value,
-            "Natural:  Unsigned integer type required"
-        );
-#endif
         Natural
             index;
-        position.at = list.last;
-        for (index = 0; index < count; index++)
-            position.at = position.at->previous;
-        return position;
-    }
-
-    template <
-        typename Natural,
-        typename Elemental
-    >
-    static inline Referential< const Positional< Elemental > >
-    BeginReadDecrementSafely(
-        Referential< const Junctive< Natural, Elemental > >
-            list,
-        Referential< Positional< Elemental > >
-            position,
-        Referential< const Natural >
-            count
-    ) {
-#ifndef RAPBTL_NO_STD_CPLUSPLUS
-        using namespace ::std;
-        static_assert(
-            is_integral< Natural >::value && is_unsigned< Natural >::value,
-            "Natural:  Unsigned integer type required"
-        );
-#endif
-        Natural
-            index;
-        if (!list.last)
+        current = GetOrigin( list );
+        if (Safety && !current)
             throw list;
-        position.at = list.last;
+        position.at = current;
         for (index = 0; index < count; index++) {
-            if (!position.at->previous)
+            current = GetSubsequent( position.at );
+            if (Safety && !current)
                 throw count;
-            position.at = position.at->previous;
+            position.at = current;
         }
         return position;
     }
 
     template <
+        typename Connective,
         typename Natural,
-        typename Elemental
+        typename Elemental,
+        Referential< Original< Connective, Natural, Elemental > >
+            GetOrigin,
+        Referential< Subsequent< Connective, Elemental > >
+            GetSubsequent,
+        const bool
+            Safety
     >
-    static inline Referential< const Positional< Elemental > >
-    BeginWriteDecrement(
-        Referential< Junctive< Natural, Elemental > >
+    static inline Referential< const Positional< Connective, Elemental > >
+    BeginWriteScale(
+        Referential< Junctive< Connective, Natural, Elemental > >
             list,
-        Referential< Positional< Elemental > >
+        Referential< Positional< Connective, Elemental > >
             position,
         Referential< const Natural >
             count
@@ -1178,238 +1521,75 @@ namespace junction {
             "Natural:  Unsigned integer type required"
         );
 #endif
-        Natural
-            index;
-        position.at = list.last;
-        for (index = 0; index < count; index++)
-            position.at = position.at->previous;
-        return position;
-    }
-
-    template <
-        typename Natural,
-        typename Elemental
-    >
-    static inline Referential< const Positional< Elemental > >
-    BeginWriteDecrementSafely(
-        Referential< Junctive< Natural, Elemental > >
-            list,
-        Referential< Positional< Elemental > >
-            position,
-        Referential< const Natural >
-            count
-    ) {
-#ifndef RAPBTL_NO_STD_CPLUSPLUS
-        using namespace ::std;
-        static_assert(
-            is_integral< Natural >::value && is_unsigned< Natural >::value,
-            "Natural:  Unsigned integer type required"
-        );
-#endif
-        Natural
-            index;
-        if (!list.last)
-            throw list;
-        position.at = list.last;
-        for (index = 0; index < count; index++) {
-            if (!position.at->previous)
-                throw count;
-            position.at = position.at->previous;
-        }
-        return position;
-    }
-
-    template <
-        typename Natural,
-        typename Elemental
-    >
-    static inline bool
-    DecrementBegins(
-        Referential< const Junctive< Natural, Elemental > >
-            list,
-        Referential< const Natural >
-            count
-    ) {
-#ifndef RAPBTL_NO_STD_CPLUSPLUS
-        using namespace ::std;
-        static_assert(
-            is_integral< Natural >::value && is_unsigned< Natural >::value,
-            "Natural:  Unsigned integer type required"
-        );
-#endif
-        Natural
-            index;
-        Positional< Elemental >
-            position;
-        if (!list.last)
-            return false;
-        position.at = list.last;
-        for (index = 0; index < count; index++)
-            if (!position.at->previous)
-                return false;
-        return true;
-    }
-
-    template <
-        typename Natural,
-        typename Elemental
-    >
-    static inline Referential< const Positional< Elemental > >
-    TraverseReadDecrement(
-        Referential< const Junctive< Natural, Elemental > >
-            list,
-        Referential< Positional< Elemental > >
-            position,
-        Referential< const Natural >
-            count
-    ) {
-#ifndef RAPBTL_NO_STD_CPLUSPLUS
-        using namespace ::std;
-        static_assert(
-            is_integral< Natural >::value && is_unsigned< Natural >::value,
-            "Natural:  Unsigned integer type required"
-        );
-#endif
-        Natural
-            index;
-        for (index = 0; index < count; index++)
-            position.at = position.at->previous;
-        return position;
-    }
-
-    template <
-        typename Natural,
-        typename Elemental
-    >
-    static inline Referential< const Positional< Elemental > >
-    TraverseReadDecrementSafely(
-        Referential< const Junctive< Natural, Elemental > >
-            list,
-        Referential< Positional< Elemental > >
-            position,
-        Referential< const Natural >
-            count
-    ) {
-#ifndef RAPBTL_NO_STD_CPLUSPLUS
-        using namespace ::std;
-        static_assert(
-            is_integral< Natural >::value && is_unsigned< Natural >::value,
-            "Natural:  Unsigned integer type required"
-        );
-#endif
-        Natural
-            index;
-        if (!position.at)
-            throw position;
-        for (index = 0; index < count; index++) {
-            if (!position.at->previous)
-                throw position;
-            position.at = position.at->previous;
-        }
-        return position;
-    }
-
-    template <
-        typename Natural,
-        typename Elemental
-    >
-    static inline Referential< const Positional< Elemental > >
-    TraverseWriteDecrement(
-        Referential< Junctive< Natural, Elemental > >
-            list,
-        Referential< Positional< Elemental > >
-            position,
-        Referential< const Natural >
-            count
-    ) {
-#ifndef RAPBTL_NO_STD_CPLUSPLUS
-        using namespace ::std;
-        static_assert(
-            is_integral< Natural >::value && is_unsigned< Natural >::value,
-            "Natural:  Unsigned integer type required"
-        );
-#endif
-        Natural
-            index;
-        for (index = 0; index < count; index++)
-            position.at = position.at->previous;
-        return position;
-    }
-
-    template <
-        typename Natural,
-        typename Elemental
-    >
-    static inline Referential< const Positional< Elemental > >
-    TraverseWriteDecrementSafely(
-        Referential< Junctive< Natural, Elemental > >
-            list,
-        Referential< Positional< Elemental > >
-            position,
-        Referential< const Natural >
-            count
-    ) {
-        using namespace ::std;
-#ifndef RAPBTL_NO_STD_CPLUSPLUS
-        static_assert(
-            is_integral< Natural >::value && is_unsigned< Natural >::value,
-            "Natural:  Unsigned integer type required"
-        );
-#endif
-        Natural
-            index;
-        if (!position.at)
-            throw position;
-        for (index = 0; index < count; index++) {
-            if (!position.at->previous)
-                throw position;
-            position.at = position.at->previous;
-        }
-        return position;
-    }
-
-    template <
-        typename Natural,
-        typename Elemental
-    >
-    static inline bool
-    DecrementTraverses(
-        Referential< const Junctive< Natural, Elemental > >
-            list,
-        Referential< const Positional< Elemental > >
-            position,
-        Referential< const Natural >
-            count
-    ) {
-#ifndef RAPBTL_NO_STD_CPLUSPLUS
-        using namespace ::std;
-        static_assert(
-            is_integral< Natural >::value && is_unsigned< Natural >::value,
-            "Natural:  Unsigned integer type required"
-        );
-#endif
-        Natural
-            index;
-        Positional< Elemental >
+        Locational< Nodal< Connective, Elemental > >
             current;
-        current = position;
+        Natural
+            index;
+        current = GetOrigin( list );
+        if (Safety && !current)
+            throw list;
+        position.at = current;
         for (index = 0; index < count; index++) {
-            if (!current.at->previous)
+            current = GetSubsequent( position.at );
+            if (Safety && !current)
+                throw count;
+            position.at = current;
+        }
+        return position;
+    }
+
+    template <
+        typename Connective,
+        typename Natural,
+        typename Elemental,
+        Referential< Original< Connective, Natural, Elemental > >
+            GetOrigin,
+        Referential< Subsequent< Connective, Elemental > >
+            GetSubsequent
+    >
+    static inline bool
+    DirectionBegins(
+        Referential< const Junctive< Connective, Natural, Elemental > >
+            list,
+        Referential< const Natural >
+            count
+    ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
+#endif
+        Locational< Nodal< Connective, Elemental > >
+            current;
+        Natural
+            index;
+        current = GetOrigin( list );
+        if (!current)
+            return false;
+        for (index = 0; index < count; index++) {
+            current = GetSubsequent( current );
+            if (!current)
                 return false;
-            current.at = current.at->previous;
         }
         return true;
     }
 
     template <
+        typename Connective,
         typename Natural,
-        typename Elemental
+        typename Elemental,
+        Referential< Subsequent< Connective, Elemental > >
+            GetSubsequent,
+        const bool
+            Safety
     >
-    static inline bool
-    DecrementTraversesChecksForNull(
-        Referential< const Junctive< Natural, Elemental > >
+    static inline Referential< const Positional< Connective, Elemental > >
+    TraverseReadScale(
+        Referential< const Junctive< Connective, Natural, Elemental > >
             list,
-        Referential< const Positional< Elemental > >
+        Referential< Positional< Connective, Elemental > >
             position,
         Referential< const Natural >
             count
@@ -1421,412 +1601,743 @@ namespace junction {
             "Natural:  Unsigned integer type required"
         );
 #endif
-        if (!position.at)
+        Locational< Nodal< Connective, Elemental > >
+            current;
+        Natural
+            index;
+        if (Safety && !position.at)
             throw position;
-        return DecrementTraverses( list, position, count );
+        for (index = 0; index < count; index++) {
+            current = GetSubsequent( position.at );
+            if (Safety && !current)
+                throw count;
+            position.at = current;
+        }
+        return position;
+    }
+
+    template <
+        typename Connective,
+        typename Natural,
+        typename Elemental,
+        Referential< Subsequent< Connective, Elemental > >
+            GetSubsequent,
+        const bool
+            Safety
+    >
+    static inline Referential< const Positional< Connective, Elemental > >
+    TraverseWriteScale(
+        Referential< Junctive< Connective, Natural, Elemental > >
+            list,
+        Referential< Positional< Connective, Elemental > >
+            position,
+        Referential< const Natural >
+            count
+    ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
+#endif
+        Locational< Nodal< Connective, Elemental > >
+            current;
+        Natural
+            index;
+        if (Safety && !position.at)
+            throw position;
+        for (index = 0; index < count; index++) {
+            current = GetSubsequent( position.at );
+            if (Safety && !current)
+                throw count;
+            position.at = current;
+        }
+        return position;
+    }
+
+    template <
+        typename Connective,
+        typename Natural,
+        typename Elemental,
+        Referential< Subsequent< Connective, Elemental > >
+            GetSubsequent,
+        const bool
+            Safety
+    >
+    static inline bool
+    DirectionTraverses(
+        Referential< const Junctive< Connective, Natural, Elemental > >
+            list,
+        Referential< const Positional< Connective, Elemental > >
+            position,
+        Referential< const Natural >
+            count
+    ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
+#endif
+        Locational< Nodal< Connective, Elemental > >
+            current;
+        Natural
+            index;
+        current = position.at;
+        if (Safety && !current)
+            throw position;
+        for (index = 0; index < count; index++) {
+            current = GetSubsequent( current );
+            if (!current)
+                return false;
+        }
+        return true;
     }
 
     template <
         typename Natural,
         typename Elemental
     >
-    constexpr Adjunctive< Natural, Elemental >
-    DefaultNewAdjunct = {
-        AllocateDefault< DefaultDisclaimable< Junctional< Elemental > >, Natural, Elemental, FastDefaultNew< Junctional< Elemental > > >,
-        DeallocateDefault< DefaultClaimable< Junctional< Elemental > >, Natural, Elemental, FastDefaultNew< Junctional< Elemental > > >,
-        ProclaimDefault< DefaultDisclaimable< Junctional< Elemental > >, Natural, Elemental, FastDefaultNew< Junctional< Elemental > > >
+    constexpr SinglyAdjunctive< Natural, Elemental >
+    DefaultNewSingleAdjunct = {
+        AllocateDefault< SinglyLinked< Elemental >, DefaultDisclaimable< SinglyNodal< Elemental > >, Natural, Elemental, FastDefaultNew< SinglyNodal< Elemental > > >,
+        DeallocateDefault< SinglyLinked< Elemental >, DefaultClaimable< SinglyNodal< Elemental > >, Natural, Elemental, FastDefaultNew< SinglyNodal< Elemental > > >,
+        ProclaimDefault< SinglyLinked< Elemental >, DefaultDisclaimable< SinglyNodal< Elemental > >, Natural, Elemental, FastDefaultNew< SinglyNodal< Elemental > > >
     };
 
     template <
         typename Natural,
         typename Elemental
     >
-    constexpr Adjunctive< Natural, Elemental >
-    CopyNewAdjunct = {
-        AllocateNothing< Natural, Elemental >,
-        DeallocateDefault< CopyClaimable< Junctional< Elemental > >, Natural, Elemental, FastCopyNew< Junctional< Elemental > > >,
-        ProclaimCopy< DefaultDisclaimable< Junctional< Elemental > >, Natural, Elemental, FastCopyNew< Junctional< Elemental > > >
-    };
-
-    template <
-        typename Elemental
-    >
-    constexpr Equative< Positional< Elemental > >
-    Equality = {
-        IsEqual< Elemental >,
-        IsNotEqual< Elemental >
-    };
-
-    template <
-        typename Elemental
-    >
-    constexpr Relational< Positional< Elemental > >
-    Relation = {
-        IsLesser< Elemental >,
-        IsGreater< Elemental >,
-        IsNotGreater< Elemental >,
-        IsNotLesser< Elemental >
-    };
-
-    template <
-        typename Elemental
-    >
-    constexpr Relational< Positional< Elemental > >
-    RelationChecksForNull = {
-        IsLesserChecksForNull< Elemental >,
-        IsGreaterChecksForNull< Elemental >,
-        IsNotGreaterChecksForNull< Elemental >,
-        IsNotLesserChecksForNull< Elemental >
-    };
-
-    template <
-        typename Elemental
-    >
-    constexpr Comparative< Positional< Elemental >  >
-    Comparison = {
-        Equality< Elemental >,
-        Relation< Elemental >
-    };
-
-    template <
-        typename Elemental
-    >
-    constexpr Comparative< Positional< Elemental >  >
-    ComparisonChecksForNull = {
-        Equality< Elemental >,
-        RelationChecksForNull< Elemental >
+    constexpr DoublyAdjunctive< Natural, Elemental >
+    DefaultNewDoubleAdjunct = {
+        AllocateDefault< DoublyLinked< Elemental >, DefaultDisclaimable< DoublyNodal< Elemental > >, Natural, Elemental, FastDefaultNew< DoublyNodal< Elemental > > >,
+        DeallocateDefault< DoublyLinked< Elemental >, DefaultClaimable< DoublyNodal< Elemental > >, Natural, Elemental, FastDefaultNew< DoublyNodal< Elemental > > >,
+        ProclaimDefault< DoublyLinked< Elemental >, DefaultDisclaimable< DoublyNodal< Elemental > >, Natural, Elemental, FastDefaultNew< DoublyNodal< Elemental > > >
     };
 
     template <
         typename Natural,
         typename Elemental
     >
-    constexpr Vectorial< const Junctive< Natural, Elemental >, Positional< Elemental >, const Elemental >
-    ReadVector = {
-        Comparison< Elemental >,
-        Contains< Natural, Elemental >,
-        GoRead< Natural, Elemental >
+    constexpr SinglyAdjunctive< Natural, Elemental >
+    DefaultStaticSingleAdjunct = {
+        AllocateNothing< SinglyLinked< Elemental >, Natural, Elemental >,
+        DeallocateNothing< SinglyLinked< Elemental >, Natural, Elemental >,
+        ProclaimCyclic< SinglyLinked< Elemental >, Natural, Elemental >
     };
 
     template <
         typename Natural,
         typename Elemental
     >
-    constexpr Vectorial< const Junctive< Natural, Elemental >, Positional< Elemental >, const Elemental >
-    SafeReadVector = {
-        ComparisonChecksForNull< Elemental >,
-        ContainsChecksForNull< Natural, Elemental >,
-        GoReadSafely< Natural, Elemental >
+    constexpr DoublyAdjunctive< Natural, Elemental >
+    DefaultStaticDoubleAdjunct = {
+        AllocateNothing< DoublyLinked< Elemental >, Natural, Elemental >,
+        DeallocateNothing< DoublyLinked< Elemental >, Natural, Elemental >,
+        ProclaimCyclic< DoublyLinked< Elemental >, Natural, Elemental >
     };
 
     template <
         typename Natural,
         typename Elemental
     >
-    constexpr Vectorial< Junctive< Natural, Elemental >, Positional< Elemental >, Elemental >
-    WriteVector = {
-        Comparison< Elemental >,
-        Contains< Natural, Elemental >,
-        GoWrite< Natural, Elemental >
+    constexpr SinglyAdjunctive< Natural, Elemental >
+    CopyNewSingleAdjunct = {
+        AllocateNothing< SinglyLinked< Elemental >, Natural, Elemental >,
+        DeallocateDefault< SinglyLinked< Elemental >, CopyClaimable< SinglyNodal< Elemental > >, Natural, Elemental, FastCopyNew< SinglyNodal< Elemental > > >,
+        ProclaimCopy< DefaultDisclaimable< SinglyNodal< Elemental > >, Natural, Elemental, FastCopyNew< SinglyNodal< Elemental > > >
     };
 
     template <
         typename Natural,
         typename Elemental
     >
-    constexpr Vectorial< Junctive< Natural, Elemental >, Positional< Elemental >, Elemental >
-    SafeWriteVector = {
-        ComparisonChecksForNull< Elemental >,
-        ContainsChecksForNull< Natural, Elemental >,
-        GoWriteSafely< Natural, Elemental >
+    constexpr DoublyAdjunctive< Natural, Elemental >
+    CopyNewDoubleAdjunct = {
+        AllocateNothing< DoublyLinked< Elemental >, Natural, Elemental >,
+        DeallocateDefault< DoublyLinked< Elemental >, CopyClaimable< DoublyNodal< Elemental > >, Natural, Elemental, FastCopyNew< DoublyNodal< Elemental > > >,
+        ProclaimCopy< DefaultDisclaimable< DoublyNodal< Elemental > >, Natural, Elemental, FastCopyNew< DoublyNodal< Elemental > > >
+    };
+
+    template <
+        typename Elemental
+    >
+    constexpr Equative< SinglyPositional< Elemental > >
+    SingleEquality = {
+        IsEqual< SinglyLinked< Elemental >, Elemental >,
+        IsNotEqual< SinglyLinked< Elemental >, Elemental >
+    };
+
+    template <
+        typename Elemental
+    >
+    constexpr Equative< DoublyPositional< Elemental > >
+    DoubleEquality = {
+        IsEqual< DoublyLinked< Elemental >, Elemental >,
+        IsNotEqual< DoublyLinked< Elemental >, Elemental >
+    };
+
+    template <
+        typename Elemental
+    >
+    constexpr Relational< SinglyPositional< Elemental > >
+    SingleRelation = {
+        IsLesser< SinglyLinked< Elemental >, Elemental, false >,
+        IsGreater< SinglyLinked< Elemental >, Elemental, false >,
+        IsNotGreater< SinglyLinked< Elemental >, Elemental, false >,
+        IsNotLesser< SinglyLinked< Elemental >, Elemental, false >
+    };
+
+    template <
+        typename Elemental
+    >
+    constexpr Relational< DoublyPositional< Elemental > >
+    DoubleRelation = {
+        IsLesser< DoublyLinked< Elemental >, Elemental, false >,
+        IsGreater< DoublyLinked< Elemental >, Elemental, false >,
+        IsNotGreater< DoublyLinked< Elemental >, Elemental, false >,
+        IsNotLesser< DoublyLinked< Elemental >, Elemental, false >
+    };
+
+    template <
+        typename Elemental
+    >
+    constexpr Relational< SinglyPositional< Elemental > >
+    SafeSingleRelation = {
+        IsLesser< SinglyLinked< Elemental >, Elemental, true >,
+        IsGreater< SinglyLinked< Elemental >, Elemental, true >,
+        IsNotGreater< SinglyLinked< Elemental >, Elemental, true >,
+        IsNotLesser< SinglyLinked< Elemental >, Elemental, true >
+    };
+
+    template <
+        typename Elemental
+    >
+    constexpr Relational< DoublyPositional< Elemental > >
+    SafeDoubleRelation = {
+        IsLesser< DoublyLinked< Elemental >, Elemental, true >,
+        IsGreater< DoublyLinked< Elemental >, Elemental, true >,
+        IsNotGreater< DoublyLinked< Elemental >, Elemental, true >,
+        IsNotLesser< DoublyLinked< Elemental >, Elemental, true >
+    };
+
+    template <
+        typename Elemental
+    >
+    constexpr Comparative< SinglyPositional< Elemental >  >
+    SingleComparison = {
+        SingleEquality< Elemental >,
+        SingleRelation< Elemental >
+    };
+
+    template <
+        typename Elemental
+    >
+    constexpr Comparative< DoublyPositional< Elemental >  >
+    DoubleComparison = {
+        DoubleEquality< Elemental >,
+        DoubleRelation< Elemental >
+    };
+
+    template <
+        typename Elemental
+    >
+    constexpr Comparative< SinglyPositional< Elemental >  >
+    SafeSingleComparison = {
+        SingleEquality< Elemental >,
+        SafeSingleRelation< Elemental >
+    };
+
+    template <
+        typename Elemental
+    >
+    constexpr Comparative< DoublyPositional< Elemental >  >
+    SafeDoubleComparison = {
+        DoubleEquality< Elemental >,
+        SafeDoubleRelation< Elemental >
     };
 
     template <
         typename Natural,
         typename Elemental
     >
-    constexpr Scalar< const Junctive< Natural, Elemental >, Positional< Elemental >, Natural, const Elemental >
-    ReadIncrementScale = {
-        Comparison< Elemental >,
-        BeginReadIncrement< Natural, Elemental >,
-        TraverseReadIncrement< Natural, Elemental >,
-        GoRead< Natural, Elemental >
+    constexpr Vectorial< const SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, const Elemental >
+    ReadSingleVector = {
+        SingleComparison< Elemental >,
+        Contains< SinglyLinked< Elemental >, Natural, Elemental, false >,
+        GoRead< SinglyLinked< Elemental >, Natural, Elemental >
     };
 
     template <
         typename Natural,
         typename Elemental
     >
-    constexpr Scalar< const Junctive< Natural, Elemental >, Positional< Elemental >, Natural, const Elemental >
-    SafeReadIncrementScale = {
-        ComparisonChecksForNull< Elemental >,
-        BeginReadIncrementSafely< Natural, Elemental >,
-        TraverseReadIncrementSafely< Natural, Elemental >,
-        GoReadSafely< Natural, Elemental >
+    constexpr Vectorial< const DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, const Elemental >
+    ReadDoubleVector = {
+        DoubleComparison< Elemental >,
+        Contains< DoublyLinked< Elemental >, Natural, Elemental, false >,
+        GoRead< DoublyLinked< Elemental >, Natural, Elemental >
     };
 
     template <
         typename Natural,
         typename Elemental
     >
-    constexpr Scalar< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental >
-    WriteIncrementScale = {
-        Comparison< Elemental >,
-        BeginWriteIncrement< Natural, Elemental >,
-        TraverseWriteIncrement< Natural, Elemental >,
-        GoWrite< Natural, Elemental >
+    constexpr Vectorial< const SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, const Elemental >
+    SafeReadSingleVector = {
+        SafeSingleComparison< Elemental >,
+        Contains< SinglyLinked< Elemental >, Natural, Elemental, true >,
+        GoReadSafely< SinglyLinked< Elemental >, Natural, Elemental >
     };
 
     template <
         typename Natural,
         typename Elemental
     >
-    constexpr Scalar< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental >
-    SafeWriteIncrementScale = {
-        ComparisonChecksForNull< Elemental >,
-        BeginWriteIncrementSafely< Natural, Elemental >,
-        TraverseWriteIncrementSafely< Natural, Elemental >,
-        GoWriteSafely< Natural, Elemental >
+    constexpr Vectorial< const DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, const Elemental >
+    SafeReadDoubleVector = {
+        SafeDoubleComparison< Elemental >,
+        Contains< DoublyLinked< Elemental >, Natural, Elemental, true >,
+        GoReadSafely< DoublyLinked< Elemental >, Natural, Elemental >
     };
 
     template <
         typename Natural,
         typename Elemental
     >
-    constexpr Scalar< const Junctive< Natural, Elemental >, Positional< Elemental >, Natural, const Elemental >
-    ReadDecrementScale = {
-        Comparison< Elemental >,
-        BeginReadDecrement< Natural, Elemental >,
-        TraverseReadDecrement< Natural, Elemental >,
-        GoRead< Natural, Elemental >
+    constexpr Vectorial< SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, Elemental >
+    WriteSingleVector = {
+        SingleComparison< Elemental >,
+        Contains< SinglyLinked< Elemental >, Natural, Elemental, false >,
+        GoWrite< SinglyLinked< Elemental >, Natural, Elemental >
     };
 
     template <
         typename Natural,
         typename Elemental
     >
-    constexpr Scalar< const Junctive< Natural, Elemental >, Positional< Elemental >, Natural, const Elemental >
-    SafeReadDecrementScale = {
-        ComparisonChecksForNull< Elemental >,
-        BeginReadDecrementSafely< Natural, Elemental >,
-        TraverseReadDecrementSafely< Natural, Elemental >,
-        GoReadSafely< Natural, Elemental >
+    constexpr Vectorial< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Elemental >
+    WriteDoubleVector = {
+        DoubleComparison< Elemental >,
+        Contains< DoublyLinked< Elemental >, Natural, Elemental, false >,
+        GoWrite< DoublyLinked< Elemental >, Natural, Elemental >
     };
 
     template <
         typename Natural,
         typename Elemental
     >
-    constexpr Scalar< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental >
-    WriteDecrementScale = {
-        Comparison< Elemental >,
-        BeginWriteDecrement< Natural, Elemental >,
-        TraverseWriteDecrement< Natural, Elemental >,
-        GoWrite< Natural, Elemental >
+    constexpr Vectorial< SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, Elemental >
+    SafeWriteSingleVector = {
+        SafeSingleComparison< Elemental >,
+        Contains< SinglyLinked< Elemental >, Natural, Elemental, true >,
+        GoWriteSafely< SinglyLinked< Elemental >, Natural, Elemental >
     };
 
     template <
         typename Natural,
         typename Elemental
     >
-    constexpr Scalar< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental >
-    SafeWriteDecrementScale = {
-        ComparisonChecksForNull< Elemental >,
-        BeginWriteDecrementSafely< Natural, Elemental >,
-        TraverseWriteDecrementSafely< Natural, Elemental >,
-        GoWriteSafely< Natural, Elemental >
+    constexpr Vectorial< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Elemental >
+    SafeWriteDoubleVector = {
+        SafeDoubleComparison< Elemental >,
+        Contains< DoublyLinked< Elemental >, Natural, Elemental, true >,
+        GoWriteSafely< DoublyLinked< Elemental >, Natural, Elemental >
     };
 
     template <
         typename Natural,
         typename Elemental
     >
-    constexpr Lineal< const Junctive< Natural, Elemental >, Positional< Elemental >, Natural, const Elemental >
-    ReadLiner = {
-        ReadIncrementScale< Natural, Elemental >,
-        ReadDecrementScale< Natural, Elemental >
+    constexpr Scalar< const SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, Natural, const Elemental >
+    ReadIncrementSingleScale = {
+        SingleComparison< Elemental >,
+        BeginReadScale< SinglyLinked< Elemental >, Natural, Elemental, GetFirst< Natural, Elemental >, GetNext< Elemental >, false >,
+        TraverseReadScale< SinglyLinked< Elemental >, Natural, Elemental, GetNext< Elemental >, false >,
+        GoRead< SinglyLinked< Elemental >, Natural, Elemental >
     };
 
     template <
         typename Natural,
         typename Elemental
     >
-    constexpr Lineal< const Junctive< Natural, Elemental >, Positional< Elemental >, Natural, const Elemental >
-    SafeReadLiner = {
-        SafeReadIncrementScale< Natural, Elemental >,
-        SafeReadDecrementScale< Natural, Elemental >
+    constexpr Scalar< const DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, const Elemental >
+    ReadIncrementDoubleScale = {
+        DoubleComparison< Elemental >,
+        BeginReadScale< DoublyLinked< Elemental >, Natural, Elemental, GetFirst< Natural, Elemental >, GetNext< Elemental >, false >,
+        TraverseReadScale< DoublyLinked< Elemental >, Natural, Elemental, GetNext< Elemental >, false >,
+        GoRead< DoublyLinked< Elemental >, Natural, Elemental >
     };
 
     template <
         typename Natural,
         typename Elemental
     >
-    constexpr Lineal< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental >
-    WriteLiner = {
-        WriteIncrementScale< Natural, Elemental >,
-        WriteDecrementScale< Natural, Elemental >
+    constexpr Scalar< const SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, Natural, const Elemental >
+    SafeReadIncrementSingleScale = {
+        SafeSingleComparison< Elemental >,
+        BeginReadScale< SinglyLinked< Elemental >, Natural, Elemental, GetFirst< Natural, Elemental >, GetNext< Elemental >, true >,
+        TraverseReadScale< SinglyLinked< Elemental >, Natural, Elemental, GetNext< Elemental >, true >,
+        GoReadSafely< SinglyLinked< Elemental >, Natural, Elemental >
     };
 
     template <
         typename Natural,
         typename Elemental
     >
-    constexpr Lineal< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental >
-    SafeWriteLiner = {
-        SafeWriteIncrementScale< Natural, Elemental >,
-        SafeWriteDecrementScale< Natural, Elemental >
+    constexpr Scalar< const DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, const Elemental >
+    SafeReadIncrementDoubleScale = {
+        SafeDoubleComparison< Elemental >,
+        BeginReadScale< DoublyLinked< Elemental >, Natural, Elemental, GetFirst< Natural, Elemental >, GetNext< Elemental >, true >,
+        TraverseReadScale< DoublyLinked< Elemental >, Natural, Elemental, GetNext< Elemental >, true >,
+        GoReadSafely< DoublyLinked< Elemental >, Natural, Elemental >
     };
 
     template <
         typename Natural,
         typename Elemental
     >
-    constexpr Directional< const Junctive< Natural, Elemental >, Positional< Elemental >, Natural, const Elemental >
-    ReadIncrementDirection = {
-        ReadIncrementScale< Natural, Elemental >,
-        IncrementBegins< Natural, Elemental >,
-        IncrementTraverses< Natural, Elemental >,
-        Contains< Natural, Elemental >,
-        Account< Natural, Elemental >,
-        CountIncrement< Natural, Elemental >
+    constexpr Scalar< SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, Natural, Elemental >
+    WriteIncrementSingleScale = {
+        SingleComparison< Elemental >,
+        BeginWriteScale< SinglyLinked< Elemental >, Natural, Elemental, GetFirst< Natural, Elemental >, GetNext< Elemental >, false >,
+        TraverseWriteScale< SinglyLinked< Elemental >, Natural, Elemental, GetNext< Elemental >, false >,
+        GoWrite< SinglyLinked< Elemental >, Natural, Elemental >
     };
 
     template <
         typename Natural,
         typename Elemental
     >
-    constexpr Directional< const Junctive< Natural, Elemental >, Positional< Elemental >, Natural, const Elemental >
-    SafeReadIncrementDirection = {
-        SafeReadIncrementScale< Natural, Elemental >,
-        IncrementBegins< Natural, Elemental >,
-        IncrementTraversesChecksForNull< Natural, Elemental >,
-        ContainsChecksForNull< Natural, Elemental >,
-        Account< Natural, Elemental >,
-        CountIncrement< Natural, Elemental >
+    constexpr Scalar< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, Elemental >
+    WriteIncrementDoubleScale = {
+        DoubleComparison< Elemental >,
+        BeginWriteScale< DoublyLinked< Elemental >, Natural, Elemental, GetFirst< Natural, Elemental >, GetNext< Elemental >, false >,
+        TraverseWriteScale< DoublyLinked< Elemental >, Natural, Elemental, GetNext< Elemental >, false >,
+        GoWrite< DoublyLinked< Elemental >, Natural, Elemental >
     };
 
     template <
         typename Natural,
         typename Elemental
     >
-    constexpr Directional< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental >
-    WriteIncrementDirection = {
-        WriteIncrementScale< Natural, Elemental >,
-        IncrementBegins< Natural, Elemental >,
-        IncrementTraverses< Natural, Elemental >,
-        Contains< Natural, Elemental >,
-        Account< Natural, Elemental >,
-        CountIncrement< Natural, Elemental >
+    constexpr Scalar< SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, Natural, Elemental >
+    SafeWriteIncrementSingleScale = {
+        SafeSingleComparison< Elemental >,
+        BeginWriteScale< SinglyLinked< Elemental >, Natural, Elemental, GetFirst< Natural, Elemental >, GetNext< Elemental >, true >,
+        TraverseWriteScale< SinglyLinked< Elemental >, Natural, Elemental, GetNext< Elemental >, true >,
+        GoWriteSafely< SinglyLinked< Elemental >, Natural, Elemental >
     };
 
     template <
         typename Natural,
         typename Elemental
     >
-    constexpr Directional< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental >
-    SafeWriteIncrementDirection = {
-        SafeWriteIncrementScale< Natural, Elemental >,
-        IncrementBegins< Natural, Elemental >,
-        IncrementTraversesChecksForNull< Natural, Elemental >,
-        ContainsChecksForNull< Natural, Elemental >,
-        Account< Natural, Elemental >,
-        CountIncrement< Natural, Elemental >
+    constexpr Scalar< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, Elemental >
+    SafeWriteIncrementDoubleScale = {
+        SafeDoubleComparison< Elemental >,
+        BeginWriteScale< DoublyLinked< Elemental >, Natural, Elemental, GetFirst< Natural, Elemental >, GetNext< Elemental >, true >,
+        TraverseWriteScale< DoublyLinked< Elemental >, Natural, Elemental, GetNext< Elemental >, true >,
+        GoWriteSafely< DoublyLinked< Elemental >, Natural, Elemental >
     };
 
     template <
         typename Natural,
         typename Elemental
     >
-    constexpr Directional< const Junctive< Natural, Elemental >, Positional< Elemental >, Natural, const Elemental >
-    ReadDecrementDirection = {
-        ReadDecrementScale< Natural, Elemental >,
-        DecrementBegins< Natural, Elemental >,
-        DecrementTraverses< Natural, Elemental >,
-        Contains< Natural, Elemental >,
-        Account< Natural, Elemental >,
-        CountIncrement< Natural, Elemental >
+    constexpr Scalar< const DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, const Elemental >
+    ReadDecrementDoubleScale = {
+        DoubleComparison< Elemental >,
+        BeginReadScale< DoublyLinked< Elemental >, Natural, Elemental, GetLast< Natural, Elemental >, GetPrevious< Elemental >, false >,
+        TraverseReadScale< DoublyLinked< Elemental >, Natural, Elemental, GetPrevious< Elemental >, false >,
+        GoRead< DoublyLinked< Elemental >, Natural, Elemental >
     };
 
     template <
         typename Natural,
         typename Elemental
     >
-    constexpr Directional< const Junctive< Natural, Elemental >, Positional< Elemental >, Natural, const Elemental >
-    SafeReadDecrementDirection = {
-        SafeReadDecrementScale< Natural, Elemental >,
-        DecrementBegins< Natural, Elemental >,
-        DecrementTraversesChecksForNull< Natural, Elemental >,
-        ContainsChecksForNull< Natural, Elemental >,
-        Account< Natural, Elemental >,
-        CountIncrement< Natural, Elemental >
+    constexpr Scalar< const DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, const Elemental >
+    SafeReadDecrementDoubleScale = {
+        SafeDoubleComparison< Elemental >,
+        BeginReadScale< DoublyLinked< Elemental >, Natural, Elemental, GetLast< Natural, Elemental >, GetPrevious< Elemental >, true >,
+        TraverseReadScale< DoublyLinked< Elemental >, Natural, Elemental, GetPrevious< Elemental >, true >,
+        GoReadSafely< DoublyLinked< Elemental >, Natural, Elemental >
     };
 
     template <
         typename Natural,
         typename Elemental
     >
-    constexpr Directional< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental >
-    WriteDecrementDirection = {
-        WriteDecrementScale< Natural, Elemental >,
-        DecrementBegins< Natural, Elemental >,
-        DecrementTraverses< Natural, Elemental >,
-        ContainsChecksForNull< Natural, Elemental >,
-        Account< Natural, Elemental >,
-        CountIncrement< Natural, Elemental >
+    constexpr Scalar< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, Elemental >
+    WriteDecrementDoubleScale = {
+        DoubleComparison< Elemental >,
+        BeginWriteScale< DoublyLinked< Elemental >, Natural, Elemental, GetLast< Natural, Elemental >, GetPrevious< Elemental >, false >,
+        TraverseWriteScale< DoublyLinked< Elemental >, Natural, Elemental, GetPrevious< Elemental >, false >,
+        GoWrite< DoublyLinked< Elemental >, Natural, Elemental >
     };
 
     template <
         typename Natural,
         typename Elemental
     >
-    constexpr Directional< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental >
-    SafeWriteDecrementDirection = {
-        SafeWriteDecrementScale< Natural, Elemental >,
-        DecrementBegins< Natural, Elemental >,
-        DecrementTraversesChecksForNull< Natural, Elemental >,
-        ContainsChecksForNull< Natural, Elemental >,
-        Account< Natural, Elemental >,
-        CountIncrement< Natural, Elemental >
+    constexpr Scalar< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, Elemental >
+    SafeWriteDecrementDoubleScale = {
+        SafeDoubleComparison< Elemental >,
+        BeginWriteScale< DoublyLinked< Elemental >, Natural, Elemental, GetLast< Natural, Elemental >, GetPrevious< Elemental >, true >,
+        TraverseWriteScale< DoublyLinked< Elemental >, Natural, Elemental, GetPrevious< Elemental >, true >,
+        GoWriteSafely< DoublyLinked< Elemental >, Natural, Elemental >
     };
 
     template <
         typename Natural,
         typename Elemental
     >
-    constexpr Axial< const Junctive< Natural, Elemental >, Positional< Elemental >, Natural, const Elemental >
-    ReadAxis = {
-        ReadIncrementDirection< Natural, Elemental >,
-        ReadDecrementDirection< Natural, Elemental >
+    constexpr Lineal< const DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, const Elemental >
+    ReadDoubleLiner = {
+        ReadIncrementDoubleScale< Natural, Elemental >,
+        ReadDecrementDoubleScale< Natural, Elemental >
     };
 
     template <
         typename Natural,
         typename Elemental
     >
-    constexpr Axial< const Junctive< Natural, Elemental >, Positional< Elemental >, Natural, const Elemental >
-    SafeReadAxis = {
-        SafeReadIncrementDirection< Natural, Elemental >,
-        SafeReadDecrementDirection< Natural, Elemental >
+    constexpr Lineal< const DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, const Elemental >
+    SafeReadDoubleLiner = {
+        SafeReadIncrementDoubleScale< Natural, Elemental >,
+        SafeReadDecrementDoubleScale< Natural, Elemental > 
     };
 
     template <
         typename Natural,
         typename Elemental
     >
-    constexpr Axial< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental >
-    WriteAxis = {
-        WriteIncrementDirection< Natural, Elemental >,
-        WriteDecrementDirection< Natural, Elemental >
+    constexpr Lineal< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, Elemental >
+    WriteDoubleLiner = {
+        WriteIncrementDoubleScale< Natural, Elemental >,
+        WriteDecrementDoubleScale< Natural, Elemental >
     };
 
     template <
         typename Natural,
         typename Elemental
     >
-    constexpr Axial< Junctive< Natural, Elemental >, Positional< Elemental >, Natural, Elemental >
-    SafeWriteAxis = {
-        SafeWriteIncrementDirection< Natural, Elemental >,
-        SafeWriteDecrementDirection< Natural, Elemental >
+    constexpr Lineal< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, Elemental >
+    SafeWriteDoubleLiner = {
+        SafeWriteIncrementDoubleScale< Natural, Elemental >,
+        SafeWriteDecrementDoubleScale< Natural, Elemental >
+    };
+
+    template <
+        typename Natural,
+        typename Elemental
+    >
+    constexpr Directional< const SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, Natural, const Elemental >
+    ReadIncrementSingleDirection = {
+        ReadIncrementSingleScale< Natural, Elemental >,
+        DirectionBegins< SinglyLinked< Elemental >, Natural, Elemental, GetFirst< Natural, Elemental >, GetNext< Elemental > >,
+        DirectionTraverses< SinglyLinked< Elemental >, Natural, Elemental, GetNext< Elemental >, false >,
+        Contains< SinglyLinked< Elemental >, Natural, Elemental, false >,
+        Account< SinglyLinked< Elemental >, Natural, Elemental >,
+        Count< SinglyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >
+    };
+
+    template <
+        typename Natural,
+        typename Elemental
+    >
+    constexpr Directional< const DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, const Elemental >
+    ReadIncrementDoubleDirection = {
+        ReadIncrementDoubleScale< Natural, Elemental >,
+        DirectionBegins< DoublyLinked< Elemental >, Natural, Elemental, GetFirst< Natural, Elemental >, GetNext< Elemental > >,
+        DirectionTraverses< DoublyLinked< Elemental >, Natural, Elemental, GetNext< Elemental >, false >,
+        Contains< DoublyLinked< Elemental >, Natural, Elemental, false >,
+        Account< DoublyLinked< Elemental >, Natural, Elemental >,
+        Count< DoublyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >
+    };
+
+    template <
+        typename Natural,
+        typename Elemental
+    >
+    constexpr Directional< const SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, Natural, const Elemental >
+    SafeReadIncrementSingleDirection = {
+        SafeReadIncrementSingleScale< Natural, Elemental >,
+        DirectionBegins< SinglyLinked< Elemental >, Natural, Elemental, GetFirst< Natural, Elemental >, GetNext< Elemental > >,
+        DirectionTraverses< SinglyLinked< Elemental >, Natural, Elemental, GetNext< Elemental >, true >,
+        Contains< SinglyLinked< Elemental >, Natural, Elemental, true >,
+        Account< SinglyLinked< Elemental >, Natural, Elemental >,
+        Count< SinglyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >
+    };
+
+    template <
+        typename Natural,
+        typename Elemental
+    >
+    constexpr Directional< const DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, const Elemental >
+    SafeReadIncrementDoubleDirection = {
+        SafeReadIncrementDoubleScale< Natural, Elemental >,
+        DirectionBegins< DoublyLinked< Elemental >, Natural, Elemental, GetFirst< Natural, Elemental >, GetNext< Elemental > >,
+        DirectionTraverses< DoublyLinked< Elemental >, Natural, Elemental, GetNext< Elemental >, true >,
+        Contains< DoublyLinked< Elemental >, Natural, Elemental, true >,
+        Account< DoublyLinked< Elemental >, Natural, Elemental >,
+        Count< DoublyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >
+    };
+
+    template <
+        typename Natural,
+        typename Elemental
+    >
+    constexpr Directional< SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, Natural, Elemental >
+    WriteIncrementSingleDirection = {
+        WriteIncrementSingleScale< Natural, Elemental >,
+        DirectionBegins< SinglyLinked< Elemental >, Natural, Elemental, GetFirst< Natural, Elemental >, GetNext< Elemental > >,
+        DirectionTraverses< SinglyLinked< Elemental >, Natural, Elemental, GetNext< Elemental >, false >,
+        Contains< SinglyLinked< Elemental >, Natural, Elemental, false >,
+        Account< SinglyLinked< Elemental >, Natural, Elemental >,
+        Count< SinglyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >
+    };
+
+    template <
+        typename Natural,
+        typename Elemental
+    >
+    constexpr Directional< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, Elemental >
+    WriteIncrementDoubleDirection = {
+        WriteIncrementDoubleScale< Natural, Elemental >,
+        DirectionBegins< DoublyLinked< Elemental >, Natural, Elemental, GetFirst< Natural, Elemental >, GetNext< Elemental > >,
+        DirectionTraverses< DoublyLinked< Elemental >, Natural, Elemental, GetNext< Elemental >, false >,
+        Contains< DoublyLinked< Elemental >, Natural, Elemental, false >,
+        Account< DoublyLinked< Elemental >, Natural, Elemental >,
+        Count< DoublyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >
+    };
+
+    template <
+        typename Natural,
+        typename Elemental
+    >
+    constexpr Directional< SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, Natural, Elemental >
+    SafeWriteIncrementSingleDirection = {
+        SafeWriteIncrementSingleScale< Natural, Elemental >,
+        DirectionBegins< SinglyLinked< Elemental >, Natural, Elemental, GetFirst< Natural, Elemental >, GetNext< Elemental > >,
+        DirectionTraverses< SinglyLinked< Elemental >, Natural, Elemental, GetNext< Elemental >, true >,
+        Contains< SinglyLinked< Elemental >, Natural, Elemental, true >,
+        Account< SinglyLinked< Elemental >, Natural, Elemental >,
+        Count< SinglyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >
+    };
+
+    template <
+        typename Natural,
+        typename Elemental
+    >
+    constexpr Directional< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, Elemental >
+    SafeWriteIncrementDoubleDirection = {
+        SafeWriteIncrementDoubleScale< Natural, Elemental >,
+        DirectionBegins< DoublyLinked< Elemental >, Natural, Elemental, GetFirst< Natural, Elemental >, GetNext< Elemental > >,
+        DirectionTraverses< DoublyLinked< Elemental >, Natural, Elemental, GetNext< Elemental >, true >,
+        Contains< DoublyLinked< Elemental >, Natural, Elemental, true >,
+        Account< DoublyLinked< Elemental >, Natural, Elemental >,
+        Count< DoublyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >
+    };
+
+    template <
+        typename Natural,
+        typename Elemental
+    >
+    constexpr Directional< const DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, const Elemental >
+    ReadDecrementDoubleDirection = {
+        ReadDecrementDoubleScale< Natural, Elemental >,
+        DirectionBegins< DoublyLinked< Elemental >, Natural, Elemental, GetLast< Natural, Elemental >, GetPrevious< Elemental > >,
+        DirectionTraverses< DoublyLinked< Elemental >, Natural, Elemental, GetPrevious< Elemental >, false >,
+        Contains< DoublyLinked< Elemental >, Natural, Elemental, false >,
+        Account< DoublyLinked< Elemental >, Natural, Elemental >,
+        Count< DoublyLinked< Elemental >, Natural, Elemental, GetPrevious< Elemental > >
+    };
+
+    template <
+        typename Natural,
+        typename Elemental
+    >
+    constexpr Directional< const DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, const Elemental >
+    SafeReadDecrementDoubleDirection = {
+        SafeReadDecrementDoubleScale< Natural, Elemental >,
+        DirectionBegins< DoublyLinked< Elemental >, Natural, Elemental, GetLast< Natural, Elemental >, GetPrevious< Elemental > >,
+        DirectionTraverses< DoublyLinked< Elemental >, Natural, Elemental, GetPrevious< Elemental >, true >,
+        Contains< DoublyLinked< Elemental >, Natural, Elemental, true >,
+        Account< DoublyLinked< Elemental >, Natural, Elemental >,
+        Count< DoublyLinked< Elemental >, Natural, Elemental, GetPrevious< Elemental > >
+    };
+
+    template <
+        typename Natural,
+        typename Elemental
+    >
+    constexpr Directional< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, Elemental >
+    WriteDecrementDoubleDirection = {
+        WriteDecrementDoubleScale< Natural, Elemental >,
+        DirectionBegins< DoublyLinked< Elemental >, Natural, Elemental, GetLast< Natural, Elemental >, GetPrevious< Elemental > >,
+        DirectionTraverses< DoublyLinked< Elemental >, Natural, Elemental, GetPrevious< Elemental >, false >,
+        Contains< DoublyLinked< Elemental >, Natural, Elemental, false >,
+        Account< DoublyLinked< Elemental >, Natural, Elemental >,
+        Count< DoublyLinked< Elemental >, Natural, Elemental, GetPrevious< Elemental > >
+    };
+
+    template <
+        typename Natural,
+        typename Elemental
+    >
+    constexpr Directional< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, Elemental >
+    SafeWriteDecrementDoubleDirection = {
+        SafeWriteDecrementDoubleScale< Natural, Elemental >,
+        DirectionBegins< DoublyLinked< Elemental >, Natural, Elemental, GetLast< Natural, Elemental >, GetPrevious< Elemental > >,
+        DirectionTraverses< DoublyLinked< Elemental >, Natural, Elemental, GetPrevious< Elemental >, true >,
+        Contains< DoublyLinked< Elemental >, Natural, Elemental, true >,
+        Account< DoublyLinked< Elemental >, Natural, Elemental >,
+        Count< DoublyLinked< Elemental >, Natural, Elemental, GetPrevious< Elemental > >
+    };
+
+    template <
+        typename Natural,
+        typename Elemental
+    >
+    constexpr Axial< const DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, const Elemental >
+    ReadDoubleAxis = {
+        ReadIncrementDoubleDirection< Natural, Elemental >,
+        ReadDecrementDoubleDirection< Natural, Elemental >
+    };
+
+    template <
+        typename Natural,
+        typename Elemental
+    >
+    constexpr Axial< const DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, const Elemental >
+    SafeReadDoubleAxis = {
+        SafeReadIncrementDoubleDirection< Natural, Elemental >,
+        SafeReadDecrementDoubleDirection< Natural, Elemental >
+    };
+
+    template <
+        typename Natural,
+        typename Elemental
+    >
+    constexpr Axial< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, Elemental >
+    WriteDoubleAxis = {
+        WriteIncrementDoubleDirection< Natural, Elemental >,
+        WriteDecrementDoubleDirection< Natural, Elemental >
+    };
+
+    template <
+        typename Natural,
+        typename Elemental
+    >
+    constexpr Axial< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, Elemental >
+    SafeWriteDoubleAxis = {
+        SafeWriteIncrementDoubleDirection< Natural, Elemental >,
+        SafeWriteDecrementDoubleDirection< Natural, Elemental >
     };
 
 }
