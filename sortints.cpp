@@ -65,12 +65,12 @@ main(
         IntegerCount = -4
     };
     static const unsigned
-        CacheLimit = 0x10000,
-        CacheReserve = 0x400;
+        CacheLimit = 0x2000,
+        CacheReserve = 0x80;
     static const unsigned
         MaximumNodes = (CacheLimit - CacheReserve) / sizeof(IntegerNodal);
     static auto&
-        // Problem 347511 filed Oct 2 2018 (same error, may be a different issue)
+        // Problem 388684 filed Nov 21 2018
         Composer = OrderedSingleComposer< unsigned, int, IsEqual, IsLesser, StaticAdjunct >;
     static auto&
         Increment = ReadIncrementSingleDirection< unsigned, int >;
