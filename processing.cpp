@@ -19,93 +19,152 @@ using FunctionSituational = Locational< FunctionDemonstrative >;
 const unsigned
 MaximumEvents = 127;
 
-using EventSchedular = Contractional< unsigned, MaximumEvents, Contextual >;
+using EventSchedular = Contractional< unsigned, MaximumEvents, Contextual< unsigned > >;
+
+template <
+    typename PrintStringTypical,
+    typename PrintNaturalTypical,
+    typename RunFunctionTypical,
+    typename ProcessEventTypical
+>
+struct Coordinate {
+
+    PrintStringTypical
+        schedule_print_string;
+
+    PrintNaturalTypical
+        schedule_print_natural;
+
+    RunFunctionTypical
+        schedule_run_function;
+
+    ProcessEventTypical
+        process_event;
+
+};
 
 constexpr Tractile< EventSchedular, unsigned, unsigned >
-EventContractor = Contractor< unsigned, MaximumEvents, Contextual >;
-
-constexpr Directional< EventSchedular, unsigned, unsigned, Contextual >
-EventVisitor = WriteIncrementDirection< unsigned, MaximumEvents, Contextual >;
+EventContractor = Contractor< unsigned, MaximumEvents, Contextual< unsigned > >;
 
 static void
 PrintString(
     const Locational< void >
-        location
+        locality,
+    unsigned
+        identifier
 ) {
     using Specific = const Locational< const char >;
-    printf( "%s\n", static_cast< Specific >(location) );
+    printf( "PrintString( '%s', %u )\n", static_cast< Specific >(locality), identifier );
 }
 
 static void
 PrintNatural(
     const Locational< void >
-        location
+        locality,
+    unsigned 
+        identifier
 ) {
     using Specific = const Locational< const unsigned >;
-    printf( "%u\n", Refer( static_cast< Specific >(location) ).to );
+    printf( "PrintNatural( %u, %u )\n", Refer( static_cast< Specific >(locality) ).to, identifier );
 }
 
 static void
 RunFunction(
     const Locational< void >
-        location
+        locality,
+    unsigned
+        identifier
 ) {
     using Specific = const Locational< const FunctionSituational >;
-    Refer( static_cast< Specific >(location) ).to();
+    printf( "RunFunction( " );
+    Refer( static_cast< Specific >(locality) ).to();
+    printf( ", %u )\n", identifier );
 }
 
 static void
-Demonstrate( void ) {
-    puts( "Demonstrate()" );
+Function1( void ) {
+    printf( "Function1" );
 }
 
-struct {
+static void
+Function2( void ) {
+    printf( "Function2" );
+}
 
-    struct {
+template <
+    typename ...LambdaTypical
+>
+static inline Coordinate< LambdaTypical... >
+InitializeCoordinator(
+    LambdaTypical...
+        lambdas
+) {
+    const Coordinate< LambdaTypical... >
+        coordinator = {lambdas...};
+    return coordinator;
+}
 
-        Referential< Programmatic< EventSchedular, const char > >
-            print_string;
+static inline auto
+PrepareCoordinator(
+    Referential< EventSchedular >
+        schedule
+) {
+    static auto&
+        EventVisitor = WriteIncrementDirection< unsigned, MaximumEvents, Contextual< unsigned > >;
+    static auto&
+        PreparePrintString = PrepareScheduleNullRefused< EventSchedular, unsigned, unsigned, const char, EventContractor, unsigned >;
+    static auto&
+        PreparePrintNatural = PrepareScheduleNullRefused< EventSchedular, unsigned, unsigned, const unsigned, EventContractor, unsigned >;
+    static auto&
+        PrepareRunFunction = PrepareScheduleNullRefused< EventSchedular, unsigned, unsigned, const FunctionSituational, EventContractor, unsigned >;
+    static auto&
+        PrepareProcessEvent = PrepareProcessOneEvent< EventSchedular, unsigned, unsigned, EventContractor, unsigned >;
+    auto
+        print_string = PreparePrintString( EventVisitor, schedule, PrintString );
+    auto
+        print_natural = PreparePrintNatural( EventVisitor, schedule, PrintNatural );
+    auto
+        run_function = PrepareRunFunction( EventVisitor, schedule, RunFunction );
+    auto
+        process_event = PrepareProcessEvent( EventVisitor, schedule );
+    return InitializeCoordinator( print_string, print_natural, run_function, process_event );
+}
 
-        Referential< Programmatic< EventSchedular, const unsigned > >
-            print_natural;
-
-        Referential< Programmatic< EventSchedular, const FunctionSituational > >
-            run_function;
-
-    } schedule;
-    
-    Referential< Processive< EventSchedular > >
-        process;
-
-} Program = {
-    {
-        ScheduleNullRefused< EventSchedular, unsigned, unsigned, const char, EventContractor, EventVisitor, PrintString >,
-        ScheduleNullRefused< EventSchedular, unsigned, unsigned, const unsigned, EventContractor, EventVisitor, PrintNatural >,
-        ScheduleNullRefused< EventSchedular, unsigned, unsigned, const FunctionSituational, EventContractor, EventVisitor, RunFunction >
-    },
-    ProcessOneEvent< EventSchedular, unsigned, unsigned, EventContractor, EventVisitor >
-};
+template <
+    typename ...LambdaTypical
+>
+static inline void
+Demonstrate(
+    Referential< const Coordinate< LambdaTypical... > >
+        coordinator
+) {
+    static const Locational< const char >
+        HelloLocality = "Hello world!",
+        GoodbyeLocality = "Goodbye";
+    static const FunctionSituational
+        FirstObjective = Function1,
+        SecondObjective = Function2;
+    static const unsigned
+        QueueSize = sizeof(EventSchedular);
+    coordinator.schedule_print_string( HelloLocality );
+    coordinator.schedule_run_function( Locate( FirstObjective ).at );
+    coordinator.schedule_print_natural( Locate( QueueSize ).at );
+    coordinator.schedule_run_function( Locate( SecondObjective ).at );
+    coordinator.schedule_print_string( GoodbyeLocality );
+}
 
 int main() {
-    static const Locational< const char >
-        Hello = "Hello world!",
-        Goodbye = "Goodbye";
-    static const FunctionSituational
-        Objective = Locate( Demonstrate ).at;
-    static const unsigned
-        QueueLength = sizeof(EventSchedular);
     EventSchedular
         event_queue;
     unsigned
         count;
+    const auto
+        coordinator = PrepareCoordinator( event_queue );
     Initialize( event_queue );
-    Program.schedule.print_string( event_queue, Hello );
-    Program.schedule.print_natural( event_queue, Locate( QueueLength ).at );
-    Program.schedule.run_function( event_queue, Locate( Objective ).at );
-    Program.schedule.print_string( event_queue, Goodbye );
+    Demonstrate( coordinator );
     puts( "Processing event(s):" );
     puts( "--------------------" );
-    for (count = 0; Program.process( event_queue ); count++);
+    for (count = 0; coordinator.process_event( count ); count++);
     puts( "--------------------" );
     printf( "Processed %u event(s).\n", count );
 }

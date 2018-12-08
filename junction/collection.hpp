@@ -34,9 +34,12 @@ namespace junction {
         using ::junction::consecution::Consequent;
         using ::junction::consecution::Concessive;
         using ::junction::consecution::Precede;
+        using ::junction::consecution::PrecedeSafely;
         using ::junction::consecution::Cede;
+        using ::junction::consecution::CedeSafely;
         using ::junction::consecution::Proceed;
         using ::junction::consecution::Concede;
+        using ::junction::consecution::ConcedeSafely;
 
         template <
             typename Natural,
@@ -320,7 +323,7 @@ namespace junction {
             result = Adjunct.proclaim( set, replacement );
             if (!result)
                 return false;
-            if (original_position.at != GetFirst( set )) {
+            if (original_position.at != set.first) {
                 Scale.begin( set, previous, 0 );
                 while (GetNext( previous.at ) != original_position.at)
                     Scale.traverse( set, previous, 1 );
@@ -338,7 +341,7 @@ namespace junction {
                 if (!GetNext( result ))
                     set.last = result;
             } else {
-                if (replacement_position.at != GetFirst( set )) {
+                if (replacement_position.at != set.first) {
                     Scale.begin( set, previous, 0 );
                     while (GetNext( previous.at ) != replacement_position.at)
                         Scale.traverse( set, previous, 1 );
@@ -1988,9 +1991,9 @@ namespace junction {
             ComposeCollection<
                 Natural, 
                 Elemental, 
-                Precede< Natural, Elemental, Adjunct, false >, 
-                Cede< Natural, Elemental, Adjunct, false >, 
-                Proceed< Natural, Elemental, Adjunct, false >, 
+                Precede< Natural, Elemental, Adjunct >, 
+                Cede< Natural, Elemental, Adjunct >, 
+                Proceed< Natural, Elemental, Adjunct >, 
                 Equate, 
                 Order, 
                 ReadIncrementSingleScale< Natural, Elemental > 
@@ -2006,7 +2009,7 @@ namespace junction {
             DiscomposeCollection<
                 Natural, 
                 Elemental, 
-                Concede< Natural, Elemental, false >, 
+                Concede< Natural, Elemental >, 
                 Equate, 
                 Order, 
                 ReadIncrementSingleScale< Natural, Elemental > 
@@ -2032,9 +2035,9 @@ namespace junction {
             ComposeCollection<
                 Natural, 
                 Elemental, 
-                Precede< Natural, Elemental, Adjunct, false >, 
-                Cede< Natural, Elemental, Adjunct, false >, 
-                Proceed< Natural, Elemental, Adjunct, false >, 
+                Precede< Natural, Elemental, Adjunct >, 
+                Cede< Natural, Elemental, Adjunct >, 
+                Proceed< Natural, Elemental, Adjunct >, 
                 Equate, 
                 Order, 
                 ReadDoubleLiner< Natural, Elemental > 
@@ -2050,7 +2053,7 @@ namespace junction {
             DiscomposeCollection< 
                 Natural, 
                 Elemental, 
-                Concede< Natural, Elemental, false >, 
+                Concede< Natural, Elemental >, 
                 Equate, 
                 Order, 
                 ReadDoubleLiner< Natural, Elemental > 
@@ -2076,9 +2079,9 @@ namespace junction {
             ComposeCollection<
                 Natural, 
                 Elemental, 
-                Precede< Natural, Elemental, Adjunct, true >, 
-                Cede< Natural, Elemental, Adjunct, true >, 
-                Proceed< Natural, Elemental, Adjunct, true >, 
+                PrecedeSafely< Natural, Elemental, Adjunct >, 
+                CedeSafely< Natural, Elemental, Adjunct >, 
+                Proceed< Natural, Elemental, Adjunct >, 
                 Equate, 
                 Order, 
                 SafeReadIncrementSingleScale< Natural, Elemental > 
@@ -2094,7 +2097,7 @@ namespace junction {
             DiscomposeCollection<
                 Natural, 
                 Elemental, 
-                Concede< Natural, Elemental, true >, 
+                ConcedeSafely< Natural, Elemental >, 
                 Equate, 
                 Order, 
                 SafeReadIncrementSingleScale< Natural, Elemental > 
@@ -2120,9 +2123,9 @@ namespace junction {
             ComposeCollection<
                 Natural, 
                 Elemental, 
-                Precede< Natural, Elemental, Adjunct, true >, 
-                Cede< Natural, Elemental, Adjunct, true >, 
-                Proceed< Natural, Elemental, Adjunct, true >, 
+                PrecedeSafely< Natural, Elemental, Adjunct >, 
+                CedeSafely< Natural, Elemental, Adjunct >, 
+                Proceed< Natural, Elemental, Adjunct >, 
                 Equate, 
                 Order, 
                 SafeReadDoubleLiner< Natural, Elemental > 
@@ -2138,7 +2141,7 @@ namespace junction {
             DiscomposeCollection< 
                 Natural, 
                 Elemental, 
-                Concede< Natural, Elemental, true >, 
+                ConcedeSafely< Natural, Elemental >, 
                 Equate, 
                 Order, 
                 SafeReadDoubleLiner< Natural, Elemental > 
@@ -2174,9 +2177,9 @@ namespace junction {
                 RelativeNatural, 
                 Natural, 
                 Elemental, 
-                Precede< Natural, Elemental, Adjunct, false >, 
-                Cede< Natural, Elemental, Adjunct, false >, 
-                Proceed< Natural, Elemental, Adjunct, false >, 
+                Precede< Natural, Elemental, Adjunct >, 
+                Cede< Natural, Elemental, Adjunct >, 
+                Proceed< Natural, Elemental, Adjunct >, 
                 Equate, 
                 Order,
                 ReadIncrementSingleScale< Natural, Elemental >
@@ -2190,9 +2193,9 @@ namespace junction {
                 RelativeNatural, 
                 Natural, 
                 Elemental, 
-                Precede< Natural, Elemental, Adjunct, false >, 
-                Cede< Natural, Elemental, Adjunct, false >, 
-                Proceed< Natural, Elemental, Adjunct, false >, 
+                Precede< Natural, Elemental, Adjunct >, 
+                Cede< Natural, Elemental, Adjunct >, 
+                Proceed< Natural, Elemental, Adjunct >, 
                 Equate, 
                 Order,
                 ReadIncrementSingleScale< Natural, Elemental >
@@ -2206,9 +2209,9 @@ namespace junction {
                 RelativeNatural, 
                 Natural, 
                 Elemental, 
-                Precede< Natural, Elemental, Adjunct, false >, 
-                Cede< Natural, Elemental, Adjunct, false >,
-                Proceed< Natural, Elemental, Adjunct, false >, 
+                Precede< Natural, Elemental, Adjunct >, 
+                Cede< Natural, Elemental, Adjunct >,
+                Proceed< Natural, Elemental, Adjunct >, 
                 Equate, 
                 Order,
                 ReadIncrementSingleScale< Natural, Elemental >
@@ -2222,9 +2225,9 @@ namespace junction {
                 RelativeNatural, 
                 Natural, 
                 Elemental, 
-                Precede< Natural, Elemental, Adjunct, false >, 
-                Cede< Natural, Elemental, Adjunct, false >,
-                Proceed< Natural, Elemental, Adjunct, false >, 
+                Precede< Natural, Elemental, Adjunct >, 
+                Cede< Natural, Elemental, Adjunct >,
+                Proceed< Natural, Elemental, Adjunct >, 
                 Equate, 
                 Order,
                 ReadIncrementSingleScale< Natural, Elemental >
@@ -2258,9 +2261,9 @@ namespace junction {
                 RelativeNatural, 
                 Natural, 
                 Elemental, 
-                Precede< Natural, Elemental, Adjunct, false >, 
-                Cede< Natural, Elemental, Adjunct, false >, 
-                Proceed< Natural, Elemental, Adjunct, false >, 
+                Precede< Natural, Elemental, Adjunct >, 
+                Cede< Natural, Elemental, Adjunct >, 
+                Proceed< Natural, Elemental, Adjunct >, 
                 Equate, 
                 Order,
                 ReadDoubleLiner< Natural, Elemental >
@@ -2274,9 +2277,9 @@ namespace junction {
                 RelativeNatural, 
                 Natural, 
                 Elemental, 
-                Precede< Natural, Elemental, Adjunct, false >, 
-                Cede< Natural, Elemental, Adjunct, false >, 
-                Proceed< Natural, Elemental, Adjunct, false >, 
+                Precede< Natural, Elemental, Adjunct >, 
+                Cede< Natural, Elemental, Adjunct >, 
+                Proceed< Natural, Elemental, Adjunct >, 
                 Equate, 
                 Order,
                 ReadDoubleLiner< Natural, Elemental >
@@ -2290,9 +2293,9 @@ namespace junction {
                 RelativeNatural, 
                 Natural, 
                 Elemental, 
-                Precede< Natural, Elemental, Adjunct, false >, 
-                Cede< Natural, Elemental, Adjunct, false >,
-                Proceed< Natural, Elemental, Adjunct, false >, 
+                Precede< Natural, Elemental, Adjunct >, 
+                Cede< Natural, Elemental, Adjunct >,
+                Proceed< Natural, Elemental, Adjunct >, 
                 Equate, 
                 Order,
                 ReadDoubleLiner< Natural, Elemental >
@@ -2306,9 +2309,9 @@ namespace junction {
                 RelativeNatural, 
                 Natural, 
                 Elemental, 
-                Precede< Natural, Elemental, Adjunct, false >, 
-                Cede< Natural, Elemental, Adjunct, false >,
-                Proceed< Natural, Elemental, Adjunct, false >, 
+                Precede< Natural, Elemental, Adjunct >, 
+                Cede< Natural, Elemental, Adjunct >,
+                Proceed< Natural, Elemental, Adjunct >, 
                 Equate, 
                 Order,
                 ReadDoubleLiner< Natural, Elemental >
@@ -2342,9 +2345,9 @@ namespace junction {
                 RelativeNatural, 
                 Natural, 
                 Elemental, 
-                Precede< Natural, Elemental, Adjunct, true >, 
-                Cede< Natural, Elemental, Adjunct, true >, 
-                Proceed< Natural, Elemental, Adjunct, true >, 
+                PrecedeSafely< Natural, Elemental, Adjunct >, 
+                CedeSafely< Natural, Elemental, Adjunct >, 
+                Proceed< Natural, Elemental, Adjunct >, 
                 Equate, 
                 Order,
                 SafeReadIncrementSingleScale< Natural, Elemental >
@@ -2358,9 +2361,9 @@ namespace junction {
                 RelativeNatural, 
                 Natural, 
                 Elemental, 
-                Precede< Natural, Elemental, Adjunct, true >, 
-                Cede< Natural, Elemental, Adjunct, true >, 
-                Proceed< Natural, Elemental, Adjunct, true >, 
+                PrecedeSafely< Natural, Elemental, Adjunct >, 
+                CedeSafely< Natural, Elemental, Adjunct >, 
+                Proceed< Natural, Elemental, Adjunct >, 
                 Equate, 
                 Order,
                 SafeReadIncrementSingleScale< Natural, Elemental >
@@ -2374,9 +2377,9 @@ namespace junction {
                 RelativeNatural, 
                 Natural, 
                 Elemental, 
-                Precede< Natural, Elemental, Adjunct, true >, 
-                Cede< Natural, Elemental, Adjunct, true >,
-                Proceed< Natural, Elemental, Adjunct, true >, 
+                PrecedeSafely< Natural, Elemental, Adjunct >, 
+                CedeSafely< Natural, Elemental, Adjunct >,
+                Proceed< Natural, Elemental, Adjunct >, 
                 Equate, 
                 Order,
                 SafeReadIncrementSingleScale< Natural, Elemental >
@@ -2390,9 +2393,9 @@ namespace junction {
                 RelativeNatural, 
                 Natural, 
                 Elemental, 
-                Precede< Natural, Elemental, Adjunct, true >, 
-                Cede< Natural, Elemental, Adjunct, true >,
-                Proceed< Natural, Elemental, Adjunct, true >, 
+                PrecedeSafely< Natural, Elemental, Adjunct >, 
+                CedeSafely< Natural, Elemental, Adjunct >,
+                Proceed< Natural, Elemental, Adjunct >, 
                 Equate, 
                 Order,
                 SafeReadIncrementSingleScale< Natural, Elemental >
@@ -2426,9 +2429,9 @@ namespace junction {
                 RelativeNatural, 
                 Natural, 
                 Elemental, 
-                Precede< Natural, Elemental, Adjunct, true >, 
-                Cede< Natural, Elemental, Adjunct, true >, 
-                Proceed< Natural, Elemental, Adjunct, true >, 
+                PrecedeSafely< Natural, Elemental, Adjunct >, 
+                CedeSafely< Natural, Elemental, Adjunct >, 
+                Proceed< Natural, Elemental, Adjunct >, 
                 Equate, 
                 Order,
                 SafeReadDoubleLiner< Natural, Elemental >
@@ -2442,9 +2445,9 @@ namespace junction {
                 RelativeNatural, 
                 Natural, 
                 Elemental, 
-                Precede< Natural, Elemental, Adjunct, true >, 
-                Cede< Natural, Elemental, Adjunct, true >, 
-                Proceed< Natural, Elemental, Adjunct, true >, 
+                PrecedeSafely< Natural, Elemental, Adjunct >, 
+                CedeSafely< Natural, Elemental, Adjunct >, 
+                Proceed< Natural, Elemental, Adjunct >, 
                 Equate, 
                 Order,
                 SafeReadDoubleLiner< Natural, Elemental >
@@ -2458,9 +2461,9 @@ namespace junction {
                 RelativeNatural, 
                 Natural, 
                 Elemental, 
-                Precede< Natural, Elemental, Adjunct, true >, 
-                Cede< Natural, Elemental, Adjunct, true >,
-                Proceed< Natural, Elemental, Adjunct, true >, 
+                PrecedeSafely< Natural, Elemental, Adjunct >, 
+                CedeSafely< Natural, Elemental, Adjunct >,
+                Proceed< Natural, Elemental, Adjunct >, 
                 Equate, 
                 Order,
                 SafeReadDoubleLiner< Natural, Elemental >
@@ -2474,9 +2477,9 @@ namespace junction {
                 RelativeNatural, 
                 Natural, 
                 Elemental, 
-                Precede< Natural, Elemental, Adjunct, true >, 
-                Cede< Natural, Elemental, Adjunct, true >,
-                Proceed< Natural, Elemental, Adjunct, true >, 
+                PrecedeSafely< Natural, Elemental, Adjunct >, 
+                CedeSafely< Natural, Elemental, Adjunct >,
+                Proceed< Natural, Elemental, Adjunct >, 
                 Equate, 
                 Order,
                 SafeReadDoubleLiner< Natural, Elemental >
@@ -2515,9 +2518,9 @@ namespace junction {
                 Natural, 
                 Natural, 
                 Elemental, 
-                Precede< Natural, Elemental, Adjunct, false >, 
-                Cede< Natural, Elemental, Adjunct, false >, 
-                Proceed< Natural, Elemental, Adjunct, false >, 
+                Precede< Natural, Elemental, Adjunct >, 
+                Cede< Natural, Elemental, Adjunct >, 
+                Proceed< Natural, Elemental, Adjunct >, 
                 Equate, 
                 Order,
                 ReadIncrementSingleScale< Natural, Elemental >
@@ -2567,9 +2570,9 @@ namespace junction {
                 Natural, 
                 Natural, 
                 Elemental, 
-                Precede< Natural, Elemental, Adjunct, false >, 
-                Cede< Natural, Elemental, Adjunct, false >, 
-                Proceed< Natural, Elemental, Adjunct, false >, 
+                Precede< Natural, Elemental, Adjunct >, 
+                Cede< Natural, Elemental, Adjunct >, 
+                Proceed< Natural, Elemental, Adjunct >, 
                 Equate, 
                 Order,
                 ReadDoubleLiner< Natural, Elemental >
@@ -2619,9 +2622,9 @@ namespace junction {
                 Natural, 
                 Natural, 
                 Elemental, 
-                Precede< Natural, Elemental, Adjunct, true >, 
-                Cede< Natural, Elemental, Adjunct, true >, 
-                Proceed< Natural, Elemental, Adjunct, true >, 
+                PrecedeSafely< Natural, Elemental, Adjunct >, 
+                CedeSafely< Natural, Elemental, Adjunct >, 
+                Proceed< Natural, Elemental, Adjunct >, 
                 Equate, 
                 Order,
                 SafeReadIncrementSingleScale< Natural, Elemental >
@@ -2671,9 +2674,9 @@ namespace junction {
                 Natural, 
                 Natural, 
                 Elemental, 
-                Precede< Natural, Elemental, Adjunct, true >, 
-                Cede< Natural, Elemental, Adjunct, true >, 
-                Proceed< Natural, Elemental, Adjunct, true >, 
+                PrecedeSafely< Natural, Elemental, Adjunct >, 
+                CedeSafely< Natural, Elemental, Adjunct >, 
+                Proceed< Natural, Elemental, Adjunct >, 
                 Equate, 
                 Order,
                 SafeReadDoubleLiner< Natural, Elemental >
@@ -2800,7 +2803,7 @@ namespace junction {
                 RelativeNatural, 
                 Natural, 
                 Elemental, 
-                Proceed< Natural, Elemental, Adjunct, false >, 
+                Proceed< Natural, Elemental, Adjunct >, 
                 Proceed< Relative, RelativePositional, RelativeNatural, Natural, Elemental, Adjunct, false >, 
                 Equate, 
                 Order 
@@ -2815,7 +2818,7 @@ namespace junction {
                 RelativeNatural, 
                 Natural, 
                 Elemental, 
-                Proceed< Natural, Elemental, Adjunct, false >, 
+                Proceed< Natural, Elemental, Adjunct >, 
                 Proceed< Basic, BasicPositional, BasicNatural, Natural, Elemental, Adjunct, false >,
                 Proceed< Relative, RelativePositional, RelativeNatural, Natural, Elemental, Adjunct, false >, 
                 Equate, 
@@ -2831,7 +2834,7 @@ namespace junction {
                 RelativeNatural, 
                 Natural, 
                 Elemental, 
-                Proceed< Natural, Elemental, Adjunct, false >, 
+                Proceed< Natural, Elemental, Adjunct >, 
                 Equate, 
                 Order 
             >,
@@ -2845,7 +2848,7 @@ namespace junction {
                 RelativeNatural, 
                 Natural, 
                 Elemental, 
-                Proceed< Natural, Elemental, Adjunct, false >, 
+                Proceed< Natural, Elemental, Adjunct >, 
                 Proceed< Basic, BasicPositional, BasicNatural, Natural, Elemental, Adjunct, false >, 
                 Proceed< Relative, RelativePositional, RelativeNatural, Natural, Elemental, Adjunct, false >, 
                 Equate, 
@@ -2881,7 +2884,7 @@ namespace junction {
                 RelativeNatural, 
                 Natural, 
                 Elemental, 
-                Proceed< Natural, Elemental, Adjunct, true >, 
+                Proceed< Natural, Elemental, Adjunct >, 
                 Proceed< Relative, RelativePositional, RelativeNatural, Natural, Elemental, Adjunct, true >, 
                 Equate, 
                 Order 
@@ -2896,7 +2899,7 @@ namespace junction {
                 RelativeNatural, 
                 Natural, 
                 Elemental, 
-                Proceed< Natural, Elemental, Adjunct, true >, 
+                Proceed< Natural, Elemental, Adjunct >, 
                 Proceed< Basic, BasicPositional, BasicNatural, Natural, Elemental, Adjunct, true >,
                 Proceed< Relative, RelativePositional, RelativeNatural, Natural, Elemental, Adjunct, true >, 
                 Equate, 
@@ -2912,7 +2915,7 @@ namespace junction {
                 RelativeNatural, 
                 Natural, 
                 Elemental, 
-                Proceed< Natural, Elemental, Adjunct, true >, 
+                Proceed< Natural, Elemental, Adjunct >, 
                 Equate, 
                 Order 
             >,
@@ -2926,7 +2929,7 @@ namespace junction {
                 RelativeNatural, 
                 Natural, 
                 Elemental, 
-                Proceed< Natural, Elemental, Adjunct, true >, 
+                Proceed< Natural, Elemental, Adjunct >, 
                 Proceed< Basic, BasicPositional, BasicNatural, Natural, Elemental, Adjunct, true >, 
                 Proceed< Relative, RelativePositional, RelativeNatural, Natural, Elemental, Adjunct, true >, 
                 Equate, 
@@ -2962,7 +2965,7 @@ namespace junction {
                 RelativeNatural, 
                 Natural, 
                 Elemental, 
-                Proceed< Natural, Elemental, Adjunct, true >, 
+                Proceed< Natural, Elemental, Adjunct >, 
                 Proceed< Relative, RelativePositional, RelativeNatural, Natural, Elemental, Adjunct, true >, 
                 Equate, 
                 Order 
@@ -2977,7 +2980,7 @@ namespace junction {
                 RelativeNatural, 
                 Natural, 
                 Elemental, 
-                Proceed< Natural, Elemental, Adjunct, true >, 
+                Proceed< Natural, Elemental, Adjunct >, 
                 Proceed< Basic, BasicPositional, BasicNatural, Natural, Elemental, Adjunct, true >,
                 Proceed< Relative, RelativePositional, RelativeNatural, Natural, Elemental, Adjunct, true >, 
                 Equate, 
@@ -2993,7 +2996,7 @@ namespace junction {
                 RelativeNatural, 
                 Natural, 
                 Elemental, 
-                Proceed< Natural, Elemental, Adjunct, true >, 
+                Proceed< Natural, Elemental, Adjunct >, 
                 Equate, 
                 Order 
             >,
@@ -3007,7 +3010,7 @@ namespace junction {
                 RelativeNatural, 
                 Natural, 
                 Elemental, 
-                Proceed< Natural, Elemental, Adjunct, true >, 
+                Proceed< Natural, Elemental, Adjunct >, 
                 Proceed< Basic, BasicPositional, BasicNatural, Natural, Elemental, Adjunct, true >, 
                 Proceed< Relative, RelativePositional, RelativeNatural, Natural, Elemental, Adjunct, true >, 
                 Equate, 

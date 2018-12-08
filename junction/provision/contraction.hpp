@@ -22,6 +22,7 @@ namespace junction {
 
             using ::traction::Tractile;
             using consecution::Succeed;
+            using consecution::SucceedSafely;
 
             template <
                 typename Natural,
@@ -36,7 +37,7 @@ namespace junction {
                 Survey< SinglyLinked< Elemental >, Natural, Maximum, Elemental >,
                 Account< SinglyLinked< Elemental >, Natural, Elemental >,
                 Protract< Natural, Maximum, Elemental, Allocator, false >,
-                Succeed< Natural, Elemental, false >,
+                Succeed< Natural, Elemental >,
                 RemoveAll< SinglyLinked< Elemental >, Natural, Elemental >
             };
 
@@ -53,7 +54,7 @@ namespace junction {
                 Survey< DoublyLinked< Elemental >, Natural, Maximum, Elemental >,
                 Account< DoublyLinked< Elemental >, Natural, Elemental >,
                 Protract< Natural, Maximum, Elemental, Allocator, false >,
-                Succeed< Natural, Elemental, false >,
+                Succeed< Natural, Elemental >,
                 RemoveAll< DoublyLinked< Elemental >, Natural, Elemental >
             };
 
@@ -70,7 +71,7 @@ namespace junction {
                 Survey< SinglyLinked< Elemental >, Natural, Maximum, Elemental >,
                 Account< SinglyLinked< Elemental >, Natural, Elemental >,
                 Protract< Natural, Maximum, Elemental, Allocator, true >,
-                Succeed< Natural, Elemental, true >,
+                SucceedSafely< Natural, Elemental >,
                 RemoveAll< SinglyLinked< Elemental >, Natural, Elemental >
             };
 
@@ -87,7 +88,7 @@ namespace junction {
                 Survey< DoublyLinked< Elemental >, Natural, Maximum, Elemental >,
                 Account< DoublyLinked< Elemental >, Natural, Elemental >,
                 Protract< Natural, Maximum, Elemental, Allocator, true >,
-                Succeed< Natural, Elemental, true >,
+                SucceedSafely< Natural, Elemental >,
                 RemoveAll< DoublyLinked< Elemental >, Natural, Elemental >
             };
 

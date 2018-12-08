@@ -27,7 +27,9 @@ namespace junction {
             using ::junction::consecution::Concessive;
             using ::junction::consecution::Proceed;
             using ::junction::consecution::Succeed;
+            using ::junction::consecution::SucceedSafely;
             using ::junction::consecution::Concede;
+            using ::junction::consecution::ConcedeSafely;
 
             template <
                 typename Connective,
@@ -350,6 +352,8 @@ namespace junction {
                 return Concede( map, position, 1 );
             }
 
+            // This function template throws an exception if the relator (key)
+            // does not exist in the map even with Safety set to false.
             template <
                 typename Connective,
                 typename Natural,
@@ -385,8 +389,6 @@ namespace junction {
                         Equate,
                         Scale
                     >;
-                static auto&
-                    RelateElement = GoReadElement< Connective, Natural, Correlative, Evaluative, Safety >;
 				AssociativelyPositional< Connective, Correlative, Evaluative >
                     position;
                 if (!map.first)
@@ -394,9 +396,11 @@ namespace junction {
                 Scale.begin( map, position, 0 );
                 if (!Search( map, relator, position, Account( map ) - 1 ))
                     throw relator;
-                return RelateElement( map, position );
+                return GoReadElement( map, position );
             }
 
+            // This function template throws an exception if the relator (key)
+            // does not exist in the map even with Safety set to false.
             template <
                 typename Connective,
                 typename Natural,
@@ -432,8 +436,6 @@ namespace junction {
                         Equate,
                         Scale
                     >;
-                static auto&
-                    RelateElement = GoWriteElement< Connective, Natural, Correlative, Evaluative, Safety >;
 				AssociativelyPositional< Connective, Correlative, Evaluative >
                     position;
                 if (!map.first)
@@ -441,7 +443,7 @@ namespace junction {
                 Scale.begin( map, position, 0 );
                 if (!Search( map, relator, position, Account( map ) - 1 ))
                     throw relator;
-                return RelateElement( map, position );
+                return GoWriteElement( map, position );
             }
 
             template <
@@ -562,9 +564,9 @@ namespace junction {
                 Instantiate< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, Adjunct >,
                 Account< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative > >,
                 Correspond< SingleComplementary< Correlative, Evaluative >, Natural, Correlative, Evaluative, Equate, ReadRelatorIncrementSingleScale< Natural, Correlative, Evaluative > >,
-                Associate< SingleComplementary< Correlative, Evaluative >, Natural, Correlative, Evaluative, Proceed< Natural, Complementary< Correlative, Evaluative >, Adjunct, false >, Equate, ReadRelatorIncrementSingleScale< Natural, Correlative, Evaluative > >,
+                Associate< SingleComplementary< Correlative, Evaluative >, Natural, Correlative, Evaluative, Proceed< Natural, Complementary< Correlative, Evaluative >, Adjunct >, Equate, ReadRelatorIncrementSingleScale< Natural, Correlative, Evaluative > >,
                 Reassociate< Natural, Correlative, Evaluative, Equate, ReadRelatorIncrementSingleScale< Natural, Correlative, Evaluative >, Adjunct >,
-                Disassociate< Natural, Correlative, Evaluative, Succeed< Natural, Complementary< Correlative, Evaluative >, false >, Equate, ReadRelatorIncrementSingleScale< Natural, Correlative, Evaluative > >,
+                Disassociate< Natural, Correlative, Evaluative, Succeed< Natural, Complementary< Correlative, Evaluative > >, Equate, ReadRelatorIncrementSingleScale< Natural, Correlative, Evaluative > >,
                 RemoveAll< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative > >,
                 DeleteOneNode< Natural, Complementary< Correlative, Evaluative >, Adjunct >
             };
@@ -583,9 +585,9 @@ namespace junction {
                 Instantiate< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, Adjunct >,
                 Account< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative > >,
                 Correspond< DoubleComplementary< Correlative, Evaluative >, Natural, Correlative, Evaluative, Equate, ReadRelatorIncrementDoubleScale< Natural, Correlative, Evaluative > >,
-                Associate< DoubleComplementary< Correlative, Evaluative >, Natural, Correlative, Evaluative, Proceed< Natural, Complementary< Correlative, Evaluative >, Adjunct, false >, Equate, ReadRelatorIncrementDoubleScale< Natural, Correlative, Evaluative > >,
+                Associate< DoubleComplementary< Correlative, Evaluative >, Natural, Correlative, Evaluative, Proceed< Natural, Complementary< Correlative, Evaluative >, Adjunct >, Equate, ReadRelatorIncrementDoubleScale< Natural, Correlative, Evaluative > >,
                 Reassociate< Natural, Correlative, Evaluative, Equate, ReadRelatorIncrementDoubleScale< Natural, Correlative, Evaluative >, Adjunct >,
-                Disassociate< Natural, Correlative, Evaluative, Concede< Natural, Complementary< Correlative, Evaluative >, false >, Equate, ReadRelatorIncrementDoubleScale< Natural, Correlative, Evaluative > >,
+                Disassociate< Natural, Correlative, Evaluative, Concede< Natural, Complementary< Correlative, Evaluative > >, Equate, ReadRelatorIncrementDoubleScale< Natural, Correlative, Evaluative > >,
                 RemoveAll< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative > >,
                 DeleteOneNode< Natural, Complementary< Correlative, Evaluative >, Adjunct >
             };
@@ -604,9 +606,9 @@ namespace junction {
                 Instantiate< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, Adjunct >,
                 Account< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative > >,
                 Correspond< SingleComplementary< Correlative, Evaluative >, Natural, Correlative, Evaluative, Equate, SafeReadRelatorIncrementSingleScale< Natural, Correlative, Evaluative > >,
-                Associate< SingleComplementary< Correlative, Evaluative >, Natural, Correlative, Evaluative, Proceed< Natural, Complementary< Correlative, Evaluative >, Adjunct, true >, Equate, SafeReadRelatorIncrementSingleScale< Natural, Correlative, Evaluative > >,
+                Associate< SingleComplementary< Correlative, Evaluative >, Natural, Correlative, Evaluative, Proceed< Natural, Complementary< Correlative, Evaluative >, Adjunct >, Equate, SafeReadRelatorIncrementSingleScale< Natural, Correlative, Evaluative > >,
                 Reassociate< Natural, Correlative, Evaluative, Equate, SafeReadRelatorIncrementSingleScale< Natural, Correlative, Evaluative >, Adjunct >,
-                Disassociate< Natural, Correlative, Evaluative, Succeed< Natural, Complementary< Correlative, Evaluative >, true >, Equate, SafeReadRelatorIncrementSingleScale< Natural, Correlative, Evaluative > >,
+                Disassociate< Natural, Correlative, Evaluative, SucceedSafely< Natural, Complementary< Correlative, Evaluative > >, Equate, SafeReadRelatorIncrementSingleScale< Natural, Correlative, Evaluative > >,
                 RemoveAll< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative > >,
                 DeleteOneNode< Natural, Complementary< Correlative, Evaluative >, Adjunct >
             };
@@ -625,9 +627,9 @@ namespace junction {
                 Instantiate< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, Adjunct >,
                 Account< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative > >,
                 Correspond< DoubleComplementary< Correlative, Evaluative >, Natural, Correlative, Evaluative, Equate, SafeReadRelatorIncrementDoubleScale< Natural, Correlative, Evaluative > >,
-                Associate< DoubleComplementary< Correlative, Evaluative >, Natural, Correlative, Evaluative, Proceed< Natural, Complementary< Correlative, Evaluative >, Adjunct, true >, Equate, SafeReadRelatorIncrementDoubleScale< Natural, Correlative, Evaluative > >,
+                Associate< DoubleComplementary< Correlative, Evaluative >, Natural, Correlative, Evaluative, Proceed< Natural, Complementary< Correlative, Evaluative >, Adjunct >, Equate, SafeReadRelatorIncrementDoubleScale< Natural, Correlative, Evaluative > >,
                 Reassociate< Natural, Correlative, Evaluative, Equate, SafeReadRelatorIncrementDoubleScale< Natural, Correlative, Evaluative >, Adjunct >,
-                Disassociate< Natural, Correlative, Evaluative, Concede< Natural, Complementary< Correlative, Evaluative >, true >, Equate, SafeReadRelatorIncrementDoubleScale< Natural, Correlative, Evaluative > >,
+                Disassociate< Natural, Correlative, Evaluative, ConcedeSafely< Natural, Complementary< Correlative, Evaluative > >, Equate, SafeReadRelatorIncrementDoubleScale< Natural, Correlative, Evaluative > >,
                 RemoveAll< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative > >,
                 DeleteOneNode< Natural, Complementary< Correlative, Evaluative >, Adjunct >
             };

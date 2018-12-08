@@ -740,9 +740,7 @@ namespace junction {
 
     template <
         typename Connective,
-        typename Elemental,
-        const bool 
-            Safety
+        typename Elemental
     >
     static inline bool
     IsGreater(
@@ -753,12 +751,6 @@ namespace junction {
     ) {
         Locational< Nodal< Connective, Elemental > >
             current;
-        if (Safety) {
-            if (!base.at)
-                throw base;
-            if (!relative.at)
-                throw relative;
-        }
         current = GetNext( relative.at );
         while (current) {
             if (current == relative.at)
@@ -770,9 +762,25 @@ namespace junction {
 
     template <
         typename Connective,
-        typename Elemental,
-        const bool
-            Safety
+        typename Elemental
+    >
+    static inline bool
+    IsGreaterCheckSafely(
+        Referential< const Positional< Connective, Elemental > >
+            base,
+        Referential< const Positional< Connective, Elemental > >
+            relative
+    ) {
+        if (!base.at)
+            throw base;
+        if (!relative.at)
+            throw relative;
+        return IsGreater( base, relative );
+    }
+
+    template <
+        typename Connective,
+        typename Elemental
     >
     static inline bool
     IsLesser(
@@ -783,12 +791,6 @@ namespace junction {
     ) {
         Locational< Nodal< Connective, Elemental > >
             current;
-        if (Safety) {
-            if (!base.at)
-                throw base;
-            if (!relative.at)
-                throw relative;
-        }
         current = GetNext( base.at );
         while (current) {
             if (current == relative.at)
@@ -800,9 +802,25 @@ namespace junction {
 
     template <
         typename Connective,
-        typename Elemental,
-        const bool
-            Safety
+        typename Elemental
+    >
+    static inline bool
+    IsLesserCheckSafely(
+        Referential< const Positional< Connective, Elemental > >
+            base,
+        Referential< const Positional< Connective, Elemental > >
+            relative
+    ) {
+        if (!base.at)
+            throw base;
+        if (!relative.at)
+            throw relative;
+        return IsLesser( base, relative );
+    }
+
+    template <
+        typename Connective,
+        typename Elemental
     >
     static inline bool
     IsNotLesser(
@@ -813,12 +831,6 @@ namespace junction {
     ) {
         Locational< Nodal< Connective, Elemental > >
             current;
-        if (Safety) {
-            if (!base.at)
-                throw base;
-            if (!relative.at)
-                throw relative;
-        }
         current = relative.at; 
         while (current) {
             if (current == relative.at)
@@ -830,9 +842,25 @@ namespace junction {
 
     template <
         typename Connective,
-        typename Elemental,
-        const bool
-            Safety
+        typename Elemental
+    >
+    static inline bool
+    IsNotLesserCheckSafely(
+        Referential< const Positional< Connective, Elemental > >
+            base,
+        Referential< const Positional< Connective, Elemental > >
+            relative
+    ) {
+        if (!base.at)
+            throw base;
+        if (!relative.at)
+            throw relative;
+        return IsNotLesser( base, relative );
+    }
+
+    template <
+        typename Connective,
+        typename Elemental
     >
     static inline bool
     IsNotGreater(
@@ -843,12 +871,6 @@ namespace junction {
     ) {
         Locational< Nodal< Connective, Elemental > >
             current;
-        if (Safety) {
-            if (!base.at)
-                throw base;
-            if (!relative.at)
-                throw relative;
-        }
         current = base.at;
         while (current) {
             if (current == relative.at)
@@ -856,6 +878,24 @@ namespace junction {
             current = GetNext( current );
         }
         return false;
+    }
+
+    template <
+        typename Connective,
+        typename Elemental
+    >
+    static inline bool
+    IsNotGreaterCheckSafely(
+        Referential< const Positional< Connective, Elemental > >
+            base,
+        Referential< const Positional< Connective, Elemental > >
+            relative
+    ) {
+        if (!base.at)
+            throw base;
+        if (!relative.at)
+            throw relative;
+        return IsNotGreater( base, relative );
     }
 
     template <
@@ -1315,9 +1355,7 @@ namespace junction {
     template <
         typename Connective,
         typename Natural,
-        typename Elemental,
-        const bool 
-            Safety
+        typename Elemental
     >
     static inline bool
     Contains(
@@ -1335,8 +1373,6 @@ namespace junction {
 #endif
         Locational< Nodal< Connective, Elemental > >
             current;
-        if (Safety && !position.at)
-            throw position;
         current = list.first; 
         while (current) {
             if (current == position.at)
@@ -1344,6 +1380,30 @@ namespace junction {
             current = GetNext( current );
         }
         return false;
+    }
+
+    template <
+        typename Connective,
+        typename Natural,
+        typename Elemental
+    >
+    static inline bool
+    ContainsCheckSafely(
+        Referential< const Junctive< Connective, Natural, Elemental > >
+            list,
+        Referential< const Positional< Connective, Elemental > >
+            position
+    ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
+#endif
+        if (!position.at)
+            throw position;
+        return Contains( list, position );
     }
 
     template <
@@ -1457,9 +1517,7 @@ namespace junction {
         Referential< Original< Connective, Natural, Elemental > >
             GetOrigin,
         Referential< Subsequent< Connective, Elemental > >
-            GetSubsequent,
-        const bool
-            Safety
+            GetSubsequent
     >
     static inline Referential< const Positional< Connective, Elemental > >
     BeginReadScale(
@@ -1482,15 +1540,9 @@ namespace junction {
         Natural
             index;
         current = GetOrigin( list );
-        if (Safety && !current)
-            throw list;
+        for (index = 0; index < count; index++)
+            current = GetSubsequent( current );
         position.at = current;
-        for (index = 0; index < count; index++) {
-            current = GetSubsequent( position.at );
-            if (Safety && !current)
-                throw count;
-            position.at = current;
-        }
         return position;
     }
 
@@ -1501,9 +1553,48 @@ namespace junction {
         Referential< Original< Connective, Natural, Elemental > >
             GetOrigin,
         Referential< Subsequent< Connective, Elemental > >
-            GetSubsequent,
-        const bool
-            Safety
+            GetSubsequent
+    >
+    static inline Referential< const Positional< Connective, Elemental > >
+    BeginReadScaleSafely(
+        Referential< const Junctive< Connective, Natural, Elemental > >
+            list,
+        Referential< Positional< Connective, Elemental > >
+            position,
+        Referential< const Natural >
+            count
+    ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
+#endif
+        Locational< Nodal< Connective, Elemental > >
+            current;
+        Natural
+            index;
+        current = GetOrigin( list );
+        if (!current)
+            throw list;
+        for (index = 0; index < count; index++) {
+            current = GetSubsequent( current );
+            if (!current)
+                throw count;
+        }
+        position.at = current;
+        return position;
+    }
+
+    template <
+        typename Connective,
+        typename Natural,
+        typename Elemental,
+        Referential< Original< Connective, Natural, Elemental > >
+            GetOrigin,
+        Referential< Subsequent< Connective, Elemental > >
+            GetSubsequent
     >
     static inline Referential< const Positional< Connective, Elemental > >
     BeginWriteScale(
@@ -1526,15 +1617,50 @@ namespace junction {
         Natural
             index;
         current = GetOrigin( list );
-        if (Safety && !current)
-            throw list;
+        for (index = 0; index < count; index++)
+            current = GetSubsequent( current );
         position.at = current;
+        return position;
+    }
+
+    template <
+        typename Connective,
+        typename Natural,
+        typename Elemental,
+        Referential< Original< Connective, Natural, Elemental > >
+            GetOrigin,
+        Referential< Subsequent< Connective, Elemental > >
+            GetSubsequent
+    >
+    static inline Referential< const Positional< Connective, Elemental > >
+    BeginWriteScaleSafely(
+        Referential< Junctive< Connective, Natural, Elemental > >
+            list,
+        Referential< Positional< Connective, Elemental > >
+            position,
+        Referential< const Natural >
+            count
+    ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
+#endif
+        Locational< Nodal< Connective, Elemental > >
+            current;
+        Natural
+            index;
+        current = GetOrigin( list );
+        if (!current)
+            throw list;
         for (index = 0; index < count; index++) {
             current = GetSubsequent( position.at );
-            if (Safety && !current)
+            if (!current)
                 throw count;
-            position.at = current;
         }
+        position.at = current;
         return position;
     }
 
@@ -1581,9 +1707,7 @@ namespace junction {
         typename Natural,
         typename Elemental,
         Referential< Subsequent< Connective, Elemental > >
-            GetSubsequent,
-        const bool
-            Safety
+            GetSubsequent
     >
     static inline Referential< const Positional< Connective, Elemental > >
     TraverseReadScale(
@@ -1605,14 +1729,10 @@ namespace junction {
             current;
         Natural
             index;
-        if (Safety && !position.at)
-            throw position;
-        for (index = 0; index < count; index++) {
-            current = GetSubsequent( position.at );
-            if (Safety && !current)
-                throw count;
-            position.at = current;
-        }
+        current = position.at;
+        for (index = 0; index < count; index++)
+            current = GetSubsequent( current );
+        position.at = current;
         return position;
     }
 
@@ -1621,9 +1741,46 @@ namespace junction {
         typename Natural,
         typename Elemental,
         Referential< Subsequent< Connective, Elemental > >
-            GetSubsequent,
-        const bool
-            Safety
+            GetSubsequent
+    >
+    static inline Referential< const Positional< Connective, Elemental > >
+    TraverseReadScaleSafely(
+        Referential< const Junctive< Connective, Natural, Elemental > >
+            list,
+        Referential< Positional< Connective, Elemental > >
+            position,
+        Referential< const Natural >
+            count
+    ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
+#endif
+        Locational< Nodal< Connective, Elemental > >
+            current;
+        Natural
+            index;
+        if (!position.at)
+            throw position;
+        current = position.at;
+        for (index = 0; index < count; index++) {
+            current = GetSubsequent( current );
+            if (!current)
+                throw count;
+        }
+        position.at = current;
+        return position;
+    }
+
+    template <
+        typename Connective,
+        typename Natural,
+        typename Elemental,
+        Referential< Subsequent< Connective, Elemental > >
+            GetSubsequent
     >
     static inline Referential< const Positional< Connective, Elemental > >
     TraverseWriteScale(
@@ -1645,14 +1802,10 @@ namespace junction {
             current;
         Natural
             index;
-        if (Safety && !position.at)
-            throw position;
-        for (index = 0; index < count; index++) {
-            current = GetSubsequent( position.at );
-            if (Safety && !current)
-                throw count;
-            position.at = current;
-        }
+        current = position.at;
+        for (index = 0; index < count; index++)
+            current = GetSubsequent( current );
+        position.at = current;
         return position;
     }
 
@@ -1661,9 +1814,46 @@ namespace junction {
         typename Natural,
         typename Elemental,
         Referential< Subsequent< Connective, Elemental > >
-            GetSubsequent,
-        const bool
-            Safety
+            GetSubsequent
+    >
+    static inline Referential< const Positional< Connective, Elemental > >
+    TraverseWriteScaleSafely(
+        Referential< Junctive< Connective, Natural, Elemental > >
+            list,
+        Referential< Positional< Connective, Elemental > >
+            position,
+        Referential< const Natural >
+            count
+    ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
+#endif
+        Locational< Nodal< Connective, Elemental > >
+            current;
+        Natural
+            index;
+        if (!position.at)
+            throw position;
+        current = position.at;
+        for (index = 0; index < count; index++) {
+            current = GetSubsequent( current );
+            if (!current)
+                throw count;
+        }
+        position.at = current;
+        return position;
+    }
+
+    template <
+        typename Connective,
+        typename Natural,
+        typename Elemental,
+        Referential< Subsequent< Connective, Elemental > >
+            GetSubsequent
     >
     static inline bool
     DirectionTraverses(
@@ -1686,14 +1876,42 @@ namespace junction {
         Natural
             index;
         current = position.at;
-        if (Safety && !current)
-            throw position;
         for (index = 0; index < count; index++) {
             current = GetSubsequent( current );
             if (!current)
                 return false;
         }
         return true;
+    }
+
+    template <
+        typename Connective,
+        typename Natural,
+        typename Elemental,
+        Referential< Subsequent< Connective, Elemental > >
+            GetSubsequent
+    >
+    static inline bool
+    DirectionTraversesCheckSafely(
+        Referential< const Junctive< Connective, Natural, Elemental > >
+            list,
+        Referential< const Positional< Connective, Elemental > >
+            position,
+        Referential< const Natural >
+            count
+    ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
+        using namespace ::std;
+        static_assert(
+            is_integral< Natural >::value && is_unsigned< Natural >::value,
+            "Natural:  Unsigned integer type required"
+        );
+#endif
+        static auto&
+            Traverses = DirectionTraverses< Connective, Natural, Elemental, GetSubsequent >;
+        if (!position.at)
+            throw position;
+        return Traverses( list, position, count );
     }
 
     template <
@@ -1785,10 +2003,10 @@ namespace junction {
     >
     constexpr Relational< SinglyPositional< Elemental > >
     SingleRelation = {
-        IsLesser< SinglyLinked< Elemental >, Elemental, false >,
-        IsGreater< SinglyLinked< Elemental >, Elemental, false >,
-        IsNotGreater< SinglyLinked< Elemental >, Elemental, false >,
-        IsNotLesser< SinglyLinked< Elemental >, Elemental, false >
+        IsLesser< SinglyLinked< Elemental >, Elemental >,
+        IsGreater< SinglyLinked< Elemental >, Elemental >,
+        IsNotGreater< SinglyLinked< Elemental >, Elemental >,
+        IsNotLesser< SinglyLinked< Elemental >, Elemental >
     };
 
     template <
@@ -1796,10 +2014,10 @@ namespace junction {
     >
     constexpr Relational< DoublyPositional< Elemental > >
     DoubleRelation = {
-        IsLesser< DoublyLinked< Elemental >, Elemental, false >,
-        IsGreater< DoublyLinked< Elemental >, Elemental, false >,
-        IsNotGreater< DoublyLinked< Elemental >, Elemental, false >,
-        IsNotLesser< DoublyLinked< Elemental >, Elemental, false >
+        IsLesser< DoublyLinked< Elemental >, Elemental >,
+        IsGreater< DoublyLinked< Elemental >, Elemental >,
+        IsNotGreater< DoublyLinked< Elemental >, Elemental >,
+        IsNotLesser< DoublyLinked< Elemental >, Elemental >
     };
 
     template <
@@ -1807,10 +2025,10 @@ namespace junction {
     >
     constexpr Relational< SinglyPositional< Elemental > >
     SafeSingleRelation = {
-        IsLesser< SinglyLinked< Elemental >, Elemental, true >,
-        IsGreater< SinglyLinked< Elemental >, Elemental, true >,
-        IsNotGreater< SinglyLinked< Elemental >, Elemental, true >,
-        IsNotLesser< SinglyLinked< Elemental >, Elemental, true >
+        IsLesserCheckSafely< SinglyLinked< Elemental >, Elemental >,
+        IsGreaterCheckSafely< SinglyLinked< Elemental >, Elemental >,
+        IsNotGreaterCheckSafely< SinglyLinked< Elemental >, Elemental >,
+        IsNotLesserCheckSafely< SinglyLinked< Elemental >, Elemental >
     };
 
     template <
@@ -1818,10 +2036,10 @@ namespace junction {
     >
     constexpr Relational< DoublyPositional< Elemental > >
     SafeDoubleRelation = {
-        IsLesser< DoublyLinked< Elemental >, Elemental, true >,
-        IsGreater< DoublyLinked< Elemental >, Elemental, true >,
-        IsNotGreater< DoublyLinked< Elemental >, Elemental, true >,
-        IsNotLesser< DoublyLinked< Elemental >, Elemental, true >
+        IsLesserCheckSafely< DoublyLinked< Elemental >, Elemental >,
+        IsGreaterCheckSafely< DoublyLinked< Elemental >, Elemental >,
+        IsNotGreaterCheckSafely< DoublyLinked< Elemental >, Elemental >,
+        IsNotLesserCheckSafely< DoublyLinked< Elemental >, Elemental >
     };
 
     template <
@@ -1867,7 +2085,7 @@ namespace junction {
     constexpr Vectorial< const SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, const Elemental >
     ReadSingleVector = {
         SingleComparison< Elemental >,
-        Contains< SinglyLinked< Elemental >, Natural, Elemental, false >,
+        Contains< SinglyLinked< Elemental >, Natural, Elemental >,
         GoRead< SinglyLinked< Elemental >, Natural, Elemental >
     };
 
@@ -1878,7 +2096,7 @@ namespace junction {
     constexpr Vectorial< const DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, const Elemental >
     ReadDoubleVector = {
         DoubleComparison< Elemental >,
-        Contains< DoublyLinked< Elemental >, Natural, Elemental, false >,
+        Contains< DoublyLinked< Elemental >, Natural, Elemental >,
         GoRead< DoublyLinked< Elemental >, Natural, Elemental >
     };
 
@@ -1889,7 +2107,7 @@ namespace junction {
     constexpr Vectorial< const SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, const Elemental >
     SafeReadSingleVector = {
         SafeSingleComparison< Elemental >,
-        Contains< SinglyLinked< Elemental >, Natural, Elemental, true >,
+        ContainsCheckSafely< SinglyLinked< Elemental >, Natural, Elemental >,
         GoReadSafely< SinglyLinked< Elemental >, Natural, Elemental >
     };
 
@@ -1900,7 +2118,7 @@ namespace junction {
     constexpr Vectorial< const DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, const Elemental >
     SafeReadDoubleVector = {
         SafeDoubleComparison< Elemental >,
-        Contains< DoublyLinked< Elemental >, Natural, Elemental, true >,
+        ContainsCheckSafely< DoublyLinked< Elemental >, Natural, Elemental >,
         GoReadSafely< DoublyLinked< Elemental >, Natural, Elemental >
     };
 
@@ -1911,7 +2129,7 @@ namespace junction {
     constexpr Vectorial< SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, Elemental >
     WriteSingleVector = {
         SingleComparison< Elemental >,
-        Contains< SinglyLinked< Elemental >, Natural, Elemental, false >,
+        Contains< SinglyLinked< Elemental >, Natural, Elemental >,
         GoWrite< SinglyLinked< Elemental >, Natural, Elemental >
     };
 
@@ -1922,7 +2140,7 @@ namespace junction {
     constexpr Vectorial< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Elemental >
     WriteDoubleVector = {
         DoubleComparison< Elemental >,
-        Contains< DoublyLinked< Elemental >, Natural, Elemental, false >,
+        Contains< DoublyLinked< Elemental >, Natural, Elemental >,
         GoWrite< DoublyLinked< Elemental >, Natural, Elemental >
     };
 
@@ -1933,7 +2151,7 @@ namespace junction {
     constexpr Vectorial< SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, Elemental >
     SafeWriteSingleVector = {
         SafeSingleComparison< Elemental >,
-        Contains< SinglyLinked< Elemental >, Natural, Elemental, true >,
+        ContainsCheckSafely< SinglyLinked< Elemental >, Natural, Elemental >,
         GoWriteSafely< SinglyLinked< Elemental >, Natural, Elemental >
     };
 
@@ -1944,7 +2162,7 @@ namespace junction {
     constexpr Vectorial< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Elemental >
     SafeWriteDoubleVector = {
         SafeDoubleComparison< Elemental >,
-        Contains< DoublyLinked< Elemental >, Natural, Elemental, true >,
+        ContainsCheckSafely< DoublyLinked< Elemental >, Natural, Elemental >,
         GoWriteSafely< DoublyLinked< Elemental >, Natural, Elemental >
     };
 
@@ -1955,8 +2173,8 @@ namespace junction {
     constexpr Scalar< const SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, Natural, const Elemental >
     ReadIncrementSingleScale = {
         SingleComparison< Elemental >,
-        BeginReadScale< SinglyLinked< Elemental >, Natural, Elemental, GetFirst< Natural, Elemental >, GetNext< Elemental >, false >,
-        TraverseReadScale< SinglyLinked< Elemental >, Natural, Elemental, GetNext< Elemental >, false >,
+        BeginReadScale< SinglyLinked< Elemental >, Natural, Elemental, GetFirst< Natural, Elemental >, GetNext< Elemental > >,
+        TraverseReadScale< SinglyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >,
         GoRead< SinglyLinked< Elemental >, Natural, Elemental >
     };
 
@@ -1967,8 +2185,8 @@ namespace junction {
     constexpr Scalar< const DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, const Elemental >
     ReadIncrementDoubleScale = {
         DoubleComparison< Elemental >,
-        BeginReadScale< DoublyLinked< Elemental >, Natural, Elemental, GetFirst< Natural, Elemental >, GetNext< Elemental >, false >,
-        TraverseReadScale< DoublyLinked< Elemental >, Natural, Elemental, GetNext< Elemental >, false >,
+        BeginReadScale< DoublyLinked< Elemental >, Natural, Elemental, GetFirst< Natural, Elemental >, GetNext< Elemental > >,
+        TraverseReadScale< DoublyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >,
         GoRead< DoublyLinked< Elemental >, Natural, Elemental >
     };
 
@@ -1979,8 +2197,8 @@ namespace junction {
     constexpr Scalar< const SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, Natural, const Elemental >
     SafeReadIncrementSingleScale = {
         SafeSingleComparison< Elemental >,
-        BeginReadScale< SinglyLinked< Elemental >, Natural, Elemental, GetFirst< Natural, Elemental >, GetNext< Elemental >, true >,
-        TraverseReadScale< SinglyLinked< Elemental >, Natural, Elemental, GetNext< Elemental >, true >,
+        BeginReadScaleSafely< SinglyLinked< Elemental >, Natural, Elemental, GetFirst< Natural, Elemental >, GetNext< Elemental > >,
+        TraverseReadScaleSafely< SinglyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >,
         GoReadSafely< SinglyLinked< Elemental >, Natural, Elemental >
     };
 
@@ -1991,8 +2209,8 @@ namespace junction {
     constexpr Scalar< const DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, const Elemental >
     SafeReadIncrementDoubleScale = {
         SafeDoubleComparison< Elemental >,
-        BeginReadScale< DoublyLinked< Elemental >, Natural, Elemental, GetFirst< Natural, Elemental >, GetNext< Elemental >, true >,
-        TraverseReadScale< DoublyLinked< Elemental >, Natural, Elemental, GetNext< Elemental >, true >,
+        BeginReadScaleSafely< DoublyLinked< Elemental >, Natural, Elemental, GetFirst< Natural, Elemental >, GetNext< Elemental > >,
+        TraverseReadScaleSafely< DoublyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >,
         GoReadSafely< DoublyLinked< Elemental >, Natural, Elemental >
     };
 
@@ -2003,8 +2221,8 @@ namespace junction {
     constexpr Scalar< SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, Natural, Elemental >
     WriteIncrementSingleScale = {
         SingleComparison< Elemental >,
-        BeginWriteScale< SinglyLinked< Elemental >, Natural, Elemental, GetFirst< Natural, Elemental >, GetNext< Elemental >, false >,
-        TraverseWriteScale< SinglyLinked< Elemental >, Natural, Elemental, GetNext< Elemental >, false >,
+        BeginWriteScale< SinglyLinked< Elemental >, Natural, Elemental, GetFirst< Natural, Elemental >, GetNext< Elemental > >,
+        TraverseWriteScale< SinglyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >,
         GoWrite< SinglyLinked< Elemental >, Natural, Elemental >
     };
 
@@ -2015,8 +2233,8 @@ namespace junction {
     constexpr Scalar< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, Elemental >
     WriteIncrementDoubleScale = {
         DoubleComparison< Elemental >,
-        BeginWriteScale< DoublyLinked< Elemental >, Natural, Elemental, GetFirst< Natural, Elemental >, GetNext< Elemental >, false >,
-        TraverseWriteScale< DoublyLinked< Elemental >, Natural, Elemental, GetNext< Elemental >, false >,
+        BeginWriteScale< DoublyLinked< Elemental >, Natural, Elemental, GetFirst< Natural, Elemental >, GetNext< Elemental > >,
+        TraverseWriteScale< DoublyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >,
         GoWrite< DoublyLinked< Elemental >, Natural, Elemental >
     };
 
@@ -2027,8 +2245,8 @@ namespace junction {
     constexpr Scalar< SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, Natural, Elemental >
     SafeWriteIncrementSingleScale = {
         SafeSingleComparison< Elemental >,
-        BeginWriteScale< SinglyLinked< Elemental >, Natural, Elemental, GetFirst< Natural, Elemental >, GetNext< Elemental >, true >,
-        TraverseWriteScale< SinglyLinked< Elemental >, Natural, Elemental, GetNext< Elemental >, true >,
+        BeginWriteScaleSafely< SinglyLinked< Elemental >, Natural, Elemental, GetFirst< Natural, Elemental >, GetNext< Elemental > >,
+        TraverseWriteScaleSafely< SinglyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >,
         GoWriteSafely< SinglyLinked< Elemental >, Natural, Elemental >
     };
 
@@ -2039,8 +2257,8 @@ namespace junction {
     constexpr Scalar< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, Elemental >
     SafeWriteIncrementDoubleScale = {
         SafeDoubleComparison< Elemental >,
-        BeginWriteScale< DoublyLinked< Elemental >, Natural, Elemental, GetFirst< Natural, Elemental >, GetNext< Elemental >, true >,
-        TraverseWriteScale< DoublyLinked< Elemental >, Natural, Elemental, GetNext< Elemental >, true >,
+        BeginWriteScaleSafely< DoublyLinked< Elemental >, Natural, Elemental, GetFirst< Natural, Elemental >, GetNext< Elemental > >,
+        TraverseWriteScaleSafely< DoublyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >,
         GoWriteSafely< DoublyLinked< Elemental >, Natural, Elemental >
     };
 
@@ -2051,8 +2269,8 @@ namespace junction {
     constexpr Scalar< const DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, const Elemental >
     ReadDecrementDoubleScale = {
         DoubleComparison< Elemental >,
-        BeginReadScale< DoublyLinked< Elemental >, Natural, Elemental, GetLast< Natural, Elemental >, GetPrevious< Elemental >, false >,
-        TraverseReadScale< DoublyLinked< Elemental >, Natural, Elemental, GetPrevious< Elemental >, false >,
+        BeginReadScale< DoublyLinked< Elemental >, Natural, Elemental, GetLast< Natural, Elemental >, GetPrevious< Elemental > >,
+        TraverseReadScale< DoublyLinked< Elemental >, Natural, Elemental, GetPrevious< Elemental > >,
         GoRead< DoublyLinked< Elemental >, Natural, Elemental >
     };
 
@@ -2063,8 +2281,8 @@ namespace junction {
     constexpr Scalar< const DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, const Elemental >
     SafeReadDecrementDoubleScale = {
         SafeDoubleComparison< Elemental >,
-        BeginReadScale< DoublyLinked< Elemental >, Natural, Elemental, GetLast< Natural, Elemental >, GetPrevious< Elemental >, true >,
-        TraverseReadScale< DoublyLinked< Elemental >, Natural, Elemental, GetPrevious< Elemental >, true >,
+        BeginReadScaleSafely< DoublyLinked< Elemental >, Natural, Elemental, GetLast< Natural, Elemental >, GetPrevious< Elemental > >,
+        TraverseReadScaleSafely< DoublyLinked< Elemental >, Natural, Elemental, GetPrevious< Elemental > >,
         GoReadSafely< DoublyLinked< Elemental >, Natural, Elemental >
     };
 
@@ -2075,8 +2293,8 @@ namespace junction {
     constexpr Scalar< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, Elemental >
     WriteDecrementDoubleScale = {
         DoubleComparison< Elemental >,
-        BeginWriteScale< DoublyLinked< Elemental >, Natural, Elemental, GetLast< Natural, Elemental >, GetPrevious< Elemental >, false >,
-        TraverseWriteScale< DoublyLinked< Elemental >, Natural, Elemental, GetPrevious< Elemental >, false >,
+        BeginWriteScale< DoublyLinked< Elemental >, Natural, Elemental, GetLast< Natural, Elemental >, GetPrevious< Elemental > >,
+        TraverseWriteScale< DoublyLinked< Elemental >, Natural, Elemental, GetPrevious< Elemental > >,
         GoWrite< DoublyLinked< Elemental >, Natural, Elemental >
     };
 
@@ -2087,8 +2305,8 @@ namespace junction {
     constexpr Scalar< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, Elemental >
     SafeWriteDecrementDoubleScale = {
         SafeDoubleComparison< Elemental >,
-        BeginWriteScale< DoublyLinked< Elemental >, Natural, Elemental, GetLast< Natural, Elemental >, GetPrevious< Elemental >, true >,
-        TraverseWriteScale< DoublyLinked< Elemental >, Natural, Elemental, GetPrevious< Elemental >, true >,
+        BeginWriteScaleSafely< DoublyLinked< Elemental >, Natural, Elemental, GetLast< Natural, Elemental >, GetPrevious< Elemental > >,
+        TraverseWriteScaleSafely< DoublyLinked< Elemental >, Natural, Elemental, GetPrevious< Elemental > >,
         GoWriteSafely< DoublyLinked< Elemental >, Natural, Elemental >
     };
 
@@ -2140,8 +2358,8 @@ namespace junction {
     ReadIncrementSingleDirection = {
         ReadIncrementSingleScale< Natural, Elemental >,
         DirectionBegins< SinglyLinked< Elemental >, Natural, Elemental, GetFirst< Natural, Elemental >, GetNext< Elemental > >,
-        DirectionTraverses< SinglyLinked< Elemental >, Natural, Elemental, GetNext< Elemental >, false >,
-        Contains< SinglyLinked< Elemental >, Natural, Elemental, false >,
+        DirectionTraverses< SinglyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >,
+        Contains< SinglyLinked< Elemental >, Natural, Elemental >,
         Account< SinglyLinked< Elemental >, Natural, Elemental >,
         Count< SinglyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >
     };
@@ -2154,8 +2372,8 @@ namespace junction {
     ReadIncrementDoubleDirection = {
         ReadIncrementDoubleScale< Natural, Elemental >,
         DirectionBegins< DoublyLinked< Elemental >, Natural, Elemental, GetFirst< Natural, Elemental >, GetNext< Elemental > >,
-        DirectionTraverses< DoublyLinked< Elemental >, Natural, Elemental, GetNext< Elemental >, false >,
-        Contains< DoublyLinked< Elemental >, Natural, Elemental, false >,
+        DirectionTraverses< DoublyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >,
+        Contains< DoublyLinked< Elemental >, Natural, Elemental >,
         Account< DoublyLinked< Elemental >, Natural, Elemental >,
         Count< DoublyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >
     };
@@ -2168,8 +2386,8 @@ namespace junction {
     SafeReadIncrementSingleDirection = {
         SafeReadIncrementSingleScale< Natural, Elemental >,
         DirectionBegins< SinglyLinked< Elemental >, Natural, Elemental, GetFirst< Natural, Elemental >, GetNext< Elemental > >,
-        DirectionTraverses< SinglyLinked< Elemental >, Natural, Elemental, GetNext< Elemental >, true >,
-        Contains< SinglyLinked< Elemental >, Natural, Elemental, true >,
+        DirectionTraversesCheckSafely< SinglyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >,
+        ContainsCheckSafely< SinglyLinked< Elemental >, Natural, Elemental >,
         Account< SinglyLinked< Elemental >, Natural, Elemental >,
         Count< SinglyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >
     };
@@ -2182,8 +2400,8 @@ namespace junction {
     SafeReadIncrementDoubleDirection = {
         SafeReadIncrementDoubleScale< Natural, Elemental >,
         DirectionBegins< DoublyLinked< Elemental >, Natural, Elemental, GetFirst< Natural, Elemental >, GetNext< Elemental > >,
-        DirectionTraverses< DoublyLinked< Elemental >, Natural, Elemental, GetNext< Elemental >, true >,
-        Contains< DoublyLinked< Elemental >, Natural, Elemental, true >,
+        DirectionTraversesCheckSafely< DoublyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >,
+        ContainsCheckSafely< DoublyLinked< Elemental >, Natural, Elemental >,
         Account< DoublyLinked< Elemental >, Natural, Elemental >,
         Count< DoublyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >
     };
@@ -2196,8 +2414,8 @@ namespace junction {
     WriteIncrementSingleDirection = {
         WriteIncrementSingleScale< Natural, Elemental >,
         DirectionBegins< SinglyLinked< Elemental >, Natural, Elemental, GetFirst< Natural, Elemental >, GetNext< Elemental > >,
-        DirectionTraverses< SinglyLinked< Elemental >, Natural, Elemental, GetNext< Elemental >, false >,
-        Contains< SinglyLinked< Elemental >, Natural, Elemental, false >,
+        DirectionTraverses< SinglyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >,
+        Contains< SinglyLinked< Elemental >, Natural, Elemental >,
         Account< SinglyLinked< Elemental >, Natural, Elemental >,
         Count< SinglyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >
     };
@@ -2210,8 +2428,8 @@ namespace junction {
     WriteIncrementDoubleDirection = {
         WriteIncrementDoubleScale< Natural, Elemental >,
         DirectionBegins< DoublyLinked< Elemental >, Natural, Elemental, GetFirst< Natural, Elemental >, GetNext< Elemental > >,
-        DirectionTraverses< DoublyLinked< Elemental >, Natural, Elemental, GetNext< Elemental >, false >,
-        Contains< DoublyLinked< Elemental >, Natural, Elemental, false >,
+        DirectionTraverses< DoublyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >,
+        Contains< DoublyLinked< Elemental >, Natural, Elemental >,
         Account< DoublyLinked< Elemental >, Natural, Elemental >,
         Count< DoublyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >
     };
@@ -2224,8 +2442,8 @@ namespace junction {
     SafeWriteIncrementSingleDirection = {
         SafeWriteIncrementSingleScale< Natural, Elemental >,
         DirectionBegins< SinglyLinked< Elemental >, Natural, Elemental, GetFirst< Natural, Elemental >, GetNext< Elemental > >,
-        DirectionTraverses< SinglyLinked< Elemental >, Natural, Elemental, GetNext< Elemental >, true >,
-        Contains< SinglyLinked< Elemental >, Natural, Elemental, true >,
+        DirectionTraversesCheckSafely< SinglyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >,
+        ContainsCheckSafely< SinglyLinked< Elemental >, Natural, Elemental >,
         Account< SinglyLinked< Elemental >, Natural, Elemental >,
         Count< SinglyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >
     };
@@ -2238,8 +2456,8 @@ namespace junction {
     SafeWriteIncrementDoubleDirection = {
         SafeWriteIncrementDoubleScale< Natural, Elemental >,
         DirectionBegins< DoublyLinked< Elemental >, Natural, Elemental, GetFirst< Natural, Elemental >, GetNext< Elemental > >,
-        DirectionTraverses< DoublyLinked< Elemental >, Natural, Elemental, GetNext< Elemental >, true >,
-        Contains< DoublyLinked< Elemental >, Natural, Elemental, true >,
+        DirectionTraversesCheckSafely< DoublyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >,
+        ContainsCheckSafely< DoublyLinked< Elemental >, Natural, Elemental >,
         Account< DoublyLinked< Elemental >, Natural, Elemental >,
         Count< DoublyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >
     };
@@ -2252,8 +2470,8 @@ namespace junction {
     ReadDecrementDoubleDirection = {
         ReadDecrementDoubleScale< Natural, Elemental >,
         DirectionBegins< DoublyLinked< Elemental >, Natural, Elemental, GetLast< Natural, Elemental >, GetPrevious< Elemental > >,
-        DirectionTraverses< DoublyLinked< Elemental >, Natural, Elemental, GetPrevious< Elemental >, false >,
-        Contains< DoublyLinked< Elemental >, Natural, Elemental, false >,
+        DirectionTraverses< DoublyLinked< Elemental >, Natural, Elemental, GetPrevious< Elemental > >,
+        Contains< DoublyLinked< Elemental >, Natural, Elemental >,
         Account< DoublyLinked< Elemental >, Natural, Elemental >,
         Count< DoublyLinked< Elemental >, Natural, Elemental, GetPrevious< Elemental > >
     };
@@ -2266,8 +2484,8 @@ namespace junction {
     SafeReadDecrementDoubleDirection = {
         SafeReadDecrementDoubleScale< Natural, Elemental >,
         DirectionBegins< DoublyLinked< Elemental >, Natural, Elemental, GetLast< Natural, Elemental >, GetPrevious< Elemental > >,
-        DirectionTraverses< DoublyLinked< Elemental >, Natural, Elemental, GetPrevious< Elemental >, true >,
-        Contains< DoublyLinked< Elemental >, Natural, Elemental, true >,
+        DirectionTraversesCheckSafely< DoublyLinked< Elemental >, Natural, Elemental, GetPrevious< Elemental > >,
+        ContainsCheckSafely< DoublyLinked< Elemental >, Natural, Elemental >,
         Account< DoublyLinked< Elemental >, Natural, Elemental >,
         Count< DoublyLinked< Elemental >, Natural, Elemental, GetPrevious< Elemental > >
     };
@@ -2280,8 +2498,8 @@ namespace junction {
     WriteDecrementDoubleDirection = {
         WriteDecrementDoubleScale< Natural, Elemental >,
         DirectionBegins< DoublyLinked< Elemental >, Natural, Elemental, GetLast< Natural, Elemental >, GetPrevious< Elemental > >,
-        DirectionTraverses< DoublyLinked< Elemental >, Natural, Elemental, GetPrevious< Elemental >, false >,
-        Contains< DoublyLinked< Elemental >, Natural, Elemental, false >,
+        DirectionTraverses< DoublyLinked< Elemental >, Natural, Elemental, GetPrevious< Elemental > >,
+        Contains< DoublyLinked< Elemental >, Natural, Elemental >,
         Account< DoublyLinked< Elemental >, Natural, Elemental >,
         Count< DoublyLinked< Elemental >, Natural, Elemental, GetPrevious< Elemental > >
     };
@@ -2294,8 +2512,8 @@ namespace junction {
     SafeWriteDecrementDoubleDirection = {
         SafeWriteDecrementDoubleScale< Natural, Elemental >,
         DirectionBegins< DoublyLinked< Elemental >, Natural, Elemental, GetLast< Natural, Elemental >, GetPrevious< Elemental > >,
-        DirectionTraverses< DoublyLinked< Elemental >, Natural, Elemental, GetPrevious< Elemental >, true >,
-        Contains< DoublyLinked< Elemental >, Natural, Elemental, true >,
+        DirectionTraversesCheckSafely< DoublyLinked< Elemental >, Natural, Elemental, GetPrevious< Elemental > >,
+        ContainsCheckSafely< DoublyLinked< Elemental >, Natural, Elemental >,
         Account< DoublyLinked< Elemental >, Natural, Elemental >,
         Count< DoublyLinked< Elemental >, Natural, Elemental, GetPrevious< Elemental > >
     };

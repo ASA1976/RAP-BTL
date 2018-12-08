@@ -39,9 +39,14 @@ namespace procession {
      *     which implement this contract receive their event data as a void
      *     pointer and are expected to run the event when called.
      */
+    template <
+        typename ...Parametric
+    >
     using Contractual = void(
         const Locational< void >
-            locality
+            locality,
+        Parametric...
+            arguments
     );
 
     /**
@@ -56,7 +61,10 @@ namespace procession {
      *     ensure the event data remains in scope until after the event function
      *     has been invoked.
      */
-    using Contextual = Complementary< Locational< Contractual >, Locational< void > >;
+    template <
+        typename ...Parametric
+    >
+    using Contextual = Complementary< Locational< Contractual< Parametric... > >, Locational< void > >;
 
     /**
      * @brief
@@ -137,15 +145,16 @@ namespace procession {
         typename Subjective,
         Referential< const Tractile< Schedular, Positional, Natural > >
             Contractor,
-        Referential< const Directional< Schedular, Positional, Natural, Contextual > >
-            Visitor,
-        Referential< Contractual >
-            Function
+        typename ...Parametric
     >
     static inline bool
     ScheduleNullAccepted(
+        Referential< const Directional< Schedular, Positional, Natural, Contextual< Parametric... > > >
+            visitor,
         Referential< Schedular >
             schedule,
+        Referential< Contractual< Parametric... > >
+            function,
         const Locational< Subjective >
             subject
     ) {
@@ -164,11 +173,70 @@ namespace procession {
             position;
         if (!Contractor.protract( schedule, position, 1 ))
             return false;
-        Referential< Contextual >
-            event = Visitor.scale.go( schedule, position ).to;
+        Referential< Contextual< Parametric... > >
+            event = visitor.scale.go( schedule, position ).to;
         event.value = (Locational< void >) subject;
-        event.relator = Function;
+        event.relator = function;
         return true;
+    }
+
+    /**
+     * @brief 
+     *     Prepares a lambda expression which schedules an event which can omit
+     *     a data location.
+     * @details
+     *     Function Template
+     *     -----------------
+     *     Prepares a lambda expression which schedules an event which may omit 
+     *     event data, in a container space using the provided contractor 
+     *     objective.
+     * @tparam Schedular
+     *     Type of the schedule.
+     * @tparam Positional
+     *     Type of positions to events in the schedule.
+     * @tparam Natural
+     *     Type of natural integer used by the schedule.
+     * @tparam Subjective 
+     *     Type of the event data (function type not allowed).
+     * @tparam Contractor 
+     *     Objective reference used to add events into the schedule.
+     * @tparam Visitor
+     *     Objective reference used to retrieve events from the schedule.
+     * @tparam Function
+     *     Function reference to the function invoked during the event.
+     * @param[in] schedule 
+     *     Reference to the schedule. 
+     * @return
+     *     The instance of the lambda expression.
+     */
+    template <
+        typename Schedular,
+        typename Positional,
+        typename Natural,
+        typename Subjective,
+        Referential< const Tractile< Schedular, Positional, Natural > >
+            Contractor,
+        typename ...Parametric
+    >
+    static inline auto
+    PrepareScheduleNullAccepted(
+        Referential< const Directional< Schedular, Positional, Natural, Contextual< Parametric... > > >
+            visitor,
+        Referential< Schedular >
+            schedule,
+        Referential< Contractual< Parametric... > >
+            function
+    ) {
+        static auto&
+            ScheduleEvent = ScheduleNullAccepted< Schedular, Positional, Natural, Subjective, Contractor, Parametric... >;
+        auto 
+            Lambda = [&visitor, &schedule, &function]( 
+                const Locational< Subjective > 
+                    subject 
+            ) {
+                return ScheduleEvent( visitor, schedule, function, subject );
+            };
+        return Lambda;
     }
 
     /**
@@ -207,15 +275,16 @@ namespace procession {
         typename Subjective,
         Referential< const Tractile< Schedular, Positional, Natural > >
             Contractor,
-        Referential< const Directional< Schedular, Positional, Natural, Contextual > >
-            Visitor,
-        Referential< Contractual >
-            Function
+        typename ...Parametric
     >
     static inline bool
     ScheduleNullRefused(
+        Referential< const Directional< Schedular, Positional, Natural, Contextual< Parametric... > > >
+            visitor,
         Referential< Schedular >
             schedule,
+        Referential< Contractual< Parametric... > >
+            function,
         const Locational< Subjective >
             subject
     ) {
@@ -231,10 +300,69 @@ namespace procession {
         );
 #endif
         static auto&
-            Schedule = ScheduleNullAccepted< Schedular, Positional, Natural, Subjective, Contractor, Visitor, Function >;
+            Schedule = ScheduleNullAccepted< Schedular, Positional, Natural, Subjective, Contractor, Parametric... >;
         if (subject == 0)
             return false;
-        return Schedule( schedule, subject );
+        return Schedule( visitor, schedule, function, subject );
+    }
+
+    /**
+     * @brief 
+     *     Prepares a lambda expression which schedules an event which can not 
+     *     omit a data location.
+     * @details
+     *     Function Template
+     *     -----------------
+     *     Prepares a lambda expression which schedules an event which may not 
+     *     omit event data, in a container space using the provided contractor 
+     *     objective.
+     * @tparam Schedular
+     *     Type of the schedule.
+     * @tparam Positional
+     *     Type of positions to events in the schedule.
+     * @tparam Natural
+     *     Type of natural integer used by the schedule.
+     * @tparam Subjective 
+     *     Type of the event data (function type not allowed).
+     * @tparam Contractor 
+     *     Objective reference used to add events into the schedule.
+     * @tparam Visitor
+     *     Objective reference used to retrieve events from the schedule.
+     * @tparam Function
+     *     Function reference to the function invoked during the event.
+     * @param[in] schedule 
+     *     Reference to the schedule. 
+     * @return
+     *     The instance of the lambda expression.
+     */
+    template <
+        typename Schedular,
+        typename Positional,
+        typename Natural,
+        typename Subjective,
+        Referential< const Tractile< Schedular, Positional, Natural > >
+            Contractor,
+        typename ...Parametric
+    >
+    static inline auto
+    PrepareScheduleNullRefused(
+        Referential< const Directional< Schedular, Positional, Natural, Contextual< Parametric... > > >
+            visitor,
+        Referential< Schedular >
+            schedule,
+        Referential< Contractual< Parametric... > >
+            function
+    ) {
+        static auto&
+            ScheduleEvent = ScheduleNullRefused< Schedular, Positional, Natural, Subjective, Contractor, Parametric... >;
+        auto 
+            Lambda = [&visitor, &schedule, &function]( 
+                const Locational< Subjective > 
+                    subject 
+            ) {
+                return ScheduleEvent( visitor, schedule, function, subject );
+            };
+        return Lambda;
     }
 
     /**
@@ -267,13 +395,16 @@ namespace procession {
         typename Natural,
         Referential< const Tractile< Schedular, Positional, Natural > >
             Contractor,
-        Referential< const Directional< Schedular, Positional, Natural, Contextual > >
-            Visitor
+        typename ...Parametric
     >
     static inline bool
     ProcessOneEvent(
+        Referential< const Directional< Schedular, Positional, Natural, Contextual< Parametric... > > >
+            visitor,
         Referential< Schedular >
-            schedule
+            schedule,
+        Parametric...
+            arguments
     ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
@@ -284,17 +415,69 @@ namespace procession {
 #endif
         Positional
             position;
-        Contextual
+        Contextual< Parametric... >
             event;
-        if (!Visitor.begins( schedule, 0 ))
+        if (!visitor.begins( schedule, 0 ))
             return false;
-        Visitor.scale.begin( schedule, position, 0 );
-        event = Visitor.scale.go( schedule, position ).to;
+        visitor.scale.begin( schedule, position, 0 );
+        event = visitor.scale.go( schedule, position ).to;
         Contractor.retract( schedule, 1 );
-        event.relator( event.value );
+        event.relator( event.value, arguments... );
         return true;
     }
 
-};
+    /**
+     * @brief
+     *     Prepares a lambda expression which processes a single scheduled 
+     *     event.
+     * @details
+     *     Function Template
+     *     -----------------
+     *     Prepares a lambda expression which processes a single event by first 
+     *     removing it from the schedule schedule and then invoking the event 
+     *     function while passing the event data.
+     * @tparam Schedular
+     *     Type of the schedule.
+     * @tparam Positional
+     *     Type of positions to events in the schedule.
+     * @tparam Natural
+     *     Type of natural integer used by the schedule.
+     * @tparam Contractor 
+     *     Objective reference used to add events into the schedule.
+     * @tparam Visitor
+     *     Objective reference used to retrieve events from the schedule.
+     * @param[in] schedule 
+     *     Reference to the schedule. 
+     * @return
+     *     The instance of the lambda expression.
+     */
+    template <
+        typename Schedular,
+        typename Positional,
+        typename Natural,
+        Referential< const Tractile< Schedular, Positional, Natural > >
+            Contractor,
+        typename ...Parametric
+    >
+    static inline auto
+    PrepareProcessOneEvent(
+        Referential< const Directional< Schedular, Positional, Natural, Contextual< Parametric... > > >
+            visitor,
+        Referential< Schedular >
+            schedule
+    ) {
+        static auto&
+            ProcessEvent = ProcessOneEvent< Schedular, Positional, Natural, Contractor, Parametric... >;
+        auto 
+            Lambda = [&visitor, &schedule]( 
+                Parametric... 
+                    arguments 
+            ) -> bool {
+                return ProcessEvent( visitor, schedule, arguments... );
+            };
+        return Lambda;
+    }
+
+}
 
 #endif

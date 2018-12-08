@@ -23,6 +23,7 @@ namespace junction {
             using ::attribution::Tributary;
             using consecution::Concessive;
             using consecution::Concede;
+            using consecution::ConcedeSafely;
 
             template <
                 typename Natural,
@@ -148,7 +149,7 @@ namespace junction {
                 Survey< SinglyLinked< Elemental >, Natural, Maximum, Elemental >,
                 Account< SinglyLinked< Elemental >, Natural, Elemental >,
                 Distribute< Natural, Maximum, Elemental, Allocator, false >,
-                Retribute< SinglyLinked< Elemental >, Natural, Elemental, Concede< Natural, Elemental, false > >,
+                Retribute< SinglyLinked< Elemental >, Natural, Elemental, Concede< Natural, Elemental > >,
                 RemoveAll< SinglyLinked< Elemental >, Natural, Elemental >
             };
 
@@ -165,7 +166,7 @@ namespace junction {
                 Survey< DoublyLinked< Elemental >, Natural, Maximum, Elemental >,
                 Account< DoublyLinked< Elemental >, Natural, Elemental >,
                 Distribute< Natural, Maximum, Elemental, Allocator, false >,
-                Retribute< DoublyLinked< Elemental >, Natural, Elemental, Concede< Natural, Elemental, false > >,
+                Retribute< DoublyLinked< Elemental >, Natural, Elemental, Concede< Natural, Elemental > >,
                 RemoveAll< DoublyLinked< Elemental >, Natural, Elemental >
             };
 
@@ -182,7 +183,7 @@ namespace junction {
                 Survey< SinglyLinked< Elemental >, Natural, Maximum, Elemental >,
                 Account< SinglyLinked< Elemental >, Natural, Elemental >,
                 Distribute< Natural, Maximum, Elemental, Allocator, true >,
-                Retribute< SinglyLinked< Elemental >, Natural, Elemental, Concede< Natural, Elemental, true > >,
+                Retribute< SinglyLinked< Elemental >, Natural, Elemental, ConcedeSafely< Natural, Elemental > >,
                 RemoveAll< SinglyLinked< Elemental >, Natural, Elemental >
             };
 
@@ -199,7 +200,7 @@ namespace junction {
                 Survey< DoublyLinked< Elemental >, Natural, Maximum, Elemental >,
                 Account< DoublyLinked< Elemental >, Natural, Elemental >,
                 Distribute< Natural, Maximum, Elemental, Allocator, true >,
-                Retribute< DoublyLinked< Elemental >, Natural, Elemental, Concede< Natural, Elemental, true > >,
+                Retribute< DoublyLinked< Elemental >, Natural, Elemental, ConcedeSafely< Natural, Elemental > >,
                 RemoveAll< DoublyLinked< Elemental >, Natural, Elemental >
             };
 

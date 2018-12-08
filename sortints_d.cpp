@@ -15,9 +15,9 @@ constexpr DoublyAdjunctive< unsigned, int >
 StaticAdjunct = DefaultStaticDoubleAdjunct< unsigned, int >;
 
 #ifdef _MSC_VER
-// Problem 255118 filed May 17 2018 (same error, may be a different issue)
-//template bool ::comparison::IsLesser( Referential< const int >, Referential< const int > );
-//template bool ::comparison::IsEqual( Referential< const int >, Referential< const int > );
+// Problem 395723
+template bool ::comparison::IsLesser( Referential< const int >, Referential< const int > );
+template bool ::comparison::IsEqual( Referential< const int >, Referential< const int > );
 #endif
 
 template <
@@ -70,7 +70,6 @@ main(
     static const unsigned
         MaximumNodes = (CacheLimit - CacheReserve) / sizeof(IntegerNodal);
     static auto&
-        // Problem 388684 filed Nov 21 2018
         Composer = OrderedDoubleComposer< unsigned, int, IsEqual, IsLesser, StaticAdjunct >;
     static auto&
         Increment = ReadIncrementDoubleDirection< unsigned, int >;

@@ -28,7 +28,9 @@ namespace junction {
         using ::junction::consecution::Recessive;
         using ::junction::consecution::Proceed;
         using ::junction::consecution::Succeed;
+        using ::junction::consecution::SucceedSafely;
         using ::junction::consecution::Concede;
+        using ::junction::consecution::ConcedeSafely;
 
         template <
             typename Connective,
@@ -717,10 +719,36 @@ namespace junction {
         constexpr Compositional< SinglyJunctive< Natural, Elemental >, Natural, Elemental >
         SingleComposer = {
             Instantiate< SinglyLinked< Elemental >, Natural, Elemental, Adjunct >,
-            AccreditSelection< SinglyLinked< Elemental >, Natural, Elemental, Equate, ReadIncrementSingleScale< Natural, Elemental > >,
-            ComposeSelection< SinglyLinked< Elemental >, Natural, Elemental, Proceed< Natural, Elemental, Adjunct, false >, Equate, ReadIncrementSingleScale< Natural, Elemental > >,
-            RecomposeSelection< Natural, Elemental, Proceed< Natural, Elemental, Adjunct, false >, Succeed< Natural, Elemental, false >, Equate, ReadIncrementSingleScale< Natural, Elemental > >,
-            DiscomposeSelection< Natural, Elemental, Succeed< Natural, Elemental, false >, Equate, ReadIncrementSingleScale< Natural, Elemental >>,
+            AccreditSelection< 
+                SinglyLinked< Elemental >, 
+                Natural, 
+                Elemental, 
+                Equate, 
+                ReadIncrementSingleScale< Natural, Elemental > 
+            >,
+            ComposeSelection< 
+                SinglyLinked< Elemental >, 
+                Natural, 
+                Elemental, 
+                Proceed< Natural, Elemental, Adjunct >, 
+                Equate, 
+                ReadIncrementSingleScale< Natural, Elemental > 
+            >,
+            RecomposeSelection< 
+                Natural, 
+                Elemental, 
+                Proceed< Natural, Elemental, Adjunct >, 
+                Succeed< Natural, Elemental >, 
+                Equate, 
+                ReadIncrementSingleScale< Natural, Elemental > 
+            >,
+            DiscomposeSelection< 
+                Natural, 
+                Elemental, 
+                Succeed< Natural, Elemental >, 
+                Equate, 
+                ReadIncrementSingleScale< Natural, Elemental >
+            >,
             RemoveAll< SinglyLinked< Elemental >, Natural, Elemental >,
             DeleteOneNode< Natural, Elemental, Adjunct >
         };
@@ -747,7 +775,7 @@ namespace junction {
                 DoublyLinked< Elemental >, 
                 Natural, 
                 Elemental, 
-                Proceed< Natural, Elemental, Adjunct, false >, 
+                Proceed< Natural, Elemental, Adjunct >, 
                 Equate, 
                 ReadIncrementDoubleScale< Natural, Elemental > 
             >,
@@ -761,7 +789,7 @@ namespace junction {
             DiscomposeSelection< 
                 Natural, 
                 Elemental, 
-                Concede< Natural, Elemental, false >, 
+                Concede< Natural, Elemental >, 
                 Equate, 
                 ReadIncrementDoubleScale< Natural, Elemental >
             >,
@@ -791,22 +819,22 @@ namespace junction {
                 SinglyLinked< Elemental >, 
                 Natural, 
                 Elemental, 
-                Proceed< Natural, Elemental, Adjunct, true >, 
+                Proceed< Natural, Elemental, Adjunct >, 
                 Equate, 
                 SafeReadIncrementSingleScale< Natural, Elemental > 
             >,
             RecomposeSelection< 
                 Natural, 
                 Elemental, 
-                Proceed< Natural, Elemental, Adjunct, true >, 
-                Succeed< Natural, Elemental, true >, 
+                Proceed< Natural, Elemental, Adjunct >, 
+                SucceedSafely< Natural, Elemental >, 
                 Equate, 
                 SafeReadIncrementSingleScale< Natural, Elemental >
             >,
             DiscomposeSelection< 
                 Natural, 
                 Elemental, 
-                Succeed< Natural, Elemental, true >, 
+                SucceedSafely< Natural, Elemental >, 
                 Equate, 
                 SafeReadIncrementSingleScale< Natural, Elemental >
             >,
@@ -836,22 +864,22 @@ namespace junction {
                 DoublyLinked< Elemental >, 
                 Natural, 
                 Elemental, 
-                Proceed< Natural, Elemental, Adjunct, true >, 
+                Proceed< Natural, Elemental, Adjunct >, 
                 Equate, 
                 SafeReadIncrementDoubleScale< Natural, Elemental > 
             >,
             RecomposeSelection< 
                 Natural, 
                 Elemental, 
-                Proceed< Natural, Elemental, Adjunct, true >, 
-                Succeed< Natural, Elemental, true >, 
+                Proceed< Natural, Elemental, Adjunct >, 
+                SucceedSafely< Natural, Elemental >, 
                 Equate, 
                 SafeReadIncrementDoubleScale< Natural, Elemental >
             >,
             DiscomposeSelection< 
                 Natural, 
                 Elemental, 
-                Succeed< Natural, Elemental, true >, 
+                SucceedSafely< Natural, Elemental >, 
                 Equate, 
                 SafeReadIncrementDoubleScale< Natural, Elemental >
             >,
@@ -885,7 +913,7 @@ namespace junction {
                 RelativeNatural, 
                 Natural, 
                 Elemental, 
-                Proceed< Natural, Elemental, Adjunct, false >,
+                Proceed< Natural, Elemental, Adjunct >,
                 Equate
             >,
             DifferentiateSelections< 
@@ -898,7 +926,7 @@ namespace junction {
                 RelativeNatural, 
                 Natural, 
                 Elemental, 
-                Proceed< Natural, Elemental, Adjunct, false >, 
+                Proceed< Natural, Elemental, Adjunct >, 
                 Equate
             >,
             IntersectSelections< 
@@ -911,7 +939,7 @@ namespace junction {
                 RelativeNatural, 
                 Natural, 
                 Elemental, 
-                Proceed< Natural, Elemental, Adjunct, false >, 
+                Proceed< Natural, Elemental, Adjunct >, 
                 Equate
             >,
             UniteSelections< 
@@ -924,7 +952,7 @@ namespace junction {
                 RelativeNatural, 
                 Natural, 
                 Elemental, 
-                Proceed< Natural, Elemental, Adjunct, false >, 
+                Proceed< Natural, Elemental, Adjunct >, 
                 Equate
             >
         };
@@ -955,7 +983,7 @@ namespace junction {
                 RelativeNatural, 
                 Natural, 
                 Elemental, 
-                Proceed< Natural, Elemental, Adjunct, false >, 
+                Proceed< Natural, Elemental, Adjunct >, 
                 Equate
             >,
             DifferentiateSelections< 
@@ -968,7 +996,7 @@ namespace junction {
                 RelativeNatural, 
                 Natural, 
                 Elemental, 
-                Proceed< Natural, Elemental, Adjunct, false >, 
+                Proceed< Natural, Elemental, Adjunct >, 
                 Equate
             >,
             IntersectSelections< 
@@ -981,7 +1009,7 @@ namespace junction {
                 RelativeNatural, 
                 Natural, 
                 Elemental, 
-                Proceed< Natural, Elemental, Adjunct, false >, 
+                Proceed< Natural, Elemental, Adjunct >, 
                 Equate
             >,
             UniteSelections< 
@@ -994,7 +1022,7 @@ namespace junction {
                 RelativeNatural, 
                 Natural, 
                 Elemental, 
-                Proceed< Natural, Elemental, Adjunct, false >, 
+                Proceed< Natural, Elemental, Adjunct >, 
                 Equate
             >
         };
@@ -1025,7 +1053,7 @@ namespace junction {
                 RelativeNatural, 
                 Natural, 
                 Elemental, 
-                Proceed< Natural, Elemental, Adjunct, true >, 
+                Proceed< Natural, Elemental, Adjunct >, 
                 Equate
             >,
             DifferentiateSelections< 
@@ -1038,7 +1066,7 @@ namespace junction {
                 RelativeNatural, 
                 Natural, 
                 Elemental, 
-                Proceed< Natural, Elemental, Adjunct, true >, 
+                Proceed< Natural, Elemental, Adjunct >, 
                 Equate
             >,
             IntersectSelections< 
@@ -1051,7 +1079,7 @@ namespace junction {
                 RelativeNatural, 
                 Natural, 
                 Elemental, 
-                Proceed< Natural, Elemental, Adjunct, true >, 
+                Proceed< Natural, Elemental, Adjunct >, 
                 Equate
             >,
             UniteSelections< 
@@ -1064,7 +1092,7 @@ namespace junction {
                 RelativeNatural, 
                 Natural, 
                 Elemental, 
-                Proceed< Natural, Elemental, Adjunct, true >, 
+                Proceed< Natural, Elemental, Adjunct >, 
                 Equate
             >
         };
@@ -1095,7 +1123,7 @@ namespace junction {
                 RelativeNatural, 
                 Natural, 
                 Elemental, 
-                Proceed< Natural, Elemental, Adjunct, true >, 
+                Proceed< Natural, Elemental, Adjunct >, 
                 Equate
             >,
             DifferentiateSelections< 
@@ -1108,7 +1136,7 @@ namespace junction {
                 RelativeNatural, 
                 Natural, 
                 Elemental, 
-                Proceed< Natural, Elemental, Adjunct, true >, 
+                Proceed< Natural, Elemental, Adjunct >, 
                 Equate
             >,
             IntersectSelections< 
@@ -1121,7 +1149,7 @@ namespace junction {
                 RelativeNatural, 
                 Natural, 
                 Elemental, 
-                Proceed< Natural, Elemental, Adjunct, true >, 
+                Proceed< Natural, Elemental, Adjunct >, 
                 Equate
             >,
             UniteSelections< 
@@ -1134,7 +1162,7 @@ namespace junction {
                 RelativeNatural, 
                 Natural, 
                 Elemental, 
-                Proceed< Natural, Elemental, Adjunct, true >, 
+                Proceed< Natural, Elemental, Adjunct >, 
                 Equate
             >
         };
@@ -1169,7 +1197,7 @@ namespace junction {
                 Natural, 
                 Natural, 
                 Elemental, 
-                Proceed< Natural, Elemental, false, Adjunct > 
+                Proceed< Natural, Elemental, Adjunct > 
             >,
             EquateSelections< 
                 SinglyJunctive< Natural, Elemental >, 
@@ -1214,7 +1242,7 @@ namespace junction {
                 Natural, 
                 Natural, 
                 Elemental, 
-                Proceed< Natural, Elemental, Adjunct, false > 
+                Proceed< Natural, Elemental, Adjunct > 
             >,
             EquateSelections< 
                 DoublyJunctive< Natural, Elemental >, 
@@ -1259,7 +1287,7 @@ namespace junction {
                 Natural, 
                 Natural, 
                 Elemental, 
-                Proceed< Natural, Elemental, Adjunct, true > 
+                Proceed< Natural, Elemental, Adjunct > 
             >,
             EquateSelections< 
                 SinglyJunctive< Natural, Elemental >, 
@@ -1304,7 +1332,7 @@ namespace junction {
                 Natural, 
                 Natural, 
                 Elemental, 
-                Proceed< Natural, Elemental, Adjunct, true > 
+                Proceed< Natural, Elemental, Adjunct > 
             >,
             EquateSelections< 
                 DoublyJunctive< Natural, Elemental >, 

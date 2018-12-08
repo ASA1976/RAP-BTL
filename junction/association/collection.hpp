@@ -28,9 +28,12 @@ namespace junction {
             using ::junction::consecution::Consequent;
             using ::junction::consecution::Concessive;
             using ::junction::consecution::Precede;
+            using ::junction::consecution::PrecedeSafely;
             using ::junction::consecution::Cede;
+            using ::junction::consecution::CedeSafely;
             using ::junction::consecution::Proceed;
             using ::junction::consecution::Concede;
+            using ::junction::consecution::ConcedeSafely;
 
             template <
                 typename Natural,
@@ -291,11 +294,10 @@ namespace junction {
                 result = Adjunct.proclaim( map, replacement );
                 if (!result)
                     return false;
-                if (original_position.at != GetFirst( map )) {
+                if (original_position.at != map.first) {
                     Scale.begin( map, previous, 0 );
                     while (GetNext( previous.at ) != original_position)
                         previous.at = GetNext( previous.at );
-                    // TODO:  CONSIDER SAFETY FOR ABOVE
                     SetNext( previous.at, GetNext( original_position.at ) );
                     if (!GetNext( previous.at ))
                         map.last = previous.at;
@@ -310,11 +312,119 @@ namespace junction {
                     if (!GetNext( result ))
                         map.last = result;
                 } else {
-                    if (replacement_position != GetFirst( map )) {
+                    if (replacement_position != map.first) {
                         Scale.begin( map, previous, 0 );
                         while (GetNext( previous.at ) != replacement_position)
                             previous.at = GetNext( previous.at );
-                        // TODO:  CONSIDER SAFETY FOR ABOVE
+                        SetNext( previous.at, result );
+                    } else {
+                        map.first = result;
+                    }
+                    SetNext( result, replacement_position.at );
+                }
+                return true;
+            }
+
+            template <
+                typename Natural,
+                typename Correlative,
+                typename Evaluative,
+                Referential< Assortive< Correlative > >
+                    Equate,
+                Referential< Assortive< Correlative > >
+                    Order,
+                Referential< const Scalar< const AssociativelySingleJunctive< Natural, Correlative, Evaluative >, AssociativelySinglePositional< Correlative, Evaluative >, Natural, const Correlative > >
+                    Scale,
+                Referential< const AssociativelySingleAdjunctive< Natural, Correlative, Evaluative > >
+                    Adjunct
+            >
+            static inline bool
+            ReassociateSafely(
+                Referential< AssociativelySingleJunctive< Natural, Correlative, Evaluative > >
+                    map,
+                Referential< const Correlative >
+                    original,
+                Referential< const Correlative >
+                    replacement
+            ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
+                using namespace ::std;
+                static_assert(
+                    is_integral< Natural >::value && is_unsigned< Natural >::value,
+                    "Natural:  Unsigned integer type required"
+                );
+#endif
+                static auto&
+					Search = SearchScalarBisection< 
+                        AssociativelySingleJunctive< Natural, Correlative, Evaluative >, 
+                        AssociativelySinglePositional< Correlative, Evaluative >, 
+                        Natural, 
+                        Correlative, 
+                        Equate,
+                        Order,
+                        Scale
+                    >;
+                AssociativelySinglePositional< Correlative, Evaluative >
+                    original_position,
+                    replacement_position,
+                    previous;
+                Locational< AssociativelySingleNodal< Correlative, Evaluative > >
+                    result;
+                Natural
+                    extent;
+                if (!map.first)
+                    return false;
+                extent = Account( map ) - 1;
+                Scale.begin( map, original_position, 0 );
+                if (!Search( map, original, original_position, extent ))
+                    return false;
+                Scale.begin( map, replacement_position, 0 );
+                if (Search( map, replacement, replacement_position, extent ))
+                    return false;
+                if (original_position.at != map.first) {
+                    Scale.begin( map, previous, 0 );
+                    if (!previous.at)
+                        throw map;
+                    while (GetNext( previous.at ) != original_position) {
+                        previous.at = GetNext( previous.at );
+                        if (!previous.at)
+                            throw map;
+                    }
+                    result = Adjunct.proclaim( map, replacement );
+                    if (!result)
+                        return false;
+                    SetNext( previous.at, GetNext( original_position.at ) );
+                    if (!GetNext( previous.at ))
+                        map.last = previous.at;
+                } else {
+                    result = Adjunct.proclaim( map, replacement );
+                    if (!result)
+                        return false;
+                    map.first = GetNext( original_position.at );
+                }
+                SetNext( original_position.at, map.unused );
+                map.unused = original_position.at;
+                if (Order( Scale.go( map, replacement_position ).to, replacement )) {
+                    SetNext( result, GetNext( replacement_position.at ) );
+                    SetNext( replacement_position.at, result );
+                    if (!GetNext( result ))
+                        map.last = result;
+                } else {
+                    if (replacement_position != map.first) {
+                        Scale.begin( map, previous, 0 );
+                        if (!previous.at) {
+                            SetNext( result, map.unused );
+                            map.unused = result;
+                            throw map;
+                        }
+                        while (GetNext( previous.at ) != replacement_position) {
+                            previous.at = GetNext( previous.at );
+                            if (!previous.at) {
+                                SetNext( result, map.unused );
+                                map.unused = result;
+                                throw map;
+                            }
+                        }
                         SetNext( previous.at, result );
                     } else {
                         map.first = result;
@@ -511,6 +621,8 @@ namespace junction {
                 return Concede( map, position, 1 );
             }
 
+            // This function template throws an exception if the relator (key)
+            // does not exist in the map even with Safety set to false.
             template <
                 typename Natural,
                 typename Correlative,
@@ -556,6 +668,8 @@ namespace junction {
                 return Deter( position.at->element.value );
             }
 
+            // This function template throws an exception if the relator (key)
+            // does not exist in the map even with Safety set to false.
             template <
                 typename Natural,
                 typename Correlative,
@@ -601,6 +715,8 @@ namespace junction {
                 return Deter( position.at->element.value );
             }
 
+            // This function template throws an exception if the relator (key)
+            // does not exist in the map even with Safety set to false.
             template <
                 typename Natural,
                 typename Correlative,
@@ -638,6 +754,8 @@ namespace junction {
                 return Confer( position.at->element.value );
             }
 
+            // This function template throws an exception if the relator (key)
+            // does not exist in the map even with Safety set to false.
             template <
                 typename Natural,
                 typename Correlative,
@@ -751,9 +869,9 @@ namespace junction {
                 Instantiate< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, Adjunct >,
                 Account< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative > >,
                 Correspond< Natural, Correlative, Evaluative, Equate, Order, ReadRelatorIncrementSingleScale< Natural, Correlative, Evaluative > >,
-                Associate< Natural, Correlative, Evaluative, Precede< Natural, Complementary< Correlative, Evaluative >, Adjunct, false >, Cede< Natural, Complementary< Correlative, Evaluative >, Adjunct, false >, Proceed< Natural, Complementary< Correlative, Evaluative >, Adjunct, false >, Equate, Order, ReadRelatorIncrementSingleScale< Natural, Correlative, Evaluative > >,
+                Associate< Natural, Correlative, Evaluative, Precede< Natural, Complementary< Correlative, Evaluative >, Adjunct >, Cede< Natural, Complementary< Correlative, Evaluative >, Adjunct >, Proceed< Natural, Complementary< Correlative, Evaluative >, Adjunct >, Equate, Order, ReadRelatorIncrementSingleScale< Natural, Correlative, Evaluative > >,
                 Reassociate< Natural, Correlative, Evaluative, Equate, Order, ReadRelatorIncrementSingleScale< Natural, Correlative, Evaluative >, Adjunct >,
-                Disassociate< Natural, Correlative, Evaluative, Concede< Natural, Complementary< Correlative, Evaluative >, false >, Equate, Order, ReadRelatorIncrementSingleScale< Natural, Correlative, Evaluative > >,
+                Disassociate< Natural, Correlative, Evaluative, Concede< Natural, Complementary< Correlative, Evaluative > >, Equate, Order, ReadRelatorIncrementSingleScale< Natural, Correlative, Evaluative > >,
                 RemoveAll< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative > >,
                 DeleteOneNode< Natural, Complementary< Correlative, Evaluative >, Adjunct >
             };
@@ -774,9 +892,9 @@ namespace junction {
                 Instantiate< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, Adjunct >,
                 Account< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative > >,
                 Correspond< Natural, Correlative, Evaluative, Equate, Order, ReadRelatorDoubleLiner< Natural, Correlative, Evaluative > >,
-                Associate< Natural, Correlative, Evaluative, Precede< Natural, Complementary< Correlative, Evaluative >, Adjunct, false >, Cede< Natural, Complementary< Correlative, Evaluative >, Adjunct, false >, Proceed< Natural, Complementary< Correlative, Evaluative >, Adjunct, false >, Equate, Order, ReadRelatorDoubleLiner< Natural, Correlative, Evaluative > >,
+                Associate< Natural, Correlative, Evaluative, Precede< Natural, Complementary< Correlative, Evaluative >, Adjunct >, Cede< Natural, Complementary< Correlative, Evaluative >, Adjunct >, Proceed< Natural, Complementary< Correlative, Evaluative >, Adjunct >, Equate, Order, ReadRelatorDoubleLiner< Natural, Correlative, Evaluative > >,
                 Reassociate< Natural, Correlative, Evaluative, Equate, Order, ReadRelatorDoubleLiner< Natural, Correlative, Evaluative >, Adjunct >,
-                Disassociate< Natural, Correlative, Evaluative, Concede< Natural, Complementary< Correlative, Evaluative >, false >, Equate, Order, ReadRelatorDoubleLiner< Natural, Correlative, Evaluative > >,
+                Disassociate< Natural, Correlative, Evaluative, Concede< Natural, Complementary< Correlative, Evaluative > >, Equate, Order, ReadRelatorDoubleLiner< Natural, Correlative, Evaluative > >,
                 RemoveAll< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative > >,
                 DeleteOneNode< Natural, Complementary< Correlative, Evaluative >, Adjunct >
             };
@@ -797,9 +915,9 @@ namespace junction {
                 Instantiate< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, Adjunct >,
                 Account< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative > >,
                 Correspond< Natural, Correlative, Evaluative, Equate, Order, SafeReadRelatorIncrementSingleScale< Natural, Correlative, Evaluative > >,
-                Associate< Natural, Correlative, Evaluative, Precede< Natural, Complementary< Correlative, Evaluative >, Adjunct, true >, Cede< Natural, Complementary< Correlative, Evaluative >, Adjunct, true >, Proceed< Natural, Complementary< Correlative, Evaluative >, Adjunct, true >, Equate, Order, SafeReadRelatorIncrementSingleScale< Natural, Correlative, Evaluative > >,
-                Reassociate< Natural, Correlative, Evaluative, Equate, Order, SafeReadRelatorIncrementSingleScale< Natural, Correlative, Evaluative >, Adjunct >,
-                Disassociate< Natural, Correlative, Evaluative, Concede< Natural, Complementary< Correlative, Evaluative >, true >, Equate, Order, SafeReadRelatorIncrementSingleScale< Natural, Correlative, Evaluative > >,
+                Associate< Natural, Correlative, Evaluative, PrecedeSafely< Natural, Complementary< Correlative, Evaluative >, Adjunct >, CedeSafely< Natural, Complementary< Correlative, Evaluative >, Adjunct >, Proceed< Natural, Complementary< Correlative, Evaluative >, Adjunct >, Equate, Order, SafeReadRelatorIncrementSingleScale< Natural, Correlative, Evaluative > >,
+                ReassociateSafely< Natural, Correlative, Evaluative, Equate, Order, SafeReadRelatorIncrementSingleScale< Natural, Correlative, Evaluative >, Adjunct >,
+                Disassociate< Natural, Correlative, Evaluative, ConcedeSafely< Natural, Complementary< Correlative, Evaluative > >, Equate, Order, SafeReadRelatorIncrementSingleScale< Natural, Correlative, Evaluative > >,
                 RemoveAll< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative > >,
                 DeleteOneNode< Natural, Complementary< Correlative, Evaluative >, Adjunct >
             };
@@ -820,9 +938,9 @@ namespace junction {
                 Instantiate< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, Adjunct >,
                 Account< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative > >,
                 Correspond< Natural, Correlative, Evaluative, Equate, Order, SafeReadRelatorDoubleLiner< Natural, Correlative, Evaluative > >,
-                Associate< Natural, Correlative, Evaluative, Precede< Natural, Complementary< Correlative, Evaluative >, Adjunct, true >, Cede< Natural, Complementary< Correlative, Evaluative >, Adjunct, true >, Proceed< Natural, Complementary< Correlative, Evaluative >, Adjunct, true >, Equate, Order, SafeReadRelatorDoubleLiner< Natural, Correlative, Evaluative > >,
+                Associate< Natural, Correlative, Evaluative, PrecedeSafely< Natural, Complementary< Correlative, Evaluative >, Adjunct >, CedeSafely< Natural, Complementary< Correlative, Evaluative >, Adjunct >, Proceed< Natural, Complementary< Correlative, Evaluative >, Adjunct >, Equate, Order, SafeReadRelatorDoubleLiner< Natural, Correlative, Evaluative > >,
                 Reassociate< Natural, Correlative, Evaluative, Equate, Order, SafeReadRelatorDoubleLiner< Natural, Correlative, Evaluative >, Adjunct >,
-                Disassociate< Natural, Correlative, Evaluative, Concede< Natural, Complementary< Correlative, Evaluative >, true >, Equate, Order, SafeReadRelatorDoubleLiner< Natural, Correlative, Evaluative > >,
+                Disassociate< Natural, Correlative, Evaluative, ConcedeSafely< Natural, Complementary< Correlative, Evaluative > >, Equate, Order, SafeReadRelatorDoubleLiner< Natural, Correlative, Evaluative > >,
                 RemoveAll< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative > >,
                 DeleteOneNode< Natural, Complementary< Correlative, Evaluative >, Adjunct >
             };
