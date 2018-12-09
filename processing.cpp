@@ -76,8 +76,13 @@ RunFunction(
         identifier
 ) {
     using Specific = const Locational< const FunctionSituational >;
+    const FunctionSituational
+        function = Refer( static_cast< Specific >(locality) ).to;
     printf( "RunFunction( " );
-    Refer( static_cast< Specific >(locality) ).to();
+    if (function)
+        function();
+    else
+        printf( "null" );
     printf( ", %u )\n", identifier );
 }
 
