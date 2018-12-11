@@ -16,7 +16,7 @@ using namespace ::procession;
 using FunctionDemonstrative = void( void );
 using FunctionSituational = Locational< FunctionDemonstrative >;
 
-const unsigned
+constexpr unsigned
 MaximumEvents = 127;
 
 using EventSchedular = Contractional< unsigned, MaximumEvents, Contextual< unsigned > >;
@@ -24,8 +24,7 @@ using EventSchedular = Contractional< unsigned, MaximumEvents, Contextual< unsig
 template <
     typename PrintStringTypical,
     typename PrintNaturalTypical,
-    typename RunFunctionTypical,
-    typename ProcessEventTypical
+    typename RunFunctionTypical
 >
 struct Coordinate {
 
@@ -38,13 +37,13 @@ struct Coordinate {
     RunFunctionTypical
         schedule_run_function;
 
-    ProcessEventTypical
-        process_event;
-
 };
 
 constexpr Tractile< EventSchedular, unsigned, unsigned >
 EventContractor = Contractor< unsigned, MaximumEvents, Contextual< unsigned > >;
+
+auto&
+EventVisitor = WriteIncrementDirection< unsigned, MaximumEvents, Contextual< unsigned > >;
 
 static void
 PrintString(
@@ -115,24 +114,18 @@ PrepareCoordinator(
         schedule
 ) {
     static auto&
-        EventVisitor = WriteIncrementDirection< unsigned, MaximumEvents, Contextual< unsigned > >;
-    static auto&
         PreparePrintString = PrepareScheduleNullRefused< EventSchedular, unsigned, unsigned, const char, EventContractor, unsigned >;
     static auto&
         PreparePrintNatural = PrepareScheduleNullRefused< EventSchedular, unsigned, unsigned, const unsigned, EventContractor, unsigned >;
     static auto&
         PrepareRunFunction = PrepareScheduleNullRefused< EventSchedular, unsigned, unsigned, const FunctionSituational, EventContractor, unsigned >;
-    static auto&
-        PrepareProcessEvent = PrepareProcessOneEvent< EventSchedular, unsigned, unsigned, EventContractor, unsigned >;
     auto
         print_string = PreparePrintString( EventVisitor, schedule, PrintString );
     auto
         print_natural = PreparePrintNatural( EventVisitor, schedule, PrintNatural );
     auto
         run_function = PrepareRunFunction( EventVisitor, schedule, RunFunction );
-    auto
-        process_event = PrepareProcessEvent( EventVisitor, schedule );
-    return InitializeCoordinator( print_string, print_natural, run_function, process_event );
+    return InitializeCoordinator( print_string, print_natural, run_function );
 }
 
 template <
@@ -158,7 +151,10 @@ Demonstrate(
     coordinator.schedule_print_string( GoodbyeLocality );
 }
 
-int main() {
+int 
+main() {
+    static auto&
+        ProcessEvent = ProcessOneEvent< EventSchedular, unsigned, unsigned, EventContractor, unsigned >;
     EventSchedular
         event_queue;
     unsigned
@@ -169,7 +165,7 @@ int main() {
     Demonstrate( coordinator );
     puts( "Processing event(s):" );
     puts( "--------------------" );
-    for (count = 0; coordinator.process_event( count ); count++);
+    for (count = 0; ProcessEvent( EventVisitor, event_queue, count ); count++);
     puts( "--------------------" );
     printf( "Processed %u event(s).\n", count );
 }

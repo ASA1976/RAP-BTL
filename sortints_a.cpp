@@ -117,8 +117,8 @@ main(
 				fclose(input);
 				return Erroneous::IntegerCount;
 			}
-			if (!SearchIntegers(integers, value, position, before, after)) {
-				if (IsLesser(integers[position], value)) {
+			if (!SearchIntegers( integers, value, position, before, after )) {
+				if (IsLesser( integers[position], value )) {
 					if (after > 0) {
 						memmove( integers + position + 2, integers + position + 1, after * sizeof( int ) );
 					}
@@ -134,7 +134,7 @@ main(
 			}
 		}
 	}
-	OutputIntegers( static_cast< const int* >(integers), Increment, count, output );
+	OutputIntegers( static_cast< Locational< const int > >(integers), Increment, count, output );
 	if (output != stdout)
 		fclose(output);
 	fclose(input);
