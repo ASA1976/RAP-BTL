@@ -174,6 +174,10 @@ namespace procession {
             "Subjective:  Function type not allowed, use pointer to function type instead"
         );
 #endif
+        static_assert(
+            sizeof(Locational< void >) == sizeof(Locational< Subjective >),
+            "Subjective:  Must be data type"
+        );
         Positional
             position;
         if (!Contractor.protract( schedule, position, 1 ))
@@ -309,6 +313,10 @@ namespace procession {
             "Subjective:  Function type not allowed, use pointer to function type instead"
         );
 #endif
+        static_assert(
+            sizeof(Locational< void >) == sizeof(Locational< Subjective >),
+            "Subjective:  Must be data type"
+        );
         static auto&
             Schedule = ScheduleNullAccepted< Schedular, Positional, Natural, Subjective, Contractor, Parametric... >;
         if (locality == 0)

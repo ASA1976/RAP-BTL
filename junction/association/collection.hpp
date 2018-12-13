@@ -622,7 +622,7 @@ namespace junction {
             }
 
             // This function template throws an exception if the relator (key)
-            // does not exist in the map even with Safety set to false.
+            // does not exist in the map.
             template <
                 typename Natural,
                 typename Correlative,
@@ -665,11 +665,11 @@ namespace junction {
                 Scale.begin( map, position, 0 );
                 if (!Search( map, relator, position, Account( map ) - 1 ))
                     throw relator;
-                return Deter( position.at->element.value );
+                return GoReadElement( map, position );
             }
 
             // This function template throws an exception if the relator (key)
-            // does not exist in the map even with Safety set to false.
+            // does not exist in the map.
             template <
                 typename Natural,
                 typename Correlative,
@@ -712,11 +712,11 @@ namespace junction {
                 Liner.increment.begin( map, position, 0 );
                 if (!Search( map, relator, position, 0, Account( map ) - 1 ))
                     throw relator;
-                return Deter( position.at->element.value );
+                return GoReadElement( map, position );
             }
 
             // This function template throws an exception if the relator (key)
-            // does not exist in the map even with Safety set to false.
+            // does not exist in the map.
             template <
                 typename Natural,
                 typename Correlative,
@@ -751,11 +751,11 @@ namespace junction {
                 Scale.begin( map, position, 0 );
                 if (!Search( map, relator, position, Account( map ) - 1 ))
                     throw relator;
-                return Confer( position.at->element.value );
+                return GoWriteElement( map, position );
             }
 
             // This function template throws an exception if the relator (key)
-            // does not exist in the map even with Safety set to false.
+            // does not exist in the map.
             template <
                 typename Natural,
                 typename Correlative,
@@ -790,7 +790,7 @@ namespace junction {
                 Liner.increment.begin( map, position, 0 );
                 if (!Search( map, relator, position, 0, Account( map ) - 1 ))
                     throw relator;
-                return Confer( position.at->element.value );
+                return GoWriteElement( map, position );
             }
 
             template <

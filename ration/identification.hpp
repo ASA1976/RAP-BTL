@@ -26,7 +26,7 @@ namespace ration {
 
         /**
          * @brief 
-         *     Identifier pool.
+         *     Identifier pool conformity.
          * @details  
          *     Conformation Template
          *     ---------------------

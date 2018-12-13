@@ -42,8 +42,24 @@ struct Coordinate {
 constexpr Tractile< EventSchedular, unsigned, unsigned >
 EventContractor = Contractor< unsigned, MaximumEvents, Contextual< unsigned > >;
 
-auto&
+constexpr auto&
 EventVisitor = WriteIncrementDirection< unsigned, MaximumEvents, Contextual< unsigned > >;
+
+constexpr auto&
+PrepareProcessEvent = PrepareProcessOneEvent< EventSchedular, unsigned, unsigned, EventContractor, unsigned >;
+
+template <
+    typename ...LambdaTypical
+>
+static inline Coordinate< LambdaTypical... >
+InitializeCoordinator(
+    LambdaTypical...
+        lambdas
+) {
+    const Coordinate< LambdaTypical... >
+        coordinator = {lambdas...};
+    return coordinator;
+}
 
 static void
 PrintString(
@@ -85,29 +101,6 @@ RunFunction(
     printf( ", %u )\n", identifier );
 }
 
-static void
-Function1( void ) {
-    printf( "Function1" );
-}
-
-static void
-Function2( void ) {
-    printf( "Function2" );
-}
-
-template <
-    typename ...LambdaTypical
->
-static inline Coordinate< LambdaTypical... >
-InitializeCoordinator(
-    LambdaTypical...
-        lambdas
-) {
-    const Coordinate< LambdaTypical... >
-        coordinator = {lambdas...};
-    return coordinator;
-}
-
 static inline auto
 PrepareCoordinator(
     Referential< EventSchedular >
@@ -128,11 +121,21 @@ PrepareCoordinator(
     return InitializeCoordinator( print_string, print_natural, run_function );
 }
 
+static void
+Function1( void ) {
+    printf( "Function1()" );
+}
+
+static void
+Function2( void ) {
+    printf( "Function2()" );
+}
+
 template <
     typename ...LambdaTypical
 >
 static inline void
-Demonstrate(
+ScheduleEvents(
     Referential< const Coordinate< LambdaTypical... > >
         coordinator
 ) {
@@ -141,31 +144,46 @@ Demonstrate(
         GoodbyeLocality = "Goodbye";
     static const FunctionSituational
         FirstObjective = Function1,
-        SecondObjective = Function2;
+        SecondObjective = Function2,
+        NullObjective = 0;
     static const unsigned
         QueueSize = sizeof(EventSchedular);
+    printf( "Scheduling event(s), " );
     coordinator.schedule_print_string( HelloLocality );
     coordinator.schedule_run_function( Locate( FirstObjective ).at );
     coordinator.schedule_print_natural( Locate( QueueSize ).at );
     coordinator.schedule_run_function( Locate( SecondObjective ).at );
     coordinator.schedule_print_string( GoodbyeLocality );
+    coordinator.schedule_run_function( Locate( NullObjective ).at );
+    puts( "finished." );
+}
+
+template <
+    typename ProcessEventTypical
+>
+static inline void
+ProcessEvents(
+    Referential< const ProcessEventTypical >
+        process_event
+) {
+    unsigned
+        count;
+    puts( "Processing event(s):" );
+    puts( "--------------------" );
+    for (count = 0; process_event( count ); count++);
+    puts( "--------------------" );
+    printf( "Processed %u event(s).\n", count );
 }
 
 int 
 main() {
-    static auto&
-        ProcessEvent = ProcessOneEvent< EventSchedular, unsigned, unsigned, EventContractor, unsigned >;
     EventSchedular
         event_queue;
-    unsigned
-        count;
     const auto
         coordinator = PrepareCoordinator( event_queue );
+    const auto
+        process_event = PrepareProcessEvent( EventVisitor, event_queue );
     Initialize( event_queue );
-    Demonstrate( coordinator );
-    puts( "Processing event(s):" );
-    puts( "--------------------" );
-    for (count = 0; ProcessEvent( EventVisitor, event_queue, count ); count++);
-    puts( "--------------------" );
-    printf( "Processed %u event(s).\n", count );
+    ScheduleEvents( coordinator );
+    ProcessEvents( process_event );
 }

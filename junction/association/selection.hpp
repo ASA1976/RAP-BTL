@@ -353,7 +353,7 @@ namespace junction {
             }
 
             // This function template throws an exception if the relator (key)
-            // does not exist in the map even with Safety set to false.
+            // does not exist in the map.
             template <
                 typename Connective,
                 typename Natural,
@@ -362,9 +362,7 @@ namespace junction {
                 Referential< Assortive< Correlative > >
                     Equate,
                 Referential< const Scalar< const AssociativelyJunctive< Connective, Natural, Correlative, Evaluative >, AssociativelyPositional< Connective, Correlative, Evaluative >, Natural, const Correlative > >
-                    Scale,
-                const bool
-                    Safety
+                    Scale
             >
             static inline Conferential< const Evaluative >
             RelateReadElement(
@@ -400,7 +398,7 @@ namespace junction {
             }
 
             // This function template throws an exception if the relator (key)
-            // does not exist in the map even with Safety set to false.
+            // does not exist in the map.
             template <
                 typename Connective,
                 typename Natural,
@@ -409,9 +407,7 @@ namespace junction {
                 Referential< Assortive< Correlative > >
                     Equate,
                 Referential< const Scalar< const AssociativelyJunctive< Connective, Natural, Correlative, Evaluative >, AssociativelyPositional< Connective, Correlative, Evaluative >, Natural, const Correlative > >
-                    Scale,
-                const bool
-                    Safety
+                    Scale
             >
             static inline Conferential< Evaluative >
             RelateWriteElement(
@@ -456,7 +452,7 @@ namespace junction {
             constexpr Vectorial< const AssociativelySingleJunctive< Natural, Correlative, Evaluative >, Correlative, const Evaluative >
             RelateReadSingleVector = {
                 Correspond< SingleComplementary< Correlative, Evaluative >, Natural, Correlative, Evaluative, Equate, ReadRelatorIncrementSingleScale< Natural, Correlative, Evaluative > >,
-                RelateReadElement< SingleComplementary< Correlative, Evaluative >, Natural, Correlative, Evaluative, Equate, ReadRelatorIncrementSingleScale< Natural, Correlative, Evaluative >, false >
+                RelateReadElement< SingleComplementary< Correlative, Evaluative >, Natural, Correlative, Evaluative, Equate, ReadRelatorIncrementSingleScale< Natural, Correlative, Evaluative > >
             };
 
             template <
@@ -469,7 +465,7 @@ namespace junction {
             constexpr Vectorial< const AssociativelyDoubleJunctive< Natural, Correlative, Evaluative >, Correlative, const Evaluative >
             RelateReadDoubleVector = {
                 Correspond< DoubleComplementary< Correlative, Evaluative >, Natural, Correlative, Evaluative, Equate, ReadRelatorIncrementDoubleScale< Natural, Correlative, Evaluative > >,
-                RelateReadElement< DoubleComplementary< Correlative, Evaluative >, Natural, Correlative, Evaluative, Equate, ReadRelatorIncrementDoubleScale< Natural, Correlative, Evaluative >, false >
+                RelateReadElement< DoubleComplementary< Correlative, Evaluative >, Natural, Correlative, Evaluative, Equate, ReadRelatorIncrementDoubleScale< Natural, Correlative, Evaluative > >
             };
 
             template <
@@ -482,7 +478,7 @@ namespace junction {
             constexpr Vectorial< const AssociativelySingleJunctive< Natural, Correlative, Evaluative >, Correlative, const Evaluative >
             SafeRelateReadSingleVector = {
                 Correspond< SingleComplementary< Correlative, Evaluative >, Natural, Correlative, Evaluative, Equate, SafeReadRelatorIncrementSingleScale< Natural, Correlative, Evaluative > >,
-                RelateReadElement< SingleComplementary< Correlative, Evaluative >, Natural, Correlative, Evaluative, Equate, SafeReadRelatorIncrementSingleScale< Natural, Correlative, Evaluative >, true >
+                RelateReadElement< SingleComplementary< Correlative, Evaluative >, Natural, Correlative, Evaluative, Equate, SafeReadRelatorIncrementSingleScale< Natural, Correlative, Evaluative > >
             };
 
             template <
@@ -495,7 +491,7 @@ namespace junction {
             constexpr Vectorial< const AssociativelyDoubleJunctive< Natural, Correlative, Evaluative >, Correlative, const Evaluative >
             SafeRelateReadDoubleVector = {
                 Correspond< DoubleComplementary< Correlative, Evaluative >, Natural, Correlative, Evaluative, Equate, SafeReadRelatorIncrementDoubleScale< Natural, Correlative, Evaluative > >,
-                RelateReadElement< DoubleComplementary< Correlative, Evaluative >, Natural, Correlative, Evaluative, Equate, SafeReadRelatorIncrementDoubleScale< Natural, Correlative, Evaluative >, true >
+                RelateReadElement< DoubleComplementary< Correlative, Evaluative >, Natural, Correlative, Evaluative, Equate, SafeReadRelatorIncrementDoubleScale< Natural, Correlative, Evaluative > >
             };
 
             template <
@@ -508,7 +504,7 @@ namespace junction {
             constexpr Vectorial< AssociativelySingleJunctive< Natural, Correlative, Evaluative >, Correlative, Evaluative >
             RelateWriteSingleVector = {
                 Correspond< SingleComplementary< Correlative, Evaluative >, Natural, Correlative, Evaluative, Equate, ReadRelatorIncrementSingleScale< Natural, Correlative, Evaluative > >,
-                RelateWriteElement< SingleComplementary< Correlative, Evaluative >, Natural, Correlative, Evaluative, Equate, ReadRelatorIncrementSingleScale< Natural, Correlative, Evaluative >, false >
+                RelateWriteElement< SingleComplementary< Correlative, Evaluative >, Natural, Correlative, Evaluative, Equate, ReadRelatorIncrementSingleScale< Natural, Correlative, Evaluative > >
             };
 
             template <
@@ -521,7 +517,7 @@ namespace junction {
             constexpr Vectorial< AssociativelyDoubleJunctive< Natural, Correlative, Evaluative >, Correlative, Evaluative >
             RelateWriteDoubleVector = {
                 Correspond< DoubleComplementary< Correlative, Evaluative >, Natural, Correlative, Evaluative, Equate, ReadRelatorIncrementSingleScale< Natural, Correlative, Evaluative > >,
-                RelateWriteElement< DoubleComplementary< Correlative, Evaluative >, Natural, Correlative, Evaluative, Equate, ReadRelatorIncrementSingleScale< Natural, Correlative, Evaluative >, false >
+                RelateWriteElement< DoubleComplementary< Correlative, Evaluative >, Natural, Correlative, Evaluative, Equate, ReadRelatorIncrementSingleScale< Natural, Correlative, Evaluative > >
             };
 
             template <
@@ -534,7 +530,7 @@ namespace junction {
             constexpr Vectorial< AssociativelySingleJunctive< Natural, Correlative, Evaluative >, Correlative, Evaluative >
             SafeRelateWriteSingleVector = {
                 Correspond< SingleComplementary< Correlative, Evaluative >, Natural, Correlative, Evaluative, Equate, SafeReadRelatorIncrementSingleScale< Natural, Correlative, Evaluative > >,
-                RelateWriteElement< SingleComplementary< Correlative, Evaluative >, Natural, Correlative, Evaluative, Equate, SafeReadRelatorIncrementSingleScale< Natural, Correlative, Evaluative >, true >
+                RelateWriteElement< SingleComplementary< Correlative, Evaluative >, Natural, Correlative, Evaluative, Equate, SafeReadRelatorIncrementSingleScale< Natural, Correlative, Evaluative > >
             };
 
             template <
@@ -547,7 +543,7 @@ namespace junction {
             constexpr Vectorial< AssociativelyDoubleJunctive< Natural, Correlative, Evaluative >, Correlative, Evaluative >
             SafeRelateWriteDoubleVector = {
                 Correspond< DoubleComplementary< Correlative, Evaluative >, Natural, Correlative, Evaluative, Equate, SafeReadRelatorIncrementSingleScale< Natural, Correlative, Evaluative > >,
-                RelateWriteElement< DoubleComplementary< Correlative, Evaluative >, Natural, Correlative, Evaluative, Equate, SafeReadRelatorIncrementSingleScale< Natural, Correlative, Evaluative >, true >
+                RelateWriteElement< DoubleComplementary< Correlative, Evaluative >, Natural, Correlative, Evaluative, Equate, SafeReadRelatorIncrementSingleScale< Natural, Correlative, Evaluative > >
             };
 
             template <
