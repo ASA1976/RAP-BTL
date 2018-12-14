@@ -239,15 +239,15 @@ namespace procession {
             function
     ) {
         static auto&
-            ScheduleEvent = ScheduleNullAccepted< Schedular, Positional, Natural, Subjective, Contractor, Parametric... >;
+            Schedule = ScheduleNullAccepted< Schedular, Positional, Natural, Subjective, Contractor, Parametric... >;
         auto 
-            Lambda = [&visitor, &schedule, &function]( 
+            lambda = [&visitor, &schedule, &function]( 
                 const Locational< Subjective > 
                     locality 
             ) {
-                return ScheduleEvent( visitor, schedule, function, locality );
+                return Schedule( visitor, schedule, function, locality );
             };
-        return Lambda;
+        return lambda;
     }
 
     /**
@@ -374,15 +374,15 @@ namespace procession {
             function
     ) {
         static auto&
-            ScheduleEvent = ScheduleNullRefused< Schedular, Positional, Natural, Subjective, Contractor, Parametric... >;
+            Schedule = ScheduleNullRefused< Schedular, Positional, Natural, Subjective, Contractor, Parametric... >;
         auto 
-            Lambda = [&visitor, &schedule, &function]( 
+            lambda = [&visitor, &schedule, &function]( 
                 const Locational< Subjective > 
                     locality 
             ) {
-                return ScheduleEvent( visitor, schedule, function, locality );
+                return Schedule( visitor, schedule, function, locality );
             };
-        return Lambda;
+        return lambda;
     }
 
     /**
@@ -493,15 +493,15 @@ namespace procession {
             schedule
     ) {
         static auto&
-            ProcessEvent = ProcessOneEvent< Schedular, Positional, Natural, Contractor, Parametric... >;
+            Process = ProcessOneEvent< Schedular, Positional, Natural, Contractor, Parametric... >;
         auto 
-            Lambda = [&visitor, &schedule]( 
+            lambda = [&visitor, &schedule]( 
                 Parametric... 
                     arguments 
             ) -> bool {
-                return ProcessEvent( visitor, schedule, arguments... );
+                return Process( visitor, schedule, arguments... );
             };
-        return Lambda;
+        return lambda;
     }
 
 }

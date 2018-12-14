@@ -155,6 +155,9 @@ ScheduleEvents(
     coordinator.schedule_run_function( Locate( SecondObjective ).at );
     coordinator.schedule_print_string( GoodbyeLocality );
     coordinator.schedule_run_function( Locate( NullObjective ).at );
+    coordinator.schedule_print_string( 0 );
+    coordinator.schedule_print_natural( 0 );
+    coordinator.schedule_run_function( 0 );
     puts( "finished." );
 }
 
