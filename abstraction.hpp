@@ -56,11 +56,11 @@ namespace abstraction {
     >
     struct Invocative {
 
-        Locational< Resultant( Locational< const void >, Parametric... ) >
+        const Locational< Abstract< Resultant, const Locational< const void >, Parametric... > >
             interface;
 
-        Locational< const void >
-            procedure;
+        const Locational< const void >
+            objective;
 
     };
 
@@ -85,15 +85,15 @@ namespace abstraction {
     >
     static Resultant
     InvokeProcedure(
-        Locational< const void >
+        const Locational< const void >
             locality,
         Parametric...
             arguments
     ) {
         using Specific = const Locational< const Locational< Procedural > >;
         static_assert(
-            sizeof(Specific) == sizeof(Locational< const void >),
-            "Data type expected (see assertion)"
+            sizeof(Specific) == sizeof(const Locational< const void >),
+            "Specific: Pointer to pointer should be a data type"
         );
         Specific
             objective = static_cast< Specific >(locality);
@@ -128,7 +128,7 @@ namespace abstraction {
                 Parametric... 
                     arguments 
             ) -> Resultant {
-                return invocation.interface( invocation.procedure, arguments... );
+                return invocation.interface( invocation.objective, arguments... );
             };
         return lambda;
     }
@@ -140,7 +140,7 @@ namespace abstraction {
      *     Function Template
      *     -----------------
      *     Creates an invocative instance which can later be used to invoke the 
-     *     procedure specified by locality.
+     *     procedure specified by objective.
      * @tparam Procedural
      *     Procedural (function, lambda or functor) type.
      * @tparam Resultant
@@ -156,16 +156,16 @@ namespace abstraction {
     static inline Invocative< Resultant, Parametric... >
     CreateInvocation(
         Referential< const Locational< Procedural > >
-            locality
+            objective
     ) {
         static_assert(
-            sizeof Locate( locality ).at == sizeof(Locational< const void >),
-            "locality: Data type expected (see assertion)"
+            sizeof Locate( objective ).at == sizeof(Locational< const void >),
+            "objective: Pointer to pointer should be a data type"
         );
-        static const auto&
+        static auto&
             Invoke = InvokeProcedure< Procedural, Resultant, Parametric... >;
         const Invocative< Resultant, Parametric... >
-            invocation = {Locate( Invoke ).at, Locate( locality ).at};
+            invocation = {Locate( Invoke ).at, Locate( objective ).at};
         return invocation;
     }
 
@@ -176,8 +176,8 @@ namespace abstraction {
      *     Function Template
      *     -----------------
      *     Creates an invocative instance which can later be used to invoke the 
-     *     procedure specified by locality.  If the location provided is null, 
-     *     this version will throw the locality argument.
+     *     procedure specified by objective.  If the location provided is null, 
+     *     this version will throw the objective argument.
      * @tparam Procedural
      *     Procedural (function, lambda or functor) type.
      * @tparam Resultant
@@ -193,13 +193,13 @@ namespace abstraction {
     static inline Invocative< Resultant, Parametric... >
     CreateInvocationSafely(
         Referential< const Locational< Procedural > >
-            locality
+            objective
     ) {
         static auto&
             Create = CreateInvocation< Procedural, Resultant, Parametric... >;
-        if (!locality)
-            throw locality;
-        return Create( locality );
+        if (!objective)
+            throw objective;
+        return Create( objective );
     }
 
 }
