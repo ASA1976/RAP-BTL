@@ -171,8 +171,8 @@ namespace junction {
             return true;
         }
 
-    };
+    }
 
-};
+}
 
 #endif
