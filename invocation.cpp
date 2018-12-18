@@ -87,30 +87,28 @@ StaticObjective = Locate( ClassTypical::Static ).at;
 const Methodic< ClassTypical, void, unsigned >
 InstanceObjective = CreateInstanceObjective( &ClassTypical::instance, Object );
 
-const auto
-FunctionCall = PrepareInvocation( CreateInvokeFunction( FunctionObjective ) ),
-LambdaCall = PrepareInvocation( CreateInvokeLambda( LambdaObjective ) ),
-FunctorCall = PrepareInvocation( CreateInvokeFunctor( FunctorObjective ) ),
-StaticCall = PrepareInvocation( CreateInvokeFunction( StaticObjective ) ),
-InstanceCall = PrepareInvocation( CreateInvokeInstance( InstanceObjective ) );
-
-using CallTypical = decltype(FunctionCall);
+const Invocative< void, unsigned >
+InvokeFunction = CreateInvokeFunction( FunctionObjective ),
+InvokeLambda = CreateInvokeLambda( LambdaObjective ),
+InvokeFunctor = CreateInvokeFunctor( FunctorObjective ),
+InvokeStatic = CreateInvokeFunction( StaticObjective ),
+InvokeInstance = CreateInvokeInstance( InstanceObjective );
 
 static inline void
 Demonstrate(
-    Referential< const CallTypical >
-        call
+    Referential< const Invocative< void, unsigned > >
+        invoke
 ) {
     static unsigned 
         count = 0;
-    call( ++count );
+    invoke( ++count );
 }
 
 int 
 main() {
-    Demonstrate( FunctionCall );
-    Demonstrate( LambdaCall );
-    Demonstrate( FunctorCall );
-    Demonstrate( StaticCall );
-    Demonstrate( InstanceCall );
+    Demonstrate( InvokeFunction );
+    Demonstrate( InvokeLambda );
+    Demonstrate( InvokeFunctor );
+    Demonstrate( InvokeStatic );
+    Demonstrate( InvokeInstance );
 }

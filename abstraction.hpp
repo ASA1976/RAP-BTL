@@ -62,6 +62,14 @@ namespace abstraction {
         Locational< const void >
             objective;
 
+        Resultant
+            operator()( 
+                Parametric... 
+                    arguments 
+            ) const {
+                return interface( objective, arguments... );
+            }
+
     };
 
     /**
