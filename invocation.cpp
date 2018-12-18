@@ -10,17 +10,13 @@
 
 using namespace ::abstraction;
 
-struct {
-
-    void operator()(
-        unsigned 
-            value
-    ) {
-        printf( "Functor( %u )\n", value );
-    }
-
+static void
+Function( 
+    unsigned 
+        value 
+) {
+    printf( "Function( %u )\n", value );
 }
-Functor;
 
 auto
 Lambda = []( 
@@ -30,17 +26,51 @@ Lambda = [](
     printf( "Lambda( %u )\n", value );
 };
 
-static void
-Function( 
-    unsigned 
-        value 
-) {
-    printf( "Function( %u )\n", value );
+class ClassTypical {
+
+public:
+
+    void operator()(
+        unsigned 
+            value
+    ) {
+        printf( "Object( %u )\n", value );
+    }
+
+    static void Static(
+        unsigned
+            value
+    ) {
+        printf( "ClassTypical::Static( %u )\n", value );
+    }
+
+    void instance(
+        unsigned
+            value
+    ) {
+        printf( "Object.instance( %u )\n", value );
+    }
+
 }
+Object;
 
 using FunctionTypical = Abstract< void, unsigned >;
 using LambdaTypical = decltype(Lambda);
-using FunctorTypical = decltype(Functor);
+
+auto&
+CreateInvokeFunction = CreateInvokeProcedure< FunctionTypical, void, unsigned >;
+
+auto&
+CreateInvokeLambda = CreateInvokeProcedure< LambdaTypical, void, unsigned >;
+
+auto&
+CreateInvokeFunctor = CreateInvokeProcedure< ClassTypical, void, unsigned >;
+
+auto&
+CreateInvokeInstance = CreateInvokeMethod< ClassTypical, void, unsigned >;
+
+auto&
+CreateInstanceObjective = CreateMethodObjective< ClassTypical, void, unsigned >;
 
 const Locational< FunctionTypical >
 FunctionObjective = Locate( Function ).at;
@@ -48,22 +78,21 @@ FunctionObjective = Locate( Function ).at;
 const Locational< LambdaTypical >
 LambdaObjective = Locate( Lambda ).at;
 
-const Locational< FunctorTypical >
-FunctorObjective = Locate( Functor ).at;
+const Locational< ClassTypical >
+FunctorObjective = Locate( Object ).at;
 
-auto&
-CreateInvokeFunction = CreateInvocation< FunctionTypical, void, unsigned >;
+const Locational< FunctionTypical >
+StaticObjective = Locate( ClassTypical::Static ).at;
 
-auto&
-CreateInvokeLambda = CreateInvocation< LambdaTypical, void, unsigned >;
-
-auto&
-CreateInvokeFunctor = CreateInvocation< FunctorTypical, void, unsigned >;
+const Methodic< ClassTypical, void, unsigned >
+InstanceObjective = CreateInstanceObjective( &ClassTypical::instance, Object );
 
 const auto
 FunctionCall = PrepareInvocation( CreateInvokeFunction( FunctionObjective ) ),
 LambdaCall = PrepareInvocation( CreateInvokeLambda( LambdaObjective ) ),
-FunctorCall = PrepareInvocation( CreateInvokeFunctor( FunctorObjective ) );
+FunctorCall = PrepareInvocation( CreateInvokeFunctor( FunctorObjective ) ),
+StaticCall = PrepareInvocation( CreateInvokeFunction( StaticObjective ) ),
+InstanceCall = PrepareInvocation( CreateInvokeInstance( InstanceObjective ) );
 
 using CallTypical = decltype(FunctionCall);
 
@@ -77,11 +106,11 @@ Demonstrate(
     call( ++count );
 }
 
-int main() {
+int 
+main() {
     Demonstrate( FunctionCall );
     Demonstrate( LambdaCall );
     Demonstrate( FunctorCall );
-    Demonstrate( FunctionCall );
-    Demonstrate( LambdaCall );
-    Demonstrate( FunctorCall );
+    Demonstrate( StaticCall );
+    Demonstrate( InstanceCall );
 }
