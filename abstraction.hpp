@@ -321,11 +321,11 @@ namespace abstraction {
 
     /**
      * @brief 
-     *     Creates an instance method objective.
+     *     Assigns an instance method objective.
      * @details
      *     Function Template
      *     -----------------
-     *     Creates an objective containing the pointers required to invoke an 
+     *     Assigns an objective containing the pointers required to invoke an 
      *     object oriented instance method.
      * @tparam ClassTypical
      *     Object oriented class type.
@@ -340,7 +340,7 @@ namespace abstraction {
         typename ...Parametric
     >
     static inline Methodic< ClassTypical, Resultant, Parametric... >
-    CreateMethodObjective(
+    AssignMethodObjective(
         Resultant
             (ClassTypical::* const method)( Parametric... ),
         Referential< ClassTypical >
@@ -353,11 +353,11 @@ namespace abstraction {
 
     /**
      * @brief 
-     *     Creates an instance method objective safely.
+     *     Assigns an instance method objective safely.
      * @details
      *     Function Template
      *     -----------------
-     *     Creates an objective containing the pointers required to invoke an 
+     *     Assigns an objective containing the pointers required to invoke an 
      *     object oriented instance method.  Throws an exception if method is
      *     null.
      * @tparam ClassTypical
@@ -373,7 +373,7 @@ namespace abstraction {
         typename ...Parametric
     >
     static inline Methodic< ClassTypical, Resultant, Parametric... >
-    CreateMethodObjectiveSafely(
+    AssignMethodObjectiveSafely(
         Resultant
             (ClassTypical::* const method)( Parametric... ),
         Referential< ClassTypical >
@@ -388,11 +388,11 @@ namespace abstraction {
 
     /**
      * @brief 
-     *     Creates a procedural invocation instance.
+     *     Assigns a procedural invocation instance.
      * @details
      *     Function Template
      *     -----------------
-     *     Creates an invocative instance which can later be used to invoke the 
+     *     Assigns an invocative instance which can later be used to invoke the 
      *     procedure specified by objective.
      * @tparam Procedural
      *     Procedural (function, lambda or functor) type.
@@ -407,7 +407,7 @@ namespace abstraction {
         typename ...Parametric
     >
     static inline Invocative< Resultant, Parametric... >
-    CreateInvokeProcedure(
+    AssignInvokeProcedure(
         Referential< const Locational< Procedural > >
             objective
     ) {
@@ -424,11 +424,11 @@ namespace abstraction {
 
     /**
      * @brief 
-     *     Creates a safe procedural invocation instance.
+     *     Assigns a safe procedural invocation instance.
      * @details
      *     Function Template
      *     -----------------
-     *     Creates an invocative instance which can later be used to invoke the 
+     *     Assigns an invocative instance which can later be used to invoke the 
      *     procedure specified by objective.  If the location provided is null, 
      *     this version will throw the objective argument.  The resulting
      *     interface function will throw an exception if it's provided
@@ -446,7 +446,7 @@ namespace abstraction {
         typename ...Parametric
     >
     static inline Invocative< Resultant, Parametric... >
-    CreateInvokeProcedureSafely(
+    AssignInvokeProcedureSafely(
         Referential< const Locational< Procedural > >
             objective
     ) {
@@ -465,11 +465,11 @@ namespace abstraction {
 
     /**
      * @brief 
-     *     Creates a methodic invocation instance.
+     *     Assigns a methodic invocation instance.
      * @details
      *     Function Template
      *     -----------------
-     *     Creates an invocative instance which can later be used to invoke the 
+     *     Assigns an invocative instance which can later be used to invoke the 
      *     method specified by objective.
      * @tparam ClassTypical
      *     Object oriented class type.
@@ -484,7 +484,7 @@ namespace abstraction {
         typename ...Parametric
     >
     static inline Invocative< Resultant, Parametric... >
-    CreateInvokeMethod(
+    AssignInvokeMethod(
         Referential< const Methodic< ClassTypical, Resultant, Parametric... > >
             objective
     ) {
@@ -497,11 +497,11 @@ namespace abstraction {
 
     /**
      * @brief 
-     *     Creates a safe methodic invocation instance.
+     *     Assigns a safe methodic invocation instance.
      * @details
      *     Function Template
      *     -----------------
-     *     Creates an invocative instance which can later be used to invoke the 
+     *     Assigns an invocative instance which can later be used to invoke the 
      *     method specified by objective.  The resulting interface function will
      *     throw an exception if it's provided pointers are null.
      * @tparam ClassTypical
@@ -517,7 +517,7 @@ namespace abstraction {
         typename ...Parametric
     >
     static inline Invocative< Resultant, Parametric... >
-    CreateInvokeMethodSafely(
+    AssignInvokeMethodSafely(
         Referential< const Methodic< ClassTypical, Resultant, Parametric... > >
             objective
     ) {

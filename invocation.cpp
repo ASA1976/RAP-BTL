@@ -58,19 +58,19 @@ using FunctionTypical = Abstract< void, unsigned >;
 using LambdaTypical = decltype(Lambda);
 
 auto&
-CreateInvokeFunction = CreateInvokeProcedure< FunctionTypical, void, unsigned >;
+AssignInvokeFunction = AssignInvokeProcedure< FunctionTypical, void, unsigned >;
 
 auto&
-CreateInvokeLambda = CreateInvokeProcedure< LambdaTypical, void, unsigned >;
+AssignInvokeLambda = AssignInvokeProcedure< LambdaTypical, void, unsigned >;
 
 auto&
-CreateInvokeFunctor = CreateInvokeProcedure< ClassTypical, void, unsigned >;
+AssignInvokeFunctor = AssignInvokeProcedure< ClassTypical, void, unsigned >;
 
 auto&
-CreateInvokeInstance = CreateInvokeMethod< ClassTypical, void, unsigned >;
+AssignInvokeInstance = AssignInvokeMethod< ClassTypical, void, unsigned >;
 
 auto&
-CreateInstanceObjective = CreateMethodObjective< ClassTypical, void, unsigned >;
+AssignInstanceObjective = AssignMethodObjective< ClassTypical, void, unsigned >;
 
 const Locational< FunctionTypical >
 FunctionObjective = Locate( Function ).at;
@@ -85,14 +85,14 @@ const Locational< FunctionTypical >
 StaticObjective = Locate( ClassTypical::Static ).at;
 
 const Methodic< ClassTypical, void, unsigned >
-InstanceObjective = CreateInstanceObjective( &ClassTypical::instance, Object );
+InstanceObjective = AssignInstanceObjective( &ClassTypical::instance, Object );
 
 const Invocative< void, unsigned >
-InvokeFunction = CreateInvokeFunction( FunctionObjective ),
-InvokeLambda = CreateInvokeLambda( LambdaObjective ),
-InvokeFunctor = CreateInvokeFunctor( FunctorObjective ),
-InvokeStatic = CreateInvokeFunction( StaticObjective ),
-InvokeInstance = CreateInvokeInstance( InstanceObjective );
+InvokeFunction = AssignInvokeFunction( FunctionObjective ),
+InvokeLambda = AssignInvokeLambda( LambdaObjective ),
+InvokeFunctor = AssignInvokeFunctor( FunctorObjective ),
+InvokeStatic = AssignInvokeFunction( StaticObjective ),
+InvokeInstance = AssignInvokeInstance( InstanceObjective );
 
 static inline void
 Demonstrate(
