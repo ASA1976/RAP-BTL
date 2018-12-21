@@ -109,7 +109,7 @@ main(
 		}
 	}
 	while (!feof(input)) {
-		if (fscanf( input, "%d", Locate( value ).at )) {
+		if (fscanf( input, "%d", Locate( value ).at ) == 1) {
 			if (count == MaximumIntegers) {
 				fprintf(stderr, "Maximum number of integers is %u\n", MaximumIntegers );
 				if (output != stdout)
