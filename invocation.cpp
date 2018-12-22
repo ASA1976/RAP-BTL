@@ -54,46 +54,6 @@ public:
 }
 Object;
 
-using FunctionTypical = Abstract< void, unsigned >;
-using LambdaTypical = decltype(Lambda);
-
-auto&
-AssignInvokeFunction = AssignInvokeProcedure< FunctionTypical, void, unsigned >;
-
-auto&
-AssignInvokeLambda = AssignInvokeProcedure< LambdaTypical, void, unsigned >;
-
-auto&
-AssignInvokeFunctor = AssignInvokeProcedure< ClassTypical, void, unsigned >;
-
-auto&
-AssignInvokeInstance = AssignInvokeMethod< ClassTypical, void, unsigned >;
-
-auto&
-AssignInstanceObjective = AssignMethodObjective< ClassTypical, void, unsigned >;
-
-const Locational< FunctionTypical >
-FunctionObjective = Locate( Function ).at;
-
-const Locational< LambdaTypical >
-LambdaObjective = Locate( Lambda ).at;
-
-const Locational< ClassTypical >
-FunctorObjective = Locate( Object ).at;
-
-const Locational< FunctionTypical >
-StaticObjective = Locate( ClassTypical::Static ).at;
-
-const Methodic< ClassTypical, void, unsigned >
-InstanceObjective = AssignInstanceObjective( &ClassTypical::instance, Object );
-
-const Invocative< void, unsigned >
-InvokeFunction = AssignInvokeFunction( FunctionObjective ),
-InvokeLambda = AssignInvokeLambda( LambdaObjective ),
-InvokeFunctor = AssignInvokeFunctor( FunctorObjective ),
-InvokeStatic = AssignInvokeFunction( StaticObjective ),
-InvokeInstance = AssignInvokeInstance( InstanceObjective );
-
 static inline void
 Demonstrate(
     Referential< const Invocative< void, unsigned > >
@@ -106,9 +66,31 @@ Demonstrate(
 
 int 
 main() {
-    Demonstrate( InvokeFunction );
-    Demonstrate( InvokeLambda );
-    Demonstrate( InvokeFunctor );
-    Demonstrate( InvokeStatic );
-    Demonstrate( InvokeInstance );
+    using FunctionTypical = Abstract< void, unsigned >;
+    using LambdaTypical = decltype(Lambda);
+    static auto&
+        AssignInvokeFunction = AssignInvokeProcedure< FunctionTypical, void, unsigned >;
+    static auto&
+        AssignInvokeLambda = AssignInvokeProcedure< LambdaTypical, void, unsigned >;
+    static auto&
+        AssignInvokeFunctor = AssignInvokeProcedure< ClassTypical, void, unsigned >;
+    static auto&
+        AssignInvokeInstance = AssignInvokeMethod< ClassTypical, void, unsigned >;
+    static auto&
+        AssignInstanceObjective = AssignMethodObjective< ClassTypical, void, unsigned >;
+    static const Locational< FunctionTypical >
+        FunctionObjective = Locate( Function ).at;
+    static const Locational< LambdaTypical >
+        LambdaObjective = Locate( Lambda ).at;
+    static const Locational< ClassTypical >
+        FunctorObjective = Locate( Object ).at;
+    static const Locational< FunctionTypical >
+        StaticObjective = Locate( ClassTypical::Static ).at;
+    static const Methodic< ClassTypical, void, unsigned >
+        InstanceObjective = AssignInstanceObjective( &ClassTypical::instance, Object );
+    Demonstrate( AssignInvokeFunction( FunctionObjective ) );
+    Demonstrate( AssignInvokeLambda( LambdaObjective ) );
+    Demonstrate( AssignInvokeFunctor( FunctorObjective ) );
+    Demonstrate( AssignInvokeFunction( StaticObjective ) );
+    Demonstrate( AssignInvokeInstance( InstanceObjective ) );
 }
