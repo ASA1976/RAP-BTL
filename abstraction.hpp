@@ -219,7 +219,7 @@ namespace abstraction {
      *     Function Template
      *     -----------------
      *     Invokes an object oriented instance method, specific to the procedural type.
-     *     Throws an exception if objective or either of it's members method or object are
+     *     Throws an exception if objective or either of its members method or object are
      *     null.
      * @tparam ClassTypical
      *     Object oriented class type.
@@ -393,7 +393,9 @@ namespace abstraction {
      *     Function Template
      *     -----------------
      *     Assigns an invocative instance which can later be used to invoke the 
-     *     procedure specified by objective.
+     *     procedure specified by objective.  The objective argument specifier
+     *     must have sufficient duration such that it exists when the invocation
+     *     occurs.
      * @tparam Procedural
      *     Procedural (function, lambda or functor) type.
      * @tparam Resultant
@@ -429,10 +431,11 @@ namespace abstraction {
      *     Function Template
      *     -----------------
      *     Assigns an invocative instance which can later be used to invoke the 
-     *     procedure specified by objective.  If the location provided is null, 
-     *     this version will throw the objective argument.  The resulting
-     *     interface function will throw an exception if it's provided
-     *     pointers are null.
+     *     procedure specified by objective.  The objective argument specifier
+     *     must have sufficient duration such that it exists when the invocation
+     *     occurs.  If the location provided is null, this version will throw 
+     *     the objective argument.  The resulting interface function will throw
+     *     an exception if its provided pointers are null.
      * @tparam Procedural
      *     Procedural (function, lambda or functor) type.
      * @tparam Resultant
@@ -470,7 +473,9 @@ namespace abstraction {
      *     Function Template
      *     -----------------
      *     Assigns an invocative instance which can later be used to invoke the 
-     *     method specified by objective.
+     *     method specified by objective.  The objective argument specifier
+     *     must have sufficient duration such that it exists when the invocation
+     *     occurs.
      * @tparam ClassTypical
      *     Object oriented class type.
      * @tparam Resultant
@@ -502,8 +507,10 @@ namespace abstraction {
      *     Function Template
      *     -----------------
      *     Assigns an invocative instance which can later be used to invoke the 
-     *     method specified by objective.  The resulting interface function will
-     *     throw an exception if it's provided pointers are null.
+     *     method specified by objective.  The objective argument specifier
+     *     must have sufficient duration such that it exists when the invocation
+     *     occurs.  The resulting interface function will throw an exception if 
+     *     its provided pointers are null.
      * @tparam ClassTypical
      *     Object oriented class type.
      * @tparam Resultant
