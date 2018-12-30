@@ -63,12 +63,12 @@ namespace abstraction {
             objective;
 
         Resultant
-            operator()( 
-                Parametric... 
-                    arguments 
-            ) const {
-                return interface( objective, arguments... );
-            }
+        operator()( 
+            Parametric... 
+                arguments 
+        ) const {
+            return interface( objective, arguments... );
+        }
 
     };
 

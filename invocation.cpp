@@ -30,21 +30,24 @@ class ClassTypical {
 
 public:
 
-    void operator()(
+    void
+    operator()(
         unsigned 
             value
     ) {
         printf( "Object( %u )\n", value );
     }
 
-    static void Static(
+    static void 
+    Static(
         unsigned
             value
     ) {
         printf( "ClassTypical::Static( %u )\n", value );
     }
 
-    void instance(
+    void 
+    instance(
         unsigned
             value
     ) {
