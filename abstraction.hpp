@@ -88,14 +88,14 @@ namespace abstraction {
      *     Parameter pack which represents the procedural parameters.
      */
     template <
-        typename ClassTypical,
+        class ClassTypical,
         typename Resultant,
         typename ...Parametric
     >
     struct Methodic {
 
-        Resultant
-            (ClassTypical::*method)( Parametric... );
+        Abstract< Resultant, Parametric... > ClassTypical::* 
+            method;
 
         Locational< ClassTypical >
             object;
@@ -195,7 +195,7 @@ namespace abstraction {
      *     Parameter pack which represents the procedural parameters.
      */
     template <
-        typename ClassTypical,
+        class ClassTypical,
         typename Resultant,
         typename ...Parametric
     >
@@ -229,7 +229,7 @@ namespace abstraction {
      *     Parameter pack which represents the procedural parameters.
      */
     template <
-        typename ClassTypical,
+        class ClassTypical,
         typename Resultant,
         typename ...Parametric
     >
@@ -335,14 +335,14 @@ namespace abstraction {
      *     Parameter pack which represents the procedural parameters.
      */
     template <
-        typename ClassTypical,
+        class ClassTypical,
         typename Resultant,
         typename ...Parametric
     >
     static inline Methodic< ClassTypical, Resultant, Parametric... >
     AssignMethodObjective(
-        Resultant
-            (ClassTypical::* const method)( Parametric... ),
+        Abstract< Resultant, Parametric... > ClassTypical::* const 
+            method,
         Referential< ClassTypical >
             object
     ) {
@@ -368,14 +368,14 @@ namespace abstraction {
      *     Parameter pack which represents the procedural parameters.
      */
     template <
-        typename ClassTypical,
+        class ClassTypical,
         typename Resultant,
         typename ...Parametric
     >
     static inline Methodic< ClassTypical, Resultant, Parametric... >
     AssignMethodObjectiveSafely(
-        Resultant
-            (ClassTypical::* const method)( Parametric... ),
+        Abstract< Resultant, Parametric... > ClassTypical::* const 
+            method,
         Referential< ClassTypical >
             object
     ) {
@@ -484,7 +484,7 @@ namespace abstraction {
      *     Parameter pack which represents the procedural parameters.
      */
     template <
-        typename ClassTypical,
+        class ClassTypical,
         typename Resultant,
         typename ...Parametric
     >
@@ -519,7 +519,7 @@ namespace abstraction {
      *     Parameter pack which represents the procedural parameters.
      */
     template <
-        typename ClassTypical,
+        class ClassTypical,
         typename Resultant,
         typename ...Parametric
     >
