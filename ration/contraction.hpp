@@ -1,4 +1,4 @@
-// © 2018 Aaron Sami Abassi
+// © 2019 Aaron Sami Abassi
 // Licensed under the Academic Free License version 3.0
 #ifndef RATION_CONTRACTION_MODULE
 #define RATION_CONTRACTION_MODULE
@@ -85,10 +85,10 @@ namespace ration {
             typename Elemental
         >
         constexpr Contractional< Natural, Maximum, Elemental >
-        InitializedQueue = {
-            0,
-            InitializedResource< Natural, Maximum, Elemental >
-        };
+            InitializedQueue = {
+                0,
+                InitializedResource< Natural, Maximum, Elemental >
+            };
 
         /**
          * @brief
@@ -1765,13 +1765,13 @@ namespace ration {
             typename Elemental
         >
         constexpr Tractile< Contractional< Natural, Maximum, Elemental >, Natural, Natural >
-        Contractor = {
-            Survey< Natural, Maximum, Elemental >,
-            Account< Natural, Maximum, Elemental >,
-            Protract< Natural, Maximum, Elemental >,
-            Retract< Natural, Maximum, Elemental >,
-            Contract< Natural, Maximum, Elemental >
-        };
+            Contractor = {
+                Survey< Natural, Maximum, Elemental >,
+                Account< Natural, Maximum, Elemental >,
+                Protract< Natural, Maximum, Elemental >,
+                Retract< Natural, Maximum, Elemental >,
+                Contract< Natural, Maximum, Elemental >
+            };
 
         /**
          * @brief 
@@ -1797,13 +1797,13 @@ namespace ration {
             typename Elemental
         >
         constexpr Tractile< Contractional< Natural, Maximum, Elemental >, Natural, Natural >
-        SafeContractor = {
-            Survey< Natural, Maximum, Elemental >,
-            Account< Natural, Maximum, Elemental >,
-            ProtractSafely< Natural, Maximum, Elemental >,
-            RetractSafely< Natural, Maximum, Elemental >,
-            Contract< Natural, Maximum, Elemental >
-        };
+            SafeContractor = {
+                Survey< Natural, Maximum, Elemental >,
+                Account< Natural, Maximum, Elemental >,
+                ProtractSafely< Natural, Maximum, Elemental >,
+                RetractSafely< Natural, Maximum, Elemental >,
+                Contract< Natural, Maximum, Elemental >
+            };
 
         /**
          * @brief 
@@ -1829,11 +1829,11 @@ namespace ration {
             typename Elemental
         >
         constexpr Vectorial< const Contractional< Natural, Maximum, Elemental >, Natural, const Elemental >
-        ReadVector = {
-            Comparison< Natural >,
-            Contains< Natural, Maximum, Elemental >,
-            GoRead< Natural, Maximum, Elemental >
-        };
+            ReadVector = {
+                Comparison< Natural >,
+                Contains< Natural, Maximum, Elemental >,
+                GoRead< Natural, Maximum, Elemental >
+            };
 
         /**
          * @brief 
@@ -1859,11 +1859,11 @@ namespace ration {
             typename Elemental
         >
         constexpr Vectorial< const Contractional< Natural, Maximum, Elemental >, Natural, const Elemental >
-        SafeReadVector = {
-            Comparison< Natural >,
-            Contains< Natural, Maximum, Elemental >,
-            GoReadSafely< Natural, Maximum, Elemental >
-        };
+            SafeReadVector = {
+                Comparison< Natural >,
+                Contains< Natural, Maximum, Elemental >,
+                GoReadSafely< Natural, Maximum, Elemental >
+            };
 
         /**
          * @brief 
@@ -1889,11 +1889,11 @@ namespace ration {
             typename Elemental
         >
         constexpr Vectorial< Contractional< Natural, Maximum, Elemental >, Natural, Elemental >
-        WriteVector = {
-            Comparison< Natural >,
-            Contains< Natural, Maximum, Elemental >,
-            GoWrite< Natural, Maximum, Elemental >
-        };
+            WriteVector = {
+                Comparison< Natural >,
+                Contains< Natural, Maximum, Elemental >,
+                GoWrite< Natural, Maximum, Elemental >
+            };
 
         /**
          * @brief 
@@ -1919,11 +1919,11 @@ namespace ration {
             typename Elemental
         >
         constexpr Vectorial< Contractional< Natural, Maximum, Elemental >, Natural, Elemental >
-        SafeWriteVector = {
-            Comparison< Natural >,
-            Contains< Natural, Maximum, Elemental >,
-            GoWriteSafely< Natural, Maximum, Elemental >
-        };
+            SafeWriteVector = {
+                Comparison< Natural >,
+                Contains< Natural, Maximum, Elemental >,
+                GoWriteSafely< Natural, Maximum, Elemental >
+            };
 
         /**
          * @brief 
@@ -1948,12 +1948,12 @@ namespace ration {
             typename Elemental
         >
         constexpr Scalar< const Contractional< Natural, Maximum, Elemental >, Natural, Natural, const Elemental >
-        ReadIncrementScale = {
-            Comparison< Natural >,
-            BeginReadIncrement< Natural, Maximum, Elemental >,
-            TraverseReadIncrement< Natural, Maximum, Elemental >,
-            GoRead< Natural, Maximum, Elemental >
-        };
+            ReadIncrementScale = {
+                Comparison< Natural >,
+                BeginReadIncrement< Natural, Maximum, Elemental >,
+                TraverseReadIncrement< Natural, Maximum, Elemental >,
+                GoRead< Natural, Maximum, Elemental >
+            };
 
         /**
          * @brief 
@@ -1978,12 +1978,12 @@ namespace ration {
             typename Elemental
         >
         constexpr Scalar< const Contractional< Natural, Maximum, Elemental >, Natural, Natural, const Elemental >
-        SafeReadIncrementScale = {
-            Comparison< Natural >,
-            BeginReadIncrementSafely< Natural, Maximum, Elemental >,
-            TraverseReadIncrementSafely< Natural, Maximum, Elemental >,
-            GoReadSafely< Natural, Maximum, Elemental >
-        };
+            SafeReadIncrementScale = {
+                Comparison< Natural >,
+                BeginReadIncrementSafely< Natural, Maximum, Elemental >,
+                TraverseReadIncrementSafely< Natural, Maximum, Elemental >,
+                GoReadSafely< Natural, Maximum, Elemental >
+            };
 
         /**
          * @brief 
@@ -2008,12 +2008,12 @@ namespace ration {
             typename Elemental
         >
         constexpr Scalar< Contractional< Natural, Maximum, Elemental >, Natural, Natural, Elemental >
-        WriteIncrementScale = {
-            Comparison< Natural >,
-            BeginWriteIncrement< Natural, Maximum, Elemental >,
-            TraverseWriteIncrement< Natural, Maximum, Elemental >,
-            GoWrite< Natural, Maximum, Elemental >
-        };
+            WriteIncrementScale = {
+                Comparison< Natural >,
+                BeginWriteIncrement< Natural, Maximum, Elemental >,
+                TraverseWriteIncrement< Natural, Maximum, Elemental >,
+                GoWrite< Natural, Maximum, Elemental >
+            };
 
         /**
          * @brief 
@@ -2038,12 +2038,12 @@ namespace ration {
             typename Elemental
         >
         constexpr Scalar< Contractional< Natural, Maximum, Elemental >, Natural, Natural, Elemental >
-        SafeWriteIncrementScale = {
-            Comparison< Natural >,
-            BeginWriteIncrementSafely< Natural, Maximum, Elemental >,
-            TraverseWriteIncrementSafely< Natural, Maximum, Elemental >,
-            GoWriteSafely< Natural, Maximum, Elemental >
-        };
+            SafeWriteIncrementScale = {
+                Comparison< Natural >,
+                BeginWriteIncrementSafely< Natural, Maximum, Elemental >,
+                TraverseWriteIncrementSafely< Natural, Maximum, Elemental >,
+                GoWriteSafely< Natural, Maximum, Elemental >
+            };
 
         /**
          * @brief 
@@ -2068,12 +2068,12 @@ namespace ration {
             typename Elemental
         >
         constexpr Scalar< const Contractional< Natural, Maximum, Elemental >, Natural, Natural, const Elemental >
-        ReadDecrementScale = {
-            Comparison< Natural >,
-            BeginReadDecrement< Natural, Maximum, Elemental >,
-            TraverseReadDecrement< Natural, Maximum, Elemental >,
-            GoRead< Natural, Maximum, Elemental >
-        };
+            ReadDecrementScale = {
+                Comparison< Natural >,
+                BeginReadDecrement< Natural, Maximum, Elemental >,
+                TraverseReadDecrement< Natural, Maximum, Elemental >,
+                GoRead< Natural, Maximum, Elemental >
+            };
 
         /**
          * @brief 
@@ -2098,12 +2098,12 @@ namespace ration {
             typename Elemental
         >
         constexpr Scalar< const Contractional< Natural, Maximum, Elemental >, Natural, Natural, const Elemental >
-        SafeReadDecrementScale = {
-            Comparison< Natural >,
-            BeginReadDecrementSafely< Natural, Maximum, Elemental >,
-            TraverseReadDecrementSafely< Natural, Maximum, Elemental >,
-            GoReadSafely< Natural, Maximum, Elemental >
-        };
+            SafeReadDecrementScale = {
+                Comparison< Natural >,
+                BeginReadDecrementSafely< Natural, Maximum, Elemental >,
+                TraverseReadDecrementSafely< Natural, Maximum, Elemental >,
+                GoReadSafely< Natural, Maximum, Elemental >
+            };
 
         /**
          * @brief 
@@ -2128,12 +2128,12 @@ namespace ration {
             typename Elemental
         >
         constexpr Scalar< Contractional< Natural, Maximum, Elemental >, Natural, Natural, Elemental >
-        WriteDecrementScale = {
-            Comparison< Natural >,
-            BeginWriteDecrement< Natural, Maximum, Elemental >,
-            TraverseWriteDecrement< Natural, Maximum, Elemental >,
-            GoWrite< Natural, Maximum, Elemental >
-        };
+            WriteDecrementScale = {
+                Comparison< Natural >,
+                BeginWriteDecrement< Natural, Maximum, Elemental >,
+                TraverseWriteDecrement< Natural, Maximum, Elemental >,
+                GoWrite< Natural, Maximum, Elemental >
+            };
 
         /**
          * @brief 
@@ -2158,12 +2158,12 @@ namespace ration {
             typename Elemental
         >
         constexpr Scalar< Contractional< Natural, Maximum, Elemental >, Natural, Natural, Elemental >
-        SafeWriteDecrementScale = {
-            Comparison< Natural >,
-            BeginWriteDecrementSafely< Natural, Maximum, Elemental >,
-            TraverseWriteDecrementSafely< Natural, Maximum, Elemental >,
-            GoWriteSafely< Natural, Maximum, Elemental >
-        };
+            SafeWriteDecrementScale = {
+                Comparison< Natural >,
+                BeginWriteDecrementSafely< Natural, Maximum, Elemental >,
+                TraverseWriteDecrementSafely< Natural, Maximum, Elemental >,
+                GoWriteSafely< Natural, Maximum, Elemental >
+            };
 
         /**
          * @brief 
@@ -2188,10 +2188,10 @@ namespace ration {
             typename Elemental
         >
         constexpr Lineal< const Contractional< Natural, Maximum, Elemental >, Natural, Natural, const Elemental >
-        ReadLiner = {
-            ReadIncrementScale< Natural, Maximum, Elemental >,
-            ReadDecrementScale< Natural, Maximum, Elemental >
-        };
+            ReadLiner = {
+                ReadIncrementScale< Natural, Maximum, Elemental >,
+                ReadDecrementScale< Natural, Maximum, Elemental >
+            };
 
         /**
          * @brief 
@@ -2216,10 +2216,10 @@ namespace ration {
             typename Elemental
         >
         constexpr Lineal< const Contractional< Natural, Maximum, Elemental >, Natural, Natural, const Elemental >
-        SafeReadLiner = {
-            SafeReadIncrementScale< Natural, Maximum, Elemental >,
-            SafeReadDecrementScale< Natural, Maximum, Elemental >
-        };
+            SafeReadLiner = {
+                SafeReadIncrementScale< Natural, Maximum, Elemental >,
+                SafeReadDecrementScale< Natural, Maximum, Elemental >
+            };
 
         /**
          * @brief 
@@ -2244,10 +2244,10 @@ namespace ration {
             typename Elemental
         >
         constexpr Lineal< Contractional< Natural, Maximum, Elemental >, Natural, Natural, Elemental >
-        WriteLiner = {
-            WriteIncrementScale< Natural, Maximum, Elemental >,
-            WriteDecrementScale< Natural, Maximum, Elemental >
-        };
+            WriteLiner = {
+                WriteIncrementScale< Natural, Maximum, Elemental >,
+                WriteDecrementScale< Natural, Maximum, Elemental >
+            };
 
         /**
          * @brief 
@@ -2272,10 +2272,10 @@ namespace ration {
             typename Elemental
         >
         constexpr Lineal< Contractional< Natural, Maximum, Elemental >, Natural, Natural, Elemental >
-        SafeWriteLiner = {
-            SafeWriteIncrementScale< Natural, Maximum, Elemental >,
-            SafeWriteDecrementScale< Natural, Maximum, Elemental >
-        };
+            SafeWriteLiner = {
+                SafeWriteIncrementScale< Natural, Maximum, Elemental >,
+                SafeWriteDecrementScale< Natural, Maximum, Elemental >
+            };
 
         /**
          * @brief 
@@ -2300,14 +2300,14 @@ namespace ration {
             typename Elemental
         >
         constexpr Directional< const Contractional< Natural, Maximum, Elemental >, Natural, Natural, const Elemental >
-        ReadIncrementDirection = {
-            ReadIncrementScale< Natural, Maximum, Elemental >,
-            Begins< Natural, Maximum, Elemental >,
-            IncrementTraverses< Natural, Maximum, Elemental >,
-            Contains< Natural, Maximum, Elemental >,
-            Account< Natural, Maximum, Elemental >,
-            CountIncrement< Natural, Maximum, Elemental >
-        };
+            ReadIncrementDirection = {
+                ReadIncrementScale< Natural, Maximum, Elemental >,
+                Begins< Natural, Maximum, Elemental >,
+                IncrementTraverses< Natural, Maximum, Elemental >,
+                Contains< Natural, Maximum, Elemental >,
+                Account< Natural, Maximum, Elemental >,
+                CountIncrement< Natural, Maximum, Elemental >
+            };
 
         /**
          * @brief 
@@ -2332,14 +2332,14 @@ namespace ration {
             typename Elemental
         >
         constexpr Directional< const Contractional< Natural, Maximum, Elemental >, Natural, Natural, const Elemental >
-        SafeReadIncrementDirection = {
-            SafeReadIncrementScale< Natural, Maximum, Elemental >,
-            Begins< Natural, Maximum, Elemental >,
-            IncrementTraverses< Natural, Maximum, Elemental >,
-            Contains< Natural, Maximum, Elemental >,
-            Account< Natural, Maximum, Elemental >,
-            CountIncrement< Natural, Maximum, Elemental >
-        };
+            SafeReadIncrementDirection = {
+                SafeReadIncrementScale< Natural, Maximum, Elemental >,
+                Begins< Natural, Maximum, Elemental >,
+                IncrementTraverses< Natural, Maximum, Elemental >,
+                Contains< Natural, Maximum, Elemental >,
+                Account< Natural, Maximum, Elemental >,
+                CountIncrement< Natural, Maximum, Elemental >
+            };
 
         /**
          * @brief 
@@ -2364,14 +2364,14 @@ namespace ration {
             typename Elemental
         >
         constexpr Directional< Contractional< Natural, Maximum, Elemental >, Natural, Natural, Elemental >
-        WriteIncrementDirection = {
-            WriteIncrementScale< Natural, Maximum, Elemental >,
-            Begins< Natural, Maximum, Elemental >,
-            IncrementTraverses< Natural, Maximum, Elemental >,
-            Contains< Natural, Maximum, Elemental >,
-            Account< Natural, Maximum, Elemental >,
-            CountIncrement< Natural, Maximum, Elemental >
-        };
+            WriteIncrementDirection = {
+                WriteIncrementScale< Natural, Maximum, Elemental >,
+                Begins< Natural, Maximum, Elemental >,
+                IncrementTraverses< Natural, Maximum, Elemental >,
+                Contains< Natural, Maximum, Elemental >,
+                Account< Natural, Maximum, Elemental >,
+                CountIncrement< Natural, Maximum, Elemental >
+            };
 
         /**
          * @brief 
@@ -2396,14 +2396,14 @@ namespace ration {
             typename Elemental
         >
         constexpr Directional< Contractional< Natural, Maximum, Elemental >, Natural, Natural, Elemental >
-        SafeWriteIncrementDirection = {
-            SafeWriteIncrementScale< Natural, Maximum, Elemental >,
-            Begins< Natural, Maximum, Elemental >,
-            IncrementTraverses< Natural, Maximum, Elemental >,
-            Contains< Natural, Maximum, Elemental >,
-            Account< Natural, Maximum, Elemental >,
-            CountIncrement< Natural, Maximum, Elemental >
-        };
+            SafeWriteIncrementDirection = {
+                SafeWriteIncrementScale< Natural, Maximum, Elemental >,
+                Begins< Natural, Maximum, Elemental >,
+                IncrementTraverses< Natural, Maximum, Elemental >,
+                Contains< Natural, Maximum, Elemental >,
+                Account< Natural, Maximum, Elemental >,
+                CountIncrement< Natural, Maximum, Elemental >
+            };
 
         /**
          * @brief 
@@ -2428,14 +2428,14 @@ namespace ration {
             typename Elemental
         >
         constexpr Directional< const Contractional< Natural, Maximum, Elemental >, Natural, Natural, const Elemental >
-        ReadDecrementDirection = {
-            ReadDecrementScale< Natural, Maximum, Elemental >,
-            Begins< Natural, Maximum, Elemental >,
-            DecrementTraverses< Natural, Maximum, Elemental >,
-            Contains< Natural, Maximum, Elemental >,
-            Account< Natural, Maximum, Elemental >,
-            CountDecrement< Natural, Maximum, Elemental >
-        };
+            ReadDecrementDirection = {
+                ReadDecrementScale< Natural, Maximum, Elemental >,
+                Begins< Natural, Maximum, Elemental >,
+                DecrementTraverses< Natural, Maximum, Elemental >,
+                Contains< Natural, Maximum, Elemental >,
+                Account< Natural, Maximum, Elemental >,
+                CountDecrement< Natural, Maximum, Elemental >
+            };
 
         /**
          * @brief 
@@ -2460,14 +2460,14 @@ namespace ration {
             typename Elemental
         >
         constexpr Directional< const Contractional< Natural, Maximum, Elemental >, Natural, Natural, const Elemental >
-        SafeReadDecrementDirection = {
-            SafeReadDecrementScale< Natural, Maximum, Elemental >,
-            Begins< Natural, Maximum, Elemental >,
-            DecrementTraverses< Natural, Maximum, Elemental >,
-            Contains< Natural, Maximum, Elemental >,
-            Account< Natural, Maximum, Elemental >,
-            CountDecrement< Natural, Maximum, Elemental >
-        };
+            SafeReadDecrementDirection = {
+                SafeReadDecrementScale< Natural, Maximum, Elemental >,
+                Begins< Natural, Maximum, Elemental >,
+                DecrementTraverses< Natural, Maximum, Elemental >,
+                Contains< Natural, Maximum, Elemental >,
+                Account< Natural, Maximum, Elemental >,
+                CountDecrement< Natural, Maximum, Elemental >
+            };
 
         /**
          * @brief 
@@ -2492,14 +2492,14 @@ namespace ration {
             typename Elemental
         >
         constexpr Directional< Contractional< Natural, Maximum, Elemental >, Natural, Natural, Elemental >
-        WriteDecrementDirection = {
-            WriteDecrementScale< Natural, Maximum, Elemental >,
-            Begins< Natural, Maximum, Elemental >,
-            DecrementTraverses< Natural, Maximum, Elemental >,
-            Contains< Natural, Maximum, Elemental >,
-            Account< Natural, Maximum, Elemental >,
-            CountDecrement< Natural, Maximum, Elemental >
-        };
+            WriteDecrementDirection = {
+                WriteDecrementScale< Natural, Maximum, Elemental >,
+                Begins< Natural, Maximum, Elemental >,
+                DecrementTraverses< Natural, Maximum, Elemental >,
+                Contains< Natural, Maximum, Elemental >,
+                Account< Natural, Maximum, Elemental >,
+                CountDecrement< Natural, Maximum, Elemental >
+            };
 
         /**
          * @brief 
@@ -2524,14 +2524,14 @@ namespace ration {
             typename Elemental
         >
         constexpr Directional< Contractional< Natural, Maximum, Elemental >, Natural, Natural, Elemental >
-        SafeWriteDecrementDirection = {
-            SafeWriteDecrementScale< Natural, Maximum, Elemental >,
-            Begins< Natural, Maximum, Elemental >,
-            DecrementTraverses< Natural, Maximum, Elemental >,
-            Contains< Natural, Maximum, Elemental >,
-            Account< Natural, Maximum, Elemental >,
-            CountDecrement< Natural, Maximum, Elemental >
-        };
+            SafeWriteDecrementDirection = {
+                SafeWriteDecrementScale< Natural, Maximum, Elemental >,
+                Begins< Natural, Maximum, Elemental >,
+                DecrementTraverses< Natural, Maximum, Elemental >,
+                Contains< Natural, Maximum, Elemental >,
+                Account< Natural, Maximum, Elemental >,
+                CountDecrement< Natural, Maximum, Elemental >
+            };
 
         /**
          * @brief 
@@ -2556,10 +2556,10 @@ namespace ration {
             typename Elemental
         >
         constexpr Axial< const Contractional< Natural, Maximum, Elemental >, Natural, Natural, const Elemental >
-        ReadAxis = {
-            ReadIncrementDirection< Natural, Maximum, Elemental >,
-            ReadDecrementDirection< Natural, Maximum, Elemental >
-        };
+            ReadAxis = {
+                ReadIncrementDirection< Natural, Maximum, Elemental >,
+                ReadDecrementDirection< Natural, Maximum, Elemental >
+            };
 
         /**
          * @brief 
@@ -2584,10 +2584,10 @@ namespace ration {
             typename Elemental
         >
         constexpr Axial< const Contractional< Natural, Maximum, Elemental >, Natural, Natural, const Elemental >
-        SafeReadAxis = {
-            SafeReadIncrementDirection< Natural, Maximum, Elemental >,
-            SafeReadDecrementDirection< Natural, Maximum, Elemental >
-        };
+            SafeReadAxis = {
+                SafeReadIncrementDirection< Natural, Maximum, Elemental >,
+                SafeReadDecrementDirection< Natural, Maximum, Elemental >
+            };
 
         /**
          * @brief 
@@ -2612,10 +2612,10 @@ namespace ration {
             typename Elemental
         >
         constexpr Axial< Contractional< Natural, Maximum, Elemental >, Natural, Natural, Elemental >
-        WriteAxis = {
-            WriteIncrementDirection< Natural, Maximum, Elemental >,
-            WriteDecrementDirection< Natural, Maximum, Elemental >
-        };
+            WriteAxis = {
+                WriteIncrementDirection< Natural, Maximum, Elemental >,
+                WriteDecrementDirection< Natural, Maximum, Elemental >
+            };
 
         /**
          * @brief 
@@ -2640,10 +2640,10 @@ namespace ration {
             typename Elemental
         >
         constexpr Axial< Contractional< Natural, Maximum, Elemental >, Natural, Natural, Elemental >
-        SafeWriteAxis = {
-            SafeWriteIncrementDirection< Natural, Maximum, Elemental >,
-            SafeWriteDecrementDirection< Natural, Maximum, Elemental >
-        };
+            SafeWriteAxis = {
+                SafeWriteIncrementDirection< Natural, Maximum, Elemental >,
+                SafeWriteDecrementDirection< Natural, Maximum, Elemental >
+            };
 
     }
 

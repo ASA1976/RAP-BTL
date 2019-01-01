@@ -1,4 +1,4 @@
-// © 2018 Aaron Sami Abassi
+// © 2019 Aaron Sami Abassi
 // Licensed under the Academic Free License version 3.0
 #ifndef COMPOSITION_MODULE
 #define COMPOSITION_MODULE

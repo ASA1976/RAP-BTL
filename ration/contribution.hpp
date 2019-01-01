@@ -1,4 +1,4 @@
-// © 2018 Aaron Sami Abassi
+// © 2019 Aaron Sami Abassi
 // Licensed under the Academic Free License version 3.0
 #ifndef RATION_CONTRIBUTION_MODULE
 #define RATION_CONTRIBUTION_MODULE
@@ -84,10 +84,10 @@ namespace ration {
             typename Elemental
         >
         constexpr Contributory< Natural, Maximum, Elemental >
-        InitializedPool = {
-            0,
-            InitializedResource< Natural, Maximum, Elemental >
-        };
+            InitializedPool = {
+                0,
+                InitializedResource< Natural, Maximum, Elemental >
+            };
 
         /**
          * @brief
@@ -699,13 +699,13 @@ namespace ration {
             typename Elemental
         >
         constexpr Tributary< Contributory< Natural, Maximum, Elemental >, Natural, Natural >
-        Contributor = {
-            Survey< Natural, Maximum, Elemental >,
-            Account< Natural, Maximum, Elemental >,
-            Distribute< Natural, Maximum, Elemental >,
-            Retribute< Natural, Maximum, Elemental >,
-            Contribute< Natural, Maximum, Elemental >
-        };
+            Contributor = {
+                Survey< Natural, Maximum, Elemental >,
+                Account< Natural, Maximum, Elemental >,
+                Distribute< Natural, Maximum, Elemental >,
+                Retribute< Natural, Maximum, Elemental >,
+                Contribute< Natural, Maximum, Elemental >
+            };
 
         /**
          * @brief 
@@ -730,13 +730,13 @@ namespace ration {
             typename Elemental
         >
         constexpr Tributary< Contributory< Natural, Maximum, Elemental >, Natural, Natural >
-        SafeContributor = {
-            Survey< Natural, Maximum, Elemental >,
-            Account< Natural, Maximum, Elemental >,
-            DistributeSafely< Natural, Maximum, Elemental >,
-            RetributeSafely< Natural, Maximum, Elemental >,
-            Contribute< Natural, Maximum, Elemental >
-        };
+            SafeContributor = {
+                Survey< Natural, Maximum, Elemental >,
+                Account< Natural, Maximum, Elemental >,
+                DistributeSafely< Natural, Maximum, Elemental >,
+                RetributeSafely< Natural, Maximum, Elemental >,
+                Contribute< Natural, Maximum, Elemental >
+            };
 
         /**
          * @brief 
@@ -762,11 +762,11 @@ namespace ration {
             typename Elemental
         >
         constexpr Vectorial< const Contributory< Natural, Maximum, Elemental >, Natural, const Elemental >
-        ReadVector = {
-            Comparison< Natural >,
-            Contains< Natural, Maximum, Elemental >,
-            GoRead< Natural, Maximum, Elemental >
-        };
+            ReadVector = {
+                Comparison< Natural >,
+                Contains< Natural, Maximum, Elemental >,
+                GoRead< Natural, Maximum, Elemental >
+            };
 
         /**
          * @brief 
@@ -792,11 +792,11 @@ namespace ration {
             typename Elemental
         >
         constexpr Vectorial< const Contributory< Natural, Maximum, Elemental >, Natural, const Elemental >
-        SafeReadVector = {
-            Comparison< Natural >,
-            Contains< Natural, Maximum, Elemental >,
-            GoReadSafely< Natural, Maximum, Elemental >
-        };
+            SafeReadVector = {
+                Comparison< Natural >,
+                Contains< Natural, Maximum, Elemental >,
+                GoReadSafely< Natural, Maximum, Elemental >
+            };
 
         /**
          * @brief 
@@ -822,11 +822,11 @@ namespace ration {
             typename Elemental
         >
         constexpr Vectorial< Contributory< Natural, Maximum, Elemental >, Natural, Elemental >
-        WriteVector = {
-            Comparison< Natural >,
-            Contains< Natural, Maximum, Elemental >,
-            GoWrite< Natural, Maximum, Elemental >
-        };
+            WriteVector = {
+                Comparison< Natural >,
+                Contains< Natural, Maximum, Elemental >,
+                GoWrite< Natural, Maximum, Elemental >
+            };
 
         /**
          * @brief 
@@ -852,11 +852,11 @@ namespace ration {
             typename Elemental
         >
         constexpr Vectorial< Contributory< Natural, Maximum, Elemental >, Natural, Elemental >
-        SafeWriteVector = {
-            Comparison< Natural >,
-            Contains< Natural, Maximum, Elemental >,
-            GoWriteSafely< Natural, Maximum, Elemental >
-        };
+            SafeWriteVector = {
+                Comparison< Natural >,
+                Contains< Natural, Maximum, Elemental >,
+                GoWriteSafely< Natural, Maximum, Elemental >
+            };
 
     }
 

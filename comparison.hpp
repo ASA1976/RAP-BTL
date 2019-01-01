@@ -1,4 +1,4 @@
-// © 2018 Aaron Sami Abassi
+// © 2019 Aaron Sami Abassi
 // Licensed under the Academic Free License version 3.0
 #ifndef COMPARISON_MODULE
 #define COMPARISON_MODULE
@@ -348,10 +348,10 @@ namespace comparison {
         typename Relative = Basic
     >
     constexpr Equative< Basic, Relative >
-    Equality = {
-        IsEqual< Basic, Relative >,
-        IsNotEqual< Basic, Relative >
-    };
+        Equality = {
+            IsEqual< Basic, Relative >,
+            IsNotEqual< Basic, Relative >
+        };
 
     /**
      * @brief 
@@ -371,12 +371,12 @@ namespace comparison {
         typename Relative = Basic
     >
     constexpr Relational< Basic, Relative >
-    Relation = {
-        IsLesser< Basic, Relative >,
-        IsGreater< Basic, Relative >,
-        IsNotGreater< Basic, Relative >,
-        IsNotLesser< Basic, Relative >
-    };
+        Relation = {
+            IsLesser< Basic, Relative >,
+            IsGreater< Basic, Relative >,
+            IsNotGreater< Basic, Relative >,
+            IsNotLesser< Basic, Relative >
+        };
 
     /**
      * @brief
@@ -396,10 +396,10 @@ namespace comparison {
         typename Relative = Basic
     >
     constexpr Comparative< Basic, Relative >
-    Comparison = {
-        Equality< Basic, Relative >,
-        Relation< Basic, Relative >
-    };
+        Comparison = {
+            Equality< Basic, Relative >,
+            Relation< Basic, Relative >
+        };
 
 }
 

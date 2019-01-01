@@ -1,4 +1,4 @@
-// © 2018 Aaron Sami Abassi
+// © 2019 Aaron Sami Abassi
 // Licensed under the Academic Free License version 3.0
 #ifndef ALLOCATION_MODULE
 #define ALLOCATION_MODULE
@@ -445,10 +445,10 @@ namespace allocation {
         typename Subjective
     >
     constexpr DefaultAllocative< Subjective >
-    DefaultNew = {
-        AllocateNewElement< Subjective >, 
-        DeleteElementAndSetToNull< Subjective >
-    };
+        DefaultNew = {
+            AllocateNewElement< Subjective >, 
+            DeleteElementAndSetToNull< Subjective >
+        };
 
     /**
      * @brief
@@ -465,10 +465,10 @@ namespace allocation {
         typename Subjective
     >
     constexpr DefaultAllocative< Subjective >
-    FastDefaultNew = {
-        AllocateNewElement< Subjective >, 
-        DeleteElement< Subjective >
-    };
+        FastDefaultNew = {
+            AllocateNewElement< Subjective >, 
+            DeleteElement< Subjective >
+        };
 
     /**
      * @brief
@@ -486,10 +486,10 @@ namespace allocation {
         typename Subjective
     >
     constexpr ArrayAllocative< Natural, Subjective >
-    ArrayNew = {
-        AllocateNewArray< Natural, Subjective >, 
-        DeleteArrayAndSetToNull< Subjective >
-    };
+        ArrayNew = {
+            AllocateNewArray< Natural, Subjective >, 
+            DeleteArrayAndSetToNull< Subjective >
+        };
 
     /**
      * @brief
@@ -507,10 +507,10 @@ namespace allocation {
         typename Subjective
     >
     constexpr ArrayAllocative< Natural, Subjective >
-    FastArrayNew = {
-        AllocateNewArray< Natural, Subjective >, 
-        DeleteArray< Subjective >
-    };
+        FastArrayNew = {
+            AllocateNewArray< Natural, Subjective >, 
+            DeleteArray< Subjective >
+        };
 
     /**
      * @brief
@@ -527,10 +527,10 @@ namespace allocation {
         typename Subjective
     >
     constexpr CopyAllocative< Subjective >
-    CopyNew = {
-        AllocateNewCopy< Subjective >, 
-        DeleteElementAndSetToNull< Subjective >
-    };
+        CopyNew = {
+            AllocateNewCopy< Subjective >, 
+            DeleteElementAndSetToNull< Subjective >
+        };
 
     /**
      * @brief
@@ -547,10 +547,10 @@ namespace allocation {
         typename Subjective
     >
     constexpr CopyAllocative< Subjective >
-    FastCopyNew = {
-        AllocateNewCopy< Subjective >, 
-        DeleteElement< Subjective >
-    };
+        FastCopyNew = {
+            AllocateNewCopy< Subjective >, 
+            DeleteElement< Subjective >
+        };
 
 }
 

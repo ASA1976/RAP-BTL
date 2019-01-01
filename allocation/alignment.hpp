@@ -1,4 +1,4 @@
-// © 2018 Aaron Sami Abassi
+// © 2019 Aaron Sami Abassi
 // Licensed under the Academic Free License version 3.0
 #ifndef ALLOCATION_ALIGNMENT_MODULE
 #define ALLOCATION_ALIGNMENT_MODULE
@@ -213,10 +213,10 @@ namespace allocation {
                 Size = sizeof(Subjective)
         >
         constexpr DefaultAllocative< Subjective >
-        DefaultAligned = {
-            AllocateAlignedElement< Subjective, Alignment, Size >, 
-            DeleteAlignedSubjectAndSetToNull< Subjective >
-        };
+            DefaultAligned = {
+                AllocateAlignedElement< Subjective, Alignment, Size >, 
+                DeleteAlignedSubjectAndSetToNull< Subjective >
+            };
 
         /**
          * @brief
@@ -242,10 +242,10 @@ namespace allocation {
                 Size = sizeof(Subjective)
         >
         constexpr DefaultAllocative< Subjective >
-        FastDefaultAligned = {
-            AllocateAlignedElement< Subjective, Alignment, Size >, 
-            DeleteAlignedSubject< Subjective >
-        };
+            FastDefaultAligned = {
+                AllocateAlignedElement< Subjective, Alignment, Size >, 
+                DeleteAlignedSubject< Subjective >
+            };
 
         /**
          * @brief
@@ -271,10 +271,10 @@ namespace allocation {
                 Size = sizeof(Subjective)
         >
         constexpr ArrayAllocative< Subjective, size_t >
-        ArrayAligned = {
-            AllocateAlignedArray< Subjective, Alignment, Size >, 
-            DeleteAlignedSubjectAndSetToNull< Subjective >
-        };
+            ArrayAligned = {
+                AllocateAlignedArray< Subjective, Alignment, Size >, 
+                DeleteAlignedSubjectAndSetToNull< Subjective >
+            };
 
         /**
          * @brief
@@ -300,10 +300,10 @@ namespace allocation {
                 Size = sizeof(Subjective)
         >
         constexpr ArrayAllocative< Subjective, size_t >
-        FastArrayAligned = {
-            AllocateAlignedArray< Subjective, Alignment, Size >, 
-            DeleteAlignedSubject< Subjective >
-        };
+            FastArrayAligned = {
+                AllocateAlignedArray< Subjective, Alignment, Size >, 
+                DeleteAlignedSubject< Subjective >
+            };
 
     }
 

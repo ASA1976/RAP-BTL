@@ -1,4 +1,4 @@
-// © 2018 Aaron Sami Abassi
+// © 2019 Aaron Sami Abassi
 // Licensed under the Academic Free License version 3.0
 #ifndef LOCALIZATION_MODULE
 #define LOCALIZATION_MODULE
@@ -578,12 +578,12 @@ namespace localization {
         typename Elemental
     >
     constexpr Scalar< const Locational< const Elemental >, Integral, Natural, const Elemental >
-    ReadIncrementScale = {
-        Comparison< Integral >,
-        BeginIncrement< Integral, Natural, const Elemental >,
-        TraverseIncrement< Integral, Natural, const Elemental >,
-        IndexicalGo< Integral, const Elemental >
-    };
+        ReadIncrementScale = {
+            Comparison< Integral >,
+            BeginIncrement< Integral, Natural, const Elemental >,
+            TraverseIncrement< Integral, Natural, const Elemental >,
+            IndexicalGo< Integral, const Elemental >
+        };
 
     /**
      * @brief 
@@ -607,12 +607,12 @@ namespace localization {
         typename Elemental
     >
     constexpr Scalar< const Locational< const Elemental >, Integral, Natural, const Elemental >
-    CoherentReadIncrementScale = {
-        Comparison< Integral >,
-        BeginIncrementCoherently< Integral, Natural, const Elemental >,
-        TraverseIncrementCoherently< Integral, Natural, const Elemental >,
-        IndexicalGoCoherently< Integral, const Elemental >
-    };
+        CoherentReadIncrementScale = {
+            Comparison< Integral >,
+            BeginIncrementCoherently< Integral, Natural, const Elemental >,
+            TraverseIncrementCoherently< Integral, Natural, const Elemental >,
+            IndexicalGoCoherently< Integral, const Elemental >
+        };
 
     /**
      * @brief 
@@ -636,12 +636,12 @@ namespace localization {
         typename Elemental
     >
     constexpr Scalar< const Locational< Elemental >, Integral, Natural, Elemental >
-    WriteIncrementScale = {
-        Comparison< Integral >,
-        BeginIncrement< Integral, Natural, Elemental >,
-        TraverseIncrement< Integral, Natural, Elemental >,
-        IndexicalGo< Integral, Elemental >
-    };
+        WriteIncrementScale = {
+            Comparison< Integral >,
+            BeginIncrement< Integral, Natural, Elemental >,
+            TraverseIncrement< Integral, Natural, Elemental >,
+            IndexicalGo< Integral, Elemental >
+        };
 
     /**
      * @brief 
@@ -665,12 +665,12 @@ namespace localization {
         typename Elemental
     >
     constexpr Scalar< const Locational< Elemental >, Integral, Natural, Elemental >
-    CoherentWriteIncrementScale = {
-        Comparison< Integral >,
-        BeginIncrementCoherently< Integral, Natural, Elemental >,
-        TraverseIncrementCoherently< Integral, Natural, Elemental >,
-        IndexicalGoCoherently< Integral, Elemental >
-    };
+        CoherentWriteIncrementScale = {
+            Comparison< Integral >,
+            BeginIncrementCoherently< Integral, Natural, Elemental >,
+            TraverseIncrementCoherently< Integral, Natural, Elemental >,
+            IndexicalGoCoherently< Integral, Elemental >
+        };
 
     /**
      * @brief 
@@ -694,12 +694,12 @@ namespace localization {
         typename Elemental
     >
     constexpr Scalar< const Locational< const Elemental >, Integral, Natural, const Elemental >
-    ReadDecrementScale = {
-        Comparison< Integral >,
-        BeginDecrement< Integral, Natural, const Elemental >,
-        TraverseDecrement< Integral, Natural, const Elemental >,
-        IndexicalGo< Integral, const Elemental >
-    };
+        ReadDecrementScale = {
+            Comparison< Integral >,
+            BeginDecrement< Integral, Natural, const Elemental >,
+            TraverseDecrement< Integral, Natural, const Elemental >,
+            IndexicalGo< Integral, const Elemental >
+        };
 
     /**
      * @brief 
@@ -723,12 +723,12 @@ namespace localization {
         typename Elemental
     >
     constexpr Scalar< const Locational< const Elemental >, Integral, Natural, const Elemental >
-    CoherentReadDecrementScale = {
-        Comparison< Integral >,
-        BeginDecrementCoherently< Integral, Natural, const Elemental >,
-        TraverseDecrementCoherently< Integral, Natural, const Elemental >,
-        IndexicalGoCoherently< Integral, const Elemental >
-    };
+        CoherentReadDecrementScale = {
+            Comparison< Integral >,
+            BeginDecrementCoherently< Integral, Natural, const Elemental >,
+            TraverseDecrementCoherently< Integral, Natural, const Elemental >,
+            IndexicalGoCoherently< Integral, const Elemental >
+        };
 
     /**
      * @brief 
@@ -752,12 +752,12 @@ namespace localization {
         typename Elemental
     >
     constexpr Scalar< const Locational< Elemental >, Integral, Natural, Elemental >
-    WriteDecrementScale = {
-        Comparison< Integral >,
-        BeginDecrement< Integral, Natural, Elemental >,
-        TraverseDecrement< Integral, Natural, Elemental >,
-        IndexicalGo< Integral, Elemental >
-    };
+        WriteDecrementScale = {
+            Comparison< Integral >,
+            BeginDecrement< Integral, Natural, Elemental >,
+            TraverseDecrement< Integral, Natural, Elemental >,
+            IndexicalGo< Integral, Elemental >
+        };
 
     /**
      * @brief 
@@ -781,12 +781,12 @@ namespace localization {
         typename Elemental
     >
     constexpr Scalar< const Locational< Elemental >, Integral, Natural, Elemental >
-    CoherentWriteDecrementScale = {
-        Comparison< Integral >,
-        BeginDecrementCoherently< Integral, Natural, Elemental >,
-        TraverseDecrementCoherently< Integral, Natural, Elemental >,
-        IndexicalGoCoherently< Integral, Elemental >
-    };
+        CoherentWriteDecrementScale = {
+            Comparison< Integral >,
+            BeginDecrementCoherently< Integral, Natural, Elemental >,
+            TraverseDecrementCoherently< Integral, Natural, Elemental >,
+            IndexicalGoCoherently< Integral, Elemental >
+        };
 
     /**
      * @brief 
@@ -810,10 +810,10 @@ namespace localization {
         typename Elemental
     >
     constexpr Lineal< const Locational< const Elemental >, Integral, Natural, const Elemental >
-    ReadLiner = {
-        ReadIncrementScale< Integral, Natural, Elemental >,
-        ReadDecrementScale< Integral, Natural, Elemental >
-    };
+        ReadLiner = {
+            ReadIncrementScale< Integral, Natural, Elemental >,
+            ReadDecrementScale< Integral, Natural, Elemental >
+        };
 
     /**
      * @brief 
@@ -837,10 +837,10 @@ namespace localization {
         typename Elemental
     >
     constexpr Lineal< const Locational< const Elemental >, Integral, Natural, const Elemental >
-    CoherentReadLiner = {
-        CoherentReadIncrementScale< Integral, Natural, Elemental >,
-        CoherentReadDecrementScale< Integral, Natural, Elemental >
-    };
+        CoherentReadLiner = {
+            CoherentReadIncrementScale< Integral, Natural, Elemental >,
+            CoherentReadDecrementScale< Integral, Natural, Elemental >
+        };
 
     /**
      * @brief 
@@ -864,10 +864,10 @@ namespace localization {
         typename Elemental
     >
     constexpr Lineal< const Locational< Elemental >, Integral, Natural, Elemental >
-    WriteLiner = {
-        WriteIncrementScale< Integral, Natural, Elemental >,
-        WriteDecrementScale< Integral, Natural, Elemental >
-    };
+        WriteLiner = {
+            WriteIncrementScale< Integral, Natural, Elemental >,
+            WriteDecrementScale< Integral, Natural, Elemental >
+        };
 
     /**
      * @brief 
@@ -891,10 +891,10 @@ namespace localization {
         typename Elemental
     >
     constexpr Lineal< const Locational< Elemental >, Integral, Natural, Elemental >
-    CoherentWriteLiner = {
-        CoherentWriteIncrementScale< Integral, Natural, Elemental >,
-        CoherentWriteDecrementScale< Integral, Natural, Elemental >
-    };
+        CoherentWriteLiner = {
+            CoherentWriteIncrementScale< Integral, Natural, Elemental >,
+            CoherentWriteDecrementScale< Integral, Natural, Elemental >
+        };
 
 }
 

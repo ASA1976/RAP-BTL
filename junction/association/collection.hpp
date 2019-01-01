@@ -1,4 +1,4 @@
-// © 2018 Aaron Sami Abassi
+// © 2019 Aaron Sami Abassi
 // Licensed under the Academic Free License version 3.0
 #ifndef JUNCTION_ASSOCIATION_COLLECTION_MODULE
 #define JUNCTION_ASSOCIATION_COLLECTION_MODULE
@@ -803,10 +803,10 @@ namespace junction {
                     Order
             >
             constexpr Vectorial< const AssociativelySingleJunctive< Natural, Correlative, Evaluative >, Correlative, const Evaluative >
-            RelateReadSingleVector = {
-                Correspond< Natural, Correlative, Evaluative, Equate, Order, ReadRelatorIncrementSingleScale< Natural, Correlative, Evaluative > >,
-                RelateReadElement< Natural, Correlative, Evaluative, Equate, Order, ReadRelatorIncrementSingleScale< Natural, Correlative, Evaluative > >
-            };
+                RelateReadSingleVector = {
+                    Correspond< Natural, Correlative, Evaluative, Equate, Order, ReadRelatorIncrementSingleScale< Natural, Correlative, Evaluative > >,
+                    RelateReadElement< Natural, Correlative, Evaluative, Equate, Order, ReadRelatorIncrementSingleScale< Natural, Correlative, Evaluative > >
+                };
 
             template <
                 typename Natural,
@@ -818,10 +818,10 @@ namespace junction {
                     Order
             >
             constexpr Vectorial< const AssociativelyDoubleJunctive< Natural, Correlative, Evaluative >, Correlative, const Evaluative >
-            RelateReadDoubleVector = {
-                Correspond< Natural, Correlative, Evaluative, Equate, Order, ReadRelatorDoubleLiner< Natural, Correlative, Evaluative > >,
-                RelateReadElement< Natural, Correlative, Evaluative, Equate, Order, ReadRelatorDoubleLiner< Natural, Correlative, Evaluative > >
-            };
+                RelateReadDoubleVector = {
+                    Correspond< Natural, Correlative, Evaluative, Equate, Order, ReadRelatorDoubleLiner< Natural, Correlative, Evaluative > >,
+                    RelateReadElement< Natural, Correlative, Evaluative, Equate, Order, ReadRelatorDoubleLiner< Natural, Correlative, Evaluative > >
+                };
 
             template <
                 typename Natural,
@@ -833,10 +833,10 @@ namespace junction {
                     Order
             >
             constexpr Vectorial< AssociativelySingleJunctive< Natural, Correlative, Evaluative >, Correlative, Evaluative >
-            RelateWriteSingleVector = {
-                Correspond< Natural, Correlative, Evaluative, Equate, Order, ReadRelatorIncrementSingleScale< Natural, Correlative, Evaluative > >,
-                RelateWriteElement< Natural, Correlative, Evaluative, Equate, Order, ReadRelatorIncrementSingleScale< Natural, Correlative, Evaluative > >
-            };
+                RelateWriteSingleVector = {
+                    Correspond< Natural, Correlative, Evaluative, Equate, Order, ReadRelatorIncrementSingleScale< Natural, Correlative, Evaluative > >,
+                    RelateWriteElement< Natural, Correlative, Evaluative, Equate, Order, ReadRelatorIncrementSingleScale< Natural, Correlative, Evaluative > >
+                };
 
             template <
                 typename Natural,
@@ -848,10 +848,10 @@ namespace junction {
                     Order
             >
             constexpr Vectorial< AssociativelyDoubleJunctive< Natural, Correlative, Evaluative >, Correlative, Evaluative >
-            RelateWriteDoubleVector = {
-                Correspond< Natural, Correlative, Evaluative, Equate, Order, ReadRelatorDoubleLiner< Natural, Correlative, Evaluative > >,
-                RelateWriteElement< Natural, Correlative, Evaluative, Equate, Order, ReadRelatorDoubleLiner< Natural, Correlative, Evaluative > >
-            };
+                RelateWriteDoubleVector = {
+                    Correspond< Natural, Correlative, Evaluative, Equate, Order, ReadRelatorDoubleLiner< Natural, Correlative, Evaluative > >,
+                    RelateWriteElement< Natural, Correlative, Evaluative, Equate, Order, ReadRelatorDoubleLiner< Natural, Correlative, Evaluative > >
+                };
 
             template <
                 typename Natural,
@@ -865,16 +865,16 @@ namespace junction {
                     Adjunct
             >
             constexpr Associative< AssociativelySingleJunctive< Natural, Correlative, Evaluative >, Natural, Correlative, Evaluative >
-            SingleAssociator = {
-                Instantiate< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, Adjunct >,
-                Account< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative > >,
-                Correspond< Natural, Correlative, Evaluative, Equate, Order, ReadRelatorIncrementSingleScale< Natural, Correlative, Evaluative > >,
-                Associate< Natural, Correlative, Evaluative, Precede< Natural, Complementary< Correlative, Evaluative >, Adjunct >, Cede< Natural, Complementary< Correlative, Evaluative >, Adjunct >, Proceed< Natural, Complementary< Correlative, Evaluative >, Adjunct >, Equate, Order, ReadRelatorIncrementSingleScale< Natural, Correlative, Evaluative > >,
-                Reassociate< Natural, Correlative, Evaluative, Equate, Order, ReadRelatorIncrementSingleScale< Natural, Correlative, Evaluative >, Adjunct >,
-                Disassociate< Natural, Correlative, Evaluative, Concede< Natural, Complementary< Correlative, Evaluative > >, Equate, Order, ReadRelatorIncrementSingleScale< Natural, Correlative, Evaluative > >,
-                RemoveAll< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative > >,
-                DeleteOneNode< Natural, Complementary< Correlative, Evaluative >, Adjunct >
-            };
+                SingleAssociator = {
+                    Instantiate< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, Adjunct >,
+                    Account< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative > >,
+                    Correspond< Natural, Correlative, Evaluative, Equate, Order, ReadRelatorIncrementSingleScale< Natural, Correlative, Evaluative > >,
+                    Associate< Natural, Correlative, Evaluative, Precede< Natural, Complementary< Correlative, Evaluative >, Adjunct >, Cede< Natural, Complementary< Correlative, Evaluative >, Adjunct >, Proceed< Natural, Complementary< Correlative, Evaluative >, Adjunct >, Equate, Order, ReadRelatorIncrementSingleScale< Natural, Correlative, Evaluative > >,
+                    Reassociate< Natural, Correlative, Evaluative, Equate, Order, ReadRelatorIncrementSingleScale< Natural, Correlative, Evaluative >, Adjunct >,
+                    Disassociate< Natural, Correlative, Evaluative, Concede< Natural, Complementary< Correlative, Evaluative > >, Equate, Order, ReadRelatorIncrementSingleScale< Natural, Correlative, Evaluative > >,
+                    RemoveAll< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative > >,
+                    DeleteOneNode< Natural, Complementary< Correlative, Evaluative >, Adjunct >
+                };
 
             template <
                 typename Natural,
@@ -888,16 +888,16 @@ namespace junction {
                     Adjunct
             >
             constexpr Associative< AssociativelyDoubleJunctive< Natural, Correlative, Evaluative >, Natural, Correlative, Evaluative >
-            DoubleAssociator = {
-                Instantiate< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, Adjunct >,
-                Account< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative > >,
-                Correspond< Natural, Correlative, Evaluative, Equate, Order, ReadRelatorDoubleLiner< Natural, Correlative, Evaluative > >,
-                Associate< Natural, Correlative, Evaluative, Precede< Natural, Complementary< Correlative, Evaluative >, Adjunct >, Cede< Natural, Complementary< Correlative, Evaluative >, Adjunct >, Proceed< Natural, Complementary< Correlative, Evaluative >, Adjunct >, Equate, Order, ReadRelatorDoubleLiner< Natural, Correlative, Evaluative > >,
-                Reassociate< Natural, Correlative, Evaluative, Equate, Order, ReadRelatorDoubleLiner< Natural, Correlative, Evaluative >, Adjunct >,
-                Disassociate< Natural, Correlative, Evaluative, Concede< Natural, Complementary< Correlative, Evaluative > >, Equate, Order, ReadRelatorDoubleLiner< Natural, Correlative, Evaluative > >,
-                RemoveAll< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative > >,
-                DeleteOneNode< Natural, Complementary< Correlative, Evaluative >, Adjunct >
-            };
+                DoubleAssociator = {
+                    Instantiate< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, Adjunct >,
+                    Account< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative > >,
+                    Correspond< Natural, Correlative, Evaluative, Equate, Order, ReadRelatorDoubleLiner< Natural, Correlative, Evaluative > >,
+                    Associate< Natural, Correlative, Evaluative, Precede< Natural, Complementary< Correlative, Evaluative >, Adjunct >, Cede< Natural, Complementary< Correlative, Evaluative >, Adjunct >, Proceed< Natural, Complementary< Correlative, Evaluative >, Adjunct >, Equate, Order, ReadRelatorDoubleLiner< Natural, Correlative, Evaluative > >,
+                    Reassociate< Natural, Correlative, Evaluative, Equate, Order, ReadRelatorDoubleLiner< Natural, Correlative, Evaluative >, Adjunct >,
+                    Disassociate< Natural, Correlative, Evaluative, Concede< Natural, Complementary< Correlative, Evaluative > >, Equate, Order, ReadRelatorDoubleLiner< Natural, Correlative, Evaluative > >,
+                    RemoveAll< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative > >,
+                    DeleteOneNode< Natural, Complementary< Correlative, Evaluative >, Adjunct >
+                };
 
             template <
                 typename Natural,
@@ -911,16 +911,16 @@ namespace junction {
                     Adjunct
             >
             constexpr Associative< AssociativelySingleJunctive< Natural, Correlative, Evaluative >, Natural, Correlative, Evaluative >
-            SafeSingleAssociator = {
-                Instantiate< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, Adjunct >,
-                Account< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative > >,
-                Correspond< Natural, Correlative, Evaluative, Equate, Order, SafeReadRelatorIncrementSingleScale< Natural, Correlative, Evaluative > >,
-                Associate< Natural, Correlative, Evaluative, PrecedeSafely< Natural, Complementary< Correlative, Evaluative >, Adjunct >, CedeSafely< Natural, Complementary< Correlative, Evaluative >, Adjunct >, Proceed< Natural, Complementary< Correlative, Evaluative >, Adjunct >, Equate, Order, SafeReadRelatorIncrementSingleScale< Natural, Correlative, Evaluative > >,
-                ReassociateSafely< Natural, Correlative, Evaluative, Equate, Order, SafeReadRelatorIncrementSingleScale< Natural, Correlative, Evaluative >, Adjunct >,
-                Disassociate< Natural, Correlative, Evaluative, ConcedeSafely< Natural, Complementary< Correlative, Evaluative > >, Equate, Order, SafeReadRelatorIncrementSingleScale< Natural, Correlative, Evaluative > >,
-                RemoveAll< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative > >,
-                DeleteOneNode< Natural, Complementary< Correlative, Evaluative >, Adjunct >
-            };
+                SafeSingleAssociator = {
+                    Instantiate< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, Adjunct >,
+                    Account< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative > >,
+                    Correspond< Natural, Correlative, Evaluative, Equate, Order, SafeReadRelatorIncrementSingleScale< Natural, Correlative, Evaluative > >,
+                    Associate< Natural, Correlative, Evaluative, PrecedeSafely< Natural, Complementary< Correlative, Evaluative >, Adjunct >, CedeSafely< Natural, Complementary< Correlative, Evaluative >, Adjunct >, Proceed< Natural, Complementary< Correlative, Evaluative >, Adjunct >, Equate, Order, SafeReadRelatorIncrementSingleScale< Natural, Correlative, Evaluative > >,
+                    ReassociateSafely< Natural, Correlative, Evaluative, Equate, Order, SafeReadRelatorIncrementSingleScale< Natural, Correlative, Evaluative >, Adjunct >,
+                    Disassociate< Natural, Correlative, Evaluative, ConcedeSafely< Natural, Complementary< Correlative, Evaluative > >, Equate, Order, SafeReadRelatorIncrementSingleScale< Natural, Correlative, Evaluative > >,
+                    RemoveAll< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative > >,
+                    DeleteOneNode< Natural, Complementary< Correlative, Evaluative >, Adjunct >
+                };
 
             template <
                 typename Natural,
@@ -934,16 +934,16 @@ namespace junction {
                     Adjunct
             >
             constexpr Associative< AssociativelyDoubleJunctive< Natural, Correlative, Evaluative >, Natural, Correlative, Evaluative >
-            SafeDoubleAssociator = {
-                Instantiate< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, Adjunct >,
-                Account< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative > >,
-                Correspond< Natural, Correlative, Evaluative, Equate, Order, SafeReadRelatorDoubleLiner< Natural, Correlative, Evaluative > >,
-                Associate< Natural, Correlative, Evaluative, PrecedeSafely< Natural, Complementary< Correlative, Evaluative >, Adjunct >, CedeSafely< Natural, Complementary< Correlative, Evaluative >, Adjunct >, Proceed< Natural, Complementary< Correlative, Evaluative >, Adjunct >, Equate, Order, SafeReadRelatorDoubleLiner< Natural, Correlative, Evaluative > >,
-                Reassociate< Natural, Correlative, Evaluative, Equate, Order, SafeReadRelatorDoubleLiner< Natural, Correlative, Evaluative >, Adjunct >,
-                Disassociate< Natural, Correlative, Evaluative, ConcedeSafely< Natural, Complementary< Correlative, Evaluative > >, Equate, Order, SafeReadRelatorDoubleLiner< Natural, Correlative, Evaluative > >,
-                RemoveAll< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative > >,
-                DeleteOneNode< Natural, Complementary< Correlative, Evaluative >, Adjunct >
-            };
+                SafeDoubleAssociator = {
+                    Instantiate< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, Adjunct >,
+                    Account< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative > >,
+                    Correspond< Natural, Correlative, Evaluative, Equate, Order, SafeReadRelatorDoubleLiner< Natural, Correlative, Evaluative > >,
+                    Associate< Natural, Correlative, Evaluative, PrecedeSafely< Natural, Complementary< Correlative, Evaluative >, Adjunct >, CedeSafely< Natural, Complementary< Correlative, Evaluative >, Adjunct >, Proceed< Natural, Complementary< Correlative, Evaluative >, Adjunct >, Equate, Order, SafeReadRelatorDoubleLiner< Natural, Correlative, Evaluative > >,
+                    Reassociate< Natural, Correlative, Evaluative, Equate, Order, SafeReadRelatorDoubleLiner< Natural, Correlative, Evaluative >, Adjunct >,
+                    Disassociate< Natural, Correlative, Evaluative, ConcedeSafely< Natural, Complementary< Correlative, Evaluative > >, Equate, Order, SafeReadRelatorDoubleLiner< Natural, Correlative, Evaluative > >,
+                    RemoveAll< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative > >,
+                    DeleteOneNode< Natural, Complementary< Correlative, Evaluative >, Adjunct >
+                };
 
         }
 

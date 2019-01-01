@@ -1,4 +1,4 @@
-// © 2018 Aaron Sami Abassi
+// © 2019 Aaron Sami Abassi
 // Licensed under the Academic Free License version 3.0
 // #define RAPBTL_NO_STD_CPLUSPLUS 1
 #include "abstraction.hpp"
@@ -19,12 +19,12 @@ Function(
 }
 
 auto
-Lambda = []( 
-    unsigned 
-        value 
-) -> void {
-    printf( "Lambda( %u )\n", value );
-};
+    Lambda = []( 
+        unsigned 
+            value 
+    ) -> void {
+        printf( "Lambda( %u )\n", value );
+    };
 
 class ClassTypical {
 
@@ -35,7 +35,7 @@ public:
         unsigned 
             value
     ) {
-        printf( "Object( %u )\n", value );
+        printf( "ClassTypical::operator()( %u )\n", value );
     }
 
     static void 
@@ -51,11 +51,11 @@ public:
         unsigned
             value
     ) {
-        printf( "Object.instance( %u )\n", value );
+        printf( "ClassTypical::instance( %u )\n", value );
     }
 
 }
-Object;
+    Object;
 
 static inline void
 Demonstrate(
@@ -69,7 +69,7 @@ Demonstrate(
 
 int 
 main() {
-    using FunctionTypical = Abstract< void, unsigned >;
+    using FunctionTypical = void( unsigned );
     using LambdaTypical = decltype(Lambda);
     static auto&
         AssignInvokeFunction = AssignInvokeProcedure< FunctionTypical, void, unsigned >;

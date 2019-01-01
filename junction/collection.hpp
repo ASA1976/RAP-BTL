@@ -1,4 +1,4 @@
-// © 2018 Aaron Sami Abassi
+// © 2019 Aaron Sami Abassi
 // Licensed under the Academic Free License version 3.0
 #ifndef JUNCTION_COLLECTION_MODULE
 #define JUNCTION_COLLECTION_MODULE
@@ -1720,14 +1720,14 @@ namespace junction {
             RelativePositional
                 opposition;
             auto
-                RemainingBase = [&]{
+                find_base_last = [&]{
                     BasicPositional
                         last;
                     basis.decrement.scale.begin( base_set, last, 0 );
                     return ProceedManyFromBase( operand, basis.increment, base_set, position, last );
                 };
             auto
-                RemainingRelative = [&]{
+                find_relative_last = [&]{
                     RelativePositional
                         last;
                     relativity.decrement.scale.begin( relative_set, last, 0 );
@@ -1737,12 +1737,12 @@ namespace junction {
             if (!basis.increment.begins( base_set, 0 )) {
                 if (relativity.increment.begins( relative_set, 0 )) {
                     relativity.increment.scale.begin( relative_set, opposition, 0 );
-                    return RemainingRelative();
+                    return find_relative_last();
                 }
             } else if (!relativity.increment.begins( relative_set, 0 )) {
                 if (basis.increment.begins( base_set, 0 )) {
                     basis.increment.scale.begin( base_set, position, 0 );
-                    return RemainingBase();
+                    return find_base_last();
                 }
             } else {
                 basis.increment.scale.begin( base_set, position, 0 );
@@ -1756,10 +1756,10 @@ namespace junction {
                             if (!relativity.increment.traverses( relative_set, opposition, 1 ))
                                 break;
                             relativity.increment.scale.traverse( relative_set, opposition, 1 );
-                            return RemainingRelative();
+                            return find_relative_last();
                         } else if (!relativity.increment.traverses( relative_set, opposition, 1 )) {
                             basis.increment.scale.traverse( base_set, position, 1 );
-                            return RemainingBase();
+                            return find_base_last();
                         }
                         basis.increment.scale.traverse( base_set, position, 1 );
                         relativity.increment.scale.traverse( relative_set, opposition, 1 );
@@ -1767,13 +1767,13 @@ namespace junction {
                         if (!ProceedOne( operand, base_value ))
                             return false;
                         if (!basis.increment.traverses( base_set, position, 1 ))
-                            return RemainingRelative();
+                            return find_relative_last();
                         basis.increment.scale.traverse( base_set, position, 1 );
                     } else {
                         if (!ProceedOne( operand, relative_value ))
                             return false;
                         if (!relativity.increment.traverses( relative_set, opposition, 1 ))
-                            return RemainingBase();
+                            return find_base_last();
                         relativity.increment.scale.traverse( relative_set, opposition, 1 );
                     }
                 }
@@ -1915,14 +1915,14 @@ namespace junction {
             RelativePositional
                 apposition;
             auto
-                RemainingBase = [&]{
+                find_base_last = [&]{
                     BasicPositional
                         last;
                     basis.decrement.scale.begin( base_set, last, 0 );
                     return ProceedManyFromBase( operand, basis.increment, base_set, position, last );
                 };
             auto
-                RemainingRelative = [&]{
+                find_relative_last = [&]{
                     RelativePositional
                         last;
                     relativity.decrement.scale.begin( relative_set, last, 0 );
@@ -1933,10 +1933,10 @@ namespace junction {
                 if (!relativity.increment.begins( relative_set, 0 ))
                     return true;
                 relativity.increment.scale.begin( relative_set, apposition, 0 );
-                return RemainingRelative();
+                return find_relative_last();
             } else if (!relativity.increment.begins( relative_set, 0 )) {
                 basis.increment.scale.begin( base_set, position, 0 );
-                return RemainingBase();
+                return find_base_last();
             }
             basis.increment.scale.begin( base_set, position, 0 );
             relativity.increment.scale.begin( relative_set, apposition, 0 );
@@ -1951,10 +1951,10 @@ namespace junction {
                         if (!relativity.increment.traverses( relative_set, apposition, 1 ))
                             return true;
                         relativity.increment.scale.traverse( relative_set, apposition, 1 );
-                        return RemainingRelative();
+                        return find_relative_last();
                     } else if (!relativity.increment.traverses( relative_set, apposition, 1 )) {
                         basis.increment.scale.traverse( base_set, position, 1 );
-                        return RemainingBase();
+                        return find_base_last();
                     }
                     basis.increment.scale.traverse( base_set, position, 1 );
                     relativity.increment.scale.traverse( relative_set, apposition, 1 );
@@ -1962,13 +1962,13 @@ namespace junction {
                     if (!ProceedOne( operand, base_value ))
                         return false;
                     if (!basis.increment.traverses( base_set, position, 1 ))
-                        return RemainingRelative();
+                        return find_relative_last();
                     basis.increment.scale.traverse( base_set, position, 1 );
                 } else {
                     if (!ProceedOne( operand, relative_value ))
                         return false;
                     if (!relativity.increment.traverses( relative_set, apposition, 1 ))
-                        return RemainingBase();
+                        return find_base_last();
                     relativity.increment.scale.traverse( relative_set, apposition, 1 );
                 }
             }
@@ -1985,38 +1985,38 @@ namespace junction {
                 Adjunct
         >
         constexpr Compositional< SinglyJunctive< Natural, Elemental >, Natural, Elemental >
-        OrderedSingleComposer = {
-            Instantiate< SinglyLinked< Elemental >, Natural, Elemental, Adjunct >,
-            AccreditCollection< Natural, Elemental, Equate, Order, ReadIncrementSingleScale< Natural, Elemental > >,
-            ComposeCollection<
-                Natural, 
-                Elemental, 
-                Precede< Natural, Elemental, Adjunct >, 
-                Cede< Natural, Elemental, Adjunct >, 
-                Proceed< Natural, Elemental, Adjunct >, 
-                Equate, 
-                Order, 
-                ReadIncrementSingleScale< Natural, Elemental > 
-            >,
-            RecomposeCollection<
-                Natural, 
-                Elemental, 
-                Equate, 
-                Order, 
-                ReadIncrementSingleScale< Natural, Elemental >,
-                Adjunct
-            >,
-            DiscomposeCollection<
-                Natural, 
-                Elemental, 
-                Concede< Natural, Elemental >, 
-                Equate, 
-                Order, 
-                ReadIncrementSingleScale< Natural, Elemental > 
-            >,
-            RemoveAll< SinglyLinked< Elemental >, Natural, Elemental >,
-            DeleteOneNode< Natural, Elemental, Adjunct >
-        };
+            OrderedSingleComposer = {
+                Instantiate< SinglyLinked< Elemental >, Natural, Elemental, Adjunct >,
+                AccreditCollection< Natural, Elemental, Equate, Order, ReadIncrementSingleScale< Natural, Elemental > >,
+                ComposeCollection<
+                    Natural, 
+                    Elemental, 
+                    Precede< Natural, Elemental, Adjunct >, 
+                    Cede< Natural, Elemental, Adjunct >, 
+                    Proceed< Natural, Elemental, Adjunct >, 
+                    Equate, 
+                    Order, 
+                    ReadIncrementSingleScale< Natural, Elemental > 
+                >,
+                RecomposeCollection<
+                    Natural, 
+                    Elemental, 
+                    Equate, 
+                    Order, 
+                    ReadIncrementSingleScale< Natural, Elemental >,
+                    Adjunct
+                >,
+                DiscomposeCollection<
+                    Natural, 
+                    Elemental, 
+                    Concede< Natural, Elemental >, 
+                    Equate, 
+                    Order, 
+                    ReadIncrementSingleScale< Natural, Elemental > 
+                >,
+                RemoveAll< SinglyLinked< Elemental >, Natural, Elemental >,
+                DeleteOneNode< Natural, Elemental, Adjunct >
+            };
 
         template <
             typename Natural,
@@ -2029,38 +2029,38 @@ namespace junction {
                 Adjunct
         >
         constexpr Compositional< DoublyJunctive< Natural, Elemental >, Natural, Elemental >
-        OrderedDoubleComposer = {
-            Instantiate< DoublyLinked< Elemental >, Natural, Elemental, Adjunct >,
-            AccreditCollection< Natural, Elemental, Equate, Order, ReadDoubleLiner< Natural, Elemental > >,
-            ComposeCollection<
-                Natural, 
-                Elemental, 
-                Precede< Natural, Elemental, Adjunct >, 
-                Cede< Natural, Elemental, Adjunct >, 
-                Proceed< Natural, Elemental, Adjunct >, 
-                Equate, 
-                Order, 
-                ReadDoubleLiner< Natural, Elemental > 
-            >,
-            RecomposeCollection<
-                Natural, 
-                Elemental, 
-                Equate, 
-                Order, 
-                ReadDoubleLiner< Natural, Elemental >,
-                Adjunct
-            >,
-            DiscomposeCollection< 
-                Natural, 
-                Elemental, 
-                Concede< Natural, Elemental >, 
-                Equate, 
-                Order, 
-                ReadDoubleLiner< Natural, Elemental > 
-            >,
-            RemoveAll< DoublyLinked< Elemental >, Natural, Elemental >,
-            DeleteOneNode< Natural, Elemental, Adjunct >
-        };
+            OrderedDoubleComposer = {
+                Instantiate< DoublyLinked< Elemental >, Natural, Elemental, Adjunct >,
+                AccreditCollection< Natural, Elemental, Equate, Order, ReadDoubleLiner< Natural, Elemental > >,
+                ComposeCollection<
+                    Natural, 
+                    Elemental, 
+                    Precede< Natural, Elemental, Adjunct >, 
+                    Cede< Natural, Elemental, Adjunct >, 
+                    Proceed< Natural, Elemental, Adjunct >, 
+                    Equate, 
+                    Order, 
+                    ReadDoubleLiner< Natural, Elemental > 
+                >,
+                RecomposeCollection<
+                    Natural, 
+                    Elemental, 
+                    Equate, 
+                    Order, 
+                    ReadDoubleLiner< Natural, Elemental >,
+                    Adjunct
+                >,
+                DiscomposeCollection< 
+                    Natural, 
+                    Elemental, 
+                    Concede< Natural, Elemental >, 
+                    Equate, 
+                    Order, 
+                    ReadDoubleLiner< Natural, Elemental > 
+                >,
+                RemoveAll< DoublyLinked< Elemental >, Natural, Elemental >,
+                DeleteOneNode< Natural, Elemental, Adjunct >
+            };
 
         template <
             typename Natural,
@@ -2073,38 +2073,38 @@ namespace junction {
                 Adjunct
         >
         constexpr Compositional< SinglyJunctive< Natural, Elemental >, Natural, Elemental >
-        SafeOrderedSingleComposer = {
-            Instantiate< SinglyLinked< Elemental >, Natural, Elemental, Adjunct >,
-            AccreditCollection< Natural, Elemental, Equate, Order, SafeReadIncrementSingleScale< Natural, Elemental > >,
-            ComposeCollection<
-                Natural, 
-                Elemental, 
-                PrecedeSafely< Natural, Elemental, Adjunct >, 
-                CedeSafely< Natural, Elemental, Adjunct >, 
-                Proceed< Natural, Elemental, Adjunct >, 
-                Equate, 
-                Order, 
-                SafeReadIncrementSingleScale< Natural, Elemental > 
-            >,
-            RecomposeCollection<
-                Natural, 
-                Elemental, 
-                Equate, 
-                Order, 
-                SafeReadIncrementSingleScale< Natural, Elemental >,
-                Adjunct
-            >,
-            DiscomposeCollection<
-                Natural, 
-                Elemental, 
-                ConcedeSafely< Natural, Elemental >, 
-                Equate, 
-                Order, 
-                SafeReadIncrementSingleScale< Natural, Elemental > 
-            >,
-            RemoveAll< SinglyLinked< Elemental >, Natural, Elemental >,
-            DeleteOneNode< Natural, Elemental, Adjunct >
-        };
+            SafeOrderedSingleComposer = {
+                Instantiate< SinglyLinked< Elemental >, Natural, Elemental, Adjunct >,
+                AccreditCollection< Natural, Elemental, Equate, Order, SafeReadIncrementSingleScale< Natural, Elemental > >,
+                ComposeCollection<
+                    Natural, 
+                    Elemental, 
+                    PrecedeSafely< Natural, Elemental, Adjunct >, 
+                    CedeSafely< Natural, Elemental, Adjunct >, 
+                    Proceed< Natural, Elemental, Adjunct >, 
+                    Equate, 
+                    Order, 
+                    SafeReadIncrementSingleScale< Natural, Elemental > 
+                >,
+                RecomposeCollection<
+                    Natural, 
+                    Elemental, 
+                    Equate, 
+                    Order, 
+                    SafeReadIncrementSingleScale< Natural, Elemental >,
+                    Adjunct
+                >,
+                DiscomposeCollection<
+                    Natural, 
+                    Elemental, 
+                    ConcedeSafely< Natural, Elemental >, 
+                    Equate, 
+                    Order, 
+                    SafeReadIncrementSingleScale< Natural, Elemental > 
+                >,
+                RemoveAll< SinglyLinked< Elemental >, Natural, Elemental >,
+                DeleteOneNode< Natural, Elemental, Adjunct >
+            };
 
         template <
             typename Natural,
@@ -2117,38 +2117,38 @@ namespace junction {
                 Adjunct
         >
         constexpr Compositional< DoublyJunctive< Natural, Elemental >, Natural, Elemental >
-        SafeOrderedDoubleComposer = {
-            Instantiate< DoublyLinked< Elemental >, Natural, Elemental, Adjunct >,
-            AccreditCollection< Natural, Elemental, Equate, Order, SafeReadDoubleLiner< Natural, Elemental > >,
-            ComposeCollection<
-                Natural, 
-                Elemental, 
-                PrecedeSafely< Natural, Elemental, Adjunct >, 
-                CedeSafely< Natural, Elemental, Adjunct >, 
-                Proceed< Natural, Elemental, Adjunct >, 
-                Equate, 
-                Order, 
-                SafeReadDoubleLiner< Natural, Elemental > 
-            >,
-            RecomposeCollection<
-                Natural, 
-                Elemental, 
-                Equate, 
-                Order, 
-                SafeReadDoubleLiner< Natural, Elemental >,
-                Adjunct
-            >,
-            DiscomposeCollection< 
-                Natural, 
-                Elemental, 
-                ConcedeSafely< Natural, Elemental >, 
-                Equate, 
-                Order, 
-                SafeReadDoubleLiner< Natural, Elemental > 
-            >,
-            RemoveAll< DoublyLinked< Elemental >, Natural, Elemental >,
-            DeleteOneNode< Natural, Elemental, Adjunct >
-        };
+            SafeOrderedDoubleComposer = {
+                Instantiate< DoublyLinked< Elemental >, Natural, Elemental, Adjunct >,
+                AccreditCollection< Natural, Elemental, Equate, Order, SafeReadDoubleLiner< Natural, Elemental > >,
+                ComposeCollection<
+                    Natural, 
+                    Elemental, 
+                    PrecedeSafely< Natural, Elemental, Adjunct >, 
+                    CedeSafely< Natural, Elemental, Adjunct >, 
+                    Proceed< Natural, Elemental, Adjunct >, 
+                    Equate, 
+                    Order, 
+                    SafeReadDoubleLiner< Natural, Elemental > 
+                >,
+                RecomposeCollection<
+                    Natural, 
+                    Elemental, 
+                    Equate, 
+                    Order, 
+                    SafeReadDoubleLiner< Natural, Elemental >,
+                    Adjunct
+                >,
+                DiscomposeCollection< 
+                    Natural, 
+                    Elemental, 
+                    ConcedeSafely< Natural, Elemental >, 
+                    Equate, 
+                    Order, 
+                    SafeReadDoubleLiner< Natural, Elemental > 
+                >,
+                RemoveAll< DoublyLinked< Elemental >, Natural, Elemental >,
+                DeleteOneNode< Natural, Elemental, Adjunct >
+            };
 
         template <
             typename Basic,
@@ -2167,72 +2167,72 @@ namespace junction {
                 Adjunct
         >
         constexpr Sectional< SinglyJunctive< Natural, Elemental >, Basic, BasicPositional, BasicNatural, Relative, RelativePositional, RelativeNatural, Elemental >
-        OrderedSingleSection = {
-            ComplementSelections<
-                Basic, 
-                BasicPositional, 
-                BasicNatural, 
-                Relative, 
-                RelativePositional, 
-                RelativeNatural, 
-                Natural, 
-                Elemental, 
-                Precede< Natural, Elemental, Adjunct >, 
-                Cede< Natural, Elemental, Adjunct >, 
-                Proceed< Natural, Elemental, Adjunct >, 
-                Equate, 
-                Order,
-                ReadIncrementSingleScale< Natural, Elemental >
-            >,
-            DifferentiateSelections< 
-                Basic, 
-                BasicPositional, 
-                BasicNatural, 
-                Relative, 
-                RelativePositional, 
-                RelativeNatural, 
-                Natural, 
-                Elemental, 
-                Precede< Natural, Elemental, Adjunct >, 
-                Cede< Natural, Elemental, Adjunct >, 
-                Proceed< Natural, Elemental, Adjunct >, 
-                Equate, 
-                Order,
-                ReadIncrementSingleScale< Natural, Elemental >
-            >,
-            IntersectSelections< 
-                Basic, 
-                BasicPositional, 
-                BasicNatural, 
-                Relative, 
-                RelativePositional, 
-                RelativeNatural, 
-                Natural, 
-                Elemental, 
-                Precede< Natural, Elemental, Adjunct >, 
-                Cede< Natural, Elemental, Adjunct >,
-                Proceed< Natural, Elemental, Adjunct >, 
-                Equate, 
-                Order,
-                ReadIncrementSingleScale< Natural, Elemental >
-            >,
-            UniteSelections< 
-                Basic, 
-                BasicPositional, 
-                BasicNatural, 
-                Relative, 
-                RelativePositional, 
-                RelativeNatural, 
-                Natural, 
-                Elemental, 
-                Precede< Natural, Elemental, Adjunct >, 
-                Cede< Natural, Elemental, Adjunct >,
-                Proceed< Natural, Elemental, Adjunct >, 
-                Equate, 
-                Order,
-                ReadIncrementSingleScale< Natural, Elemental >
-            >
-        };
+            OrderedSingleSection = {
+                ComplementSelections<
+                    Basic, 
+                    BasicPositional, 
+                    BasicNatural, 
+                    Relative, 
+                    RelativePositional, 
+                    RelativeNatural, 
+                    Natural, 
+                    Elemental, 
+                    Precede< Natural, Elemental, Adjunct >, 
+                    Cede< Natural, Elemental, Adjunct >, 
+                    Proceed< Natural, Elemental, Adjunct >, 
+                    Equate, 
+                    Order,
+                    ReadIncrementSingleScale< Natural, Elemental >
+                >,
+                DifferentiateSelections< 
+                    Basic, 
+                    BasicPositional, 
+                    BasicNatural, 
+                    Relative, 
+                    RelativePositional, 
+                    RelativeNatural, 
+                    Natural, 
+                    Elemental, 
+                    Precede< Natural, Elemental, Adjunct >, 
+                    Cede< Natural, Elemental, Adjunct >, 
+                    Proceed< Natural, Elemental, Adjunct >, 
+                    Equate, 
+                    Order,
+                    ReadIncrementSingleScale< Natural, Elemental >
+                >,
+                IntersectSelections< 
+                    Basic, 
+                    BasicPositional, 
+                    BasicNatural, 
+                    Relative, 
+                    RelativePositional, 
+                    RelativeNatural, 
+                    Natural, 
+                    Elemental, 
+                    Precede< Natural, Elemental, Adjunct >, 
+                    Cede< Natural, Elemental, Adjunct >,
+                    Proceed< Natural, Elemental, Adjunct >, 
+                    Equate, 
+                    Order,
+                    ReadIncrementSingleScale< Natural, Elemental >
+                >,
+                UniteSelections< 
+                    Basic, 
+                    BasicPositional, 
+                    BasicNatural, 
+                    Relative, 
+                    RelativePositional, 
+                    RelativeNatural, 
+                    Natural, 
+                    Elemental, 
+                    Precede< Natural, Elemental, Adjunct >, 
+                    Cede< Natural, Elemental, Adjunct >,
+                    Proceed< Natural, Elemental, Adjunct >, 
+                    Equate, 
+                    Order,
+                    ReadIncrementSingleScale< Natural, Elemental >
+                >
+            };
 
         template <
             typename Basic,
@@ -2251,72 +2251,72 @@ namespace junction {
                 Adjunct
         >
         constexpr Sectional< DoublyJunctive< Natural, Elemental >, Basic, BasicPositional, BasicNatural, Relative, RelativePositional, RelativeNatural, Elemental >
-        OrderedDoubleSection = {
-            ComplementSelections<
-                Basic, 
-                BasicPositional, 
-                BasicNatural, 
-                Relative, 
-                RelativePositional, 
-                RelativeNatural, 
-                Natural, 
-                Elemental, 
-                Precede< Natural, Elemental, Adjunct >, 
-                Cede< Natural, Elemental, Adjunct >, 
-                Proceed< Natural, Elemental, Adjunct >, 
-                Equate, 
-                Order,
-                ReadDoubleLiner< Natural, Elemental >
-            >,
-            DifferentiateSelections< 
-                Basic, 
-                BasicPositional, 
-                BasicNatural, 
-                Relative, 
-                RelativePositional, 
-                RelativeNatural, 
-                Natural, 
-                Elemental, 
-                Precede< Natural, Elemental, Adjunct >, 
-                Cede< Natural, Elemental, Adjunct >, 
-                Proceed< Natural, Elemental, Adjunct >, 
-                Equate, 
-                Order,
-                ReadDoubleLiner< Natural, Elemental >
-            >,
-            IntersectSelections< 
-                Basic, 
-                BasicPositional, 
-                BasicNatural, 
-                Relative, 
-                RelativePositional, 
-                RelativeNatural, 
-                Natural, 
-                Elemental, 
-                Precede< Natural, Elemental, Adjunct >, 
-                Cede< Natural, Elemental, Adjunct >,
-                Proceed< Natural, Elemental, Adjunct >, 
-                Equate, 
-                Order,
-                ReadDoubleLiner< Natural, Elemental >
-            >,
-            UniteSelections< 
-                Basic, 
-                BasicPositional, 
-                BasicNatural, 
-                Relative, 
-                RelativePositional, 
-                RelativeNatural, 
-                Natural, 
-                Elemental, 
-                Precede< Natural, Elemental, Adjunct >, 
-                Cede< Natural, Elemental, Adjunct >,
-                Proceed< Natural, Elemental, Adjunct >, 
-                Equate, 
-                Order,
-                ReadDoubleLiner< Natural, Elemental >
-            >
-        };
+            OrderedDoubleSection = {
+                ComplementSelections<
+                    Basic, 
+                    BasicPositional, 
+                    BasicNatural, 
+                    Relative, 
+                    RelativePositional, 
+                    RelativeNatural, 
+                    Natural, 
+                    Elemental, 
+                    Precede< Natural, Elemental, Adjunct >, 
+                    Cede< Natural, Elemental, Adjunct >, 
+                    Proceed< Natural, Elemental, Adjunct >, 
+                    Equate, 
+                    Order,
+                    ReadDoubleLiner< Natural, Elemental >
+                >,
+                DifferentiateSelections< 
+                    Basic, 
+                    BasicPositional, 
+                    BasicNatural, 
+                    Relative, 
+                    RelativePositional, 
+                    RelativeNatural, 
+                    Natural, 
+                    Elemental, 
+                    Precede< Natural, Elemental, Adjunct >, 
+                    Cede< Natural, Elemental, Adjunct >, 
+                    Proceed< Natural, Elemental, Adjunct >, 
+                    Equate, 
+                    Order,
+                    ReadDoubleLiner< Natural, Elemental >
+                >,
+                IntersectSelections< 
+                    Basic, 
+                    BasicPositional, 
+                    BasicNatural, 
+                    Relative, 
+                    RelativePositional, 
+                    RelativeNatural, 
+                    Natural, 
+                    Elemental, 
+                    Precede< Natural, Elemental, Adjunct >, 
+                    Cede< Natural, Elemental, Adjunct >,
+                    Proceed< Natural, Elemental, Adjunct >, 
+                    Equate, 
+                    Order,
+                    ReadDoubleLiner< Natural, Elemental >
+                >,
+                UniteSelections< 
+                    Basic, 
+                    BasicPositional, 
+                    BasicNatural, 
+                    Relative, 
+                    RelativePositional, 
+                    RelativeNatural, 
+                    Natural, 
+                    Elemental, 
+                    Precede< Natural, Elemental, Adjunct >, 
+                    Cede< Natural, Elemental, Adjunct >,
+                    Proceed< Natural, Elemental, Adjunct >, 
+                    Equate, 
+                    Order,
+                    ReadDoubleLiner< Natural, Elemental >
+                >
+            };
 
         template <
             typename Basic,
@@ -2335,72 +2335,72 @@ namespace junction {
                 Adjunct
         >
         constexpr Sectional< SinglyJunctive< Natural, Elemental >, Basic, BasicPositional, BasicNatural, Relative, RelativePositional, RelativeNatural, Elemental >
-        SafeOrderedSingleSection = {
-            ComplementSelections<
-                Basic, 
-                BasicPositional, 
-                BasicNatural, 
-                Relative, 
-                RelativePositional, 
-                RelativeNatural, 
-                Natural, 
-                Elemental, 
-                PrecedeSafely< Natural, Elemental, Adjunct >, 
-                CedeSafely< Natural, Elemental, Adjunct >, 
-                Proceed< Natural, Elemental, Adjunct >, 
-                Equate, 
-                Order,
-                SafeReadIncrementSingleScale< Natural, Elemental >
-            >,
-            DifferentiateSelections< 
-                Basic, 
-                BasicPositional, 
-                BasicNatural, 
-                Relative, 
-                RelativePositional, 
-                RelativeNatural, 
-                Natural, 
-                Elemental, 
-                PrecedeSafely< Natural, Elemental, Adjunct >, 
-                CedeSafely< Natural, Elemental, Adjunct >, 
-                Proceed< Natural, Elemental, Adjunct >, 
-                Equate, 
-                Order,
-                SafeReadIncrementSingleScale< Natural, Elemental >
-            >,
-            IntersectSelections< 
-                Basic, 
-                BasicPositional, 
-                BasicNatural, 
-                Relative, 
-                RelativePositional, 
-                RelativeNatural, 
-                Natural, 
-                Elemental, 
-                PrecedeSafely< Natural, Elemental, Adjunct >, 
-                CedeSafely< Natural, Elemental, Adjunct >,
-                Proceed< Natural, Elemental, Adjunct >, 
-                Equate, 
-                Order,
-                SafeReadIncrementSingleScale< Natural, Elemental >
-            >,
-            UniteSelections< 
-                Basic, 
-                BasicPositional, 
-                BasicNatural, 
-                Relative, 
-                RelativePositional, 
-                RelativeNatural, 
-                Natural, 
-                Elemental, 
-                PrecedeSafely< Natural, Elemental, Adjunct >, 
-                CedeSafely< Natural, Elemental, Adjunct >,
-                Proceed< Natural, Elemental, Adjunct >, 
-                Equate, 
-                Order,
-                SafeReadIncrementSingleScale< Natural, Elemental >
-            >
-        };
+            SafeOrderedSingleSection = {
+                ComplementSelections<
+                    Basic, 
+                    BasicPositional, 
+                    BasicNatural, 
+                    Relative, 
+                    RelativePositional, 
+                    RelativeNatural, 
+                    Natural, 
+                    Elemental, 
+                    PrecedeSafely< Natural, Elemental, Adjunct >, 
+                    CedeSafely< Natural, Elemental, Adjunct >, 
+                    Proceed< Natural, Elemental, Adjunct >, 
+                    Equate, 
+                    Order,
+                    SafeReadIncrementSingleScale< Natural, Elemental >
+                >,
+                DifferentiateSelections< 
+                    Basic, 
+                    BasicPositional, 
+                    BasicNatural, 
+                    Relative, 
+                    RelativePositional, 
+                    RelativeNatural, 
+                    Natural, 
+                    Elemental, 
+                    PrecedeSafely< Natural, Elemental, Adjunct >, 
+                    CedeSafely< Natural, Elemental, Adjunct >, 
+                    Proceed< Natural, Elemental, Adjunct >, 
+                    Equate, 
+                    Order,
+                    SafeReadIncrementSingleScale< Natural, Elemental >
+                >,
+                IntersectSelections< 
+                    Basic, 
+                    BasicPositional, 
+                    BasicNatural, 
+                    Relative, 
+                    RelativePositional, 
+                    RelativeNatural, 
+                    Natural, 
+                    Elemental, 
+                    PrecedeSafely< Natural, Elemental, Adjunct >, 
+                    CedeSafely< Natural, Elemental, Adjunct >,
+                    Proceed< Natural, Elemental, Adjunct >, 
+                    Equate, 
+                    Order,
+                    SafeReadIncrementSingleScale< Natural, Elemental >
+                >,
+                UniteSelections< 
+                    Basic, 
+                    BasicPositional, 
+                    BasicNatural, 
+                    Relative, 
+                    RelativePositional, 
+                    RelativeNatural, 
+                    Natural, 
+                    Elemental, 
+                    PrecedeSafely< Natural, Elemental, Adjunct >, 
+                    CedeSafely< Natural, Elemental, Adjunct >,
+                    Proceed< Natural, Elemental, Adjunct >, 
+                    Equate, 
+                    Order,
+                    SafeReadIncrementSingleScale< Natural, Elemental >
+                >
+            };
 
         template <
             typename Basic,
@@ -2419,72 +2419,72 @@ namespace junction {
                 Adjunct
         >
         constexpr Sectional< DoublyJunctive< Natural, Elemental >, Basic, BasicPositional, BasicNatural, Relative, RelativePositional, RelativeNatural, Elemental >
-        SafeOrderedDoubleSection = {
-            ComplementSelections<
-                Basic, 
-                BasicPositional, 
-                BasicNatural, 
-                Relative, 
-                RelativePositional, 
-                RelativeNatural, 
-                Natural, 
-                Elemental, 
-                PrecedeSafely< Natural, Elemental, Adjunct >, 
-                CedeSafely< Natural, Elemental, Adjunct >, 
-                Proceed< Natural, Elemental, Adjunct >, 
-                Equate, 
-                Order,
-                SafeReadDoubleLiner< Natural, Elemental >
-            >,
-            DifferentiateSelections< 
-                Basic, 
-                BasicPositional, 
-                BasicNatural, 
-                Relative, 
-                RelativePositional, 
-                RelativeNatural, 
-                Natural, 
-                Elemental, 
-                PrecedeSafely< Natural, Elemental, Adjunct >, 
-                CedeSafely< Natural, Elemental, Adjunct >, 
-                Proceed< Natural, Elemental, Adjunct >, 
-                Equate, 
-                Order,
-                SafeReadDoubleLiner< Natural, Elemental >
-            >,
-            IntersectSelections< 
-                Basic, 
-                BasicPositional, 
-                BasicNatural, 
-                Relative, 
-                RelativePositional, 
-                RelativeNatural, 
-                Natural, 
-                Elemental, 
-                PrecedeSafely< Natural, Elemental, Adjunct >, 
-                CedeSafely< Natural, Elemental, Adjunct >,
-                Proceed< Natural, Elemental, Adjunct >, 
-                Equate, 
-                Order,
-                SafeReadDoubleLiner< Natural, Elemental >
-            >,
-            UniteSelections< 
-                Basic, 
-                BasicPositional, 
-                BasicNatural, 
-                Relative, 
-                RelativePositional, 
-                RelativeNatural, 
-                Natural, 
-                Elemental, 
-                PrecedeSafely< Natural, Elemental, Adjunct >, 
-                CedeSafely< Natural, Elemental, Adjunct >,
-                Proceed< Natural, Elemental, Adjunct >, 
-                Equate, 
-                Order,
-                SafeReadDoubleLiner< Natural, Elemental >
-            >
-        };
+            SafeOrderedDoubleSection = {
+                ComplementSelections<
+                    Basic, 
+                    BasicPositional, 
+                    BasicNatural, 
+                    Relative, 
+                    RelativePositional, 
+                    RelativeNatural, 
+                    Natural, 
+                    Elemental, 
+                    PrecedeSafely< Natural, Elemental, Adjunct >, 
+                    CedeSafely< Natural, Elemental, Adjunct >, 
+                    Proceed< Natural, Elemental, Adjunct >, 
+                    Equate, 
+                    Order,
+                    SafeReadDoubleLiner< Natural, Elemental >
+                >,
+                DifferentiateSelections< 
+                    Basic, 
+                    BasicPositional, 
+                    BasicNatural, 
+                    Relative, 
+                    RelativePositional, 
+                    RelativeNatural, 
+                    Natural, 
+                    Elemental, 
+                    PrecedeSafely< Natural, Elemental, Adjunct >, 
+                    CedeSafely< Natural, Elemental, Adjunct >, 
+                    Proceed< Natural, Elemental, Adjunct >, 
+                    Equate, 
+                    Order,
+                    SafeReadDoubleLiner< Natural, Elemental >
+                >,
+                IntersectSelections< 
+                    Basic, 
+                    BasicPositional, 
+                    BasicNatural, 
+                    Relative, 
+                    RelativePositional, 
+                    RelativeNatural, 
+                    Natural, 
+                    Elemental, 
+                    PrecedeSafely< Natural, Elemental, Adjunct >, 
+                    CedeSafely< Natural, Elemental, Adjunct >,
+                    Proceed< Natural, Elemental, Adjunct >, 
+                    Equate, 
+                    Order,
+                    SafeReadDoubleLiner< Natural, Elemental >
+                >,
+                UniteSelections< 
+                    Basic, 
+                    BasicPositional, 
+                    BasicNatural, 
+                    Relative, 
+                    RelativePositional, 
+                    RelativeNatural, 
+                    Natural, 
+                    Elemental, 
+                    PrecedeSafely< Natural, Elemental, Adjunct >, 
+                    CedeSafely< Natural, Elemental, Adjunct >,
+                    Proceed< Natural, Elemental, Adjunct >, 
+                    Equate, 
+                    Order,
+                    SafeReadDoubleLiner< Natural, Elemental >
+                >
+            };
 
         template <
             typename Natural,
@@ -2497,46 +2497,46 @@ namespace junction {
                 Adjunct
         >
         constexpr Selective< SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, Natural, Elemental >
-        OrderedSingleSelector = {
-            OrderedSingleComposer< Natural, Elemental, Equate, Order, Adjunct >,
-            OrderedSingleSection< 
-                SinglyJunctive< Natural, Elemental >, 
-                SinglyPositional< Elemental >, 
-                Natural, 
-                SinglyJunctive< Natural, Elemental >, 
-                SinglyPositional< Elemental >, 
-                Natural, 
-                Natural, 
-                Elemental, 
-                Equate, 
-                Order, 
-                Adjunct 
-            >,
-            CollateSelection< 
-                SinglyJunctive< Natural, Elemental >, 
-                SinglyPositional< Elemental >, 
-                Natural, 
-                Natural, 
-                Elemental, 
-                Precede< Natural, Elemental, Adjunct >, 
-                Cede< Natural, Elemental, Adjunct >, 
-                Proceed< Natural, Elemental, Adjunct >, 
-                Equate, 
-                Order,
-                ReadIncrementSingleScale< Natural, Elemental >
-            >,
-            EquateSelections< 
-                SinglyJunctive< Natural, Elemental >, 
-                SinglyPositional< Elemental >, 
-                Natural, 
-                SinglyJunctive< Natural, Elemental >, 
-                SinglyPositional< Elemental >, 
-                Natural, 
-                Elemental, 
-                Equate 
-            >,
-            Account< SinglyLinked< Elemental >, Natural, Elemental >
-        };
+            OrderedSingleSelector = {
+                OrderedSingleComposer< Natural, Elemental, Equate, Order, Adjunct >,
+                OrderedSingleSection< 
+                    SinglyJunctive< Natural, Elemental >, 
+                    SinglyPositional< Elemental >, 
+                    Natural, 
+                    SinglyJunctive< Natural, Elemental >, 
+                    SinglyPositional< Elemental >, 
+                    Natural, 
+                    Natural, 
+                    Elemental, 
+                    Equate, 
+                    Order, 
+                    Adjunct 
+                >,
+                CollateSelection< 
+                    SinglyJunctive< Natural, Elemental >, 
+                    SinglyPositional< Elemental >, 
+                    Natural, 
+                    Natural, 
+                    Elemental, 
+                    Precede< Natural, Elemental, Adjunct >, 
+                    Cede< Natural, Elemental, Adjunct >, 
+                    Proceed< Natural, Elemental, Adjunct >, 
+                    Equate, 
+                    Order,
+                    ReadIncrementSingleScale< Natural, Elemental >
+                >,
+                EquateSelections< 
+                    SinglyJunctive< Natural, Elemental >, 
+                    SinglyPositional< Elemental >, 
+                    Natural, 
+                    SinglyJunctive< Natural, Elemental >, 
+                    SinglyPositional< Elemental >, 
+                    Natural, 
+                    Elemental, 
+                    Equate 
+                >,
+                Account< SinglyLinked< Elemental >, Natural, Elemental >
+            };
 
         template <
             typename Natural,
@@ -2549,46 +2549,46 @@ namespace junction {
                 Adjunct
         >
         constexpr Selective< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, Elemental >
-        OrderedDoubleSelector = {
-            OrderedDoubleComposer< Natural, Elemental, Equate, Order, Adjunct >,
-            OrderedDoubleSection< 
-                DoublyJunctive< Natural, Elemental >, 
-                DoublyPositional< Elemental >, 
-                Natural, 
-                DoublyJunctive< Natural, Elemental >, 
-                DoublyPositional< Elemental >, 
-                Natural, 
-                Natural, 
-                Elemental, 
-                Equate, 
-                Order, 
-                Adjunct 
-            >,
-            CollateSelection< 
-                DoublyJunctive< Natural, Elemental >, 
-                DoublyPositional< Elemental >, 
-                Natural, 
-                Natural, 
-                Elemental, 
-                Precede< Natural, Elemental, Adjunct >, 
-                Cede< Natural, Elemental, Adjunct >, 
-                Proceed< Natural, Elemental, Adjunct >, 
-                Equate, 
-                Order,
-                ReadDoubleLiner< Natural, Elemental >
-            >,
-            EquateSelections< 
-                DoublyJunctive< Natural, Elemental >, 
-                DoublyPositional< Elemental >, 
-                Natural, 
-                DoublyJunctive< Natural, Elemental >, 
-                DoublyPositional< Elemental >, 
-                Natural, 
-                Elemental, 
-                Equate 
-            >,
-            Account< DoublyLinked< Elemental >, Natural, Elemental >
-        };
+            OrderedDoubleSelector = {
+                OrderedDoubleComposer< Natural, Elemental, Equate, Order, Adjunct >,
+                OrderedDoubleSection< 
+                    DoublyJunctive< Natural, Elemental >, 
+                    DoublyPositional< Elemental >, 
+                    Natural, 
+                    DoublyJunctive< Natural, Elemental >, 
+                    DoublyPositional< Elemental >, 
+                    Natural, 
+                    Natural, 
+                    Elemental, 
+                    Equate, 
+                    Order, 
+                    Adjunct 
+                >,
+                CollateSelection< 
+                    DoublyJunctive< Natural, Elemental >, 
+                    DoublyPositional< Elemental >, 
+                    Natural, 
+                    Natural, 
+                    Elemental, 
+                    Precede< Natural, Elemental, Adjunct >, 
+                    Cede< Natural, Elemental, Adjunct >, 
+                    Proceed< Natural, Elemental, Adjunct >, 
+                    Equate, 
+                    Order,
+                    ReadDoubleLiner< Natural, Elemental >
+                >,
+                EquateSelections< 
+                    DoublyJunctive< Natural, Elemental >, 
+                    DoublyPositional< Elemental >, 
+                    Natural, 
+                    DoublyJunctive< Natural, Elemental >, 
+                    DoublyPositional< Elemental >, 
+                    Natural, 
+                    Elemental, 
+                    Equate 
+                >,
+                Account< DoublyLinked< Elemental >, Natural, Elemental >
+            };
 
         template <
             typename Natural,
@@ -2601,46 +2601,46 @@ namespace junction {
                 Adjunct
         >
         constexpr Selective< SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, Natural, Elemental >
-        SafeOrderedSingleSelector = {
-            SafeOrderedSingleComposer< Natural, Elemental, Equate, Order, Adjunct >,
-            SafeOrderedSingleSection< 
-                SinglyJunctive< Natural, Elemental >, 
-                SinglyPositional< Elemental >, 
-                Natural, 
-                SinglyJunctive< Natural, Elemental >, 
-                SinglyPositional< Elemental >, 
-                Natural, 
-                Natural, 
-                Elemental, 
-                Equate, 
-                Order, 
-                Adjunct 
-            >,
-            CollateSelection< 
-                SinglyJunctive< Natural, Elemental >, 
-                SinglyPositional< Elemental >, 
-                Natural, 
-                Natural, 
-                Elemental, 
-                PrecedeSafely< Natural, Elemental, Adjunct >, 
-                CedeSafely< Natural, Elemental, Adjunct >, 
-                Proceed< Natural, Elemental, Adjunct >, 
-                Equate, 
-                Order,
-                SafeReadIncrementSingleScale< Natural, Elemental >
-            >,
-            EquateSelections< 
-                SinglyJunctive< Natural, Elemental >, 
-                SinglyPositional< Elemental >, 
-                Natural, 
-                SinglyJunctive< Natural, Elemental >, 
-                SinglyPositional< Elemental >, 
-                Natural, 
-                Elemental, 
-                Equate 
-            >,
-            Account< SinglyLinked< Elemental >, Natural, Elemental >
-        };
+            SafeOrderedSingleSelector = {
+                SafeOrderedSingleComposer< Natural, Elemental, Equate, Order, Adjunct >,
+                SafeOrderedSingleSection< 
+                    SinglyJunctive< Natural, Elemental >, 
+                    SinglyPositional< Elemental >, 
+                    Natural, 
+                    SinglyJunctive< Natural, Elemental >, 
+                    SinglyPositional< Elemental >, 
+                    Natural, 
+                    Natural, 
+                    Elemental, 
+                    Equate, 
+                    Order, 
+                    Adjunct 
+                >,
+                CollateSelection< 
+                    SinglyJunctive< Natural, Elemental >, 
+                    SinglyPositional< Elemental >, 
+                    Natural, 
+                    Natural, 
+                    Elemental, 
+                    PrecedeSafely< Natural, Elemental, Adjunct >, 
+                    CedeSafely< Natural, Elemental, Adjunct >, 
+                    Proceed< Natural, Elemental, Adjunct >, 
+                    Equate, 
+                    Order,
+                    SafeReadIncrementSingleScale< Natural, Elemental >
+                >,
+                EquateSelections< 
+                    SinglyJunctive< Natural, Elemental >, 
+                    SinglyPositional< Elemental >, 
+                    Natural, 
+                    SinglyJunctive< Natural, Elemental >, 
+                    SinglyPositional< Elemental >, 
+                    Natural, 
+                    Elemental, 
+                    Equate 
+                >,
+                Account< SinglyLinked< Elemental >, Natural, Elemental >
+            };
 
         template <
             typename Natural,
@@ -2653,46 +2653,46 @@ namespace junction {
                 Adjunct
         >
         constexpr Selective< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, Elemental >
-        SafeOrderedDoubleSelector = {
-            SafeOrderedDoubleComposer< Natural, Elemental, Equate, Order, Adjunct >,
-            SafeOrderedDoubleSection< 
-                DoublyJunctive< Natural, Elemental >, 
-                DoublyPositional< Elemental >, 
-                Natural, 
-                DoublyJunctive< Natural, Elemental >, 
-                DoublyPositional< Elemental >, 
-                Natural, 
-                Natural, 
-                Elemental, 
-                Equate, 
-                Order, 
-                Adjunct 
-            >,
-            CollateSelection< 
-                DoublyJunctive< Natural, Elemental >, 
-                DoublyPositional< Elemental >, 
-                Natural, 
-                Natural, 
-                Elemental, 
-                PrecedeSafely< Natural, Elemental, Adjunct >, 
-                CedeSafely< Natural, Elemental, Adjunct >, 
-                Proceed< Natural, Elemental, Adjunct >, 
-                Equate, 
-                Order,
-                SafeReadDoubleLiner< Natural, Elemental >
-            >,
-            EquateSelections< 
-                DoublyJunctive< Natural, Elemental >, 
-                DoublyPositional< Elemental >, 
-                Natural, 
-                DoublyJunctive< Natural, Elemental >, 
-                DoublyPositional< Elemental >, 
-                Natural, 
-                Elemental, 
-                Equate 
-            >,
-            Account< DoublyLinked< Elemental >, Natural, Elemental >
-        };
+            SafeOrderedDoubleSelector = {
+                SafeOrderedDoubleComposer< Natural, Elemental, Equate, Order, Adjunct >,
+                SafeOrderedDoubleSection< 
+                    DoublyJunctive< Natural, Elemental >, 
+                    DoublyPositional< Elemental >, 
+                    Natural, 
+                    DoublyJunctive< Natural, Elemental >, 
+                    DoublyPositional< Elemental >, 
+                    Natural, 
+                    Natural, 
+                    Elemental, 
+                    Equate, 
+                    Order, 
+                    Adjunct 
+                >,
+                CollateSelection< 
+                    DoublyJunctive< Natural, Elemental >, 
+                    DoublyPositional< Elemental >, 
+                    Natural, 
+                    Natural, 
+                    Elemental, 
+                    PrecedeSafely< Natural, Elemental, Adjunct >, 
+                    CedeSafely< Natural, Elemental, Adjunct >, 
+                    Proceed< Natural, Elemental, Adjunct >, 
+                    Equate, 
+                    Order,
+                    SafeReadDoubleLiner< Natural, Elemental >
+                >,
+                EquateSelections< 
+                    DoublyJunctive< Natural, Elemental >, 
+                    DoublyPositional< Elemental >, 
+                    Natural, 
+                    DoublyJunctive< Natural, Elemental >, 
+                    DoublyPositional< Elemental >, 
+                    Natural, 
+                    Elemental, 
+                    Equate 
+                >,
+                Account< DoublyLinked< Elemental >, Natural, Elemental >
+            };
 
         template <
             typename Basic,
@@ -2711,69 +2711,69 @@ namespace junction {
                 Adjunct
         >
         constexpr Bisectional< SinglyJunctive< Natural, Elemental >, Basic, BasicPositional, BasicNatural, Relative, RelativePositional, RelativeNatural, Elemental >
-        SingleBisection = {
-            ComplementCollections< 
-                SinglyLinked< Elemental >,
-                Basic, 
-                BasicPositional, 
-                BasicNatural, 
-                Relative, 
-                RelativePositional, 
-                RelativeNatural, 
-                Natural, 
-                Elemental, 
-                Proceed< Natural, Elemental, Adjunct, false >, 
-                Proceed< Relative, RelativePositional, RelativeNatural, Natural, Elemental, Adjunct, false >, 
-                Equate, 
-                Order 
-            >,
-            DifferentiateCollections< 
-                SinglyLinked< Elemental >,
-                Basic, 
-                BasicPositional, 
-                BasicNatural, 
-                Relative, 
-                RelativePositional, 
-                RelativeNatural, 
-                Natural, 
-                Elemental, 
-                Proceed< Natural, Elemental, Adjunct, false >, 
-                Proceed< Basic, BasicPositional, BasicNatural, Natural, Elemental, Adjunct, false >,
-                Proceed< Relative, RelativePositional, RelativeNatural, Natural, Elemental, Adjunct, false >, 
-                Equate, 
-                Order 
-            >,
-            IntersectCollections< 
-                SinglyLinked< Elemental >,
-                Basic, 
-                BasicPositional, 
-                BasicNatural, 
-                Relative, 
-                RelativePositional, 
-                RelativeNatural, 
-                Natural, 
-                Elemental, 
-                Proceed< Natural, Elemental, Adjunct, false >, 
-                Equate, 
-                Order 
-            >,
-            UniteCollections< 
-                SinglyLinked< Elemental >,
-                Basic, 
-                BasicPositional, 
-                BasicNatural, 
-                Relative, 
-                RelativePositional, 
-                RelativeNatural, 
-                Natural, 
-                Elemental, 
-                Proceed< Natural, Elemental, Adjunct, false >, 
-                Proceed< Basic, BasicPositional, BasicNatural, Natural, Elemental, Adjunct, false >, 
-                Proceed< Relative, RelativePositional, RelativeNatural, Natural, Elemental, Adjunct, false >, 
-                Equate, 
-                Order 
-            >
-        };
+            SingleBisection = {
+                ComplementCollections< 
+                    SinglyLinked< Elemental >,
+                    Basic, 
+                    BasicPositional, 
+                    BasicNatural, 
+                    Relative, 
+                    RelativePositional, 
+                    RelativeNatural, 
+                    Natural, 
+                    Elemental, 
+                    Proceed< Natural, Elemental, Adjunct, false >, 
+                    Proceed< Relative, RelativePositional, RelativeNatural, Natural, Elemental, Adjunct, false >, 
+                    Equate, 
+                    Order 
+                >,
+                DifferentiateCollections< 
+                    SinglyLinked< Elemental >,
+                    Basic, 
+                    BasicPositional, 
+                    BasicNatural, 
+                    Relative, 
+                    RelativePositional, 
+                    RelativeNatural, 
+                    Natural, 
+                    Elemental, 
+                    Proceed< Natural, Elemental, Adjunct, false >, 
+                    Proceed< Basic, BasicPositional, BasicNatural, Natural, Elemental, Adjunct, false >,
+                    Proceed< Relative, RelativePositional, RelativeNatural, Natural, Elemental, Adjunct, false >, 
+                    Equate, 
+                    Order 
+                >,
+                IntersectCollections< 
+                    SinglyLinked< Elemental >,
+                    Basic, 
+                    BasicPositional, 
+                    BasicNatural, 
+                    Relative, 
+                    RelativePositional, 
+                    RelativeNatural, 
+                    Natural, 
+                    Elemental, 
+                    Proceed< Natural, Elemental, Adjunct, false >, 
+                    Equate, 
+                    Order 
+                >,
+                UniteCollections< 
+                    SinglyLinked< Elemental >,
+                    Basic, 
+                    BasicPositional, 
+                    BasicNatural, 
+                    Relative, 
+                    RelativePositional, 
+                    RelativeNatural, 
+                    Natural, 
+                    Elemental, 
+                    Proceed< Natural, Elemental, Adjunct, false >, 
+                    Proceed< Basic, BasicPositional, BasicNatural, Natural, Elemental, Adjunct, false >, 
+                    Proceed< Relative, RelativePositional, RelativeNatural, Natural, Elemental, Adjunct, false >, 
+                    Equate, 
+                    Order 
+                >
+            };
 
         template <
             typename Basic,
@@ -2792,69 +2792,69 @@ namespace junction {
                 Adjunct
         >
         constexpr Bisectional< DoublyJunctive< Natural, Elemental >, Basic, BasicPositional, BasicNatural, Relative, RelativePositional, RelativeNatural, Elemental >
-        DoubleBisection = {
-            ComplementCollections< 
-                DoublyLinked< Elemental >,
-                Basic, 
-                BasicPositional, 
-                BasicNatural, 
-                Relative, 
-                RelativePositional, 
-                RelativeNatural, 
-                Natural, 
-                Elemental, 
-                Proceed< Natural, Elemental, Adjunct >, 
-                Proceed< Relative, RelativePositional, RelativeNatural, Natural, Elemental, Adjunct, false >, 
-                Equate, 
-                Order 
-            >,
-            DifferentiateCollections< 
-                DoublyLinked< Elemental >,
-                Basic, 
-                BasicPositional, 
-                BasicNatural, 
-                Relative, 
-                RelativePositional, 
-                RelativeNatural, 
-                Natural, 
-                Elemental, 
-                Proceed< Natural, Elemental, Adjunct >, 
-                Proceed< Basic, BasicPositional, BasicNatural, Natural, Elemental, Adjunct, false >,
-                Proceed< Relative, RelativePositional, RelativeNatural, Natural, Elemental, Adjunct, false >, 
-                Equate, 
-                Order 
-            >,
-            IntersectCollections< 
-                DoublyLinked< Elemental >,
-                Basic, 
-                BasicPositional, 
-                BasicNatural, 
-                Relative, 
-                RelativePositional, 
-                RelativeNatural, 
-                Natural, 
-                Elemental, 
-                Proceed< Natural, Elemental, Adjunct >, 
-                Equate, 
-                Order 
-            >,
-            UniteCollections< 
-                DoublyLinked< Elemental >,
-                Basic, 
-                BasicPositional, 
-                BasicNatural, 
-                Relative, 
-                RelativePositional, 
-                RelativeNatural, 
-                Natural, 
-                Elemental, 
-                Proceed< Natural, Elemental, Adjunct >, 
-                Proceed< Basic, BasicPositional, BasicNatural, Natural, Elemental, Adjunct, false >, 
-                Proceed< Relative, RelativePositional, RelativeNatural, Natural, Elemental, Adjunct, false >, 
-                Equate, 
-                Order 
-            >
-        };
+            DoubleBisection = {
+                ComplementCollections< 
+                    DoublyLinked< Elemental >,
+                    Basic, 
+                    BasicPositional, 
+                    BasicNatural, 
+                    Relative, 
+                    RelativePositional, 
+                    RelativeNatural, 
+                    Natural, 
+                    Elemental, 
+                    Proceed< Natural, Elemental, Adjunct >, 
+                    Proceed< Relative, RelativePositional, RelativeNatural, Natural, Elemental, Adjunct, false >, 
+                    Equate, 
+                    Order 
+                >,
+                DifferentiateCollections< 
+                    DoublyLinked< Elemental >,
+                    Basic, 
+                    BasicPositional, 
+                    BasicNatural, 
+                    Relative, 
+                    RelativePositional, 
+                    RelativeNatural, 
+                    Natural, 
+                    Elemental, 
+                    Proceed< Natural, Elemental, Adjunct >, 
+                    Proceed< Basic, BasicPositional, BasicNatural, Natural, Elemental, Adjunct, false >,
+                    Proceed< Relative, RelativePositional, RelativeNatural, Natural, Elemental, Adjunct, false >, 
+                    Equate, 
+                    Order 
+                >,
+                IntersectCollections< 
+                    DoublyLinked< Elemental >,
+                    Basic, 
+                    BasicPositional, 
+                    BasicNatural, 
+                    Relative, 
+                    RelativePositional, 
+                    RelativeNatural, 
+                    Natural, 
+                    Elemental, 
+                    Proceed< Natural, Elemental, Adjunct >, 
+                    Equate, 
+                    Order 
+                >,
+                UniteCollections< 
+                    DoublyLinked< Elemental >,
+                    Basic, 
+                    BasicPositional, 
+                    BasicNatural, 
+                    Relative, 
+                    RelativePositional, 
+                    RelativeNatural, 
+                    Natural, 
+                    Elemental, 
+                    Proceed< Natural, Elemental, Adjunct >, 
+                    Proceed< Basic, BasicPositional, BasicNatural, Natural, Elemental, Adjunct, false >, 
+                    Proceed< Relative, RelativePositional, RelativeNatural, Natural, Elemental, Adjunct, false >, 
+                    Equate, 
+                    Order 
+                >
+            };
 
         template <
             typename Basic,
@@ -2873,69 +2873,69 @@ namespace junction {
                 Adjunct
         >
         constexpr Bisectional< SinglyJunctive< Natural, Elemental >, Basic, BasicPositional, BasicNatural, Relative, RelativePositional, RelativeNatural, Elemental >
-        SafeSingleBisection = {
-            ComplementCollections< 
-                SinglyLinked< Elemental >,
-                Basic, 
-                BasicPositional, 
-                BasicNatural, 
-                Relative, 
-                RelativePositional, 
-                RelativeNatural, 
-                Natural, 
-                Elemental, 
-                Proceed< Natural, Elemental, Adjunct >, 
-                Proceed< Relative, RelativePositional, RelativeNatural, Natural, Elemental, Adjunct, true >, 
-                Equate, 
-                Order 
-            >,
-            DifferentiateCollections< 
-                SinglyLinked< Elemental >,
-                Basic, 
-                BasicPositional, 
-                BasicNatural, 
-                Relative, 
-                RelativePositional, 
-                RelativeNatural, 
-                Natural, 
-                Elemental, 
-                Proceed< Natural, Elemental, Adjunct >, 
-                Proceed< Basic, BasicPositional, BasicNatural, Natural, Elemental, Adjunct, true >,
-                Proceed< Relative, RelativePositional, RelativeNatural, Natural, Elemental, Adjunct, true >, 
-                Equate, 
-                Order 
-            >,
-            IntersectCollections< 
-                SinglyLinked< Elemental >,
-                Basic, 
-                BasicPositional, 
-                BasicNatural, 
-                Relative, 
-                RelativePositional, 
-                RelativeNatural, 
-                Natural, 
-                Elemental, 
-                Proceed< Natural, Elemental, Adjunct >, 
-                Equate, 
-                Order 
-            >,
-            UniteCollections< 
-                SinglyLinked< Elemental >,
-                Basic, 
-                BasicPositional, 
-                BasicNatural, 
-                Relative, 
-                RelativePositional, 
-                RelativeNatural, 
-                Natural, 
-                Elemental, 
-                Proceed< Natural, Elemental, Adjunct >, 
-                Proceed< Basic, BasicPositional, BasicNatural, Natural, Elemental, Adjunct, true >, 
-                Proceed< Relative, RelativePositional, RelativeNatural, Natural, Elemental, Adjunct, true >, 
-                Equate, 
-                Order 
-            >
-        };
+            SafeSingleBisection = {
+                ComplementCollections< 
+                    SinglyLinked< Elemental >,
+                    Basic, 
+                    BasicPositional, 
+                    BasicNatural, 
+                    Relative, 
+                    RelativePositional, 
+                    RelativeNatural, 
+                    Natural, 
+                    Elemental, 
+                    Proceed< Natural, Elemental, Adjunct >, 
+                    Proceed< Relative, RelativePositional, RelativeNatural, Natural, Elemental, Adjunct, true >, 
+                    Equate, 
+                    Order 
+                >,
+                DifferentiateCollections< 
+                    SinglyLinked< Elemental >,
+                    Basic, 
+                    BasicPositional, 
+                    BasicNatural, 
+                    Relative, 
+                    RelativePositional, 
+                    RelativeNatural, 
+                    Natural, 
+                    Elemental, 
+                    Proceed< Natural, Elemental, Adjunct >, 
+                    Proceed< Basic, BasicPositional, BasicNatural, Natural, Elemental, Adjunct, true >,
+                    Proceed< Relative, RelativePositional, RelativeNatural, Natural, Elemental, Adjunct, true >, 
+                    Equate, 
+                    Order 
+                >,
+                IntersectCollections< 
+                    SinglyLinked< Elemental >,
+                    Basic, 
+                    BasicPositional, 
+                    BasicNatural, 
+                    Relative, 
+                    RelativePositional, 
+                    RelativeNatural, 
+                    Natural, 
+                    Elemental, 
+                    Proceed< Natural, Elemental, Adjunct >, 
+                    Equate, 
+                    Order 
+                >,
+                UniteCollections< 
+                    SinglyLinked< Elemental >,
+                    Basic, 
+                    BasicPositional, 
+                    BasicNatural, 
+                    Relative, 
+                    RelativePositional, 
+                    RelativeNatural, 
+                    Natural, 
+                    Elemental, 
+                    Proceed< Natural, Elemental, Adjunct >, 
+                    Proceed< Basic, BasicPositional, BasicNatural, Natural, Elemental, Adjunct, true >, 
+                    Proceed< Relative, RelativePositional, RelativeNatural, Natural, Elemental, Adjunct, true >, 
+                    Equate, 
+                    Order 
+                >
+            };
 
         template <
             typename Basic,
@@ -2954,69 +2954,69 @@ namespace junction {
                 Adjunct
         >
         constexpr Bisectional< DoublyJunctive< Natural, Elemental >, Basic, BasicPositional, BasicNatural, Relative, RelativePositional, RelativeNatural, Elemental >
-        SafeDoubleBisection = {
-            ComplementCollections< 
-                DoublyLinked< Elemental >,
-                Basic, 
-                BasicPositional, 
-                BasicNatural, 
-                Relative, 
-                RelativePositional, 
-                RelativeNatural, 
-                Natural, 
-                Elemental, 
-                Proceed< Natural, Elemental, Adjunct >, 
-                Proceed< Relative, RelativePositional, RelativeNatural, Natural, Elemental, Adjunct, true >, 
-                Equate, 
-                Order 
-            >,
-            DifferentiateCollections< 
-                DoublyLinked< Elemental >,
-                Basic, 
-                BasicPositional, 
-                BasicNatural, 
-                Relative, 
-                RelativePositional, 
-                RelativeNatural, 
-                Natural, 
-                Elemental, 
-                Proceed< Natural, Elemental, Adjunct >, 
-                Proceed< Basic, BasicPositional, BasicNatural, Natural, Elemental, Adjunct, true >,
-                Proceed< Relative, RelativePositional, RelativeNatural, Natural, Elemental, Adjunct, true >, 
-                Equate, 
-                Order 
-            >,
-            IntersectCollections< 
-                DoublyLinked< Elemental >,
-                Basic, 
-                BasicPositional, 
-                BasicNatural, 
-                Relative, 
-                RelativePositional, 
-                RelativeNatural, 
-                Natural, 
-                Elemental, 
-                Proceed< Natural, Elemental, Adjunct >, 
-                Equate, 
-                Order 
-            >,
-            UniteCollections< 
-                DoublyLinked< Elemental >,
-                Basic, 
-                BasicPositional, 
-                BasicNatural, 
-                Relative, 
-                RelativePositional, 
-                RelativeNatural, 
-                Natural, 
-                Elemental, 
-                Proceed< Natural, Elemental, Adjunct >, 
-                Proceed< Basic, BasicPositional, BasicNatural, Natural, Elemental, Adjunct, true >, 
-                Proceed< Relative, RelativePositional, RelativeNatural, Natural, Elemental, Adjunct, true >, 
-                Equate, 
-                Order 
-            >
-        };
+            SafeDoubleBisection = {
+                ComplementCollections< 
+                    DoublyLinked< Elemental >,
+                    Basic, 
+                    BasicPositional, 
+                    BasicNatural, 
+                    Relative, 
+                    RelativePositional, 
+                    RelativeNatural, 
+                    Natural, 
+                    Elemental, 
+                    Proceed< Natural, Elemental, Adjunct >, 
+                    Proceed< Relative, RelativePositional, RelativeNatural, Natural, Elemental, Adjunct, true >, 
+                    Equate, 
+                    Order 
+                >,
+                DifferentiateCollections< 
+                    DoublyLinked< Elemental >,
+                    Basic, 
+                    BasicPositional, 
+                    BasicNatural, 
+                    Relative, 
+                    RelativePositional, 
+                    RelativeNatural, 
+                    Natural, 
+                    Elemental, 
+                    Proceed< Natural, Elemental, Adjunct >, 
+                    Proceed< Basic, BasicPositional, BasicNatural, Natural, Elemental, Adjunct, true >,
+                    Proceed< Relative, RelativePositional, RelativeNatural, Natural, Elemental, Adjunct, true >, 
+                    Equate, 
+                    Order 
+                >,
+                IntersectCollections< 
+                    DoublyLinked< Elemental >,
+                    Basic, 
+                    BasicPositional, 
+                    BasicNatural, 
+                    Relative, 
+                    RelativePositional, 
+                    RelativeNatural, 
+                    Natural, 
+                    Elemental, 
+                    Proceed< Natural, Elemental, Adjunct >, 
+                    Equate, 
+                    Order 
+                >,
+                UniteCollections< 
+                    DoublyLinked< Elemental >,
+                    Basic, 
+                    BasicPositional, 
+                    BasicNatural, 
+                    Relative, 
+                    RelativePositional, 
+                    RelativeNatural, 
+                    Natural, 
+                    Elemental, 
+                    Proceed< Natural, Elemental, Adjunct >, 
+                    Proceed< Basic, BasicPositional, BasicNatural, Natural, Elemental, Adjunct, true >, 
+                    Proceed< Relative, RelativePositional, RelativeNatural, Natural, Elemental, Adjunct, true >, 
+                    Equate, 
+                    Order 
+                >
+            };
 
         template <
             typename Natural,
@@ -3029,41 +3029,41 @@ namespace junction {
                 Adjunct
         >
         constexpr Collective< SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, Natural, Elemental >
-        SingleCollector = {
-            OrderedSingleSelector< Natural, Elemental, Equate, Order, Adjunct >,
-            SingleBisection<
-                SinglyJunctive< Natural, Elemental >, 
-                SinglyPositional< Elemental >, 
-                Natural, 
-                SinglyJunctive< Natural, Elemental >, 
-                SinglyPositional< Elemental >, 
-                Natural, 
-                Natural, 
-                Elemental, 
-                Equate, 
-                Order, 
-                Adjunct 
-            >,
-            CollateCollection<
-                SinglyLinked< Elemental >,
-                SinglyJunctive< Natural, Elemental >, 
-                SinglyPositional< Elemental >, 
-                Natural, 
-                Natural, 
-                Elemental, 
-                Proceed< SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, Natural, Natural, Elemental, Adjunct, false > 
-            >,
-            EquateCollections< 
-                SinglyJunctive< Natural, Elemental >, 
-                SinglyPositional< Elemental >, 
-                Natural, 
-                SinglyJunctive< Natural, Elemental >, 
-                SinglyPositional< Elemental >, 
-                Natural, 
-                Elemental, 
-                Equate 
-            >
-        };
+            SingleCollector = {
+                OrderedSingleSelector< Natural, Elemental, Equate, Order, Adjunct >,
+                SingleBisection<
+                    SinglyJunctive< Natural, Elemental >, 
+                    SinglyPositional< Elemental >, 
+                    Natural, 
+                    SinglyJunctive< Natural, Elemental >, 
+                    SinglyPositional< Elemental >, 
+                    Natural, 
+                    Natural, 
+                    Elemental, 
+                    Equate, 
+                    Order, 
+                    Adjunct 
+                >,
+                CollateCollection<
+                    SinglyLinked< Elemental >,
+                    SinglyJunctive< Natural, Elemental >, 
+                    SinglyPositional< Elemental >, 
+                    Natural, 
+                    Natural, 
+                    Elemental, 
+                    Proceed< SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, Natural, Natural, Elemental, Adjunct, false > 
+                >,
+                EquateCollections< 
+                    SinglyJunctive< Natural, Elemental >, 
+                    SinglyPositional< Elemental >, 
+                    Natural, 
+                    SinglyJunctive< Natural, Elemental >, 
+                    SinglyPositional< Elemental >, 
+                    Natural, 
+                    Elemental, 
+                    Equate 
+                >
+            };
 
         template <
             typename Natural,
@@ -3076,41 +3076,41 @@ namespace junction {
                 Adjunct
         >
         constexpr Collective< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, Elemental >
-        DoubleCollector = {
-            OrderedDoubleSelector< Natural, Elemental, Equate, Order, Adjunct >,
-            DoubleBisection<
-                DoublyJunctive< Natural, Elemental >, 
-                DoublyPositional< Elemental >, 
-                Natural, 
-                DoublyJunctive< Natural, Elemental >, 
-                DoublyPositional< Elemental >, 
-                Natural, 
-                Natural, 
-                Elemental, 
-                Equate, 
-                Order, 
-                Adjunct 
-            >,
-            CollateCollection<
-                DoublyLinked< Elemental >,
-                DoublyJunctive< Natural, Elemental >, 
-                DoublyPositional< Elemental >, 
-                Natural, 
-                Natural, 
-                Elemental, 
-                Proceed< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, Natural, Elemental, Adjunct, false > 
-            >,
-            EquateCollections< 
-                DoublyJunctive< Natural, Elemental >, 
-                DoublyPositional< Elemental >, 
-                Natural, 
-                DoublyJunctive< Natural, Elemental >, 
-                DoublyPositional< Elemental >, 
-                Natural, 
-                Elemental, 
-                Equate 
-            >
-        };
+            DoubleCollector = {
+                OrderedDoubleSelector< Natural, Elemental, Equate, Order, Adjunct >,
+                DoubleBisection<
+                    DoublyJunctive< Natural, Elemental >, 
+                    DoublyPositional< Elemental >, 
+                    Natural, 
+                    DoublyJunctive< Natural, Elemental >, 
+                    DoublyPositional< Elemental >, 
+                    Natural, 
+                    Natural, 
+                    Elemental, 
+                    Equate, 
+                    Order, 
+                    Adjunct 
+                >,
+                CollateCollection<
+                    DoublyLinked< Elemental >,
+                    DoublyJunctive< Natural, Elemental >, 
+                    DoublyPositional< Elemental >, 
+                    Natural, 
+                    Natural, 
+                    Elemental, 
+                    Proceed< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, Natural, Elemental, Adjunct, false > 
+                >,
+                EquateCollections< 
+                    DoublyJunctive< Natural, Elemental >, 
+                    DoublyPositional< Elemental >, 
+                    Natural, 
+                    DoublyJunctive< Natural, Elemental >, 
+                    DoublyPositional< Elemental >, 
+                    Natural, 
+                    Elemental, 
+                    Equate 
+                >
+            };
 
         template <
             typename Natural,
@@ -3123,41 +3123,41 @@ namespace junction {
                 Adjunct
         >
         constexpr Collective< SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, Natural, Elemental >
-        SafeSingleCollector = {
-            SafeOrderedSingleSelector< Natural, Elemental, Equate, Order, Adjunct >,
-            SafeSingleBisection<
-                SinglyJunctive< Natural, Elemental >, 
-                SinglyPositional< Elemental >, 
-                Natural, 
-                SinglyJunctive< Natural, Elemental >, 
-                SinglyPositional< Elemental >, 
-                Natural, 
-                Natural, 
-                Elemental, 
-                Equate, 
-                Order, 
-                Adjunct 
-            >,
-            CollateCollection<
-                SinglyLinked< Elemental >,
-                SinglyJunctive< Natural, Elemental >, 
-                SinglyPositional< Elemental >, 
-                Natural, 
-                Natural, 
-                Elemental, 
-                Proceed< SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, Natural, Natural, Elemental, Adjunct, true > 
-            >,
-            EquateCollections< 
-                SinglyJunctive< Natural, Elemental >, 
-                SinglyPositional< Elemental >, 
-                Natural, 
-                SinglyJunctive< Natural, Elemental >, 
-                SinglyPositional< Elemental >, 
-                Natural, 
-                Elemental, 
-                Equate 
-            >
-        };
+            SafeSingleCollector = {
+                SafeOrderedSingleSelector< Natural, Elemental, Equate, Order, Adjunct >,
+                SafeSingleBisection<
+                    SinglyJunctive< Natural, Elemental >, 
+                    SinglyPositional< Elemental >, 
+                    Natural, 
+                    SinglyJunctive< Natural, Elemental >, 
+                    SinglyPositional< Elemental >, 
+                    Natural, 
+                    Natural, 
+                    Elemental, 
+                    Equate, 
+                    Order, 
+                    Adjunct 
+                >,
+                CollateCollection<
+                    SinglyLinked< Elemental >,
+                    SinglyJunctive< Natural, Elemental >, 
+                    SinglyPositional< Elemental >, 
+                    Natural, 
+                    Natural, 
+                    Elemental, 
+                    Proceed< SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, Natural, Natural, Elemental, Adjunct, true > 
+                >,
+                EquateCollections< 
+                    SinglyJunctive< Natural, Elemental >, 
+                    SinglyPositional< Elemental >, 
+                    Natural, 
+                    SinglyJunctive< Natural, Elemental >, 
+                    SinglyPositional< Elemental >, 
+                    Natural, 
+                    Elemental, 
+                    Equate 
+                >
+            };
 
         template <
             typename Natural,
@@ -3170,41 +3170,41 @@ namespace junction {
                 Adjunct
         >
         constexpr Collective< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, Elemental >
-        SafeDoubleCollector = {
-            SafeOrderedDoubleSelector< Natural, Elemental, Equate, Order, Adjunct >,
-            SafeDoubleBisection<
-                DoublyJunctive< Natural, Elemental >, 
-                DoublyPositional< Elemental >, 
-                Natural, 
-                DoublyJunctive< Natural, Elemental >, 
-                DoublyPositional< Elemental >, 
-                Natural, 
-                Natural, 
-                Elemental, 
-                Equate, 
-                Order, 
-                Adjunct 
-            >,
-            CollateCollection<
-                DoublyLinked< Elemental >,
-                DoublyJunctive< Natural, Elemental >, 
-                DoublyPositional< Elemental >, 
-                Natural, 
-                Natural, 
-                Elemental, 
-                Proceed< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, Natural, Elemental, Adjunct, true > 
-            >,
-            EquateCollections< 
-                DoublyJunctive< Natural, Elemental >, 
-                DoublyPositional< Elemental >, 
-                Natural, 
-                DoublyJunctive< Natural, Elemental >, 
-                DoublyPositional< Elemental >, 
-                Natural, 
-                Elemental, 
-                Equate 
-            >
-        };
+            SafeDoubleCollector = {
+                SafeOrderedDoubleSelector< Natural, Elemental, Equate, Order, Adjunct >,
+                SafeDoubleBisection<
+                    DoublyJunctive< Natural, Elemental >, 
+                    DoublyPositional< Elemental >, 
+                    Natural, 
+                    DoublyJunctive< Natural, Elemental >, 
+                    DoublyPositional< Elemental >, 
+                    Natural, 
+                    Natural, 
+                    Elemental, 
+                    Equate, 
+                    Order, 
+                    Adjunct 
+                >,
+                CollateCollection<
+                    DoublyLinked< Elemental >,
+                    DoublyJunctive< Natural, Elemental >, 
+                    DoublyPositional< Elemental >, 
+                    Natural, 
+                    Natural, 
+                    Elemental, 
+                    Proceed< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, Natural, Elemental, Adjunct, true > 
+                >,
+                EquateCollections< 
+                    DoublyJunctive< Natural, Elemental >, 
+                    DoublyPositional< Elemental >, 
+                    Natural, 
+                    DoublyJunctive< Natural, Elemental >, 
+                    DoublyPositional< Elemental >, 
+                    Natural, 
+                    Elemental, 
+                    Equate 
+                >
+            };
 
     }
 

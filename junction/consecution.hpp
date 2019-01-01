@@ -1,4 +1,4 @@
-// © 2018 Aaron Sami Abassi
+// © 2019 Aaron Sami Abassi
 // Licensed under the Academic Free License version 3.0
 #ifndef JUNCTION_CONSECUTION_MODULE
 #define JUNCTION_CONSECUTION_MODULE
@@ -2014,12 +2014,12 @@ namespace junction {
                 Adjunct
         >
         constexpr Conjoint< SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, Relative, Appositional, RelativeNatural, Elemental >
-        SingleConjoiner = {
-            Accede< Relative, Appositional, RelativeNatural, Natural, Elemental, Adjunct, false >,
-            Precede< Relative, Appositional, RelativeNatural, Natural, Elemental, Adjunct >,
-            Cede< Relative, Appositional, RelativeNatural, Natural, Elemental, Adjunct >,
-            Proceed< Relative, Appositional, RelativeNatural, Natural, Elemental, Adjunct, false >
-        };
+            SingleConjoiner = {
+                Accede< Relative, Appositional, RelativeNatural, Natural, Elemental, Adjunct, false >,
+                Precede< Relative, Appositional, RelativeNatural, Natural, Elemental, Adjunct >,
+                Cede< Relative, Appositional, RelativeNatural, Natural, Elemental, Adjunct >,
+                Proceed< Relative, Appositional, RelativeNatural, Natural, Elemental, Adjunct, false >
+            };
 
         template <
             typename Relative,
@@ -2031,12 +2031,12 @@ namespace junction {
                 Adjunct
         >
         constexpr Conjoint< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Relative, Appositional, RelativeNatural, Elemental >
-        DoubleConjoiner = {
-            Accede< Relative, Appositional, RelativeNatural, Natural, Elemental, Adjunct, false >,
-            Precede< Relative, Appositional, RelativeNatural, Natural, Elemental, Adjunct >,
-            Cede< Relative, Appositional, RelativeNatural, Natural, Elemental, Adjunct >,
-            Proceed< Relative, Appositional, RelativeNatural, Natural, Elemental, Adjunct, false >
-        };
+            DoubleConjoiner = {
+                Accede< Relative, Appositional, RelativeNatural, Natural, Elemental, Adjunct, false >,
+                Precede< Relative, Appositional, RelativeNatural, Natural, Elemental, Adjunct >,
+                Cede< Relative, Appositional, RelativeNatural, Natural, Elemental, Adjunct >,
+                Proceed< Relative, Appositional, RelativeNatural, Natural, Elemental, Adjunct, false >
+            };
 
         template <
             typename Relative,
@@ -2048,12 +2048,12 @@ namespace junction {
                 Adjunct
         >
         constexpr Conjoint< SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, Relative, Appositional, RelativeNatural, Elemental >
-        SafeSingleConjoiner = {
-            Accede< Relative, Appositional, RelativeNatural, Elemental, Adjunct, true >,
-            PrecedeSafely< Relative, Appositional, RelativeNatural, Elemental, Adjunct >,
-            CedeSafely< Relative, Appositional, RelativeNatural, Natural, Elemental, Adjunct >,
-            Proceed< Relative, Appositional, RelativeNatural, Elemental, Adjunct, true >
-        };
+            SafeSingleConjoiner = {
+                Accede< Relative, Appositional, RelativeNatural, Elemental, Adjunct, true >,
+                PrecedeSafely< Relative, Appositional, RelativeNatural, Elemental, Adjunct >,
+                CedeSafely< Relative, Appositional, RelativeNatural, Natural, Elemental, Adjunct >,
+                Proceed< Relative, Appositional, RelativeNatural, Elemental, Adjunct, true >
+            };
 
         template <
             typename Relative,
@@ -2065,12 +2065,12 @@ namespace junction {
                 Adjunct
         >
         constexpr Conjoint< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Relative, Appositional, RelativeNatural, Elemental >
-        SafeDoubleConjoiner = {
-            Accede< Relative, Appositional, RelativeNatural, Elemental, Adjunct, true >,
-            PrecedeSafely< Relative, Appositional, RelativeNatural, Elemental, Adjunct >,
-            CedeSafely< Relative, Appositional, RelativeNatural, Natural, Elemental, Adjunct >,
-            Proceed< Relative, Appositional, RelativeNatural, Elemental, Adjunct, true >
-        };
+            SafeDoubleConjoiner = {
+                Accede< Relative, Appositional, RelativeNatural, Elemental, Adjunct, true >,
+                PrecedeSafely< Relative, Appositional, RelativeNatural, Elemental, Adjunct >,
+                CedeSafely< Relative, Appositional, RelativeNatural, Natural, Elemental, Adjunct >,
+                Proceed< Relative, Appositional, RelativeNatural, Elemental, Adjunct, true >
+            };
 
         template <
             typename Natural,
@@ -2079,21 +2079,21 @@ namespace junction {
                 Adjunct
         >
         constexpr Sequent< SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, Natural, Elemental >
-        SingleSequencer = {
-            Instantiate< SinglyLinked< Elemental >, Natural, Elemental, Adjunct >,
-            Account< SinglyLinked< Elemental >, Natural, Elemental >,
-            Accede< Natural, Elemental, Adjunct >,
-            Precede< Natural, Elemental, Adjunct >,
-            Cede< Natural, Elemental, Adjunct >,
-            Proceed< Natural, Elemental, Adjunct >,
-            Succeed< Natural, Elemental >,
-            Supersede< Natural, Elemental >,
-            Concede< Natural, Elemental >,
-            Recede< Natural, Elemental >,
-            RemoveAll< SinglyLinked< Elemental >, Natural, Elemental >,
-            DeleteOneNode< Natural, Elemental, Adjunct >,
-            SingleConjoiner< SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, Natural, Natural, Elemental, Adjunct >
-        };
+            SingleSequencer = {
+                Instantiate< SinglyLinked< Elemental >, Natural, Elemental, Adjunct >,
+                Account< SinglyLinked< Elemental >, Natural, Elemental >,
+                Accede< Natural, Elemental, Adjunct >,
+                Precede< Natural, Elemental, Adjunct >,
+                Cede< Natural, Elemental, Adjunct >,
+                Proceed< Natural, Elemental, Adjunct >,
+                Succeed< Natural, Elemental >,
+                Supersede< Natural, Elemental >,
+                Concede< Natural, Elemental >,
+                Recede< Natural, Elemental >,
+                RemoveAll< SinglyLinked< Elemental >, Natural, Elemental >,
+                DeleteOneNode< Natural, Elemental, Adjunct >,
+                SingleConjoiner< SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, Natural, Natural, Elemental, Adjunct >
+            };
 
         template <
             typename Natural,
@@ -2102,21 +2102,21 @@ namespace junction {
                 Adjunct
         >
         constexpr Sequent< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, Elemental >
-        DoubleSequencer = {
-            Instantiate< DoublyLinked< Elemental >, Natural, Elemental, Adjunct >,
-            Account< DoublyLinked< Elemental >, Natural, Elemental >,
-            Accede< Natural, Elemental, Adjunct >,
-            Precede< Natural, Elemental, Adjunct >,
-            Cede< Natural, Elemental, Adjunct >,
-            Proceed< Natural, Elemental, Adjunct >,
-            Succeed< Natural, Elemental >,
-            Supersede< Natural, Elemental >,
-            Concede< Natural, Elemental >,
-            Recede< Natural, Elemental >,
-            RemoveAll< DoublyLinked< Elemental >, Natural, Elemental >,
-            DeleteOneNode< Natural, Elemental, Adjunct >,
-            DoubleConjoiner< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, Natural, Elemental, Adjunct >
-        };
+            DoubleSequencer = {
+                Instantiate< DoublyLinked< Elemental >, Natural, Elemental, Adjunct >,
+                Account< DoublyLinked< Elemental >, Natural, Elemental >,
+                Accede< Natural, Elemental, Adjunct >,
+                Precede< Natural, Elemental, Adjunct >,
+                Cede< Natural, Elemental, Adjunct >,
+                Proceed< Natural, Elemental, Adjunct >,
+                Succeed< Natural, Elemental >,
+                Supersede< Natural, Elemental >,
+                Concede< Natural, Elemental >,
+                Recede< Natural, Elemental >,
+                RemoveAll< DoublyLinked< Elemental >, Natural, Elemental >,
+                DeleteOneNode< Natural, Elemental, Adjunct >,
+                DoubleConjoiner< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, Natural, Elemental, Adjunct >
+            };
 
         template <
             typename Natural,
@@ -2125,21 +2125,21 @@ namespace junction {
                 Adjunct
         >
         constexpr Sequent< SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, Natural, Elemental >
-        SafeSingleSequencer = {
-            Instantiate< SinglyLinked< Elemental >, Natural, Elemental, Adjunct >,
-            Account< SinglyLinked< Elemental >, Natural, Elemental >,
-            Accede< Natural, Elemental, Adjunct >,
-            PrecedeSafely< Natural, Elemental, Adjunct >,
-            CedeSafely< Natural, Elemental, Adjunct >,
-            Proceed< Natural, Elemental, Adjunct >,
-            SucceedSafely< Natural, Elemental >,
-            SupersedeSafely< Natural, Elemental >,
-            ConcedeSafely< Natural, Elemental >,
-            RecedeSafely< Natural, Elemental >,
-            RemoveAll< SinglyLinked< Elemental >, Natural, Elemental >,
-            DeleteOneNode< Natural, Elemental, Adjunct >,
-            SafeSingleConjoiner< SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, Natural, Natural, Elemental, Adjunct >
-        };
+            SafeSingleSequencer = {
+                Instantiate< SinglyLinked< Elemental >, Natural, Elemental, Adjunct >,
+                Account< SinglyLinked< Elemental >, Natural, Elemental >,
+                Accede< Natural, Elemental, Adjunct >,
+                PrecedeSafely< Natural, Elemental, Adjunct >,
+                CedeSafely< Natural, Elemental, Adjunct >,
+                Proceed< Natural, Elemental, Adjunct >,
+                SucceedSafely< Natural, Elemental >,
+                SupersedeSafely< Natural, Elemental >,
+                ConcedeSafely< Natural, Elemental >,
+                RecedeSafely< Natural, Elemental >,
+                RemoveAll< SinglyLinked< Elemental >, Natural, Elemental >,
+                DeleteOneNode< Natural, Elemental, Adjunct >,
+                SafeSingleConjoiner< SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, Natural, Natural, Elemental, Adjunct >
+            };
 
         template <
             typename Natural,
@@ -2148,21 +2148,21 @@ namespace junction {
                 Adjunct
         >
         constexpr Sequent< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, Elemental >
-        SafeDoubleSequencer = {
-            Instantiate< DoublyLinked< Elemental >, Natural, Elemental, Adjunct >,
-            Account< DoublyLinked< Elemental >, Natural, Elemental >,
-            Accede< Natural, Elemental, Adjunct >,
-            PrecedeSafely< Natural, Elemental, Adjunct >,
-            CedeSafely< Natural, Elemental, Adjunct >,
-            Proceed< Natural, Elemental, Adjunct >,
-            SucceedSafely< Natural, Elemental >,
-            SupersedeSafely< Natural, Elemental >,
-            ConcedeSafely< Natural, Elemental >,
-            RecedeSafely< Natural, Elemental >,
-            RemoveAll< DoublyLinked< Elemental >, Natural, Elemental >,
-            DeleteOneNode< Natural, Elemental, Adjunct >,
-            SafeDoubleConjoiner< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, Natural, Elemental, Adjunct >
-        };
+            SafeDoubleSequencer = {
+                Instantiate< DoublyLinked< Elemental >, Natural, Elemental, Adjunct >,
+                Account< DoublyLinked< Elemental >, Natural, Elemental >,
+                Accede< Natural, Elemental, Adjunct >,
+                PrecedeSafely< Natural, Elemental, Adjunct >,
+                CedeSafely< Natural, Elemental, Adjunct >,
+                Proceed< Natural, Elemental, Adjunct >,
+                SucceedSafely< Natural, Elemental >,
+                SupersedeSafely< Natural, Elemental >,
+                ConcedeSafely< Natural, Elemental >,
+                RecedeSafely< Natural, Elemental >,
+                RemoveAll< DoublyLinked< Elemental >, Natural, Elemental >,
+                DeleteOneNode< Natural, Elemental, Adjunct >,
+                SafeDoubleConjoiner< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, Natural, Elemental, Adjunct >
+            };
 
     }
 

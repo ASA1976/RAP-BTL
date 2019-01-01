@@ -1,4 +1,4 @@
-// © 2018 Aaron Sami Abassi
+// © 2019 Aaron Sami Abassi
 // Licensed under the Academic Free License version 3.0
 // #define RAPBTL_NO_STD_CPLUSPLUS 1
 #include "segmentation.hpp"
@@ -19,9 +19,17 @@ using namespace ::trajection;
 using namespace ::composition;
 using namespace ::association;
 using namespace ::consecution;
+using namespace ::junction;
+using namespace ::junction::stdlib;
 
 using MessageLocal = const Locational< const char >;
 using MapComplementary = Complementary< char, int >;
+
+constexpr DoublyAdjunctive< size_t, char >
+    ListAdjunct = DefaultMallocDoubleAdjunct< size_t, char >;
+
+constexpr DoublyAdjunctive< size_t, MapComplementary >
+    MapAdjunct = DefaultMallocDoubleAdjunct< size_t, MapComplementary >;
 
 template <
     typename Spatial,
@@ -262,8 +270,6 @@ DemonstrateOrdination( void ) {
 
 static bool
 DemonstrateJunction( void ) {
-    using namespace ::junction;
-    using namespace ::junction::stdlib;
     using namespace ::junction::consecution;
     using namespace ::junction::selection;
     using namespace ::junction::collection;
@@ -272,100 +278,88 @@ DemonstrateJunction( void ) {
     using namespace ::junction::association::collection;
     using namespace ::comparison;
     static auto&
-        ListSequencer = DoubleSequencer< size_t, char, DefaultMallocDoubleAdjunct< size_t, char > >;
+        ListSequencer = DoubleSequencer< size_t, char, ListAdjunct >;
     static auto&
-        ListConjoiner = DoubleConjoiner< const Locational< const char >, size_t, size_t, size_t, char, DefaultMallocDoubleAdjunct< size_t, char > >;
+        ListConjoiner = DoubleConjoiner< const Locational< const char >, size_t, size_t, size_t, char, ListAdjunct >;
     static auto&
-        ListSelector = DoubleSelector< size_t, char, IsEqual, DefaultMallocDoubleAdjunct< size_t, char > >;
+        ListSelector = DoubleSelector< size_t, char, IsEqual, ListAdjunct >;
     static auto&
-        ListCollector = DoubleCollector< size_t, char, IsEqual, IsLesser, DefaultMallocDoubleAdjunct< size_t, char > >;
+        ListCollector = DoubleCollector< size_t, char, IsEqual, IsLesser, ListAdjunct >;
     static auto&
         ListAxis = ReadDoubleAxis< size_t, char >;
     static auto&
-        MapCorrelator = DoubleCorrelator< size_t, char, int, IsEqual, DefaultMallocDoubleAdjunct< size_t, MapComplementary > >;
+        MapCorrelator = DoubleCorrelator< size_t, char, int, IsEqual, MapAdjunct >;
     static auto&
-        MapAssociator = DoubleAssociator< size_t, char, int, IsEqual, IsLesser, DefaultMallocDoubleAdjunct< size_t, MapComplementary > >;
+        MapAssociator = DoubleAssociator< size_t, char, int, IsEqual, IsLesser, MapAdjunct >;
     static auto&
         MapDirection = ReadIncrementDoubleDirection< size_t, MapComplementary >;
-    struct LocalJunctive {
-
-        DoublyJunctive< size_t, char >
-            list,
-            base,
-            relative;
-
-        AssociativelyDoubleJunctive< size_t, char, int >
-            map;
-
-        LocalJunctive() {
-            Initialize( list );
-            Initialize( base );
-            Initialize( relative );
-            Initialize( map );
-        }
-
-        ~LocalJunctive() {
-            ListSequencer.secede( list );
-            ListSequencer.secede( base );
-            ListSequencer.secede( relative );
-            MapCorrelator.disband( map );
-            printf( "Freeing 1/4." );
-            while (ListSequencer.condense( list ))
-                printf( "." );
-            printf( " 2/4." );
-            while (ListSequencer.condense( base ))
-                printf( "." );
-            printf( " 3/4." );
-            while (ListSequencer.condense( relative ))
-                printf( "." );
-            printf( " 4/4." );
-            while (MapCorrelator.dissolve( map ))
-                printf( "." );
-            puts( "" );
-        }
-
-    }
-        junctions;
+    DoublyJunctive< size_t, char >
+        list,
+        base,
+        relative;
+    AssociativelyDoubleJunctive< size_t, char, int >
+        map;
+    Initialize( list );
+    Initialize( base );
+    Initialize( relative );
+    Initialize( map );
     puts( "Junction (Linked List And Map)" );
-    if (!ProceedSequence( junctions.list, ListSequencer, ListConjoiner ))
+    if (!ProceedSequence( list, ListSequencer, ListConjoiner ))
         return false;
     printf( "Sequence = (" );
-    DisplayCharacters( junctions.list, ListAxis.increment );
+    DisplayCharacters( list, ListAxis.increment );
     puts( ")" );
-    if (!ComposeSets( junctions.base, junctions.relative, ListSelector.composer ))
+    if (!ComposeSets( base, relative, ListSelector.composer ))
         return false;
     printf( "Unordered Sets: Base = {" );
-    DisplayCharacters( junctions.base, ListAxis.increment );
+    DisplayCharacters( base, ListAxis.increment );
     printf( "}, Relative = {" );
-    DisplayCharacters( junctions.relative, ListAxis.increment );
+    DisplayCharacters( relative, ListAxis.increment );
     puts( "}" );
-    if (!ListSelector.section.unite( junctions.list, ListAxis.increment, junctions.base, ListAxis.increment, junctions.relative ))
+    if (!ListSelector.section.unite( list, ListAxis.increment, base, ListAxis.increment, relative ))
         return false;
     printf( "Unordered Union Of Base And Relative = {" );
-    DisplayCharacters( junctions.list, ListAxis.increment );
+    DisplayCharacters( list, ListAxis.increment );
     puts( "}" );
-    if (!ComposeSets( junctions.base, junctions.relative, ListCollector.selector.composer ))
+    if (!ComposeSets( base, relative, ListCollector.selector.composer ))
         return false;
     printf( "Ordered Sets: Base = {" );
-    DisplayCharacters( junctions.base, ListAxis.increment );
+    DisplayCharacters( base, ListAxis.increment );
     printf( "}, Relative = {" );
-    DisplayCharacters( junctions.relative, ListAxis.increment );
+    DisplayCharacters( relative, ListAxis.increment );
     puts( "}" );
-    if (!ListCollector.bisection.unite( junctions.list, ListAxis, junctions.base, ListAxis, junctions.relative ))
+    if (!ListCollector.bisection.unite( list, ListAxis, base, ListAxis, relative ))
         return false;
     printf( "Ordered Union Of Base And Relative = {" );
-    DisplayCharacters( junctions.list, ListAxis.increment );
+    DisplayCharacters( list, ListAxis.increment );
     puts( "}" );
-    if (!AssociateMap( junctions.map, MapCorrelator ))
+    if (!AssociateMap( map, MapCorrelator ))
         return false;
     printf( "Unordered Map: [" );
-    DisplayMappings( junctions.map, MapDirection );
+    DisplayMappings( map, MapDirection );
     puts( "]" );
-    if (!AssociateMap( junctions.map, MapAssociator ))
+    if (!AssociateMap( map, MapAssociator ))
         return false;
     printf( "Ordered Map: [" );
-    DisplayMappings( junctions.map, MapDirection );
+    DisplayMappings( map, MapDirection );
     puts( "]" );
+    ListSequencer.secede( list );
+    ListSequencer.secede( base );
+    ListSequencer.secede( relative );
+    MapCorrelator.disband( map );
+    printf( "Freeing 1/4." );
+    while (ListSequencer.condense( list ))
+        printf( "." );
+    printf( " 2/4." );
+    while (ListSequencer.condense( base ))
+        printf( "." );
+    printf( " 3/4." );
+    while (ListSequencer.condense( relative ))
+        printf( "." );
+    printf( " 4/4." );
+    while (MapCorrelator.dissolve( map ))
+        printf( "." );
+    puts( "" );
     return true;
 }
 

@@ -1,4 +1,4 @@
-// © 2018 Aaron Sami Abassi
+// © 2019 Aaron Sami Abassi
 // Licensed under the Academic Free License version 3.0
 // #define RAPBTL_NO_STD_CPLUSPLUS 1
 #include "procession.hpp"
@@ -17,7 +17,7 @@ using FunctionDemonstrative = void( void );
 using FunctionSituational = Locational< FunctionDemonstrative >;
 
 constexpr unsigned
-MaximumEvents = 127;
+    MaximumEvents = 127;
 
 using EventSchedular = Contractional< unsigned, MaximumEvents, Contextual< unsigned > >;
 
@@ -40,13 +40,13 @@ struct Coordinate {
 };
 
 constexpr Tractile< EventSchedular, unsigned, unsigned >
-EventContractor = Contractor< unsigned, MaximumEvents, Contextual< unsigned > >;
+    EventContractor = Contractor< unsigned, MaximumEvents, Contextual< unsigned > >;
 
 constexpr auto&
-EventVisitor = WriteIncrementDirection< unsigned, MaximumEvents, Contextual< unsigned > >;
+    EventVisitor = WriteIncrementDirection< unsigned, MaximumEvents, Contextual< unsigned > >;
 
 constexpr auto&
-PrepareProcessEvent = PrepareProcessOneEvent< EventSchedular, unsigned, unsigned, EventContractor, unsigned >;
+    PrepareProcessEvent = PrepareProcessOneEvent< EventSchedular, unsigned, unsigned, EventContractor, unsigned >;
 
 template <
     typename ...LambdaTypical

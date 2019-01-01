@@ -1,4 +1,4 @@
-// © 2018 Aaron Sami Abassi
+// © 2019 Aaron Sami Abassi
 // Licensed under the Academic Free License version 3.0
 // #define RAPBTL_NO_STD_CPLUSPLUS 1
 #include "junction/collection.hpp"
@@ -12,7 +12,7 @@ using namespace ::location;
 using namespace ::junction;
 
 constexpr SinglyAdjunctive< unsigned, int >
-StaticAdjunct = DefaultStaticSingleAdjunct< unsigned, int >;
+    StaticAdjunct = DefaultStaticSingleAdjunct< unsigned, int >;
 
 #ifdef _MSC_VER
 // Problem 395723

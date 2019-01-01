@@ -1,4 +1,4 @@
-// © 2018 Aaron Sami Abassi
+// © 2019 Aaron Sami Abassi
 // Licensed under the Academic Free License version 3.0
 #ifndef ALLOCATION_STDLIB_MODULE
 #define ALLOCATION_STDLIB_MODULE
@@ -219,10 +219,10 @@ namespace allocation {
             typename Subjective
         >
         constexpr DefaultAllocative< Subjective >
-        DefaultMalloc = {
-            AllocateElementUsingMalloc< Subjective >, 
-            DeleteUsingFreeAndSetToNull< Subjective >
-        };
+            DefaultMalloc = {
+                AllocateElementUsingMalloc< Subjective >, 
+                DeleteUsingFreeAndSetToNull< Subjective >
+            };
 
         /**
          * @brief
@@ -239,10 +239,10 @@ namespace allocation {
             typename Subjective
         >
         constexpr DefaultAllocative< Subjective >
-        FastDefaultMalloc = {
-            AllocateElementUsingMalloc< Subjective >, 
-            DeleteUsingFree< Subjective >
-        };
+            FastDefaultMalloc = {
+                AllocateElementUsingMalloc< Subjective >, 
+                DeleteUsingFree< Subjective >
+            };
 
         /**
          * @brief
@@ -259,10 +259,10 @@ namespace allocation {
             typename Subjective
         >
         constexpr ArrayAllocative< Subjective, size_t >
-        ArrayMalloc = {
-            AllocateArrayUsingMalloc< Subjective >, 
-            DeleteUsingFreeAndSetToNull< Subjective >
-        };
+            ArrayMalloc = {
+                AllocateArrayUsingMalloc< Subjective >, 
+                DeleteUsingFreeAndSetToNull< Subjective >
+            };
 
         /**
          * @brief
@@ -279,10 +279,10 @@ namespace allocation {
             typename Subjective
         >
         constexpr ArrayAllocative< Subjective, size_t >
-        FastArrayMalloc = {
-            AllocateArrayUsingMalloc< Subjective >, 
-            DeleteUsingFree< Subjective >
-        };
+            FastArrayMalloc = {
+                AllocateArrayUsingMalloc< Subjective >, 
+                DeleteUsingFree< Subjective >
+            };
 
         /**
          * @brief
@@ -299,10 +299,10 @@ namespace allocation {
             typename Subjective
         >
         constexpr DefaultAllocative< Subjective >
-        DefaultCalloc = {
-            AllocateElementUsingCalloc< Subjective >, 
-            DeleteUsingFreeAndSetToNull< Subjective >
-        };
+            DefaultCalloc = {
+                AllocateElementUsingCalloc< Subjective >, 
+                DeleteUsingFreeAndSetToNull< Subjective >
+            };
 
         /**
          * @brief
@@ -319,10 +319,10 @@ namespace allocation {
             typename Subjective
         >
         constexpr DefaultAllocative< Subjective >
-        FastDefaultCalloc = {
-            AllocateElementUsingCalloc< Subjective >, 
-            DeleteUsingFree< Subjective >
-        };
+            FastDefaultCalloc = {
+                AllocateElementUsingCalloc< Subjective >, 
+                DeleteUsingFree< Subjective >
+            };
 
         /**
          * @brief
@@ -339,10 +339,10 @@ namespace allocation {
             typename Subjective
         >
         constexpr ArrayAllocative< Subjective, size_t >
-        ArrayCalloc = {
-            AllocateArrayUsingCalloc< Subjective >, 
-            DeleteUsingFreeAndSetToNull< Subjective >
-        };
+            ArrayCalloc = {
+                AllocateArrayUsingCalloc< Subjective >, 
+                DeleteUsingFreeAndSetToNull< Subjective >
+            };
 
         /**
          * @brief
@@ -359,10 +359,10 @@ namespace allocation {
             typename Subjective
         >
         constexpr ArrayAllocative< Subjective, size_t >
-        FastArrayCalloc = {
-            AllocateArrayUsingCalloc< Subjective >, 
-            DeleteUsingFree< Subjective >
-        };
+            FastArrayCalloc = {
+                AllocateArrayUsingCalloc< Subjective >, 
+                DeleteUsingFree< Subjective >
+            };
 
     }
 

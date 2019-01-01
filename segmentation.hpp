@@ -1,4 +1,4 @@
-// © 2018 Aaron Sami Abassi
+// © 2019 Aaron Sami Abassi
 // Licensed under the Academic Free License version 3.0
 #ifndef SEGMENTATION_MODULE
 #define SEGMENTATION_MODULE
@@ -896,11 +896,11 @@ namespace segmentation {
         typename Elemental
     >
     constexpr Vectorial< const Locational< const Elemental >, Natural, const Elemental >
-    ReadVector = {
-        Comparison< Natural >,
-        ContainsIndex< Natural, Length, const Elemental >,
-        IndexicalGo< Natural, const Elemental >
-    };
+        ReadVector = {
+            Comparison< Natural >,
+            ContainsIndex< Natural, Length, const Elemental >,
+            IndexicalGo< Natural, const Elemental >
+        };
 
     /**
      * @brief 
@@ -926,11 +926,11 @@ namespace segmentation {
         typename Elemental
     >
     constexpr Vectorial< const Locational< const Elemental >, Natural, const Elemental >
-    SafeReadVector = {
-        Comparison< Natural >,
-        SafelyContainsIndex< Natural, Length, const Elemental >,
-        IndexicalGoSafely< Natural, Length, const Elemental >
-    };
+        SafeReadVector = {
+            Comparison< Natural >,
+            SafelyContainsIndex< Natural, Length, const Elemental >,
+            IndexicalGoSafely< Natural, Length, const Elemental >
+        };
 
     /**
      * @brief 
@@ -956,11 +956,11 @@ namespace segmentation {
         typename Elemental
     >
     constexpr Vectorial< const Locational< Elemental >, Natural, Elemental >
-    WriteVector = {
-        Comparison< Natural >,
-        ContainsIndex< Natural, Length, Elemental >,
-        IndexicalGo< Natural, Elemental >
-    };
+        WriteVector = {
+            Comparison< Natural >,
+            ContainsIndex< Natural, Length, Elemental >,
+            IndexicalGo< Natural, Elemental >
+        };
 
     /**
      * @brief 
@@ -986,11 +986,11 @@ namespace segmentation {
         typename Elemental
     >
     constexpr Vectorial< const Locational< Elemental >, Natural, Elemental >
-    SafeWriteVector = {
-        Comparison< Natural >,
-        SafelyContainsIndex< Natural, Length, Elemental >,
-        IndexicalGoSafely< Natural, Length, Elemental >
-    };
+        SafeWriteVector = {
+            Comparison< Natural >,
+            SafelyContainsIndex< Natural, Length, Elemental >,
+            IndexicalGoSafely< Natural, Length, Elemental >
+        };
 
     /**
      * @brief 
@@ -1015,12 +1015,12 @@ namespace segmentation {
         typename Elemental
     >
     constexpr Scalar< const Locational< const Elemental >, Natural, Natural, const Elemental >
-    SafeReadIncrementScale = {
-        Comparison< Natural >,
-        BeginIncrementSafely< Natural, Length, const Elemental >,
-        TraverseIncrementSafely< Natural, Length, const Elemental >,
-        IndexicalGoSafely< Natural, Length, const Elemental >,
-    };
+        SafeReadIncrementScale = {
+            Comparison< Natural >,
+            BeginIncrementSafely< Natural, Length, const Elemental >,
+            TraverseIncrementSafely< Natural, Length, const Elemental >,
+            IndexicalGoSafely< Natural, Length, const Elemental >,
+        };
 
     /**
      * @brief 
@@ -1045,12 +1045,12 @@ namespace segmentation {
         typename Elemental
     >
     constexpr Scalar< const Locational< Elemental >, Natural, Natural, Elemental >
-    SafeWriteIncrementScale = {
-        Comparison< Natural >,
-        BeginIncrementSafely< Natural, Length, Elemental >,
-        TraverseIncrementSafely< Natural, Length, Elemental >,
-        IndexicalGoSafely< Natural, Length, Elemental >,
-    };
+        SafeWriteIncrementScale = {
+            Comparison< Natural >,
+            BeginIncrementSafely< Natural, Length, Elemental >,
+            TraverseIncrementSafely< Natural, Length, Elemental >,
+            IndexicalGoSafely< Natural, Length, Elemental >,
+        };
 
     /**
      * @brief 
@@ -1075,12 +1075,12 @@ namespace segmentation {
         typename Elemental
     >
     constexpr Scalar< const Locational< const Elemental >, Natural, Natural, const Elemental >
-    ReadDecrementScale = {
-        Comparison< Natural >,
-        BeginDecrement< Natural, Length, const Elemental >,
-        TraverseDecrement< Natural, Natural, const Elemental >,
-        IndexicalGo< Natural, const Elemental >
-    };
+        ReadDecrementScale = {
+            Comparison< Natural >,
+            BeginDecrement< Natural, Length, const Elemental >,
+            TraverseDecrement< Natural, Natural, const Elemental >,
+            IndexicalGo< Natural, const Elemental >
+        };
 
     /**
      * @brief 
@@ -1105,12 +1105,12 @@ namespace segmentation {
         typename Elemental
     >
     constexpr Scalar< const Locational< const Elemental >, Natural, Natural, const Elemental >
-    SafeReadDecrementScale = {
-        Comparison< Natural >,
-        BeginDecrementSafely< Natural, Length, const Elemental >,
-        TraverseDecrementSafely< Natural, Length, const Elemental >,
-        IndexicalGoSafely< Natural, Length, const Elemental >,
-    };
+        SafeReadDecrementScale = {
+            Comparison< Natural >,
+            BeginDecrementSafely< Natural, Length, const Elemental >,
+            TraverseDecrementSafely< Natural, Length, const Elemental >,
+            IndexicalGoSafely< Natural, Length, const Elemental >,
+        };
 
     /**
      * @brief 
@@ -1135,12 +1135,12 @@ namespace segmentation {
         typename Elemental
     >
     constexpr Scalar< const Locational< Elemental >, Natural, Natural, Elemental >
-    WriteDecrementScale = {
-        Comparison< Natural >,
-        BeginDecrement< Natural, Length, Elemental >,
-        TraverseDecrement< Natural, Natural,  Elemental >,
-        IndexicalGo< Natural, Elemental >,
-    };
+        WriteDecrementScale = {
+            Comparison< Natural >,
+            BeginDecrement< Natural, Length, Elemental >,
+            TraverseDecrement< Natural, Natural,  Elemental >,
+            IndexicalGo< Natural, Elemental >,
+        };
 
     /**
      * @brief 
@@ -1165,12 +1165,12 @@ namespace segmentation {
         typename Elemental
     >
     constexpr Scalar< const Locational< Elemental >, Natural, Natural, Elemental >
-    SafeWriteDecrementScale = {
-        Comparison< Natural >,
-        BeginDecrementSafely< Natural, Length, Elemental >,
-        TraverseDecrementSafely< Natural, Length, Elemental >,
-        IndexicalGoSafely< Natural, Length, Elemental >,
-    };
+        SafeWriteDecrementScale = {
+            Comparison< Natural >,
+            BeginDecrementSafely< Natural, Length, Elemental >,
+            TraverseDecrementSafely< Natural, Length, Elemental >,
+            IndexicalGoSafely< Natural, Length, Elemental >,
+        };
 
     /**
      * @brief 
@@ -1195,10 +1195,10 @@ namespace segmentation {
         typename Elemental
     >
     constexpr Lineal< const Locational< const Elemental >, Natural, Natural, const Elemental >
-    ReadLiner = {
-        ReadIncrementScale< Natural, Natural, Elemental >,
-        ReadDecrementScale< Natural, Length, Elemental >
-    };
+        ReadLiner = {
+            ReadIncrementScale< Natural, Natural, Elemental >,
+            ReadDecrementScale< Natural, Length, Elemental >
+        };
 
     /**
      * @brief 
@@ -1223,10 +1223,10 @@ namespace segmentation {
         typename Elemental
     >
     constexpr Lineal< const Locational< Elemental >, Natural, Natural, Elemental >
-    WriteLiner = {
-        WriteIncrementScale< Natural, Natural, Elemental >,
-        WriteDecrementScale< Natural, Length, Elemental >
-    };
+        WriteLiner = {
+            WriteIncrementScale< Natural, Natural, Elemental >,
+            WriteDecrementScale< Natural, Length, Elemental >
+        };
 
     /**
      * @brief 
@@ -1251,10 +1251,10 @@ namespace segmentation {
         typename Elemental
     >
     constexpr Lineal< const Locational< const Elemental >, Natural, Natural, const Elemental >
-    SafeReadLiner = {
-        SafeReadIncrementScale< Natural, Length, Elemental >,
-        SafeReadDecrementScale< Natural, Length, Elemental >
-    };
+        SafeReadLiner = {
+            SafeReadIncrementScale< Natural, Length, Elemental >,
+            SafeReadDecrementScale< Natural, Length, Elemental >
+        };
 
     /**
      * @brief 
@@ -1279,10 +1279,10 @@ namespace segmentation {
         typename Elemental
     >
     constexpr Lineal< const Locational< Elemental >, Natural, Natural, Elemental >
-    SafeWriteLiner = {
-        SafeWriteIncrementScale< Natural, Length, Elemental >,
-        SafeWriteDecrementScale< Natural, Length, Elemental >
-    };
+        SafeWriteLiner = {
+            SafeWriteIncrementScale< Natural, Length, Elemental >,
+            SafeWriteDecrementScale< Natural, Length, Elemental >
+        };
 
     /**
      * @brief 
@@ -1307,14 +1307,14 @@ namespace segmentation {
         typename Elemental
     >
     constexpr Directional< const Locational< const Elemental >, Natural, Natural, const Elemental >
-    ReadIncrementDirection = {
-        ReadIncrementScale< Natural, Natural, Elemental >,
-        Begins< Natural, Length, const Elemental >,
-        IncrementTraverses< Natural, Length, const Elemental >,
-        ContainsIndex< Natural, Length, const Elemental >,
-        Account< Natural, Length, const Elemental >,
-        CountIncrement< Natural, Length, const Elemental >
-    };
+        ReadIncrementDirection = {
+            ReadIncrementScale< Natural, Natural, Elemental >,
+            Begins< Natural, Length, const Elemental >,
+            IncrementTraverses< Natural, Length, const Elemental >,
+            ContainsIndex< Natural, Length, const Elemental >,
+            Account< Natural, Length, const Elemental >,
+            CountIncrement< Natural, Length, const Elemental >
+        };
 
     /**
      * @brief 
@@ -1339,14 +1339,14 @@ namespace segmentation {
         typename Elemental
     >
     constexpr Directional< const Locational< const Elemental >, Natural, Natural, const Elemental >
-    SafeReadIncrementDirection = {
-        SafeReadIncrementScale< Natural, Length, Elemental >,
-        SafelyBegins< Natural, Length, const Elemental >,
-        IncrementTraversesSafely< Natural, Length, const Elemental >,
-        SafelyContainsIndex< Natural, Length, const Elemental >,
-        Account< Natural, Length, const Elemental >,
-        CountIncrement< Natural, Length, const Elemental >
-    };
+        SafeReadIncrementDirection = {
+            SafeReadIncrementScale< Natural, Length, Elemental >,
+            SafelyBegins< Natural, Length, const Elemental >,
+            IncrementTraversesSafely< Natural, Length, const Elemental >,
+            SafelyContainsIndex< Natural, Length, const Elemental >,
+            Account< Natural, Length, const Elemental >,
+            CountIncrement< Natural, Length, const Elemental >
+        };
 
     /**
      * @brief 
@@ -1371,14 +1371,14 @@ namespace segmentation {
         typename Elemental
     >
     constexpr Directional< const Locational< Elemental >, Natural, Natural, Elemental >
-    WriteIncrementDirection = {
-        WriteIncrementScale< Natural, Elemental >,
-        Begins< Natural, Length, Elemental >,
-        IncrementTraverses< Natural, Length, Elemental >,
-        ContainsIndex< Natural, Length, Elemental >,
-        Account< Natural, Length, Elemental >,
-        CountIncrement< Natural, Length, Elemental >
-    };
+        WriteIncrementDirection = {
+            WriteIncrementScale< Natural, Elemental >,
+            Begins< Natural, Length, Elemental >,
+            IncrementTraverses< Natural, Length, Elemental >,
+            ContainsIndex< Natural, Length, Elemental >,
+            Account< Natural, Length, Elemental >,
+            CountIncrement< Natural, Length, Elemental >
+        };
 
     /**
      * @brief 
@@ -1403,14 +1403,14 @@ namespace segmentation {
         typename Elemental
     >
     constexpr Directional< const Locational< Elemental >, Natural, Natural, Elemental >
-    SafeWriteIncrementDirection = {
-        SafeWriteIncrementScale< Natural, Length, Elemental >,
-        SafelyBegins< Natural, Length, Elemental >,
-        IncrementTraversesSafely< Natural, Length, Elemental >,
-        SafelyContainsIndex< Natural, Length, const Elemental >,
-        Account< Natural, Length, Elemental >,
-        CountIncrement< Natural, Length, Elemental >
-    };
+        SafeWriteIncrementDirection = {
+            SafeWriteIncrementScale< Natural, Length, Elemental >,
+            SafelyBegins< Natural, Length, Elemental >,
+            IncrementTraversesSafely< Natural, Length, Elemental >,
+            SafelyContainsIndex< Natural, Length, const Elemental >,
+            Account< Natural, Length, Elemental >,
+            CountIncrement< Natural, Length, Elemental >
+        };
 
     /**
      * @brief 
@@ -1435,14 +1435,14 @@ namespace segmentation {
         typename Elemental
     >
     constexpr Directional< const Locational< const Elemental >, Natural, Natural, const Elemental >
-    ReadDecrementDirection = {
-        ReadDecrementScale< Natural, Length, Elemental >,
-        Begins< Natural, Length, const Elemental >,
-        DecrementTraverses< Natural, Length, const Elemental >,
-        ContainsIndex< Natural, Length, const Elemental >,
-        Account< Natural, Length, const Elemental >,
-        CountDecrement< Natural, Length, const Elemental >
-    };
+        ReadDecrementDirection = {
+            ReadDecrementScale< Natural, Length, Elemental >,
+            Begins< Natural, Length, const Elemental >,
+            DecrementTraverses< Natural, Length, const Elemental >,
+            ContainsIndex< Natural, Length, const Elemental >,
+            Account< Natural, Length, const Elemental >,
+            CountDecrement< Natural, Length, const Elemental >
+        };
 
     /**
      * @brief 
@@ -1467,14 +1467,14 @@ namespace segmentation {
         typename Elemental
     >
     constexpr Directional< const Locational< const Elemental >, Natural, Natural, const Elemental >
-    SafeReadDecrementDirection = {
-        SafeReadDecrementScale< Natural, Length, Elemental >,
-        SafelyBegins< Natural, Length, const Elemental >,
-        DecrementTraversesSafely< Natural, Length, const Elemental >,
-        SafelyContainsIndex< Natural, Length, const Elemental >,
-        Account< Natural, Length, const Elemental >,
-        CountDecrement< Natural, Length, const Elemental >
-    };
+        SafeReadDecrementDirection = {
+            SafeReadDecrementScale< Natural, Length, Elemental >,
+            SafelyBegins< Natural, Length, const Elemental >,
+            DecrementTraversesSafely< Natural, Length, const Elemental >,
+            SafelyContainsIndex< Natural, Length, const Elemental >,
+            Account< Natural, Length, const Elemental >,
+            CountDecrement< Natural, Length, const Elemental >
+        };
 
     /**
      * @brief 
@@ -1499,14 +1499,14 @@ namespace segmentation {
         typename Elemental
     >
     constexpr Directional< const Locational< Elemental >, Natural, Natural, Elemental >
-    WriteDecrementDirection = {
-        WriteDecrementScale< Natural, Length, Elemental >,
-        Begins< Natural, Length, Elemental >,
-        DecrementTraverses< Natural, Length, Elemental >,
-        ContainsIndex< Natural, Length, Elemental >,
-        Account< Natural, Length, Elemental >,
-        CountDecrement< Natural, Length, Elemental >
-    };
+        WriteDecrementDirection = {
+            WriteDecrementScale< Natural, Length, Elemental >,
+            Begins< Natural, Length, Elemental >,
+            DecrementTraverses< Natural, Length, Elemental >,
+            ContainsIndex< Natural, Length, Elemental >,
+            Account< Natural, Length, Elemental >,
+            CountDecrement< Natural, Length, Elemental >
+        };
 
     /**
      * @brief 
@@ -1531,14 +1531,14 @@ namespace segmentation {
         typename Elemental
     >
     constexpr Directional< const Locational< Elemental >, Natural, Natural, Elemental >
-    SafeWriteDecrementDirection = {
-        SafeWriteDecrementScale< Natural, Length, Elemental >,
-        SafelyBegins< Natural, Length, Elemental >,
-        DecrementTraversesSafely< Natural, Length, Elemental >,
-        SafelyContainsIndex< Natural, Length, Elemental >,
-        Account< Natural, Length, Elemental >,
-        CountDecrement< Natural, Length, Elemental >
-    };
+        SafeWriteDecrementDirection = {
+            SafeWriteDecrementScale< Natural, Length, Elemental >,
+            SafelyBegins< Natural, Length, Elemental >,
+            DecrementTraversesSafely< Natural, Length, Elemental >,
+            SafelyContainsIndex< Natural, Length, Elemental >,
+            Account< Natural, Length, Elemental >,
+            CountDecrement< Natural, Length, Elemental >
+        };
 
     /**
      * @brief 
@@ -1563,10 +1563,10 @@ namespace segmentation {
         typename Elemental
     >
     constexpr Axial< const Locational< const Elemental >, Natural, Natural, const Elemental >
-    ReadAxis = {
-        ReadIncrementDirection< Natural, Length, Elemental >,
-        ReadDecrementDirection< Natural, Length, Elemental >
-    };
+        ReadAxis = {
+            ReadIncrementDirection< Natural, Length, Elemental >,
+            ReadDecrementDirection< Natural, Length, Elemental >
+        };
 
     /**
      * @brief 
@@ -1591,10 +1591,10 @@ namespace segmentation {
         typename Elemental
     >
     constexpr Axial< const Locational< const Elemental >, Natural, Natural, const Elemental >
-    SafeReadAxis = {
-        SafeReadIncrementDirection< Natural, Length, Elemental >,
-        SafeReadDecrementDirection< Natural, Length, Elemental >
-    };
+        SafeReadAxis = {
+            SafeReadIncrementDirection< Natural, Length, Elemental >,
+            SafeReadDecrementDirection< Natural, Length, Elemental >
+        };
 
     /**
      * @brief 
@@ -1619,10 +1619,10 @@ namespace segmentation {
         typename Elemental
     >
     constexpr Axial< const Locational< Elemental >, Natural, Natural, Elemental >
-    WriteAxis = {
-        WriteIncrementDirection< Natural, Length, Elemental >,
-        WriteDecrementDirection< Natural, Length, Elemental >
-    };
+        WriteAxis = {
+            WriteIncrementDirection< Natural, Length, Elemental >,
+            WriteDecrementDirection< Natural, Length, Elemental >
+        };
 
     /**
      * @brief 
@@ -1647,10 +1647,10 @@ namespace segmentation {
         typename Elemental
     >
     constexpr Axial< const Locational< Elemental >, Natural, Natural, Elemental >
-    SafeWriteAxis = {
-        SafeWriteIncrementDirection< Natural, Length, Elemental >,
-        SafeWriteDecrementDirection< Natural, Length, Elemental >
-    };
+        SafeWriteAxis = {
+            SafeWriteIncrementDirection< Natural, Length, Elemental >,
+            SafeWriteDecrementDirection< Natural, Length, Elemental >
+        };
 
 }
 

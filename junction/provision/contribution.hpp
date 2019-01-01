@@ -1,4 +1,4 @@
-// © 2018 Aaron Sami Abassi
+// © 2019 Aaron Sami Abassi
 // Licensed under the Academic Free License version 3.0
 #ifndef JUNCTION_PROVISION_CONTRIBUTION_MODULE
 #define JUNCTION_PROVISION_CONTRIBUTION_MODULE
@@ -145,13 +145,13 @@ namespace junction {
                     Allocator
             >
             constexpr Tributary< SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, Natural >
-            SingleContributor = {
-                Survey< SinglyLinked< Elemental >, Natural, Maximum, Elemental >,
-                Account< SinglyLinked< Elemental >, Natural, Elemental >,
-                Distribute< Natural, Maximum, Elemental, Allocator, false >,
-                Retribute< SinglyLinked< Elemental >, Natural, Elemental, Concede< Natural, Elemental > >,
-                RemoveAll< SinglyLinked< Elemental >, Natural, Elemental >
-            };
+                SingleContributor = {
+                    Survey< SinglyLinked< Elemental >, Natural, Maximum, Elemental >,
+                    Account< SinglyLinked< Elemental >, Natural, Elemental >,
+                    Distribute< Natural, Maximum, Elemental, Allocator, false >,
+                    Retribute< SinglyLinked< Elemental >, Natural, Elemental, Concede< Natural, Elemental > >,
+                    RemoveAll< SinglyLinked< Elemental >, Natural, Elemental >
+                };
 
             template <
                 typename Natural,
@@ -162,13 +162,13 @@ namespace junction {
                     Allocator
             >
             constexpr Tributary< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural >
-            DoubleContributor = {
-                Survey< DoublyLinked< Elemental >, Natural, Maximum, Elemental >,
-                Account< DoublyLinked< Elemental >, Natural, Elemental >,
-                Distribute< Natural, Maximum, Elemental, Allocator, false >,
-                Retribute< DoublyLinked< Elemental >, Natural, Elemental, Concede< Natural, Elemental > >,
-                RemoveAll< DoublyLinked< Elemental >, Natural, Elemental >
-            };
+                DoubleContributor = {
+                    Survey< DoublyLinked< Elemental >, Natural, Maximum, Elemental >,
+                    Account< DoublyLinked< Elemental >, Natural, Elemental >,
+                    Distribute< Natural, Maximum, Elemental, Allocator, false >,
+                    Retribute< DoublyLinked< Elemental >, Natural, Elemental, Concede< Natural, Elemental > >,
+                    RemoveAll< DoublyLinked< Elemental >, Natural, Elemental >
+                };
 
             template <
                 typename Natural,
@@ -179,13 +179,13 @@ namespace junction {
                     Allocator
             >
             constexpr Tributary< SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, Natural >
-            SafeSingleContributor = {
-                Survey< SinglyLinked< Elemental >, Natural, Maximum, Elemental >,
-                Account< SinglyLinked< Elemental >, Natural, Elemental >,
-                Distribute< Natural, Maximum, Elemental, Allocator, true >,
-                Retribute< SinglyLinked< Elemental >, Natural, Elemental, ConcedeSafely< Natural, Elemental > >,
-                RemoveAll< SinglyLinked< Elemental >, Natural, Elemental >
-            };
+                SafeSingleContributor = {
+                    Survey< SinglyLinked< Elemental >, Natural, Maximum, Elemental >,
+                    Account< SinglyLinked< Elemental >, Natural, Elemental >,
+                    Distribute< Natural, Maximum, Elemental, Allocator, true >,
+                    Retribute< SinglyLinked< Elemental >, Natural, Elemental, ConcedeSafely< Natural, Elemental > >,
+                    RemoveAll< SinglyLinked< Elemental >, Natural, Elemental >
+                };
 
             template <
                 typename Natural,
@@ -196,13 +196,13 @@ namespace junction {
                     Allocator
             >
             constexpr Tributary< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural >
-            SafeDoubleContributor = {
-                Survey< DoublyLinked< Elemental >, Natural, Maximum, Elemental >,
-                Account< DoublyLinked< Elemental >, Natural, Elemental >,
-                Distribute< Natural, Maximum, Elemental, Allocator, true >,
-                Retribute< DoublyLinked< Elemental >, Natural, Elemental, ConcedeSafely< Natural, Elemental > >,
-                RemoveAll< DoublyLinked< Elemental >, Natural, Elemental >
-            };
+                SafeDoubleContributor = {
+                    Survey< DoublyLinked< Elemental >, Natural, Maximum, Elemental >,
+                    Account< DoublyLinked< Elemental >, Natural, Elemental >,
+                    Distribute< Natural, Maximum, Elemental, Allocator, true >,
+                    Retribute< DoublyLinked< Elemental >, Natural, Elemental, ConcedeSafely< Natural, Elemental > >,
+                    RemoveAll< DoublyLinked< Elemental >, Natural, Elemental >
+                };
 
         }
 

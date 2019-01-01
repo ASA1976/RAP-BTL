@@ -1,4 +1,4 @@
-// © 2018 Aaron Sami Abassi
+// © 2019 Aaron Sami Abassi
 // Licensed under the Academic Free License version 3.0
 #ifndef ALLOCATION_CONTRIBUTION_MODULE
 #define ALLOCATION_CONTRIBUTION_MODULE
@@ -250,10 +250,10 @@ namespace allocation {
                 Pool
         >
         constexpr DefaultAllocative< Subjective >
-        FastPoolAllocator = {
-            Assign< Natural, Maximum, Subjective, Pool >,
-            Revoke< Natural, Maximum, Subjective, Pool >
-        };
+            FastPoolAllocator = {
+                Assign< Natural, Maximum, Subjective, Pool >,
+                Revoke< Natural, Maximum, Subjective, Pool >
+            };
 
         /**
          * @brief
@@ -280,10 +280,10 @@ namespace allocation {
                 Pool
         >
         constexpr DefaultAllocative< Subjective >
-        SafePoolAllocator = {
-            AssignSafely< Natural, Maximum, Subjective, Pool >,
-            RevokeSafely< Natural, Maximum, Subjective, Pool >
-        };
+            SafePoolAllocator = {
+                AssignSafely< Natural, Maximum, Subjective, Pool >,
+                RevokeSafely< Natural, Maximum, Subjective, Pool >
+            };
 
     }
 

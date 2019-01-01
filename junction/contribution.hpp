@@ -1,4 +1,4 @@
-// © 2018 Aaron Sami Abassi
+// © 2019 Aaron Sami Abassi
 // Licensed under the Academic Free License version 3.0
 #ifndef JUNCTION_CONTRIBUTION_MODULE
 #define JUNCTION_CONTRIBUTION_MODULE
@@ -22,11 +22,11 @@ namespace junction {
                 Pool
         >
         constexpr SinglyAdjunctive< Natural, Elemental >
-        FastPoolSingleAdjunct = {
-            AllocateDefault< SinglyLinked< Elemental >, DefaultDisclaimable< SinglyNodal< Elemental > >, Natural, Elemental, FastPoolAllocator< Natural, Maximum, SinglyNodal< Elemental >, Pool > >,
-            DeallocateDefault< SinglyLinked< Elemental >, DefaultClaimable< SinglyNodal< Elemental > >, Natural, Elemental, FastPoolAllocator< Natural, Maximum, SinglyNodal< Elemental >, Pool > >,
-            ProclaimDefault< SinglyLinked< Elemental >, DefaultDisclaimable< SinglyNodal< Elemental > >, Natural, Elemental, FastPoolAllocator< Natural, Maximum, SinglyNodal< Elemental >, Pool > >
-        };
+            FastPoolSingleAdjunct = {
+                AllocateDefault< SinglyLinked< Elemental >, DefaultDisclaimable< SinglyNodal< Elemental > >, Natural, Elemental, FastPoolAllocator< Natural, Maximum, SinglyNodal< Elemental >, Pool > >,
+                DeallocateDefault< SinglyLinked< Elemental >, DefaultClaimable< SinglyNodal< Elemental > >, Natural, Elemental, FastPoolAllocator< Natural, Maximum, SinglyNodal< Elemental >, Pool > >,
+                ProclaimDefault< SinglyLinked< Elemental >, DefaultDisclaimable< SinglyNodal< Elemental > >, Natural, Elemental, FastPoolAllocator< Natural, Maximum, SinglyNodal< Elemental >, Pool > >
+            };
 
         template <
             typename Natural,
@@ -37,11 +37,11 @@ namespace junction {
                 Pool
         >
         constexpr DoublyAdjunctive< Natural, Elemental >
-        FastPoolDoubleAdjunct = {
-            AllocateDefault< DoublyLinked< Elemental >, DefaultDisclaimable< DoublyNodal< Elemental > >, Natural, Elemental, FastPoolAllocator< Natural, Maximum, DoublyNodal< Elemental >, Pool > >,
-            DeallocateDefault< DoublyLinked< Elemental >, DefaultClaimable< DoublyNodal< Elemental > >, Natural, Elemental, FastPoolAllocator< Natural, Maximum, DoublyNodal< Elemental >, Pool > >,
-            ProclaimDefault< DoublyLinked< Elemental >, DefaultDisclaimable< DoublyNodal< Elemental > >, Natural, Elemental, FastPoolAllocator< Natural, Maximum, DoublyNodal< Elemental >, Pool > >
-        };
+            FastPoolDoubleAdjunct = {
+                AllocateDefault< DoublyLinked< Elemental >, DefaultDisclaimable< DoublyNodal< Elemental > >, Natural, Elemental, FastPoolAllocator< Natural, Maximum, DoublyNodal< Elemental >, Pool > >,
+                DeallocateDefault< DoublyLinked< Elemental >, DefaultClaimable< DoublyNodal< Elemental > >, Natural, Elemental, FastPoolAllocator< Natural, Maximum, DoublyNodal< Elemental >, Pool > >,
+                ProclaimDefault< DoublyLinked< Elemental >, DefaultDisclaimable< DoublyNodal< Elemental > >, Natural, Elemental, FastPoolAllocator< Natural, Maximum, DoublyNodal< Elemental >, Pool > >
+            };
 
         template <
             typename Natural,
@@ -52,11 +52,11 @@ namespace junction {
                 Pool
         >
         constexpr SinglyAdjunctive< Natural, Elemental >
-        SafePoolSingleAdjunct = {
-            AllocateDefault< SinglyLinked< Elemental >, DefaultDisclaimable< SinglyNodal< Elemental > >, Natural, Elemental, SafePoolAllocator< Natural, Maximum, SinglyNodal< Elemental >, Pool > >,
-            DeallocateDefault< SinglyLinked< Elemental >, DefaultClaimable< SinglyNodal< Elemental > >, Natural, Elemental, SafePoolAllocator< Natural, Maximum, SinglyNodal< Elemental >, Pool > >,
-            ProclaimDefault< SinglyLinked< Elemental >, DefaultDisclaimable< SinglyNodal< Elemental > >, Natural, Elemental, SafePoolAllocator< Natural, Maximum, SinglyNodal< Elemental >, Pool > >
-        };
+            SafePoolSingleAdjunct = {
+                AllocateDefault< SinglyLinked< Elemental >, DefaultDisclaimable< SinglyNodal< Elemental > >, Natural, Elemental, SafePoolAllocator< Natural, Maximum, SinglyNodal< Elemental >, Pool > >,
+                DeallocateDefault< SinglyLinked< Elemental >, DefaultClaimable< SinglyNodal< Elemental > >, Natural, Elemental, SafePoolAllocator< Natural, Maximum, SinglyNodal< Elemental >, Pool > >,
+                ProclaimDefault< SinglyLinked< Elemental >, DefaultDisclaimable< SinglyNodal< Elemental > >, Natural, Elemental, SafePoolAllocator< Natural, Maximum, SinglyNodal< Elemental >, Pool > >
+            };
 
         template <
             typename Natural,
@@ -67,11 +67,11 @@ namespace junction {
                 Pool
         >
         constexpr DoublyAdjunctive< Natural, Elemental >
-        SafePoolDoubleAdjunct = {
-            AllocateDefault< DoublyLinked< Elemental >, DefaultDisclaimable< DoublyNodal< Elemental > >, Natural, Elemental, SafePoolAllocator< Natural, Maximum, DoublyNodal< Elemental >, Pool > >,
-            DeallocateDefault< DoublyLinked< Elemental >, DefaultClaimable< DoublyNodal< Elemental > >, Natural, Elemental, SafePoolAllocator< Natural, Maximum, DoublyNodal< Elemental >, Pool > >,
-            ProclaimDefault< DoublyLinked< Elemental >, DefaultDisclaimable< DoublyNodal< Elemental > >, Natural, Elemental, SafePoolAllocator< Natural, Maximum, DoublyNodal< Elemental >, Pool > >
-        };
+            SafePoolDoubleAdjunct = {
+                AllocateDefault< DoublyLinked< Elemental >, DefaultDisclaimable< DoublyNodal< Elemental > >, Natural, Elemental, SafePoolAllocator< Natural, Maximum, DoublyNodal< Elemental >, Pool > >,
+                DeallocateDefault< DoublyLinked< Elemental >, DefaultClaimable< DoublyNodal< Elemental > >, Natural, Elemental, SafePoolAllocator< Natural, Maximum, DoublyNodal< Elemental >, Pool > >,
+                ProclaimDefault< DoublyLinked< Elemental >, DefaultDisclaimable< DoublyNodal< Elemental > >, Natural, Elemental, SafePoolAllocator< Natural, Maximum, DoublyNodal< Elemental >, Pool > >
+            };
 
     }
 

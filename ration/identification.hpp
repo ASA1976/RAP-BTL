@@ -1,4 +1,4 @@
-// © 2018 Aaron Sami Abassi
+// © 2019 Aaron Sami Abassi
 // Licensed under the Academic Free License version 3.0
 #ifndef RATION_IDENTIFICATION_MODULE
 #define RATION_IDENTIFICATION_MODULE
@@ -70,10 +70,10 @@ namespace ration {
                 Maximum
         >
         constexpr Identical< Natural, Maximum >
-        InitializedIdentifierPool = {
-            0,
-            InitializedResource< Natural, Maximum, Natural >
-        };
+            InitializedIdentifierPool = {
+                0,
+                InitializedResource< Natural, Maximum, Natural >
+            };
 
         /**
          * @brief
@@ -474,13 +474,13 @@ namespace ration {
                 Maximum
         >
         constexpr Tributary< Identical< Natural, Maximum >, Natural, Natural >
-        IdentityContributor = {
-            Survey< Natural, Maximum >,
-            Account< Natural, Maximum >,
-            Distribute< Natural, Maximum >,
-            Retribute< Natural, Maximum >,
-            Contribute< Natural, Maximum >
-        };
+            IdentityContributor = {
+                Survey< Natural, Maximum >,
+                Account< Natural, Maximum >,
+                Distribute< Natural, Maximum >,
+                Retribute< Natural, Maximum >,
+                Contribute< Natural, Maximum >
+            };
 
         /**
          * @brief 
@@ -502,13 +502,13 @@ namespace ration {
                 Maximum
         >
         constexpr Tributary< Identical< Natural, Maximum >, Natural, Natural >
-        SafeIdentityContributor = {
-            Survey< Natural, Maximum >,
-            Account< Natural, Maximum >,
-            DistributeSafely< Natural, Maximum >,
-            RetributeSafely< Natural, Maximum >,
-            Contribute< Natural, Maximum >
-        };
+            SafeIdentityContributor = {
+                Survey< Natural, Maximum >,
+                Account< Natural, Maximum >,
+                DistributeSafely< Natural, Maximum >,
+                RetributeSafely< Natural, Maximum >,
+                Contribute< Natural, Maximum >
+            };
 
     }
 

@@ -1,4 +1,4 @@
-// © 2018 Aaron Sami Abassi
+// © 2019 Aaron Sami Abassi
 // Licensed under the Academic Free License version 3.0
 #ifndef ORDINATION_MODULE
 #define ORDINATION_MODULE
@@ -1309,10 +1309,10 @@ namespace ordination {
         typename Elemental
     >
     constexpr Vectorial< const Elemental[Length], Natural, const Elemental >
-    ReadVector = {
-        ContainsIndex< Natural, Length, const Elemental >,
-        NaturalGo< Natural, Length, const Elemental >
-    };
+        ReadVector = {
+            ContainsIndex< Natural, Length, const Elemental >,
+            NaturalGo< Natural, Length, const Elemental >
+        };
 
     /**
      * @brief 
@@ -1338,10 +1338,10 @@ namespace ordination {
         typename Elemental
     >
     constexpr Vectorial< const Elemental[Length], Natural, const Elemental >
-    SafeReadVector = {
-        ContainsIndex< Natural, Length, const Elemental >,
-        NaturalGoSafely< Natural, Length, const Elemental >
-    };
+        SafeReadVector = {
+            ContainsIndex< Natural, Length, const Elemental >,
+            NaturalGoSafely< Natural, Length, const Elemental >
+        };
 
     /**
      * @brief 
@@ -1367,10 +1367,10 @@ namespace ordination {
         typename Elemental
     >
     constexpr Vectorial< Elemental[Length], Natural, Elemental >
-    WriteVector = {
-        ContainsIndex< Natural, Length, Elemental >,
-        NaturalGo< Natural, Length, Elemental >
-    };
+        WriteVector = {
+            ContainsIndex< Natural, Length, Elemental >,
+            NaturalGo< Natural, Length, Elemental >
+        };
 
     /**
      * @brief 
@@ -1396,10 +1396,10 @@ namespace ordination {
         typename Elemental
     >
     constexpr Vectorial< Elemental[Length], Natural, Elemental >
-    SafeWriteVector = {
-        ContainsIndex< Natural, Length, Elemental >,
-        NaturalGoSafely< Natural, Length, Elemental >
-    };
+        SafeWriteVector = {
+            ContainsIndex< Natural, Length, Elemental >,
+            NaturalGoSafely< Natural, Length, Elemental >
+        };
 
     /**
      * @brief 
@@ -1424,12 +1424,12 @@ namespace ordination {
         typename Elemental
     >
     constexpr Scalar< const Elemental[Length], Locational< const Elemental >, Natural, const Elemental >
-    ReadIncrementScale = {
-        Comparison< Locational< const Elemental > >,
-        BeginIncrement< Natural, Length, const Elemental >,
-        TraverseIncrement< Natural, Length, const Elemental >,
-        PositionalGo< Natural, Length, const Elemental >,
-    };
+        ReadIncrementScale = {
+            Comparison< Locational< const Elemental > >,
+            BeginIncrement< Natural, Length, const Elemental >,
+            TraverseIncrement< Natural, Length, const Elemental >,
+            PositionalGo< Natural, Length, const Elemental >,
+        };
 
     /**
      * @brief 
@@ -1453,12 +1453,12 @@ namespace ordination {
         typename Elemental
     >
     constexpr Scalar< const Elemental[Length], Locational< const Elemental >, Natural, const Elemental >
-    SafeReadIncrementScale = {
-        Comparison< Locational< const Elemental > >,
-        BeginIncrementSafely< Natural, Length, const Elemental >,
-        TraverseIncrementSafely< Natural, Length, const Elemental >,
-        PositionalGoSafely< Natural, Length, const Elemental >,
-    };
+        SafeReadIncrementScale = {
+            Comparison< Locational< const Elemental > >,
+            BeginIncrementSafely< Natural, Length, const Elemental >,
+            TraverseIncrementSafely< Natural, Length, const Elemental >,
+            PositionalGoSafely< Natural, Length, const Elemental >,
+        };
 
     /**
      * @brief 
@@ -1483,12 +1483,12 @@ namespace ordination {
         typename Elemental
     >
     constexpr Scalar< Elemental[Length], Locational< Elemental >, Natural, Elemental >
-    WriteIncrementScale = {
-        Comparison< Locational< Elemental > >,
-        BeginIncrement< Natural, Length, Elemental >,
-        TraverseIncrement< Natural, Length, Elemental >,
-        PositionalGo< Natural, Length, Elemental >,
-    };
+        WriteIncrementScale = {
+            Comparison< Locational< Elemental > >,
+            BeginIncrement< Natural, Length, Elemental >,
+            TraverseIncrement< Natural, Length, Elemental >,
+            PositionalGo< Natural, Length, Elemental >,
+        };
 
     /**
      * @brief 
@@ -1512,12 +1512,12 @@ namespace ordination {
         typename Elemental
     >
     constexpr Scalar< Elemental[Length], Locational< Elemental >, Natural, Elemental >
-    SafeWriteIncrementScale = {
-        Comparison< Locational< Elemental > >,
-        BeginIncrementSafely< Natural, Length, Elemental >,
-        TraverseIncrementSafely< Natural, Length, Elemental >,
-        PositionalGoSafely< Natural, Length, Elemental >,
-    };
+        SafeWriteIncrementScale = {
+            Comparison< Locational< Elemental > >,
+            BeginIncrementSafely< Natural, Length, Elemental >,
+            TraverseIncrementSafely< Natural, Length, Elemental >,
+            PositionalGoSafely< Natural, Length, Elemental >,
+        };
 
     /**
      * @brief 
@@ -1542,12 +1542,12 @@ namespace ordination {
         typename Elemental
     >
     constexpr Scalar< const Elemental[Length], Locational< const Elemental >, Natural, const Elemental >
-    ReadDecrementScale = {
-        Comparison< Locational< const Elemental > >,
-        BeginDecrement< Natural, Length, const Elemental >,
-        TraverseDecrement< Natural, Length, const Elemental >,
-        PositionalGo< Natural, Length, const Elemental >,
-    };
+        ReadDecrementScale = {
+            Comparison< Locational< const Elemental > >,
+            BeginDecrement< Natural, Length, const Elemental >,
+            TraverseDecrement< Natural, Length, const Elemental >,
+            PositionalGo< Natural, Length, const Elemental >,
+        };
 
     /**
      * @brief 
@@ -1571,12 +1571,12 @@ namespace ordination {
         typename Elemental
     >
     constexpr Scalar< const Elemental[Length], Locational< const Elemental >, Natural, const Elemental >
-    SafeReadDecrementScale = {
-        Comparison< Locational< const Elemental > >,
-        BeginDecrementSafely< Natural, Length, const Elemental >,
-        TraverseDecrementSafely< Natural, Length, const Elemental >,
-        PositionalGoSafely< Natural, Length, const Elemental >,
-    };
+        SafeReadDecrementScale = {
+            Comparison< Locational< const Elemental > >,
+            BeginDecrementSafely< Natural, Length, const Elemental >,
+            TraverseDecrementSafely< Natural, Length, const Elemental >,
+            PositionalGoSafely< Natural, Length, const Elemental >,
+        };
 
     /**
      * @brief 
@@ -1601,12 +1601,12 @@ namespace ordination {
         typename Elemental
     >
     constexpr Scalar< Elemental[Length], Locational< Elemental >, Natural, Elemental >
-    WriteDecrementScale = {
-        Comparison< Locational< Elemental > >,
-        BeginDecrement< Natural, Length, Elemental >,
-        TraverseDecrement< Natural, Length, Elemental >,
-        PositionalGo< Natural, Length, Elemental >,
-    };
+        WriteDecrementScale = {
+            Comparison< Locational< Elemental > >,
+            BeginDecrement< Natural, Length, Elemental >,
+            TraverseDecrement< Natural, Length, Elemental >,
+            PositionalGo< Natural, Length, Elemental >,
+        };
 
     /**
      * @brief 
@@ -1630,12 +1630,12 @@ namespace ordination {
         typename Elemental
     >
     constexpr Scalar< Elemental[Length], Locational< Elemental >, Natural, Elemental >
-    SafeWriteDecrementScale = {
-        Comparison< Locational< Elemental > >,
-        BeginDecrementSafely< Natural, Length, Elemental >,
-        TraverseDecrementSafely< Natural, Length, Elemental >,
-        PositionalGoSafely< Natural, Length, Elemental >,
-    };
+        SafeWriteDecrementScale = {
+            Comparison< Locational< Elemental > >,
+            BeginDecrementSafely< Natural, Length, Elemental >,
+            TraverseDecrementSafely< Natural, Length, Elemental >,
+            PositionalGoSafely< Natural, Length, Elemental >,
+        };
 
     /**
      * @brief 
@@ -1660,10 +1660,10 @@ namespace ordination {
         typename Elemental
     >
     constexpr Lineal< const Elemental[Length], Locational< const Elemental >, Natural, const Elemental >
-    ReadLiner = {
-        ReadIncrementScale< Natural, Length, Elemental >,
-        ReadDecrementScale< Natural, Length, Elemental >
-    };
+        ReadLiner = {
+            ReadIncrementScale< Natural, Length, Elemental >,
+            ReadDecrementScale< Natural, Length, Elemental >
+        };
 
     /**
      * @brief 
@@ -1688,10 +1688,10 @@ namespace ordination {
         typename Elemental
     >
     constexpr Lineal< const Elemental[Length], Locational< const Elemental >, Natural, const Elemental >
-    SafeReadLiner = {
-        SafeReadIncrementScale< Natural, Length, Elemental >,
-        SafeReadDecrementScale< Natural, Length, Elemental >
-    };
+        SafeReadLiner = {
+            SafeReadIncrementScale< Natural, Length, Elemental >,
+            SafeReadDecrementScale< Natural, Length, Elemental >
+        };
 
     /**
      * @brief 
@@ -1716,10 +1716,10 @@ namespace ordination {
         typename Elemental
     >
     constexpr Lineal< Elemental[Length], Locational< Elemental >, Natural, Elemental >
-    WriteLiner = {
-        WriteIncrementScale< Natural, Length, Elemental >,
-        WriteDecrementScale< Natural, Length, Elemental >
-    };
+        WriteLiner = {
+            WriteIncrementScale< Natural, Length, Elemental >,
+            WriteDecrementScale< Natural, Length, Elemental >
+        };
 
     /**
      * @brief 
@@ -1744,10 +1744,10 @@ namespace ordination {
         typename Elemental
     >
     constexpr Lineal< Elemental[Length], Locational< Elemental >, Natural, Elemental >
-    SafeWriteLiner = {
-        SafeWriteIncrementScale< Natural, Length, Elemental >,
-        SafeWriteDecrementScale< Natural, Length, Elemental >
-    };
+        SafeWriteLiner = {
+            SafeWriteIncrementScale< Natural, Length, Elemental >,
+            SafeWriteDecrementScale< Natural, Length, Elemental >
+        };
 
     /**
      * @brief 
@@ -1772,14 +1772,14 @@ namespace ordination {
         typename Elemental
     >
     constexpr Directional< const Elemental[Length], Locational< const Elemental >, Natural, const Elemental >
-    ReadIncrementDirection = {
-        ReadIncrementScale< Natural, Length, Elemental >,
-        Begins< Natural, Length, const Elemental >,
-        IncrementTraverses< Natural, Length, const Elemental >,
-        ContainsPosition< Natural, Length, const Elemental >,
-        Account< Natural, Length, const Elemental >,
-        CountIncrement< Natural, Length, const Elemental >
-    };
+        ReadIncrementDirection = {
+            ReadIncrementScale< Natural, Length, Elemental >,
+            Begins< Natural, Length, const Elemental >,
+            IncrementTraverses< Natural, Length, const Elemental >,
+            ContainsPosition< Natural, Length, const Elemental >,
+            Account< Natural, Length, const Elemental >,
+            CountIncrement< Natural, Length, const Elemental >
+        };
 
     /**
      * @brief 
@@ -1803,14 +1803,14 @@ namespace ordination {
         typename Elemental
     >
     constexpr Directional< const Elemental[Length], Locational< const Elemental >, Natural, const Elemental >
-    SafeReadIncrementDirection = {
-        SafeReadIncrementScale< Natural, Length, Elemental >,
-        SafelyBegins< Natural, Length, const Elemental >,
-        IncrementTraversesSafely< Natural, Length, const Elemental >,
-        ContainsPositionChecksForNull< Natural, Length, const Elemental >,
-        Account< Natural, Length, const Elemental >,
-        CountIncrement< Natural, Length, const Elemental >
-    };
+        SafeReadIncrementDirection = {
+            SafeReadIncrementScale< Natural, Length, Elemental >,
+            SafelyBegins< Natural, Length, const Elemental >,
+            IncrementTraversesSafely< Natural, Length, const Elemental >,
+            ContainsPositionChecksForNull< Natural, Length, const Elemental >,
+            Account< Natural, Length, const Elemental >,
+            CountIncrement< Natural, Length, const Elemental >
+        };
 
     /**
      * @brief 
@@ -1835,14 +1835,14 @@ namespace ordination {
         typename Elemental
     >
     constexpr Directional< Elemental[Length], Locational< Elemental >, Natural, Elemental >
-    WriteIncrementDirection = {
-        WriteIncrementScale< Natural, Length, Elemental >,
-        Begins< Natural, Length, Elemental >,
-        IncrementTraverses< Natural, Length, Elemental >,
-        ContainsPosition< Natural, Length, Elemental >,
-        Account< Natural, Length, Elemental >,
-        CountIncrement< Natural, Length, Elemental >
-    };
+        WriteIncrementDirection = {
+            WriteIncrementScale< Natural, Length, Elemental >,
+            Begins< Natural, Length, Elemental >,
+            IncrementTraverses< Natural, Length, Elemental >,
+            ContainsPosition< Natural, Length, Elemental >,
+            Account< Natural, Length, Elemental >,
+            CountIncrement< Natural, Length, Elemental >
+        };
 
     /**
      * @brief 
@@ -1866,14 +1866,14 @@ namespace ordination {
         typename Elemental
     >
     constexpr Directional< Elemental[Length], Locational< Elemental >, Natural, Elemental >
-    SafeWriteIncrementDirection = {
-        SafeWriteIncrementScale< Natural, Length, Elemental >,
-        SafelyBegins< Natural, Length, Elemental >,
-        IncrementTraversesSafely< Natural, Length, Elemental >,
-        ContainsPositionChecksForNull< Natural, Length, Elemental >,
-        Account< Natural, Length, Elemental >,
-        CountIncrement< Natural, Length, Elemental >
-    };
+        SafeWriteIncrementDirection = {
+            SafeWriteIncrementScale< Natural, Length, Elemental >,
+            SafelyBegins< Natural, Length, Elemental >,
+            IncrementTraversesSafely< Natural, Length, Elemental >,
+            ContainsPositionChecksForNull< Natural, Length, Elemental >,
+            Account< Natural, Length, Elemental >,
+            CountIncrement< Natural, Length, Elemental >
+        };
 
     /**
      * @brief 
@@ -1898,14 +1898,14 @@ namespace ordination {
         typename Elemental
     >
     constexpr Directional< const Elemental[Length], Locational< const Elemental >, Natural, const Elemental >
-    ReadDecrementDirection = {
-        ReadDecrementScale< Natural, Length, Elemental >,
-        Begins< Natural, Length, const Elemental >,
-        DecrementTraverses< Natural, Length, const Elemental >,
-        ContainsPosition< Natural, Length, const Elemental >,
-        Account< Natural, Length, const Elemental >,
-        CountDecrement< Natural, Length, const Elemental >
-    };
+        ReadDecrementDirection = {
+            ReadDecrementScale< Natural, Length, Elemental >,
+            Begins< Natural, Length, const Elemental >,
+            DecrementTraverses< Natural, Length, const Elemental >,
+            ContainsPosition< Natural, Length, const Elemental >,
+            Account< Natural, Length, const Elemental >,
+            CountDecrement< Natural, Length, const Elemental >
+        };
 
     /**
      * @brief 
@@ -1929,14 +1929,14 @@ namespace ordination {
         typename Elemental
     >
     constexpr Directional< const Elemental[Length], Locational< const Elemental >, Natural, const Elemental >
-    SafeReadDecrementDirection = {
-        SafeReadDecrementScale< Natural, Length, Elemental >,
-        SafelyBegins< Natural, Length, const Elemental >,
-        DecrementTraversesSafely< Natural, Length, const Elemental >,
-        ContainsPositionChecksForNull< Natural, Length, const Elemental >,
-        Account< Natural, Length, const Elemental >,
-        CountDecrement< Natural, Length, const Elemental >
-    };
+        SafeReadDecrementDirection = {
+            SafeReadDecrementScale< Natural, Length, Elemental >,
+            SafelyBegins< Natural, Length, const Elemental >,
+            DecrementTraversesSafely< Natural, Length, const Elemental >,
+            ContainsPositionChecksForNull< Natural, Length, const Elemental >,
+            Account< Natural, Length, const Elemental >,
+            CountDecrement< Natural, Length, const Elemental >
+        };
 
     /**
      * @brief 
@@ -1961,14 +1961,14 @@ namespace ordination {
         typename Elemental
     >
     constexpr Directional< Elemental[Length], Locational< Elemental >, Natural, Elemental >
-    WriteDecrementDirection = {
-        WriteDecrementScale< Natural, Length, Elemental >,
-        Begins< Natural, Length, Elemental >,
-        DecrementTraverses< Natural, Length, Elemental >,
-        ContainsPosition< Natural, Length, Elemental >,
-        Account< Natural, Length, Elemental >,
-        CountDecrement< Natural, Length, Elemental >
-    };
+        WriteDecrementDirection = {
+            WriteDecrementScale< Natural, Length, Elemental >,
+            Begins< Natural, Length, Elemental >,
+            DecrementTraverses< Natural, Length, Elemental >,
+            ContainsPosition< Natural, Length, Elemental >,
+            Account< Natural, Length, Elemental >,
+            CountDecrement< Natural, Length, Elemental >
+        };
 
     /**
      * @brief 
@@ -1992,14 +1992,14 @@ namespace ordination {
         typename Elemental
     >
     constexpr Directional< Elemental[Length], Locational< Elemental >, Natural, Elemental >
-    SafeWriteDecrementDirection = {
-        SafeWriteDecrementScale< Natural, Length, Elemental >,
-        SafelyBegins< Natural, Length, Elemental >,
-        DecrementTraversesSafely< Natural, Length, Elemental >,
-        ContainsPositionChecksForNull< Natural, Length, Elemental >,
-        Account< Natural, Length, Elemental >,
-        CountDecrement< Natural, Length, Elemental >
-    };
+        SafeWriteDecrementDirection = {
+            SafeWriteDecrementScale< Natural, Length, Elemental >,
+            SafelyBegins< Natural, Length, Elemental >,
+            DecrementTraversesSafely< Natural, Length, Elemental >,
+            ContainsPositionChecksForNull< Natural, Length, Elemental >,
+            Account< Natural, Length, Elemental >,
+            CountDecrement< Natural, Length, Elemental >
+        };
 
     /**
      * @brief 
@@ -2024,10 +2024,10 @@ namespace ordination {
         typename Elemental
     >
     constexpr Axial< const Elemental[Length], Locational< const Elemental >, Natural, const Elemental >
-    ReadAxis = {
-        ReadIncrementDirection< Natural, Length, Elemental >,
-        ReadDecrementDirection< Natural, Length, Elemental >
-    };
+        ReadAxis = {
+            ReadIncrementDirection< Natural, Length, Elemental >,
+            ReadDecrementDirection< Natural, Length, Elemental >
+        };
 
     /**
      * @brief 
@@ -2052,10 +2052,10 @@ namespace ordination {
         typename Elemental
     >
     constexpr Axial< const Elemental[Length], Locational< const Elemental >, Natural, const Elemental >
-    SafeReadAxis = {
-        SafeReadIncrementDirection< Natural, Length, Elemental >,
-        SafeReadDecrementDirection< Natural, Length, Elemental >
-    };
+        SafeReadAxis = {
+            SafeReadIncrementDirection< Natural, Length, Elemental >,
+            SafeReadDecrementDirection< Natural, Length, Elemental >
+        };
 
     /**
      * @brief 
@@ -2080,10 +2080,10 @@ namespace ordination {
         typename Elemental
     >
     constexpr Axial< Elemental[Length], Locational< Elemental >, Natural, Elemental >
-    WriteAxis = {
-        WriteIncrementDirection< Natural, Length, Elemental >,
-        WriteDecrementDirection< Natural, Length, Elemental >
-    };
+        WriteAxis = {
+            WriteIncrementDirection< Natural, Length, Elemental >,
+            WriteDecrementDirection< Natural, Length, Elemental >
+        };
 
     /**
      * @brief 
@@ -2108,10 +2108,10 @@ namespace ordination {
         typename Elemental
     >
     constexpr Axial< Elemental[Length], Locational< Elemental >, Natural, Elemental >
-    SafeWriteAxis = {
-        SafeWriteIncrementDirection< Natural, Length, Elemental >,
-        SafeWriteDecrementDirection< Natural, Length, Elemental >
-    };
+        SafeWriteAxis = {
+            SafeWriteIncrementDirection< Natural, Length, Elemental >,
+            SafeWriteDecrementDirection< Natural, Length, Elemental >
+        };
 
 }
 

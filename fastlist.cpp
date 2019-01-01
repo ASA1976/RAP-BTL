@@ -1,4 +1,4 @@
-// © 2018 Aaron Sami Abassi
+// © 2019 Aaron Sami Abassi
 // Licensed under the Academic Free License version 3.0
 // #define RAPBTL_NO_STD_CPLUSPLUS 1
 #include "junction/contribution.hpp"
@@ -14,14 +14,14 @@ using namespace ::junction::contribution;
 using namespace ::consecution;
 
 const unsigned short
-NodePoolSize = 3;
+    NodePoolSize = 3;
 
 Contributory< unsigned short, NodePoolSize, SinglyNodal< char > >
-NodePool;
+    NodePool;
 
 // Use SafePoolAdjunct if overflowing the pool is a possibility
 constexpr SinglyAdjunctive< unsigned short, char >
-NodePoolAdjunct = FastPoolSingleAdjunct< unsigned short, NodePoolSize, char, NodePool >;
+    NodePoolAdjunct = FastPoolSingleAdjunct< unsigned short, NodePoolSize, char, NodePool >;
 
 template <
     typename Spatial,

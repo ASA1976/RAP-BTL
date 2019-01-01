@@ -1,4 +1,4 @@
-// © 2018 Aaron Sami Abassi
+// © 2019 Aaron Sami Abassi
 // Licensed under the Academic Free License version 3.0
 #ifndef JUNCTION_ASSOCIATION_MODULE
 #define JUNCTION_ASSOCIATION_MODULE
@@ -467,12 +467,12 @@ namespace junction {
             typename Evaluative
         >
         constexpr Scalar< const AssociativelySingleJunctive< Natural, Correlative, Evaluative >, AssociativelySinglePositional< Correlative, Evaluative >, Natural, const Correlative >
-        ReadRelatorIncrementSingleScale = {
-            SingleComparison< Complementary< Correlative, Evaluative > >,
-            BeginReadScale< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetFirst< Natural, Complementary< Correlative, Evaluative > >, GetNext< Complementary< Correlative, Evaluative > > >,
-            TraverseReadScale< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetNext< Complementary< Correlative, Evaluative > > >,
-            GoReadRelator< SingleComplementary< Correlative, Evaluative >, Natural, Correlative, Evaluative >
-        };
+            ReadRelatorIncrementSingleScale = {
+                SingleComparison< Complementary< Correlative, Evaluative > >,
+                BeginReadScale< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetFirst< Natural, Complementary< Correlative, Evaluative > >, GetNext< Complementary< Correlative, Evaluative > > >,
+                TraverseReadScale< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetNext< Complementary< Correlative, Evaluative > > >,
+                GoReadRelator< SingleComplementary< Correlative, Evaluative >, Natural, Correlative, Evaluative >
+            };
 
         template <
             typename Natural,
@@ -480,12 +480,12 @@ namespace junction {
             typename Evaluative
         >
         constexpr Scalar< const AssociativelyDoubleJunctive< Natural, Correlative, Evaluative >, AssociativelyDoublePositional< Correlative, Evaluative >, Natural, const Correlative >
-        ReadRelatorIncrementDoubleScale = {
-            DoubleComparison< Complementary< Correlative, Evaluative > >,
-            BeginReadScale< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetFirst< Natural, Complementary< Correlative, Evaluative > >, GetNext< Complementary< Correlative, Evaluative > > >,
-            TraverseReadScale< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetNext< Complementary< Correlative, Evaluative > > >,
-            GoReadRelator< DoubleComplementary< Correlative, Evaluative >, Natural, Correlative, Evaluative >
-        };
+            ReadRelatorIncrementDoubleScale = {
+                DoubleComparison< Complementary< Correlative, Evaluative > >,
+                BeginReadScale< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetFirst< Natural, Complementary< Correlative, Evaluative > >, GetNext< Complementary< Correlative, Evaluative > > >,
+                TraverseReadScale< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetNext< Complementary< Correlative, Evaluative > > >,
+                GoReadRelator< DoubleComplementary< Correlative, Evaluative >, Natural, Correlative, Evaluative >
+            };
 
         template <
             typename Natural,
@@ -493,12 +493,12 @@ namespace junction {
             typename Evaluative
         >
         constexpr Scalar< const AssociativelySingleJunctive< Natural, Correlative, Evaluative >, AssociativelySinglePositional< Correlative, Evaluative >, Natural, const Correlative >
-        SafeReadRelatorIncrementSingleScale = {
-            SingleComparison< Complementary< Correlative, Evaluative > >,
-            BeginReadScaleSafely< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetFirst< Natural, Complementary< Correlative, Evaluative > >, GetNext< Complementary< Correlative, Evaluative > > >,
-            TraverseReadScaleSafely< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetNext< Complementary< Correlative, Evaluative > > >,
-            GoReadRelatorSafely< SingleComplementary< Correlative, Evaluative >, Natural, Correlative, Evaluative >
-        };
+            SafeReadRelatorIncrementSingleScale = {
+                SingleComparison< Complementary< Correlative, Evaluative > >,
+                BeginReadScaleSafely< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetFirst< Natural, Complementary< Correlative, Evaluative > >, GetNext< Complementary< Correlative, Evaluative > > >,
+                TraverseReadScaleSafely< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetNext< Complementary< Correlative, Evaluative > > >,
+                GoReadRelatorSafely< SingleComplementary< Correlative, Evaluative >, Natural, Correlative, Evaluative >
+            };
 
         template <
             typename Natural,
@@ -506,12 +506,12 @@ namespace junction {
             typename Evaluative
         >
         constexpr Scalar< const AssociativelyDoubleJunctive< Natural, Correlative, Evaluative >, AssociativelyDoublePositional< Correlative, Evaluative >, Natural, const Correlative >
-        SafeReadRelatorIncrementDoubleScale = {
-            DoubleComparison< Complementary< Correlative, Evaluative > >,
-            BeginReadScaleSafely< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetFirst< Natural, Complementary< Correlative, Evaluative > >, GetNext< Complementary< Correlative, Evaluative > > >,
-            TraverseReadScaleSafely< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetNext< Complementary< Correlative, Evaluative > > >,
-            GoReadRelatorSafely< DoubleComplementary< Correlative, Evaluative >, Natural, Correlative, Evaluative >
-        };
+            SafeReadRelatorIncrementDoubleScale = {
+                DoubleComparison< Complementary< Correlative, Evaluative > >,
+                BeginReadScaleSafely< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetFirst< Natural, Complementary< Correlative, Evaluative > >, GetNext< Complementary< Correlative, Evaluative > > >,
+                TraverseReadScaleSafely< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetNext< Complementary< Correlative, Evaluative > > >,
+                GoReadRelatorSafely< DoubleComplementary< Correlative, Evaluative >, Natural, Correlative, Evaluative >
+            };
 
         template <
             typename Natural,
@@ -519,12 +519,12 @@ namespace junction {
             typename Evaluative
         >
         constexpr Scalar< const AssociativelyDoubleJunctive< Natural, Correlative, Evaluative >, AssociativelyDoublePositional< Correlative, Evaluative >, Natural, const Correlative >
-        ReadRelatorDecrementDoubleScale = {
-            DoubleComparison< Complementary< Correlative, Evaluative > >,
-            BeginReadScale< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetLast< Natural, Complementary< Correlative, Evaluative > >, GetPrevious< Complementary< Correlative, Evaluative > > >,
-            TraverseReadScale< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetPrevious< Complementary< Correlative, Evaluative > > >,
-            GoReadRelator< DoubleComplementary< Correlative, Evaluative >, Natural, Correlative, Evaluative >
-        };
+            ReadRelatorDecrementDoubleScale = {
+                DoubleComparison< Complementary< Correlative, Evaluative > >,
+                BeginReadScale< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetLast< Natural, Complementary< Correlative, Evaluative > >, GetPrevious< Complementary< Correlative, Evaluative > > >,
+                TraverseReadScale< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetPrevious< Complementary< Correlative, Evaluative > > >,
+                GoReadRelator< DoubleComplementary< Correlative, Evaluative >, Natural, Correlative, Evaluative >
+            };
 
         template <
             typename Natural,
@@ -532,12 +532,12 @@ namespace junction {
             typename Evaluative
         >
         constexpr Scalar< const AssociativelyDoubleJunctive< Natural, Correlative, Evaluative >, AssociativelyDoublePositional< Correlative, Evaluative >, Natural, const Correlative >
-        SafeReadRelatorDecrementDoubleScale = {
-            DoubleComparison< Complementary< Correlative, Evaluative > >,
-            BeginReadScaleSafely< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetLast< Natural, Complementary< Correlative, Evaluative > >, GetPrevious< Complementary< Correlative, Evaluative > > >,
-            TraverseReadScaleSafely< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetPrevious< Complementary< Correlative, Evaluative > > >,
-            GoReadRelatorSafely< DoubleComplementary< Correlative, Evaluative >, Natural, Correlative, Evaluative >
-        };
+            SafeReadRelatorDecrementDoubleScale = {
+                DoubleComparison< Complementary< Correlative, Evaluative > >,
+                BeginReadScaleSafely< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetLast< Natural, Complementary< Correlative, Evaluative > >, GetPrevious< Complementary< Correlative, Evaluative > > >,
+                TraverseReadScaleSafely< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetPrevious< Complementary< Correlative, Evaluative > > >,
+                GoReadRelatorSafely< DoubleComplementary< Correlative, Evaluative >, Natural, Correlative, Evaluative >
+            };
 
         template <
             typename Natural,
@@ -545,12 +545,12 @@ namespace junction {
             typename Evaluative
         >
         constexpr Scalar< const AssociativelySingleJunctive< Natural, Correlative, Evaluative >, AssociativelySinglePositional< Correlative, Evaluative >, Natural, const Evaluative >
-        ReadElementIncrementSingleScale = {
-            SingleComparison< Complementary< Correlative, Evaluative > >,
-            BeginReadScale< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetFirst< Natural, Complementary< Correlative, Evaluative > >, GetNext< Complementary< Correlative, Evaluative > > >,
-            TraverseReadScale< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetNext< Complementary< Correlative, Evaluative > > >,
-            GoReadElement< SingleComplementary< Correlative, Evaluative >, Natural, Correlative, Evaluative >
-        };
+            ReadElementIncrementSingleScale = {
+                SingleComparison< Complementary< Correlative, Evaluative > >,
+                BeginReadScale< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetFirst< Natural, Complementary< Correlative, Evaluative > >, GetNext< Complementary< Correlative, Evaluative > > >,
+                TraverseReadScale< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetNext< Complementary< Correlative, Evaluative > > >,
+                GoReadElement< SingleComplementary< Correlative, Evaluative >, Natural, Correlative, Evaluative >
+            };
 
         template <
             typename Natural,
@@ -558,12 +558,12 @@ namespace junction {
             typename Evaluative
         >
         constexpr Scalar< const AssociativelyDoubleJunctive< Natural, Correlative, Evaluative >, AssociativelyDoublePositional< Correlative, Evaluative >, Natural, const Evaluative >
-        ReadElementIncrementDoubleScale = {
-            DoubleComparison< Complementary< Correlative, Evaluative > >,
-            BeginReadScale< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetFirst< Natural, Complementary< Correlative, Evaluative > >, GetNext< Complementary< Correlative, Evaluative > > >,
-            TraverseReadScale< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetNext< Complementary< Correlative, Evaluative > > >,
-            GoReadElement< DoubleComplementary< Correlative, Evaluative >, Natural, Correlative, Evaluative >
-        };
+            ReadElementIncrementDoubleScale = {
+                DoubleComparison< Complementary< Correlative, Evaluative > >,
+                BeginReadScale< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetFirst< Natural, Complementary< Correlative, Evaluative > >, GetNext< Complementary< Correlative, Evaluative > > >,
+                TraverseReadScale< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetNext< Complementary< Correlative, Evaluative > > >,
+                GoReadElement< DoubleComplementary< Correlative, Evaluative >, Natural, Correlative, Evaluative >
+            };
 
         template <
             typename Natural,
@@ -571,12 +571,12 @@ namespace junction {
             typename Evaluative
         >
         constexpr Scalar< const AssociativelySingleJunctive< Natural, Correlative, Evaluative >, AssociativelySinglePositional< Correlative, Evaluative >, Natural, const Evaluative >
-        SafeReadElementIncrementSingleScale = {
-            SingleComparison< Complementary< Correlative, Evaluative > >,
-            BeginReadScaleSafely< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetFirst< Natural, Complementary< Correlative, Evaluative > >, GetNext< Complementary< Correlative, Evaluative > > >,
-            TraverseReadScaleSafely< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetNext< Complementary< Correlative, Evaluative > > >,
-            GoReadElementSafely< SingleComplementary< Correlative, Evaluative >, Natural, Correlative, Evaluative >
-        };
+            SafeReadElementIncrementSingleScale = {
+                SingleComparison< Complementary< Correlative, Evaluative > >,
+                BeginReadScaleSafely< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetFirst< Natural, Complementary< Correlative, Evaluative > >, GetNext< Complementary< Correlative, Evaluative > > >,
+                TraverseReadScaleSafely< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetNext< Complementary< Correlative, Evaluative > > >,
+                GoReadElementSafely< SingleComplementary< Correlative, Evaluative >, Natural, Correlative, Evaluative >
+            };
 
         template <
             typename Natural,
@@ -584,12 +584,12 @@ namespace junction {
             typename Evaluative
         >
         constexpr Scalar< const AssociativelyDoubleJunctive< Natural, Correlative, Evaluative >, AssociativelyDoublePositional< Correlative, Evaluative >, Natural, const Evaluative >
-        SafeReadElementIncrementDoubleScale = {
-            DoubleComparison< Complementary< Correlative, Evaluative > >,
-            BeginReadScaleSafely< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetFirst< Natural, Complementary< Correlative, Evaluative > >, GetNext< Complementary< Correlative, Evaluative > > >,
-            TraverseReadScaleSafely< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetNext< Complementary< Correlative, Evaluative > > >,
-            GoReadElementSafely< DoubleComplementary< Correlative, Evaluative >, Natural, Correlative, Evaluative >
-        };
+            SafeReadElementIncrementDoubleScale = {
+                DoubleComparison< Complementary< Correlative, Evaluative > >,
+                BeginReadScaleSafely< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetFirst< Natural, Complementary< Correlative, Evaluative > >, GetNext< Complementary< Correlative, Evaluative > > >,
+                TraverseReadScaleSafely< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetNext< Complementary< Correlative, Evaluative > > >,
+                GoReadElementSafely< DoubleComplementary< Correlative, Evaluative >, Natural, Correlative, Evaluative >
+            };
 
         template <
             typename Natural,
@@ -597,12 +597,12 @@ namespace junction {
             typename Evaluative
         >
         constexpr Scalar< const AssociativelyDoubleJunctive< Natural, Correlative, Evaluative >, AssociativelyDoublePositional< Correlative, Evaluative >, Natural, const Evaluative >
-        ReadElementDecrementDoubleScale = {
-            DoubleComparison< Complementary< Correlative, Evaluative > >,
-            BeginReadScale< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetLast< Natural, Complementary< Correlative, Evaluative > >, GetPrevious< Complementary< Correlative, Evaluative > > >,
-            TraverseReadScale< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetPrevious< Complementary< Correlative, Evaluative > > >,
-            GoReadElement< DoubleComplementary< Correlative, Evaluative >, Natural, Correlative, Evaluative >
-        };
+            ReadElementDecrementDoubleScale = {
+                DoubleComparison< Complementary< Correlative, Evaluative > >,
+                BeginReadScale< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetLast< Natural, Complementary< Correlative, Evaluative > >, GetPrevious< Complementary< Correlative, Evaluative > > >,
+                TraverseReadScale< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetPrevious< Complementary< Correlative, Evaluative > > >,
+                GoReadElement< DoubleComplementary< Correlative, Evaluative >, Natural, Correlative, Evaluative >
+            };
 
         template <
             typename Natural,
@@ -610,12 +610,12 @@ namespace junction {
             typename Evaluative
         >
         constexpr Scalar< const AssociativelyDoubleJunctive< Natural, Correlative, Evaluative >, AssociativelyDoublePositional< Correlative, Evaluative >, Natural, const Evaluative >
-        SafeReadElementDecrementDoubleScale = {
-            DoubleComparison< Complementary< Correlative, Evaluative > >,
-            BeginReadScaleSafely< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetLast< Natural, Complementary< Correlative, Evaluative > >, GetPrevious< Complementary< Correlative, Evaluative > > >,
-            TraverseReadScaleSafely< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetPrevious< Complementary< Correlative, Evaluative > > >,
-            GoReadElementSafely< DoubleComplementary< Correlative, Evaluative >, Natural, Correlative, Evaluative >
-        };
+            SafeReadElementDecrementDoubleScale = {
+                DoubleComparison< Complementary< Correlative, Evaluative > >,
+                BeginReadScaleSafely< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetLast< Natural, Complementary< Correlative, Evaluative > >, GetPrevious< Complementary< Correlative, Evaluative > > >,
+                TraverseReadScaleSafely< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetPrevious< Complementary< Correlative, Evaluative > > >,
+                GoReadElementSafely< DoubleComplementary< Correlative, Evaluative >, Natural, Correlative, Evaluative >
+            };
 
         template <
             typename Natural,
@@ -623,12 +623,12 @@ namespace junction {
             typename Evaluative
         >
         constexpr Scalar< const AssociativelySingleJunctive< Natural, Correlative, Evaluative >, AssociativelySinglePositional< Correlative, Evaluative >, Natural, const Evaluative >
-        WriteElementIncrementSingleScale = {
-            SingleComparison< Complementary< Correlative, Evaluative > >,
-            BeginReadScale< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetFirst< Natural, Complementary< Correlative, Evaluative > >, GetNext< Complementary< Correlative, Evaluative > > >,
-            TraverseReadScale< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetNext< Complementary< Correlative, Evaluative > > >,
-            GoWriteElement< SingleComplementary< Correlative, Evaluative >, Natural, Correlative, Evaluative >
-        };
+            WriteElementIncrementSingleScale = {
+                SingleComparison< Complementary< Correlative, Evaluative > >,
+                BeginReadScale< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetFirst< Natural, Complementary< Correlative, Evaluative > >, GetNext< Complementary< Correlative, Evaluative > > >,
+                TraverseReadScale< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetNext< Complementary< Correlative, Evaluative > > >,
+                GoWriteElement< SingleComplementary< Correlative, Evaluative >, Natural, Correlative, Evaluative >
+            };
 
         template <
             typename Natural,
@@ -636,12 +636,12 @@ namespace junction {
             typename Evaluative
         >
         constexpr Scalar< const AssociativelyDoubleJunctive< Natural, Correlative, Evaluative >, AssociativelyDoublePositional< Correlative, Evaluative >, Natural, const Evaluative >
-        WriteElementIncrementDoubleScale = {
-            DoubleComparison< Complementary< Correlative, Evaluative > >,
-            BeginReadScale< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetFirst< Natural, Complementary< Correlative, Evaluative > >, GetNext< Complementary< Correlative, Evaluative > > >,
-            TraverseReadScale< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetNext< Complementary< Correlative, Evaluative > > >,
-            GoWriteElement< DoubleComplementary< Correlative, Evaluative >, Natural, Correlative, Evaluative >
-        };
+            WriteElementIncrementDoubleScale = {
+                DoubleComparison< Complementary< Correlative, Evaluative > >,
+                BeginReadScale< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetFirst< Natural, Complementary< Correlative, Evaluative > >, GetNext< Complementary< Correlative, Evaluative > > >,
+                TraverseReadScale< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetNext< Complementary< Correlative, Evaluative > > >,
+                GoWriteElement< DoubleComplementary< Correlative, Evaluative >, Natural, Correlative, Evaluative >
+            };
 
         template <
             typename Natural,
@@ -649,12 +649,12 @@ namespace junction {
             typename Evaluative
         >
         constexpr Scalar< const AssociativelySingleJunctive< Natural, Correlative, Evaluative >, AssociativelySinglePositional< Correlative, Evaluative >, Natural, const Evaluative >
-        SafeWriteElementIncrementSingleScale = {
-            SingleComparison< Complementary< Correlative, Evaluative > >,
-            BeginReadScaleSafely< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetFirst< Natural, Complementary< Correlative, Evaluative > >, GetNext< Complementary< Correlative, Evaluative > > >,
-            TraverseReadScaleSafely< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetNext< Complementary< Correlative, Evaluative > > >,
-            GoWriteElementSafely< SingleComplementary< Correlative, Evaluative >, Natural, Correlative, Evaluative >
-        };
+            SafeWriteElementIncrementSingleScale = {
+                SingleComparison< Complementary< Correlative, Evaluative > >,
+                BeginReadScaleSafely< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetFirst< Natural, Complementary< Correlative, Evaluative > >, GetNext< Complementary< Correlative, Evaluative > > >,
+                TraverseReadScaleSafely< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetNext< Complementary< Correlative, Evaluative > > >,
+                GoWriteElementSafely< SingleComplementary< Correlative, Evaluative >, Natural, Correlative, Evaluative >
+            };
 
         template <
             typename Natural,
@@ -662,12 +662,12 @@ namespace junction {
             typename Evaluative
         >
         constexpr Scalar< const AssociativelyDoubleJunctive< Natural, Correlative, Evaluative >, AssociativelyDoublePositional< Correlative, Evaluative >, Natural, const Evaluative >
-        SafeWriteElementIncrementDoubleScale = {
-            DoubleComparison< Complementary< Correlative, Evaluative > >,
-            BeginReadScaleSafely< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetFirst< Natural, Complementary< Correlative, Evaluative > >, GetNext< Complementary< Correlative, Evaluative > > >,
-            TraverseReadScaleSafely< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetNext< Complementary< Correlative, Evaluative > > >,
-            GoWriteElementSafely< DoubleComplementary< Correlative, Evaluative >, Natural, Correlative, Evaluative >
-        };
+            SafeWriteElementIncrementDoubleScale = {
+                DoubleComparison< Complementary< Correlative, Evaluative > >,
+                BeginReadScaleSafely< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetFirst< Natural, Complementary< Correlative, Evaluative > >, GetNext< Complementary< Correlative, Evaluative > > >,
+                TraverseReadScaleSafely< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetNext< Complementary< Correlative, Evaluative > > >,
+                GoWriteElementSafely< DoubleComplementary< Correlative, Evaluative >, Natural, Correlative, Evaluative >
+            };
 
         template <
             typename Natural,
@@ -675,12 +675,12 @@ namespace junction {
             typename Evaluative
         >
         constexpr Scalar< const AssociativelyDoubleJunctive< Natural, Correlative, Evaluative >, AssociativelyDoublePositional< Correlative, Evaluative >, Natural, const Evaluative >
-        WriteElementDecrementDoubleScale = {
-            DoubleComparison< Complementary< Correlative, Evaluative > >,
-            BeginReadScale< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetLast< Natural, Complementary< Correlative, Evaluative > >, GetPrevious< Complementary< Correlative, Evaluative > > >,
-            TraverseReadScale< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetPrevious< Complementary< Correlative, Evaluative > > >,
-            GoWriteElement< DoubleComplementary< Correlative, Evaluative >, Natural, Correlative, Evaluative >
-        };
+            WriteElementDecrementDoubleScale = {
+                DoubleComparison< Complementary< Correlative, Evaluative > >,
+                BeginReadScale< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetLast< Natural, Complementary< Correlative, Evaluative > >, GetPrevious< Complementary< Correlative, Evaluative > > >,
+                TraverseReadScale< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetPrevious< Complementary< Correlative, Evaluative > > >,
+                GoWriteElement< DoubleComplementary< Correlative, Evaluative >, Natural, Correlative, Evaluative >
+            };
 
         template <
             typename Natural,
@@ -688,12 +688,12 @@ namespace junction {
             typename Evaluative
         >
         constexpr Scalar< const AssociativelyDoubleJunctive< Natural, Correlative, Evaluative >, AssociativelyDoublePositional< Correlative, Evaluative >, Natural, const Evaluative >
-        SafeWriteElementDecrementDoubleScale = {
-            DoubleComparison< Complementary< Correlative, Evaluative > >,
-            BeginReadScaleSafely< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetLast< Natural, Complementary< Correlative, Evaluative > >, GetPrevious< Complementary< Correlative, Evaluative > > >,
-            TraverseReadScaleSafely< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetPrevious< Complementary< Correlative, Evaluative > > >,
-            GoWriteElementSafely< DoubleComplementary< Correlative, Evaluative >, Natural, Correlative, Evaluative >
-        };
+            SafeWriteElementDecrementDoubleScale = {
+                DoubleComparison< Complementary< Correlative, Evaluative > >,
+                BeginReadScaleSafely< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetLast< Natural, Complementary< Correlative, Evaluative > >, GetPrevious< Complementary< Correlative, Evaluative > > >,
+                TraverseReadScaleSafely< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetPrevious< Complementary< Correlative, Evaluative > > >,
+                GoWriteElementSafely< DoubleComplementary< Correlative, Evaluative >, Natural, Correlative, Evaluative >
+            };
 
         template <
             typename Natural,
@@ -701,10 +701,10 @@ namespace junction {
             typename Evaluative
         >
         constexpr Lineal< const AssociativelyDoubleJunctive< Natural, Correlative, Evaluative >, AssociativelyDoublePositional< Correlative, Evaluative >, Natural, const Correlative >
-        ReadRelatorDoubleLiner = {
-            ReadRelatorIncrementDoubleScale< Natural, Correlative, Evaluative >,
-            ReadRelatorDecrementDoubleScale< Natural, Correlative, Evaluative >
-        };
+            ReadRelatorDoubleLiner = {
+                ReadRelatorIncrementDoubleScale< Natural, Correlative, Evaluative >,
+                ReadRelatorDecrementDoubleScale< Natural, Correlative, Evaluative >
+            };
 
         template <
             typename Natural,
@@ -712,10 +712,10 @@ namespace junction {
             typename Evaluative
         >
         constexpr Lineal< const AssociativelyDoubleJunctive< Natural, Correlative, Evaluative >, AssociativelyDoublePositional< Correlative, Evaluative >, Natural, const Correlative >
-        SafeReadRelatorDoubleLiner = {
-            SafeReadRelatorIncrementDoubleScale< Natural, Correlative, Evaluative >,
-            SafeReadRelatorDecrementDoubleScale< Natural, Correlative, Evaluative >
-        };
+            SafeReadRelatorDoubleLiner = {
+                SafeReadRelatorIncrementDoubleScale< Natural, Correlative, Evaluative >,
+                SafeReadRelatorDecrementDoubleScale< Natural, Correlative, Evaluative >
+            };
 
         template <
             typename Natural,
@@ -723,10 +723,10 @@ namespace junction {
             typename Evaluative
         >
         constexpr Lineal< const AssociativelyDoubleJunctive< Natural, Correlative, Evaluative >, AssociativelyDoublePositional< Correlative, Evaluative >, Natural, const Evaluative >
-        ReadElementDoubleLiner = {
-            ReadElementIncrementDoubleScale< Natural, Correlative, Evaluative >,
-            ReadElementDecrementDoubleScale< Natural, Correlative, Evaluative >
-        };
+            ReadElementDoubleLiner = {
+                ReadElementIncrementDoubleScale< Natural, Correlative, Evaluative >,
+                ReadElementDecrementDoubleScale< Natural, Correlative, Evaluative >
+            };
 
         template <
             typename Natural,
@@ -734,10 +734,10 @@ namespace junction {
             typename Evaluative
         >
         constexpr Lineal< const AssociativelyDoubleJunctive< Natural, Correlative, Evaluative >, AssociativelyDoublePositional< Correlative, Evaluative >, Natural, const Evaluative >
-        SafeReadElementDoubleLiner = {
-            SafeReadElementIncrementDoubleScale< Natural, Correlative, Evaluative >,
-            SafeReadElementDecrementDoubleScale< Natural, Correlative, Evaluative >
-        };
+            SafeReadElementDoubleLiner = {
+                SafeReadElementIncrementDoubleScale< Natural, Correlative, Evaluative >,
+                SafeReadElementDecrementDoubleScale< Natural, Correlative, Evaluative >
+            };
 
         template <
             typename Natural,
@@ -745,10 +745,10 @@ namespace junction {
             typename Evaluative
         >
         constexpr Lineal< AssociativelyDoubleJunctive< Natural, Correlative, Evaluative >, AssociativelyDoublePositional< Correlative, Evaluative >, Natural, Evaluative >
-        WriteElementDoubleLiner = {
-            WriteElementIncrementDoubleScale< Natural, Correlative, Evaluative >,
-            WriteElementDecrementDoubleScale< Natural, Correlative, Evaluative >
-        };
+            WriteElementDoubleLiner = {
+                WriteElementIncrementDoubleScale< Natural, Correlative, Evaluative >,
+                WriteElementDecrementDoubleScale< Natural, Correlative, Evaluative >
+            };
 
         template <
             typename Natural,
@@ -756,10 +756,10 @@ namespace junction {
             typename Evaluative
         >
         constexpr Lineal< AssociativelyDoubleJunctive< Natural, Correlative, Evaluative >, AssociativelyDoublePositional< Correlative, Evaluative >, Natural, Evaluative >
-        SafeWriteElementDoubleLiner = {
-            SafeWriteElementIncrementDoubleScale< Natural, Correlative, Evaluative >,
-            SafeWriteElementDecrementDoubleScale< Natural, Correlative, Evaluative >
-        };
+            SafeWriteElementDoubleLiner = {
+                SafeWriteElementIncrementDoubleScale< Natural, Correlative, Evaluative >,
+                SafeWriteElementDecrementDoubleScale< Natural, Correlative, Evaluative >
+            };
 
         template <
             typename Natural,
@@ -767,12 +767,12 @@ namespace junction {
             typename Evaluative
         >
         constexpr Directional< const AssociativelySingleJunctive< Natural, Correlative, Evaluative >, AssociativelySinglePositional< Correlative, Evaluative >, Natural, const Correlative >
-        ReadRelatorIncrementSingleDirection = {
-            ReadRelatorIncrementSingleScale< Natural, Correlative, Evaluative >,
-            DirectionBegins< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetFirst< Natural, Complementary< Correlative, Evaluative > >, GetNext< Complementary< Correlative, Evaluative > > >,
-            DirectionTraverses< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetNext< Complementary< Correlative, Evaluative > > >,
-            Contains< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative > >
-        };
+            ReadRelatorIncrementSingleDirection = {
+                ReadRelatorIncrementSingleScale< Natural, Correlative, Evaluative >,
+                DirectionBegins< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetFirst< Natural, Complementary< Correlative, Evaluative > >, GetNext< Complementary< Correlative, Evaluative > > >,
+                DirectionTraverses< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetNext< Complementary< Correlative, Evaluative > > >,
+                Contains< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative > >
+            };
 
         template <
             typename Natural,
@@ -780,12 +780,12 @@ namespace junction {
             typename Evaluative
         >
         constexpr Directional< const AssociativelyDoubleJunctive< Natural, Correlative, Evaluative >, AssociativelyDoublePositional< Correlative, Evaluative >, Natural, const Correlative >
-        ReadRelatorIncrementDoubleDirection = {
-            ReadRelatorIncrementDoubleScale< Natural, Correlative, Evaluative >,
-            DirectionBegins< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetFirst< Natural, Complementary< Correlative, Evaluative > >, GetNext< Complementary< Correlative, Evaluative > > >,
-            DirectionTraverses< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetNext< Complementary< Correlative, Evaluative > > >,
-            Contains< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative > >
-        };
+            ReadRelatorIncrementDoubleDirection = {
+                ReadRelatorIncrementDoubleScale< Natural, Correlative, Evaluative >,
+                DirectionBegins< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetFirst< Natural, Complementary< Correlative, Evaluative > >, GetNext< Complementary< Correlative, Evaluative > > >,
+                DirectionTraverses< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetNext< Complementary< Correlative, Evaluative > > >,
+                Contains< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative > >
+            };
 
         template <
             typename Natural,
@@ -793,12 +793,12 @@ namespace junction {
             typename Evaluative
         >
         constexpr Directional< const AssociativelySingleJunctive< Natural, Correlative, Evaluative >, AssociativelySinglePositional< Correlative, Evaluative >, Natural, const Correlative >
-        SafeReadRelatorIncrementSingleDirection = {
-            SafeReadRelatorIncrementSingleScale< Natural, Correlative, Evaluative >,
-            DirectionBegins< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetFirst< Natural, Complementary< Correlative, Evaluative > >, GetNext< Complementary< Correlative, Evaluative > > >,
-            DirectionTraversesCheckSafely< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetNext< Complementary< Correlative, Evaluative > > >,
-            ContainsCheckSafely< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative > >
-        };
+            SafeReadRelatorIncrementSingleDirection = {
+                SafeReadRelatorIncrementSingleScale< Natural, Correlative, Evaluative >,
+                DirectionBegins< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetFirst< Natural, Complementary< Correlative, Evaluative > >, GetNext< Complementary< Correlative, Evaluative > > >,
+                DirectionTraversesCheckSafely< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetNext< Complementary< Correlative, Evaluative > > >,
+                ContainsCheckSafely< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative > >
+            };
 
         template <
             typename Natural,
@@ -806,12 +806,12 @@ namespace junction {
             typename Evaluative
         >
         constexpr Directional< const AssociativelyDoubleJunctive< Natural, Correlative, Evaluative >, AssociativelyDoublePositional< Correlative, Evaluative >, Natural, const Correlative >
-        SafeReadRelatorIncrementDoubleDirection = {
-            SafeReadRelatorIncrementDoubleScale< Natural, Correlative, Evaluative >,
-            DirectionBegins< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetFirst< Natural, Complementary< Correlative, Evaluative > >, GetNext< Complementary< Correlative, Evaluative > > >,
-            DirectionTraversesCheckSafely< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetNext< Complementary< Correlative, Evaluative > > >,
-            ContainsCheckSafely< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative > >
-        };
+            SafeReadRelatorIncrementDoubleDirection = {
+                SafeReadRelatorIncrementDoubleScale< Natural, Correlative, Evaluative >,
+                DirectionBegins< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetFirst< Natural, Complementary< Correlative, Evaluative > >, GetNext< Complementary< Correlative, Evaluative > > >,
+                DirectionTraversesCheckSafely< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetNext< Complementary< Correlative, Evaluative > > >,
+                ContainsCheckSafely< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative > >
+            };
 
         template <
             typename Natural,
@@ -819,12 +819,12 @@ namespace junction {
             typename Evaluative
         >
         constexpr Directional< const AssociativelyDoubleJunctive< Natural, Correlative, Evaluative >, AssociativelyDoublePositional< Correlative, Evaluative >, Natural, const Correlative >
-        ReadRelatorDecrementDoubleDirection = {
-            ReadRelatorDecrementDoubleScale< Natural, Correlative, Evaluative >,
-            DirectionBegins< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetLast< Natural, Complementary< Correlative, Evaluative > >, GetPrevious< Complementary< Correlative, Evaluative > > >,
-            DirectionTraverses< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetPrevious< Complementary< Correlative, Evaluative > > >,
-            Contains< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative > >
-        };
+            ReadRelatorDecrementDoubleDirection = {
+                ReadRelatorDecrementDoubleScale< Natural, Correlative, Evaluative >,
+                DirectionBegins< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetLast< Natural, Complementary< Correlative, Evaluative > >, GetPrevious< Complementary< Correlative, Evaluative > > >,
+                DirectionTraverses< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetPrevious< Complementary< Correlative, Evaluative > > >,
+                Contains< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative > >
+            };
 
         template <
             typename Natural,
@@ -832,12 +832,12 @@ namespace junction {
             typename Evaluative
         >
         constexpr Directional< const AssociativelyDoubleJunctive< Natural, Correlative, Evaluative >, AssociativelyDoublePositional< Correlative, Evaluative >, Natural, const Correlative >
-        SafeReadRelatorDecrementDoubleDirection = {
-            SafeReadRelatorDecrementDoubleScale< Natural, Correlative, Evaluative >,
-            DirectionBegins< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetLast< Natural, Complementary< Correlative, Evaluative > >, GetPrevious< Complementary< Correlative, Evaluative > > >,
-            DirectionTraversesCheckSafely< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetPrevious< Complementary< Correlative, Evaluative > > >,
-            ContainsCheckSafely< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative > >
-        };
+            SafeReadRelatorDecrementDoubleDirection = {
+                SafeReadRelatorDecrementDoubleScale< Natural, Correlative, Evaluative >,
+                DirectionBegins< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetLast< Natural, Complementary< Correlative, Evaluative > >, GetPrevious< Complementary< Correlative, Evaluative > > >,
+                DirectionTraversesCheckSafely< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetPrevious< Complementary< Correlative, Evaluative > > >,
+                ContainsCheckSafely< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative > >
+            };
 
         template <
             typename Natural,
@@ -845,12 +845,12 @@ namespace junction {
             typename Evaluative
         >
         constexpr Directional< const AssociativelySingleJunctive< Natural, Correlative, Evaluative >, AssociativelySinglePositional< Correlative, Evaluative >, Natural, const Evaluative >
-        ReadElementIncrementSingleDirection = {
-            ReadElementIncrementSingleScale< Natural, Correlative, Evaluative >,
-            DirectionBegins< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetFirst< Natural, Complementary< Correlative, Evaluative > >,  GetNext< Complementary< Correlative, Evaluative > > >,
-            DirectionTraverses< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetNext< Complementary< Correlative, Evaluative > > >,
-            Contains< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative > >
-        };
+            ReadElementIncrementSingleDirection = {
+                ReadElementIncrementSingleScale< Natural, Correlative, Evaluative >,
+                DirectionBegins< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetFirst< Natural, Complementary< Correlative, Evaluative > >,  GetNext< Complementary< Correlative, Evaluative > > >,
+                DirectionTraverses< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetNext< Complementary< Correlative, Evaluative > > >,
+                Contains< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative > >
+            };
 
         template <
             typename Natural,
@@ -858,12 +858,12 @@ namespace junction {
             typename Evaluative
         >
         constexpr Directional< const AssociativelyDoubleJunctive< Natural, Correlative, Evaluative >, AssociativelyDoublePositional< Correlative, Evaluative >, Natural, const Evaluative >
-        ReadElementIncrementDoubleDirection = {
-            ReadElementIncrementDoubleScale< Natural, Correlative, Evaluative >,
-            DirectionBegins< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetFirst< Natural, Complementary< Correlative, Evaluative > >, GetNext< Complementary< Correlative, Evaluative > > >,
-            DirectionTraverses< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetNext< Complementary< Correlative, Evaluative > > >,
-            Contains< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative > >
-        };
+            ReadElementIncrementDoubleDirection = {
+                ReadElementIncrementDoubleScale< Natural, Correlative, Evaluative >,
+                DirectionBegins< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetFirst< Natural, Complementary< Correlative, Evaluative > >, GetNext< Complementary< Correlative, Evaluative > > >,
+                DirectionTraverses< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetNext< Complementary< Correlative, Evaluative > > >,
+                Contains< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative > >
+            };
 
         template <
             typename Natural,
@@ -871,12 +871,12 @@ namespace junction {
             typename Evaluative
         >
         constexpr Directional< const AssociativelySingleJunctive< Natural, Correlative, Evaluative >, AssociativelySinglePositional< Correlative, Evaluative >, Natural, const Evaluative >
-        SafeReadElementIncrementSingleDirection = {
-            SafeReadElementIncrementSingleScale< Natural, Correlative, Evaluative >,
-            DirectionBegins< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetFirst< Natural, Complementary< Correlative, Evaluative > >, GetNext< Complementary< Correlative, Evaluative > > >,
-            DirectionTraversesCheckSafely< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetNext< Complementary< Correlative, Evaluative > > >,
-            ContainsCheckSafely< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative > >
-        };
+            SafeReadElementIncrementSingleDirection = {
+                SafeReadElementIncrementSingleScale< Natural, Correlative, Evaluative >,
+                DirectionBegins< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetFirst< Natural, Complementary< Correlative, Evaluative > >, GetNext< Complementary< Correlative, Evaluative > > >,
+                DirectionTraversesCheckSafely< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetNext< Complementary< Correlative, Evaluative > > >,
+                ContainsCheckSafely< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative > >
+            };
 
         template <
             typename Natural,
@@ -884,12 +884,12 @@ namespace junction {
             typename Evaluative
         >
         constexpr Directional< const AssociativelyDoubleJunctive< Natural, Correlative, Evaluative >, AssociativelyDoublePositional< Correlative, Evaluative >, Natural, const Evaluative >
-        SafeReadElementIncrementDoubleDirection = {
-            SafeReadElementIncrementDoubleScale< Natural, Correlative, Evaluative >,
-            DirectionBegins< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetFirst< Natural, Complementary< Correlative, Evaluative > >, GetNext< Complementary< Correlative, Evaluative > > >,
-            DirectionTraversesCheckSafely< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetNext< Complementary< Correlative, Evaluative > > >,
-            ContainsCheckSafely< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative > >
-        };
+            SafeReadElementIncrementDoubleDirection = {
+                SafeReadElementIncrementDoubleScale< Natural, Correlative, Evaluative >,
+                DirectionBegins< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetFirst< Natural, Complementary< Correlative, Evaluative > >, GetNext< Complementary< Correlative, Evaluative > > >,
+                DirectionTraversesCheckSafely< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetNext< Complementary< Correlative, Evaluative > > >,
+                ContainsCheckSafely< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative > >
+            };
 
         template <
             typename Natural,
@@ -897,12 +897,12 @@ namespace junction {
             typename Evaluative
         >
         constexpr Directional< const AssociativelyDoubleJunctive< Natural, Correlative, Evaluative >, AssociativelyDoublePositional< Correlative, Evaluative >, Natural, const Evaluative >
-        ReadElementDecrementDoubleDirection = {
-            ReadElementDecrementDoubleScale< Natural, Correlative, Evaluative >,
-            DirectionBegins< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetLast< Natural, Complementary< Correlative, Evaluative > >, GetPrevious< Complementary< Correlative, Evaluative > > >,
-            DirectionTraverses< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetPrevious< Complementary< Correlative, Evaluative > > >,
-            Contains< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative > >
-        };
+            ReadElementDecrementDoubleDirection = {
+                ReadElementDecrementDoubleScale< Natural, Correlative, Evaluative >,
+                DirectionBegins< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetLast< Natural, Complementary< Correlative, Evaluative > >, GetPrevious< Complementary< Correlative, Evaluative > > >,
+                DirectionTraverses< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetPrevious< Complementary< Correlative, Evaluative > > >,
+                Contains< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative > >
+            };
 
         template <
             typename Natural,
@@ -910,12 +910,12 @@ namespace junction {
             typename Evaluative
         >
         constexpr Directional< const AssociativelyDoubleJunctive< Natural, Correlative, Evaluative >, AssociativelyDoublePositional< Correlative, Evaluative >, Natural, const Evaluative >
-        SafeReadElementDecrementDoubleDirection = {
-            SafeReadElementDecrementDoubleScale< Natural, Correlative, Evaluative >,
-            DirectionBegins< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetLast< Natural, Complementary< Correlative, Evaluative > >, GetPrevious< Complementary< Correlative, Evaluative > > >,
-            DirectionTraversesCheckSafely< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetPrevious< Complementary< Correlative, Evaluative > > >,
-            ContainsCheckSafely< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative > >
-        };
+            SafeReadElementDecrementDoubleDirection = {
+                SafeReadElementDecrementDoubleScale< Natural, Correlative, Evaluative >,
+                DirectionBegins< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetLast< Natural, Complementary< Correlative, Evaluative > >, GetPrevious< Complementary< Correlative, Evaluative > > >,
+                DirectionTraversesCheckSafely< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetPrevious< Complementary< Correlative, Evaluative > > >,
+                ContainsCheckSafely< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative > >
+            };
 
         template <
             typename Natural,
@@ -923,12 +923,12 @@ namespace junction {
             typename Evaluative
         >
         constexpr Directional< AssociativelySingleJunctive< Natural, Correlative, Evaluative >, AssociativelySinglePositional< Correlative, Evaluative >, Natural, Evaluative >
-        WriteElementIncrementSingleDirection = {
-            WriteElementIncrementSingleScale< Natural, Correlative, Evaluative >,
-            DirectionBegins< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetFirst< Natural, Complementary< Correlative, Evaluative > >,  GetNext< Complementary< Correlative, Evaluative > > >,
-            DirectionTraverses< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetNext< Complementary< Correlative, Evaluative > > >,
-            Contains< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative > >
-        };
+            WriteElementIncrementSingleDirection = {
+                WriteElementIncrementSingleScale< Natural, Correlative, Evaluative >,
+                DirectionBegins< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetFirst< Natural, Complementary< Correlative, Evaluative > >,  GetNext< Complementary< Correlative, Evaluative > > >,
+                DirectionTraverses< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetNext< Complementary< Correlative, Evaluative > > >,
+                Contains< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative > >
+            };
 
         template <
             typename Natural,
@@ -936,12 +936,12 @@ namespace junction {
             typename Evaluative
         >
         constexpr Directional< AssociativelyDoubleJunctive< Natural, Correlative, Evaluative >, AssociativelyDoublePositional< Correlative, Evaluative >, Natural, Evaluative >
-        WriteElementIncrementDoubleDirection = {
-            WriteElementIncrementDoubleScale< Natural, Correlative, Evaluative >,
-            DirectionBegins< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetFirst< Natural, Complementary< Correlative, Evaluative > >, GetNext< Complementary< Correlative, Evaluative > > >,
-            DirectionTraverses< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetNext< Complementary< Correlative, Evaluative > > >,
-            Contains< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative > >
-        };
+            WriteElementIncrementDoubleDirection = {
+                WriteElementIncrementDoubleScale< Natural, Correlative, Evaluative >,
+                DirectionBegins< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetFirst< Natural, Complementary< Correlative, Evaluative > >, GetNext< Complementary< Correlative, Evaluative > > >,
+                DirectionTraverses< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetNext< Complementary< Correlative, Evaluative > > >,
+                Contains< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative > >
+            };
 
         template <
             typename Natural,
@@ -949,12 +949,12 @@ namespace junction {
             typename Evaluative
         >
         constexpr Directional< AssociativelySingleJunctive< Natural, Correlative, Evaluative >, AssociativelySinglePositional< Correlative, Evaluative >, Natural, Evaluative >
-        SafeWriteElementIncrementSingleDirection = {
-            SafeWriteElementIncrementSingleScale< Natural, Correlative, Evaluative >,
-            DirectionBegins< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetFirst< Natural, Complementary< Correlative, Evaluative > >, GetNext< Complementary< Correlative, Evaluative > > >,
-            DirectionTraversesCheckSafely< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetNext< Complementary< Correlative, Evaluative > > >,
-            ContainsCheckSafely< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative > >
-        };
+            SafeWriteElementIncrementSingleDirection = {
+                SafeWriteElementIncrementSingleScale< Natural, Correlative, Evaluative >,
+                DirectionBegins< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetFirst< Natural, Complementary< Correlative, Evaluative > >, GetNext< Complementary< Correlative, Evaluative > > >,
+                DirectionTraversesCheckSafely< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetNext< Complementary< Correlative, Evaluative > > >,
+                ContainsCheckSafely< SingleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative > >
+            };
 
         template <
             typename Natural,
@@ -962,12 +962,12 @@ namespace junction {
             typename Evaluative
         >
         constexpr Directional< AssociativelyDoubleJunctive< Natural, Correlative, Evaluative >, AssociativelyDoublePositional< Correlative, Evaluative >, Natural, Evaluative >
-        SafeWriteElementIncrementDoubleDirection = {
-            SafeWriteElementIncrementDoubleScale< Natural, Correlative, Evaluative >,
-            DirectionBegins< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetFirst< Natural, Complementary< Correlative, Evaluative > >, GetNext< Complementary< Correlative, Evaluative > > >,
-            DirectionTraversesCheckSafely< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetNext< Complementary< Correlative, Evaluative > > >,
-            ContainsCheckSafely< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative > >
-        };
+            SafeWriteElementIncrementDoubleDirection = {
+                SafeWriteElementIncrementDoubleScale< Natural, Correlative, Evaluative >,
+                DirectionBegins< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetFirst< Natural, Complementary< Correlative, Evaluative > >, GetNext< Complementary< Correlative, Evaluative > > >,
+                DirectionTraversesCheckSafely< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetNext< Complementary< Correlative, Evaluative > > >,
+                ContainsCheckSafely< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative > >
+            };
 
         template <
             typename Natural,
@@ -975,12 +975,12 @@ namespace junction {
             typename Evaluative
         >
         constexpr Directional< AssociativelyDoubleJunctive< Natural, Correlative, Evaluative >, AssociativelyDoublePositional< Correlative, Evaluative >, Natural, Evaluative >
-        WriteElementDecrementDoubleDirection = {
-            WriteElementDecrementDoubleScale< Natural, Correlative, Evaluative >,
-            DirectionBegins< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetLast< Natural, Complementary< Correlative, Evaluative > >, GetPrevious< Complementary< Correlative, Evaluative > > >,
-            DirectionTraverses< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetPrevious< Complementary< Correlative, Evaluative > > >,
-            Contains< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative > >
-        };
+            WriteElementDecrementDoubleDirection = {
+                WriteElementDecrementDoubleScale< Natural, Correlative, Evaluative >,
+                DirectionBegins< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetLast< Natural, Complementary< Correlative, Evaluative > >, GetPrevious< Complementary< Correlative, Evaluative > > >,
+                DirectionTraverses< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetPrevious< Complementary< Correlative, Evaluative > > >,
+                Contains< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative > >
+            };
 
         template <
             typename Natural,
@@ -988,12 +988,12 @@ namespace junction {
             typename Evaluative
         >
         constexpr Directional< AssociativelyDoubleJunctive< Natural, Correlative, Evaluative >, AssociativelyDoublePositional< Correlative, Evaluative >, Natural, Evaluative >
-        SafeWriteElementDecrementDoubleDirection = {
-            SafeWriteElementDecrementDoubleScale< Natural, Correlative, Evaluative >,
-            DirectionBegins< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetLast< Natural, Complementary< Correlative, Evaluative > >, GetPrevious< Complementary< Correlative, Evaluative > > >,
-            DirectionTraversesCheckSafely< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetPrevious< Complementary< Correlative, Evaluative > > >,
-            ContainsCheckSafely< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative > >
-        };
+            SafeWriteElementDecrementDoubleDirection = {
+                SafeWriteElementDecrementDoubleScale< Natural, Correlative, Evaluative >,
+                DirectionBegins< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetLast< Natural, Complementary< Correlative, Evaluative > >, GetPrevious< Complementary< Correlative, Evaluative > > >,
+                DirectionTraversesCheckSafely< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative >, GetPrevious< Complementary< Correlative, Evaluative > > >,
+                ContainsCheckSafely< DoubleComplementary< Correlative, Evaluative >, Natural, Complementary< Correlative, Evaluative > >
+            };
 
         template <
             typename Natural,
@@ -1001,10 +1001,10 @@ namespace junction {
             typename Evaluative
         >
         constexpr Axial< const AssociativelyDoubleJunctive< Natural, Correlative, Evaluative >, AssociativelyDoublePositional< Correlative, Evaluative >, Natural, const Correlative >
-        ReadRelatorDoubleAxis = {
-            ReadRelatorIncrementDoubleDirection< Natural, Correlative, Evaluative >,
-            ReadRelatorDecrementDoubleDirection< Natural, Correlative, Evaluative >
-        };
+            ReadRelatorDoubleAxis = {
+                ReadRelatorIncrementDoubleDirection< Natural, Correlative, Evaluative >,
+                ReadRelatorDecrementDoubleDirection< Natural, Correlative, Evaluative >
+            };
 
         template <
             typename Natural,
@@ -1012,10 +1012,10 @@ namespace junction {
             typename Evaluative
         >
         constexpr Axial< const AssociativelyDoubleJunctive< Natural, Correlative, Evaluative >, AssociativelyDoublePositional< Correlative, Evaluative >, Natural, const Correlative >
-        SafeReadRelatorDoubleAxis = {
-            SafeReadRelatorIncrementDoubleDirection< Natural, Correlative, Evaluative >,
-            SafeReadRelatorDecrementDoubleDirection< Natural, Correlative, Evaluative >
-        };
+            SafeReadRelatorDoubleAxis = {
+                SafeReadRelatorIncrementDoubleDirection< Natural, Correlative, Evaluative >,
+                SafeReadRelatorDecrementDoubleDirection< Natural, Correlative, Evaluative >
+            };
 
         template <
             typename Natural,
@@ -1023,10 +1023,10 @@ namespace junction {
             typename Evaluative
         >
         constexpr Axial< const AssociativelyDoubleJunctive< Natural, Correlative, Evaluative >, AssociativelyDoublePositional< Correlative, Evaluative >, Natural, const Evaluative >
-        ReadElementDoubleAxis = {
-            ReadElementIncrementDoubleDirection< Natural, Correlative, Evaluative >,
-            ReadElementDecrementDoubleDirection< Natural, Correlative, Evaluative >
-        };
+            ReadElementDoubleAxis = {
+                ReadElementIncrementDoubleDirection< Natural, Correlative, Evaluative >,
+                ReadElementDecrementDoubleDirection< Natural, Correlative, Evaluative >
+            };
 
         template <
             typename Natural,
@@ -1034,10 +1034,10 @@ namespace junction {
             typename Evaluative
         >
         constexpr Axial< const AssociativelyDoubleJunctive< Natural, Correlative, Evaluative >, AssociativelyDoublePositional< Correlative, Evaluative >, Natural, const Evaluative >
-        SafeReadElementDoubleAxis = {
-            SafeReadElementIncrementDoubleDirection< Natural, Correlative, Evaluative >,
-            SafeReadElementDecrementDoubleDirection< Natural, Correlative, Evaluative >
-        };
+            SafeReadElementDoubleAxis = {
+                SafeReadElementIncrementDoubleDirection< Natural, Correlative, Evaluative >,
+                SafeReadElementDecrementDoubleDirection< Natural, Correlative, Evaluative >
+            };
 
         template <
             typename Natural,
@@ -1045,10 +1045,10 @@ namespace junction {
             typename Evaluative
         >
         constexpr Axial< AssociativelyDoubleJunctive< Natural, Correlative, Evaluative >, AssociativelyDoublePositional< Correlative, Evaluative >, Natural, Evaluative >
-        WriteElementDoubleAxis = {
-            WriteElementIncrementDoubleDirection< Natural, Correlative, Evaluative >,
-            WriteElementDecrementDoubleDirection< Natural, Correlative, Evaluative >
-        };
+            WriteElementDoubleAxis = {
+                WriteElementIncrementDoubleDirection< Natural, Correlative, Evaluative >,
+                WriteElementDecrementDoubleDirection< Natural, Correlative, Evaluative >
+            };
 
         template <
             typename Natural,
@@ -1056,10 +1056,10 @@ namespace junction {
             typename Evaluative
         >
         constexpr Axial< AssociativelyDoubleJunctive< Natural, Correlative, Evaluative >, AssociativelyDoublePositional< Correlative, Evaluative >, Natural, Evaluative >
-        SafeWriteElementDoubleAxis = {
-            SafeWriteElementIncrementDoubleDirection< Natural, Correlative, Evaluative >,
-            SafeWriteElementDecrementDoubleDirection< Natural, Correlative, Evaluative >
-        };
+            SafeWriteElementDoubleAxis = {
+                SafeWriteElementIncrementDoubleDirection< Natural, Correlative, Evaluative >,
+                SafeWriteElementDecrementDoubleDirection< Natural, Correlative, Evaluative >
+            };
 
     }
 

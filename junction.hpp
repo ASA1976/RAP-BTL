@@ -1,4 +1,4 @@
-// © 2018 Aaron Sami Abassi
+// © 2019 Aaron Sami Abassi
 // Licensed under the Academic Free License version 3.0
 #ifndef JUNCTION_MODULE
 #define JUNCTION_MODULE
@@ -391,7 +391,7 @@ namespace junction {
         typename Elemental
     >
     constexpr Junctive< Connective, Natural, Elemental >
-    InitializedList = {0, 0, 0, 0, 0};
+        InitializedList = {0, 0, 0, 0, 0};
 
     template <
         typename Elemental
@@ -1919,644 +1919,644 @@ namespace junction {
         typename Elemental
     >
     constexpr SinglyAdjunctive< Natural, Elemental >
-    DefaultNewSingleAdjunct = {
-        AllocateDefault< SinglyLinked< Elemental >, DefaultDisclaimable< SinglyNodal< Elemental > >, Natural, Elemental, FastDefaultNew< SinglyNodal< Elemental > > >,
-        DeallocateDefault< SinglyLinked< Elemental >, DefaultClaimable< SinglyNodal< Elemental > >, Natural, Elemental, FastDefaultNew< SinglyNodal< Elemental > > >,
-        ProclaimDefault< SinglyLinked< Elemental >, DefaultDisclaimable< SinglyNodal< Elemental > >, Natural, Elemental, FastDefaultNew< SinglyNodal< Elemental > > >
-    };
+        DefaultNewSingleAdjunct = {
+            AllocateDefault< SinglyLinked< Elemental >, DefaultDisclaimable< SinglyNodal< Elemental > >, Natural, Elemental, FastDefaultNew< SinglyNodal< Elemental > > >,
+            DeallocateDefault< SinglyLinked< Elemental >, DefaultClaimable< SinglyNodal< Elemental > >, Natural, Elemental, FastDefaultNew< SinglyNodal< Elemental > > >,
+            ProclaimDefault< SinglyLinked< Elemental >, DefaultDisclaimable< SinglyNodal< Elemental > >, Natural, Elemental, FastDefaultNew< SinglyNodal< Elemental > > >
+        };
 
     template <
         typename Natural,
         typename Elemental
     >
     constexpr DoublyAdjunctive< Natural, Elemental >
-    DefaultNewDoubleAdjunct = {
-        AllocateDefault< DoublyLinked< Elemental >, DefaultDisclaimable< DoublyNodal< Elemental > >, Natural, Elemental, FastDefaultNew< DoublyNodal< Elemental > > >,
-        DeallocateDefault< DoublyLinked< Elemental >, DefaultClaimable< DoublyNodal< Elemental > >, Natural, Elemental, FastDefaultNew< DoublyNodal< Elemental > > >,
-        ProclaimDefault< DoublyLinked< Elemental >, DefaultDisclaimable< DoublyNodal< Elemental > >, Natural, Elemental, FastDefaultNew< DoublyNodal< Elemental > > >
-    };
+        DefaultNewDoubleAdjunct = {
+            AllocateDefault< DoublyLinked< Elemental >, DefaultDisclaimable< DoublyNodal< Elemental > >, Natural, Elemental, FastDefaultNew< DoublyNodal< Elemental > > >,
+            DeallocateDefault< DoublyLinked< Elemental >, DefaultClaimable< DoublyNodal< Elemental > >, Natural, Elemental, FastDefaultNew< DoublyNodal< Elemental > > >,
+            ProclaimDefault< DoublyLinked< Elemental >, DefaultDisclaimable< DoublyNodal< Elemental > >, Natural, Elemental, FastDefaultNew< DoublyNodal< Elemental > > >
+        };
 
     template <
         typename Natural,
         typename Elemental
     >
     constexpr SinglyAdjunctive< Natural, Elemental >
-    DefaultStaticSingleAdjunct = {
-        AllocateNothing< SinglyLinked< Elemental >, Natural, Elemental >,
-        DeallocateNothing< SinglyLinked< Elemental >, Natural, Elemental >,
-        ProclaimCyclic< SinglyLinked< Elemental >, Natural, Elemental >
-    };
+        DefaultStaticSingleAdjunct = {
+            AllocateNothing< SinglyLinked< Elemental >, Natural, Elemental >,
+            DeallocateNothing< SinglyLinked< Elemental >, Natural, Elemental >,
+            ProclaimCyclic< SinglyLinked< Elemental >, Natural, Elemental >
+        };
 
     template <
         typename Natural,
         typename Elemental
     >
     constexpr DoublyAdjunctive< Natural, Elemental >
-    DefaultStaticDoubleAdjunct = {
-        AllocateNothing< DoublyLinked< Elemental >, Natural, Elemental >,
-        DeallocateNothing< DoublyLinked< Elemental >, Natural, Elemental >,
-        ProclaimCyclic< DoublyLinked< Elemental >, Natural, Elemental >
-    };
+        DefaultStaticDoubleAdjunct = {
+            AllocateNothing< DoublyLinked< Elemental >, Natural, Elemental >,
+            DeallocateNothing< DoublyLinked< Elemental >, Natural, Elemental >,
+            ProclaimCyclic< DoublyLinked< Elemental >, Natural, Elemental >
+        };
 
     template <
         typename Natural,
         typename Elemental
     >
     constexpr SinglyAdjunctive< Natural, Elemental >
-    CopyNewSingleAdjunct = {
-        AllocateNothing< SinglyLinked< Elemental >, Natural, Elemental >,
-        DeallocateDefault< SinglyLinked< Elemental >, CopyClaimable< SinglyNodal< Elemental > >, Natural, Elemental, FastCopyNew< SinglyNodal< Elemental > > >,
-        ProclaimCopy< DefaultDisclaimable< SinglyNodal< Elemental > >, Natural, Elemental, FastCopyNew< SinglyNodal< Elemental > > >
-    };
+        CopyNewSingleAdjunct = {
+            AllocateNothing< SinglyLinked< Elemental >, Natural, Elemental >,
+            DeallocateDefault< SinglyLinked< Elemental >, CopyClaimable< SinglyNodal< Elemental > >, Natural, Elemental, FastCopyNew< SinglyNodal< Elemental > > >,
+            ProclaimCopy< DefaultDisclaimable< SinglyNodal< Elemental > >, Natural, Elemental, FastCopyNew< SinglyNodal< Elemental > > >
+        };
 
     template <
         typename Natural,
         typename Elemental
     >
     constexpr DoublyAdjunctive< Natural, Elemental >
-    CopyNewDoubleAdjunct = {
-        AllocateNothing< DoublyLinked< Elemental >, Natural, Elemental >,
-        DeallocateDefault< DoublyLinked< Elemental >, CopyClaimable< DoublyNodal< Elemental > >, Natural, Elemental, FastCopyNew< DoublyNodal< Elemental > > >,
-        ProclaimCopy< DefaultDisclaimable< DoublyNodal< Elemental > >, Natural, Elemental, FastCopyNew< DoublyNodal< Elemental > > >
-    };
+        CopyNewDoubleAdjunct = {
+            AllocateNothing< DoublyLinked< Elemental >, Natural, Elemental >,
+            DeallocateDefault< DoublyLinked< Elemental >, CopyClaimable< DoublyNodal< Elemental > >, Natural, Elemental, FastCopyNew< DoublyNodal< Elemental > > >,
+            ProclaimCopy< DefaultDisclaimable< DoublyNodal< Elemental > >, Natural, Elemental, FastCopyNew< DoublyNodal< Elemental > > >
+        };
 
     template <
         typename Elemental
     >
     constexpr Equative< SinglyPositional< Elemental > >
-    SingleEquality = {
-        IsEqual< SinglyLinked< Elemental >, Elemental >,
-        IsNotEqual< SinglyLinked< Elemental >, Elemental >
-    };
+        SingleEquality = {
+            IsEqual< SinglyLinked< Elemental >, Elemental >,
+            IsNotEqual< SinglyLinked< Elemental >, Elemental >
+        };
 
     template <
         typename Elemental
     >
     constexpr Equative< DoublyPositional< Elemental > >
-    DoubleEquality = {
-        IsEqual< DoublyLinked< Elemental >, Elemental >,
-        IsNotEqual< DoublyLinked< Elemental >, Elemental >
-    };
+        DoubleEquality = {
+            IsEqual< DoublyLinked< Elemental >, Elemental >,
+            IsNotEqual< DoublyLinked< Elemental >, Elemental >
+        };
 
     template <
         typename Elemental
     >
     constexpr Relational< SinglyPositional< Elemental > >
-    SingleRelation = {
-        IsLesser< SinglyLinked< Elemental >, Elemental >,
-        IsGreater< SinglyLinked< Elemental >, Elemental >,
-        IsNotGreater< SinglyLinked< Elemental >, Elemental >,
-        IsNotLesser< SinglyLinked< Elemental >, Elemental >
-    };
+        SingleRelation = {
+            IsLesser< SinglyLinked< Elemental >, Elemental >,
+            IsGreater< SinglyLinked< Elemental >, Elemental >,
+            IsNotGreater< SinglyLinked< Elemental >, Elemental >,
+            IsNotLesser< SinglyLinked< Elemental >, Elemental >
+        };
 
     template <
         typename Elemental
     >
     constexpr Relational< DoublyPositional< Elemental > >
-    DoubleRelation = {
-        IsLesser< DoublyLinked< Elemental >, Elemental >,
-        IsGreater< DoublyLinked< Elemental >, Elemental >,
-        IsNotGreater< DoublyLinked< Elemental >, Elemental >,
-        IsNotLesser< DoublyLinked< Elemental >, Elemental >
-    };
+        DoubleRelation = {
+            IsLesser< DoublyLinked< Elemental >, Elemental >,
+            IsGreater< DoublyLinked< Elemental >, Elemental >,
+            IsNotGreater< DoublyLinked< Elemental >, Elemental >,
+            IsNotLesser< DoublyLinked< Elemental >, Elemental >
+        };
 
     template <
         typename Elemental
     >
     constexpr Relational< SinglyPositional< Elemental > >
-    SafeSingleRelation = {
-        IsLesserCheckSafely< SinglyLinked< Elemental >, Elemental >,
-        IsGreaterCheckSafely< SinglyLinked< Elemental >, Elemental >,
-        IsNotGreaterCheckSafely< SinglyLinked< Elemental >, Elemental >,
-        IsNotLesserCheckSafely< SinglyLinked< Elemental >, Elemental >
-    };
+        SafeSingleRelation = {
+            IsLesserCheckSafely< SinglyLinked< Elemental >, Elemental >,
+            IsGreaterCheckSafely< SinglyLinked< Elemental >, Elemental >,
+            IsNotGreaterCheckSafely< SinglyLinked< Elemental >, Elemental >,
+            IsNotLesserCheckSafely< SinglyLinked< Elemental >, Elemental >
+        };
 
     template <
         typename Elemental
     >
     constexpr Relational< DoublyPositional< Elemental > >
-    SafeDoubleRelation = {
-        IsLesserCheckSafely< DoublyLinked< Elemental >, Elemental >,
-        IsGreaterCheckSafely< DoublyLinked< Elemental >, Elemental >,
-        IsNotGreaterCheckSafely< DoublyLinked< Elemental >, Elemental >,
-        IsNotLesserCheckSafely< DoublyLinked< Elemental >, Elemental >
-    };
+        SafeDoubleRelation = {
+            IsLesserCheckSafely< DoublyLinked< Elemental >, Elemental >,
+            IsGreaterCheckSafely< DoublyLinked< Elemental >, Elemental >,
+            IsNotGreaterCheckSafely< DoublyLinked< Elemental >, Elemental >,
+            IsNotLesserCheckSafely< DoublyLinked< Elemental >, Elemental >
+        };
 
     template <
         typename Elemental
     >
     constexpr Comparative< SinglyPositional< Elemental >  >
-    SingleComparison = {
-        SingleEquality< Elemental >,
-        SingleRelation< Elemental >
-    };
+        SingleComparison = {
+            SingleEquality< Elemental >,
+            SingleRelation< Elemental >
+        };
 
     template <
         typename Elemental
     >
     constexpr Comparative< DoublyPositional< Elemental >  >
-    DoubleComparison = {
-        DoubleEquality< Elemental >,
-        DoubleRelation< Elemental >
-    };
+        DoubleComparison = {
+            DoubleEquality< Elemental >,
+            DoubleRelation< Elemental >
+        };
 
     template <
         typename Elemental
     >
     constexpr Comparative< SinglyPositional< Elemental >  >
-    SafeSingleComparison = {
-        SingleEquality< Elemental >,
-        SafeSingleRelation< Elemental >
-    };
+        SafeSingleComparison = {
+            SingleEquality< Elemental >,
+            SafeSingleRelation< Elemental >
+        };
 
     template <
         typename Elemental
     >
     constexpr Comparative< DoublyPositional< Elemental >  >
-    SafeDoubleComparison = {
-        DoubleEquality< Elemental >,
-        SafeDoubleRelation< Elemental >
-    };
+        SafeDoubleComparison = {
+            DoubleEquality< Elemental >,
+            SafeDoubleRelation< Elemental >
+        };
 
     template <
         typename Natural,
         typename Elemental
     >
     constexpr Vectorial< const SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, const Elemental >
-    ReadSingleVector = {
-        SingleComparison< Elemental >,
-        Contains< SinglyLinked< Elemental >, Natural, Elemental >,
-        GoRead< SinglyLinked< Elemental >, Natural, Elemental >
-    };
+        ReadSingleVector = {
+            SingleComparison< Elemental >,
+            Contains< SinglyLinked< Elemental >, Natural, Elemental >,
+            GoRead< SinglyLinked< Elemental >, Natural, Elemental >
+        };
 
     template <
         typename Natural,
         typename Elemental
     >
     constexpr Vectorial< const DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, const Elemental >
-    ReadDoubleVector = {
-        DoubleComparison< Elemental >,
-        Contains< DoublyLinked< Elemental >, Natural, Elemental >,
-        GoRead< DoublyLinked< Elemental >, Natural, Elemental >
-    };
+        ReadDoubleVector = {
+            DoubleComparison< Elemental >,
+            Contains< DoublyLinked< Elemental >, Natural, Elemental >,
+            GoRead< DoublyLinked< Elemental >, Natural, Elemental >
+        };
 
     template <
         typename Natural,
         typename Elemental
     >
     constexpr Vectorial< const SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, const Elemental >
-    SafeReadSingleVector = {
-        SafeSingleComparison< Elemental >,
-        ContainsCheckSafely< SinglyLinked< Elemental >, Natural, Elemental >,
-        GoReadSafely< SinglyLinked< Elemental >, Natural, Elemental >
-    };
+        SafeReadSingleVector = {
+            SafeSingleComparison< Elemental >,
+            ContainsCheckSafely< SinglyLinked< Elemental >, Natural, Elemental >,
+            GoReadSafely< SinglyLinked< Elemental >, Natural, Elemental >
+        };
 
     template <
         typename Natural,
         typename Elemental
     >
     constexpr Vectorial< const DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, const Elemental >
-    SafeReadDoubleVector = {
-        SafeDoubleComparison< Elemental >,
-        ContainsCheckSafely< DoublyLinked< Elemental >, Natural, Elemental >,
-        GoReadSafely< DoublyLinked< Elemental >, Natural, Elemental >
-    };
+        SafeReadDoubleVector = {
+            SafeDoubleComparison< Elemental >,
+            ContainsCheckSafely< DoublyLinked< Elemental >, Natural, Elemental >,
+            GoReadSafely< DoublyLinked< Elemental >, Natural, Elemental >
+        };
 
     template <
         typename Natural,
         typename Elemental
     >
     constexpr Vectorial< SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, Elemental >
-    WriteSingleVector = {
-        SingleComparison< Elemental >,
-        Contains< SinglyLinked< Elemental >, Natural, Elemental >,
-        GoWrite< SinglyLinked< Elemental >, Natural, Elemental >
-    };
+        WriteSingleVector = {
+            SingleComparison< Elemental >,
+            Contains< SinglyLinked< Elemental >, Natural, Elemental >,
+            GoWrite< SinglyLinked< Elemental >, Natural, Elemental >
+        };
 
     template <
         typename Natural,
         typename Elemental
     >
     constexpr Vectorial< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Elemental >
-    WriteDoubleVector = {
-        DoubleComparison< Elemental >,
-        Contains< DoublyLinked< Elemental >, Natural, Elemental >,
-        GoWrite< DoublyLinked< Elemental >, Natural, Elemental >
-    };
+        WriteDoubleVector = {
+            DoubleComparison< Elemental >,
+            Contains< DoublyLinked< Elemental >, Natural, Elemental >,
+            GoWrite< DoublyLinked< Elemental >, Natural, Elemental >
+        };
 
     template <
         typename Natural,
         typename Elemental
     >
     constexpr Vectorial< SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, Elemental >
-    SafeWriteSingleVector = {
-        SafeSingleComparison< Elemental >,
-        ContainsCheckSafely< SinglyLinked< Elemental >, Natural, Elemental >,
-        GoWriteSafely< SinglyLinked< Elemental >, Natural, Elemental >
-    };
+        SafeWriteSingleVector = {
+            SafeSingleComparison< Elemental >,
+            ContainsCheckSafely< SinglyLinked< Elemental >, Natural, Elemental >,
+            GoWriteSafely< SinglyLinked< Elemental >, Natural, Elemental >
+        };
 
     template <
         typename Natural,
         typename Elemental
     >
     constexpr Vectorial< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Elemental >
-    SafeWriteDoubleVector = {
-        SafeDoubleComparison< Elemental >,
-        ContainsCheckSafely< DoublyLinked< Elemental >, Natural, Elemental >,
-        GoWriteSafely< DoublyLinked< Elemental >, Natural, Elemental >
-    };
+        SafeWriteDoubleVector = {
+            SafeDoubleComparison< Elemental >,
+            ContainsCheckSafely< DoublyLinked< Elemental >, Natural, Elemental >,
+            GoWriteSafely< DoublyLinked< Elemental >, Natural, Elemental >
+        };
 
     template <
         typename Natural,
         typename Elemental
     >
     constexpr Scalar< const SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, Natural, const Elemental >
-    ReadIncrementSingleScale = {
-        SingleComparison< Elemental >,
-        BeginReadScale< SinglyLinked< Elemental >, Natural, Elemental, GetFirst< Natural, Elemental >, GetNext< Elemental > >,
-        TraverseReadScale< SinglyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >,
-        GoRead< SinglyLinked< Elemental >, Natural, Elemental >
-    };
+        ReadIncrementSingleScale = {
+            SingleComparison< Elemental >,
+            BeginReadScale< SinglyLinked< Elemental >, Natural, Elemental, GetFirst< Natural, Elemental >, GetNext< Elemental > >,
+            TraverseReadScale< SinglyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >,
+            GoRead< SinglyLinked< Elemental >, Natural, Elemental >
+        };
 
     template <
         typename Natural,
         typename Elemental
     >
     constexpr Scalar< const DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, const Elemental >
-    ReadIncrementDoubleScale = {
-        DoubleComparison< Elemental >,
-        BeginReadScale< DoublyLinked< Elemental >, Natural, Elemental, GetFirst< Natural, Elemental >, GetNext< Elemental > >,
-        TraverseReadScale< DoublyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >,
-        GoRead< DoublyLinked< Elemental >, Natural, Elemental >
-    };
+        ReadIncrementDoubleScale = {
+            DoubleComparison< Elemental >,
+            BeginReadScale< DoublyLinked< Elemental >, Natural, Elemental, GetFirst< Natural, Elemental >, GetNext< Elemental > >,
+            TraverseReadScale< DoublyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >,
+            GoRead< DoublyLinked< Elemental >, Natural, Elemental >
+        };
 
     template <
         typename Natural,
         typename Elemental
     >
     constexpr Scalar< const SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, Natural, const Elemental >
-    SafeReadIncrementSingleScale = {
-        SafeSingleComparison< Elemental >,
-        BeginReadScaleSafely< SinglyLinked< Elemental >, Natural, Elemental, GetFirst< Natural, Elemental >, GetNext< Elemental > >,
-        TraverseReadScaleSafely< SinglyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >,
-        GoReadSafely< SinglyLinked< Elemental >, Natural, Elemental >
-    };
+        SafeReadIncrementSingleScale = {
+            SafeSingleComparison< Elemental >,
+            BeginReadScaleSafely< SinglyLinked< Elemental >, Natural, Elemental, GetFirst< Natural, Elemental >, GetNext< Elemental > >,
+            TraverseReadScaleSafely< SinglyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >,
+            GoReadSafely< SinglyLinked< Elemental >, Natural, Elemental >
+        };
 
     template <
         typename Natural,
         typename Elemental
     >
     constexpr Scalar< const DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, const Elemental >
-    SafeReadIncrementDoubleScale = {
-        SafeDoubleComparison< Elemental >,
-        BeginReadScaleSafely< DoublyLinked< Elemental >, Natural, Elemental, GetFirst< Natural, Elemental >, GetNext< Elemental > >,
-        TraverseReadScaleSafely< DoublyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >,
-        GoReadSafely< DoublyLinked< Elemental >, Natural, Elemental >
-    };
+        SafeReadIncrementDoubleScale = {
+            SafeDoubleComparison< Elemental >,
+            BeginReadScaleSafely< DoublyLinked< Elemental >, Natural, Elemental, GetFirst< Natural, Elemental >, GetNext< Elemental > >,
+            TraverseReadScaleSafely< DoublyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >,
+            GoReadSafely< DoublyLinked< Elemental >, Natural, Elemental >
+        };
 
     template <
         typename Natural,
         typename Elemental
     >
     constexpr Scalar< SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, Natural, Elemental >
-    WriteIncrementSingleScale = {
-        SingleComparison< Elemental >,
-        BeginWriteScale< SinglyLinked< Elemental >, Natural, Elemental, GetFirst< Natural, Elemental >, GetNext< Elemental > >,
-        TraverseWriteScale< SinglyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >,
-        GoWrite< SinglyLinked< Elemental >, Natural, Elemental >
-    };
+        WriteIncrementSingleScale = {
+            SingleComparison< Elemental >,
+            BeginWriteScale< SinglyLinked< Elemental >, Natural, Elemental, GetFirst< Natural, Elemental >, GetNext< Elemental > >,
+            TraverseWriteScale< SinglyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >,
+            GoWrite< SinglyLinked< Elemental >, Natural, Elemental >
+        };
 
     template <
         typename Natural,
         typename Elemental
     >
     constexpr Scalar< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, Elemental >
-    WriteIncrementDoubleScale = {
-        DoubleComparison< Elemental >,
-        BeginWriteScale< DoublyLinked< Elemental >, Natural, Elemental, GetFirst< Natural, Elemental >, GetNext< Elemental > >,
-        TraverseWriteScale< DoublyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >,
-        GoWrite< DoublyLinked< Elemental >, Natural, Elemental >
-    };
+        WriteIncrementDoubleScale = {
+            DoubleComparison< Elemental >,
+            BeginWriteScale< DoublyLinked< Elemental >, Natural, Elemental, GetFirst< Natural, Elemental >, GetNext< Elemental > >,
+            TraverseWriteScale< DoublyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >,
+            GoWrite< DoublyLinked< Elemental >, Natural, Elemental >
+        };
 
     template <
         typename Natural,
         typename Elemental
     >
     constexpr Scalar< SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, Natural, Elemental >
-    SafeWriteIncrementSingleScale = {
-        SafeSingleComparison< Elemental >,
-        BeginWriteScaleSafely< SinglyLinked< Elemental >, Natural, Elemental, GetFirst< Natural, Elemental >, GetNext< Elemental > >,
-        TraverseWriteScaleSafely< SinglyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >,
-        GoWriteSafely< SinglyLinked< Elemental >, Natural, Elemental >
-    };
+        SafeWriteIncrementSingleScale = {
+            SafeSingleComparison< Elemental >,
+            BeginWriteScaleSafely< SinglyLinked< Elemental >, Natural, Elemental, GetFirst< Natural, Elemental >, GetNext< Elemental > >,
+            TraverseWriteScaleSafely< SinglyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >,
+            GoWriteSafely< SinglyLinked< Elemental >, Natural, Elemental >
+        };
 
     template <
         typename Natural,
         typename Elemental
     >
     constexpr Scalar< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, Elemental >
-    SafeWriteIncrementDoubleScale = {
-        SafeDoubleComparison< Elemental >,
-        BeginWriteScaleSafely< DoublyLinked< Elemental >, Natural, Elemental, GetFirst< Natural, Elemental >, GetNext< Elemental > >,
-        TraverseWriteScaleSafely< DoublyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >,
-        GoWriteSafely< DoublyLinked< Elemental >, Natural, Elemental >
-    };
+        SafeWriteIncrementDoubleScale = {
+            SafeDoubleComparison< Elemental >,
+            BeginWriteScaleSafely< DoublyLinked< Elemental >, Natural, Elemental, GetFirst< Natural, Elemental >, GetNext< Elemental > >,
+            TraverseWriteScaleSafely< DoublyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >,
+            GoWriteSafely< DoublyLinked< Elemental >, Natural, Elemental >
+        };
 
     template <
         typename Natural,
         typename Elemental
     >
     constexpr Scalar< const DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, const Elemental >
-    ReadDecrementDoubleScale = {
-        DoubleComparison< Elemental >,
-        BeginReadScale< DoublyLinked< Elemental >, Natural, Elemental, GetLast< Natural, Elemental >, GetPrevious< Elemental > >,
-        TraverseReadScale< DoublyLinked< Elemental >, Natural, Elemental, GetPrevious< Elemental > >,
-        GoRead< DoublyLinked< Elemental >, Natural, Elemental >
-    };
+        ReadDecrementDoubleScale = {
+            DoubleComparison< Elemental >,
+            BeginReadScale< DoublyLinked< Elemental >, Natural, Elemental, GetLast< Natural, Elemental >, GetPrevious< Elemental > >,
+            TraverseReadScale< DoublyLinked< Elemental >, Natural, Elemental, GetPrevious< Elemental > >,
+            GoRead< DoublyLinked< Elemental >, Natural, Elemental >
+        };
 
     template <
         typename Natural,
         typename Elemental
     >
     constexpr Scalar< const DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, const Elemental >
-    SafeReadDecrementDoubleScale = {
-        SafeDoubleComparison< Elemental >,
-        BeginReadScaleSafely< DoublyLinked< Elemental >, Natural, Elemental, GetLast< Natural, Elemental >, GetPrevious< Elemental > >,
-        TraverseReadScaleSafely< DoublyLinked< Elemental >, Natural, Elemental, GetPrevious< Elemental > >,
-        GoReadSafely< DoublyLinked< Elemental >, Natural, Elemental >
-    };
+        SafeReadDecrementDoubleScale = {
+            SafeDoubleComparison< Elemental >,
+            BeginReadScaleSafely< DoublyLinked< Elemental >, Natural, Elemental, GetLast< Natural, Elemental >, GetPrevious< Elemental > >,
+            TraverseReadScaleSafely< DoublyLinked< Elemental >, Natural, Elemental, GetPrevious< Elemental > >,
+            GoReadSafely< DoublyLinked< Elemental >, Natural, Elemental >
+        };
 
     template <
         typename Natural,
         typename Elemental
     >
     constexpr Scalar< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, Elemental >
-    WriteDecrementDoubleScale = {
-        DoubleComparison< Elemental >,
-        BeginWriteScale< DoublyLinked< Elemental >, Natural, Elemental, GetLast< Natural, Elemental >, GetPrevious< Elemental > >,
-        TraverseWriteScale< DoublyLinked< Elemental >, Natural, Elemental, GetPrevious< Elemental > >,
-        GoWrite< DoublyLinked< Elemental >, Natural, Elemental >
-    };
+        WriteDecrementDoubleScale = {
+            DoubleComparison< Elemental >,
+            BeginWriteScale< DoublyLinked< Elemental >, Natural, Elemental, GetLast< Natural, Elemental >, GetPrevious< Elemental > >,
+            TraverseWriteScale< DoublyLinked< Elemental >, Natural, Elemental, GetPrevious< Elemental > >,
+            GoWrite< DoublyLinked< Elemental >, Natural, Elemental >
+        };
 
     template <
         typename Natural,
         typename Elemental
     >
     constexpr Scalar< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, Elemental >
-    SafeWriteDecrementDoubleScale = {
-        SafeDoubleComparison< Elemental >,
-        BeginWriteScaleSafely< DoublyLinked< Elemental >, Natural, Elemental, GetLast< Natural, Elemental >, GetPrevious< Elemental > >,
-        TraverseWriteScaleSafely< DoublyLinked< Elemental >, Natural, Elemental, GetPrevious< Elemental > >,
-        GoWriteSafely< DoublyLinked< Elemental >, Natural, Elemental >
-    };
+        SafeWriteDecrementDoubleScale = {
+            SafeDoubleComparison< Elemental >,
+            BeginWriteScaleSafely< DoublyLinked< Elemental >, Natural, Elemental, GetLast< Natural, Elemental >, GetPrevious< Elemental > >,
+            TraverseWriteScaleSafely< DoublyLinked< Elemental >, Natural, Elemental, GetPrevious< Elemental > >,
+            GoWriteSafely< DoublyLinked< Elemental >, Natural, Elemental >
+        };
 
     template <
         typename Natural,
         typename Elemental
     >
     constexpr Lineal< const DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, const Elemental >
-    ReadDoubleLiner = {
-        ReadIncrementDoubleScale< Natural, Elemental >,
-        ReadDecrementDoubleScale< Natural, Elemental >
-    };
+        ReadDoubleLiner = {
+            ReadIncrementDoubleScale< Natural, Elemental >,
+            ReadDecrementDoubleScale< Natural, Elemental >
+        };
 
     template <
         typename Natural,
         typename Elemental
     >
     constexpr Lineal< const DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, const Elemental >
-    SafeReadDoubleLiner = {
-        SafeReadIncrementDoubleScale< Natural, Elemental >,
-        SafeReadDecrementDoubleScale< Natural, Elemental > 
-    };
+        SafeReadDoubleLiner = {
+            SafeReadIncrementDoubleScale< Natural, Elemental >,
+            SafeReadDecrementDoubleScale< Natural, Elemental > 
+        };
 
     template <
         typename Natural,
         typename Elemental
     >
     constexpr Lineal< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, Elemental >
-    WriteDoubleLiner = {
-        WriteIncrementDoubleScale< Natural, Elemental >,
-        WriteDecrementDoubleScale< Natural, Elemental >
-    };
+        WriteDoubleLiner = {
+            WriteIncrementDoubleScale< Natural, Elemental >,
+            WriteDecrementDoubleScale< Natural, Elemental >
+        };
 
     template <
         typename Natural,
         typename Elemental
     >
     constexpr Lineal< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, Elemental >
-    SafeWriteDoubleLiner = {
-        SafeWriteIncrementDoubleScale< Natural, Elemental >,
-        SafeWriteDecrementDoubleScale< Natural, Elemental >
-    };
+        SafeWriteDoubleLiner = {
+            SafeWriteIncrementDoubleScale< Natural, Elemental >,
+            SafeWriteDecrementDoubleScale< Natural, Elemental >
+        };
 
     template <
         typename Natural,
         typename Elemental
     >
     constexpr Directional< const SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, Natural, const Elemental >
-    ReadIncrementSingleDirection = {
-        ReadIncrementSingleScale< Natural, Elemental >,
-        DirectionBegins< SinglyLinked< Elemental >, Natural, Elemental, GetFirst< Natural, Elemental >, GetNext< Elemental > >,
-        DirectionTraverses< SinglyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >,
-        Contains< SinglyLinked< Elemental >, Natural, Elemental >,
-        Account< SinglyLinked< Elemental >, Natural, Elemental >,
-        Count< SinglyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >
-    };
+        ReadIncrementSingleDirection = {
+            ReadIncrementSingleScale< Natural, Elemental >,
+            DirectionBegins< SinglyLinked< Elemental >, Natural, Elemental, GetFirst< Natural, Elemental >, GetNext< Elemental > >,
+            DirectionTraverses< SinglyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >,
+            Contains< SinglyLinked< Elemental >, Natural, Elemental >,
+            Account< SinglyLinked< Elemental >, Natural, Elemental >,
+            Count< SinglyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >
+        };
 
     template <
         typename Natural,
         typename Elemental
     >
     constexpr Directional< const DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, const Elemental >
-    ReadIncrementDoubleDirection = {
-        ReadIncrementDoubleScale< Natural, Elemental >,
-        DirectionBegins< DoublyLinked< Elemental >, Natural, Elemental, GetFirst< Natural, Elemental >, GetNext< Elemental > >,
-        DirectionTraverses< DoublyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >,
-        Contains< DoublyLinked< Elemental >, Natural, Elemental >,
-        Account< DoublyLinked< Elemental >, Natural, Elemental >,
-        Count< DoublyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >
-    };
+        ReadIncrementDoubleDirection = {
+            ReadIncrementDoubleScale< Natural, Elemental >,
+            DirectionBegins< DoublyLinked< Elemental >, Natural, Elemental, GetFirst< Natural, Elemental >, GetNext< Elemental > >,
+            DirectionTraverses< DoublyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >,
+            Contains< DoublyLinked< Elemental >, Natural, Elemental >,
+            Account< DoublyLinked< Elemental >, Natural, Elemental >,
+            Count< DoublyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >
+        };
 
     template <
         typename Natural,
         typename Elemental
     >
     constexpr Directional< const SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, Natural, const Elemental >
-    SafeReadIncrementSingleDirection = {
-        SafeReadIncrementSingleScale< Natural, Elemental >,
-        DirectionBegins< SinglyLinked< Elemental >, Natural, Elemental, GetFirst< Natural, Elemental >, GetNext< Elemental > >,
-        DirectionTraversesCheckSafely< SinglyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >,
-        ContainsCheckSafely< SinglyLinked< Elemental >, Natural, Elemental >,
-        Account< SinglyLinked< Elemental >, Natural, Elemental >,
-        Count< SinglyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >
-    };
+        SafeReadIncrementSingleDirection = {
+            SafeReadIncrementSingleScale< Natural, Elemental >,
+            DirectionBegins< SinglyLinked< Elemental >, Natural, Elemental, GetFirst< Natural, Elemental >, GetNext< Elemental > >,
+            DirectionTraversesCheckSafely< SinglyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >,
+            ContainsCheckSafely< SinglyLinked< Elemental >, Natural, Elemental >,
+            Account< SinglyLinked< Elemental >, Natural, Elemental >,
+            Count< SinglyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >
+        };
 
     template <
         typename Natural,
         typename Elemental
     >
     constexpr Directional< const DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, const Elemental >
-    SafeReadIncrementDoubleDirection = {
-        SafeReadIncrementDoubleScale< Natural, Elemental >,
-        DirectionBegins< DoublyLinked< Elemental >, Natural, Elemental, GetFirst< Natural, Elemental >, GetNext< Elemental > >,
-        DirectionTraversesCheckSafely< DoublyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >,
-        ContainsCheckSafely< DoublyLinked< Elemental >, Natural, Elemental >,
-        Account< DoublyLinked< Elemental >, Natural, Elemental >,
-        Count< DoublyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >
-    };
+        SafeReadIncrementDoubleDirection = {
+            SafeReadIncrementDoubleScale< Natural, Elemental >,
+            DirectionBegins< DoublyLinked< Elemental >, Natural, Elemental, GetFirst< Natural, Elemental >, GetNext< Elemental > >,
+            DirectionTraversesCheckSafely< DoublyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >,
+            ContainsCheckSafely< DoublyLinked< Elemental >, Natural, Elemental >,
+            Account< DoublyLinked< Elemental >, Natural, Elemental >,
+            Count< DoublyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >
+        };
 
     template <
         typename Natural,
         typename Elemental
     >
     constexpr Directional< SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, Natural, Elemental >
-    WriteIncrementSingleDirection = {
-        WriteIncrementSingleScale< Natural, Elemental >,
-        DirectionBegins< SinglyLinked< Elemental >, Natural, Elemental, GetFirst< Natural, Elemental >, GetNext< Elemental > >,
-        DirectionTraverses< SinglyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >,
-        Contains< SinglyLinked< Elemental >, Natural, Elemental >,
-        Account< SinglyLinked< Elemental >, Natural, Elemental >,
-        Count< SinglyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >
-    };
+        WriteIncrementSingleDirection = {
+            WriteIncrementSingleScale< Natural, Elemental >,
+            DirectionBegins< SinglyLinked< Elemental >, Natural, Elemental, GetFirst< Natural, Elemental >, GetNext< Elemental > >,
+            DirectionTraverses< SinglyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >,
+            Contains< SinglyLinked< Elemental >, Natural, Elemental >,
+            Account< SinglyLinked< Elemental >, Natural, Elemental >,
+            Count< SinglyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >
+        };
 
     template <
         typename Natural,
         typename Elemental
     >
     constexpr Directional< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, Elemental >
-    WriteIncrementDoubleDirection = {
-        WriteIncrementDoubleScale< Natural, Elemental >,
-        DirectionBegins< DoublyLinked< Elemental >, Natural, Elemental, GetFirst< Natural, Elemental >, GetNext< Elemental > >,
-        DirectionTraverses< DoublyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >,
-        Contains< DoublyLinked< Elemental >, Natural, Elemental >,
-        Account< DoublyLinked< Elemental >, Natural, Elemental >,
-        Count< DoublyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >
-    };
+        WriteIncrementDoubleDirection = {
+            WriteIncrementDoubleScale< Natural, Elemental >,
+            DirectionBegins< DoublyLinked< Elemental >, Natural, Elemental, GetFirst< Natural, Elemental >, GetNext< Elemental > >,
+            DirectionTraverses< DoublyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >,
+            Contains< DoublyLinked< Elemental >, Natural, Elemental >,
+            Account< DoublyLinked< Elemental >, Natural, Elemental >,
+            Count< DoublyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >
+        };
 
     template <
         typename Natural,
         typename Elemental
     >
     constexpr Directional< SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, Natural, Elemental >
-    SafeWriteIncrementSingleDirection = {
-        SafeWriteIncrementSingleScale< Natural, Elemental >,
-        DirectionBegins< SinglyLinked< Elemental >, Natural, Elemental, GetFirst< Natural, Elemental >, GetNext< Elemental > >,
-        DirectionTraversesCheckSafely< SinglyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >,
-        ContainsCheckSafely< SinglyLinked< Elemental >, Natural, Elemental >,
-        Account< SinglyLinked< Elemental >, Natural, Elemental >,
-        Count< SinglyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >
-    };
+        SafeWriteIncrementSingleDirection = {
+            SafeWriteIncrementSingleScale< Natural, Elemental >,
+            DirectionBegins< SinglyLinked< Elemental >, Natural, Elemental, GetFirst< Natural, Elemental >, GetNext< Elemental > >,
+            DirectionTraversesCheckSafely< SinglyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >,
+            ContainsCheckSafely< SinglyLinked< Elemental >, Natural, Elemental >,
+            Account< SinglyLinked< Elemental >, Natural, Elemental >,
+            Count< SinglyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >
+        };
 
     template <
         typename Natural,
         typename Elemental
     >
     constexpr Directional< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, Elemental >
-    SafeWriteIncrementDoubleDirection = {
-        SafeWriteIncrementDoubleScale< Natural, Elemental >,
-        DirectionBegins< DoublyLinked< Elemental >, Natural, Elemental, GetFirst< Natural, Elemental >, GetNext< Elemental > >,
-        DirectionTraversesCheckSafely< DoublyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >,
-        ContainsCheckSafely< DoublyLinked< Elemental >, Natural, Elemental >,
-        Account< DoublyLinked< Elemental >, Natural, Elemental >,
-        Count< DoublyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >
-    };
+        SafeWriteIncrementDoubleDirection = {
+            SafeWriteIncrementDoubleScale< Natural, Elemental >,
+            DirectionBegins< DoublyLinked< Elemental >, Natural, Elemental, GetFirst< Natural, Elemental >, GetNext< Elemental > >,
+            DirectionTraversesCheckSafely< DoublyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >,
+            ContainsCheckSafely< DoublyLinked< Elemental >, Natural, Elemental >,
+            Account< DoublyLinked< Elemental >, Natural, Elemental >,
+            Count< DoublyLinked< Elemental >, Natural, Elemental, GetNext< Elemental > >
+        };
 
     template <
         typename Natural,
         typename Elemental
     >
     constexpr Directional< const DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, const Elemental >
-    ReadDecrementDoubleDirection = {
-        ReadDecrementDoubleScale< Natural, Elemental >,
-        DirectionBegins< DoublyLinked< Elemental >, Natural, Elemental, GetLast< Natural, Elemental >, GetPrevious< Elemental > >,
-        DirectionTraverses< DoublyLinked< Elemental >, Natural, Elemental, GetPrevious< Elemental > >,
-        Contains< DoublyLinked< Elemental >, Natural, Elemental >,
-        Account< DoublyLinked< Elemental >, Natural, Elemental >,
-        Count< DoublyLinked< Elemental >, Natural, Elemental, GetPrevious< Elemental > >
-    };
+        ReadDecrementDoubleDirection = {
+            ReadDecrementDoubleScale< Natural, Elemental >,
+            DirectionBegins< DoublyLinked< Elemental >, Natural, Elemental, GetLast< Natural, Elemental >, GetPrevious< Elemental > >,
+            DirectionTraverses< DoublyLinked< Elemental >, Natural, Elemental, GetPrevious< Elemental > >,
+            Contains< DoublyLinked< Elemental >, Natural, Elemental >,
+            Account< DoublyLinked< Elemental >, Natural, Elemental >,
+            Count< DoublyLinked< Elemental >, Natural, Elemental, GetPrevious< Elemental > >
+        };
 
     template <
         typename Natural,
         typename Elemental
     >
     constexpr Directional< const DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, const Elemental >
-    SafeReadDecrementDoubleDirection = {
-        SafeReadDecrementDoubleScale< Natural, Elemental >,
-        DirectionBegins< DoublyLinked< Elemental >, Natural, Elemental, GetLast< Natural, Elemental >, GetPrevious< Elemental > >,
-        DirectionTraversesCheckSafely< DoublyLinked< Elemental >, Natural, Elemental, GetPrevious< Elemental > >,
-        ContainsCheckSafely< DoublyLinked< Elemental >, Natural, Elemental >,
-        Account< DoublyLinked< Elemental >, Natural, Elemental >,
-        Count< DoublyLinked< Elemental >, Natural, Elemental, GetPrevious< Elemental > >
-    };
+        SafeReadDecrementDoubleDirection = {
+            SafeReadDecrementDoubleScale< Natural, Elemental >,
+            DirectionBegins< DoublyLinked< Elemental >, Natural, Elemental, GetLast< Natural, Elemental >, GetPrevious< Elemental > >,
+            DirectionTraversesCheckSafely< DoublyLinked< Elemental >, Natural, Elemental, GetPrevious< Elemental > >,
+            ContainsCheckSafely< DoublyLinked< Elemental >, Natural, Elemental >,
+            Account< DoublyLinked< Elemental >, Natural, Elemental >,
+            Count< DoublyLinked< Elemental >, Natural, Elemental, GetPrevious< Elemental > >
+        };
 
     template <
         typename Natural,
         typename Elemental
     >
     constexpr Directional< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, Elemental >
-    WriteDecrementDoubleDirection = {
-        WriteDecrementDoubleScale< Natural, Elemental >,
-        DirectionBegins< DoublyLinked< Elemental >, Natural, Elemental, GetLast< Natural, Elemental >, GetPrevious< Elemental > >,
-        DirectionTraverses< DoublyLinked< Elemental >, Natural, Elemental, GetPrevious< Elemental > >,
-        Contains< DoublyLinked< Elemental >, Natural, Elemental >,
-        Account< DoublyLinked< Elemental >, Natural, Elemental >,
-        Count< DoublyLinked< Elemental >, Natural, Elemental, GetPrevious< Elemental > >
-    };
+        WriteDecrementDoubleDirection = {
+            WriteDecrementDoubleScale< Natural, Elemental >,
+            DirectionBegins< DoublyLinked< Elemental >, Natural, Elemental, GetLast< Natural, Elemental >, GetPrevious< Elemental > >,
+            DirectionTraverses< DoublyLinked< Elemental >, Natural, Elemental, GetPrevious< Elemental > >,
+            Contains< DoublyLinked< Elemental >, Natural, Elemental >,
+            Account< DoublyLinked< Elemental >, Natural, Elemental >,
+            Count< DoublyLinked< Elemental >, Natural, Elemental, GetPrevious< Elemental > >
+        };
 
     template <
         typename Natural,
         typename Elemental
     >
     constexpr Directional< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, Elemental >
-    SafeWriteDecrementDoubleDirection = {
-        SafeWriteDecrementDoubleScale< Natural, Elemental >,
-        DirectionBegins< DoublyLinked< Elemental >, Natural, Elemental, GetLast< Natural, Elemental >, GetPrevious< Elemental > >,
-        DirectionTraversesCheckSafely< DoublyLinked< Elemental >, Natural, Elemental, GetPrevious< Elemental > >,
-        ContainsCheckSafely< DoublyLinked< Elemental >, Natural, Elemental >,
-        Account< DoublyLinked< Elemental >, Natural, Elemental >,
-        Count< DoublyLinked< Elemental >, Natural, Elemental, GetPrevious< Elemental > >
-    };
+        SafeWriteDecrementDoubleDirection = {
+            SafeWriteDecrementDoubleScale< Natural, Elemental >,
+            DirectionBegins< DoublyLinked< Elemental >, Natural, Elemental, GetLast< Natural, Elemental >, GetPrevious< Elemental > >,
+            DirectionTraversesCheckSafely< DoublyLinked< Elemental >, Natural, Elemental, GetPrevious< Elemental > >,
+            ContainsCheckSafely< DoublyLinked< Elemental >, Natural, Elemental >,
+            Account< DoublyLinked< Elemental >, Natural, Elemental >,
+            Count< DoublyLinked< Elemental >, Natural, Elemental, GetPrevious< Elemental > >
+        };
 
     template <
         typename Natural,
         typename Elemental
     >
     constexpr Axial< const DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, const Elemental >
-    ReadDoubleAxis = {
-        ReadIncrementDoubleDirection< Natural, Elemental >,
-        ReadDecrementDoubleDirection< Natural, Elemental >
-    };
+        ReadDoubleAxis = {
+            ReadIncrementDoubleDirection< Natural, Elemental >,
+            ReadDecrementDoubleDirection< Natural, Elemental >
+        };
 
     template <
         typename Natural,
         typename Elemental
     >
     constexpr Axial< const DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, const Elemental >
-    SafeReadDoubleAxis = {
-        SafeReadIncrementDoubleDirection< Natural, Elemental >,
-        SafeReadDecrementDoubleDirection< Natural, Elemental >
-    };
+        SafeReadDoubleAxis = {
+            SafeReadIncrementDoubleDirection< Natural, Elemental >,
+            SafeReadDecrementDoubleDirection< Natural, Elemental >
+        };
 
     template <
         typename Natural,
         typename Elemental
     >
     constexpr Axial< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, Elemental >
-    WriteDoubleAxis = {
-        WriteIncrementDoubleDirection< Natural, Elemental >,
-        WriteDecrementDoubleDirection< Natural, Elemental >
-    };
+        WriteDoubleAxis = {
+            WriteIncrementDoubleDirection< Natural, Elemental >,
+            WriteDecrementDoubleDirection< Natural, Elemental >
+        };
 
     template <
         typename Natural,
         typename Elemental
     >
     constexpr Axial< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, Elemental >
-    SafeWriteDoubleAxis = {
-        SafeWriteIncrementDoubleDirection< Natural, Elemental >,
-        SafeWriteDecrementDoubleDirection< Natural, Elemental >
-    };
+        SafeWriteDoubleAxis = {
+            SafeWriteIncrementDoubleDirection< Natural, Elemental >,
+            SafeWriteDecrementDoubleDirection< Natural, Elemental >
+        };
 
 }
 

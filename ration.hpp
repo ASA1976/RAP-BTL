@@ -1,4 +1,4 @@
-// © 2018 Aaron Sami Abassi
+// © 2019 Aaron Sami Abassi
 // Licensed under the Academic Free License version 3.0
 #ifndef RATION_MODULE
 #define RATION_MODULE
@@ -70,7 +70,7 @@ namespace ration {
         typename Elemental
     >
     constexpr Resourceful< Natural, Maximum, Elemental >
-    InitializedResource = {0};
+        InitializedResource = {0};
 
 }
 
