@@ -3,6 +3,9 @@
 #ifndef ABSTRACTION_MODULE
 #define ABSTRACTION_MODULE
 #include "location.hpp"
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
+#include <type_traits>
+#endif
 
 /**
  * @brief   
@@ -21,15 +24,15 @@ namespace abstraction {
 
     /**
      * @brief 
-     *     Function type which represents a procedural abstract.
+     *     Call interface abstract.
      * @details 
      *     Abstraction Template
      *     --------------------
-     *     Function type alias used to represent a procedural abstract.
+     *     Function type alias is used to represent a specific call interface.
      * @tparam Resultant
-     *     Return type of the procedural invocation.
+     *     Return type of the interface.
      * @tparam ...Parametric
-     *     Parameter pack which represents the procedural parameters.
+     *     Parameter pack which represents the parameter types of the interface.
      */
     template <
         typename Resultant,
@@ -43,12 +46,12 @@ namespace abstraction {
      * @details       
      *     Classification Template
      *     -----------------------
-     *     This type is used to represent any instance of the specified 
-     *     procedural invocation.
+     *     This type is used to represent any invocation whose abstract matches
+     *     the provided specifiers.
      * @tparam Resultant
-     *     Return type of the procedural invocation.
+     *     Return type of the invocation.
      * @tparam ...Parametric
-     *     Parameter pack which represents the procedural parameters.
+     *     Parameter pack which represents the parameters of the invocation.
      */
     template <
         typename Resultant,
@@ -57,15 +60,24 @@ namespace abstraction {
     struct Invocative {
 
         Locational< Abstract< Resultant, const Locational< const void >, Parametric... > >
-            interface;
+            interface; /**< Code pointer to interface function. */
 
         Locational< const void >
-            objective;
+            objective; /**< Data pointer to invocable objective. */
 
+        /**
+         * @brief 
+         *     Invokes any kind of stored procedure.
+         * @details
+         *     Operator Overload
+         *     -----------------
+         *     Invokes any kind of stored procedure, specific to the interface
+         *     specified by the template arguments.
+         */
         Resultant
         operator()( 
             Parametric... 
-                arguments 
+                arguments /**< Arguments which are relayed to the invocation. */
         ) const {
             return interface( objective, arguments... );
         }
@@ -78,10 +90,14 @@ namespace abstraction {
      * @details       
      *     Classification Template
      *     -----------------------
-     *     This type is used to represent a method invocation relative to an 
-     *     object pursuant to the specified procedural invocation.
+     *     This type is used to represent an instance method invocation
+     *     relative to an object.  Care should be taken to ensure that
+     *     qualifiers match between ClassTypical (the object type) and
+     *     MethodLocational (the pointer to member function type).
      * @tparam ClassTypical
-     *     Object oriented class type.
+     *     Qualified object oriented class type.
+     * @tparam MethodLocational
+     *     Pointer to qualified member function type.
      * @tparam Resultant
      *     Return type of the procedural invocation.
      * @tparam ...Parametric
@@ -89,12 +105,20 @@ namespace abstraction {
      */
     template <
         class ClassTypical,
+        typename MethodLocational,
         typename Resultant,
         typename ...Parametric
     >
     struct Methodic {
 
-        Abstract< Resultant, Parametric... > ClassTypical::* 
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
+        static_assert(
+            ::std::is_member_function_pointer< MethodLocational >::value,
+            "MethodLocational:  Pointer to member function type required"
+        );
+#endif
+
+        MethodLocational
             method;
 
         Locational< ClassTypical >
@@ -121,7 +145,7 @@ namespace abstraction {
         typename Resultant,
         typename ...Parametric
     >
-    static inline Resultant
+    Resultant
     InvokeProcedure(
         const Locational< const void >
             locality,
@@ -157,7 +181,7 @@ namespace abstraction {
         typename Resultant,
         typename ...Parametric
     >
-    static inline Resultant
+    Resultant
     InvokeProcedureSafely(
         const Locational< const void >
             locality,
@@ -186,9 +210,12 @@ namespace abstraction {
      * @details
      *     Function Template
      *     -----------------
-     *     Invokes an object oriented instance method, specific to the procedural type.
+     *     Invokes an object oriented instance method which matches the 
+     *     resultant and parametric type expectations.
      * @tparam ClassTypical
-     *     Object oriented class type.
+     *     Qualified object oriented class type.
+     * @tparam MethodLocational
+     *     Pointer to qualified member function type.
      * @tparam Resultant
      *     Return type of the procedural invocation.
      * @tparam ...Parametric
@@ -196,17 +223,18 @@ namespace abstraction {
      */
     template <
         class ClassTypical,
+        typename MethodLocational,
         typename Resultant,
         typename ...Parametric
     >
-    static inline Resultant
+    Resultant
     InvokeMethod(
         const Locational< const void >
             locality,
         Parametric...
             arguments
     ) {
-        using Specific = const Locational< const Methodic< ClassTypical, Resultant, Parametric... > >;
+        using Specific = const Locational< const Methodic< ClassTypical, MethodLocational, Resultant, Parametric... > >;
         Specific
             objective = static_cast< Specific >(locality);
         return (objective->object->*objective->method)( arguments... );
@@ -218,11 +246,13 @@ namespace abstraction {
      * @details
      *     Function Template
      *     -----------------
-     *     Invokes an object oriented instance method, specific to the procedural type.
-     *     Throws an exception if objective or either of its members method or object are
-     *     null.
+     *     Invokes an object oriented instance method which matches the 
+     *     resultant and parametric type expectations. Throws an exception if 
+     *     objective is null or either of its members method or object are null.
      * @tparam ClassTypical
-     *     Object oriented class type.
+     *     Qualified object oriented class type.
+     * @tparam MethodLocational
+     *     Pointer to qualified member function type.
      * @tparam Resultant
      *     Return type of the procedural invocation.
      * @tparam ...Parametric
@@ -230,19 +260,20 @@ namespace abstraction {
      */
     template <
         class ClassTypical,
+        typename MethodLocational,
         typename Resultant,
         typename ...Parametric
     >
-    static inline Resultant
+    Resultant
     InvokeMethodSafely(
         const Locational< const void >
             locality,
         Parametric...
             arguments
     ) {
-        using Specific = const Locational< const Methodic< ClassTypical, Resultant, Parametric... > >;
+        using Specific = const Locational< const Methodic< ClassTypical, MethodLocational, Resultant, Parametric... > >;
         static auto&
-            Invoke = InvokeMethod< ClassTypical, Resultant, Parametric... >;
+            Invoke = InvokeMethod< ClassTypical, MethodLocational, Resultant, Parametric... >;
         Specific
             objective = static_cast< Specific >(locality);
         if (!objective)
@@ -328,7 +359,9 @@ namespace abstraction {
      *     Assigns an objective containing the pointers required to invoke an 
      *     object oriented instance method.
      * @tparam ClassTypical
-     *     Object oriented class type.
+     *     Qualified object oriented class type.
+     * @tparam MethodLocational
+     *     Pointer to qualified member function type.
      * @tparam Resultant
      *     Return type of the procedural invocation.
      * @tparam ...Parametric
@@ -336,17 +369,18 @@ namespace abstraction {
      */
     template <
         class ClassTypical,
+        typename MethodLocational,
         typename Resultant,
         typename ...Parametric
     >
-    static inline Methodic< ClassTypical, Resultant, Parametric... >
+    static inline Methodic< ClassTypical, MethodLocational, Resultant, Parametric... >
     AssignMethodObjective(
-        Abstract< Resultant, Parametric... > ClassTypical::* const 
+        MethodLocational
             method,
         Referential< ClassTypical >
             object
     ) {
-        const Methodic< ClassTypical, Resultant, Parametric... >
+        const Methodic< ClassTypical, MethodLocational, Resultant, Parametric... >
             objective = {method, Locate( object ).at};
         return objective;
     }
@@ -361,7 +395,9 @@ namespace abstraction {
      *     object oriented instance method.  Throws an exception if method is
      *     null.
      * @tparam ClassTypical
-     *     Object oriented class type.
+     *     Qualified object oriented class type.
+     * @tparam MethodLocational
+     *     Pointer to qualified member function type.
      * @tparam Resultant
      *     Return type of the procedural invocation.
      * @tparam ...Parametric
@@ -369,19 +405,20 @@ namespace abstraction {
      */
     template <
         class ClassTypical,
+        typename MethodLocational,
         typename Resultant,
         typename ...Parametric
     >
-    static inline Methodic< ClassTypical, Resultant, Parametric... >
+    static inline Methodic< ClassTypical, MethodLocational, Resultant, Parametric... >
     AssignMethodObjectiveSafely(
-        Abstract< Resultant, Parametric... > ClassTypical::* const 
+        MethodLocational
             method,
         Referential< ClassTypical >
             object
     ) {
         if (!method)
             throw method;
-        const Methodic< ClassTypical, Resultant, Parametric... >
+        const Methodic< ClassTypical, MethodLocational, Resultant, Parametric... >
             objective = {method, Locate( object ).at};
         return objective;
     }
@@ -477,7 +514,9 @@ namespace abstraction {
      *     must have sufficient duration such that it exists when the invocation
      *     occurs.
      * @tparam ClassTypical
-     *     Object oriented class type.
+     *     Qualified object oriented class type.
+     * @tparam MethodLocational
+     *     Pointer to qualified member function type.
      * @tparam Resultant
      *     Return type of the procedural invocation.
      * @tparam ...Parametric
@@ -485,16 +524,17 @@ namespace abstraction {
      */
     template <
         class ClassTypical,
+        typename MethodLocational,
         typename Resultant,
         typename ...Parametric
     >
     static inline Invocative< Resultant, Parametric... >
     AssignInvokeMethod(
-        Referential< const Methodic< ClassTypical, Resultant, Parametric... > >
+        Referential< const Methodic< ClassTypical, MethodLocational, Resultant, Parametric... > >
             objective
     ) {
         static auto&
-            Invoke = InvokeMethod< ClassTypical, Resultant, Parametric... >;
+            Invoke = InvokeMethod< ClassTypical, MethodLocational, Resultant, Parametric... >;
         const Invocative< Resultant, Parametric... >
             invocation = {Locate( Invoke ).at, Locate( objective ).at};
         return invocation;
@@ -512,7 +552,9 @@ namespace abstraction {
      *     occurs.  The resulting interface function will throw an exception if 
      *     its provided pointers are null.
      * @tparam ClassTypical
-     *     Object oriented class type.
+     *     Qualified object oriented class type.
+     * @tparam MethodLocational
+     *     Pointer to qualified member function type.
      * @tparam Resultant
      *     Return type of the procedural invocation.
      * @tparam ...Parametric
@@ -520,16 +562,17 @@ namespace abstraction {
      */
     template <
         class ClassTypical,
+        typename MethodLocational,
         typename Resultant,
         typename ...Parametric
     >
     static inline Invocative< Resultant, Parametric... >
     AssignInvokeMethodSafely(
-        Referential< const Methodic< ClassTypical, Resultant, Parametric... > >
+        Referential< const Methodic< ClassTypical, MethodLocational, Resultant, Parametric... > >
             objective
     ) {
         static auto&
-            Invoke = InvokeMethodSafely< ClassTypical, Resultant, Parametric... >;
+            Invoke = InvokeMethodSafely< ClassTypical, MethodLocational, Resultant, Parametric... >;
         const Invocative< Resultant, Parametric... >
             invocation = {Locate( Invoke ).at, Locate( objective ).at};
         return invocation;

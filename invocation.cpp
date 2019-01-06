@@ -10,7 +10,7 @@
 
 using namespace ::abstraction;
 
-static void
+void
 Function( 
     unsigned 
         value 
@@ -18,7 +18,7 @@ Function(
     printf( "Function( %u )\n", value );
 }
 
-auto
+const auto
     Lambda = []( 
         unsigned 
             value 
@@ -71,6 +71,7 @@ int
 main() {
     using FunctionTypical = void( unsigned );
     using LambdaTypical = decltype(Lambda);
+    using MethodLocational = void (ClassTypical::*)( unsigned );
     static auto&
         AssignInvokeFunction = AssignInvokeProcedure< FunctionTypical, void, unsigned >;
     static auto&
@@ -78,9 +79,9 @@ main() {
     static auto&
         AssignInvokeFunctor = AssignInvokeProcedure< ClassTypical, void, unsigned >;
     static auto&
-        AssignInvokeInstance = AssignInvokeMethod< ClassTypical, void, unsigned >;
+        AssignInvokeInstance = AssignInvokeMethod< ClassTypical, MethodLocational, void, unsigned >;
     static auto&
-        AssignInstanceObjective = AssignMethodObjective< ClassTypical, void, unsigned >;
+        AssignInstanceObjective = AssignMethodObjective< ClassTypical, MethodLocational, void, unsigned >;
     static const Locational< FunctionTypical >
         FunctionObjective = Locate( Function ).at;
     static const Locational< LambdaTypical >
@@ -89,7 +90,7 @@ main() {
         FunctorObjective = Locate( Object ).at;
     static const Locational< FunctionTypical >
         StaticObjective = Locate( ClassTypical::Static ).at;
-    static const Methodic< ClassTypical, void, unsigned >
+    static const Methodic< ClassTypical, MethodLocational, void, unsigned >
         InstanceObjective = AssignInstanceObjective( &ClassTypical::instance, Object );
     Demonstrate( AssignInvokeFunction( FunctionObjective ) );
     Demonstrate( AssignInvokeLambda( LambdaObjective ) );
