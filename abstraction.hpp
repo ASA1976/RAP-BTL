@@ -9,11 +9,11 @@
 
 /**
  * @brief   
- *     Procedural invocation facilitation.
+ *     Abstraction and invocation facilitation.
  * @details 
  *     Association
  *     -----------
- *     Procedural invocation facilitation.
+ *     Abstraction and invocation facilitation.
  */
 namespace abstraction {
 
@@ -24,15 +24,15 @@ namespace abstraction {
 
     /**
      * @brief 
-     *     Call interface abstract.
+     *     Function abstract.
      * @details 
      *     Abstraction Template
      *     --------------------
-     *     Function type alias is used to represent a specific call interface.
+     *     Function type alias corresponding to the invocation abstract.
      * @tparam Resultant
-     *     Return type of the interface.
+     *     Return type of the invocation.
      * @tparam ...Parametric
-     *     Parameter pack which represents the parameter types of the interface.
+     *     Parameter pack which represents the parameter types of the invocation.
      */
     template <
         typename Resultant,
@@ -42,16 +42,16 @@ namespace abstraction {
 
     /**
      * @brief         
-     *     Procedural invocation classifier.
+     *     Invocation classifier.
      * @details       
      *     Classification Template
      *     -----------------------
-     *     This type is used to represent any invocation whose abstract matches
-     *     the provided specifiers.
+     *     This type is used to represent the invocation of any stored procedure
+     *     whose invocation abstract matches the provided specifiers.
      * @tparam Resultant
      *     Return type of the invocation.
      * @tparam ...Parametric
-     *     Parameter pack which represents the parameters of the invocation.
+     *     Parameter pack which represents the parameter types of the invocation.
      */
     template <
         typename Resultant,
@@ -60,24 +60,24 @@ namespace abstraction {
     struct Invocative {
 
         Locational< Abstract< Resultant, const Locational< const void >, Parametric... > >
-            interface; /**< Code pointer to interface function. */
+            interface; /**< Code pointer to the interface function. */
 
         Locational< const void >
-            objective; /**< Data pointer to invocable objective. */
+            objective; /**< Data pointer to the objective. */
 
         /**
          * @brief 
-         *     Invokes any kind of stored procedure.
+         *     Allows instances of the Invocative type to be directly invoked.
          * @details
          *     Operator Overload
          *     -----------------
-         *     Invokes any kind of stored procedure, specific to the interface
-         *     specified by the template arguments.
+         *     Invokes any kind of stored procedure, specific to the invocation
+         *     abstract specified by the template arguments.
          */
         Resultant
         operator()( 
             Parametric... 
-                arguments /**< Arguments which are relayed to the invocation. */
+                arguments /**< Argument pack which is expanded for the invocation. */
         ) const {
             return interface( objective, arguments... );
         }
@@ -86,22 +86,23 @@ namespace abstraction {
 
     /**
      * @brief         
-     *     Object oriented instance method classifier.
+     *     Object oriented non-static method classifier.
      * @details       
      *     Classification Template
      *     -----------------------
-     *     This type is used to represent an instance method invocation
-     *     relative to an object.  Care should be taken to ensure that
-     *     qualifiers match between ClassTypical (the object type) and
-     *     MethodLocational (the pointer to member function type).
+     *     This type is used to represent a non-static method invocation.  
+     *     Qualifiers should be applied to the ClassTypical and MethodLocational
+     *     argument specifiers as appropriate in order to cast the object
+     *     and pointer to member function as required in order to invoke the
+     *     desired member function (qualifier overloads, etc.).
      * @tparam ClassTypical
      *     Qualified object oriented class type.
      * @tparam MethodLocational
      *     Pointer to qualified member function type.
      * @tparam Resultant
-     *     Return type of the procedural invocation.
+     *     Return type of the invocation.
      * @tparam ...Parametric
-     *     Parameter pack which represents the procedural parameters.
+     *     Parameter pack which represents the parameter types of the invocation.
      */
     template <
         class ClassTypical,
@@ -119,26 +120,32 @@ namespace abstraction {
 #endif
 
         MethodLocational
-            method;
+            method; /**< Pointer to qualified member function. */
 
         Locational< ClassTypical >
-            object;
+            object; /**< Pointer to qualified data object. */
 
     };
 
     /**
      * @brief 
-     *     Invokes the procedural instance.
+     *     Invokes the procedural objective.
      * @details
      *     Function Template
      *     -----------------
-     *     Invokes the procedural instance, specific to the procedural type.
+     *     Invokes either a function, lambda or functor objective.
      * @tparam Procedural
      *     Procedural (function, lambda or functor) type.
      * @tparam Resultant
-     *     Return type of the procedural invocation.
+     *     Return type of the invocation.
      * @tparam ...Parametric
-     *     Parameter pack which represents the procedural parameters.
+     *     Parameter pack which represents the parameter types of the invocation.
+     * @param[in] locality 
+     *     Opaque pointer to the procedural objective.
+     * @param[in] arguments
+     *     Argument pack which is expanded for the invocation.
+     * @return
+     *     Result of the invocation.
      */
     template <
         typename Procedural,
@@ -164,17 +171,25 @@ namespace abstraction {
 
     /**
      * @brief 
-     *     Invokes the procedural instance safely.
+     *     Invokes the procedural objective safely.
      * @details
      *     Function Template
      *     -----------------
-     *     Invokes the procedural instance, specific to the procedural type.
+     *     Invokes either a function, lambda or functor objective.  Throws an
+     *     exception if objective is null or its dereferenced pointer space is 
+     *     in turn null.
      * @tparam Procedural
      *     Procedural (function, lambda or functor) type.
      * @tparam Resultant
-     *     Return type of the procedural invocation.
+     *     Return type of the invocation.
      * @tparam ...Parametric
-     *     Parameter pack which represents the procedural parameters.
+     *     Parameter pack which represents the parameter types of the invocation.
+     * @param[in] locality 
+     *     Opaque pointer to the procedural objective.
+     * @param[in] arguments
+     *     Argument pack which is expanded for the invocation.
+     * @return
+     *     Result of the invocation.
      */
     template <
         typename Procedural,
@@ -206,20 +221,25 @@ namespace abstraction {
 
     /**
      * @brief 
-     *     Invokes an object oriented instance method.
+     *     Invokes an object oriented non-static method objective.
      * @details
      *     Function Template
      *     -----------------
-     *     Invokes an object oriented instance method which matches the 
-     *     resultant and parametric type expectations.
+     *     Invokes an object oriented non-static method objective.
      * @tparam ClassTypical
      *     Qualified object oriented class type.
      * @tparam MethodLocational
      *     Pointer to qualified member function type.
      * @tparam Resultant
-     *     Return type of the procedural invocation.
+     *     Return type of the invocation.
      * @tparam ...Parametric
-     *     Parameter pack which represents the procedural parameters.
+     *     Parameter pack which represents the parameter types of the invocation.
+     * @param[in] locality 
+     *     Opaque pointer to the methodic objective.
+     * @param[in] arguments
+     *     Argument pack which is expanded for the invocation.
+     * @return
+     *     Result of the invocation.
      */
     template <
         class ClassTypical,
@@ -242,21 +262,27 @@ namespace abstraction {
 
     /**
      * @brief 
-     *     Invokes an object oriented instance method safely.
+     *     Invokes an object oriented non-static method objective safely.
      * @details
      *     Function Template
      *     -----------------
-     *     Invokes an object oriented instance method which matches the 
-     *     resultant and parametric type expectations. Throws an exception if 
-     *     objective is null or either of its members method or object are null.
+     *     Invokes an object oriented non-static method objective. Throws an 
+     *     exception if objective itself is null or either of its members, 
+     *     method or object are null.
      * @tparam ClassTypical
      *     Qualified object oriented class type.
      * @tparam MethodLocational
      *     Pointer to qualified member function type.
      * @tparam Resultant
-     *     Return type of the procedural invocation.
+     *     Return type of the invocation.
      * @tparam ...Parametric
-     *     Parameter pack which represents the procedural parameters.
+     *     Parameter pack which represents the parameter types of the invocation.
+     * @param[in] locality 
+     *     Opaque pointer to the methodic objective.
+     * @param[in] arguments
+     *     Argument pack which is expanded for the invocation.
+     * @return
+     *     Result of the invocation.
      */
     template <
         class ClassTypical,
@@ -287,17 +313,21 @@ namespace abstraction {
 
    /**
      * @brief 
-     *     Prepares a lambda expression which invokes a procedural call.
+     *     Prepares a lambda expression which can invoke the stored procedure.
      * @details
      *     Function Template
      *     -----------------
-     *     Prepares a lambda expression which can be used to invoke a specified 
-     *     procedural call.  The invocation instance is captured by copy when 
-     *     being prepared to be called as a lambda expression.
+     *     Prepares a lambda expression which can be used to invoke any stored
+     *     procedure.  The invocative instance is captured by copy when 
+     *     PrepareInvocation is called.
      * @tparam Resultant
-     *     Return type of the procedural invocation.
+     *     Return type of the invocation.
      * @tparam ...Parametric
-     *     Parameter pack which represents the procedural parameters.
+     *     Parameter pack which represents the parameter types of the invocation.
+     * @param[in] invocation 
+     *     Reference to a constant invocative instance.
+     * @return
+     *     Lambda expression returned by value.
      */
     template <
         typename Resultant,
@@ -324,15 +354,19 @@ namespace abstraction {
      * @details
      *     Function Template
      *     -----------------
-     *     Prepares a lambda expression which can be used to invoke a specified 
-     *     procedural call.  The invocation instance is captured by copy when 
-     *     being prepared to be called as a lambda expression.  If either of the
-     *     interface or objective of the invocation are null, an exception is 
-     *     thrown.
+     *     Prepares a lambda expression which can be used to invoke any stored
+     *     procedure.  The invocative instance is captured by copy when 
+     *     PrepareInvocation is called.  Throws an exception immediately if 
+     *     either of the interface or objective members of the invocative 
+     *     instance are null.
      * @tparam Resultant
-     *     Return type of the procedural invocation.
+     *     Return type of the invocation.
      * @tparam ...Parametric
-     *     Parameter pack which represents the procedural parameters.
+     *     Parameter pack which represents the parameter types of the invocation.
+     * @param[in] invocation 
+     *     Reference to a constant invocative instance.
+     * @return
+     *     Lambda expression returned by value.
      */
     template <
         typename Resultant,
@@ -352,20 +386,26 @@ namespace abstraction {
 
     /**
      * @brief 
-     *     Assigns an instance method objective.
+     *     Assigns a non-static method objective.
      * @details
      *     Function Template
      *     -----------------
      *     Assigns an objective containing the pointers required to invoke an 
-     *     object oriented instance method.
+     *     object oriented non-static method.
      * @tparam ClassTypical
      *     Qualified object oriented class type.
      * @tparam MethodLocational
      *     Pointer to qualified member function type.
      * @tparam Resultant
-     *     Return type of the procedural invocation.
+     *     Return type of the invocation.
      * @tparam ...Parametric
-     *     Parameter pack which represents the procedural parameters.
+     *     Parameter pack which represents the parameter types of the invocation.
+     * @param[in] method
+     *     Pointer to qualified member function.
+     * @param[in] object
+     *     Reference to qualified data object.
+     * @return
+     *     Methodic objective instance returned by value.
      */
     template <
         class ClassTypical,
@@ -376,7 +416,7 @@ namespace abstraction {
     static inline Methodic< ClassTypical, MethodLocational, Resultant, Parametric... >
     AssignMethodObjective(
         MethodLocational
-            method,
+            method, 
         Referential< ClassTypical >
             object
     ) {
@@ -387,21 +427,27 @@ namespace abstraction {
 
     /**
      * @brief 
-     *     Assigns an instance method objective safely.
+     *     Assigns a non-static method objective safely.
      * @details
      *     Function Template
      *     -----------------
      *     Assigns an objective containing the pointers required to invoke an 
-     *     object oriented instance method.  Throws an exception if method is
+     *     object oriented non-static method.  Throws an exception if method is
      *     null.
      * @tparam ClassTypical
      *     Qualified object oriented class type.
      * @tparam MethodLocational
      *     Pointer to qualified member function type.
      * @tparam Resultant
-     *     Return type of the procedural invocation.
+     *     Return type of the invocation.
      * @tparam ...Parametric
-     *     Parameter pack which represents the procedural parameters.
+     *     Parameter pack which represents the parameter types of the invocation.
+     * @param[in] method
+     *     Pointer to qualified member function.
+     * @param[in] object
+     *     Reference to qualified data object.
+     * @return
+     *     Methodic objective instance returned by value.
      */
     template <
         class ClassTypical,
@@ -412,9 +458,9 @@ namespace abstraction {
     static inline Methodic< ClassTypical, MethodLocational, Resultant, Parametric... >
     AssignMethodObjectiveSafely(
         MethodLocational
-            method,
+            method, 
         Referential< ClassTypical >
-            object
+            object 
     ) {
         if (!method)
             throw method;
@@ -425,7 +471,7 @@ namespace abstraction {
 
     /**
      * @brief 
-     *     Assigns a procedural invocation instance.
+     *     Assigns a procedural invocative instance.
      * @details
      *     Function Template
      *     -----------------
@@ -436,9 +482,13 @@ namespace abstraction {
      * @tparam Procedural
      *     Procedural (function, lambda or functor) type.
      * @tparam Resultant
-     *     Return type of the procedural invocation.
+     *     Return type of the invocation.
      * @tparam ...Parametric
-     *     Parameter pack which represents the procedural parameters.
+     *     Parameter pack which represents the parameter types of the invocation.
+     * @param[in] objective
+     *     Reference to a function pointer with suitable duration.
+     * @return
+     *     Invocative instance returned by value.
      */
     template <
         typename Procedural,
@@ -463,7 +513,7 @@ namespace abstraction {
 
     /**
      * @brief 
-     *     Assigns a safe procedural invocation instance.
+     *     Assigns a safe procedural invocative instance.
      * @details
      *     Function Template
      *     -----------------
@@ -476,9 +526,13 @@ namespace abstraction {
      * @tparam Procedural
      *     Procedural (function, lambda or functor) type.
      * @tparam Resultant
-     *     Return type of the procedural invocation.
+     *     Return type of the invocation.
      * @tparam ...Parametric
-     *     Parameter pack which represents the procedural parameters.
+     *     Parameter pack which represents the parameter types of the invocation.
+     * @param[in] objective
+     *     Reference to a function pointer with suitable duration.
+     * @return
+     *     Invocative instance returned by value.
      */
     template <
         typename Procedural,
@@ -505,7 +559,7 @@ namespace abstraction {
 
     /**
      * @brief 
-     *     Assigns a methodic invocation instance.
+     *     Assigns a methodic invocative instance.
      * @details
      *     Function Template
      *     -----------------
@@ -518,9 +572,13 @@ namespace abstraction {
      * @tparam MethodLocational
      *     Pointer to qualified member function type.
      * @tparam Resultant
-     *     Return type of the procedural invocation.
+     *     Return type of the invocation.
      * @tparam ...Parametric
-     *     Parameter pack which represents the procedural parameters.
+     *     Parameter pack which represents the parameter types of the invocation.
+     * @param[in] objective
+     *     Reference to method objective with suitable duration.
+     * @return
+     *     Invocative instance returned by value.
      */
     template <
         class ClassTypical,
@@ -542,7 +600,7 @@ namespace abstraction {
 
     /**
      * @brief 
-     *     Assigns a safe methodic invocation instance.
+     *     Assigns a safe methodic invocative instance.
      * @details
      *     Function Template
      *     -----------------
@@ -556,9 +614,13 @@ namespace abstraction {
      * @tparam MethodLocational
      *     Pointer to qualified member function type.
      * @tparam Resultant
-     *     Return type of the procedural invocation.
+     *     Return type of the invocation.
      * @tparam ...Parametric
-     *     Parameter pack which represents the procedural parameters.
+     *     Parameter pack which represents the parameter types of the invocation.
+     * @param[in] objective
+     *     Reference to method objective with suitable duration.
+     * @return
+     *     Invocative instance returned by value.
      */
     template <
         class ClassTypical,
