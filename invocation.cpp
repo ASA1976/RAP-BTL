@@ -71,7 +71,7 @@ int
 main() {
     using FunctionTypical = void( unsigned );
     using LambdaTypical = decltype(Lambda);
-    using MethodLocational = void (ClassTypical::*)( unsigned );
+    using MethodLocational = void(ClassTypical::*)( unsigned );
     static auto&
         AssignInvokeFunction = AssignInvokeProcedure< FunctionTypical, void, unsigned >;
     static auto&
