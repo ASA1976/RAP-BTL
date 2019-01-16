@@ -42,7 +42,17 @@ DisplayHexMemory(
 
 int
 main() {
-    printf( "Literal 7 Hex Byte List: " );
+    puts( "" );
+    puts( "Literal 7 Hex Byte List: " );
     DisplayHexMemory( 7 );
-    printf( "\n" );
+    puts( "" );
+    puts( "" );
+    puts( "Literal true Hex Byte List: " );
+    DisplayHexMemory( true );
+    puts( "" );
+    puts( "" );
+    puts( "Literal 3.14159 Hex Byte List: " );
+    DisplayHexMemory( 3.14159 );
+    puts( "" );
+    puts( "" );
 }
