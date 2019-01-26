@@ -18,30 +18,27 @@
 
 */
 
-typedef struct {
-    void(*interface)( const void* const, unsigned );
-    const void* objective;
-} invocation_t;
+typedef void(*abstract_t)( unsigned ) ;
 
-static inline void demonstrate( invocation_t invocation )
+static inline void demonstrate( const abstract_t procedure )
 {
     static unsigned count = 0;
-    invocation.interface( invocation.objective, ++count );
+    procedure( ++count );
 }
 
-extern const invocation_t
-mangled_invocation, 
-functor_invocation, 
-static_invocation, 
-instance_invocation, 
-lambda_invocation;
+extern const abstract_t
+mangled_abstraction, 
+functor_abstraction, 
+static_abstraction, 
+instance_abstraction, 
+lambda_abstraction;
 
 int main() {
     puts( "Start of main function, C programming language." );
-    demonstrate( mangled_invocation );
-    demonstrate( functor_invocation );
-    demonstrate( static_invocation );
-    demonstrate( instance_invocation );
-    demonstrate( lambda_invocation );
+    demonstrate( mangled_abstraction );
+    demonstrate( functor_abstraction );
+    demonstrate( static_abstraction );
+    demonstrate( instance_abstraction );
+    demonstrate( lambda_abstraction );
     puts( "End of main function, C programming language." );
 }

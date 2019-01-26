@@ -9,6 +9,7 @@
 #endif
 
 using namespace ::abstraction;
+using namespace ::location;
 
 void
 Mangled(
@@ -56,35 +57,15 @@ const auto
         printf( "Lambda( %u ), C++ programming language.\n", value );
     };
 
-using FunctionTypical = void( unsigned );
-using LambdaTypical = decltype(Lambda);
-using MethodLocational = void(ClassTypical::*)( unsigned ) const;
-
-auto&
-    AssignFunction = AssignInvokeProcedure< FunctionTypical, void, unsigned >;
-auto&
-    AssignFunctor = AssignInvokeProcedure< const ClassTypical, void, unsigned >;
-auto&
-    AssignInstance = AssignInvokeMethod< const ClassTypical, MethodLocational, void, unsigned >;
-auto&
-    AssignLambda = AssignInvokeProcedure< LambdaTypical, void, unsigned >;
-auto&
-    AssignMethod = AssignMethodObjective< const ClassTypical, MethodLocational, void, unsigned >;
 const ClassTypical
     Object;
-const Locational< FunctionTypical >
-    MangledObjective = Locate( Mangled ).at;
-const Locational< const ClassTypical >
-    FunctorObjective = Locate( Object ).at;
-const Locational< FunctionTypical >
-    StaticObjective = Locate( ClassTypical::Static ).at;
-const Methodic< const ClassTypical, MethodLocational, void, unsigned >
-    InstanceObjective = AssignMethod( &ClassTypical::instance, Object );
-const Locational< LambdaTypical >
-    LambdaObjective = Locate( Lambda ).at;
-extern "C" const Invocative< void, unsigned >
-    mangled_invocation = AssignFunction( MangledObjective ),
-    functor_invocation = AssignFunctor( FunctorObjective ),
-    static_invocation = AssignFunction( StaticObjective ),
-    instance_invocation = AssignInstance( InstanceObjective ),
-    lambda_invocation = AssignLambda( LambdaObjective );
+
+using LambdaTypical = decltype(Lambda);
+using MethodLocational = decltype(&ClassTypical::instance);
+
+extern "C" const Locational< Abstract< void, unsigned > >
+    mangled_abstraction = Mangled,
+    functor_abstraction = AbstractProcedure< const ClassTypical, Object, void, unsigned >,
+    static_abstraction = ClassTypical::Static,
+    lambda_abstraction = AbstractProcedure< LambdaTypical, Lambda, void, unsigned >,
+    instance_abstraction = AbstractMethod< const ClassTypical, MethodLocational, Object, &ClassTypical::instance, void, unsigned >;

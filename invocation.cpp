@@ -1,14 +1,14 @@
 // © 2019 Aaron Sami Abassi
 // Licensed under the Academic Free License version 3.0
 // #define RAPBTL_NO_STD_CPLUSPLUS 1
-#include "abstraction.hpp"
+#include "invocation.hpp"
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
 #include <cstdio>
 #else
 #include <stdio.h>
 #endif
 
-using namespace ::abstraction;
+using namespace ::invocation;
 
 void
 Function( 
@@ -58,7 +58,7 @@ public:
     Object;
 
 static inline void
-Demonstrate(
+DemonstrateInvocation(
     Referential< const Invocative< void, unsigned > >
         invoke
 ) {
@@ -69,9 +69,9 @@ Demonstrate(
 
 int 
 main() {
-    using FunctionTypical = void( unsigned );
+    using FunctionTypical = decltype(Function);
     using LambdaTypical = decltype(Lambda);
-    using MethodLocational = void(ClassTypical::*)( unsigned );
+    using MethodLocational = decltype(&ClassTypical::instance);
     static auto&
         AssignInvokeFunction = AssignInvokeProcedure< FunctionTypical, void, unsigned >;
     static auto&
@@ -92,9 +92,9 @@ main() {
         StaticObjective = Locate( ClassTypical::Static ).at;
     static const Methodic< ClassTypical, MethodLocational, void, unsigned >
         InstanceObjective = AssignInstanceObjective( &ClassTypical::instance, Object );
-    Demonstrate( AssignInvokeFunction( FunctionObjective ) );
-    Demonstrate( AssignInvokeLambda( LambdaObjective ) );
-    Demonstrate( AssignInvokeFunctor( FunctorObjective ) );
-    Demonstrate( AssignInvokeFunction( StaticObjective ) );
-    Demonstrate( AssignInvokeInstance( InstanceObjective ) );
+    DemonstrateInvocation( AssignInvokeFunction( FunctionObjective ) );
+    DemonstrateInvocation( AssignInvokeLambda( LambdaObjective ) );
+    DemonstrateInvocation( AssignInvokeFunctor( FunctorObjective ) );
+    DemonstrateInvocation( AssignInvokeFunction( StaticObjective ) );
+    DemonstrateInvocation( AssignInvokeInstance( InstanceObjective ) );
 }
