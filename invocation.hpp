@@ -46,7 +46,7 @@ namespace invocation {
             interface; /**< Code pointer to the interface function. */
 
         Locational< const void >
-            objective; /**< Data pointer to the objective. */
+            location; /**< Data pointer to the invocable object location. */
 
         /**
          * @brief 
@@ -62,7 +62,7 @@ namespace invocation {
             Parametric... 
                 arguments /**< Argument pack which is expanded for the invocation. */
         ) const {
-            return interface( objective, arguments... );
+            return interface( location, arguments... );
         }
 
     };
@@ -112,11 +112,11 @@ namespace invocation {
 
     /**
      * @brief 
-     *     Invokes the procedural objective.
+     *     Invokes the procedural object.
      * @details
      *     Function Template
      *     -----------------
-     *     Invokes either a function, lambda or functor objective.
+     *     Invokes either a function, lambda or functor.
      * @tparam Procedural
      *     Procedural (function, lambda or functor) type.
      * @tparam Resultant
@@ -124,7 +124,7 @@ namespace invocation {
      * @tparam ...Parametric
      *     Parameter pack which represents the parameter types of the invocation.
      * @param[in] locality 
-     *     Opaque pointer to the procedural objective.
+     *     Data pointer to the procedural object.
      * @param[in] arguments
      *     Argument pack which is expanded for the invocation.
      * @return
@@ -148,19 +148,18 @@ namespace invocation {
             "Specific: Pointer to pointer should be a data type"
         );
         Specific
-            objective = static_cast< Specific >(locality);
-        return Refer( Refer( objective ).to ).to( arguments... );
+            location = static_cast< Specific >(locality);
+        return Refer( Refer( location ).to ).to( arguments... );
     }
 
     /**
      * @brief 
-     *     Invokes the procedural objective safely.
+     *     Invokes the procedural object safely.
      * @details
      *     Function Template
      *     -----------------
-     *     Invokes either a function, lambda or functor objective.  Throws an
-     *     exception if objective is null or its dereferenced pointer space is 
-     *     in turn null.
+     *     Invokes either a function, lambda or functor.  Throws an exception if
+     *     locality is null or its dereferenced pointer space is in turn null.
      * @tparam Procedural
      *     Procedural (function, lambda or functor) type.
      * @tparam Resultant
@@ -168,7 +167,7 @@ namespace invocation {
      * @tparam ...Parametric
      *     Parameter pack which represents the parameter types of the invocation.
      * @param[in] locality 
-     *     Opaque pointer to the procedural objective.
+     *     Data pointer to the procedural object.
      * @param[in] arguments
      *     Argument pack which is expanded for the invocation.
      * @return
@@ -194,21 +193,21 @@ namespace invocation {
         static auto&
             Invoke = InvokeProcedure< Procedural, Resultant, Parametric... >;
         Specific
-            objective = static_cast< Specific >(locality);
-        if (!objective)
-            throw objective;
-        if (!Refer( objective ).to)
-            throw Refer( objective ).to;
-        return Invoke( objective, arguments ... );
+            location = static_cast< Specific >(locality);
+        if (!location)
+            throw location;
+        if (!Refer( location ).to)
+            throw Refer( location ).to;
+        return Invoke( location, arguments ... );
     }
 
     /**
      * @brief 
-     *     Invokes an object oriented non-static method objective.
+     *     Invokes an object oriented non-static method.
      * @details
      *     Function Template
      *     -----------------
-     *     Invokes an object oriented non-static method objective.
+     *     Invokes an object oriented non-static method.
      * @tparam ClassTypical
      *     Qualified object oriented class type.
      * @tparam MethodLocational
@@ -218,7 +217,7 @@ namespace invocation {
      * @tparam ...Parametric
      *     Parameter pack which represents the parameter types of the invocation.
      * @param[in] locality 
-     *     Opaque pointer to the methodic objective.
+     *     Data pointer to the methodic instance.
      * @param[in] arguments
      *     Argument pack which is expanded for the invocation.
      * @return
@@ -239,19 +238,19 @@ namespace invocation {
     ) {
         using Specific = const Locational< const Methodic< ClassTypical, MethodLocational, Resultant, Parametric... > >;
         Specific
-            objective = static_cast< Specific >(locality);
-        return (objective->object->*objective->method)( arguments... );
+            instance = static_cast< Specific >(locality);
+        return (instance->object->*instance->method)( arguments... );
     }
 
     /**
      * @brief 
-     *     Invokes an object oriented non-static method objective safely.
+     *     Invokes an object oriented non-static method safely.
      * @details
      *     Function Template
      *     -----------------
-     *     Invokes an object oriented non-static method objective. Throws an 
-     *     exception if objective itself is null or either of its members, 
-     *     method or object are null.
+     *     Invokes an object oriented non-static method. Throws an exception if
+     *     location itself is null or either of its members, method or object 
+     *     are null.
      * @tparam ClassTypical
      *     Qualified object oriented class type.
      * @tparam MethodLocational
@@ -261,7 +260,7 @@ namespace invocation {
      * @tparam ...Parametric
      *     Parameter pack which represents the parameter types of the invocation.
      * @param[in] locality 
-     *     Opaque pointer to the methodic objective.
+     *     Data pointer to the methodic instance.
      * @param[in] arguments
      *     Argument pack which is expanded for the invocation.
      * @return
@@ -284,24 +283,24 @@ namespace invocation {
         static auto&
             Invoke = InvokeMethod< ClassTypical, MethodLocational, Resultant, Parametric... >;
         Specific
-            objective = static_cast< Specific >(locality);
-        if (!objective)
-            throw objective;
-        if (!objective->method)
-            throw objective->method;
-        if (!objective->object)
-            throw objective->object;
-        return Invoke( objective, arguments ... );
+            instance = static_cast< Specific >(locality);
+        if (!instance)
+            throw instance;
+        if (!instance->method)
+            throw instance->method;
+        if (!instance->object)
+            throw instance->object;
+        return Invoke( instance, arguments ... );
     }
 
    /**
      * @brief 
-     *     Prepares a lambda expression which can invoke the stored procedure.
+     *     Prepares a lambda expression which can later invoke the invocation.
      * @details
      *     Function Template
      *     -----------------
-     *     Prepares a lambda expression which can be used to invoke any stored
-     *     procedure.  The invocative instance is captured by copy when 
+     *     Prepares a lambda expression which can later be used to invoke any
+     *     invocation.  The invocative instance is captured by copy when 
      *     PrepareInvocation is called.
      * @tparam Resultant
      *     Return type of the invocation.
@@ -326,21 +325,21 @@ namespace invocation {
                 Parametric... 
                     arguments 
             ) -> Resultant {
-                return invocation.interface( invocation.objective, arguments... );
+                return invocation.interface( invocation.location, arguments... );
             };
         return lambda;
     }
 
    /**
      * @brief 
-     *     Prepares a lambda expression which invokes a procedural call safely.
+     *     Prepares a lambda expression which can safely invoke the invocation.
      * @details
      *     Function Template
      *     -----------------
-     *     Prepares a lambda expression which can be used to invoke any stored
-     *     procedure.  The invocative instance is captured by copy when 
+     *     Prepares a lambda expression which can later be used to invoke any
+     *     invocation.  The invocative instance is captured by copy when 
      *     PrepareInvocation is called.  Throws an exception immediately if 
-     *     either of the interface or objective members of the invocative 
+     *     either of the interface or location members of the invocative 
      *     instance are null.
      * @tparam Resultant
      *     Return type of the invocation.
@@ -362,19 +361,19 @@ namespace invocation {
     ) {
         if (!invocation.interface)
             throw invocation.interface;
-        if (!invocation.objective)
-            throw invocation.objective;
+        if (!invocation.location)
+            throw invocation.location;
         return PrepareInvocation( invocation );
     }
 
     /**
      * @brief 
-     *     Assigns a non-static method objective.
+     *     Assigns a non-static method instance.
      * @details
      *     Function Template
      *     -----------------
-     *     Assigns an objective containing the pointers required to invoke an 
-     *     object oriented non-static method.
+     *     Assigns a method and object to a methodic instance, which can be 
+     *     assigned to an invocative instance.
      * @tparam ClassTypical
      *     Qualified object oriented class type.
      * @tparam MethodLocational
@@ -388,7 +387,7 @@ namespace invocation {
      * @param[in] object
      *     Reference to qualified data object.
      * @return
-     *     Methodic objective instance returned by value.
+     *     Methodic instance returned by value.
      */
     template <
         class ClassTypical,
@@ -397,26 +396,26 @@ namespace invocation {
         typename ...Parametric
     >
     static inline Methodic< ClassTypical, MethodLocational, Resultant, Parametric... >
-    AssignMethodObjective(
+    AssignClassMethod(
         MethodLocational
             method, 
         Referential< ClassTypical >
             object
     ) {
         const Methodic< ClassTypical, MethodLocational, Resultant, Parametric... >
-            objective = {method, Locate( object ).at};
-        return objective;
+            location = {method, Locate( object ).at};
+        return location;
     }
 
     /**
      * @brief 
-     *     Assigns a non-static method objective safely.
+     *     Assigns a non-static method safely.
      * @details
      *     Function Template
      *     -----------------
-     *     Assigns an objective containing the pointers required to invoke an 
-     *     object oriented non-static method.  Throws an exception if method is
-     *     null.
+     *     Assigns a method and object to a methodic instance, which can be 
+     *     assigned to an invocative instance.  Throws an exception if method 
+     *     is null.
      * @tparam ClassTypical
      *     Qualified object oriented class type.
      * @tparam MethodLocational
@@ -430,7 +429,7 @@ namespace invocation {
      * @param[in] object
      *     Reference to qualified data object.
      * @return
-     *     Methodic objective instance returned by value.
+     *     Methodic instance returned by value.
      */
     template <
         class ClassTypical,
@@ -439,7 +438,7 @@ namespace invocation {
         typename ...Parametric
     >
     static inline Methodic< ClassTypical, MethodLocational, Resultant, Parametric... >
-    AssignMethodObjectiveSafely(
+    AssignClassMethodSafely(
         MethodLocational
             method, 
         Referential< ClassTypical >
@@ -448,8 +447,8 @@ namespace invocation {
         if (!method)
             throw method;
         const Methodic< ClassTypical, MethodLocational, Resultant, Parametric... >
-            objective = {method, Locate( object ).at};
-        return objective;
+            location = {method, Locate( object ).at};
+        return location;
     }
 
     /**
@@ -459,7 +458,7 @@ namespace invocation {
      *     Function Template
      *     -----------------
      *     Assigns an invocative instance which can later be used to invoke the 
-     *     procedure specified by objective.  The objective argument specifier
+     *     procedure specified by location.  The location argument specifier
      *     must have sufficient duration such that it exists when the invocation
      *     occurs.
      * @tparam Procedural
@@ -468,8 +467,8 @@ namespace invocation {
      *     Return type of the invocation.
      * @tparam ...Parametric
      *     Parameter pack which represents the parameter types of the invocation.
-     * @param[in] objective
-     *     Reference to a function pointer with suitable duration.
+     * @param[in] location
+     *     Reference to a pointer with suitable duration.
      * @return
      *     Invocative instance returned by value.
      */
@@ -481,16 +480,16 @@ namespace invocation {
     static inline Invocative< Resultant, Parametric... >
     AssignInvokeProcedure(
         Referential< const Locational< Procedural > >
-            objective
+            location
     ) {
         static_assert(
-            sizeof Locate( objective ).at == sizeof(Locational< const void >),
-            "objective: Pointer to pointer should be a data type"
+            sizeof Locate( location ).at == sizeof(Locational< const void >),
+            "location: Pointer to pointer should be a data type"
         );
         static auto&
             Invoke = InvokeProcedure< Procedural, Resultant, Parametric... >;
         const Invocative< Resultant, Parametric... >
-            invocation = {Locate( Invoke ).at, Locate( objective ).at};
+            invocation = {Locate( Invoke ).at, Locate( location ).at};
         return invocation;
     }
 
@@ -501,10 +500,10 @@ namespace invocation {
      *     Function Template
      *     -----------------
      *     Assigns an invocative instance which can later be used to invoke the 
-     *     procedure specified by objective.  The objective argument specifier
+     *     procedure specified by location.  The location argument specifier
      *     must have sufficient duration such that it exists when the invocation
      *     occurs.  If the location provided is null, this version will throw 
-     *     the objective argument.  The resulting interface function will throw
+     *     the location argument.  The resulting interface function will throw
      *     an exception if its provided pointers are null.
      * @tparam Procedural
      *     Procedural (function, lambda or functor) type.
@@ -512,8 +511,8 @@ namespace invocation {
      *     Return type of the invocation.
      * @tparam ...Parametric
      *     Parameter pack which represents the parameter types of the invocation.
-     * @param[in] objective
-     *     Reference to a function pointer with suitable duration.
+     * @param[in] location
+     *     Reference to a pointer with suitable duration.
      * @return
      *     Invocative instance returned by value.
      */
@@ -525,18 +524,18 @@ namespace invocation {
     static inline Invocative< Resultant, Parametric... >
     AssignInvokeProcedureSafely(
         Referential< const Locational< Procedural > >
-            objective
+            location
     ) {
         static_assert(
-            sizeof Locate( objective ).at == sizeof(Locational< const void >),
-            "objective: Pointer to pointer should be a data type"
+            sizeof Locate( location ).at == sizeof(Locational< const void >),
+            "location: Pointer to pointer should be a data type"
         );
         static auto&
             Invoke = InvokeProcedureSafely< Procedural, Resultant, Parametric... >;
-        if (!objective)
-            throw objective;
+        if (!location)
+            throw location;
         const Invocative< Resultant, Parametric... >
-            invocation = {Locate( Invoke ).at, Locate( objective ).at};
+            invocation = {Locate( Invoke ).at, Locate( location ).at};
         return invocation;
     }
 
@@ -546,10 +545,10 @@ namespace invocation {
      * @details
      *     Function Template
      *     -----------------
-     *     Assigns an invocative instance which can later be used to invoke the 
-     *     method specified by objective.  The objective argument specifier
-     *     must have sufficient duration such that it exists when the invocation
-     *     occurs.
+     *     Assigns an invocative instance which can later be used to invoke a 
+     *     specific method against an object both specified by the instance 
+     *     argument.  The instance argument specifier must have sufficient 
+     *     duration such that it exists when the invocation occurs.
      * @tparam ClassTypical
      *     Qualified object oriented class type.
      * @tparam MethodLocational
@@ -558,8 +557,8 @@ namespace invocation {
      *     Return type of the invocation.
      * @tparam ...Parametric
      *     Parameter pack which represents the parameter types of the invocation.
-     * @param[in] objective
-     *     Reference to method objective with suitable duration.
+     * @param[in] instance
+     *     Reference to a methodic instance with suitable duration.
      * @return
      *     Invocative instance returned by value.
      */
@@ -572,12 +571,12 @@ namespace invocation {
     static inline Invocative< Resultant, Parametric... >
     AssignInvokeMethod(
         Referential< const Methodic< ClassTypical, MethodLocational, Resultant, Parametric... > >
-            objective
+            instance
     ) {
         static auto&
             Invoke = InvokeMethod< ClassTypical, MethodLocational, Resultant, Parametric... >;
         const Invocative< Resultant, Parametric... >
-            invocation = {Locate( Invoke ).at, Locate( objective ).at};
+            invocation = {Locate( Invoke ).at, Locate( instance ).at};
         return invocation;
     }
 
@@ -587,11 +586,12 @@ namespace invocation {
      * @details
      *     Function Template
      *     -----------------
-     *     Assigns an invocative instance which can later be used to invoke the 
-     *     method specified by objective.  The objective argument specifier
-     *     must have sufficient duration such that it exists when the invocation
-     *     occurs.  The resulting interface function will throw an exception if 
-     *     its provided pointers are null.
+     *     Assigns an invocative instance which can later be used to invoke a 
+     *     specific method against an object both specified by the instance 
+     *     argument.  The instance argument specifier must have sufficient 
+     *     duration such that it exists when the invocation occurs.  The 
+     *     resulting interface function will throw an exception if its provided 
+     *     pointers are null.
      * @tparam ClassTypical
      *     Qualified object oriented class type.
      * @tparam MethodLocational
@@ -600,8 +600,8 @@ namespace invocation {
      *     Return type of the invocation.
      * @tparam ...Parametric
      *     Parameter pack which represents the parameter types of the invocation.
-     * @param[in] objective
-     *     Reference to method objective with suitable duration.
+     * @param[in] instance
+     *     Reference to a methodic instance with suitable duration.
      * @return
      *     Invocative instance returned by value.
      */
@@ -614,12 +614,12 @@ namespace invocation {
     static inline Invocative< Resultant, Parametric... >
     AssignInvokeMethodSafely(
         Referential< const Methodic< ClassTypical, MethodLocational, Resultant, Parametric... > >
-            objective
+            instance
     ) {
         static auto&
             Invoke = InvokeMethodSafely< ClassTypical, MethodLocational, Resultant, Parametric... >;
         const Invocative< Resultant, Parametric... >
-            invocation = {Locate( Invoke ).at, Locate( objective ).at};
+            invocation = {Locate( Invoke ).at, Locate( instance ).at};
         return invocation;
     }
 

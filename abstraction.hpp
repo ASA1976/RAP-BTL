@@ -49,7 +49,7 @@ namespace abstraction {
      *     template can also be used to invoke them.
      * @tparam Procedural
      *     Procedural (function, lambda or functor) type.
-     * @tparam Objective
+     * @tparam Location
      *     Reference to a function, lambda or functor object.
      * @tparam Resultant
      *     Return type of the invocation.
@@ -63,7 +63,7 @@ namespace abstraction {
     template <
         typename Procedural,
         Referential< Procedural >
-            Objective,
+            Location,
         typename Resultant,
         typename ...Parametric
     >
@@ -72,7 +72,7 @@ namespace abstraction {
         Parametric...
             arguments
     ) {
-        return Objective( arguments... );
+        return Location( arguments... );
     }
 
     /**
@@ -81,9 +81,8 @@ namespace abstraction {
      * @details
      *     Function Template
      *     -----------------
-     *     Invokes an object oriented non-static method objective where the 
-     *     object instance must have linkage.  The convoke templates are a more
-     *     simplistic and limited alternative to the Invocative templates.
+     *     Invokes an object oriented non-static method where the object 
+     *     instance must have linkage.
      * @tparam ClassTypical
      *     Qualified object oriented class type.
      * @tparam MethodLocational
@@ -121,8 +120,8 @@ namespace abstraction {
             ::std::is_member_function_pointer< MethodLocational >::value,
             "MethodLocational:  Pointer to member function type required"
         );
-        static_assert(Method != 0, "Method:  Pointer is null");
 #endif
+        static_assert(Method != 0, "Method:  Pointer is null");
         return (Object.*Method)( arguments... );
     }
 

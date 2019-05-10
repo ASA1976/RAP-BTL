@@ -79,22 +79,22 @@ main() {
     static auto&
         AssignInvokeFunctor = AssignInvokeProcedure< ClassTypical, void, unsigned >;
     static auto&
-        AssignInvokeInstance = AssignInvokeMethod< ClassTypical, MethodLocational, void, unsigned >;
+        AssignInstanceMethod = AssignClassMethod< ClassTypical, MethodLocational, void, unsigned >;
     static auto&
-        AssignInstanceObjective = AssignMethodObjective< ClassTypical, MethodLocational, void, unsigned >;
+        AssignInvokeInstance = AssignInvokeMethod< ClassTypical, MethodLocational, void, unsigned >;
     static const Locational< FunctionTypical >
-        FunctionObjective = Locate( Function ).at;
+        FunctionLocation = Locate( Function ).at;
     static const Locational< LambdaTypical >
-        LambdaObjective = Locate( Lambda ).at;
+        LambdaLocation = Locate( Lambda ).at;
     static const Locational< ClassTypical >
-        FunctorObjective = Locate( Object ).at;
+        FunctorLocation = Locate( Object ).at;
     static const Locational< FunctionTypical >
-        StaticObjective = Locate( ClassTypical::Static ).at;
+        StaticLocation = Locate( ClassTypical::Static ).at;
     static const Methodic< ClassTypical, MethodLocational, void, unsigned >
-        InstanceObjective = AssignInstanceObjective( &ClassTypical::instance, Object );
-    DemonstrateInvocation( AssignInvokeFunction( FunctionObjective ) );
-    DemonstrateInvocation( AssignInvokeLambda( LambdaObjective ) );
-    DemonstrateInvocation( AssignInvokeFunctor( FunctorObjective ) );
-    DemonstrateInvocation( AssignInvokeFunction( StaticObjective ) );
-    DemonstrateInvocation( AssignInvokeInstance( InstanceObjective ) );
+        MethodInstance = AssignInstanceMethod( &ClassTypical::instance, Object );
+    DemonstrateInvocation( AssignInvokeFunction( FunctionLocation ) );
+    DemonstrateInvocation( AssignInvokeLambda( LambdaLocation ) );
+    DemonstrateInvocation( AssignInvokeFunctor( FunctorLocation ) );
+    DemonstrateInvocation( AssignInvokeFunction( StaticLocation ) );
+    DemonstrateInvocation( AssignInvokeInstance( MethodInstance ) );
 }
