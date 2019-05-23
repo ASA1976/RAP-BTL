@@ -13,7 +13,7 @@
  * @details 
  *     Association
  *     -----------
- *     Invocation of any code object with or without linkage.
+ *     Invocation of any object with or without linkage.
  */
 namespace invocation {
 
