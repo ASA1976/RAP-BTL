@@ -14,8 +14,7 @@
 using namespace ::location;
 using namespace ::trajection;
 
-#ifdef _MSC_VER
-// Problem 395723
+#if defined( _MSC_VER ) && _MSC_VER < 1921
 template bool ::comparison::IsLesser(Referential< const int >, Referential< const int >);
 template bool ::comparison::IsEqual(Referential< const int >, Referential< const int >);
 #endif
