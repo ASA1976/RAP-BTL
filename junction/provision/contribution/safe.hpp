@@ -1,27 +1,17 @@
 // © 2019 Aaron Sami Abassi
 // Licensed under the Academic Free License version 3.0
-#ifndef JUNCTION_PROVISION_CONTRACTION_MODULE
-#define JUNCTION_PROVISION_CONTRACTION_MODULE
-#include "../consecution.hpp"
-#include "../provision.hpp"
-#include "../../traction.hpp"
+#ifndef SAFE_JUNCTION_PROVISION_CONTRIBUTION_MODULE
+#define SAFE_JUNCTION_PROVISION_CONTRIBUTION_MODULE
+#include "../contribution.hpp"
+#include "../../consecution/safe.hpp"
 
 namespace junction {
 
     namespace provision {
 
-        /**
-         * @brief         
-         *     Linked list queue resource management implementation.
-         * @details       
-         *     Association
-         *     -----------
-         *     Linked list queue resource management implementation.
-         */
-        namespace contraction {
+        namespace contribution {
 
-            using ::traction::Tractile;
-            using consecution::Succeed;
+            using consecution::ConcedeSafely;
 
             template <
                 typename Natural,
@@ -31,12 +21,12 @@ namespace junction {
                 Referential< const DefaultAllocative< SinglyNodal< Elemental > > >
                     Allocator
             >
-            constexpr Tractile< SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, Natural >
-                SingleContractor = {
+            constexpr Tributary< SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, Natural >
+                SafeSingleContributor = {
                     Survey< SinglyLinked< Elemental >, Natural, Maximum, Elemental >,
                     Account< SinglyLinked< Elemental >, Natural, Elemental >,
-                    Protract< Natural, Maximum, Elemental, Allocator, false >,
-                    Succeed< Natural, Elemental >,
+                    Distribute< Natural, Maximum, Elemental, Allocator, true >,
+                    Retribute< SinglyLinked< Elemental >, Natural, Elemental, ConcedeSafely< Natural, Elemental > >,
                     RemoveAll< SinglyLinked< Elemental >, Natural, Elemental >
                 };
 
@@ -48,12 +38,12 @@ namespace junction {
                 Referential< const DefaultAllocative< DoublyNodal< Elemental > > >
                     Allocator
             >
-            constexpr Tractile< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural >
-                DoubleContractor = {
+            constexpr Tributary< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural >
+                SafeDoubleContributor = {
                     Survey< DoublyLinked< Elemental >, Natural, Maximum, Elemental >,
                     Account< DoublyLinked< Elemental >, Natural, Elemental >,
-                    Protract< Natural, Maximum, Elemental, Allocator, false >,
-                    Succeed< Natural, Elemental >,
+                    Distribute< Natural, Maximum, Elemental, Allocator, true >,
+                    Retribute< DoublyLinked< Elemental >, Natural, Elemental, ConcedeSafely< Natural, Elemental > >,
                     RemoveAll< DoublyLinked< Elemental >, Natural, Elemental >
                 };
 

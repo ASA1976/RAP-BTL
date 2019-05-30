@@ -23,7 +23,6 @@ namespace junction {
             using ::attribution::Tributary;
             using consecution::Concessive;
             using consecution::Concede;
-            using consecution::ConcedeSafely;
 
             template <
                 typename Natural,
@@ -167,40 +166,6 @@ namespace junction {
                     Account< DoublyLinked< Elemental >, Natural, Elemental >,
                     Distribute< Natural, Maximum, Elemental, Allocator, false >,
                     Retribute< DoublyLinked< Elemental >, Natural, Elemental, Concede< Natural, Elemental > >,
-                    RemoveAll< DoublyLinked< Elemental >, Natural, Elemental >
-                };
-
-            template <
-                typename Natural,
-                Natural
-                    Maximum,
-                typename Elemental,
-                Referential< const DefaultAllocative< SinglyNodal< Elemental > > >
-                    Allocator
-            >
-            constexpr Tributary< SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, Natural >
-                SafeSingleContributor = {
-                    Survey< SinglyLinked< Elemental >, Natural, Maximum, Elemental >,
-                    Account< SinglyLinked< Elemental >, Natural, Elemental >,
-                    Distribute< Natural, Maximum, Elemental, Allocator, true >,
-                    Retribute< SinglyLinked< Elemental >, Natural, Elemental, ConcedeSafely< Natural, Elemental > >,
-                    RemoveAll< SinglyLinked< Elemental >, Natural, Elemental >
-                };
-
-            template <
-                typename Natural,
-                Natural
-                    Maximum,
-                typename Elemental,
-                Referential< const DefaultAllocative< DoublyNodal< Elemental > > >
-                    Allocator
-            >
-            constexpr Tributary< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural >
-                SafeDoubleContributor = {
-                    Survey< DoublyLinked< Elemental >, Natural, Maximum, Elemental >,
-                    Account< DoublyLinked< Elemental >, Natural, Elemental >,
-                    Distribute< Natural, Maximum, Elemental, Allocator, true >,
-                    Retribute< DoublyLinked< Elemental >, Natural, Elemental, ConcedeSafely< Natural, Elemental > >,
                     RemoveAll< DoublyLinked< Elemental >, Natural, Elemental >
                 };
 
