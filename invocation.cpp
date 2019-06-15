@@ -58,7 +58,7 @@ public:
     Object;
 
 static inline void
-DemonstrateInvocation(
+Demonstrate(
     Referential< const Invocative< void, unsigned > >
         invoke
 ) {
@@ -73,28 +73,18 @@ main() {
     using LambdaTypical = decltype(Lambda);
     using MethodLocational = decltype(&ClassTypical::instance);
     static auto&
-        AssignInvokeFunction = AssignInvokeProcedure< FunctionTypical, void, unsigned >;
+        AssignFunction = AssignInvokeProcedure< FunctionTypical, void, unsigned >;
     static auto&
-        AssignInvokeLambda = AssignInvokeProcedure< LambdaTypical, void, unsigned >;
+        AssignLambda = AssignInvokeProcedure< LambdaTypical, void, unsigned >;
     static auto&
-        AssignInvokeFunctor = AssignInvokeProcedure< ClassTypical, void, unsigned >;
+        AssignFunctor = AssignInvokeProcedure< ClassTypical, void, unsigned >;
     static auto&
-        AssignInstanceMethod = AssignClassMethod< ClassTypical, MethodLocational, void, unsigned >;
+        AssignMethod = AssignClassMethod< ClassTypical, MethodLocational, void, unsigned >;
     static auto&
-        AssignInvokeInstance = AssignInvokeMethod< ClassTypical, MethodLocational, void, unsigned >;
-    static const Locational< FunctionTypical >
-        FunctionLocation = Locate( Function ).at;
-    static const Locational< LambdaTypical >
-        LambdaLocation = Locate( Lambda ).at;
-    static const Locational< ClassTypical >
-        FunctorLocation = Locate( Object ).at;
-    static const Locational< FunctionTypical >
-        StaticLocation = Locate( ClassTypical::Static ).at;
-    static const Methodic< ClassTypical, MethodLocational, void, unsigned >
-        MethodInstance = AssignInstanceMethod( &ClassTypical::instance, Object );
-    DemonstrateInvocation( AssignInvokeFunction( FunctionLocation ) );
-    DemonstrateInvocation( AssignInvokeLambda( LambdaLocation ) );
-    DemonstrateInvocation( AssignInvokeFunctor( FunctorLocation ) );
-    DemonstrateInvocation( AssignInvokeFunction( StaticLocation ) );
-    DemonstrateInvocation( AssignInvokeInstance( MethodInstance ) );
+        AssignInstance = AssignInvokeMethod< ClassTypical, MethodLocational, void, unsigned >;
+    Demonstrate( AssignFunction( Locate( Function ).at ) );
+    Demonstrate( AssignLambda( Locate( Lambda ).at ) );
+    Demonstrate( AssignFunctor( Locate( Object ).at ) );
+    Demonstrate( AssignFunction( Locate( ClassTypical::Static ).at ) );
+    Demonstrate( AssignInstance( AssignMethod( &ClassTypical::instance, Object ) ) );
 }
