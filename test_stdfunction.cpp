@@ -24,10 +24,13 @@ TestExtern(
 
 int
 main() {
+    using Test4Typical = decltype(Test4);
     TestStatic( TestFunctional( Test1 ) );
     TestStatic( TestFunctional( Test2 ) );
     TestStatic( TestFunctional( Test3 ) );
+    TestStatic( TestFunctional( bind( &Test4Typical::run, Test4 ) ) );
     TestExtern( TestFunctional( Test1 ) );
     TestExtern( TestFunctional( Test2 ) );
     TestExtern( TestFunctional( Test3 ) );
+    TestExtern( TestFunctional( bind( &Test4Typical::run, Test4 ) ) );
 }

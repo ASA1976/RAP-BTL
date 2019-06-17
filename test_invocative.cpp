@@ -22,16 +22,24 @@ TestExtern(
 
 int
 main() {
-    static auto&
+    using Test4Typical = decltype(Test4);
+    using RunLocational = decltype(&Test4Typical::run);
+    static auto& 
         AssignTest1 = AssignInvokeProcedure< decltype(Test1), void >;
-    static auto&
+    static auto& 
         AssignTest2 = AssignInvokeProcedure< decltype(Test2), void >;
-    static auto&
+    static auto& 
         AssignTest3 = AssignInvokeProcedure< decltype(Test3), void >;
-    TestStatic( AssignTest1( Locate( Test1 ).at ) );
-    TestStatic( AssignTest2( Locate( Test2 ).at ) );
-    TestStatic( AssignTest3( Locate( Test3 ).at ) );
-    TestExtern( AssignTest1( Locate( Test1 ).at ) );
-    TestExtern( AssignTest2( Locate( Test2 ).at ) );
-    TestExtern( AssignTest3( Locate( Test3 ).at ) );
+    static auto& 
+        AssignTest4 = AssignInvokeMethod< Test4Typical, RunLocational, void >;
+    static auto& 
+        AssignRun = AssignClassMethod< Test4Typical, RunLocational, void >;
+    TestStatic( AssignTest1( &Test1 ) );
+    TestStatic( AssignTest2( &Test2 ) );
+    TestStatic( AssignTest3( &Test3 ) );
+    TestStatic( AssignTest4( AssignRun( &Test4Typical::run, Test4 ) ) );
+    TestExtern( AssignTest1( &Test1 ) );
+    TestExtern( AssignTest2( &Test2 ) );
+    TestExtern( AssignTest3( &Test3 ) );
+    TestExtern( AssignTest4( AssignRun( &Test4Typical::run, Test4 ) ) );
 }

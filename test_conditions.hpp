@@ -24,4 +24,14 @@ Test3() {
     puts( "Test3" );
 }
 
+struct {
+
+    void
+    run() {
+        puts( "Test4" );
+    }
+
+}
+    Test4;
+
 #endif
