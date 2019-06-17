@@ -13,8 +13,7 @@ using namespace ::location;
 using namespace ::ration::contraction;
 using namespace ::procession;
 
-using FunctionDemonstrative = void( void );
-using FunctionSituational = Locational< FunctionDemonstrative >;
+using Demonstrative = void();
 
 constexpr unsigned
     MaximumEvents = 127;
@@ -63,36 +62,40 @@ InitializeCoordinator(
 
 static void
 PrintString(
-    const Locational< void >
+    const Locational< const void >
         locality,
     unsigned
         identifier
 ) {
-    using Specific = const Locational< const char >;
-    printf( "PrintString( '%s', %u )\n", static_cast< Specific >(locality), identifier );
+    using Specific = Locational< const Locational< const char > >;
+    const Locational< const char >
+        text = Refer( static_cast< Specific >(locality) ).to;
+    printf( "PrintString( '%s', %u )\n", text, identifier );
 }
 
 static void
 PrintNatural(
-    const Locational< void >
+    const Locational< const void >
         locality,
     unsigned 
         identifier
 ) {
-    using Specific = const Locational< const unsigned >;
-    printf( "PrintNatural( %u, %u )\n", Refer( static_cast< Specific >(locality) ).to, identifier );
+    using Specific = Locational< const Locational< const unsigned > >;
+    Referential< const unsigned >
+        value = Refer( Refer( static_cast< Specific >(locality) ).to ).to;
+    printf( "PrintNatural( %u, %u )\n", value, identifier );
 }
 
 static void
 RunFunction(
-    const Locational< void >
+    const Locational< const void >
         locality,
     unsigned
         identifier
 ) {
-    using Specific = const Locational< const FunctionSituational >;
-    const FunctionSituational
-        function = Refer( static_cast< Specific >(locality) ).to;
+    using Specific = Locational< const Locational< Demonstrative > >;
+    const Locational< Demonstrative >
+        function = Refer( Refer( static_cast< Specific >(locality) ).to ).to;
     printf( "RunFunction( " );
     if (function)
         function();
@@ -107,11 +110,11 @@ PrepareCoordinator(
         schedule
 ) {
     static auto&
-        PreparePrintString = PrepareScheduleNullRefused< EventSchedular, unsigned, unsigned, const char, EventContractor, unsigned >;
+        PreparePrintString = PrepareSchedule< EventSchedular, unsigned, unsigned, const char, EventContractor, unsigned >;
     static auto&
-        PreparePrintNatural = PrepareScheduleNullRefused< EventSchedular, unsigned, unsigned, const unsigned, EventContractor, unsigned >;
+        PreparePrintNatural = PrepareSchedule< EventSchedular, unsigned, unsigned, const unsigned, EventContractor, unsigned >;
     static auto&
-        PrepareRunFunction = PrepareScheduleNullRefused< EventSchedular, unsigned, unsigned, const FunctionSituational, EventContractor, unsigned >;
+        PrepareRunFunction = PrepareSchedule< EventSchedular, unsigned, unsigned, Demonstrative, EventContractor, unsigned >;
     auto
         print_string = PreparePrintString( EventVisitor, schedule, PrintString );
     auto
@@ -142,22 +145,21 @@ ScheduleEvents(
     static const Locational< const char >
         HelloLocality = "Hello world!",
         GoodbyeLocality = "Goodbye";
-    static const FunctionSituational
+    static const Locational< Demonstrative >
         FirstObjective = Function1,
         SecondObjective = Function2,
         NullObjective = 0;
     static const unsigned
         QueueSize = sizeof(EventSchedular);
+    static const Locational< const unsigned >
+        QueueLocality = Locate( QueueSize ).at;
     printf( "Scheduling event(s), " );
     coordinator.schedule_print_string( HelloLocality );
-    coordinator.schedule_run_function( Locate( FirstObjective ).at );
-    coordinator.schedule_print_natural( Locate( QueueSize ).at );
-    coordinator.schedule_run_function( Locate( SecondObjective ).at );
+    coordinator.schedule_run_function( FirstObjective );
+    coordinator.schedule_print_natural( QueueLocality );
+    coordinator.schedule_run_function( SecondObjective );
     coordinator.schedule_print_string( GoodbyeLocality );
-    coordinator.schedule_run_function( Locate( NullObjective ).at );
-    coordinator.schedule_print_string( 0 );
-    coordinator.schedule_print_natural( 0 );
-    coordinator.schedule_run_function( 0 );
+    coordinator.schedule_run_function( NullObjective );
     puts( "finished." );
 }
 
