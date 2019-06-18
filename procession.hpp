@@ -33,7 +33,7 @@ namespace procession {
      *     Abstraction Template
      *     --------------------
      *     Function type alias used as the event call interface.  Functions
-     *     which implement this contract receive their event data as a 
+     *     which implement this contract receive their event subject as a 
      *     constant void pointer argument as well as zero or more specified 
      *     uniform extra event arguments and are expected to action the event 
      *     when called.
@@ -57,11 +57,11 @@ namespace procession {
      *     Classification Template
      *     -----------------------
      *     This type alias is used to represent an event in a schedule.  It 
-     *     associates the event function (relator) with the event data (value) 
-     *     using their respective memory locations.  __Care should be used to 
-     *     ensure that the duration of both the event data and the pointer to 
-     *     the event data continue to exist until after the event has been
-     *     processed__.
+     *     associates the event function (relator) with the event subject 
+     *     (value) using their respective memory locations.  __Care should be 
+     *     used to ensure that the duration of both the event subject and the 
+     *     pointer to the event subject continue to exist until after the event
+     *     has been processed__.
      * @tparam ...Parametric
      *     Parameter pack which represents extra event parameters.
      */
@@ -79,7 +79,7 @@ namespace procession {
      *     Schedules an event, in a container space using the provided 
      *     contractor objective.  Both the event subject and the pointer to the
      *     event subject must have sufficient duration such that they both exist
-     *     when the event is run.
+     *     when the event is processed.
      * @tparam Schedular
      *     Type of the schedule.
      * @tparam Positional
@@ -89,7 +89,7 @@ namespace procession {
      * @tparam Subjective 
      *     Type of the event subject.
      * @tparam Contractor 
-     *     Objective reference used to add events into the schedule.
+     *     Objective reference used to manage events in the schedule.
      * @tparam ...Parametric
      *     Parameter pack which represents extra event parameters.
      * @param[in] visitor
@@ -144,8 +144,7 @@ namespace procession {
 
     /**
      * @brief 
-     *     Prepares a lambda expression which schedules an event which can omit
-     *     a data location.
+     *     Prepares a lambda expression which schedules an event.
      * @details
      *     Function Template
      *     -----------------
@@ -160,7 +159,7 @@ namespace procession {
      * @tparam Subjective 
      *     Type of the event subject.
      * @tparam Contractor 
-     *     Objective reference used to add events into the schedule.
+     *     Objective reference used to manage events in the schedule.
      * @tparam ...Parametric
      *     Parameter pack which represents extra event parameters.
      * @param[in] visitor
@@ -191,13 +190,13 @@ namespace procession {
             function
     ) {
         static auto&
-            RunSchedule = Schedule< Schedular, Positional, Natural, Subjective, Contractor, Parametric... >;
+            ScheduleEvent = Schedule< Schedular, Positional, Natural, Subjective, Contractor, Parametric... >;
         auto 
             lambda = [&visitor, &schedule, &function]( 
                 Referential< const Locational< Subjective > >
                     locality 
             ) {
-                return RunSchedule( visitor, schedule, function, locality );
+                return ScheduleEvent( visitor, schedule, function, locality );
             };
         return lambda;
     }
@@ -209,8 +208,7 @@ namespace procession {
      *     Function Template
      *     -----------------
      *     Processes a single event by first removing it from the schedule 
-     *     and then invoking the event function while passing the event data
-     *     and zero or more event parameters.
+     *     and then invoking the event function with the appropriate arguments.
      * @tparam Schedular
      *     Type of the schedule.
      * @tparam Positional
@@ -218,7 +216,7 @@ namespace procession {
      * @tparam Natural
      *     Type of natural integer used by the schedule.
      * @tparam Contractor 
-     *     Objective reference used to add events into the schedule.
+     *     Objective reference used to manage events in the schedule.
      * @tparam ...Parametric
      *     Parameter pack which represents extra event parameters.
      * @param[in] visitor 
@@ -276,7 +274,7 @@ namespace procession {
      *     -----------------
      *     Prepares a lambda expression which processes a single event by first 
      *     removing it from the schedule schedule and then invoking the event 
-     *     function while passing the event data.
+     *     function with the appropriate arguments.
      * @tparam Schedular
      *     Type of the schedule.
      * @tparam Positional
@@ -284,7 +282,7 @@ namespace procession {
      * @tparam Natural
      *     Type of natural integer used by the schedule.
      * @tparam Contractor 
-     *     Objective reference used to add events into the schedule.
+     *     Objective reference used to manage events in the schedule.
      * @tparam ...Parametric
      *     Parameter pack which represents extra event parameters.
      * @param[in] visitor 
