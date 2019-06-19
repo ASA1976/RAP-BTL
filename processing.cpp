@@ -145,17 +145,17 @@ main() {
     EventSchedular
         event_queue;
     auto
-        PrintStringLambda = PreparePrintString( EventVisitor, event_queue, PrintString );
+        print_string_lambda = PreparePrintString( EventVisitor, event_queue, PrintString );
     auto
-        PrintNaturalLambda = PreparePrintNatural( EventVisitor, event_queue, PrintNatural );
+        print_natural_lambda = PreparePrintNatural( EventVisitor, event_queue, PrintNatural );
     auto
-        RunFunctionLambda = PrepareRunFunction( EventVisitor, event_queue, RunFunction );
+        run_function_lambda = PrepareRunFunction( EventVisitor, event_queue, RunFunction );
     auto
-        ProcessEventLambda = PrepareProcessEvent( EventVisitor, event_queue );
-    using PrintStringTypical = decltype(PrintStringLambda);
-    using PrintNaturalTypical = decltype(PrintNaturalLambda);
-    using RunFunctionTypical = decltype(RunFunctionLambda);
-    using ProcessEventTypical = decltype(ProcessEventLambda);
+        process_event_lambda = PrepareProcessEvent( EventVisitor, event_queue );
+    using PrintStringTypical = decltype(print_string_lambda);
+    using PrintNaturalTypical = decltype(print_natural_lambda);
+    using RunFunctionTypical = decltype(run_function_lambda);
+    using ProcessEventTypical = decltype(process_event_lambda);
     static auto&
         AssignPrintString = AssignInvokeProcedure< PrintStringTypical, bool, Referential< const Locational< const char > > >;
     static auto&
@@ -165,20 +165,20 @@ main() {
     static auto&
         AssignProcessEvent = AssignInvokeProcedure< ProcessEventTypical, bool, unsigned >;
     const Locational< PrintStringTypical >
-        PrintStringLocation = Locate( PrintStringLambda ).at;
+        print_string_location = Locate( print_string_lambda ).at;
     const Locational< PrintNaturalTypical >
-        PrintNaturalLocation = Locate( PrintNaturalLambda ).at;
+        print_natural_location = Locate( print_natural_lambda ).at;
     const Locational< RunFunctionTypical >
-        RunFunctionLocation = Locate( RunFunctionLambda ).at;
+        run_function_location = Locate( run_function_lambda ).at;
     const Locational< ProcessEventTypical >
-        ProcessEventLocation = Locate( ProcessEventLambda ).at;
+        process_event_location = Locate( process_event_lambda ).at;
     const Coordinate
         coordinator = {
-            AssignPrintString( PrintStringLocation ),
-            AssignPrintNatural( PrintNaturalLocation ),
-            AssignRunFunction( RunFunctionLocation )
+            AssignPrintString( print_string_location ),
+            AssignPrintNatural( print_natural_location ),
+            AssignRunFunction( run_function_location )
         };
     Initialize( event_queue );
     ScheduleSampleEvents( coordinator );
-    ProcessEvents( AssignProcessEvent( ProcessEventLocation ) );
+    ProcessEvents( AssignProcessEvent( process_event_location ) );
 }
