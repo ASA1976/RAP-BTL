@@ -134,6 +134,8 @@ ProcessEvents(
 
 int 
 main() {
+    EventSchedular
+        event_queue;
     static auto&
         PreparePrintString = PrepareSchedule< EventSchedular, unsigned, unsigned, const char, EventContractor, unsigned >;
     static auto&
@@ -142,8 +144,6 @@ main() {
         PrepareRunFunction = PrepareSchedule< EventSchedular, unsigned, unsigned, Demonstrative, EventContractor, unsigned >;
     static auto&
         PrepareProcessEvent = PrepareProcessOneEvent< EventSchedular, unsigned, unsigned, EventContractor, unsigned >;
-    EventSchedular
-        event_queue;
     auto
         PrintStringLambda = PreparePrintString( EventVisitor, event_queue, PrintString );
     auto
@@ -152,21 +152,25 @@ main() {
         RunFunctionLambda = PrepareRunFunction( EventVisitor, event_queue, RunFunction );
     auto
         ProcessEventLambda = PrepareProcessEvent( EventVisitor, event_queue );
+    using PrintStringTypical = decltype(PrintStringLambda);
+    using PrintNaturalTypical = decltype(PrintNaturalLambda);
+    using RunFunctionTypical = decltype(RunFunctionLambda);
+    using ProcessEventTypical = decltype(ProcessEventLambda);
     static auto&
-        AssignPrintString = AssignInvokeProcedure< decltype(PrintStringLambda), bool, Referential< const Locational< const char > > >;
+        AssignPrintString = AssignInvokeProcedure< PrintStringTypical, bool, Referential< const Locational< const char > > >;
     static auto&
-        AssignPrintNatural = AssignInvokeProcedure< decltype(PrintNaturalLambda), bool, Referential< const Locational< const unsigned > > >;
+        AssignPrintNatural = AssignInvokeProcedure< PrintNaturalTypical, bool, Referential< const Locational< const unsigned > > >;
     static auto&
-        AssignRunFunction = AssignInvokeProcedure< decltype(RunFunctionLambda), bool, Referential< const Locational< Demonstrative > > >;
+        AssignRunFunction = AssignInvokeProcedure< RunFunctionTypical, bool, Referential< const Locational< Demonstrative > > >;
     static auto&
-        AssignProcessEvent = AssignInvokeProcedure< decltype(ProcessEventLambda), bool, unsigned >;
-    const Locational< decltype(PrintStringLambda) >
+        AssignProcessEvent = AssignInvokeProcedure< ProcessEventTypical, bool, unsigned >;
+    const Locational< PrintStringTypical >
         PrintStringLocation = Locate( PrintStringLambda ).at;
-    const Locational< decltype(PrintNaturalLambda) >
+    const Locational< PrintNaturalTypical >
         PrintNaturalLocation = Locate( PrintNaturalLambda ).at;
-    const Locational< decltype(RunFunctionLambda) >
+    const Locational< RunFunctionTypical >
         RunFunctionLocation = Locate( RunFunctionLambda ).at;
-    const Locational< decltype(ProcessEventLambda) >
+    const Locational< ProcessEventTypical >
         ProcessEventLocation = Locate( ProcessEventLambda ).at;
     const Coordinate
         coordinator = {
