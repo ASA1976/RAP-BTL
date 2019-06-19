@@ -24,6 +24,14 @@ constexpr auto&
     EventVisitor = WriteIncrementDirection< unsigned, MaximumEvents, Contextual< unsigned > >;
 constexpr Tractile< EventSchedular, unsigned, unsigned >
     EventContractor = Contractor< unsigned, MaximumEvents, Contextual< unsigned > >;
+auto&
+    PreparePrintString = PrepareSchedule< EventSchedular, unsigned, unsigned, const char, EventContractor, unsigned >;
+auto&
+    PreparePrintNatural = PrepareSchedule< EventSchedular, unsigned, unsigned, const unsigned, EventContractor, unsigned >;
+auto&
+    PrepareRunFunction = PrepareSchedule< EventSchedular, unsigned, unsigned, Demonstrative, EventContractor, unsigned >;
+auto&
+    PrepareProcessEvent = PrepareProcessOneEvent< EventSchedular, unsigned, unsigned, EventContractor, unsigned >;
 
 struct Coordinate {
 
@@ -136,14 +144,6 @@ int
 main() {
     EventSchedular
         event_queue;
-    static auto&
-        PreparePrintString = PrepareSchedule< EventSchedular, unsigned, unsigned, const char, EventContractor, unsigned >;
-    static auto&
-        PreparePrintNatural = PrepareSchedule< EventSchedular, unsigned, unsigned, const unsigned, EventContractor, unsigned >;
-    static auto&
-        PrepareRunFunction = PrepareSchedule< EventSchedular, unsigned, unsigned, Demonstrative, EventContractor, unsigned >;
-    static auto&
-        PrepareProcessEvent = PrepareProcessOneEvent< EventSchedular, unsigned, unsigned, EventContractor, unsigned >;
     auto
         PrintStringLambda = PreparePrintString( EventVisitor, event_queue, PrintString );
     auto
