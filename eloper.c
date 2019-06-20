@@ -6,39 +6,32 @@
 
     Instructions:
 
-    First, compile interloper.cpp to an object file using a C++ compiler.
-    Then compile and link eloper.c and the interloper object file with the C 
-    compiler.
+    First, compile eloper.c to an object file using a C compiler.
+    Then compile and link interloper.cpp and the eloper object file with the C++
+    compiler and linker.
     
     Example:
 
-    clang++ -O -c interloper.cpp
-    clang -O -o elope interloper.o eloper.c
+    clang -O -c eloper.c
+    clang++ -O -o elope eloper.o interloper.cpp
     ./elope
 
 */
 
-typedef void(*abstract_t)( unsigned ) ;
+struct invocative_s {
 
-static inline void demonstrate( const abstract_t procedure )
+    void (*interface)( const void* const, unsigned );
+    const void* locality;
+
+};
+
+void call_from_c( const struct invocative_s invocation )
 {
     static unsigned count = 0;
-    procedure( ++count );
+    invocation.interface( invocation.locality, ++count );
 }
 
-extern const abstract_t
-mangled_abstraction, 
-functor_abstraction, 
-static_abstraction, 
-instance_abstraction, 
-lambda_abstraction;
-
-int main() {
-    puts( "Start of main function, C programming language." );
-    demonstrate( mangled_abstraction );
-    demonstrate( functor_abstraction );
-    demonstrate( static_abstraction );
-    demonstrate( instance_abstraction );
-    demonstrate( lambda_abstraction );
-    puts( "End of main function, C programming language." );
+void c_function( unsigned value )
+{
+    printf( "c_function( %u ), C programming language.\n", value );
 }

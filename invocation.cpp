@@ -10,32 +10,14 @@
 
 using namespace ::invocation;
 
-void
-Function( 
-    unsigned 
-        value 
-) {
-    printf( "Function( %u )\n", value );
-}
-
-const auto
-    Lambda = []( 
-        unsigned 
-            value 
-    ) -> void {
-        printf( "Lambda( %u )\n", value );
-    };
-
-class ClassTypical {
-
-public:
+struct Class {
 
     void
     operator()(
         unsigned 
             value
-    ) {
-        printf( "ClassTypical::operator()( %u )\n", value );
+    ) const {
+        printf( "Class::operator()( %u )\n", value );
     }
 
     static void 
@@ -43,19 +25,26 @@ public:
         unsigned
             value
     ) {
-        printf( "ClassTypical::Static( %u )\n", value );
+        printf( "Class::Static( %u )\n", value );
     }
 
     void 
-    instance(
+    method(
         unsigned
             value
-    ) {
-        printf( "ClassTypical::instance( %u )\n", value );
+    ) const {
+        printf( "Class::method( %u )\n", value );
     }
 
+};
+
+void
+Function( 
+    unsigned 
+        value 
+) {
+    printf( "Function( %u )\n", value );
 }
-    Object;
 
 static inline void
 Demonstrate(
@@ -69,22 +58,34 @@ Demonstrate(
 
 int 
 main() {
+    const Class
+        object;
+    const char
+        letter = 'A';
+    auto
+        lambda = [letter]( 
+            unsigned 
+                value 
+        ) -> void {
+            printf( "main::lambda['%c']( %u )\n", letter, value );
+        };
+    using ObjectTypical = decltype(object);
+    using MethodLocational = decltype(&Class::method);
     using FunctionTypical = decltype(Function);
-    using LambdaTypical = decltype(Lambda);
-    using MethodLocational = decltype(&ClassTypical::instance);
+    using LambdaTypical = decltype(lambda);
     static auto&
         AssignFunction = AssignInvokeProcedure< FunctionTypical, void, unsigned >;
     static auto&
         AssignLambda = AssignInvokeProcedure< LambdaTypical, void, unsigned >;
     static auto&
-        AssignFunctor = AssignInvokeProcedure< ClassTypical, void, unsigned >;
+        AssignFunctor = AssignInvokeProcedure< ObjectTypical, void, unsigned >;
     static auto&
-        AssignMethod = AssignClassMethod< ClassTypical, MethodLocational, void, unsigned >;
+        AssignMethod = AssignInvokeMethod< ObjectTypical, MethodLocational, void, unsigned >;
     static auto&
-        AssignInstance = AssignInvokeMethod< ClassTypical, MethodLocational, void, unsigned >;
-    Demonstrate( AssignFunction( Locate( Function ).at ) );
-    Demonstrate( AssignLambda( Locate( Lambda ).at ) );
-    Demonstrate( AssignFunctor( Locate( Object ).at ) );
-    Demonstrate( AssignFunction( Locate( ClassTypical::Static ).at ) );
-    Demonstrate( AssignInstance( AssignMethod( &ClassTypical::instance, Object ) ) );
+        AssignObject = AssignClassMethod< ObjectTypical, MethodLocational, void, unsigned >;
+    Demonstrate( AssignFunctor( &object ) );
+    Demonstrate( AssignFunction( &Class::Static ) );
+    Demonstrate( AssignMethod( AssignObject( &Class::method, object ) ) );
+    Demonstrate( AssignFunction( &Function ) );
+    Demonstrate( AssignLambda( &lambda ) );
 }

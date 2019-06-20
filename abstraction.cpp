@@ -9,6 +9,55 @@
 #endif
 
 using namespace ::abstraction;
+using namespace ::location;
+
+struct Class {
+
+    void
+    operator()(
+        unsigned 
+            value
+    ) const {
+        printf( "Class::operator()( %u )\n", value );
+    }
+
+    static void 
+    Static(
+        unsigned
+            value
+    ) {
+        printf( "Class::Static( %u )\n", value );
+    }
+
+    void 
+    method(
+        unsigned
+            value
+    ) const {
+        printf( "Class::method( %u )\n", value );
+    }
+
+}
+    const Object;
+
+static auto
+Bind(
+    const Locational< const char >
+        identifier
+) {
+    auto 
+        lambda = [identifier](
+            unsigned
+                value
+        ) -> void {
+            printf( "Bind::lambda[\"%s\"]( %u )\n", identifier, value );
+        };
+    return lambda;
+}
+
+auto
+    LambdaA = Bind( "LambdaA" ),
+    LambdaB = Bind( "LambdaB" );
 
 void
 Function( 
@@ -18,47 +67,8 @@ Function(
     printf( "Function( %u )\n", value );
 }
 
-const auto
-    Lambda = []( 
-        unsigned 
-            value 
-    ) -> void {
-        printf( "Lambda( %u )\n", value );
-    };
-
-class ClassTypical {
-
-public:
-
-    void
-    operator()(
-        unsigned 
-            value
-    ) {
-        printf( "ClassTypical::operator()( %u )\n", value );
-    }
-
-    static void 
-    Static(
-        unsigned
-            value
-    ) {
-        printf( "ClassTypical::Static( %u )\n", value );
-    }
-
-    void 
-    instance(
-        unsigned
-            value
-    ) {
-        printf( "ClassTypical::instance( %u )\n", value );
-    }
-
-}
-    Object;
-
 static inline void
-DemonstrateAbstraction(
+Demonstrate(
     Referential< Abstract< void, unsigned > >
         invoke
 ) {
@@ -69,18 +79,21 @@ DemonstrateAbstraction(
 
 int 
 main() {
-    using FunctionTypical = decltype(Function);
-    using LambdaTypical = decltype(Lambda);
-    using MethodLocational = decltype(&ClassTypical::instance);
+    using LambdaTypical = decltype(LambdaA);
+    using ObjectTypical = decltype(Object);
+    using MethodLocational = decltype(&Class::method);
     static auto&
-        LambdaProcedure = AbstractProcedure< LambdaTypical, Lambda, void, unsigned >;
+        WrapFunctor = AbstractProcedure< ObjectTypical, Object, void, unsigned >;
     static auto&
-        FunctorProcedure = AbstractProcedure< ClassTypical, Object, void, unsigned >;
+        WrapMethod = AbstractMethod< ObjectTypical, MethodLocational, Object, &Class::method, void, unsigned >;
     static auto&
-        InstanceMethod = AbstractMethod< ClassTypical, MethodLocational, Object, &ClassTypical::instance, void, unsigned >;
-    DemonstrateAbstraction( Function );
-    DemonstrateAbstraction( LambdaProcedure );
-    DemonstrateAbstraction( FunctorProcedure );
-    DemonstrateAbstraction( ClassTypical::Static );
-    DemonstrateAbstraction( InstanceMethod );
+        WrapLambdaA = AbstractProcedure< LambdaTypical, LambdaA, void, unsigned >;
+    static auto&
+        WrapLambdaB = AbstractProcedure< LambdaTypical, LambdaB, void, unsigned >;
+    Demonstrate( WrapFunctor );
+    Demonstrate( Class::Static );
+    Demonstrate( WrapMethod );
+    Demonstrate( WrapLambdaA );
+    Demonstrate( WrapLambdaB );
+    Demonstrate( Function );
 }

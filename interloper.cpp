@@ -1,34 +1,28 @@
 // © 2019 Aaron Sami Abassi
 // Licensed under the Academic Free License version 3.0
 // #define RAPBTL_NO_STD_CPLUSPLUS 1
-#include "abstraction.hpp"
+#include "invocation.hpp"
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
 #include <cstdio>
 #else
 #include <stdio.h>
 #endif
 
-using namespace ::abstraction;
-using namespace ::location;
+using namespace ::invocation;
 
-void
-Mangled(
-    unsigned
-        value
-) {
-    printf( "Mangled( %u ), C++ programming language.\n", value );
-}
+extern "C" Abstract< void, const Invocative< void, unsigned > >
+    call_from_c;
+extern "C" Abstract< void, unsigned >
+    c_function;
 
-class ClassTypical {
-
-public:
+struct Class {
 
     void
     operator()(
         unsigned 
             value
     ) const {
-        printf( "Functor( %u ), C++ programming language.\n", value );
+        printf( "Class::operator()( %u ), C++ programming language.\n", value );
     }
 
     static void 
@@ -36,36 +30,58 @@ public:
         unsigned
             value
     ) {
-        printf( "Static( %u ), C++ programming language.\n", value );
+        printf( "Class::Static( %u ), C++ programming language\n", value );
     }
 
     void 
-    instance(
+    method(
         unsigned
             value
     ) const {
-        printf( "instance( %u ), C++ programming language.\n", value );
+        printf( "Class::method( %u ), C++ programming language.\n", value );
     }
 
 };
 
-const auto
-    Lambda = []( 
-        unsigned 
-            value 
-    ) -> void {
-        printf( "Lambda( %u ), C++ programming language.\n", value );
-    };
+void
+Function(
+    unsigned
+        value
+) {
+    printf( "Function( %u ), C++ programming language.\n", value );
+}
 
-const ClassTypical
-    Object;
-
-using LambdaTypical = decltype(Lambda);
-using MethodLocational = decltype(&ClassTypical::instance);
-
-extern "C" const Locational< Abstract< void, unsigned > >
-    mangled_abstraction = Mangled,
-    functor_abstraction = AbstractProcedure< const ClassTypical, Object, void, unsigned >,
-    static_abstraction = ClassTypical::Static,
-    lambda_abstraction = AbstractProcedure< LambdaTypical, Lambda, void, unsigned >,
-    instance_abstraction = AbstractMethod< const ClassTypical, MethodLocational, Object, &ClassTypical::instance, void, unsigned >;
+int 
+main() {
+    const Class
+        object;
+    const char
+        letter = 'A';
+    auto
+        lambda = [letter]( 
+            unsigned 
+                value 
+        ) -> void {
+            printf( "main::lambda['%c']( %u ), C++ programming language.\n", letter, value );
+        };
+    using ObjectTypical = decltype(object);
+    using MethodLocational = decltype(&Class::method);
+    using FunctionTypical = decltype(Function);
+    using LambdaTypical = decltype(lambda);
+    static auto&
+        AssignFunction = AssignInvokeProcedure< FunctionTypical, void, unsigned >;
+    static auto&
+        AssignFunctor = AssignInvokeProcedure< ObjectTypical, void, unsigned >;
+    static auto&
+        AssignLambda = AssignInvokeProcedure< LambdaTypical, void, unsigned >;
+    static auto&
+        AssignMethod = AssignInvokeMethod< ObjectTypical, MethodLocational, void, unsigned >;
+    static auto&
+        AssignObject = AssignClassMethod< ObjectTypical, MethodLocational, void, unsigned >;
+    call_from_c( AssignFunction( &c_function ) );
+    call_from_c( AssignFunctor( &object ) );
+    call_from_c( AssignFunction( &Class::Static ) );
+    call_from_c( AssignMethod( AssignObject( &Class::method, object ) ) );
+    call_from_c( AssignFunction( &Function ) );
+    call_from_c( AssignLambda( &lambda ) );
+}

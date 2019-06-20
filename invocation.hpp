@@ -46,7 +46,7 @@ namespace invocation {
             interface; /**< Code pointer to the interface function. */
 
         Locational< const void >
-            location; /**< Data pointer to the invocable object location. */
+            locality; /**< Data pointer to the invocable object */
 
         /**
          * @brief 
@@ -62,7 +62,7 @@ namespace invocation {
             Parametric... 
                 arguments /**< Argument pack which is expanded for the invocation. */
         ) const {
-            return interface( location, arguments... );
+            return interface( locality, arguments... );
         }
 
     };
@@ -144,8 +144,8 @@ namespace invocation {
     ) {
         using Specific = const Locational< const Locational< Procedural > >;
         Specific
-            location = static_cast< Specific >(locality);
-        return Refer( Refer( location ).to ).to( arguments... );
+            procedure = static_cast< Specific >(locality);
+        return Refer( Refer( procedure ).to ).to( arguments... );
     }
 
     /**
@@ -221,7 +221,7 @@ namespace invocation {
                 Parametric... 
                     arguments 
             ) -> Resultant {
-                return invocation.interface( invocation.location, arguments... );
+                return invocation.interface( invocation.locality, arguments... );
             };
         return lambda;
     }
@@ -263,8 +263,8 @@ namespace invocation {
             object
     ) {
         const Methodic< ClassTypical, MethodLocational, Resultant, Parametric... >
-            location = {method, Locate( object ).at};
-        return location;
+            instance = {method, Locate( object ).at};
+        return instance;
     }
 
     /**
@@ -274,7 +274,7 @@ namespace invocation {
      *     Function Template
      *     -----------------
      *     Assigns an invocative instance which can later be used to invoke the 
-     *     procedure specified by location.  The location argument specifier
+     *     procedure specified by locality.  The locality argument specifier
      *     must have sufficient duration such that it exists when the invocation
      *     occurs.
      * @tparam Procedural
@@ -283,7 +283,7 @@ namespace invocation {
      *     Return type of the invocation.
      * @tparam ...Parametric
      *     Parameter pack which represents the parameter types of the invocation.
-     * @param[in] location
+     * @param[in] locality
      *     Reference to a pointer with suitable duration.
      * @return
      *     Invocative instance returned by value.
@@ -296,12 +296,12 @@ namespace invocation {
     static inline Invocative< Resultant, Parametric... >
     AssignInvokeProcedure(
         Referential< const Locational< Procedural > >
-            location
+            locality
     ) {
         static auto&
             Invoke = InvokeProcedure< Procedural, Resultant, Parametric... >;
         const Invocative< Resultant, Parametric... >
-            invocation = {Locate( Invoke ).at, Locate( location ).at};
+            invocation = {Locate( Invoke ).at, Locate( locality ).at};
         return invocation;
     }
 

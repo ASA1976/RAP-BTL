@@ -127,7 +127,7 @@ ScheduleSampleEvents(
 }
 
 static inline void
-ProcessEvents(
+ProcessSampleEvents(
     Referential< const Invocative< bool, unsigned > >
         process_event
 ) {
@@ -165,20 +165,20 @@ main() {
     static auto&
         AssignProcessEvent = AssignInvokeProcedure< ProcessEventTypical, bool, unsigned >;
     const Locational< PrintStringTypical >
-        print_string_location = Locate( print_string_lambda ).at;
+        print_string_locality = &print_string_lambda;
     const Locational< PrintNaturalTypical >
-        print_natural_location = Locate( print_natural_lambda ).at;
+        print_natural_locality = &print_natural_lambda;
     const Locational< RunFunctionTypical >
-        run_function_location = Locate( run_function_lambda ).at;
+        run_function_locality = &run_function_lambda;
     const Locational< ProcessEventTypical >
-        process_event_location = Locate( process_event_lambda ).at;
+        process_event_locality = &process_event_lambda;
     const Coordinate
         coordinator = {
-            AssignPrintString( print_string_location ),
-            AssignPrintNatural( print_natural_location ),
-            AssignRunFunction( run_function_location )
+            AssignPrintString( print_string_locality ),
+            AssignPrintNatural( print_natural_locality ),
+            AssignRunFunction( run_function_locality )
         };
     Initialize( event_queue );
     ScheduleSampleEvents( coordinator );
-    ProcessEvents( AssignProcessEvent( process_event_location ) );
+    ProcessSampleEvents( AssignProcessEvent( process_event_locality ) );
 }

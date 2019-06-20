@@ -42,13 +42,13 @@ namespace invocation {
         using Specific = const Locational< const Locational< Procedural > >;
         static auto&
             Invoke = InvokeProcedure< Procedural, Resultant, Parametric... >;
+        if (!locality)
+            throw locality
         Specific
-            location = static_cast< Specific >(locality);
-        if (!location)
-            throw location;
-        if (!Refer( location ).to)
-            throw Refer( location ).to;
-        return Invoke( location, arguments ... );
+            procedure = static_cast< Specific >(locality);
+        if (!Refer( procedure ).to)
+            throw Refer( procedure ).to;
+        return Invoke( procedure, arguments ... );
     }
 
     /**
@@ -58,7 +58,7 @@ namespace invocation {
      *     Function Template
      *     -----------------
      *     Invokes an object oriented non-static method. Throws an exception if
-     *     location itself is null or either of its members, method or object 
+     *     locality itself is null or either of its members, method or object 
      *     are null.
      * @tparam ClassTypical
      *     Qualified object oriented class type.
@@ -111,7 +111,7 @@ namespace invocation {
      *     Prepares a lambda expression which can later be used to invoke any
      *     invocation.  The invocative instance is captured by copy when 
      *     PrepareInvocation is called.  Throws an exception immediately if 
-     *     either of the interface or location members of the invocative 
+     *     either of the interface or locality members of the invocative 
      *     instance are null.
      * @tparam Resultant
      *     Return type of the invocation.
@@ -133,8 +133,8 @@ namespace invocation {
     ) {
         if (!invocation.interface)
             throw invocation.interface;
-        if (!invocation.location)
-            throw invocation.location;
+        if (!invocation.locality)
+            throw invocation.locality;
         return PrepareInvocation( invocation );
     }
 
@@ -178,8 +178,8 @@ namespace invocation {
         if (!method)
             throw method;
         const Methodic< ClassTypical, MethodLocational, Resultant, Parametric... >
-            location = {Locate( object ).at, method};
-        return location;
+            instance = {Locate( object ).at, method};
+        return instance;
     }
 
     /**
@@ -189,10 +189,10 @@ namespace invocation {
      *     Function Template
      *     -----------------
      *     Assigns an invocative instance which can later be used to invoke the 
-     *     procedure specified by location.  The location argument specifier
+     *     procedure specified by locality.  The locality argument specifier
      *     must have sufficient duration such that it exists when the invocation
-     *     occurs.  If the location provided is null, this version will throw 
-     *     the location argument.  The resulting interface function will throw
+     *     occurs.  If the locality provided is null, this version will throw 
+     *     the locality argument.  The resulting interface function will throw
      *     an exception if its provided pointers are null.
      * @tparam Procedural
      *     Procedural (function, lambda or functor) type.
@@ -200,7 +200,7 @@ namespace invocation {
      *     Return type of the invocation.
      * @tparam ...Parametric
      *     Parameter pack which represents the parameter types of the invocation.
-     * @param[in] location
+     * @param[in] locality
      *     Reference to a pointer with suitable duration.
      * @return
      *     Invocative instance returned by value.
@@ -213,14 +213,14 @@ namespace invocation {
     static inline Invocative< Resultant, Parametric... >
     AssignInvokeProcedureSafely(
         Referential< const Locational< Procedural > >
-            location
+            locality
     ) {
         static auto&
             Invoke = InvokeProcedureSafely< Procedural, Resultant, Parametric... >;
-        if (!location)
-            throw location;
+        if (!locality)
+            throw locality;
         const Invocative< Resultant, Parametric... >
-            invocation = {Locate( location ).at, Locate( Invoke ).at};
+            invocation = {Locate( locality ).at, Locate( Invoke ).at};
         return invocation;
     }
 
