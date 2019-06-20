@@ -50,14 +50,19 @@ Bind(
             unsigned
                 value
         ) -> void {
-            printf( "Bind::lambda[\"%s\"]( %u )\n", identifier, value );
+            printf( "Bind::lambda[" );
+            if (identifier)
+                printf( "\"%s\"", identifier );
+            else
+                printf( "null" );
+            printf( "]( %u )\n", value );
         };
     return lambda;
 }
 
 auto
-    LambdaA = Bind( "LambdaA" ),
-    LambdaB = Bind( "LambdaB" );
+    LambdaNull = Bind( 0 ),
+    LambdaNamed = Bind( "Named" );
 
 void
 Function( 
@@ -79,7 +84,7 @@ Demonstrate(
 
 int 
 main() {
-    using LambdaTypical = decltype(LambdaA);
+    using LambdaTypical = decltype(LambdaNull);
     using ObjectTypical = decltype(Object);
     using MethodLocational = decltype(&Class::method);
     static auto&
@@ -87,13 +92,13 @@ main() {
     static auto&
         WrapMethod = AbstractMethod< ObjectTypical, MethodLocational, Object, &Class::method, void, unsigned >;
     static auto&
-        WrapLambdaA = AbstractProcedure< LambdaTypical, LambdaA, void, unsigned >;
+        WrapLambdaNull = AbstractProcedure< LambdaTypical, LambdaNull, void, unsigned >;
     static auto&
-        WrapLambdaB = AbstractProcedure< LambdaTypical, LambdaB, void, unsigned >;
+        WrapLambdaNamed = AbstractProcedure< LambdaTypical, LambdaNamed, void, unsigned >;
     Demonstrate( WrapFunctor );
     Demonstrate( Class::Static );
     Demonstrate( WrapMethod );
-    Demonstrate( WrapLambdaA );
-    Demonstrate( WrapLambdaB );
+    Demonstrate( WrapLambdaNull );
+    Demonstrate( WrapLambdaNamed );
     Demonstrate( Function );
 }

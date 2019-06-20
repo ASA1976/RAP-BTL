@@ -78,7 +78,7 @@ DemonstrateContribution(
 }
 
 static inline void
-DemonstrateRation( void ) {
+DemonstrateRation() {
     using namespace ::ration::elevation;
     using namespace ::ration::contraction;
     using namespace ::ration::contribution;
@@ -105,7 +105,7 @@ DemonstrateRation( void ) {
 }
 
 static inline void
-DemonstrateJunction( void ) {
+DemonstrateJunction() {
     using namespace ::junction;
     using namespace ::junction::provision::elevation;
     using namespace ::junction::provision::contraction;

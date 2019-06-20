@@ -18,7 +18,7 @@ constexpr unsigned
     MaximumEvents = 127;
 
 using EventSchedular = Contractional< unsigned, MaximumEvents, Contextual< unsigned > >;
-using Demonstrative = void();
+using Demonstrative = Abstract< void >;
 
 constexpr auto&
     EventVisitor = WriteIncrementDirection< unsigned, MaximumEvents, Contextual< unsigned > >;
@@ -56,7 +56,7 @@ PrintString(
     using Specific = Locational< const Locational< const char > >;
     const Locational< const char >
         text = Refer( static_cast< Specific >(locality) ).to;
-    printf( "PrintString( '%s', %u )\n", text, identifier );
+    printf( "PrintString( \"%s\", %u )\n", text, identifier );
 }
 
 static void
@@ -91,12 +91,12 @@ RunFunction(
 }
 
 static void
-Function1( void ) {
+Function1() {
     printf( "Function1()" );
 }
 
 static void
-Function2( void ) {
+Function2() {
     printf( "Function2()" );
 }
 

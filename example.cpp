@@ -177,7 +177,7 @@ DisplayMappings(
 }
 
 static bool
-DemonstrateLocalization( void ) {
+DemonstrateLocalization() {
     using namespace ::localization;
     using namespace ::sortation;
     using namespace ::comparison;
@@ -207,7 +207,7 @@ DemonstrateLocalization( void ) {
 }
 
 static bool
-DemonstrateSegmentation( void ) {
+DemonstrateSegmentation() {
     using namespace ::segmentation;
     using namespace ::sortation;
     using namespace ::comparison;
@@ -237,7 +237,7 @@ DemonstrateSegmentation( void ) {
 }
 
 static bool
-DemonstrateOrdination( void ) {
+DemonstrateOrdination() {
     using namespace ::location;
     using namespace ::ordination;
     using namespace ::sortation;
@@ -269,7 +269,7 @@ DemonstrateOrdination( void ) {
 }
 
 static bool
-DemonstrateJunction( void ) {
+DemonstrateJunction() {
     using namespace ::junction::consecution;
     using namespace ::junction::selection;
     using namespace ::junction::collection;
