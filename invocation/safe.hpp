@@ -178,7 +178,7 @@ namespace invocation {
         if (!method)
             throw method;
         const Methodic< ClassTypical, MethodLocational, Resultant, Parametric... >
-            instance = {Locate( object ).at, method};
+            instance = {method, Locate( object ).at};
         return instance;
     }
 
@@ -220,7 +220,7 @@ namespace invocation {
         if (!locality)
             throw locality;
         const Invocative< Resultant, Parametric... >
-            invocation = {Locate( locality ).at, Locate( Invoke ).at};
+            invocation = {Locate( Invoke ).at, Locate( locality ).at};
         return invocation;
     }
 
@@ -263,7 +263,46 @@ namespace invocation {
         static auto&
             Invoke = InvokeMethodSafely< ClassTypical, MethodLocational, Resultant, Parametric... >;
         const Invocative< Resultant, Parametric... >
-            invocation = {Locate( instance ).at, Locate( Invoke ).at};
+            invocation = {Locate( Invoke ).at, Locate( instance ).at};
+        return invocation;
+    }
+
+    /**
+     * @brief 
+     *     Assigns a safe procedural invocative instance.
+     * @details
+     *     Function Template
+     *     -----------------
+     *     Assigns an invocative instance which can later be used to invoke the 
+     *     function specified by locality.  The locality argument specifier
+     *     must have sufficient duration such that it exists when the invocation
+     *     occurs.  If the locality provided is null, this version will throw 
+     *     the locality argument.  The resulting interface function will throw
+     *     an exception if its provided pointers are null.
+     * @tparam Resultant
+     *     Return type of the invocation.
+     * @tparam ...Parametric
+     *     Parameter pack which represents the parameter types of the invocation.
+     * @param[in] locality
+     *     Reference to a pointer with suitable duration.
+     * @return
+     *     Invocative instance returned by value.
+     */
+    template <
+        typename Resultant,
+        typename ...Parametric
+    >
+    static inline Invocative< Resultant, Parametric... >
+    AssignInvokeFunctionSafely(
+        Referential< const Locational< Abstract< Resultant, Parametric... > > >
+            locality
+    ) {
+        static auto&
+            Invoke = InvokeProcedureSafely< Abstract< Resultant, Parametric... >, Resultant, Parametric... >;
+        if (!locality)
+            throw locality;
+        const Invocative< Resultant, Parametric... >
+            invocation = {Locate( Invoke ).at, Locate( locality ).at};
         return invocation;
     }
 

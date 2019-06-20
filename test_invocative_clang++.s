@@ -107,20 +107,6 @@ _ZN10invocation15InvokeProcedureI3$_2vJEEET0_PKvDpT1_: # @"_ZN10invocation15Invo
 .Lfunc_end4:
 	.size	_ZN10invocation15InvokeProcedureI3$_2vJEEET0_PKvDpT1_, .Lfunc_end4-_ZN10invocation15InvokeProcedureI3$_2vJEEET0_PKvDpT1_
                                         # -- End function
-	.section	.text._ZN10invocation15InvokeProcedureIFvvEvJEEET0_PKvDpT1_,"axG",@progbits,_ZN10invocation15InvokeProcedureIFvvEvJEEET0_PKvDpT1_,comdat
-	.weak	_ZN10invocation15InvokeProcedureIFvvEvJEEET0_PKvDpT1_ # -- Begin function _ZN10invocation15InvokeProcedureIFvvEvJEEET0_PKvDpT1_
-	.p2align	4, 0x90
-	.type	_ZN10invocation15InvokeProcedureIFvvEvJEEET0_PKvDpT1_,@function
-_ZN10invocation15InvokeProcedureIFvvEvJEEET0_PKvDpT1_: # @_ZN10invocation15InvokeProcedureIFvvEvJEEET0_PKvDpT1_
-	.cfi_startproc
-# %bb.0:
-	movl	4(%esp), %eax
-	jmpl	*(%eax)                 # TAILCALL
-.Lfunc_end5:
-	.size	_ZN10invocation15InvokeProcedureIFvvEvJEEET0_PKvDpT1_, .Lfunc_end5-_ZN10invocation15InvokeProcedureIFvvEvJEEET0_PKvDpT1_
-	.cfi_endproc
-                                        # -- End function
-	.text
 	.p2align	4, 0x90         # -- Begin function _ZN10invocation12InvokeMethodI3$_1MS1_FvvEvJEEET1_PKvDpT2_
 	.type	_ZN10invocation12InvokeMethodI3$_1MS1_FvvEvJEEET1_PKvDpT2_,@function
 _ZN10invocation12InvokeMethodI3$_1MS1_FvvEvJEEET1_PKvDpT2_: # @"_ZN10invocation12InvokeMethodI3$_1MS1_FvvEvJEEET1_PKvDpT2_"
@@ -133,18 +119,31 @@ _ZN10invocation12InvokeMethodI3$_1MS1_FvvEvJEEET1_PKvDpT2_: # @"_ZN10invocation1
 	movl	(%edx), %eax
 	addl	4(%edx), %ecx
 	testb	$1, %al
-	je	.LBB6_2
+	je	.LBB5_2
 # %bb.1:
 	movl	(%ecx), %edx
 	movl	-1(%edx,%eax), %eax
-.LBB6_2:
+.LBB5_2:
 	movl	%ecx, (%esp)
 	calll	*%eax
 	addl	$12, %esp
 	.cfi_def_cfa_offset 4
 	retl
+.Lfunc_end5:
+	.size	_ZN10invocation12InvokeMethodI3$_1MS1_FvvEvJEEET1_PKvDpT2_, .Lfunc_end5-_ZN10invocation12InvokeMethodI3$_1MS1_FvvEvJEEET1_PKvDpT2_
+	.cfi_endproc
+                                        # -- End function
+	.section	.text._ZN10invocation15InvokeProcedureIFvvEvJEEET0_PKvDpT1_,"axG",@progbits,_ZN10invocation15InvokeProcedureIFvvEvJEEET0_PKvDpT1_,comdat
+	.weak	_ZN10invocation15InvokeProcedureIFvvEvJEEET0_PKvDpT1_ # -- Begin function _ZN10invocation15InvokeProcedureIFvvEvJEEET0_PKvDpT1_
+	.p2align	4, 0x90
+	.type	_ZN10invocation15InvokeProcedureIFvvEvJEEET0_PKvDpT1_,@function
+_ZN10invocation15InvokeProcedureIFvvEvJEEET0_PKvDpT1_: # @_ZN10invocation15InvokeProcedureIFvvEvJEEET0_PKvDpT1_
+	.cfi_startproc
+# %bb.0:
+	movl	4(%esp), %eax
+	jmpl	*(%eax)                 # TAILCALL
 .Lfunc_end6:
-	.size	_ZN10invocation12InvokeMethodI3$_1MS1_FvvEvJEEET1_PKvDpT2_, .Lfunc_end6-_ZN10invocation12InvokeMethodI3$_1MS1_FvvEvJEEET1_PKvDpT2_
+	.size	_ZN10invocation15InvokeProcedureIFvvEvJEEET0_PKvDpT1_, .Lfunc_end6-_ZN10invocation15InvokeProcedureIFvvEvJEEET0_PKvDpT1_
 	.cfi_endproc
                                         # -- End function
 	.type	.L.str,@object          # @.str
@@ -185,8 +184,8 @@ _ZN10invocation12InvokeMethodI3$_1MS1_FvvEvJEEET1_PKvDpT2_: # @"_ZN10invocation1
 	.addrsig_sym _ZN3$_13runEv
 	.addrsig_sym _ZN10invocation15InvokeProcedureI3$_0vJEEET0_PKvDpT1_
 	.addrsig_sym _ZN10invocation15InvokeProcedureI3$_2vJEEET0_PKvDpT1_
-	.addrsig_sym _ZN10invocation15InvokeProcedureIFvvEvJEEET0_PKvDpT1_
 	.addrsig_sym _ZN10invocation12InvokeMethodI3$_1MS1_FvvEvJEEET1_PKvDpT2_
+	.addrsig_sym _ZN10invocation15InvokeProcedureIFvvEvJEEET0_PKvDpT1_
 	.addrsig_sym Test1
 	.addrsig_sym Test2
 	.addrsig_sym Test4

@@ -58,23 +58,18 @@ Demonstrate(
 
 int 
 main() {
-    const Class
-        object;
-    const char
-        letter = 'A';
-    auto
-        lambda = [letter]( 
+    static auto
+        lambda = []( 
             unsigned 
                 value 
         ) -> void {
-            printf( "main::lambda['%c']( %u )\n", letter, value );
+            printf( "main::lambda( %u )\n", value );
         };
+    const Class
+        object;
     using ObjectTypical = decltype(object);
     using MethodLocational = decltype(&Class::method);
-    using FunctionTypical = decltype(Function);
     using LambdaTypical = decltype(lambda);
-    static auto&
-        AssignFunction = AssignInvokeProcedure< FunctionTypical, void, unsigned >;
     static auto&
         AssignLambda = AssignInvokeProcedure< LambdaTypical, void, unsigned >;
     static auto&
@@ -84,8 +79,8 @@ main() {
     static auto&
         AssignObject = AssignClassMethod< ObjectTypical, MethodLocational, void, unsigned >;
     Demonstrate( AssignFunctor( &object ) );
-    Demonstrate( AssignFunction( &Class::Static ) );
+    Demonstrate( AssignInvokeFunction( &Class::Static ) );
     Demonstrate( AssignMethod( AssignObject( &Class::method, object ) ) );
-    Demonstrate( AssignFunction( &Function ) );
+    Demonstrate( AssignInvokeFunction( &Function ) );
     Demonstrate( AssignLambda( &lambda ) );
 }

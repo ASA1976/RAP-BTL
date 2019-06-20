@@ -346,6 +346,42 @@ namespace invocation {
         return invocation;
     }
 
+    /**
+     * @brief 
+     *     Assigns an invocative instance for functions (only) which can deduce
+     *     the template arguments.
+     * @details
+     *     Function Template
+     *     -----------------
+     *     Assigns an invocative instance which can later be used to invoke the 
+     *     function specified by locality.  The locality argument specifier
+     *     must have sufficient duration such that it exists when the invocation
+     *     occurs.
+     * @tparam Resultant
+     *     Return type of the invocation.
+     * @tparam ...Parametric
+     *     Parameter pack which represents the parameter types of the invocation.
+     * @param[in] locality
+     *     Reference to a pointer with suitable duration.
+     * @return
+     *     Invocative instance returned by value.
+     */
+    template <
+        typename Resultant,
+        typename ...Parametric
+    >
+    static inline Invocative< Resultant, Parametric... >
+    AssignInvokeFunction(
+        Referential< const Locational< Abstract< Resultant, Parametric... > > >
+            locality
+    ) {
+        static auto&
+            Invoke = InvokeProcedure< Abstract< Resultant, Parametric... >, Resultant, Parametric... >;
+        const Invocative< Resultant, Parametric... >
+            invocation = {Locate( Invoke ).at, Locate( locality ).at};
+        return invocation;
+    }
+
 }
 
 #endif
