@@ -11,9 +11,10 @@
 using namespace ::invocation;
 
 extern "C" Abstract< void, const Invocative< void, unsigned > >
-    call_from_c;
+call_from_c;
+
 extern "C" Abstract< void, unsigned >
-    c_function;
+c_function;
 
 struct Class {
 

@@ -1,0 +1,39 @@
+ /*
+    © 2019 Aaron Sami Abassi
+    Licensed under the Academic Free License version 3.0
+
+    INVOCATIVE_STRUCT: Struct name is required if no typedef name is defined
+    INVOCATIVE_TYPEDEF: Typedef name is required if no struct name is defined
+    INVOCATIVE_RESULTANT: Always required return type, void must be explicit
+    INVOCATIVE_PARAMETRIC: Parameter type list, do not define for 0 parameters
+*/
+#if !defined( INVOCATIVE_STRUCT ) && !defined( INVOCATIVE_TYPEDEF )
+#error !defined( INVOCATIVE_STRUCT ) && !defined( INVOCATIVE_TYPEDEF )
+#endif
+#if !defined( INVOCATIVE_RESULTANT )
+#error !defined( INVOCATIVE_RESULTANT )
+#endif
+#if defined( INVOCATIVE_TYPEDEF )
+typedef
+#endif
+struct
+#if defined( INVOCATIVE_STRUCT )
+INVOCATIVE_STRUCT
+#undef INVOCATIVE_STRUCT
+#endif
+{
+    INVOCATIVE_RESULTANT (*interface)( 
+        const void* const
+#if defined( INVOCATIVE_PARAMETRIC )
+        , INVOCATIVE_PARAMETRIC 
+#undef INVOCATIVE_PARAMETRIC
+#endif
+    );
+    const void (*locality);
+}
+#if defined( INVOCATIVE_TYPEDEF )
+INVOCATIVE_TYPEDEF
+#undef INVOCATIVE_TYPEDEF
+#endif
+;
+#undef INVOCATIVE_RESULTANT

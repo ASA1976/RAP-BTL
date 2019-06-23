@@ -1,8 +1,6 @@
-// © 2019 Aaron Sami Abassi
-// Licensed under the Academic Free License version 3.0
-#include <stdio.h>
-
-/* 
+/*
+    © 2019 Aaron Sami Abassi
+    Licensed under the Academic Free License version 3.0
 
     Instructions:
 
@@ -17,13 +15,11 @@
     ./elope
 
 */
-
-struct invocative_s {
-
-    void (*interface)( const void* const, unsigned );
-    const void* locality;
-
-};
+#define INVOCATIVE_STRUCT invocative_s
+#define INVOCATIVE_RESULTANT void
+#define INVOCATIVE_PARAMETRIC unsigned
+#include "invocative.def"
+#include <stdio.h>
 
 void call_from_c( const struct invocative_s invocation )
 {
