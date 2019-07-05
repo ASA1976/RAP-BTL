@@ -122,35 +122,50 @@ for the actual call.
 
 ### Debugger Output Observations
 
-We shall examine the number of overall instructions executed, the number of 
-call return addresses pushed and popped on the stack, any instructions executed 
-beyond the object images and any heap memory management requests.  It should be
-noted that the debugger command issued was 'stepi' except when puts, the new
-operator and the delete operator executed where the debuger command issues was
-'finish' once, then 'stepi' resumed.
+We shall examine the number of overall instructions executed within the object
+images, the number of call return addresses pushed and popped on the stack from
+within the object images, any instructions executed beyond the object images and
+any heap memory management requests.  It should be noted that the debugger 
+command issued was 'stepi' except when puts, the new operator and the delete 
+operator executed where the debuger command issues was 'finish' once, then 
+'stepi' resumed.
 
 #### std::function Debugger Output
 
 The
 ['test_stdfunction_clang++.txt'](http://github.com/ASA1976/RAP-BTL/blob/master/test_stdfunction_clang%2B%2B.txt)
-file indicates that there were a total of 201 instructions executed, 22 call 
-return addresses pushed and popped on the stack, the new and delete operators
-were required and 2 heap allocations and deallocations each were requested.  
+file indicates that there were a total of 201 instructions executed within the
+object images, 22 call return addresses pushed and popped on the stack from
+within the object image code, the new and delete operators were required and 2 
+heap allocations and deallocations each were requested.  
 
 #### ::invocation Debugger Output
 
 The
 ['test_invocative_clang++.txt'](http://github.com/ASA1976/RAP-BTL/blob/master/test_invocative_clang%2B%2B.txt)
-file indicates that there were a total of 101 instructions executed, 17 call
-return addresses pushed and popped on the stack, that no other code was required
-and no heap memory requests were made.
+file indicates that there were a total of 101 instructions executed within the
+object images, 17 call return addresses pushed and popped on the stack from 
+within the object image code, that no other code was required and no heap memory 
+use was requested.
 
 ### Conclusions
 
 Based on the list of observations it is clear that the ::invocation 
 implemetation does not require any heap implementation or run-time libraries.  
 It is also clear that the ::invocation implementation produces much more concise
-instruction code on the tested platform.  Because ::invocation is portable to
-all C++ environments without modification and due to it's design, it is unlikely
-that any std::function implementation will be capable of parallel performance.
+instruction code on the tested platform.  The difference in instructions 
+executed at run-time within the object images is very nearly half, the 
+difference in object image code is less than a third and the difference in 
+object image data is is just above one tenth for each implementation's 
+compilation unit all favouring ::invocation over std::function + std::bind
+for systems programming concerns.
+
+### Footnote
+
+Because ::invocation is portable to all C++ compiler supported architecture and 
+platform environments without modification and due to it's design, it is 
+unlikely that any *current* std::function implementation will be capable of 
+parallel performance.  However std::function should continue to be used by
+general application software development, as the improper use of ::invocation
+can lead to serious problems if deployed in the field.
 
