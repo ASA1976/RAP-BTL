@@ -36,11 +36,10 @@ the test_stdfunction compilation unit and the test_invocative compilation unit.
 
 #### Test Conditions Header
 
-The 4 test cases are included by each of the implementation's compilation units
-as the included header
+The
 ['test.conditions'](http://github.com/ASA1976/RAP-BTL/blob/master/test.conditions)
-file.  The test cases are not intended to be included by the test_extern's 
-compilation unit.
+header file contains the 4 test cases which are included by the test_stdfunction 
+and test_invocative compilation units.
 
 #### External Linkage Test Source
 
