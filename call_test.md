@@ -1,6 +1,7 @@
 # Relational Association Programming - Basic Template Library
 
 Note: This is a **draft** version.
+      Last edited on July 6th 2019.
 
 ## std::function & ::invocation Performance Analysis
 
@@ -18,8 +19,9 @@ object to be called from a given point in code matching a set of parameter and
 return types.  For the purposes of general systems programming, it is imperative
 that such an invocation system be capable of invoking the objects in a 
 reasonable number of instructions and call stack frame layers, as well as 
-ideally avoiding the need for a heap memory for micro-controller environments 
-and other embedded systems where heap memory implementations may be impractical.
+ideally avoiding the need for a heap memory where a heap implementation may be 
+impractical or impossible, as in situations where there is not enough available 
+memory available for a practical heap implementation.
 
 ### Test Source Code & Header
 
@@ -149,22 +151,21 @@ use was requested.
 
 ### Conclusions
 
-Based on the list of observations it is clear that the ::invocation 
-implemetation does not require any heap implementation or run-time libraries.  
-It is also clear that the ::invocation implementation produces much more concise
-instruction code on the tested platform.  The difference in instructions 
-executed at run-time within the object images is very nearly half, the 
-difference in object image code is less than a third and the difference in 
-object image data is is just above one tenth for each implementation's 
-compilation unit all favouring ::invocation over std::function + std::bind
-for systems programming concerns.
+Based on the noted observations it is clear that the ::invocation implemetation 
+did not require any heap implementation or run-time libraries.  It is also clear
+that the ::invocation implementation produces much more concise instruction code 
+on the tested platform.  The difference in instructions executed at run-time 
+within the object images is approximately half, the difference in object image 
+code approximately one third and the difference in object image data is 
+approximately one tenth all favouring ::invocation over std::function + 
+std::bind for systems programming concerns.
 
 ### Footnote
 
 Because ::invocation is portable to all C++ compiler supported architecture and 
 platform environments without modification and due to it's design, it is 
 unlikely that any *current* std::function implementation will be capable of 
-parallel performance.  However std::function should continue to be used by
+parallel performance.  However std::function should continue to be used in
 general application software development, as the improper use of ::invocation
 can lead to serious problems if deployed in the field.
 
