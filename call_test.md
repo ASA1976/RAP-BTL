@@ -89,7 +89,7 @@ The
 ['test_extern_clang++.s'](http://github.com/ASA1976/RAP-BTL/blob/master/test_extern_clang%2B%2B.s)
 file contains a total of 14 Assembly mnemonic statements and 0 bytes of defined
 image data space, where both the std::function and Invocative versions of the 
-TestExtern function overload ontain 7 Assembly mnemonic statements each.  The 
+TestExtern function overload contain 7 Assembly mnemonic statements each.  The 
 TestExtern function overload for the std::function implementation uses an 
 indirect jump instruction to invoke the handler.  The TestExtern function 
 overload for the ::invocation implementation uses a call instruction to invoke 
@@ -133,12 +133,12 @@ for the actual call.
 ### Debugger Output Observations
 
 We shall examine the number of overall instructions executed within the object
-images, the number of call return addresses pushed and popped on the stack from
-within the object images, any instructions executed beyond the object images and
-any heap memory management requests.  It should be noted that the debugger 
-commands issued were 'start', then 'stepi' repeated except when puts, the new 
-operator and the delete operator executed where the debugger command issued was 
-'finish' once, then 'stepi' resumed until the last command which was 'finish'.
+images, the number of call return addresses pushed on to the stack from within 
+the object images, any instructions executed beyond the object images and any 
+heap memory management requests.  It should be noted that the debugger commands 
+issued were 'start', then 'stepi' repeated except when puts, the new operator 
+and the delete operator executed where the debugger command issued was 'finish'
+once, then 'stepi' resumed until the last command which was 'finish'.
 
 #### std::function Debugger Output
 
@@ -148,10 +148,10 @@ test_stdfunction.cpp' and the debugger started using 'gdb ./test'.
 The
 ['test_stdfunction_clang++.txt'](http://github.com/ASA1976/RAP-BTL/blob/master/test_stdfunction_clang%2B%2B.txt)
 file indicates that there were a total of 201 instructions executed within the
-object images, 22 call return addresses pushed and popped on the stack from
-within the object image code (when incorporating the corresponding Assembly 
-output observations), the new and delete run operators were called and 2 heap 
-memory allocations and deallocations each were requested.
+object images, 22 call return addresses were pushed on to the stack from within 
+the object image code (when incorporating the corresponding Assembly output 
+observations), the new and delete run operators were called and 2 heap memory 
+allocations and deallocations each were requested.
 
 #### ::invocation Debugger Output
 
@@ -161,9 +161,9 @@ test_invocative.cpp' and the debugger started using 'gdb ./test'.
 The
 ['test_invocative_clang++.txt'](http://github.com/ASA1976/RAP-BTL/blob/master/test_invocative_clang%2B%2B.txt)
 file indicates that there were a total of 101 instructions executed within the
-object images, 17 call return addresses pushed and popped on the stack from 
-within the object image code (when incorporating the corresponding Assembly 
-output observations), that no other code was called and no heap memory use was 
+object images, 17 call return addresses were pushed on to the stack from within 
+the object image code (when incorporating the corresponding Assembly output 
+observations), that no other code was called and no heap memory use was 
 requested.
 
 ### Conclusions
