@@ -134,7 +134,7 @@ for the actual call.
 
 We shall examine the number of overall instructions executed within the object
 images, the number of call return addresses pushed on to the stack from within 
-the object images, any instructions executed beyond the object images and any 
+the object images, note instructions executed beyond the object images and note 
 heap memory management requests.  It should be noted that the debugger commands 
 issued were 'start', then 'stepi' repeated except when puts, the new operator 
 and the delete operator executed where the debugger command issued was 'finish'
