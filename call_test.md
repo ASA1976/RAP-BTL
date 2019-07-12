@@ -78,10 +78,10 @@ This compilation unit was compiled to Assembly source output using
 
 ### Assembly Output Observations
 
-We shall examine the size of the resulting compiler object image and the 
-instruction pointer paths through the object images in the emitted Assembly 
-source code in order to draw observations about the number call stack frame 
-layers used in the emitted code.
+We shall examine the size of the resulting compiler object images and the flow 
+of control through the object images in the emitted Assembly source code in 
+order to draw observations about the number call stack frame layers used in the 
+emitted code.
 
 #### test_extern Assembly Code
 
