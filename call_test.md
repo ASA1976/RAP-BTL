@@ -1,7 +1,7 @@
 # Relational Association Programming - Basic Template Library
 
 Note: This is a **draft** version.
-      Last edited on July 6th 2019.
+      Last edited on July 11th 2019.
 
 ## std::function & ::invocation Performance Analysis
 
@@ -14,25 +14,25 @@ monolithic software systems programming.
 
 ### Preamble
 
-The std::function + std::bind and ::invocation templates allow any invocable C++
-object to be called from a given point in code matching a set of parameter and 
-return types.  For the purposes of general systems programming, it is imperative
-that such an invocation system be capable of invoking the objects in a 
-reasonable number of instructions and call stack frame layers, as well as 
+The std::function + std::bind and ::invocation templates allow the invocation of
+any C++ object to be called from a given point in code matching a set of 
+parameter and return types.  For the purposes of general systems programming, it 
+is imperative that such an invocation system be capable of invoking the objects 
+in a reasonable number of instructions and call stack frame layers, as well as 
 ideally avoiding the need for a heap memory where a heap implementation may be 
-impractical or impossible, as in situations where there is not enough available 
+impractical or impossible, as in situations where there is not enough
 memory available for a practical heap implementation.
 
 ### Test Source Code & Header
 
-For the test we shall pass to a statically linked function StaticTest and to an 
-externally linked function ExternTest, a constant reference to each 
+For the test we shall pass to a statically linked function TestStatic and to an 
+externally linked function TestExtern, a constant reference to each 
 implementation's invocation object.  There shall be 4 test cases, one functor
 (call operator overload), one lambda, one function and one method (member 
 function) shall each be represented using the implementation's invocation object 
-solution.  For each of the test cases, the StaticTest function is called once 
+solution.  For each of the test cases, the TestStatic function is called once 
 respective of the provided order.  Then for each of the test cases, the 
-ExternTest function is called once also respective of the provided order.  The 
+TestExtern function is called once, also respective of the provided order.  The 
 emitted code shall be divided into 3 parts, the test_extern compilation unit, 
 the test_stdfunction compilation unit and the test_invocative compilation unit.
 
@@ -51,6 +51,9 @@ source code contains 2 overloads of the TestExtern function which each accept
 a single parameteric constant reference argument to an implementation's 
 invocation object and simply invoke it.
 
+This compilation unit was compiled to Assembly source output using 
+'clang++ -O -S test_extern.cpp'.
+
 #### std::function Source
 
 The 
@@ -59,6 +62,9 @@ source code defines it's version of the TestStatic function, declares it's
 version of TestExtern for external linkage to the test_extern compilation unit
 and defines a main function which calls the 8 tests per the order state above.
 
+This compilation unit was compiled to Assembly source output using
+'clang++ -O -S test_stdfunction.cpp'.
+
 #### ::invocation Source
 
 The
@@ -66,6 +72,9 @@ The
 source code defines it's version of the TestStatic function, declares it's
 version of TestExtern for external linkage to the test_extern compilation unit
 and defines a main function which calls the 8 tests per the order stated above.
+
+This compilation unit was compiled to Assembly source output using
+'clang++ -O -S test_invocative.cpp'.
 
 ### Assembly Output Observations
 
@@ -127,34 +136,42 @@ We shall examine the number of overall instructions executed within the object
 images, the number of call return addresses pushed and popped on the stack from
 within the object images, any instructions executed beyond the object images and
 any heap memory management requests.  It should be noted that the debugger 
-command issued was 'stepi' except when puts, the new operator and the delete 
-operator executed where the debuger command issues was 'finish' once, then 
-'stepi' resumed.
+commands issued were 'start', then 'stepi' repeated except when puts, the new 
+operator and the delete operator executed where the debugger command issued was 
+'finish' once, then 'stepi' resumed until the last command which was 'finish'.
 
 #### std::function Debugger Output
+
+This compilation unit was compiled using 'clang++ -O -o test test_extern.cpp 
+test_stdfunction.cpp' and the debugger started using 'gdb ./test'.
 
 The
 ['test_stdfunction_clang++.txt'](http://github.com/ASA1976/RAP-BTL/blob/master/test_stdfunction_clang%2B%2B.txt)
 file indicates that there were a total of 201 instructions executed within the
 object images, 22 call return addresses pushed and popped on the stack from
-within the object image code, the new and delete operators were required and 2 
-heap allocations and deallocations each were requested.  
+within the object image code (when incorporating the corresponding Assembly 
+output observations), the new and delete run operators were called and 2 heap 
+memory allocations and deallocations each were requested.
 
 #### ::invocation Debugger Output
+
+This compilation unit was compiled using 'clang++ -O -o test test_extern.cpp 
+test_invocative.cpp' and the debugger started using 'gdb ./test'.
 
 The
 ['test_invocative_clang++.txt'](http://github.com/ASA1976/RAP-BTL/blob/master/test_invocative_clang%2B%2B.txt)
 file indicates that there were a total of 101 instructions executed within the
 object images, 17 call return addresses pushed and popped on the stack from 
-within the object image code, that no other code was required and no heap memory 
-use was requested.
+within the object image code (when incorporating the corresponding Assembly 
+output observations), that no other code was called and no heap memory use was 
+requested.
 
 ### Conclusions
 
 Based on the noted observations it is clear that the ::invocation implemetation 
 did not require any heap implementation or run-time libraries.  It is also clear
 that the ::invocation implementation produces much more concise instruction code 
-on the tested platform.  The difference in instructions executed at run-time 
+on the tested architecture.  The difference in instructions executed at run-time 
 within the object images is approximately half, the difference in object image 
 code approximately one third and the difference in object image data is 
 approximately one tenth all favouring ::invocation over std::function + 
@@ -167,5 +184,10 @@ platform environments without modification and due to it's design, it is
 unlikely that any *current* std::function implementation will be capable of 
 parallel performance.  However std::function should continue to be used in
 general application software development, as the improper use of ::invocation
-can lead to serious problems if deployed in the field.
+can lead to potentially serious problems if deployed in the field.  
+Respecting the duration requirements of **all** pointer spaces used in the
+::invocation system is required in order to prevent stale memory references
+from being assigned to the locality member of the Invocative type template by
+the Assign... function templates, which could potentially compromise system 
+integrity.
 
