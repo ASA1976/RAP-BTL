@@ -2,6 +2,7 @@
 #### Relational Association Programming - Basic Template Library
 
 © 2019 Aaron Sami Abassi
+
 Licensed under the Academic Free License version 3.0
 
 ## Introduction
