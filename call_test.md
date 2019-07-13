@@ -1,4 +1,3 @@
-
 # RAP-BTL
 ## Relational Association Programming - Basic Template Library
 
