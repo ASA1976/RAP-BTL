@@ -1,9 +1,11 @@
-# Relational Association Programming - Basic Template Library
+
+# RAP-BTL
+## Relational Association Programming - Basic Template Library
 
 Note: This is a **draft** version.
       Last edited on July 11th 2019.
 
-## std::function & ::invocation Performance Analysis
+## Performance Analysis - std::function & ::invocation
 
 Using the Assembly output from the LLVM clang++ version 7.0.1 compiler and 
 output from The GNU Project Debugger version 8.1.1 on a 32-bit i686 Linux 
@@ -54,7 +56,7 @@ invocation object and simply invoke it.
 This compilation unit was compiled to Assembly source output using 
 'clang++ -O -S test_extern.cpp'.
 
-#### std::function Source
+#### Source - std::function
 
 The 
 ['test_stdfunction.cpp'](http://github.com/ASA1976/RAP-BTL/blob/master/test_stdfunction.cpp)
@@ -65,7 +67,7 @@ and defines a main function which calls the 8 tests per the order state above.
 This compilation unit was compiled to Assembly source output using
 'clang++ -O -S test_stdfunction.cpp'.
 
-#### ::invocation Source
+#### Source - ::invocation
 
 The
 ['test_invocative.cpp'](http://github.com/ASA1976/RAP-BTL/blob/master/test_invocative.cpp) 
@@ -83,7 +85,7 @@ of control through the object images in the emitted Assembly source code in
 order to draw observations about the number call stack frame layers used in the 
 emitted code.
 
-#### test_extern Assembly Code
+#### Assembly Code - test_extern
 
 The
 ['test_extern_clang++.s'](http://github.com/ASA1976/RAP-BTL/blob/master/test_extern_clang%2B%2B.s)
@@ -95,7 +97,7 @@ indirect jump instruction to invoke the handler.  The TestExtern function
 overload for the ::invocation implementation uses a call instruction to invoke 
 the interface function. 
 
-#### std::function Assembly Code
+#### Assembly Code - std::function
 
 The
 ['test_stdfunction_clang++.s'](http://github.com/ASA1976/RAP-BTL/blob/master/test_stdfunction_clang%2B%2B.s)
@@ -113,7 +115,7 @@ stack frame layers for the actual call.  In the case of Test4, the handler calls
 the member function which returns to the handler which in turn returns to main, 
 creating 1 stack frame layer for the actual call.
 
-#### ::invocation Assembly Code
+#### Assembly Code - ::invocation
 
 The
 ['test_invocative_clang++.s'](http://github.com/ASA1976/RAP-BTL/blob/master/test_invocative_clang%2B%2B.s)
@@ -140,7 +142,7 @@ issued were 'start', then 'stepi' repeated except when puts, the new operator
 and the delete operator executed where the debugger command issued was 'finish'
 once, then 'stepi' resumed until the last command which was 'finish'.
 
-#### std::function Debugger Output
+#### Debugger Output - std::function
 
 This compilation unit was compiled using 'clang++ -O -o test test_extern.cpp 
 test_stdfunction.cpp' and the debugger started using 'gdb ./test'.
@@ -153,7 +155,7 @@ the object image code (when incorporating the corresponding Assembly output
 observations), the new and delete run operators were called and 2 heap memory 
 allocations and deallocations each were requested.
 
-#### ::invocation Debugger Output
+#### Debugger Output - ::invocation
 
 This compilation unit was compiled using 'clang++ -O -o test test_extern.cpp 
 test_invocative.cpp' and the debugger started using 'gdb ./test'.
