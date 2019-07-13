@@ -1,6 +1,9 @@
 # RAP-BTL
 #### Relational Association Programming - Basic Template Library
 
+© 2019 Aaron Sami Abassi
+Licensed under the Academic Free License version 3.0
+
 ## Introduction
 
 This template library is a proving ground for a type strict C++ (2014) dialect 
