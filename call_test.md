@@ -2,7 +2,6 @@
 #### Relational Association Programming - Basic Template Library
 
 Note: This is a **draft** version.
-      Last edited on July 11th 2019.
 
 ## Performance Analysis - std::function & ::invocation
 
