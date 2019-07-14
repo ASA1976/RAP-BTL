@@ -183,7 +183,7 @@ std::bind for systems programming concerns.  The std::function + std::bind
 implementation also contains many conditional jump branches through a larger 
 code base.  The ::invocation implementation does not necessarily produce such 
 conditional branching and also produces more compact instruction sequences, 
-which is far more instruction cache friendly on most if not all architectures.
+which is far more instruction cache friendly.
 
 ### Footnote
 
