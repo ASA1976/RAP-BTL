@@ -175,15 +175,15 @@ requested.
 Based on the noted observations it is clear that the ::invocation implemetation 
 did not require any heap implementation or run-time libraries.  It is also clear
 that the ::invocation implementation produces much more concise instruction code 
-on the tested architecture.  The difference in instructions executed at run-time 
-within the object images is approximately half, the difference in object image 
-code approximately one third and the difference in object image data is 
-approximately one tenth all favouring ::invocation over std::function + 
-std::bind for systems programming concerns.  The std::function + std::bind
-implementation also contains many conditional jump branches through a larger 
-code base.  The ::invocation implementation does not necessarily produce such 
-conditional branching and also produces more compact instruction sequences, 
-which is far more instruction cache friendly.
+on the tested architecture.  The difference in number of instructions executed 
+at run-time within the object images is approximately half, the difference in 
+emitted object image code approximately one third and the difference in emitted
+object image data is approximately one tenth all favouring ::invocation over 
+std::function + std::bind for systems programming concerns.  The std::function +
+std::bind implementation instruction code also contains many conditional jump 
+branches through a larger resulting code base which will strain instruction 
+cache compared to the smaller, more sequential instruction code emitted by the 
+::invocation implementation.
 
 ### Footnote
 
