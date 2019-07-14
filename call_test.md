@@ -179,7 +179,11 @@ on the tested architecture.  The difference in instructions executed at run-time
 within the object images is approximately half, the difference in object image 
 code approximately one third and the difference in object image data is 
 approximately one tenth all favouring ::invocation over std::function + 
-std::bind for systems programming concerns.
+std::bind for systems programming concerns.  The std::function + std::bind
+implementation also contains many conditional jump branches through a larger 
+code base.  The ::invocation implementation does not necessarily produce such 
+conditional branching and also produces more compact instruction sequences, 
+which is far more instruction cache friendly on most if not all architectures.
 
 ### Footnote
 
