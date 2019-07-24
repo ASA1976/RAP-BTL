@@ -1,14 +1,16 @@
 // © 2019 Aaron Sami Abassi
 // Licensed under the Academic Free License version 3.0
-// #define RAPBTL_NO_STD_CPLUSPLUS 1
+// #define RAPBTL_NO_STD_CPLUSPLUS
 #include "segmentation.hpp"
 #include "sortation.hpp"
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
 #include <cstdio>
 #include <cstring>
 #else
+extern "C" {
 #include <stdio.h>
 #include <string.h>
+}
 #endif
 
 using namespace ::location;

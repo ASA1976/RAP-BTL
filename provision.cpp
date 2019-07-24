@@ -1,6 +1,6 @@
 // © 2019 Aaron Sami Abassi
 // Licensed under the Academic Free License version 3.0
-// #define RAPBTL_NO_STD_CPLUSPLUS 1
+// #define RAPBTL_NO_STD_CPLUSPLUS
 #include "allocation/alignment.hpp"
 #include "ration/elevation.hpp"
 #include "ration/contraction.hpp"
@@ -11,7 +11,9 @@
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
 #include <cstdio>
 #else
+extern "C" {
 #include <stdio.h>
+}
 #endif
 
 using namespace ::traction;

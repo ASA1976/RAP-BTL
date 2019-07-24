@@ -9,7 +9,9 @@
 #include <cstdlib>
 #else
 // Requires aligned_alloc From C11
+extern "C" {
 #include <stdlib.h>
+}
 #endif
 #else
 // Requires _aligned_malloc From MSC CRT

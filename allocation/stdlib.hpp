@@ -6,7 +6,9 @@
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
 #include <cstdlib>
 #else
+extern "C" {
 #include <stdlib.h>
+}
 #endif
 
 namespace allocation {

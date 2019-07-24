@@ -1,11 +1,13 @@
 // © 2019 Aaron Sami Abassi
 // Licensed under the Academic Free License version 3.0
-// #define RAPBTL_NO_STD_CPLUSPLUS 1
+// #define RAPBTL_NO_STD_CPLUSPLUS
 #include "junction/collection.hpp"
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
 #include <cstdio>
 #else
+extern "C" {
 #include <stdio.h>
+}
 #endif
 
 using namespace ::location;
