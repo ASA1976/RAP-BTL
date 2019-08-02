@@ -26,11 +26,7 @@ namespace junction {
 
             template <
                 typename Natural,
-                Natural
-                    Maximum,
                 typename Elemental,
-                Referential< const DefaultAllocative< SinglyNodal< Elemental > > >
-                    Allocator,
                 const bool
                     Safety
             >
@@ -48,32 +44,25 @@ namespace junction {
                     "Natural:  Unsigned integer type required"
                 );
 #endif
-                if (Safety && list.count >= Maximum)
+                Locational< SinglyNodal< Elemental > >
+                    node;
+                node = Reclaim( list );
+                if (Safety && !node)
                     return false;
-                position.at = Reclaim( list );
-                if (!position.at) {
-                    Allocator.claim( position.at );
-                    if (!position.at)
-                        return false;
-                    list.total++;
-                }
-                UnsetNext( position.at );
+                UnsetNext( node );
                 if (list.last)
-                    SetNext( list.last, position.at );
+                    SetNext( list.last, node );
                 else
-                    list.first = position.at;
-                list.last = position.at;
+                    list.first = node;
+                list.last = node;
                 list.count++;
+                position.at = node;
                 return true;
             }
 
             template <
                 typename Natural,
-                Natural
-                    Maximum,
                 typename Elemental,
-                Referential< const DefaultAllocative< DoublyNodal< Elemental > > >
-                    Allocator,
                 const bool
                     Safety
             >
@@ -91,23 +80,20 @@ namespace junction {
                     "Natural:  Unsigned integer type required"
                 );
 #endif
-                if (Safety && list.count >= Maximum)
+                Locational< DoublyNodal< Elemental > >
+                    node;
+                node = Reclaim( list );
+                if (Safety && !node)
                     return false;
-                position.at = Reclaim( list );
-                if (!position.at) {
-                    Allocator.claim( position.at );
-                    if (!position.at)
-                        return false;
-                    list.total++;
-                }
-                UnsetNext( position.at );
-                SetPrevious( position.at, list.last );
+                UnsetNext( node );
+                SetPrevious( node, list.last );
                 if (list.last)
-                    SetNext( list.last, position.at );
+                    SetNext( list.last, node );
                 else
-                    list.first = position.at;
-                list.last = position.at;
+                    list.first = node;
+                list.last = node;
                 list.count++;
+                position.at = node;
                 return true;
             }
 
@@ -137,34 +123,26 @@ namespace junction {
 
             template <
                 typename Natural,
-                Natural
-                    Maximum,
-                typename Elemental,
-                Referential< const DefaultAllocative< SinglyNodal< Elemental > > >
-                    Allocator
+                typename Elemental
             >
             constexpr Tributary< SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, Natural >
                 SingleContributor = {
-                    Survey< SinglyLinked< Elemental >, Natural, Maximum, Elemental >,
+                    Survey< SinglyLinked< Elemental >, Natural, Elemental >,
                     Account< SinglyLinked< Elemental >, Natural, Elemental >,
-                    Distribute< Natural, Maximum, Elemental, Allocator, false >,
+                    Distribute< Natural, Elemental, false >,
                     Retribute< SinglyLinked< Elemental >, Natural, Elemental, Concede< Natural, Elemental > >,
                     RemoveAll< SinglyLinked< Elemental >, Natural, Elemental >
                 };
 
             template <
                 typename Natural,
-                Natural
-                    Maximum,
-                typename Elemental,
-                Referential< const DefaultAllocative< DoublyNodal< Elemental > > >
-                    Allocator
+                typename Elemental
             >
             constexpr Tributary< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural >
                 DoubleContributor = {
-                    Survey< DoublyLinked< Elemental >, Natural, Maximum, Elemental >,
+                    Survey< DoublyLinked< Elemental >, Natural, Elemental >,
                     Account< DoublyLinked< Elemental >, Natural, Elemental >,
-                    Distribute< Natural, Maximum, Elemental, Allocator, false >,
+                    Distribute< Natural, Elemental, false >,
                     Retribute< DoublyLinked< Elemental >, Natural, Elemental, Concede< Natural, Elemental > >,
                     RemoveAll< DoublyLinked< Elemental >, Natural, Elemental >
                 };

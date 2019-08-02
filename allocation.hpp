@@ -112,6 +112,8 @@ namespace allocation {
      *     --------------------
      *     Function type alias used when the claim function requires an 
      *     additional count argument.
+     * @tparam Natural 
+     *     Type of the natural integer array bounds.
      * @tparam Subjective 
      *     Type of the array element.
      */
@@ -169,6 +171,8 @@ namespace allocation {
      *     Classification Template
      *     -----------------------
      *     This type alias defines the array memory allocation classifier.
+     * @tparam Natural 
+     *     Type of the natural integer array bounds.
      * @tparam Subjective 
      *     Type of the array element.
      */
@@ -229,6 +233,8 @@ namespace allocation {
      *     Function Template
      *     -----------------
      *     With this function, the default constructor(s) will be invoked.
+     * @tparam Natural 
+     *     Type of the natural integer array bounds.
      * @tparam Subjective
      *     Type of the array element.
      * @param[out] locality
@@ -478,6 +484,8 @@ namespace allocation {
      *     ------------------------
      *     Objective table which uses the array new and array delete operators.  
      *     Disclaim frees the memory space and then sets the pointer to null.
+     * @tparam Natural 
+     *     Type of the natural integer array bounds.
      * @tparam Subjective 
      *     Type of the array elements.
      */
@@ -499,6 +507,8 @@ namespace allocation {
      *     ------------------------
      *     Objective table which uses the array new and array delete operators.
      *     Disclaim frees the memory space but does not set the pointer to null.
+     * @tparam Natural 
+     *     Type of the natural integer array bounds.
      * @tparam Subjective 
      *     Type of the array elements.
      */

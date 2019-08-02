@@ -46,5 +46,6 @@ main() {
         locality;
     if (!FindInSortedArray( array, key, locality ))
         return -1;
-    printf( "'%c'\n", Refer( locality ).to );
+    printf( "array[%u]", (unsigned) (locality - array) );
+    printf( " = '%c'\n", Refer( locality ).to );
 }

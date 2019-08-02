@@ -1,7 +1,6 @@
 // © 2019 Aaron Sami Abassi
 // Licensed under the Academic Free License version 3.0
 // #define RAPBTL_NO_STD_CPLUSPLUS
-#include "allocation/alignment.hpp"
 #include "ration/elevation.hpp"
 #include "ration/contraction.hpp"
 #include "ration/contribution.hpp"
@@ -112,19 +111,20 @@ DemonstrateJunction() {
     using namespace ::junction::provision::elevation;
     using namespace ::junction::provision::contraction;
     using namespace ::junction::provision::contribution;
-    using namespace ::allocation::alignment;
-    using IntegerNodal = DoublyNodal< int >;
     static const unsigned
         Maximum = 16;
     static auto&
-        StackElevator = DoubleElevator< unsigned, Maximum, int, FastDefaultAligned< IntegerNodal > >;
+        StackElevator = DoubleElevator< unsigned, int >;
     static auto&
-        QueueContractor = DoubleContractor< unsigned, Maximum, int, FastDefaultAligned< IntegerNodal > >;
+        QueueContractor = DoubleContractor< unsigned, int >;
     static auto&
-        PoolContributor = DoubleContributor< unsigned, Maximum, int, FastDefaultAligned< IntegerNodal > >;
+        PoolContributor = DoubleContributor< unsigned, int >;
     DoublyJunctive< unsigned, int >
         list;
+    DoublyNodal< int >
+        nodes[Maximum];
     Initialize( list );
+    IntegrateNodes( list, nodes );
     DemonstrateElevation( list, StackElevator );
     DemonstrateContraction( list, QueueContractor );
     DemonstrateContribution( list, PoolContributor );
@@ -132,7 +132,9 @@ DemonstrateJunction() {
 
 int
 main() {
+    puts( "Array based memory space provision" );
     DemonstrateRation();
     puts( "" );
+    puts( "Linked list based memory space provision" );
     DemonstrateJunction();
 }

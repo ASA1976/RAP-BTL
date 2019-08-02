@@ -21,8 +21,6 @@ namespace junction {
         template <
             typename Connective,
             typename Natural,
-            Natural
-                Maximum,
             typename Elemental
         >
         static inline Natural
@@ -37,16 +35,12 @@ namespace junction {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            return Maximum;
+            return list.total;
         }
 
         template <
             typename Natural,
-            Natural
-                Maximum,
             typename Elemental,
-            Referential< const DefaultAllocative< SinglyNodal< Elemental > > >
-                Allocator,
             const bool
                 Safety
         >
@@ -67,50 +61,32 @@ namespace junction {
             );
 #endif
             Locational< SinglyNodal< Elemental > >
-                node, result;
+                first, node;
             Natural
                 index;
-            if (Safety && list.count >= Maximum)
+            first = Reclaim( list );
+            if (Safety && !first)
                 return false;
-            position.at = Reclaim( list );
-            if (!position.at) {
-                Allocator.claim( position.at );
-                if (!position.at)
-                    return false;
-                list.total++;
-            }
-            node = position.at;
+            node = first;
             for (index = 1; index < count; index++) {
-                SetNext( node, Reclaim( list ) );
-                if (!GetNext( node )) {
-                    Allocator.claim( result );
-                    if (!result) {
-                        SetNext( node, list.unused );
-                        list.unused = position.at;
-                        return false;
-                    }
-                    SetNext( node, result );
-                    list.total++;
-                }
                 node = GetNext( node );
+                if (Safety && !node)
+                    return false;
             }
             UnsetNext( node );
             if (list.last)
-                SetNext( list.last, position.at );
+                SetNext( list.last, first );
             else
-                list.first = position.at;
-            list.last = position.at;
+                list.first = first;
+            list.last = node;
             list.count += count;
+            position.at = first;
             return true;
         }
 
         template <
             typename Natural,
-            Natural
-                Maximum,
             typename Elemental,
-            Referential< const DefaultAllocative< DoublyNodal< Elemental > > >
-                Allocator,
             const bool
                 Safety
         >
@@ -131,43 +107,27 @@ namespace junction {
             );
 #endif
             Locational< DoublyNodal< Elemental > >
-                node, result;
+                first, node;
             Natural
                 index;
-            if (Safety && list.count >= Maximum)
+            first = Reclaim( list );
+            if (Safety && !first)
                 return false;
-            position.at = Reclaim( list );
-            if (!position.at) {
-                Allocator.claim( position.at );
-                if (!position.at)
-                    return false;
-                list.total++;
-            }
-            node = position.at;
+            node = first;
             for (index = 1; index < count; index++) {
-                SetNext( node, Reclaim( list ) );
-                if (!GetNext( node )) {
-                    Allocator.claim( result );
-                    if (!result) {
-                        ConnectNext( node, list.unused );
-                        list.unused = position.at;
-                        UnsetPrevious( list.unused );
-                        return false;
-                    }
-                    SetNext( node, result );
-                    list.total++;
-                }
-                SetPrevious( GetNext( node ), node );
                 node = GetNext( node );
+                if (Safety && !node)
+                    return false;
             }
             UnsetNext( node );
-            SetPrevious( position.at, list.last );
+            SetPrevious( first, list.last );
             if (list.last)
-                SetNext( list.last, position.at );
+                SetNext( list.last, first );
             else
-                list.first = position.at;
-            list.last = position.at;
+                list.first = first;
+            list.last = node;
             list.count += count;
+            position.at = first;
             return true;
         }
 
