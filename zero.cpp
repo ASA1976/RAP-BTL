@@ -12,29 +12,34 @@ extern "C" {
 #endif
 
 using namespace ::location;
+using namespace ::comparison;
 
 template <
     const size_t
         Length
 >
 static inline bool
-FindInSortedArray(
+Find(
     Referential< const char[Length] >
         array,
     Referential< const char >
         value,
     Referential< Locational< const char > >
-        position
+        position,
+    Referential< BinaryComparative< char > >
+        equate,
+    Referential< BinaryComparative< char > >
+        order
 ) {
     using namespace ::ordination;
     using namespace ::sortation;
-    using namespace ::comparison;
     static auto&
         Liner = ReadLiner< size_t, Length, char >;
-    static auto&
-        Find = SearchBisection< char[Length], Locational< const char >, size_t, char, IsEqual, IsLesser >;
+    static const size_t
+        Before = 0,
+        After = Length - 1;
     position = array;
-    return Find( array, Liner, value, position, 0, Length - 1 );
+    return SearchBisection( array, Liner, value, position, Before, After, equate, order );
 }
 
 int
@@ -44,8 +49,10 @@ main() {
         key = 'G';
     static Locational< const char >
         locality;
-    if (!FindInSortedArray( array, key, locality ))
+    static unsigned
+        offset;
+    if (!Find( array, key, locality, IsEqual, IsLesser ))
         return -1;
-    printf( "array[%u]", (unsigned) (locality - array) );
-    printf( " = '%c'\n", Refer( locality ).to );
+    offset = locality - array;
+    printf( "array[%u] = '%c'\n", offset, Refer( locality ).to );
 }

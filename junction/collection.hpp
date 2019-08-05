@@ -62,14 +62,12 @@ namespace junction {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-			static auto&
-				Search = SearchScalarBisection< SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, Natural, Elemental, Equate, Order, Scale >;
             SinglyPositional< Elemental >
                 position;
             if (!set.first)
                 return false;
             Scale.begin( set, position, 0 );
-            return Search( set, value, position, Account( set ) - 1 );
+            return SearchScalarBisection( set, Scale, value, position, Account( set ) - 1, Equate, Order );
         }
 
         template <
@@ -96,14 +94,14 @@ namespace junction {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-			static auto&
-				Search = SearchBisection< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, Elemental, Equate, Order, Liner >;
+            static const Natural
+                Before = 0;
             DoublyPositional< Elemental >
                 position;
             if (!set.first)
                 return false;
             Liner.increment.begin( set, position, 0 );
-            return Search( set, value, position, 0, Account( set ) - 1 );
+            return SearchBisection( set, Liner, value, position, Before, Account( set ) - 1, Equate, Order );
         }
 
         template <
@@ -136,14 +134,12 @@ namespace junction {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            static auto&
-				Search = SearchScalarBisection< SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, Natural, Elemental, Equate, Order, Scale >;
 			SinglyPositional< Elemental >
                 position;
             if (!set.first)
                 return Proceed( set, value );
             Scale.begin( set, position, 0 );
-            if (Search( set, value, position, Account( set ) - 1 ))
+            if (SearchScalarBisection( set, Scale, value, position, Account( set ) - 1, Equate, Order ))
                 return false;
             if (Order( Scale.go( set, position ).to, value ))
                 return Cede( set, position, value );
@@ -180,14 +176,14 @@ namespace junction {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            static auto&
-				Search = SearchBisection< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, Elemental, Equate, Order, Liner >;
+            static const Natural
+                Before = 0;
 			DoublyPositional< Elemental >
                 position;
             if (!set.first)
                 return Proceed( set, value );
             Liner.increment.begin( set, position, 0 );
-            if (Search( set, value, position, 0, Account( set ) - 1 ))
+            if (SearchBisection( set, Liner, value, position, Before, Account( set ) - 1, Equate, Order ))
                 return false;
             if (Order( Liner.increment.go( set, position ).to, value ))
                 return Cede( set, position, value );
@@ -220,14 +216,12 @@ namespace junction {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            static auto&
-				Search = SearchScalarBisection< SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, Natural, Elemental, Equate, Order, Scale >;
             SinglyPositional< Elemental >
                 position;
             if (!set.first)
                 return false;
             Scale.begin( set, position, 0 );
-            if (!Search( set, value, position, Account( set ) - 1 ))
+            if (!SearchScalarBisection( set, Scale, value, position, Account( set ) - 1, Equate, Order ))
                 return false;
             return Concede( set, position, 1 );
         }
@@ -258,14 +252,14 @@ namespace junction {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            static auto&
-				Search = SearchBisection< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, Elemental, Equate, Order, Liner >;
+            static const Natural
+                Before = 0;
             DoublyPositional< Elemental >
                 position;
             if (!set.first)
                 return false;
             Liner.increment.begin( set, position, 0 );
-            if (!Search( set, value, position, 0, Account( set ) - 1 ))
+            if (!SearchBisection( set, Liner, value, position, Before, Account( set ) - 1, Equate, Order ))
                 return false;
             return Concede( set, position, 1 );
         }
@@ -298,8 +292,6 @@ namespace junction {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            static auto&
-				Search = SearchScalarBisection< SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, Natural, Elemental, Equate, Order, Scale >;
             SinglyPositional< Elemental >
                 original_position,
                 replacement_position,
@@ -312,10 +304,10 @@ namespace junction {
                 return false;
             extent = Account( set ) - 1;
             Scale.begin( set, original_position, 0 );
-            if (!Search( set, original, original_position, extent ))
+            if (!SearchScalarBisection( set, Scale, original, original_position, extent, Equate, Order ))
                 return false;
             Scale.begin( set, replacement_position, 0 );
-            if (Search( set, replacement, replacement_position, extent ))
+            if (SearchScalarBisection( set, Scale, replacement, replacement_position, extent, Equate, Order ))
                 return false;
             result = Adjunct.proclaim( set, replacement );
             if (!result)
@@ -379,8 +371,8 @@ namespace junction {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            static auto&
-				Search = SearchBisection< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, Elemental, Equate, Order, Liner >;
+            static const Natural
+                Before = 0;
             DoublyPositional< Elemental >
                 original_position,
                 replacement_position;
@@ -392,10 +384,10 @@ namespace junction {
                 return false;
             extent = Account( set ) - 1;
             Liner.increment.begin( set, original_position, 0 );
-            if (!Search( set, original, original_position, 0, extent ))
+            if (!SearchBisection( set, Liner, original, original_position, Before, extent, Equate, Order ))
                 return false;
             Liner.increment.begin( set, replacement_position, 0 );
-            if (Search( set, replacement, replacement_position, 0, extent ))
+            if (SearchBisection( set, Liner, replacement, replacement_position, Before, extent, Equate, Order ))
                 return false;
             result = Adjunct.proclaim( set, replacement );
             if (!result)
@@ -468,8 +460,6 @@ namespace junction {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            static auto&
-				Search = SearchScalarBisection< SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, Natural, Elemental, Equate, Order, Scale >;
             SinglyPositional< Elemental >
                 operand_position;
             BasicPositional
@@ -487,7 +477,7 @@ namespace junction {
                 Referential< const Elemental >
                     base_value = basis.scale.go( base, base_position ).to;
                 Scale.begin( operand, operand_position, 0 );
-                if (!Search( operand, base_value, operand_position, extent )) {
+                if (!SearchScalarBisection( operand, Scale, base_value, operand_position, extent, Equate, Order )) {
                     if (Order( Scale.go( operand, operand_position ).to, base_value )) {
                         if (!Cede( operand, operand_position, base_value ))
                             return false;
@@ -539,8 +529,6 @@ namespace junction {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            static auto&
-				Search = SearchBisectionIteratively< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, Elemental, Equate, Order, Liner >;
             DoublyPositional< Elemental >
                 operand_position;
             BasicPositional
@@ -558,7 +546,7 @@ namespace junction {
             while (true) {
                 Referential< const Elemental >
                     base_value = basis.scale.go( base, base_position ).to;
-                if (!Search( operand, base_value, operand_position, before, after )) {
+                if (!SearchBisectionIteratively( operand, Liner, base_value, operand_position, before, after, Equate, Order )) {
                     if (Order( Liner.increment.go( operand, operand_position ).to, base_value )) {
                         if (!Cede( operand, operand_position, base_value ))
                             return false;
@@ -667,10 +655,6 @@ namespace junction {
             );
 #endif
             static auto&
-				SearchInOperand = SearchScalarBisection< SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, Natural, Elemental, Equate, Order, Scale >;
-            static auto&
-                SearchInBase = SearchSection< Basic, BasicPositional, BasicNatural, Elemental, Equate >;
-            static auto&
                 CollateRelative = CollateSelection< Relative, RelativePositional, RelativeNatural, Natural, Elemental, Precede, Cede, Proceed, Equate, Order, Scale >;
             SinglyPositional< Elemental >
                 operand_position;
@@ -691,10 +675,10 @@ namespace junction {
                         Referential< const Elemental >
                             relative_value = relativity.scale.go( relative_set, relative_position ).to;
                         basis.scale.begin( base_set, base_position, 0 );
-                        if (!SearchInBase( base_set, basis.scale, relative_value, base_position, base_extent )) {
+                        if (!SearchSection( base_set, basis.scale, relative_value, base_position, base_extent, Equate )) {
                             if (Account( operand ) > 0) {
                                 Scale.begin( operand, operand_position, 0 );
-                                if (!SearchInOperand( operand, relative_value, operand_position, operand_extent )) {
+                                if (!SearchScalarBisection( operand, Scale, relative_value, operand_position, operand_extent, Equate, Order )) {
                                     if (Order( Scale.go( operand, operand_position ).to, relative_value )) {
                                         if (!Cede( operand, operand_position, relative_value ))
                                             return false;
@@ -774,10 +758,6 @@ namespace junction {
             );
 #endif
             static auto&
-				SearchInOperand = SearchBisectionIteratively< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, Elemental, Equate, Order, Liner >;
-            static auto&
-                SearchInBase = SearchSection< Basic, BasicPositional, BasicNatural, Elemental, Equate >;
-            static auto&
                 CollateRelative = CollateSelection< Relative, RelativePositional, RelativeNatural, Natural, Elemental, Precede, Cede, Proceed, Equate, Order, Liner >;
             DoublyPositional< Elemental >
                 operand_position;
@@ -798,9 +778,9 @@ namespace junction {
                         Referential< const Elemental >
                             relative_value = relativity.scale.go( relative_set, relative_position ).to;
                         basis.scale.begin( base_set, base_position, 0 );
-                        if (!SearchInBase( base_set, basis.scale, relative_value, base_position, extent )) {
+                        if (!SearchSection( base_set, basis.scale, relative_value, base_position, extent, Equate )) {
                             if (Account( operand ) > 0) {
-                                if (!SearchInOperand( operand, relative_value, operand_position, before, after )) {
+                                if (!SearchBisectionIteratively( operand, Liner, relative_value, operand_position, before, after, Equate, Order )) {
                                     if (Order( Liner.increment.go( operand, operand_position ).to, relative_value )) {
                                         if (!Cede( operand, operand_position, relative_value ))
                                             return false;
@@ -882,12 +862,6 @@ namespace junction {
             );
 #endif
             static auto&
-				SearchInOperand = SearchScalarBisection< SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, Natural, Elemental, Equate, Order, Scale >;
-            static auto&
-                SearchInBase = SearchSection< Basic, BasicPositional, BasicNatural, Elemental, Equate >;
-            static auto&
-                SearchInRelative = SearchSection< Relative, RelativePositional, RelativeNatural, Elemental, Equate >;
-            static auto&
                 CollateBase = CollateSelection< Basic, BasicPositional, BasicNatural, Natural, Elemental, Precede, Cede, Proceed, Equate, Order, Scale >;
             static auto&
                 CollateRelative = CollateSelection< Relative, RelativePositional, RelativeNatural, Natural, Elemental, Precede, Cede, Proceed, Equate, Order, Scale >;
@@ -912,10 +886,10 @@ namespace junction {
                         Referential< const Elemental >
                             base_value = basis.scale.go( base_set, base_position ).to;
                         relativity.scale.begin( relative_set, relative_position, 0 );
-                        if (!SearchInRelative( relative_set, relativity.scale, base_value, relative_position, relative_extent )) {
+                        if (!SearchSection( relative_set, relativity.scale, base_value, relative_position, relative_extent, Equate )) {
                             if (Account( operand ) > 0) {
                                 Scale.begin( operand, operand_position, 0 );
-                                if (!SearchInOperand( operand, base_value, operand_position, operand_extent )) {
+                                if (!SearchScalarBisection( operand, Scale, base_value, operand_position, operand_extent, Equate, Order )) {
                                     if (Order( Scale.go( operand, operand_position ).to, base_value )) {
                                         if (!Cede( operand, operand_position, base_value ))
                                             return false;
@@ -941,10 +915,10 @@ namespace junction {
                         Referential< const Elemental >
                             relative_value = relativity.scale.go( relative_set, relative_position ).to;
                         basis.scale.begin( base_set, base_position, 0 );
-                        if (!SearchInBase( base_set, basis.scale, relative_value, base_position, base_extent )) {
+                        if (!SearchSection( base_set, basis.scale, relative_value, base_position, base_extent, Equate )) {
                             if (Account( operand ) > 0) {
                                 Scale.begin( operand, operand_position, 0 );
-                                if (!SearchInOperand( operand, relative_value, operand_position, operand_extent )) {
+                                if (!SearchScalarBisection( operand, Scale, relative_value, operand_position, operand_extent, Equate, Order )) {
                                     if (Order( Scale.go( operand, operand_position ).to, relative_value )) {
                                         if (!Cede( operand, operand_position, relative_value ))
                                             return false;
@@ -1026,12 +1000,6 @@ namespace junction {
             );
 #endif
             static auto&
-				SearchInOperand = SearchBisectionIteratively< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, Elemental, Equate, Order, Liner >;
-            static auto&
-                SearchInBase = SearchSection< Basic, BasicPositional, BasicNatural, Elemental, Equate >;
-            static auto&
-                SearchInRelative = SearchSection< Relative, RelativePositional, RelativeNatural, Elemental, Equate >;
-            static auto&
                 CollateBase = CollateSelection< Basic, BasicPositional, BasicNatural, Natural, Elemental, Precede, Cede, Proceed, Equate, Order, Liner >;
             static auto&
                 CollateRelative = CollateSelection< Relative, RelativePositional, RelativeNatural, Natural, Elemental, Precede, Cede, Proceed, Equate, Order, Liner >;
@@ -1056,9 +1024,9 @@ namespace junction {
                         Referential< const Elemental >
                             base_value = basis.scale.go( base_set, base_position ).to;
                         relativity.scale.begin( relative_set, relative_position, 0 );
-                        if (!SearchInRelative( relative_set, relativity.scale, base_value, relative_position, relative_extent )) {
+                        if (!SearchSection( relative_set, relativity.scale, base_value, relative_position, relative_extent, Equate )) {
                             if (Account( operand ) > 0) {
-                                if (!SearchInOperand( operand, base_value, operand_position, before, after )) {
+                                if (!SearchBisectionIteratively( operand, Liner, base_value, operand_position, before, after, Equate, Order )) {
                                     if (Order( Liner.increment.go( operand, operand_position ).to, base_value )) {
                                         if (!Cede( operand, operand_position, base_value ))
                                             return false;
@@ -1086,9 +1054,9 @@ namespace junction {
                         Referential< const Elemental >
                             relative_value = relativity.scale.go( relative_set, relative_position ).to;
                         basis.scale.begin( base_set, base_position, 0 );
-                        if (!SearchInBase( base_set, basis.scale, relative_value, base_position, base_extent )) {
+                        if (!SearchSection( base_set, basis.scale, relative_value, base_position, base_extent, Equate )) {
                             if (Account( operand ) > 0) {
-                                if (!SearchInOperand( operand, relative_value, operand_position, before, after )) {
+                                if (!SearchBisectionIteratively( operand, Liner, relative_value, operand_position, before, after, Equate, Order )) {
                                     if (Order( Liner.increment.go( operand, operand_position ).to, relative_value )) {
                                         if (!Cede( operand, operand_position, relative_value ))
                                             return false;
@@ -1171,10 +1139,6 @@ namespace junction {
                 "RelativeNatural:  Unsigned integer type required"
             );
 #endif
-            static auto&
-				SearchInOperand = SearchScalarBisection< SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, Natural, Elemental, Equate, Order, Scale >;
-            static auto&
-                SearchInBase = SearchSection< Basic, BasicPositional, BasicNatural, Elemental, Equate >;
             SinglyPositional< Elemental >
                 operand_position;
             BasicPositional
@@ -1193,10 +1157,10 @@ namespace junction {
                     Referential< const Elemental >
                         relative_value = relativity.scale.go( relative_set, relative_position ).to;
                     basis.scale.begin( base_set, base_position, 0 );
-                    if (SearchInBase( base_set, relativity.scale, relative_value, base_position, base_extent )) {
+                    if (SearchSection( base_set, relativity.scale, relative_value, base_position, base_extent, Equate )) {
                         if (Account( operand ) > 0) {
                             Scale.begin( operand, operand_position, 0 );
-                            if (!SearchInOperand( operand, relative_value, operand_position, operand_extent )) {
+                            if (!SearchScalarBisection( operand, Scale, relative_value, operand_position, operand_extent, Equate, Order )) {
                                 if (Order( Scale.go( operand, operand_position ).to, relative_value )) {
                                     if (!Cede( operand, operand_position, relative_value ))
                                         return false;
@@ -1270,10 +1234,6 @@ namespace junction {
                 "RelativeNatural:  Unsigned integer type required"
             );
 #endif
-            static auto&
-				SearchInOperand = SearchBisectionIteratively< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, Elemental, Equate, Order, Liner >;
-            static auto&
-                SearchInBase = SearchSection< Basic, BasicPositional, BasicNatural, Elemental, Equate >;
             DoublyPositional< Elemental >
                 operand_position;
             BasicPositional
@@ -1292,9 +1252,9 @@ namespace junction {
                     Referential< const Elemental >
                         relative_value = relativity.scale.go( relative_set, relative_position ).to;
                     basis.scale.begin( base_set, base_position, 0 );
-                    if (SearchInBase( base_set, relativity.scale, relative_value, base_position, extent )) {
+                    if (SearchSection( base_set, relativity.scale, relative_value, base_position, extent, Equate )) {
                         if (Account( operand ) > 0) {
-                            if (!SearchInOperand( operand, relative_value, operand_position, before, after )) {
+                            if (!SearchBisectionIteratively( operand, Liner, relative_value, operand_position, before, after, Equate, Order )) {
                                 if (Order( Liner.increment.go( operand, operand_position ).to, relative_value )) {
                                     if (!Cede( operand, operand_position, relative_value ))
                                         return false;
@@ -1371,8 +1331,6 @@ namespace junction {
             );
 #endif
             static auto&
-				SearchInOperand = SearchScalarBisection< SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, Natural, Elemental, Equate, Order, Scale >;
-            static auto&
                 CollateBase = CollateSelection< Basic, BasicPositional, BasicNatural, Natural, Elemental, Precede, Cede, Proceed, Equate, Order, Scale >;
             static auto&
                 CollateRelative = CollateSelection< Relative, RelativePositional, RelativeNatural, Natural, Elemental, Precede, Cede, Proceed, Equate, Order, Scale >;
@@ -1393,7 +1351,7 @@ namespace junction {
                             base_value = basis.scale.go( base_set, base_position ).to;
                         if (Account( operand ) > 0) {
                             Scale.begin( operand, operand_position, 0 );
-                            SearchInOperand( operand, base_value, operand_position, extent );
+                            SearchScalarBisection( operand, Scale, base_value, operand_position, extent, Equate, Order );
                             if (Order( Scale.go( operand, operand_position ).to, base_value )) {
                                 if (!Cede( operand, operand_position, base_value ))
                                     return false;
@@ -1417,7 +1375,7 @@ namespace junction {
                             relative_value = relativity.scale.go( relative_set, relative_position ).to;
                         if (Account( operand ) > 0) {
                             Scale.begin( operand, operand_position, 0 );
-                            if (!SearchInOperand( operand, relative_value, operand_position, extent )) {
+                            if (!SearchScalarBisection( operand, Scale, relative_value, operand_position, extent, Equate, Order )) {
                                 if (Order( Scale.go( operand, operand_position ).to, relative_value )) {
                                     if (!Cede( operand, operand_position, relative_value ))
                                         return false;
@@ -1498,8 +1456,6 @@ namespace junction {
             );
 #endif
             static auto&
-				SearchInOperand = SearchBisectionIteratively< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, Elemental, Equate, Order, Liner >;
-            static auto&
                 CollateBase = CollateSelection< Basic, BasicPositional, BasicNatural, Natural, Elemental, Precede, Cede, Proceed, Equate, Order, Liner >;
             static auto&
                 CollateRelative = CollateSelection< Relative, RelativePositional, RelativeNatural, Natural, Elemental, Precede, Cede, Proceed, Equate, Order, Liner >;
@@ -1519,7 +1475,7 @@ namespace junction {
                         Referential< const Elemental >
                             base_value = basis.scale.go( base_set, base_position ).to;
                         if (Account( operand ) > 0) {
-                            SearchInOperand( operand, base_value, operand_position, before, after );
+                            SearchBisectionIteratively( operand, Liner, base_value, operand_position, before, after, Equate, Order );
                             if (Order( Liner.increment.go( operand, operand_position ).to, base_value )) {
                                 if (!Cede( operand, operand_position, base_value ))
                                     return false;
@@ -1544,7 +1500,7 @@ namespace junction {
                         Referential< const Elemental >
                             relative_value = relativity.scale.go( relative_set, relative_position ).to;
                         if (Account( operand ) > 0) {
-                            if (!SearchInOperand( operand, relative_value, operand_position, before, after )) {
+                            if (!SearchBisectionIteratively( operand, Liner, relative_value, operand_position, before, after, Equate, Order )) {
                                 if (Order( Liner.increment.go( operand, operand_position ).to, relative_value )) {
                                     if (!Cede( operand, operand_position, relative_value ))
                                         return false;

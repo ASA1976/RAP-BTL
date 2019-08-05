@@ -44,16 +44,6 @@ namespace junction {
                     "Natural:  Unsigned integer type required"
                 );
 #endif
-                static auto&
-					Search = SearchScalarBisection< 
-                        AssociativelySingleJunctive< Natural, Correlative, Evaluative >, 
-                        AssociativelySinglePositional< Correlative, Evaluative >, 
-                        Natural, 
-                        Correlative, 
-                        Equate,
-                        Order,
-                        Scale
-                    >;
                 AssociativelySinglePositional< Correlative, Evaluative >
                     original_position,
                     replacement_position,
@@ -66,10 +56,10 @@ namespace junction {
                     return false;
                 extent = Account( map ) - 1;
                 Scale.begin( map, original_position, 0 );
-                if (!Search( map, original, original_position, extent ))
+                if (!SearchScalarBisection( map, Scale, original, original_position, extent, Equate, Order ))
                     return false;
                 Scale.begin( map, replacement_position, 0 );
-                if (Search( map, replacement, replacement_position, extent ))
+                if (SearchScalarBisection( map, Scale, replacement, replacement_position, extent, Equate, Order ))
                     return false;
                 if (original_position.at != map.first) {
                     Scale.begin( map, previous, 0 );
@@ -151,22 +141,12 @@ namespace junction {
                     "Natural:  Unsigned integer type required"
                 );
 #endif
-                static auto&
-					Search = SearchScalarBisection< 
-                        AssociativelySingleJunctive< Natural, Correlative, Evaluative >, 
-                        AssociativelySinglePositional< Correlative, Evaluative >, 
-                        Natural, 
-                        Correlative, 
-                        Equate,
-                        Order,
-                        Scale
-                    >;
 				AssociativelySinglePositional< Correlative, Evaluative >
                     position;
                 if (!map.first)
                     throw relator;
                 Scale.begin( map, position, 0 );
-                if (!Search( map, relator, position, Account( map ) - 1 ))
+                if (!SearchScalarBisection( map, Scale, relator, position, Account( map ) - 1, Equate, Order ))
                     throw relator;
                 return GoReadElement( map, position );
             }
@@ -198,22 +178,14 @@ namespace junction {
                     "Natural:  Unsigned integer type required"
                 );
 #endif
-                static auto&
-					Search = SearchBisection< 
-                        AssociativelyDoubleJunctive< Natural, Correlative, Evaluative >, 
-                        AssociativelyDoublePositional< Correlative, Evaluative >, 
-                        Natural, 
-                        Correlative, 
-                        Equate,
-                        Order,
-                        Liner
-                    >;
+                static const Natural
+                    Before = 0;
 				AssociativelyDoublePositional< Correlative, Evaluative >
                     position;
                 if (!map.first)
                     throw relator;
                 Liner.increment.begin( map, position, 0 );
-                if (!Search( map, relator, position, 0, Account( map ) - 1 ))
+                if (!SearchBisection( map, Liner, relator, position, Before, Account( map ) - 1, Equate, Order ))
                     throw relator;
                 return GoReadElement( map, position );
             }
@@ -245,14 +217,12 @@ namespace junction {
                     "Natural:  Unsigned integer type required"
                 );
 #endif
-                static auto&
-                    Search = SearchScalarBisection< AssociativelySingleJunctive<  Natural, Correlative, Evaluative >, AssociativelySinglePositional< Correlative, Evaluative >, Natural, Correlative, ReadRelatorIncrementSingleScale< Natural, Correlative, Evaluative >, Equate, Order, Scale >;
 				AssociativelySinglePositional< Correlative, Evaluative >
                     position;
                 if (!map.first)
                     throw relator;
                 Scale.begin( map, position, 0 );
-                if (!Search( map, relator, position, Account( map ) - 1 ))
+                if (!SearchScalarBisection( map, Scale, relator, position, Account( map ) - 1, Equate, Order ))
                     throw relator;
                 return GoWriteElement( map, position );
             }
@@ -284,14 +254,14 @@ namespace junction {
                     "Natural:  Unsigned integer type required"
                 );
 #endif
-                static auto&
-                    Search = SearchBisection< AssociativelyDoubleJunctive<  Natural, Correlative, Evaluative >, AssociativelyDoublePositional< Correlative, Evaluative >, Natural, Correlative, ReadRelatorDoubleLiner< Natural, Correlative, Evaluative >, Equate, Order, Liner >;
+                static const Natural
+                    Before = 0;
 				AssociativelyDoublePositional< Correlative, Evaluative >
                     position;
                 if (!map.first)
                     throw relator;
                 Liner.increment.begin( map, position, 0 );
-                if (!Search( map, relator, position, 0, Account( map ) - 1 ))
+                if (!SearchBisection( map, Liner, relator, position, Before, Account( map ) - 1, Equate, Order ))
                     throw relator;
                 return GoWriteElement( map, position );
             }

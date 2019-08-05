@@ -190,8 +190,9 @@ DemonstrateLocalization() {
         Liner = ReadLiner< int, size_t, char >;
     static auto&
         Increment = ReadIncrementScale< int, size_t, char >;
-    static auto&
-        FindCharacter = SearchBisection< Local, int, size_t, char, IsEqual, IsLesser >;
+    static const size_t
+        Before = 2,
+        After = 2;
     static Local
         locality = "ABCDE";
     int
@@ -200,7 +201,7 @@ DemonstrateLocalization() {
     printf( "locality := " );
     DisplayCharacters( locality, Increment, Length );
     index = 2;
-    if (FindCharacter( locality, Liner, locality[0], index, 2, 2 )) {
+    if (SearchBisection( locality, Liner, locality[0], index, Before, After, IsEqual, IsLesser )) {
         printf( " (found '%c')\n", Increment.go( locality, index ).to );
         return true;
     }
@@ -220,8 +221,9 @@ DemonstrateSegmentation() {
         Liner = ReadLiner< size_t, Length, char >;
     static auto&
         Increment = ReadIncrementDirection< size_t, Length, char >;
-    static auto&
-        FindCharacter = SearchBisection< Segmental, size_t, size_t, char, IsEqual, IsLesser >;
+    static const size_t
+        Before = 2,
+        After = 2;
     static Segmental
         segment = "ABCDE";
     size_t
@@ -230,7 +232,7 @@ DemonstrateSegmentation() {
     printf( "segment := " );
     DisplayCharacters( segment, Increment );
     index = 2;
-    if (FindCharacter( segment, Liner, segment[1], index, 2, 2 )) {
+    if (SearchBisection( segment, Liner, segment[1], index, Before, After, IsEqual, IsLesser )) {
         printf( " (found '%c')\n", Increment.scale.go( segment, index ).to );
         return true;
     }
@@ -252,8 +254,9 @@ DemonstrateOrdination() {
         Liner = ReadLiner< size_t, Length, char >;
     static auto&
         Increment = ReadIncrementDirection< size_t, Length, char >;
-    static auto&
-        FindCharacter = SearchBisection< Ordinal, Positional, size_t, char, IsEqual, IsLesser >;
+    static const size_t
+        Before = 2,
+        After = 2;
     static Ordinal
         array = {'A','B','C','D','E'};
     Positional
@@ -262,7 +265,7 @@ DemonstrateOrdination() {
     printf( "array := " );
     DisplayCharacters( array, Increment );
     position = Locate( array[2] ).at;
-    if (FindCharacter( array, Liner, array[3], position, 2, 2 )) {
+    if (SearchBisection( array, Liner, array[3], position, Before, After, IsEqual, IsLesser )) {
         printf( " (found '%c')\n", Increment.scale.go( array, position ).to );
         return true;
     }

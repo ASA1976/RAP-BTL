@@ -40,21 +40,12 @@ namespace junction {
                     "Natural:  Unsigned integer type required"
                 );
 #endif
-                static auto&
-					Search = SearchSection< 
-                        AssociativelyJunctive< Connective, Natural, Correlative, Evaluative >, 
-                        AssociativelyPositional< Connective, Correlative, Evaluative >, 
-                        Natural, 
-                        Correlative, 
-                        Equate,
-                        Scale
-                    >;
 				AssociativelyPositional< Connective, Correlative, Evaluative >
                     position;
                 if (!map.first)
                     throw relator;
                 Scale.begin( map, position, 0 );
-                if (!Search( map, relator, position, Account( map ) - 1 ))
+                if (!SearchSection( map, Scale, relator, position, Account( map ) - 1, Equate ))
                     throw relator;
                 return GoReadElement( map, position );
             }
@@ -85,21 +76,12 @@ namespace junction {
                     "Natural:  Unsigned integer type required"
                 );
 #endif
-                static auto&
-					Search = SearchSection< 
-                        AssociativelyJunctive< Connective, Natural, Correlative, Evaluative >, 
-                        AssociativelyPositional< Connective, Correlative, Evaluative >, 
-                        Natural, 
-                        Correlative, 
-                        Equate,
-                        Scale
-                    >;
 				AssociativelyPositional< Connective, Correlative, Evaluative >
                     position;
                 if (!map.first)
                     throw relator;
                 Scale.begin( map, position, 0 );
-                if (!Search( map, relator, position, Account( map ) - 1 ))
+                if (!SearchSection( map, Scale, relator, position, Account( map ) - 1, Equate ))
                     throw relator;
                 return GoWriteElement( map, position );
             }

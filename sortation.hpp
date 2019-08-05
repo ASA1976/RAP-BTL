@@ -61,9 +61,6 @@ namespace sortation {
      *     Type of natural integer counts.
      * @tparam Evaluative
      *     Type of the elements in the space.
-     * @tparam Equate 
-     *     Reference to an assortive function which returns true if both 
-     *     arguments are to be considered equal.
      * @param[in] space
      *     Reference to the space being searched.
      * @param[in] scale 
@@ -79,6 +76,9 @@ namespace sortation {
      * @param[in] extent
      *     Number of elements in the space __after__  the initial position to be
      *     considered in the search.
+     * @param[in] equate 
+     *     Reference to an assortive function which returns true if both 
+     *     arguments are to be considered equal.
      * @return
      *     True if the value sought was found.
      */
@@ -86,9 +86,7 @@ namespace sortation {
         typename Spatial, 
         typename Positional,
         typename Natural,
-        typename Evaluative,
-        Referential< Assortive< Evaluative > >
-            Equate
+        typename Evaluative
     >
     static inline bool
     SearchSection(
@@ -101,7 +99,9 @@ namespace sortation {
         Referential< Positional >
             position,
         Natural
-            extent
+            extent,
+        Referential< Assortive< Evaluative > >
+            equate
     ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
@@ -111,7 +111,7 @@ namespace sortation {
         );
 #endif
         while (true) {
-            if (Equate( scale.go( space, position ).to, value )) 
+            if (equate( scale.go( space, position ).to, value )) 
                 return true;
             else if (!extent--)
                 return false;
@@ -138,11 +138,11 @@ namespace sortation {
      *     Type of natural integer counts.
      * @tparam Evaluative
      *     Type of the elements in the space.
-     * @tparam Scale
-     *     Reference to a scalar trajection objective.
      * @tparam Equate
      *     Reference to an assortive function which returns true if both 
      *     arguments are to be considered equal.
+     * @tparam Scale
+     *     Reference to a scalar trajection objective.
      * @param[in] space
      *     Reference to the space being searched.
      * @param[in] value
@@ -187,9 +187,7 @@ namespace sortation {
             "Natural:  Unsigned integer type required"
         );
 #endif
-        static auto&
-            Search = SearchSection< Spatial, Positional, Natural, Evaluative, Equate >;
-        return Search( space, Scale, value, position, extent );
+        return SearchSection( space, Scale, value, position, extent, Equate );
     }
 
     /**
@@ -213,9 +211,6 @@ namespace sortation {
      *     Type of natural integer counts.
      * @tparam Evaluative
      *     Type of the elements in the space.
-     * @tparam Equate
-     *     Reference to an assortive function which returns true if both 
-     *     arguments are to be considered equal.
      * @param[in] space
      *     Reference to the space being searched.
      * @param[in] scale
@@ -232,6 +227,9 @@ namespace sortation {
      *     Number of elements in the space __after__ the initial position to be 
      *     considered in the search.  The extent will also be modified in the 
      *     calling context.
+     * @param[in] equate
+     *     Reference to an assortive function which returns true if both 
+     *     arguments are to be considered equal.
      * @return
      *     True or false if the value was found.
      */
@@ -239,9 +237,7 @@ namespace sortation {
         typename Spatial,
         typename Positional,
         typename Natural,
-        typename Evaluative,
-        Referential< Assortive< Evaluative > >
-            Equate
+        typename Evaluative
     >
     static inline bool
     SearchSectionIteratively(
@@ -254,7 +250,9 @@ namespace sortation {
         Referential< Positional >
             position,
         Referential< Natural >
-            extent
+            extent,
+        Referential< Assortive< Evaluative > >
+            equate
     ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
@@ -264,7 +262,7 @@ namespace sortation {
         );
 #endif
         while (true) {
-            if (Equate( scale.go( space, position ).to, value )) 
+            if (equate( scale.go( space, position ).to, value )) 
                 return true;
             else if (!extent--)
                 return false;
@@ -293,11 +291,11 @@ namespace sortation {
      *     Type of natural integer counts.
      * @tparam Evaluative
      *     Type of the elements in the space.
-     * @tparam Scale
-     *     Reference to a scalar trajection objective.
      * @tparam Equate
      *     Reference to an assortive function which returns true if both 
      *     arguments are to be considered equal.
+     * @tparam Scale
+     *     Reference to a scalar trajection objective.
      * @param[in] space
      *     Reference to the space being searched.
      * @param[in] value 
@@ -343,9 +341,7 @@ namespace sortation {
             "Natural:  Unsigned integer type required"
         );
 #endif
-        static auto&
-            Search = SearchSectionIteratively< Spatial, Positional, Natural, Evaluative, Equate >;
-        return Search( space, Scale, value, position, extent );
+        return SearchSectionIteratively( space, Scale, value, position, extent, Equate );
     }
 
     /**
@@ -358,7 +354,8 @@ namespace sortation {
      *     argument.  The before and after argument can be used to limit the 
      *     scope of the search or can reflect the actual number of elements in
      *     the space before and after the position.  With this overload, the 
-     *     lineal trajection objective is specified as a function argument.
+     *     liner, equate and order objectives are specified as function 
+     *     arguments.
      * @tparam Spatial
      *     Type of the space to be searched.
      * @tparam Positional
@@ -367,12 +364,6 @@ namespace sortation {
      *     Type of natural integer counts.
      * @tparam Evaluative
      *     Type of the elements in the space.
-     * @tparam Equate 
-     *     Reference to an assortive function which returns true if both 
-     *     arguments are to be considered equal.
-     * @tparam Order
-     *     Reference to an assortive function which returns true if the first 
-     *     argument belongs first in the sortation order.
      * @param[in] space
      *     Reference to the space being searched.
      * @param[in] liner
@@ -391,6 +382,12 @@ namespace sortation {
      * @param[in] after
      *     Number of elements in the space __after__ the initial position to be 
      *     considered in the search.
+     * @param[in] equate 
+     *     Reference to an assortive function which returns true if both 
+     *     arguments are to be considered equal.
+     * @param[in] order
+     *     Reference to an assortive function which returns true if the first 
+     *     argument belongs first in the sortation order.
      * @return
      *     True or false if the value was found.
      */
@@ -398,11 +395,7 @@ namespace sortation {
         typename Spatial,
         typename Positional,
         typename Natural,
-        typename Evaluative,
-        Referential< Assortive< Evaluative > >
-            Equate,
-        Referential< Assortive< Evaluative > >
-            Order
+        typename Evaluative
     >
     static inline bool
     SearchBisection(
@@ -417,7 +410,11 @@ namespace sortation {
         Natural
             before,
         Natural 
-            after
+            after,
+        Referential< Assortive< Evaluative > >
+            equate,
+        Referential< Assortive< Evaluative > >
+            order
     ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
@@ -433,9 +430,9 @@ namespace sortation {
         while (true) {
             Referential< const Evaluative >
                 element = liner.increment.go( space, position ).to;
-            if (Equate( element, value ))
+            if (equate( element, value ))
                 return true;
-            if (Order( element, value )) {
+            if (order( element, value )) {
                 if (!after)
                     return false;
                 remainder = after % 2;
@@ -467,7 +464,8 @@ namespace sortation {
      *     argument.  The before and after argument can be used to limit the 
      *     scope of the search or can reflect the actual number of elements in 
      *     the space before and after the position.  With this overload, the 
-     *     lineal trajection objective is specified as a template argument.
+     *     Liner, Equate and Order objectives are specified as template 
+     *     arguments.
      * @tparam Spatial
      *     Type of the space to be searched.
      * @tparam Positional
@@ -476,14 +474,14 @@ namespace sortation {
      *     Type of natural integer counts.
      * @tparam Evaluative
      *     Type of the elements in the space.
-     * @tparam Liner
-     *     Reference to a lineal trajection objective.
      * @tparam Equate 
      *     Reference to an assortive function which returns true if both 
      *     arguments are to be considered equal.
      * @tparam Order
      *     Reference to an assortive function which returns true if the first 
      *     argument belongs first in the sortation order.
+     * @tparam Liner
+     *     Reference to a lineal trajection objective.
      * @param[in] space
      *     Reference to the space being searched.
      * @param[in] value
@@ -535,9 +533,7 @@ namespace sortation {
             "Natural:  Unsigned integer type required"
         );
 #endif
-        static auto&
-            Search = SearchBisection< Spatial, Positional, Natural, Evaluative, Equate, Order >;
-        return Search( space, Liner, value, position, before, after );
+        return SearchBisection( space, Liner, value, position, before, after, Equate, Order );
     }
 
     /**
@@ -561,12 +557,6 @@ namespace sortation {
      *     Type of natural integer counts.
      * @tparam Evaluative
      *     Type of the elements in the space.
-     * @tparam Equate
-     *     Reference to an assortive function which returns true if both 
-     *     arguments are to be considered equal.
-     * @tparam Order
-     *     Reference to an assortive function which returns true if the first 
-     *     argument belongs first in the sortation order.
      * @param[in] space 
      *     Reference to the space being searched.
      * @param[in] liner
@@ -587,6 +577,12 @@ namespace sortation {
      *     Number of elements in the space __after__ the initial position to be 
      *     considered in the search.  The after count will also be modified in 
      *     the calling context.
+     * @param[in] equate
+     *     Reference to an assortive function which returns true if both 
+     *     arguments are to be considered equal.
+     * @param[in] order
+     *     Reference to an assortive function which returns true if the first 
+     *     argument belongs first in the sortation order.
      * @return
      *     True or false if the value was found.
      */
@@ -594,11 +590,7 @@ namespace sortation {
         typename Spatial,
         typename Positional,
         typename Natural,
-        typename Evaluative,
-        Referential< Assortive< Evaluative > >
-            Equate,
-        Referential< Assortive< Evaluative > >
-            Order
+        typename Evaluative
     >
     static inline bool
     SearchBisectionIteratively(
@@ -613,7 +605,11 @@ namespace sortation {
         Referential< Natural >
             before,
         Referential< Natural >
-            after
+            after,
+        Referential< Assortive< Evaluative > >
+            equate,
+        Referential< Assortive< Evaluative > >
+            order
     ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
@@ -633,9 +629,9 @@ namespace sortation {
         while (true) {
             Referential< const Evaluative >
                 element = liner.increment.go( space, position ).to;
-            if (Equate( element, value ))
+            if (equate( element, value ))
                 return true;
-            if (Order( element, value )) {
+            if (order( element, value )) {
                 if (!max)
                     return false;
                 remainder = max % 2;
@@ -682,14 +678,14 @@ namespace sortation {
      *     Type of natural integer counts.
      * @tparam Evaluative
      *     Type of the elements in the space.
-     * @tparam Liner
-     *     Reference to a lineal trajection objective.
      * @tparam Equate
      *     Reference to an assortive function which returns true if both 
      *     arguments are to be considered equal.
      * @tparam Order
      *     Reference to an assortive function which returns true if the first 
      *     argument belongs first in the sortation order.
+     * @tparam Liner
+     *     Reference to a lineal trajection objective.
      * @param[in] space
      *     Reference to the space being searched.
      * @param[in] value
@@ -743,9 +739,7 @@ namespace sortation {
             "Natural:  Unsigned integer type required"
         );
 #endif
-        static auto&
-            Search = SearchBisectionIteratively< Spatial, Positional, Natural, Evaluative, Equate, Order >;
-        return Search( space, Liner, value, position, before, after );
+        return SearchBisectionIteratively( space, Liner, value, position, before, after, Equate, Order );
     }
 
     /**
@@ -768,12 +762,6 @@ namespace sortation {
      *     Type of natural integer counts.
      * @tparam Evaluative
      *     Type of the elements in the space.
-     * @tparam Equate 
-     *     Reference to an assortive function which returns true if both 
-     *     arguments are to be considered equal.
-     * @tparam Order
-     *     Reference to an assortive function which returns true if the first 
-     *     argument belongs first in the sortation order.
      * @param[in] space
      *     Reference to the space being searched.
      * @param[in] scale 
@@ -789,6 +777,12 @@ namespace sortation {
      * @param[in] extent
      *     Number of elements in the space __after__  the initial position to be
      *     considered in the search.
+     * @param[in] equate 
+     *     Reference to an assortive function which returns true if both 
+     *     arguments are to be considered equal.
+     * @param[in] order
+     *     Reference to an assortive function which returns true if the first 
+     *     argument belongs first in the sortation order.
      * @return
      *     True if the value sought was found.
      */
@@ -796,11 +790,7 @@ namespace sortation {
         typename Spatial, 
         typename Positional,
         typename Natural,
-        typename Evaluative,
-        Referential< Assortive< Evaluative > >
-            Equate,
-        Referential< Assortive< Evaluative > >
-            Order
+        typename Evaluative
     >
     static inline bool
     SearchScalarBisection(
@@ -813,7 +803,11 @@ namespace sortation {
         Referential< Positional >
             position,
         Natural
-            extent
+            extent,
+        Referential< Assortive< Evaluative > >
+            equate,
+        Referential< Assortive< Evaluative > >
+            order
     ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
@@ -829,12 +823,12 @@ namespace sortation {
         first = position;
         while (true) {
             if (!extent)
-                return Equate( scale.go( space, position ).to, value );
+                return equate( scale.go( space, position ).to, value );
             moves = extent / 2 + extent % 2;
             scale.traverse( space, position, moves );
-            if (Equate( scale.go( space, position ).to, value ))
+            if (equate( scale.go( space, position ).to, value ))
                 return true;
-            if (Order( scale.go( space, position ).to, value )) {
+            if (order( scale.go( space, position ).to, value )) {
                 extent -= moves;
                 if (!extent)
                     return false;
@@ -868,14 +862,14 @@ namespace sortation {
      *     Type of natural integer counts.
      * @tparam Evaluative
      *     Type of the elements in the space.
-     * @tparam Scalar
-     *     Reference to a scalar trajection objective.
      * @tparam Equate 
      *     Reference to an assortive function which returns true if both 
      *     arguments are to be considered equal.
      * @tparam Order
      *     Reference to an assortive function which returns true if the first 
      *     argument belongs first in the sortation order.
+     * @tparam Scale
+     *     Reference to a scalar trajection objective.
      * @param[in] space
      *     Reference to the space being searched.
      * @param[in] value
@@ -925,9 +919,7 @@ namespace sortation {
             "Natural:  Unsigned integer type required"
         );
 #endif
-        static auto&
-            Search = SearchScalarBisection< Spatial, Positional, Natural, Evaluative, Equate, Order >;
-        return Search( space, Scale, value, position, extent );
+        return SearchScalarBisection( space, Scale, value, position, extent, Equate, Order );
     }
 
 }

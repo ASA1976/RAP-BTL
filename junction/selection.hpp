@@ -53,14 +53,12 @@ namespace junction {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            static auto&
-                Search = SearchSection< Junctive< Connective, Natural, Elemental >, Positional< Connective, Elemental >, Natural, Elemental, Equate, Scale >;
             Positional< Connective, Elemental >
                 position;
             if (!set.first)
                 return false;
             Scale.begin( set, position, 0 );
-            return Search( set, value, position, Account( set ) - 1 );
+            return SearchSection( set, Scale, value, position, Account( set ) - 1, Equate );
         }
 
         template <
@@ -88,14 +86,12 @@ namespace junction {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            static auto&
-                Search = SearchSection< Junctive< Connective, Natural, Elemental >, Positional< Connective, Elemental >, Natural, Elemental, Equate, Scale >;
 			Positional< Connective, Elemental >
                 position;
             if (!set.first)
                 return Proceed( set, value );
             Scale.begin( set, position, 0 );
-            if (Search( set, value, position, Account( set ) - 1 ))
+            if (SearchSection( set, Scale, value, position, Account( set ) - 1, Equate ))
                 return false;
             return Proceed( set, value );
         }
@@ -176,14 +172,12 @@ namespace junction {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            static auto&
-                Search = SearchSection< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, Elemental, Equate, Scale >;
             DoublyPositional< Elemental >
                 position;
             if (!set.first)
                 return false;
             Scale.begin( set, position, 0 );
-            if (!Search( set, value, position, Account( set ) - 1 ))
+            if (!SearchSection( set, Scale, value, position, Account( set ) - 1, Equate ))
                 return false;
             return Concede( set, position, 1 );
         }
@@ -418,8 +412,6 @@ namespace junction {
             );
 #endif
             static auto&
-                SearchInBase = SearchSection< Basic, BasicPositional, BasicNatural, Elemental, Equate >;
-            static auto&
                 DuplicateRelative = DuplicateSelection< Connective, Relative, RelativePositional, RelativeNatural, Natural, Elemental, Proceed >;
             BasicPositional
                 base_position;
@@ -436,7 +428,7 @@ namespace junction {
                         const auto&
                             value = relativity.scale.go( relative_set, relative_position ).to;
                         basis.scale.begin( base_set, base_position, 0 );
-                        if (!SearchInBase( base_set, basis.scale, value, base_position, extent ))
+                        if (!SearchSection( base_set, basis.scale, value, base_position, extent, Equate ))
                             if (!Proceed( operand, value ))
                                 return false;
                         if (!relativity.traverses( relative_set, relative_position, 1 ))
@@ -499,10 +491,6 @@ namespace junction {
                 DuplicateBase = DuplicateSelection< Connective, Basic, BasicPositional, BasicNatural, Natural, Elemental, Proceed >;
             static auto&
                 DuplicateRelative = DuplicateSelection< Connective, Relative, RelativePositional, RelativeNatural, Natural, Elemental, Proceed >;
-            static auto&
-                SearchInBase = SearchSection< Basic, BasicPositional, BasicNatural, Elemental, Equate >;
-            static auto&
-                SearchInRelative = SearchSection< Relative, RelativePositional, RelativeNatural, Elemental, Equate >;
             BasicPositional
                 base_position;
             RelativePositional
@@ -527,7 +515,7 @@ namespace junction {
                 const auto&
                     value = basis.scale.go( base_set, base_position ).to;
                 relativity.scale.begin( relative_set, relative_position, 0 );
-                if (!SearchInRelative( relative_set, relativity.scale, value, relative_position, relative_extent )) {
+                if (!SearchSection( relative_set, relativity.scale, value, relative_position, relative_extent, Equate )) {
                     if (!Proceed( operand, value ))
                         return false;
                 }
@@ -541,7 +529,7 @@ namespace junction {
                 const auto&
                     value = relativity.scale.go( relative_set, relative_position ).to;
                 basis.scale.begin( base_set, base_position, 0 );
-                if (!SearchInBase( base_set, basis.scale, value, base_position, base_extent )) {
+                if (!SearchSection( base_set, basis.scale, value, base_position, base_extent, Equate )) {
                     if (!Proceed( operand, value ))
                         return false;
                 }
@@ -595,8 +583,6 @@ namespace junction {
                 "RelativeNatural:  Unsigned integer type required"
             );
 #endif
-            static auto&
-                SearchInBase = SearchSection< Basic, BasicPositional, BasicNatural, Elemental, Equate >;
             BasicPositional
                 base_position;
             RelativePositional
@@ -611,7 +597,7 @@ namespace junction {
                     const auto&
                         value = relativity.scale.go( relative_set, relative_position ).to;
                     basis.scale.begin( base_set, base_position, 0 );
-                    if (SearchInBase( base_set, basis.scale, value, base_position, base_extent)) {
+                    if (SearchSection( base_set, basis.scale, value, base_position, base_extent, Equate )) {
                         if (!Proceed( operand, value ))
                             return false;
                     }
@@ -670,8 +656,6 @@ namespace junction {
                 DuplicateBase = DuplicateSelection< Connective, Basic, BasicPositional, BasicNatural, Natural, Elemental, Proceed >;
             static auto&
                 DuplicateRelative = DuplicateSelection< Connective, Relative, RelativePositional, RelativeNatural, Natural, Elemental, Proceed >;
-            static auto&
-                SearchInBase = SearchSection< Basic, BasicPositional, BasicNatural, Elemental, Equate >;
             BasicPositional
                 base_position;
             RelativePositional
@@ -688,7 +672,7 @@ namespace junction {
                         const auto&
                             value = relativity.scale.go( relative_set, relative_position ).to;
                         basis.scale.begin( base_set, base_position, 0 );
-                        if (!SearchInBase( base_set, basis.scale, value, base_position, base_extent )) {
+                        if (!SearchSection( base_set, basis.scale, value, base_position, base_extent, Equate )) {
                             if (!Proceed( operand, value ))
                                 return false;
                         }

@@ -53,21 +53,12 @@ namespace junction {
                     "Natural:  Unsigned integer type required"
                 );
 #endif
-                static auto&
-					Search = SearchSection< 
-                        AssociativelyJunctive< Connective, Natural, Correlative, Evaluative >, 
-                        AssociativelyPositional< Connective, Correlative, Evaluative >, 
-                        Natural, 
-                        Correlative, 
-                        Equate,
-                        Scale
-                    >;
                 AssociativelyPositional< Connective, Correlative, Evaluative >
                     position;
                 if (!map.first)
                     return false;
                 Scale.begin( map, position, 0 );
-                return Search( map, relator, position, Account( map ) - 1 );
+                return SearchSection( map, Scale, relator, position, Account( map ) - 1, Equate );
             }
 
             template <
@@ -331,21 +322,12 @@ namespace junction {
                     "Natural:  Unsigned integer type required"
                 );
 #endif
-                static auto&
-					Search = SearchSection< 
-                        AssociativelyDoubleJunctive< Natural, Correlative, Evaluative >, 
-                        AssociativelyDoublePositional< Correlative, Evaluative >, 
-                        Natural, 
-                        Correlative, 
-                        Equate,
-                        Scale
-                    >;
                 AssociativelyDoublePositional< Correlative, Evaluative >
                     position;
                 if (!map.first)
                     return false;
                 Scale.begin( map, position, 0 );
-                if (!Search( map, relator, position, Account( map ) - 1 ))
+                if (!SearchSection( map, Scale, relator, position, Account( map ) - 1, Equate ))
                     return false;
                 return Concede( map, position, 1 );
             }
