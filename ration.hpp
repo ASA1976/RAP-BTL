@@ -2,7 +2,6 @@
 // Licensed under the Academic Free License version 3.0
 #ifndef RATION_MODULE
 #define RATION_MODULE
-#include <type_traits>
 
 /**
  * @brief   
