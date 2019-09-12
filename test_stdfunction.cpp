@@ -1,36 +1,30 @@
 // © 2019 Aaron Sami Abassi
 // Licensed under the Academic Free License version 3.0
-#include "test.conditions"
-#include "location.hpp"
 #include <functional>
 
-using namespace ::location;
-using namespace ::std;
+using namespace std;
 
-using TestFunctional = function< void() >;
+// Link with test_extern.cpp (only)
+void Invoke( const function<void()>& );
 
-static inline void 
-TestStatic(
-    Referential< const TestFunctional >
-        invoke
-) {
-    invoke();
+template <class Typical>
+static inline function<void()> Produce( Typical& object ) 
+{
+    return object;
 }
 
-void
-TestExtern(
-    Referential< const TestFunctional >
-);
+template <class Typical, class MethodLocational>
+static inline function<void()> Produce( Typical& object, MethodLocational method ) 
+{
+    return bind( method, object );
+}
 
-int
-main() {
-    using Test4Typical = decltype(Test4);
-    TestStatic( TestFunctional( Test1 ) );
-    TestStatic( TestFunctional( Test2 ) );
-    TestStatic( TestFunctional( Test3 ) );
-    TestStatic( TestFunctional( bind( &Test4Typical::run, Test4 ) ) );
-    TestExtern( TestFunctional( Test1 ) );
-    TestExtern( TestFunctional( Test2 ) );
-    TestExtern( TestFunctional( Test3 ) );
-    TestExtern( TestFunctional( bind( &Test4Typical::run, Test4 ) ) );
+#include "test.conditions"
+int main()
+{
+    static auto& Produce1 = Produce<Test1Typical>;
+    static auto& Produce2 = Produce<Test2Typical>;
+    static auto& Produce3 = Produce<Test3Typical>;
+    static auto& Produce4 = Produce<Test4Typical, Test4Methodic>;
+    RunTests( Invoke, Produce1, Produce2, Produce3, Produce4 );
 }
