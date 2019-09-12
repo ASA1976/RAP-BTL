@@ -16,6 +16,9 @@
 *.rtf	 diff=astextplain
 *.RTF	 diff=astextplain
 
-# Compiler Assembly output should not be included in repository stats
+# Compiler Assembly output should not be included
 *.s linguist-vendored
+# Testing scripts should not be included
+*.sh linguist-vendored
+
 
