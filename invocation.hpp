@@ -57,7 +57,7 @@ namespace invocation {
          *     Invokes any kind of stored procedure, specific to the invocation
          *     abstract specified by the template arguments.
          */
-        Resultant
+        constexpr Resultant
         operator()( 
             Parametric... 
                 arguments /**< Argument pack which is expanded for the invocation. */
