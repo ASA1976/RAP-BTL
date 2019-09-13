@@ -221,7 +221,7 @@ namespace invocation {
                 Parametric... 
                     arguments 
             ) -> Resultant {
-                return invocation.interface( invocation.locality, arguments... );
+                return invocation( arguments... );
             };
         return lambda;
     }
