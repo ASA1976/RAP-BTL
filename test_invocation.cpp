@@ -5,7 +5,7 @@
 using namespace ::invocation;
 
 // Link with test_extern.cpp (only)
-void Invoke( const Invocative<void>& );
+void CallInvocation( const Invocative<void>& );
 
 template <typename Typical, typename Classificatory>
 struct Conditional final {
@@ -36,7 +36,7 @@ static inline auto Produce( Typical& object, MethodLocational method )
     return Specific( Consign( method, object ), Assign );
 }
 
-#define TEST_INVOKE Invoke
+#define TEST_CALL CallInvocation
 #define TEST_PRODUCE1 Produce<Test1Typical>
 #define TEST_PRODUCE2 Produce<Test2Typical>
 #define TEST_PRODUCE3 Produce<Test3Typical>
