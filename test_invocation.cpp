@@ -13,11 +13,9 @@ struct Conditional final {
     Classificatory objective;
     Invocative<void> invoke;
     Conditional( const Classificatory objective, Designative& assign ) :
-        objective( objective ), invoke( assign( this->objective ) ) 
-    {}
+        objective{objective}, invoke{assign( this->objective )} {}
     Conditional( const Conditional<Typical, Classificatory>& copy ) : 
-        objective( copy.objective ), invoke{copy.invoke.interface, &objective} 
-    {}
+        objective{copy.objective}, invoke{copy.invoke.interface, &objective} {}
     constexpr operator const Invocative<void>&() const {return invoke;}
 };
 
@@ -32,19 +30,15 @@ static inline auto Produce( Typical& object )
 template <typename Typical, typename MethodLocational>
 static inline auto Produce( Typical& object, MethodLocational method ) 
 {
-    using Classificatory = Methodic<Typical, MethodLocational, void>;
-    using Specific = Conditional<Typical, Classificatory>;
+    using Specific = Conditional<Typical, Methodic<Typical, MethodLocational, void>>;
     static auto& Consign = AssignClassMethod<Typical, MethodLocational, void>;
     static auto& Assign = AssignInvokeMethod<Typical, MethodLocational, void>;
     return Specific( Consign( method, object ), Assign );
 }
 
+#define TEST_INVOKE Invoke
+#define TEST_PRODUCE1 Produce<Test1Typical>
+#define TEST_PRODUCE2 Produce<Test2Typical>
+#define TEST_PRODUCE3 Produce<Test3Typical>
+#define TEST_PRODUCE4 Produce<Test4Typical, Test4Methodic>
 #include "test.conditions"
-int main()
-{
-    static auto& Produce1 = Produce<Test1Typical>;
-    static auto& Produce2 = Produce<Test2Typical>;
-    static auto& Produce3 = Produce<Test3Typical>;
-    static auto& Produce4 = Produce<Test4Typical, Test4Methodic>;
-    RunTests( Invoke, Produce1, Produce2, Produce3, Produce4 );
-}
