@@ -6,12 +6,12 @@
 using TestInvocative = ::invocation::Invocative<void>;
 using TestFunctional = ::std::function<void()>;
 
-void CallInvocation( const TestInvocative& invoke ) 
+void CallInvocation( const TestInvocative& call ) 
 {
-    invoke();
+    call();
 }
 
-void CallFunction( const TestFunctional& invoke ) 
+void CallFunction( const TestFunctional& call ) 
 {
-    invoke();
+    call();
 }
