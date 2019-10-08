@@ -824,7 +824,9 @@ namespace ration {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            return queue = InitializedQueue< Natural, Maximum, Elemental >;
+            queue.first = 0;
+            queue.resource.allotment = 0;
+            return queue;
         }
 
         /**

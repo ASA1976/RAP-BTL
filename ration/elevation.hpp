@@ -768,7 +768,8 @@ namespace ration {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            return stack = InitializedStack< Natural, Maximum, Elemental >;
+            stack.allotment = 0;
+            return stack;
         }
 
         /**

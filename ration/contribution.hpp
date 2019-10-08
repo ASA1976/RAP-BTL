@@ -263,7 +263,9 @@ namespace ration {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            return pool = InitializedPool< Natural, Maximum, Elemental >;
+            pool.cycles = 0;
+            pool.resource.allotment = 0;
+            return pool;
         }
 
         /**
