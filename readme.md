@@ -38,6 +38,9 @@ conversion operators.  Rules which promote system security include the use of
 references over pointers where appropriate, in the case of references to 
 functions especially.
 
+Notes:
+* I'm considering inclusion of conversion operators which are declared constexpr 
+
 ## The Conversation
 
 There is a working draft document containing a more detailed breakdown of the 
