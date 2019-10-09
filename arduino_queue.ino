@@ -8,18 +8,19 @@
 //
 #define ANALOG_PIN A3
 #define SERIAL_RATE 9600
+#define SIZES_TYPE uint8_t
 #define QUEUE_MAX 8
 #define RAPBTL_NO_STD_CPLUSPLUS
 #include "ration/contraction.hpp"
 
 using namespace ration::contraction;
-using queue_t = Contractional<unsigned, QUEUE_MAX, int>;
+using queue_t = Contractional<SIZES_TYPE, QUEUE_MAX, int>;
 
 queue_t queue; // This defaults to all zero, a valid initial state for this type
 
 void printQueue() {
-    static auto& Reader = ReadIncrementDirection<unsigned, QUEUE_MAX, int>;
-    unsigned position; // Initialized by 'begin' below, otherwise unused
+    static auto& Reader = ReadIncrementDirection<SIZES_TYPE, QUEUE_MAX, int>;
+    SIZES_TYPE position; // Initialized by 'begin' below, otherwise unused
     if (!Reader.begins(queue, 0))
         return; // Queue was empty
     Reader.scale.begin(queue, position, 0);
@@ -37,9 +38,9 @@ void setup() {
 }
 
 void loop() {
-    static auto& Manager = Contractor<unsigned, QUEUE_MAX, int>;
-    static auto& Writer = WriteIncrementDirection<unsigned, QUEUE_MAX, int>;
-    unsigned position; // Initialized by 'protract' below, otherwise unused
+    static auto& Manager = Contractor<SIZES_TYPE, QUEUE_MAX, int>;
+    static auto& Writer = WriteIncrementDirection<SIZES_TYPE, QUEUE_MAX, int>;
+    SIZES_TYPE position; // Initialized by 'protract' below, otherwise unused
     if (Manager.account(queue) == Manager.survey(queue)) // Is the queue full?
         Manager.retract(queue, 1); // Dequeue first sample space
     Manager.protract(queue, position, 1); // Enqueue new sample space
