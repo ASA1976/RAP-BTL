@@ -11,7 +11,7 @@ namespace junction {
 
         namespace elevation {
 
-            using consecution::SucceedSafely;
+            using consecution::RecedeSafely;
 
             template <
                 typename Natural,
@@ -22,7 +22,7 @@ namespace junction {
                     Survey< SinglyLinked< Elemental >, Natural, Elemental >,
                     Account< SinglyLinked< Elemental >, Natural, Elemental >,
                     Protract< Natural, Elemental, true >,
-                    SucceedSafely< Natural, Elemental >,
+                    RecedeSafely< Natural, Elemental >,
                     RemoveAll< SinglyLinked< Elemental >, Natural, Elemental >
                 };
 
@@ -35,7 +35,7 @@ namespace junction {
                     Survey< DoublyLinked< Elemental >, Natural, Elemental >,
                     Account< DoublyLinked< Elemental >, Natural, Elemental >,
                     Protract< Natural, Elemental, true >,
-                    SucceedSafely< Natural, Elemental >,
+                    RecedeSafely< Natural, Elemental >,
                     RemoveAll< DoublyLinked< Elemental >, Natural, Elemental >
                 };
 
