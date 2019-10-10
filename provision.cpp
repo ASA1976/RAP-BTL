@@ -86,11 +86,11 @@ DemonstrateRation() {
     static const unsigned
         Maximum = 16;
     static auto&
-        StackElevator = Elevator< unsigned, Maximum, int >;
+        StackElevator = SureElevator< unsigned, Maximum, int >;
     static auto&
-        QueueContractor = Contractor< unsigned, Maximum, int >;
+        QueueContractor = SureContractor< unsigned, Maximum, int >;
     static auto&
-        PoolContributor = Contributor< unsigned, Maximum, int >;
+        PoolContributor = SureContributor< unsigned, Maximum, int >;
     Elevatory< unsigned, Maximum, int >
         stack;
     Contractional< unsigned, Maximum, int >

@@ -39,7 +39,7 @@ void setup() {
 }
 
 void loop() {
-    static auto& Manager = Contractor<SIZES_TYPE, QUEUE_MAX, SAMPLES_TYPE>;
+    static auto& Manager = SureContractor<SIZES_TYPE, QUEUE_MAX, SAMPLES_TYPE>;
     static auto& Writer = WriteIncrementDirection<SIZES_TYPE, QUEUE_MAX, SAMPLES_TYPE>;
     SIZES_TYPE position; // Initialized by 'protract' below, otherwise unused
     if (Manager.account(queue) == Manager.survey(queue)) // Is the queue full?
