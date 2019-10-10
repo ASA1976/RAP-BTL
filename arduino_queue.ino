@@ -11,6 +11,11 @@
 #define QUEUE_MAX 8
 #define SIZES_TYPE uint8_t
 #define SAMPLES_TYPE int
+// Use PROGMEM:
+#define MEMORY(LITERAL) F(LITERAL)
+// Use SRAM:
+// #define MEMORY(LITERAL) LITERAL
+// REQUIRED for use in Arduino sketches:
 #define RAPBTL_NO_STD_CPLUSPLUS
 #include "ration/contraction.hpp"
 
@@ -25,13 +30,15 @@ void printQueue() {
     if (!Reader.begins(queue, 0))
         return; // Queue was empty
     Reader.scale.begin(queue, position, 0);
-    Serial.println(""); // For some clarity
+    Serial.print(MEMORY("Queue: "));
     while (true) {
-        Serial.println(Reader.scale.go(queue, position).to);
+        Serial.print(Reader.scale.go(queue, position).to);
         if (!Reader.traverses(queue, position, 1))
-            return; // End of the queue
+            break; // End of the queue
         Reader.scale.traverse(queue, position, 1);
+        Serial.print(MEMORY(", "));
     }
+	Serial.println(MEMORY(""));
 }
 
 void setup() {
