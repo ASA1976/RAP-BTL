@@ -21,7 +21,7 @@ const unsigned short
 Contributory< unsigned short, NodePoolSize, SinglyNodal< char > >
     NodePool;
 
-// Use SafePoolAdjunct if overflowing the pool is a possibility
+// Use SurePoolSingleAdjunct if overflowing the pool is a possibility
 constexpr SinglyAdjunctive< unsigned short, char >
     NodePoolAdjunct = FastPoolSingleAdjunct< unsigned short, NodePoolSize, char, NodePool >;
 

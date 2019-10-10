@@ -28,9 +28,9 @@ namespace allocation {
          *     Function Template
          *     -----------------
          *     This version does not check the pool's limit when distributing 
-         *     elements from the pool.  Use AssignSafely instead if the calling
-         *     context could request more elements than are available in the 
-         *     pool.
+         *     elements from the pool.  Use AssignAssuredly instead if the 
+         *     calling context could request more elements than are available 
+         *     in the pool.
          * @tparam Natural 
          *     Type of the natural integer counts.
          * @tparam Maximum
@@ -104,7 +104,7 @@ namespace allocation {
                 Pool
         >
         static inline const Locational< Subjective >
-        AssignSafely(
+        AssignAssuredly(
             Referential< Locational< Subjective > >
                 locality
         ) {
@@ -119,7 +119,7 @@ namespace allocation {
 #endif
             Natural
                 index;
-            if (DistributeSafely( Pool, index ))
+            if (DistributeAssuredly( Pool, index ))
                 locality = Locate( GoWrite( Pool, index ).to ).at;
             else
                 locality = 0;
@@ -133,7 +133,7 @@ namespace allocation {
          *     Function Template
          *     -----------------
          *     This version does not set the pointer to null after revoking the
-         *     element back into the pool.  Use RevokeSafely instead if the 
+         *     element back into the pool.  Use RevokeAssuredly instead if the 
          *     calling context might attempt to use the pointer after the 
          *     revocation.
          * @tparam Natural
@@ -206,7 +206,7 @@ namespace allocation {
                 Pool
         >
         static inline void
-        RevokeSafely(
+        RevokeAssuredly(
             Referential< Locational< Subjective > >
                 locality
         ) {
@@ -221,7 +221,7 @@ namespace allocation {
             Natural
                 index;
             index = static_cast< Natural >(locality - Pool.resource.source);
-            if (RetributeSafely( Pool, index ))
+            if (RetributeAssuredly( Pool, index ))
                 locality = 0;
         }
 
@@ -280,9 +280,9 @@ namespace allocation {
                 Pool
         >
         constexpr DefaultAllocative< Subjective >
-            SafePoolAllocator = {
-                AssignSafely< Natural, Maximum, Subjective, Pool >,
-                RevokeSafely< Natural, Maximum, Subjective, Pool >
+            SurePoolAllocator = {
+                AssignAssuredly< Natural, Maximum, Subjective, Pool >,
+                RevokeAssuredly< Natural, Maximum, Subjective, Pool >
             };
 
     }
