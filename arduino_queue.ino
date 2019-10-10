@@ -38,7 +38,7 @@ void printQueue() {
         Reader.scale.traverse(queue, position, 1);
         Serial.print(MEMORY(", "));
     }
-	Serial.println(MEMORY(""));
+    Serial.println(MEMORY(""));
 }
 
 void setup() {
@@ -55,6 +55,6 @@ void loop() {
         Manager.retract(queue, 1); // Dequeue first sample space
     Manager.protract(queue, position, 1); // Enqueue new sample space
     Writer.scale.go(queue, position).to = analogRead(ANALOG_PIN);
-	// Use Writer to move position forward after protracting more than 1
+    // Use Writer to move position forward after protracting more than 1
     printQueue(); 
 }
