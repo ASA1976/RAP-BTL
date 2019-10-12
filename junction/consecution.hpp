@@ -1246,6 +1246,7 @@ namespace junction {
             SetNext( sequence.last, sequence.unused );
             sequence.unused = GetNext( previous );
             UnsetNext( previous );
+            sequence.last = previous;
             sequence.count -= count;
             return true;
         }

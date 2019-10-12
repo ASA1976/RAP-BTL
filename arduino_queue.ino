@@ -11,34 +11,29 @@
 #define QUEUE_MAX 8
 #define SIZES_TYPE uint8_t
 #define SAMPLES_TYPE int
-// Use PROGMEM:
-#define MEMORY(LITERAL) F(LITERAL)
-// Use SRAM:
-// #define MEMORY(LITERAL) LITERAL
-// REQUIRED for use in Arduino sketches:
 #define RAPBTL_NO_STD_CPLUSPLUS
 #include "ration/contraction.hpp"
 
 using namespace ration::contraction;
 using queue_t = Contractional<SIZES_TYPE, QUEUE_MAX, SAMPLES_TYPE>;
 
-queue_t queue; // This defaults to all zero, a valid initial state for this type
+queue_t queue;
 
-void printQueue() {
+static void printQueue() {
     static auto& Reader = ReadIncrementDirection<SIZES_TYPE, QUEUE_MAX, SAMPLES_TYPE>;
-    SIZES_TYPE position; // Initialized by 'begin' below, otherwise unused
+    SIZES_TYPE position;
     if (!Reader.begins(queue, 0))
-        return; // Queue was empty
+        return;
     Reader.scale.begin(queue, position, 0);
-    Serial.print(MEMORY("Queue: "));
+    Serial.print(F("Queue: "));
     while (true) {
         Serial.print(Reader.scale.go(queue, position).to);
         if (!Reader.traverses(queue, position, 1))
-            break; // End of the queue
+            break;
         Reader.scale.traverse(queue, position, 1);
-        Serial.print(MEMORY(", "));
+        Serial.print(F(", "));
     }
-    Serial.println(MEMORY(""));
+    Serial.println(F(""));
 }
 
 void setup() {
@@ -46,15 +41,12 @@ void setup() {
 }
 
 void loop() {
-    // SureContractor performs size checks on each operation, which is slower
-    // static auto& Manager = SureContractor<SIZES_TYPE, QUEUE_MAX, SAMPLES_TYPE>;
-    static auto& Manager = FastContractor<SIZES_TYPE, QUEUE_MAX, SAMPLES_TYPE>;
+    static auto& Manager = SureContractor<SIZES_TYPE, QUEUE_MAX, SAMPLES_TYPE>;
     static auto& Writer = WriteIncrementDirection<SIZES_TYPE, QUEUE_MAX, SAMPLES_TYPE>;
-    SIZES_TYPE position; // Initialized by 'protract' below, otherwise unused
-    if (Manager.account(queue) == Manager.survey(queue)) // Is the queue full?
-        Manager.retract(queue, 1); // Dequeue first sample space
-    Manager.protract(queue, position, 1); // Enqueue new sample space
+    SIZES_TYPE position;
+    if (Manager.account(queue) == Manager.survey(queue))
+        Manager.retract(queue, 1);
+    Manager.protract(queue, position, 1);
     Writer.scale.go(queue, position).to = analogRead(ANALOG_PIN);
-    // Use Writer to move position forward after protracting more than 1
     printQueue(); 
 }
