@@ -38,8 +38,8 @@ static void printSequence() {
 }
 
 void setup() {
-	using nodal_t = SinglyNodal<SAMPLES_TYPE>;
-	static nodal_t nodes[SEQUENCE_MAX];
+    using nodal_t = SinglyNodal<SAMPLES_TYPE>;
+    static nodal_t nodes[SEQUENCE_MAX];
     IntegrateNodes(list, nodes);
     Serial.begin(SERIAL_RATE); 
 }
