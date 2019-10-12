@@ -17,10 +17,8 @@
 using namespace junction;
 
 using list_t = SinglyJunctive<SIZES_TYPE, SAMPLES_TYPE>;
-using nodal_t = SinglyNodal<SAMPLES_TYPE>;
 using positional_t = SinglyPositional<SAMPLES_TYPE>;
 
-nodal_t nodes[SEQUENCE_MAX];
 list_t list;
 
 static void printSequence() {
@@ -40,6 +38,8 @@ static void printSequence() {
 }
 
 void setup() {
+	using nodal_t = SinglyNodal<SAMPLES_TYPE>;
+	static nodal_t nodes[SEQUENCE_MAX];
     IntegrateNodes(list, nodes);
     Serial.begin(SERIAL_RATE); 
 }
