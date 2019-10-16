@@ -12,59 +12,65 @@
 #define SIZES_TYPE uint8_t
 #define SAMPLES_TYPE int
 #define RAPBTL_NO_STD_CPLUSPLUS
-#include "junction/consecution.hpp"
+#include "ration/consecution.hpp"
+#include "sortation.hpp"
 
-using namespace junction;
+using namespace ration::consecution;
 
-using list_t = SinglyJunctive<SIZES_TYPE, SAMPLES_TYPE>;
-using positional_t = SinglyPositional<SAMPLES_TYPE>;
+using compact_t = Compact<SIZES_TYPE, SEQUENCE_MAX, SAMPLES_TYPE>;
+using read_positional_t = ReadPositional<SAMPLES_TYPE>;
+using write_positional_t = WritePositional<SAMPLES_TYPE>;
 
-list_t list;
+compact_t sequence;
 
 static void printSequence() {
-    static auto& Reader = ReadIncrementSingleDirection<SIZES_TYPE, SAMPLES_TYPE>;
-    positional_t position;
-    if (!Reader.begins(list, 0))
+    static auto& Reader = ReadIncrementDirection<SIZES_TYPE, SEQUENCE_MAX, SAMPLES_TYPE>;
+    read_positional_t position;
+    if (!Reader.begins(sequence, 0))
         return; 
-    Reader.scale.begin(list, position, 0);
+    Reader.scale.begin(sequence, position, 0);
     while (true) {
-        Serial.print(Reader.scale.go(list, position).to);
-        if (!Reader.traverses(list, position, 1))
+        Serial.print(Reader.scale.go(sequence, position).to);
+        if (!Reader.traverses(sequence, position, 1))
             break;
-        Reader.scale.traverse(list, position, 1);
+        Reader.scale.traverse(sequence, position, 1);
         Serial.print(F(", "));
     }
     Serial.println(F(""));
 }
 
 void setup() {
-    using nodal_t = SinglyNodal<SAMPLES_TYPE>;
-    static nodal_t nodes[SEQUENCE_MAX];
-    IntegrateNodes(list, nodes);
     Serial.begin(SERIAL_RATE); 
 }
 
 void loop() {
-    using namespace junction::consecution;
     using namespace sortation;
     using namespace comparison;
-    static auto& Sequencer = SingleSequencer<SIZES_TYPE, SAMPLES_TYPE, DefaultStaticSingleAdjunct<SIZES_TYPE, SAMPLES_TYPE>>;
-    static auto& Search = SearchScalarBisection<list_t, positional_t, SIZES_TYPE, SAMPLES_TYPE>;
-    static auto& Scale = ReadIncrementSingleScale<SIZES_TYPE, SAMPLES_TYPE>;
-    positional_t position;
+    static auto& ArraySequencer = Sequencer<SIZES_TYPE, SEQUENCE_MAX, SAMPLES_TYPE, MoveElements<SIZES_TYPE, SAMPLES_TYPE>>;
+    static auto& Search = SearchBisection<compact_t, read_positional_t, SIZES_TYPE, SAMPLES_TYPE>;
+    static auto& Liner = ReadLiner<SIZES_TYPE, SEQUENCE_MAX, SAMPLES_TYPE>;
+    read_positional_t read_position;
+    write_positional_t write_position;
     int sample;
     sample = analogRead(ANALOG_PIN);
-    if (list.count == 0) {
-        Sequencer.proceed(list, sample);
+    if (ArraySequencer.account(sequence) == 0) {
+        ArraySequencer.accede(sequence, sample);
         return;
     }
-    if (list.count == list.total)
-        Sequencer.recede(list, 1);
-    Scale.begin(list, position, 0);
-    Search(list, Scale, sample, position, list.count - 1, IsEqual, IsGreater);
-    if (Scale.go(list, position).to >= sample)
-        Sequencer.cede(list, position, sample);
+    if (ArraySequencer.account(sequence) == SEQUENCE_MAX)
+        ArraySequencer.recede(sequence, 1);
+    Liner.increment.begin(sequence, read_position, 0);
+    Search(sequence, Liner, sample, read_position, 0, ArraySequencer.account(sequence) - 1, IsEqual, IsGreater);
+	write_position = const_cast<write_positional_t>(read_position);
+    if (Liner.increment.go(sequence, read_position).to >= sample)
+        ArraySequencer.cede(sequence, write_position, sample);
     else
-        Sequencer.precede(list, position, sample);
+        ArraySequencer.precede(sequence, write_position, sample);
     printSequence();
+}
+
+int main() {
+    setup();
+	for (SIZES_TYPE count = 0; count < SEQUENCE_MAX * 2; count++)
+        loop();
 }
