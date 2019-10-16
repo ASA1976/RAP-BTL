@@ -60,7 +60,7 @@ void loop() {
         ArraySequencer.recede(sequence, 1);
     Liner.increment.begin(sequence, read_position, 0);
     Search(sequence, Liner, sample, read_position, 0, ArraySequencer.account(sequence) - 1, IsEqual, IsGreater);
-	write_position = const_cast<write_position_t>(read_position);
+    write_position = const_cast<write_position_t>(read_position);
     if (Liner.increment.go(sequence, read_position).to >= sample)
         ArraySequencer.cede(sequence, write_position, sample);
     else
