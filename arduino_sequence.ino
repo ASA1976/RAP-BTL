@@ -9,23 +9,22 @@
 #define ANALOG_PIN A3
 #define SERIAL_RATE 9600
 #define SEQUENCE_MAX 8
-#define SIZES_TYPE uint8_t
+#define SIZES_TYPE unsigned int
 #define SAMPLES_TYPE int
 #define RAPBTL_NO_STD_CPLUSPLUS
 #include "ration/consecution.hpp"
 #include "sortation.hpp"
 
 using namespace ration::consecution;
+using sequence_t = Compact<SIZES_TYPE, SEQUENCE_MAX, SAMPLES_TYPE>;
+using read_position_t = ReadPositional<SAMPLES_TYPE>;
+using write_position_t = WritePositional<SAMPLES_TYPE>;
 
-using compact_t = Compact<SIZES_TYPE, SEQUENCE_MAX, SAMPLES_TYPE>;
-using read_positional_t = ReadPositional<SAMPLES_TYPE>;
-using write_positional_t = WritePositional<SAMPLES_TYPE>;
-
-compact_t sequence;
+sequence_t sequence;
 
 static void printSequence() {
     static auto& Reader = ReadIncrementDirection<SIZES_TYPE, SEQUENCE_MAX, SAMPLES_TYPE>;
-    read_positional_t position;
+    read_position_t position;
     if (!Reader.begins(sequence, 0))
         return; 
     Reader.scale.begin(sequence, position, 0);
@@ -47,10 +46,10 @@ void loop() {
     using namespace sortation;
     using namespace comparison;
     static auto& ArraySequencer = Sequencer<SIZES_TYPE, SEQUENCE_MAX, SAMPLES_TYPE, MoveElements<SIZES_TYPE, SAMPLES_TYPE>>;
-    static auto& Search = SearchBisection<compact_t, read_positional_t, SIZES_TYPE, SAMPLES_TYPE>;
+    static auto& Search = SearchBisection<sequence_t, read_position_t, SIZES_TYPE, SAMPLES_TYPE>;
     static auto& Liner = ReadLiner<SIZES_TYPE, SEQUENCE_MAX, SAMPLES_TYPE>;
-    read_positional_t read_position;
-    write_positional_t write_position;
+    read_position_t read_position;
+    write_position_t write_position;
     int sample;
     sample = analogRead(ANALOG_PIN);
     if (ArraySequencer.account(sequence) == 0) {
@@ -61,16 +60,10 @@ void loop() {
         ArraySequencer.recede(sequence, 1);
     Liner.increment.begin(sequence, read_position, 0);
     Search(sequence, Liner, sample, read_position, 0, ArraySequencer.account(sequence) - 1, IsEqual, IsGreater);
-	write_position = const_cast<write_positional_t>(read_position);
+	write_position = const_cast<write_position_t>(read_position);
     if (Liner.increment.go(sequence, read_position).to >= sample)
         ArraySequencer.cede(sequence, write_position, sample);
     else
         ArraySequencer.precede(sequence, write_position, sample);
     printSequence();
-}
-
-int main() {
-    setup();
-	for (SIZES_TYPE count = 0; count < SEQUENCE_MAX * 2; count++)
-        loop();
 }

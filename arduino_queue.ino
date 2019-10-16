@@ -9,7 +9,7 @@
 #define ANALOG_PIN A3
 #define SERIAL_RATE 9600
 #define QUEUE_MAX 8
-#define SIZES_TYPE uint8_t
+#define SIZES_TYPE unsigned int
 #define SAMPLES_TYPE int
 #define RAPBTL_NO_STD_CPLUSPLUS
 #include "ration/contraction.hpp"
