@@ -161,22 +161,6 @@ namespace ration {
                 Length,
             typename Elemental
         >
-        static inline bool
-        Instantiate(
-            Referential< Compact< Natural, Length, Elemental > >
-                sequence,
-            Referential< const Natural >
-                count
-        ) {
-            return false;
-        }
-
-        template <
-            typename Natural,
-            Natural
-                Length,
-            typename Elemental
-        >
         static inline Natural
         Account(
             Referential< const Compact< Natural, Length, Elemental > >
@@ -593,6 +577,26 @@ namespace ration {
             Natural
                 Length,
             typename Elemental,
+            const bool
+                Safety
+        >
+        static inline bool
+        Antecede(
+            Referential< Compact< Natural, Length, Elemental > >
+                sequence,
+            Referential< const Natural >
+                count
+        ) {
+            if (Safety && Account( sequence ) >= Length)
+                return false;
+            return Length - Account( sequence ) >= count;
+        }
+
+        template <
+            typename Natural,
+            Natural
+                Length,
+            typename Elemental,
             Referential< MemoryMoving< Natural, Elemental > >
                 Move,
             const bool
@@ -698,6 +702,7 @@ namespace ration {
             Referential< const Elemental >
                 value
         ) {
+            using namespace ::location;
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
@@ -705,7 +710,6 @@ namespace ration {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            using namespace ::location;
             if (Safety && (rank < sequence.source || rank >= sequence.source + Account( sequence )))
                 return false;
             if (Safety && Account( sequence ) >= Length)
@@ -1196,7 +1200,7 @@ namespace ration {
         >
         constexpr Sequent< Compact< Natural, Length, Elemental >, ReadPositional< Elemental >, Natural, Elemental >
             FastSequencer = {
-                Instantiate< Natural, Length, Elemental >,
+                Antecede< Natural, Length, Elemental, false >,
                 Account< Natural, Length, Elemental >,
                 Accede< Natural, Length, Elemental, Move, false >,
                 Precede< Natural, Length, Elemental, Move, false >,
@@ -1221,7 +1225,7 @@ namespace ration {
         >
         constexpr Sequent< Compact< Natural, Length, Elemental >, ReadPositional< Elemental >, Natural, Elemental >
             SureSequencer = {
-                Instantiate< Natural, Length, Elemental >,
+                Antecede< Natural, Length, Elemental, true >,
                 Account< Natural, Length, Elemental >,
                 Accede< Natural, Length, Elemental, Move, true >,
                 Precede< Natural, Length, Elemental, Move, true >,
