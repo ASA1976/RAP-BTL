@@ -2,8 +2,8 @@
 // Licensed under the Academic Free License version 3.0
 #ifndef RATION_CONSECUTION_MODULE
 #define RATION_CONSECUTION_MODULE
-#include "../consecution.hpp"
 #include "../ration.hpp"
+#include "../consecution.hpp"
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
 #include <type_traits>
 #endif
@@ -61,6 +61,47 @@ namespace ration {
 
         template <
             typename Natural,
+            Natural
+                Length,
+            typename Elemental
+        >
+        using Consequent = bool(
+            Referential< Compact< Natural, Length, Elemental > >
+                sequence, 
+            Referential< const Elemental >
+                value 
+        );
+
+        template <
+            typename Natural,
+            Natural
+                Length,
+            typename Elemental
+        >
+        using Precedent = bool(
+            Referential< Compact< Natural, Length, Elemental > >
+                sequence, 
+            Referential< const ReadPositional< Elemental > >
+                position, 
+            Referential< const Elemental >
+                value 
+        );
+
+        template <
+            typename Natural,
+            Natural
+                Length,
+            typename Elemental
+        >
+        using Recessive = bool(
+            Referential< Compact< Natural, Length, Elemental > >
+                sequence, 
+            Referential< const Natural >
+                count 
+        );
+
+        template <
+            typename Natural,
             typename Elemental
         >
         static inline bool
@@ -72,6 +113,13 @@ namespace ration {
             Natural
                 count
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
+            using namespace ::std;
+            static_assert(
+                is_integral< Natural >::value && is_unsigned< Natural >::value,
+                "Natural:  Unsigned integer type required"
+            );
+#endif
             Natural 
                 index;
             if (from < to)
@@ -96,6 +144,13 @@ namespace ration {
             Referential< Compact< Natural, Length, Elemental > >
                 sequence
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
+            using namespace ::std;
+            static_assert(
+                is_integral< Natural >::value && is_unsigned< Natural >::value,
+                "Natural:  Unsigned integer type required"
+            );
+#endif
             sequence.allotment = 0;
             return sequence;
         }
@@ -127,6 +182,13 @@ namespace ration {
             Referential< const Compact< Natural, Length, Elemental > >
                 sequence
         ) {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
+            using namespace ::std;
+            static_assert(
+                is_integral< Natural >::value && is_unsigned< Natural >::value,
+                "Natural:  Unsigned integer type required"
+            );
+#endif
             return sequence.allotment;
         }
 
@@ -219,9 +281,9 @@ namespace ration {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            if (sequence.allotment < 1)
-                return false;
-            return sequence.source <= position && position <= sequence.source + sequence.allotment - 1;
+            return Account( sequence ) > 0 
+                && sequence.source <= position 
+                && position <= sequence.source + sequence.allotment - 1;
         }
 
         template <
@@ -532,7 +594,9 @@ namespace ration {
                 Length,
             typename Elemental,
             Referential< MemoryMoving< Natural, Elemental > >
-                Move
+                Move,
+            const bool
+                Safety
         >
         static inline bool
         Accede(
@@ -548,7 +612,9 @@ namespace ration {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            if (!Move( sequence.source, sequence.source + 1, sequence.allotment ))
+            if (!Move( sequence.source, sequence.source + 1, sequence.allotment ) && Safety)
+                return false;
+            if (Safety && Account( sequence ) >= Length)
                 return false;
             sequence.source[0] = value;
             sequence.allotment++;
@@ -564,7 +630,9 @@ namespace ration {
                 Length,
             typename Elemental,
             Referential< MemoryMoving< Natural, Elemental > >
-                Move
+                Move,
+            const bool
+                Safety
         >
         static inline bool
         Accede(
@@ -598,7 +666,9 @@ namespace ration {
                 direction.scale.traverse( space, apposition, 1 );
                 count++;
             }
-            if (!Move( sequence.source, sequence.source + count, sequence.allotment ))
+            if (Safety && sequence.allotment + count > Length)
+                return false;
+            if (!Move( sequence.source, sequence.source + count, sequence.allotment ) && Safety)
                 return false;
             apposition = from;
             for (Natural offset = 0; offset < count; offset++) {
@@ -615,13 +685,15 @@ namespace ration {
                 Length,
             typename Elemental,
             Referential< MemoryMoving< Natural, Elemental > >
-                Move
+                Move,
+            const bool
+                Safety
         >
         static inline bool
         Precede(
             Referential< Compact< Natural, Length, Elemental > >
                 sequence,
-            Referential< const WritePositional< Elemental > >
+            Referential< const ReadPositional< Elemental > >
                 rank,
             Referential< const Elemental >
                 value
@@ -634,12 +706,18 @@ namespace ration {
             );
 #endif
             using namespace ::location;
+            if (Safety && (rank < sequence.source || rank >= sequence.source + Account( sequence )))
+                return false;
+            if (Safety && Account( sequence ) >= Length)
+                return false;
             const Natural
                 index = static_cast<Natural>(rank - sequence.source);
+            const WritePositional< Elemental > 
+                position = const_cast<WritePositional< Elemental >>(rank);
             if (index < sequence.allotment)
-                if (!Move( rank, rank + 1, sequence.allotment - index ))
+                if (!Move( position, position + 1, sequence.allotment - index ) && Safety)
                     return false;
-            Refer( rank ).to = value;
+            Refer( position ).to = value;
             sequence.allotment++;
             return true;
         }
@@ -653,13 +731,15 @@ namespace ration {
                 Length,
             typename Elemental,
             Referential< MemoryMoving< Natural, Elemental > >
-                Move
+                Move,
+            const bool
+                Safety
         >
         static inline bool
         Precede(
             Referential< Compact< Natural, Length, Elemental > >
                 sequence,
-            Referential< const WritePositional< Elemental > >
+            Referential< const ReadPositional< Elemental > >
                 rank,
             Referential< const Directional< const Relative, Appositional, RelativeNatural, const Elemental > >
                 direction,
@@ -681,6 +761,8 @@ namespace ration {
                 "RelativeNatural:  Unsigned integer type required"
             );
 #endif
+            if (Safety && (rank < sequence.source || rank >= sequence.source + Account( sequence )))
+                return false;
             Appositional
                 apposition = from;
             Natural
@@ -691,11 +773,15 @@ namespace ration {
                 direction.scale.traverse( space, apposition, 1 );
                 count++;
             }
-            if (!Move( rank, rank + count, remaining ))
+            if (Safety && Account( sequence ) + count > Length)
+                return false;
+            const WritePositional< Elemental >
+                position = const_cast<WritePositional< Elemental >>(rank);
+            if (!Move( position, position + count, remaining ) && Safety)
                 return false;
             apposition = from;
             for (Natural offset = 0; offset < count; offset++) {
-                rank[offset] = direction.scale.go( space, apposition ).to;
+                position[offset] = direction.scale.go( space, apposition ).to;
                 direction.scale.traverse( space, apposition, 1 );
             }
             sequence.allotment += count;
@@ -708,17 +794,20 @@ namespace ration {
                 Length,
             typename Elemental,
             Referential< MemoryMoving< Natural, Elemental > >
-                Move
+                Move,
+            const bool
+                Safety
         >
         static inline bool
         Cede(
             Referential< Compact< Natural, Length, Elemental > >
                 sequence,
-            Referential< const WritePositional< Elemental > >
+            Referential< const ReadPositional< Elemental > >
                 rank,
             Referential< const Elemental >
                 value
         ) {
+            using namespace ::location;
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
@@ -726,13 +815,16 @@ namespace ration {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            using namespace ::location;
+            if (Safety && (rank < sequence.source || rank >= sequence.source + Account( sequence )))
+                return false;
             const Natural
                 index = static_cast<Natural>(rank + 1 - sequence.source);
+            const WritePositional< Elemental >
+                position = const_cast<WritePositional< Elemental >>(rank);
             if (index < sequence.allotment)
-                if (!Move( rank + 1, rank + 2, sequence.allotment - index ))
+                if (!Move( position + 1, position + 2, sequence.allotment - index ) && Safety)
                     return false;
-            Refer( rank ).to = value;
+            Refer( position ).to = value;
             sequence.allotment++;
             return true;
         }
@@ -746,13 +838,15 @@ namespace ration {
                 Length,
             typename Elemental,
             Referential< MemoryMoving< Natural, Elemental > >
-                Move
+                Move,
+            const bool
+                Safety
         >
         static inline bool
         Cede(
             Referential< Compact< Natural, Length, Elemental > >
                 sequence,
-            Referential< const WritePositional< Elemental > >
+            Referential< const ReadPositional< Elemental > >
                 rank,
             Referential< const Directional< const Relative, Appositional, RelativeNatural, const Elemental > >
                 direction,
@@ -774,19 +868,21 @@ namespace ration {
                 "RelativeNatural:  Unsigned integer type required"
             );
 #endif
+            if (Safety && (rank < sequence.source || rank >= sequence.source + Account( sequence )))
+                return false;
             Appositional
                 apposition = from;
             Natural
                 count = 1;
             const WritePositional< Elemental >
-                first = rank + 1;
+                first = const_cast<WritePositional< Elemental >>(rank) + 1;
             const Natural
                 remaining = sequence.allotment - static_cast<Natural>(first - sequence.source);
             while (direction.scale.order.equality.is_not_equal( apposition, to )) {
                 direction.scale.traverse( space, apposition, 1 );
                 count++;
             }
-            if (!Move( first, first + count, remaining ))
+            if (!Move( first, first + count, remaining ) && Safety)
                 return false;
             apposition = from;
             for (Natural offset = 0; offset < count; offset++) {
@@ -801,7 +897,9 @@ namespace ration {
             typename Natural,
             Natural
                 Length,
-            typename Elemental
+            typename Elemental,
+            const bool
+                Safety
         >
         static inline bool
         Proceed(
@@ -817,6 +915,8 @@ namespace ration {
                 "Natural:  Unsigned integer type required"
             );
 #endif
+            if (Safety && sequence.allotment >= Length)
+                return false;
             sequence.source[sequence.allotment++] = value;
             return true;
         }
@@ -828,7 +928,9 @@ namespace ration {
             typename Natural,
             Natural
                 Length,
-            typename Elemental
+            typename Elemental,
+            const bool
+                Safety
         >
         static inline bool
         Proceed(
@@ -856,9 +958,13 @@ namespace ration {
 #endif
             Appositional
                 apposition = from;
+            if (Safety && Account( sequence ) >= Length)
+                return false;
             sequence.source[sequence.allotment++] = direction.scale.go( space, apposition ).to;
             while (direction.scale.order.equality.is_not_equal( apposition, to )) {
                 direction.scale.traverse( space, apposition, 1 );
+                if (Safety && Account( sequence ) >= Length)
+                    return false;
                 sequence.source[sequence.allotment++] = direction.scale.go( space, apposition ).to;
             }
             return true;
@@ -870,7 +976,9 @@ namespace ration {
                 Length,
             typename Elemental,
             Referential< MemoryMoving< Natural, Elemental > >
-                Move
+                Move,
+            const bool
+                Safety
         >
         static inline bool
         Succeed(
@@ -886,12 +994,13 @@ namespace ration {
                 "Natural:  Unsigned integer type required"
             );
 #endif
+            if (Safety && count > sequence.allotment)
+                return false;
             const Natural
                 remaining = sequence.allotment - count;
-            if (remaining > 0) {
-                if (!Move( sequence.source + count, sequence.source, remaining ))
+            if (remaining > 0)
+                if (!Move( sequence.source + count, sequence.source, remaining ) && Safety)
                     return false;
-            }
             sequence.allotment -= count;
             return true;
         }
@@ -902,17 +1011,20 @@ namespace ration {
                 Length,
             typename Elemental,
             Referential< MemoryMoving< Natural, Elemental > >
-                Move
+                Move,
+            const bool
+                Safety
         >
         static inline bool
         Supersede(
             Referential< Compact< Natural, Length, Elemental > >
                 sequence,
-            Referential< const WritePositional< Elemental > >
+            Referential< const ReadPositional< Elemental > >
                 rank,
             Referential< const Natural >
                 count
         ) {
+            using namespace ::location;
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
@@ -920,13 +1032,16 @@ namespace ration {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            using namespace ::location;
+            if (Safety && (rank < sequence.source || rank >= sequence.source + Account( sequence )))
+                return false;
             const WritePositional< Elemental >
-                first = rank + count;
+                first = const_cast<WritePositional< Elemental >>(rank) + 1;
+            if (Safety && first < sequence.source + count)
+                return false;
             const Natural
                 remaining = sequence.allotment - static_cast<Natural>(first - sequence.source);
             if (remaining > 0)
-                if (!Move( first, rank, remaining ))
+                if (!Move( first, first - count, remaining ) && Safety)
                     return false;
             sequence.allotment -= count;
             return true;
@@ -938,17 +1053,20 @@ namespace ration {
                 Length,
             typename Elemental,
             Referential< MemoryMoving< Natural, Elemental > >
-                Move
+                Move,
+            const bool
+                Safety
         >
         static inline bool
         Concede(
             Referential< Compact< Natural, Length, Elemental > >
                 sequence,
-            Referential< const WritePositional< Elemental > >
+            Referential< const ReadPositional< Elemental > >
                 rank,
             Referential< const Natural >
                 count
         ) {
+            using namespace ::location;
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
@@ -956,13 +1074,17 @@ namespace ration {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            using namespace ::location;
+            if (Safety && (rank < sequence.source || rank >= sequence.source + Account( sequence )))
+                return false;
             const WritePositional< Elemental >
-                first = rank + 1 + count;
+                position = const_cast<WritePositional< Elemental >>(rank),
+                first = position + count;
+            if (Safety && first > sequence.source + Account( sequence ))
+                return false;
             const Natural
                 remaining = sequence.allotment - static_cast<Natural>(first - sequence.source);
             if (remaining > 0)
-                if (!Move( first, rank, remaining ))
+                if (!Move( first, position, remaining ) && Safety)
                     return false;
             sequence.allotment -= count;
             return true;
@@ -972,7 +1094,9 @@ namespace ration {
             typename Natural,
             Natural
                 Length,
-            typename Elemental
+            typename Elemental,
+            const bool
+                Safety
         >
         static inline bool
         Recede(
@@ -988,6 +1112,8 @@ namespace ration {
                 "Natural:  Unsigned integer type required"
             );
 #endif
+            if (Safety && count > Account( sequence ))
+                return false;
             sequence.allotment -= count;
             return true;
         }
@@ -1017,7 +1143,7 @@ namespace ration {
             Referential< Compact< Natural, Length, Elemental > >
                 sequence
         ) {
-            const bool actioned = sequence.allotment;
+            const bool actioned = sequence.allotment != 0;
             sequence.allotment = 0;
             return actioned;
         }
@@ -1033,12 +1159,31 @@ namespace ration {
             Referential< MemoryMoving< Natural, Elemental > >
                 Move
         >
-        constexpr Conjoint< Compact< Natural, Length, Elemental >, WritePositional< Elemental >, Relative, Appositional, RelativeNatural, Elemental >
-            Conjoiner = {
-                Accede< Relative, Appositional, RelativeNatural, Natural, Length, Elemental, Move >,
-                Precede< Relative, Appositional, RelativeNatural, Natural, Length, Elemental, Move >,
-                Cede< Relative, Appositional, RelativeNatural, Natural, Length, Elemental, Move >,
-                Proceed< Relative, Appositional, RelativeNatural, Natural, Length, Elemental >
+        constexpr Conjoint< Compact< Natural, Length, Elemental >, ReadPositional< Elemental >, Relative, Appositional, RelativeNatural, Elemental >
+            FastConjoiner = {
+                Accede< Relative, Appositional, RelativeNatural, Natural, Length, Elemental, Move, false >,
+                Precede< Relative, Appositional, RelativeNatural, Natural, Length, Elemental, Move, false >,
+                Cede< Relative, Appositional, RelativeNatural, Natural, Length, Elemental, Move, false >,
+                Proceed< Relative, Appositional, RelativeNatural, Natural, Length, Elemental, false >
+            };
+
+        template <
+            typename Relative,
+            typename Appositional,
+            typename RelativeNatural,
+            typename Natural,
+            Natural
+                Length,
+            typename Elemental,
+            Referential< MemoryMoving< Natural, Elemental > >
+                Move
+        >
+        constexpr Conjoint< Compact< Natural, Length, Elemental >, ReadPositional< Elemental >, Relative, Appositional, RelativeNatural, Elemental >
+            SureConjoiner = {
+                Accede< Relative, Appositional, RelativeNatural, Natural, Length, Elemental, Move, true >,
+                Precede< Relative, Appositional, RelativeNatural, Natural, Length, Elemental, Move, true >,
+                Cede< Relative, Appositional, RelativeNatural, Natural, Length, Elemental, Move, true >,
+                Proceed< Relative, Appositional, RelativeNatural, Natural, Length, Elemental, true >
             };
 
         template <
@@ -1049,21 +1194,46 @@ namespace ration {
             Referential< MemoryMoving< Natural, Elemental > >
                 Move
         >
-        constexpr Sequent< Compact< Natural, Length, Elemental >, WritePositional< Elemental >, Natural, Elemental >
-            Sequencer = {
+        constexpr Sequent< Compact< Natural, Length, Elemental >, ReadPositional< Elemental >, Natural, Elemental >
+            FastSequencer = {
                 Instantiate< Natural, Length, Elemental >,
                 Account< Natural, Length, Elemental >,
-                Accede< Natural, Length, Elemental, Move >,
-                Precede< Natural, Length, Elemental, Move >,
-                Cede< Natural, Length, Elemental, Move >,
-                Proceed< Natural, Length, Elemental >,
-                Succeed< Natural, Length, Elemental, Move >,
-                Supersede< Natural, Length, Elemental, Move >,
-                Concede< Natural, Length, Elemental, Move >,
-                Recede< Natural, Length, Elemental >,
+                Accede< Natural, Length, Elemental, Move, false >,
+                Precede< Natural, Length, Elemental, Move, false >,
+                Cede< Natural, Length, Elemental, Move, false >,
+                Proceed< Natural, Length, Elemental, false >,
+                Succeed< Natural, Length, Elemental, Move, false >,
+                Supersede< Natural, Length, Elemental, Move, false >,
+                Concede< Natural, Length, Elemental, Move, false >,
+                Recede< Natural, Length, Elemental, false >,
                 Secede< Natural, Length, Elemental >,
                 Condense< Natural, Length, Elemental >,
-                Conjoiner< Compact< Natural, Length, Elemental >, WritePositional< Elemental >, Natural, Natural, Length, Elemental, Move >
+                FastConjoiner< Compact< Natural, Length, Elemental >, ReadPositional< Elemental >, Natural, Natural, Length, Elemental, Move >
+            };
+
+        template <
+            typename Natural,
+            Natural
+                Length,
+            typename Elemental,
+            Referential< MemoryMoving< Natural, Elemental > >
+                Move
+        >
+        constexpr Sequent< Compact< Natural, Length, Elemental >, ReadPositional< Elemental >, Natural, Elemental >
+            SureSequencer = {
+                Instantiate< Natural, Length, Elemental >,
+                Account< Natural, Length, Elemental >,
+                Accede< Natural, Length, Elemental, Move, true >,
+                Precede< Natural, Length, Elemental, Move, true >,
+                Cede< Natural, Length, Elemental, Move, true >,
+                Proceed< Natural, Length, Elemental, true >,
+                Succeed< Natural, Length, Elemental, Move, true >,
+                Supersede< Natural, Length, Elemental, Move, true >,
+                Concede< Natural, Length, Elemental, Move, true >,
+                Recede< Natural, Length, Elemental, true >,
+                Secede< Natural, Length, Elemental >,
+                Condense< Natural, Length, Elemental >,
+                SureConjoiner< Compact< Natural, Length, Elemental >, ReadPositional< Elemental >, Natural, Natural, Length, Elemental, Move >
             };
 
         template <

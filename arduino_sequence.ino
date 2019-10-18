@@ -45,7 +45,7 @@ void setup() {
 void loop() {
     using namespace sortation;
     using namespace comparison;
-    static auto& ArraySequencer = Sequencer<SIZES_TYPE, SEQUENCE_MAX, SAMPLES_TYPE, MoveElements<SIZES_TYPE, SAMPLES_TYPE>>;
+    static auto& ArraySequencer = SureSequencer<SIZES_TYPE, SEQUENCE_MAX, SAMPLES_TYPE, MoveElements<SIZES_TYPE, SAMPLES_TYPE>>;
     static auto& Search = SearchBisection<sequence_t, read_position_t, SIZES_TYPE, SAMPLES_TYPE>;
     static auto& Liner = ReadLiner<SIZES_TYPE, SEQUENCE_MAX, SAMPLES_TYPE>;
     read_position_t read_position;
