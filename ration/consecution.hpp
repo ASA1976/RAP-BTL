@@ -82,7 +82,7 @@ namespace ration {
             Referential< Compact< Natural, Length, Elemental > >
                 sequence, 
             Referential< const ReadPositional< Elemental > >
-                position, 
+                rank, 
             Referential< const Elemental >
                 value 
         );
@@ -96,6 +96,21 @@ namespace ration {
         using Recessive = bool(
             Referential< Compact< Natural, Length, Elemental > >
                 sequence, 
+            Referential< const Natural >
+                count 
+        );
+
+        template <
+            typename Natural,
+            Natural
+                Length,
+            typename Elemental
+        >
+        using Concessive = bool(
+            Referential< Compact< Natural, Length, Elemental > >
+                sequence, 
+            Referential< const ReadPositional< Elemental > >
+                rank, 
             Referential< const Natural >
                 count 
         );
@@ -179,12 +194,12 @@ namespace ration {
         template <
             typename Natural,
             Natural
-                Maximum,
+                Length,
             typename Elemental
         >
         static inline Natural
         CountIncrement(
-            Referential< const Compact< Natural, Maximum, Elemental > >
+            Referential< const Compact< Natural, Length, Elemental > >
                 sequence,
             Referential< const ReadPositional< Elemental > >
                 position
@@ -202,12 +217,12 @@ namespace ration {
         template <
             typename Natural,
             Natural
-                Maximum,
+                Length,
             typename Elemental
         >
         static inline Natural
         CountDecrement(
-            Referential< const Compact< Natural, Maximum, Elemental > >
+            Referential< const Compact< Natural, Length, Elemental > >
                 sequence,
             Referential< const ReadPositional< Elemental > >
                 position
@@ -225,12 +240,12 @@ namespace ration {
         template <
             typename Natural,
             Natural
-                Maximum,
+                Length,
             typename Elemental
         >
         static inline bool
         Begins(
-            Referential< const Compact< Natural, Maximum, Elemental > >
+            Referential< const Compact< Natural, Length, Elemental > >
                 sequence,
             Referential< const Natural >
                 count
@@ -248,12 +263,12 @@ namespace ration {
         template <
             typename Natural,
             Natural
-                Maximum,
+                Length,
             typename Elemental
         >
         static inline bool
         Meets(
-            Referential< const Compact< Natural, Maximum, Elemental > >
+            Referential< const Compact< Natural, Length, Elemental > >
                 sequence,
             Referential< const ReadPositional< Elemental > >
                 position
@@ -265,7 +280,7 @@ namespace ration {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            return Account( sequence ) > 0 
+            return sequence.allotment > 0 
                 && sequence.source <= position 
                 && position <= sequence.source + sequence.allotment - 1;
         }
@@ -273,12 +288,12 @@ namespace ration {
         template <
             typename Natural,
             Natural
-                Maximum,
+                Length,
             typename Elemental
         >
         static inline Conferential< Elemental >
         GoWrite(
-            Referential< Compact< Natural, Maximum, Elemental > >
+            Referential< Compact< Natural, Length, Elemental > >
                 sequence,
             Referential< const WritePositional< Elemental > >
                 position
@@ -297,12 +312,12 @@ namespace ration {
         template <
             typename Natural,
             Natural
-                Maximum,
+                Length,
             typename Elemental
         >
         static inline Conferential< const Elemental >
         GoRead(
-            Referential< const Compact< Natural, Maximum, Elemental > >
+            Referential< const Compact< Natural, Length, Elemental > >
                 sequence,
             Referential< const ReadPositional< Elemental > >
                 position
@@ -321,12 +336,12 @@ namespace ration {
         template <
             typename Natural,
             Natural
-                Maximum,
+                Length,
             typename Elemental
         >
         static inline Referential< const ReadPositional< Elemental > >
         BeginReadIncrement(
-            Referential< const Compact< Natural, Maximum, Elemental > >
+            Referential< const Compact< Natural, Length, Elemental > >
                 sequence,
             Referential< ReadPositional< Elemental > >
                 position,
@@ -346,12 +361,12 @@ namespace ration {
         template <
             typename Natural,
             Natural
-                Maximum,
+                Length,
             typename Elemental
         >
         static inline Referential< const WritePositional< Elemental > >
         BeginWriteIncrement(
-            Referential< Compact< Natural, Maximum, Elemental > >
+            Referential< Compact< Natural, Length, Elemental > >
                 sequence,
             Referential< WritePositional< Elemental > >
                 position,
@@ -371,12 +386,12 @@ namespace ration {
         template <
             typename Natural,
             Natural
-                Maximum,
+                Length,
             typename Elemental
         >
         static inline bool
         IncrementTraverses(
-            Referential< const Compact< Natural, Maximum, Elemental > >
+            Referential< const Compact< Natural, Length, Elemental > >
                 sequence,
             Referential< const ReadPositional< Elemental > >
                 position,
@@ -398,12 +413,12 @@ namespace ration {
         template <
             typename Natural,
             Natural
-                Maximum,
+                Length,
             typename Elemental
         >
         static inline Referential< const ReadPositional< Elemental > >
         TraverseReadIncrement(
-            Referential< const Compact< Natural, Maximum, Elemental > >
+            Referential< const Compact< Natural, Length, Elemental > >
                 stack,
             Referential< ReadPositional< Elemental > >
                 position,
@@ -423,12 +438,12 @@ namespace ration {
         template <
             typename Natural,
             Natural
-                Maximum,
+                Length,
             typename Elemental
         >
         static inline Referential< const WritePositional< Elemental > >
         TraverseWriteIncrement(
-            Referential< Compact< Natural, Maximum, Elemental > >
+            Referential< Compact< Natural, Length, Elemental > >
                 sequence,
             Referential< WritePositional< Elemental > >
                 position,
@@ -448,12 +463,12 @@ namespace ration {
         template <
             typename Natural,
             Natural
-                Maximum,
+                Length,
             typename Elemental
         >
         static inline Referential< const ReadPositional< Elemental > >
         BeginReadDecrement(
-            Referential< const Compact< Natural, Maximum, Elemental > >
+            Referential< const Compact< Natural, Length, Elemental > >
                 sequence,
             Referential< ReadPositional< Elemental > >
                 position,
@@ -473,12 +488,12 @@ namespace ration {
         template <
             typename Natural,
             Natural
-                Maximum,
+                Length,
             typename Elemental
         >
         static inline Referential< const WritePositional< Elemental > >
         BeginWriteDecrement(
-            Referential< Compact< Natural, Maximum, Elemental > >
+            Referential< Compact< Natural, Length, Elemental > >
                 sequence,
             Referential< WritePositional< Elemental > >
                 position,
@@ -498,12 +513,12 @@ namespace ration {
         template <
             typename Natural,
             Natural
-                Maximum,
+                Length,
             typename Elemental
         >
         static inline bool
         DecrementTraverses(
-            Referential< const Compact< Natural, Maximum, Elemental > >
+            Referential< const Compact< Natural, Length, Elemental > >
                 sequence,
             Referential< const ReadPositional< Elemental > >
                 position,
@@ -525,12 +540,12 @@ namespace ration {
         template <
             typename Natural,
             Natural
-                Maximum,
+                Length,
             typename Elemental
         >
         static inline Referential< const ReadPositional< Elemental > >
         TraverseReadDecrement(
-            Referential< const Compact< Natural, Maximum, Elemental > >
+            Referential< const Compact< Natural, Length, Elemental > >
                 stack,
             Referential< ReadPositional< Elemental > >
                 position,
@@ -550,12 +565,12 @@ namespace ration {
         template <
             typename Natural,
             Natural
-                Maximum,
+                Length,
             typename Elemental
         >
         static inline Referential< const WritePositional< Elemental > >
         TraverseWriteDecrement(
-            Referential< Compact< Natural, Maximum, Elemental > >
+            Referential< Compact< Natural, Length, Elemental > >
                 sequence,
             Referential< WritePositional< Elemental > >
                 position,
@@ -587,9 +602,9 @@ namespace ration {
             Referential< const Natural >
                 count
         ) {
-            if (Safety && Account( sequence ) >= Length)
+            if (Safety && sequence.allotment >= Length)
                 return false;
-            return Length - Account( sequence ) >= count;
+            return Length - sequence.allotment >= count;
         }
 
         template <
@@ -618,7 +633,7 @@ namespace ration {
 #endif
             if (!Move( sequence.source, sequence.source + 1, sequence.allotment ) && Safety)
                 return false;
-            if (Safety && Account( sequence ) >= Length)
+            if (Safety && sequence.allotment >= Length)
                 return false;
             sequence.source[0] = value;
             sequence.allotment++;
@@ -710,17 +725,16 @@ namespace ration {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            if (Safety && (rank < sequence.source || rank >= sequence.source + Account( sequence )))
+            if (Safety && (rank < sequence.source || rank >= sequence.source + sequence.allotment))
                 return false;
-            if (Safety && Account( sequence ) >= Length)
+            if (Safety && sequence.allotment >= Length)
                 return false;
             const Natural
                 index = static_cast<Natural>(rank - sequence.source);
             const WritePositional< Elemental > 
                 position = const_cast<WritePositional< Elemental >>(rank);
-            if (index < sequence.allotment)
-                if (!Move( position, position + 1, sequence.allotment - index ) && Safety)
-                    return false;
+            if (!Move( position, position + 1, sequence.allotment - index ) && Safety)
+                return false;
             Refer( position ).to = value;
             sequence.allotment++;
             return true;
@@ -765,7 +779,7 @@ namespace ration {
                 "RelativeNatural:  Unsigned integer type required"
             );
 #endif
-            if (Safety && (rank < sequence.source || rank >= sequence.source + Account( sequence )))
+            if (Safety && (rank < sequence.source || rank >= sequence.source + sequence.allotment))
                 return false;
             Appositional
                 apposition = from;
@@ -777,7 +791,7 @@ namespace ration {
                 direction.scale.traverse( space, apposition, 1 );
                 count++;
             }
-            if (Safety && Account( sequence ) + count > Length)
+            if (Safety && sequence.allotment + count > Length)
                 return false;
             const WritePositional< Elemental >
                 position = const_cast<WritePositional< Elemental >>(rank);
@@ -819,15 +833,14 @@ namespace ration {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            if (Safety && (rank < sequence.source || rank >= sequence.source + Account( sequence )))
+            if (Safety && (rank < sequence.source || rank >= sequence.source + sequence.allotment))
                 return false;
-            const Natural
-                index = static_cast<Natural>(rank + 1 - sequence.source);
             const WritePositional< Elemental >
-                position = const_cast<WritePositional< Elemental >>(rank);
-            if (index < sequence.allotment)
-                if (!Move( position + 1, position + 2, sequence.allotment - index ) && Safety)
-                    return false;
+                position = const_cast<WritePositional< Elemental >>(rank + 1);
+            const Natural
+                index = static_cast<Natural>(position - sequence.source);
+            if (!Move( position, position + 1, sequence.allotment - index ) && Safety)
+                return false;
             Refer( position ).to = value;
             sequence.allotment++;
             return true;
@@ -872,7 +885,7 @@ namespace ration {
                 "RelativeNatural:  Unsigned integer type required"
             );
 #endif
-            if (Safety && (rank < sequence.source || rank >= sequence.source + Account( sequence )))
+            if (Safety && (rank < sequence.source || rank >= sequence.source + sequence.allotment))
                 return false;
             Appositional
                 apposition = from;
@@ -962,12 +975,12 @@ namespace ration {
 #endif
             Appositional
                 apposition = from;
-            if (Safety && Account( sequence ) >= Length)
+            if (Safety && sequence.allotment >= Length)
                 return false;
             sequence.source[sequence.allotment++] = direction.scale.go( space, apposition ).to;
             while (direction.scale.order.equality.is_not_equal( apposition, to )) {
                 direction.scale.traverse( space, apposition, 1 );
-                if (Safety && Account( sequence ) >= Length)
+                if (Safety && sequence.allotment >= Length)
                     return false;
                 sequence.source[sequence.allotment++] = direction.scale.go( space, apposition ).to;
             }
@@ -1036,7 +1049,7 @@ namespace ration {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            if (Safety && (rank < sequence.source || rank >= sequence.source + Account( sequence )))
+            if (Safety && (rank < sequence.source || rank >= sequence.source + sequence.allotment))
                 return false;
             const WritePositional< Elemental >
                 first = const_cast<WritePositional< Elemental >>(rank) + 1;
@@ -1078,12 +1091,12 @@ namespace ration {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            if (Safety && (rank < sequence.source || rank >= sequence.source + Account( sequence )))
+            if (Safety && (rank < sequence.source || rank >= sequence.source + sequence.allotment))
                 return false;
             const WritePositional< Elemental >
                 position = const_cast<WritePositional< Elemental >>(rank),
                 first = position + count;
-            if (Safety && first > sequence.source + Account( sequence ))
+            if (Safety && first > sequence.source + sequence.allotment)
                 return false;
             const Natural
                 remaining = sequence.allotment - static_cast<Natural>(first - sequence.source);
@@ -1116,7 +1129,7 @@ namespace ration {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            if (Safety && count > Account( sequence ))
+            if (Safety && count > sequence.allotment)
                 return false;
             sequence.allotment -= count;
             return true;
@@ -1243,169 +1256,169 @@ namespace ration {
         template <
             typename Natural,
             Natural
-                Maximum,
+                Length,
             typename Elemental
         >
-        constexpr Scalar< const Compact< Natural, Maximum, Elemental >, ReadPositional< Elemental >, Natural, const Elemental >
+        constexpr Scalar< const Compact< Natural, Length, Elemental >, ReadPositional< Elemental >, Natural, const Elemental >
             ReadIncrementScale = {
                 Comparison< ReadPositional< Elemental > >,
-                BeginReadIncrement< Natural, Maximum, Elemental >,
-                TraverseReadIncrement< Natural, Maximum, Elemental >,
-                GoRead< Natural, Maximum, Elemental >
+                BeginReadIncrement< Natural, Length, Elemental >,
+                TraverseReadIncrement< Natural, Length, Elemental >,
+                GoRead< Natural, Length, Elemental >
             };
 
         template <
             typename Natural,
             Natural
-                Maximum,
+                Length,
             typename Elemental
         >
-        constexpr Scalar< Compact< Natural, Maximum, Elemental >, WritePositional< Elemental >, Natural, Elemental >
+        constexpr Scalar< Compact< Natural, Length, Elemental >, WritePositional< Elemental >, Natural, Elemental >
             WriteIncrementScale = {
                 Comparison< WritePositional< Elemental > >,
-                BeginWriteIncrement< Natural, Maximum, Elemental >,
-                TraverseWriteIncrement< Natural, Maximum, Elemental >,
-                GoWrite< Natural, Maximum, Elemental >
+                BeginWriteIncrement< Natural, Length, Elemental >,
+                TraverseWriteIncrement< Natural, Length, Elemental >,
+                GoWrite< Natural, Length, Elemental >
             };
 
         template <
             typename Natural,
             Natural
-                Maximum,
+                Length,
             typename Elemental
         >
-        constexpr Scalar< const Compact< Natural, Maximum, Elemental >, ReadPositional< Elemental >, Natural, const Elemental >
+        constexpr Scalar< const Compact< Natural, Length, Elemental >, ReadPositional< Elemental >, Natural, const Elemental >
             ReadDecrementScale = {
                 Comparison< ReadPositional< Elemental > >,
-                BeginReadDecrement< Natural, Maximum, Elemental >,
-                TraverseReadDecrement< Natural, Maximum, Elemental >,
-                GoRead< Natural, Maximum, Elemental >
+                BeginReadDecrement< Natural, Length, Elemental >,
+                TraverseReadDecrement< Natural, Length, Elemental >,
+                GoRead< Natural, Length, Elemental >
             };
 
         template <
             typename Natural,
             Natural
-                Maximum,
+                Length,
             typename Elemental
         >
-        constexpr Scalar< Compact< Natural, Maximum, Elemental >, WritePositional< Elemental >, Natural, Elemental >
+        constexpr Scalar< Compact< Natural, Length, Elemental >, WritePositional< Elemental >, Natural, Elemental >
             WriteDecrementScale = {
                 Comparison< WritePositional< Elemental > >,
-                BeginWriteDecrement< Natural, Maximum, Elemental >,
-                TraverseWriteDecrement< Natural, Maximum, Elemental >,
-                GoWrite< Natural, Maximum, Elemental >
+                BeginWriteDecrement< Natural, Length, Elemental >,
+                TraverseWriteDecrement< Natural, Length, Elemental >,
+                GoWrite< Natural, Length, Elemental >
             };
 
         template <
             typename Natural,
             Natural
-                Maximum,
+                Length,
             typename Elemental
         >
-        constexpr Lineal< const Compact< Natural, Maximum, Elemental >, ReadPositional< Elemental >, Natural, const Elemental >
+        constexpr Lineal< const Compact< Natural, Length, Elemental >, ReadPositional< Elemental >, Natural, const Elemental >
             ReadLiner = {
-                ReadIncrementScale< Natural, Maximum, Elemental >,
-                ReadDecrementScale< Natural, Maximum, Elemental >
+                ReadIncrementScale< Natural, Length, Elemental >,
+                ReadDecrementScale< Natural, Length, Elemental >
             };
 
         template <
             typename Natural,
             Natural
-                Maximum,
+                Length,
             typename Elemental
         >
-        constexpr Lineal< Compact< Natural, Maximum, Elemental >, WritePositional< Elemental >, Natural, Elemental >
+        constexpr Lineal< Compact< Natural, Length, Elemental >, WritePositional< Elemental >, Natural, Elemental >
             WriteLiner = {
-                WriteIncrementScale< Natural, Maximum, Elemental >,
-                WriteDecrementScale< Natural, Maximum, Elemental >
+                WriteIncrementScale< Natural, Length, Elemental >,
+                WriteDecrementScale< Natural, Length, Elemental >
             };
 
         template <
             typename Natural,
             Natural
-                Maximum,
+                Length,
             typename Elemental
         >
-        constexpr Directional< const Compact< Natural, Maximum, Elemental >, ReadPositional< Elemental >, Natural, const Elemental >
+        constexpr Directional< const Compact< Natural, Length, Elemental >, ReadPositional< Elemental >, Natural, const Elemental >
             ReadIncrementDirection = {
-                ReadIncrementScale< Natural, Maximum, Elemental >,
-                Begins< Natural, Maximum, Elemental >,
-                IncrementTraverses< Natural, Maximum, Elemental >,
-                Meets< Natural, Maximum, Elemental >,
-                Account< Natural, Maximum, Elemental >,
-                CountIncrement< Natural, Maximum, Elemental >
+                ReadIncrementScale< Natural, Length, Elemental >,
+                Begins< Natural, Length, Elemental >,
+                IncrementTraverses< Natural, Length, Elemental >,
+                Meets< Natural, Length, Elemental >,
+                Account< Natural, Length, Elemental >,
+                CountIncrement< Natural, Length, Elemental >
             };
 
         template <
             typename Natural,
             Natural
-                Maximum,
+                Length,
             typename Elemental
         >
-        constexpr Directional< Compact< Natural, Maximum, Elemental >, WritePositional< Elemental >, Natural, Elemental >
+        constexpr Directional< Compact< Natural, Length, Elemental >, WritePositional< Elemental >, Natural, Elemental >
             WriteIncrementDirection = {
-                WriteIncrementScale< Natural, Maximum, Elemental >,
-                Begins< Natural, Maximum, Elemental >,
-                IncrementTraverses< Natural, Maximum, Elemental >,
-                Meets< Natural, Maximum, Elemental >,
-                Account< Natural, Maximum, Elemental >,
-                CountIncrement< Natural, Maximum, Elemental >
+                WriteIncrementScale< Natural, Length, Elemental >,
+                Begins< Natural, Length, Elemental >,
+                IncrementTraverses< Natural, Length, Elemental >,
+                Meets< Natural, Length, Elemental >,
+                Account< Natural, Length, Elemental >,
+                CountIncrement< Natural, Length, Elemental >
             };
 
         template <
             typename Natural,
             Natural
-                Maximum,
+                Length,
             typename Elemental
         >
-        constexpr Directional< const Compact< Natural, Maximum, Elemental >, ReadPositional< Elemental >, Natural, const Elemental >
+        constexpr Directional< const Compact< Natural, Length, Elemental >, ReadPositional< Elemental >, Natural, const Elemental >
             ReadDecrementDirection = {
-                ReadDecrementScale< Natural, Maximum, Elemental >,
-                Begins< Natural, Maximum, Elemental >,
-                DecrementTraverses< Natural, Maximum, Elemental >,
-                Meets< Natural, Maximum, Elemental >,
-                Account< Natural, Maximum, Elemental >,
-                CountDecrement< Natural, Maximum, Elemental >
+                ReadDecrementScale< Natural, Length, Elemental >,
+                Begins< Natural, Length, Elemental >,
+                DecrementTraverses< Natural, Length, Elemental >,
+                Meets< Natural, Length, Elemental >,
+                Account< Natural, Length, Elemental >,
+                CountDecrement< Natural, Length, Elemental >
             };
 
         template <
             typename Natural,
             Natural
-                Maximum,
+                Length,
             typename Elemental
         >
-        constexpr Directional< Compact< Natural, Maximum, Elemental >, WritePositional< Elemental >, Natural, Elemental >
+        constexpr Directional< Compact< Natural, Length, Elemental >, WritePositional< Elemental >, Natural, Elemental >
             WriteDecrementDirection = {
-                WriteDecrementScale< Natural, Maximum, Elemental >,
-                Begins< Natural, Maximum, Elemental >,
-                DecrementTraverses< Natural, Maximum, Elemental >,
-                Meets< Natural, Maximum, Elemental >,
-                Account< Natural, Maximum, Elemental >,
-                CountDecrement< Natural, Maximum, Elemental >
+                WriteDecrementScale< Natural, Length, Elemental >,
+                Begins< Natural, Length, Elemental >,
+                DecrementTraverses< Natural, Length, Elemental >,
+                Meets< Natural, Length, Elemental >,
+                Account< Natural, Length, Elemental >,
+                CountDecrement< Natural, Length, Elemental >
             };
 
         template <
             typename Natural,
             Natural
-                Maximum,
+                Length,
             typename Elemental
         >
-        constexpr Axial< const Compact< Natural, Maximum, Elemental >, ReadPositional< Elemental >, Natural, const Elemental >
+        constexpr Axial< const Compact< Natural, Length, Elemental >, ReadPositional< Elemental >, Natural, const Elemental >
             ReadAxis = {
-                ReadIncrementDirection< Natural, Maximum, Elemental >,
-                ReadDecrementDirection< Natural, Maximum, Elemental >
+                ReadIncrementDirection< Natural, Length, Elemental >,
+                ReadDecrementDirection< Natural, Length, Elemental >
             };
 
         template <
             typename Natural,
             Natural
-                Maximum,
+                Length,
             typename Elemental
         >
-        constexpr Axial< Compact< Natural, Maximum, Elemental >, WritePositional< Elemental >, Natural, Elemental >
+        constexpr Axial< Compact< Natural, Length, Elemental >, WritePositional< Elemental >, Natural, Elemental >
             WriteAxis = {
-                WriteIncrementDirection< Natural, Maximum, Elemental >,
-                WriteDecrementDirection< Natural, Maximum, Elemental >
+                WriteIncrementDirection< Natural, Length, Elemental >,
+                WriteDecrementDirection< Natural, Length, Elemental >
             };
 
     }
