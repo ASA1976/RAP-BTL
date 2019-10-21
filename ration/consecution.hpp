@@ -682,6 +682,8 @@ namespace ration {
             Natural
                 count = 1;
             while (direction.scale.order.equality.is_not_equal( apposition, to )) {
+                if (Safety && !direction.traverses( space, apposition, 1 ))
+                    return false;
                 direction.scale.traverse( space, apposition, 1 );
                 count++;
             }
@@ -788,6 +790,8 @@ namespace ration {
             const Natural
                 remaining = sequence.allotment - static_cast<Natural>(rank - sequence.source);
             while (direction.scale.order.equality.is_not_equal( apposition, to )) {
+                if (Safety && !direction.traverses( space, apposition, 1 ))
+                    return false;
                 direction.scale.traverse( space, apposition, 1 );
                 count++;
             }
@@ -896,6 +900,8 @@ namespace ration {
             const Natural
                 remaining = sequence.allotment - static_cast<Natural>(first - sequence.source);
             while (direction.scale.order.equality.is_not_equal( apposition, to )) {
+                if (Safety && !direction.traverses( space, apposition, 1 ))
+                    return false;
                 direction.scale.traverse( space, apposition, 1 );
                 count++;
             }
@@ -979,6 +985,8 @@ namespace ration {
                 return false;
             sequence.source[sequence.allotment++] = direction.scale.go( space, apposition ).to;
             while (direction.scale.order.equality.is_not_equal( apposition, to )) {
+                if (Safety && !direction.traverses( space, apposition, 1 ))
+                    return false;
                 direction.scale.traverse( space, apposition, 1 );
                 if (Safety && sequence.allotment >= Length)
                     return false;
