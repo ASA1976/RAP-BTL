@@ -3,6 +3,11 @@
 // #define RAPBTL_NO_STD_CPLUSPLUS
 #include "segmentation.hpp"
 #include "ordination.hpp"
+#include "ration/string.hpp"
+#include "ration/selection.hpp"
+#include "ration/collection.hpp"
+#include "ration/association/selection.hpp"
+#include "ration/association/collection.hpp"
 #include "junction/stdlib.hpp"
 #include "junction/selection.hpp"
 #include "junction/collection.hpp"
@@ -23,6 +28,11 @@ using namespace ::association;
 using namespace ::consecution;
 using namespace ::junction;
 using namespace ::junction::stdlib;
+
+template bool ::comparison::IsLesser( Referential< const char >, Referential< const char > );
+template bool ::comparison::IsEqual( Referential< const char >, Referential< const char > );
+template bool ::ration::string::MoveBytes( Locational< char >, Locational< char >, size_t );
+template bool ::ration::string::MoveBytes( Locational< Complementary< char, int > >, Locational< Complementary< char, int > >, size_t );
 
 using MessageLocal = const Locational< const char >;
 using MapComplementary = Complementary< char, int >;
@@ -114,39 +124,22 @@ static bool
 DisplayCharacters(
     Referential< const Spatial >
         list,
-    Referential< const Scalar< const Spatial, Positional, Natural, const char > >
-        scale,
-    Referential< const size_t >
-        count
-) {
-    Positional
-        position;
-    size_t
-        current;
-    scale.begin( list, position, 0 );
-    for (current = 0; current < count; current++) {
-        printf( "'%c'", scale.go( list, position ).to );
-        if (current < count - 1) {
-            scale.traverse( list, position, 1 );
-            printf( "," );
-        }
-    }
-    return true;
-}
-
-template <
-    typename Spatial,
-    typename Positional,
-    typename Natural
->
-static bool
-DisplayCharacters(
-    Referential< const Spatial >
-        list,
     Referential< const Directional< const Spatial, Positional, Natural, const char > >
         direction
 ) {
-    return DisplayCharacters( list, direction.scale, direction.survey( list ) );
+    Positional
+        position;
+    if (!direction.begins( list, 0 ))
+        return false;
+    direction.scale.begin( list, position, 0 );
+    while (true) {
+        printf( "'%c'", direction.scale.go( list, position ).to );
+        if (!direction.traverses( list, position, 1 ))
+            break;
+        direction.scale.traverse( list, position, 1 );
+        printf( "," );
+    }
+    return true;
 }
 
 template <
@@ -179,98 +172,85 @@ DisplayMappings(
 }
 
 static bool
-DemonstrateLocalization() {
-    using namespace ::localization;
-    using namespace ::sortation;
+DemonstrateRation() {
+    using namespace ::ration;
+    using namespace ::ration::consecution;
+    using namespace ::ration::selection;
+    using namespace ::ration::collection;
+    using namespace ::ration::association;
+    using namespace ::ration::association::selection;
+    using namespace ::ration::association::collection;
+    using namespace ::ration::string;
     using namespace ::comparison;
-    using Local = ReadLocal< char >;
-    static const size_t
-        Length = 5;
+    constexpr size_t
+        Length = 16;
     static auto&
-        Liner = ReadLiner< int, size_t, char >;
+        ListSequencer = SureSequencer< size_t, Length, char, MoveBytes >;
     static auto&
-        Increment = ReadIncrementScale< int, size_t, char >;
-    static const size_t
-        Before = 2,
-        After = 2;
-    static Local
-        locality = "ABCDE";
-    int
-        index;
-    puts( "Localization (Pointer Only)" );
-    printf( "locality := " );
-    DisplayCharacters( locality, Increment, Length );
-    index = 2;
-    if (SearchBisection( locality, Liner, locality[0], index, Before, After, IsEqual, IsLesser )) {
-        printf( " (found '%c')\n", Increment.go( locality, index ).to );
-        return true;
-    }
-    printf( " (not found)\n" );
+        ListConjoiner = SureConjoiner< const Locational< const char >, size_t, size_t, size_t, Length, char, MoveBytes >;
+    static auto&
+        ListSelector = SureSelector< size_t, Length, char, IsEqual, MoveBytes >;
+    static auto&
+        ListCollector = SureCollector< size_t, Length, char, IsEqual, IsLesser, MoveBytes >;
+    static auto&
+        ListAxis = ReadAxis< size_t, Length, char >;
+    static auto&
+        MapCorrelator = SureCorrelator< size_t, Length, char, int, IsEqual, MoveBytes >;
+    static auto&
+        MapAssociator = SureAssociator< size_t, Length, char, int, IsEqual, IsLesser, MoveBytes >;
+    static auto&
+        MapDirection = ReadIncrementDirection< size_t, Length, MapComplementary >;
+    Resourceful< size_t, Length, char >
+        list,
+        base,
+        relative;
+    AssociativelyResourceful< size_t, Length, char, int >
+        map;
+    Initialize( list );
+    Initialize( base );
+    Initialize( relative );
+    Initialize( map );
+    puts( "Ration (Array List And Map)" );
+    if (!ProceedSequence( list, ListSequencer, ListConjoiner ))
+        return false;
+    printf( "Sequence = (" );
+    DisplayCharacters( list, ListAxis.increment );
+    puts( ")" );
+    if (!ComposeSets( base, relative, ListSelector.composer ))
+        return false;
+    printf( "Unordered Sets: Base = {" );
+    DisplayCharacters( base, ListAxis.increment );
+    printf( "}, Relative = {" );
+    DisplayCharacters( relative, ListAxis.increment );
+    puts( "}" );
+    if (!ListSelector.section.unite( list, ListAxis.increment, base, ListAxis.increment, relative ))
+        return false;
+    printf( "Unordered Union Of Base And Relative = {" );
+    DisplayCharacters( list, ListAxis.increment );
+    puts( "}" );
+    if (!ComposeSets( base, relative, ListCollector.selector.composer ))
+        return false;
+    printf( "Ordered Sets: Base = {" );
+    DisplayCharacters( base, ListAxis.increment );
+    printf( "}, Relative = {" );
+    DisplayCharacters( relative, ListAxis.increment );
+    puts( "}" );
+    if (!ListCollector.bisection.unite( list, ListAxis, base, ListAxis, relative ))
+        return false;
+    printf( "Ordered Union Of Base And Relative = {" );
+    DisplayCharacters( list, ListAxis.increment );
+    puts( "}" );
+    if (!AssociateMap( map, MapCorrelator ))
+        return false;
+    printf( "Unordered Map: [" );
+    DisplayMappings( map, MapDirection );
+    puts( "]" );
+    if (!AssociateMap( map, MapAssociator ))
+        return false;
+    printf( "Ordered Map: [" );
+    DisplayMappings( map, MapDirection );
+    puts( "]" );
     return true;
-}
-
-static bool
-DemonstrateSegmentation() {
-    using namespace ::segmentation;
-    using namespace ::sortation;
-    using namespace ::comparison;
-    using Segmental = ReadLocal< char >;
-    static const size_t
-        Length = 5;
-    static auto&
-        Liner = ReadLiner< size_t, Length, char >;
-    static auto&
-        Increment = ReadIncrementDirection< size_t, Length, char >;
-    static const size_t
-        Before = 2,
-        After = 2;
-    static Segmental
-        segment = "ABCDE";
-    size_t
-        index;
-    puts( "Segmentation (Pointer And Predetermined Length)" );
-    printf( "segment := " );
-    DisplayCharacters( segment, Increment );
-    index = 2;
-    if (SearchBisection( segment, Liner, segment[1], index, Before, After, IsEqual, IsLesser )) {
-        printf( " (found '%c')\n", Increment.scale.go( segment, index ).to );
-        return true;
-    }
-    printf( " (not found)\n" );
-    return false;
-}
-
-static bool
-DemonstrateOrdination() {
-    using namespace ::location;
-    using namespace ::ordination;
-    using namespace ::sortation;
-    using namespace ::comparison;
-    static const size_t
-        Length = 5;
-    using Ordinal = ReadOrdinal< size_t, Length, char >;
-    using Positional = ReadPositional< char >;
-    static auto&
-        Liner = ReadLiner< size_t, Length, char >;
-    static auto&
-        Increment = ReadIncrementDirection< size_t, Length, char >;
-    static const size_t
-        Before = 2,
-        After = 2;
-    static Ordinal
-        array = {'A','B','C','D','E'};
-    Positional
-        position;
-    puts( "Ordination (Array)" );
-    printf( "array := " );
-    DisplayCharacters( array, Increment );
-    position = Locate( array[2] ).at;
-    if (SearchBisection( array, Liner, array[3], position, Before, After, IsEqual, IsLesser )) {
-        printf( " (found '%c')\n", Increment.scale.go( array, position ).to );
-        return true;
-    }
-    printf( " (not found)\n" );
-    return false;
 }
 
 static bool
@@ -371,28 +351,16 @@ DemonstrateJunction() {
 int
 main() {
     enum Erroneous {
-        Localization = -1,
-        Segmentation = -2,
-        Ordination = -3,
-        Junction = -4
+        RationDemonstration = -1,
+        JunctionDemonstration = -2
     };
-    if (!DemonstrateLocalization()) {
-        fprintf( stderr, "ERROR during localization demonstration\n" );
-        return Erroneous::Localization;
-    }
-    puts( "" );
-    if (!DemonstrateSegmentation()) {
-        fprintf( stderr, "ERROR during segmentation demonstration\n" );
-        return Erroneous::Segmentation;
-    }
-    puts( "" );
-    if (!DemonstrateOrdination()) {
-        fprintf( stderr, "ERROR during ordination demonstration\n" );
-        return Erroneous::Ordination;
+    if (!DemonstrateRation()) {
+        fprintf( stderr, "ERROR during ration demonstration\n" );
+        return Erroneous::RationDemonstration;
     }
     puts( "" );
     if (!DemonstrateJunction()) {
         fprintf( stderr, "ERROR during junction demonstration\n" );
-        return Erroneous::Junction;
+        return Erroneous::JunctionDemonstration;
     }
 }

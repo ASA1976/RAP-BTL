@@ -72,7 +72,7 @@ namespace junction {
             Referential< Junctive< Connective, Natural, Elemental > >
                 sequence, 
             Referential< const Positional< Connective, Elemental > >
-                position, 
+                rank, 
             Referential< const Elemental >
                 value 
         );
@@ -130,7 +130,7 @@ namespace junction {
             Referential< Junctive< Connective, Natural, Elemental > >
                 sequence, 
             Referential< const Positional< Connective, Elemental > >
-                position, 
+                rank, 
             Referential< const Natural >
                 count 
         );

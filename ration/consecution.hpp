@@ -37,36 +37,8 @@ namespace ration {
                 Length,
             typename Elemental
         >
-        using Compact = Resourceful< Natural, Length, Elemental >;
-
-        template <
-            typename Elemental
-        >
-        using ReadPositional = Locational< const Elemental >;
-
-        template <
-            typename Elemental
-        >
-        using WritePositional = Locational< Elemental >;
-
-        template <
-            typename Natural,
-            typename Elemental
-        >
-        using MemoryMoving = bool(
-            Locational< Elemental >,
-            Locational< Elemental >,
-            Natural
-        );
-
-        template <
-            typename Natural,
-            Natural
-                Length,
-            typename Elemental
-        >
         using Consequent = bool(
-            Referential< Compact< Natural, Length, Elemental > >
+            Referential< Resourceful< Natural, Length, Elemental > >
                 sequence, 
             Referential< const Elemental >
                 value 
@@ -79,7 +51,7 @@ namespace ration {
             typename Elemental
         >
         using Precedent = bool(
-            Referential< Compact< Natural, Length, Elemental > >
+            Referential< Resourceful< Natural, Length, Elemental > >
                 sequence, 
             Referential< const ReadPositional< Elemental > >
                 rank, 
@@ -94,7 +66,7 @@ namespace ration {
             typename Elemental
         >
         using Recessive = bool(
-            Referential< Compact< Natural, Length, Elemental > >
+            Referential< Resourceful< Natural, Length, Elemental > >
                 sequence, 
             Referential< const Natural >
                 count 
@@ -107,7 +79,7 @@ namespace ration {
             typename Elemental
         >
         using Concessive = bool(
-            Referential< Compact< Natural, Length, Elemental > >
+            Referential< Resourceful< Natural, Length, Elemental > >
                 sequence, 
             Referential< const ReadPositional< Elemental > >
                 rank, 
@@ -117,46 +89,13 @@ namespace ration {
 
         template <
             typename Natural,
-            typename Elemental
-        >
-        static inline bool
-        MoveElements(
-            WritePositional< Elemental >
-                from,
-            WritePositional< Elemental >
-                to,
-            Natural
-                count
-        ) {
-#ifndef RAPBTL_NO_STD_CPLUSPLUS
-            using namespace ::std;
-            static_assert(
-                is_integral< Natural >::value && is_unsigned< Natural >::value,
-                "Natural:  Unsigned integer type required"
-            );
-#endif
-            Natural 
-                index;
-            if (from < to)
-                for (index = count; index > 0; index--) {
-                    const Natural offset = index - 1;
-                    to[offset] = from[offset];
-                }
-            else
-                for (index = 0; index < count; index++)
-                    to[index] = from[index];
-            return true;
-        }
-
-        template <
-            typename Natural,
             Natural
                 Length,
             typename Elemental
         >
-        static inline Referential< Compact< Natural, Length, Elemental >>
+        static inline Referential< Resourceful< Natural, Length, Elemental >>
         Initialize(
-            Referential< Compact< Natural, Length, Elemental > >
+            Referential< Resourceful< Natural, Length, Elemental > >
                 sequence
         ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
@@ -178,7 +117,7 @@ namespace ration {
         >
         static inline Natural
         Account(
-            Referential< const Compact< Natural, Length, Elemental > >
+            Referential< const Resourceful< Natural, Length, Elemental > >
                 sequence
         ) {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
@@ -199,7 +138,7 @@ namespace ration {
         >
         static inline Natural
         CountIncrement(
-            Referential< const Compact< Natural, Length, Elemental > >
+            Referential< const Resourceful< Natural, Length, Elemental > >
                 sequence,
             Referential< const ReadPositional< Elemental > >
                 position
@@ -222,7 +161,7 @@ namespace ration {
         >
         static inline Natural
         CountDecrement(
-            Referential< const Compact< Natural, Length, Elemental > >
+            Referential< const Resourceful< Natural, Length, Elemental > >
                 sequence,
             Referential< const ReadPositional< Elemental > >
                 position
@@ -245,7 +184,7 @@ namespace ration {
         >
         static inline bool
         Begins(
-            Referential< const Compact< Natural, Length, Elemental > >
+            Referential< const Resourceful< Natural, Length, Elemental > >
                 sequence,
             Referential< const Natural >
                 count
@@ -268,7 +207,7 @@ namespace ration {
         >
         static inline bool
         Meets(
-            Referential< const Compact< Natural, Length, Elemental > >
+            Referential< const Resourceful< Natural, Length, Elemental > >
                 sequence,
             Referential< const ReadPositional< Elemental > >
                 position
@@ -293,7 +232,7 @@ namespace ration {
         >
         static inline Conferential< Elemental >
         GoWrite(
-            Referential< Compact< Natural, Length, Elemental > >
+            Referential< Resourceful< Natural, Length, Elemental > >
                 sequence,
             Referential< const WritePositional< Elemental > >
                 position
@@ -317,7 +256,7 @@ namespace ration {
         >
         static inline Conferential< const Elemental >
         GoRead(
-            Referential< const Compact< Natural, Length, Elemental > >
+            Referential< const Resourceful< Natural, Length, Elemental > >
                 sequence,
             Referential< const ReadPositional< Elemental > >
                 position
@@ -341,7 +280,7 @@ namespace ration {
         >
         static inline Referential< const ReadPositional< Elemental > >
         BeginReadIncrement(
-            Referential< const Compact< Natural, Length, Elemental > >
+            Referential< const Resourceful< Natural, Length, Elemental > >
                 sequence,
             Referential< ReadPositional< Elemental > >
                 position,
@@ -366,7 +305,7 @@ namespace ration {
         >
         static inline Referential< const WritePositional< Elemental > >
         BeginWriteIncrement(
-            Referential< Compact< Natural, Length, Elemental > >
+            Referential< Resourceful< Natural, Length, Elemental > >
                 sequence,
             Referential< WritePositional< Elemental > >
                 position,
@@ -391,7 +330,7 @@ namespace ration {
         >
         static inline bool
         IncrementTraverses(
-            Referential< const Compact< Natural, Length, Elemental > >
+            Referential< const Resourceful< Natural, Length, Elemental > >
                 sequence,
             Referential< const ReadPositional< Elemental > >
                 position,
@@ -418,7 +357,7 @@ namespace ration {
         >
         static inline Referential< const ReadPositional< Elemental > >
         TraverseReadIncrement(
-            Referential< const Compact< Natural, Length, Elemental > >
+            Referential< const Resourceful< Natural, Length, Elemental > >
                 stack,
             Referential< ReadPositional< Elemental > >
                 position,
@@ -443,7 +382,7 @@ namespace ration {
         >
         static inline Referential< const WritePositional< Elemental > >
         TraverseWriteIncrement(
-            Referential< Compact< Natural, Length, Elemental > >
+            Referential< Resourceful< Natural, Length, Elemental > >
                 sequence,
             Referential< WritePositional< Elemental > >
                 position,
@@ -468,7 +407,7 @@ namespace ration {
         >
         static inline Referential< const ReadPositional< Elemental > >
         BeginReadDecrement(
-            Referential< const Compact< Natural, Length, Elemental > >
+            Referential< const Resourceful< Natural, Length, Elemental > >
                 sequence,
             Referential< ReadPositional< Elemental > >
                 position,
@@ -493,7 +432,7 @@ namespace ration {
         >
         static inline Referential< const WritePositional< Elemental > >
         BeginWriteDecrement(
-            Referential< Compact< Natural, Length, Elemental > >
+            Referential< Resourceful< Natural, Length, Elemental > >
                 sequence,
             Referential< WritePositional< Elemental > >
                 position,
@@ -518,7 +457,7 @@ namespace ration {
         >
         static inline bool
         DecrementTraverses(
-            Referential< const Compact< Natural, Length, Elemental > >
+            Referential< const Resourceful< Natural, Length, Elemental > >
                 sequence,
             Referential< const ReadPositional< Elemental > >
                 position,
@@ -545,7 +484,7 @@ namespace ration {
         >
         static inline Referential< const ReadPositional< Elemental > >
         TraverseReadDecrement(
-            Referential< const Compact< Natural, Length, Elemental > >
+            Referential< const Resourceful< Natural, Length, Elemental > >
                 stack,
             Referential< ReadPositional< Elemental > >
                 position,
@@ -570,7 +509,7 @@ namespace ration {
         >
         static inline Referential< const WritePositional< Elemental > >
         TraverseWriteDecrement(
-            Referential< Compact< Natural, Length, Elemental > >
+            Referential< Resourceful< Natural, Length, Elemental > >
                 sequence,
             Referential< WritePositional< Elemental > >
                 position,
@@ -597,7 +536,7 @@ namespace ration {
         >
         static inline bool
         Antecede(
-            Referential< Compact< Natural, Length, Elemental > >
+            Referential< Resourceful< Natural, Length, Elemental > >
                 sequence,
             Referential< const Natural >
                 count
@@ -619,7 +558,7 @@ namespace ration {
         >
         static inline bool
         Accede(
-            Referential< Compact< Natural, Length, Elemental > >
+            Referential< Resourceful< Natural, Length, Elemental > >
                 sequence,
             Referential< const Elemental >
                 value
@@ -655,7 +594,7 @@ namespace ration {
         >
         static inline bool
         Accede(
-            Referential< Compact< Natural, Length, Elemental > >
+            Referential< Resourceful< Natural, Length, Elemental > >
                 sequence,
             Referential< const Directional< const Relative, Appositional, RelativeNatural, const Elemental > >
                 direction,
@@ -712,7 +651,7 @@ namespace ration {
         >
         static inline bool
         Precede(
-            Referential< Compact< Natural, Length, Elemental > >
+            Referential< Resourceful< Natural, Length, Elemental > >
                 sequence,
             Referential< const ReadPositional< Elemental > >
                 rank,
@@ -757,7 +696,7 @@ namespace ration {
         >
         static inline bool
         Precede(
-            Referential< Compact< Natural, Length, Elemental > >
+            Referential< Resourceful< Natural, Length, Elemental > >
                 sequence,
             Referential< const ReadPositional< Elemental > >
                 rank,
@@ -822,7 +761,7 @@ namespace ration {
         >
         static inline bool
         Cede(
-            Referential< Compact< Natural, Length, Elemental > >
+            Referential< Resourceful< Natural, Length, Elemental > >
                 sequence,
             Referential< const ReadPositional< Elemental > >
                 rank,
@@ -865,7 +804,7 @@ namespace ration {
         >
         static inline bool
         Cede(
-            Referential< Compact< Natural, Length, Elemental > >
+            Referential< Resourceful< Natural, Length, Elemental > >
                 sequence,
             Referential< const ReadPositional< Elemental > >
                 rank,
@@ -926,7 +865,7 @@ namespace ration {
         >
         static inline bool
         Proceed(
-            Referential< Compact< Natural, Length, Elemental > >
+            Referential< Resourceful< Natural, Length, Elemental > >
                 sequence,
             Referential< const Elemental >
                 value
@@ -957,7 +896,7 @@ namespace ration {
         >
         static inline bool
         Proceed(
-            Referential< Compact< Natural, Length, Elemental > >
+            Referential< Resourceful< Natural, Length, Elemental > >
                 sequence,
             Referential< const Directional< const Relative, Appositional, RelativeNatural, const Elemental > >
                 direction,
@@ -1007,7 +946,7 @@ namespace ration {
         >
         static inline bool
         Succeed(
-            Referential< Compact< Natural, Length, Elemental > >
+            Referential< Resourceful< Natural, Length, Elemental > >
                 sequence,
             Referential< const Natural >
                 count
@@ -1042,7 +981,7 @@ namespace ration {
         >
         static inline bool
         Supersede(
-            Referential< Compact< Natural, Length, Elemental > >
+            Referential< Resourceful< Natural, Length, Elemental > >
                 sequence,
             Referential< const ReadPositional< Elemental > >
                 rank,
@@ -1084,7 +1023,7 @@ namespace ration {
         >
         static inline bool
         Concede(
-            Referential< Compact< Natural, Length, Elemental > >
+            Referential< Resourceful< Natural, Length, Elemental > >
                 sequence,
             Referential< const ReadPositional< Elemental > >
                 rank,
@@ -1125,7 +1064,7 @@ namespace ration {
         >
         static inline bool
         Recede(
-            Referential< Compact< Natural, Length, Elemental > >
+            Referential< Resourceful< Natural, Length, Elemental > >
                 sequence,
             Referential< const Natural >
                 count
@@ -1151,7 +1090,7 @@ namespace ration {
         >
         static inline bool
         Condense(
-            Referential< Compact< Natural, Length, Elemental > >
+            Referential< Resourceful< Natural, Length, Elemental > >
                 sequence
         ) {
             return false;
@@ -1165,7 +1104,7 @@ namespace ration {
         >
         static inline bool
         Secede(
-            Referential< Compact< Natural, Length, Elemental > >
+            Referential< Resourceful< Natural, Length, Elemental > >
                 sequence
         ) {
             const bool actioned = sequence.allotment != 0;
@@ -1184,7 +1123,7 @@ namespace ration {
             Referential< MemoryMoving< Natural, Elemental > >
                 Move
         >
-        constexpr Conjoint< Compact< Natural, Length, Elemental >, ReadPositional< Elemental >, Relative, Appositional, RelativeNatural, Elemental >
+        constexpr Conjoint< Resourceful< Natural, Length, Elemental >, ReadPositional< Elemental >, Relative, Appositional, RelativeNatural, Elemental >
             FastConjoiner = {
                 Accede< Relative, Appositional, RelativeNatural, Natural, Length, Elemental, Move, false >,
                 Precede< Relative, Appositional, RelativeNatural, Natural, Length, Elemental, Move, false >,
@@ -1203,7 +1142,7 @@ namespace ration {
             Referential< MemoryMoving< Natural, Elemental > >
                 Move
         >
-        constexpr Conjoint< Compact< Natural, Length, Elemental >, ReadPositional< Elemental >, Relative, Appositional, RelativeNatural, Elemental >
+        constexpr Conjoint< Resourceful< Natural, Length, Elemental >, ReadPositional< Elemental >, Relative, Appositional, RelativeNatural, Elemental >
             SureConjoiner = {
                 Accede< Relative, Appositional, RelativeNatural, Natural, Length, Elemental, Move, true >,
                 Precede< Relative, Appositional, RelativeNatural, Natural, Length, Elemental, Move, true >,
@@ -1219,7 +1158,7 @@ namespace ration {
             Referential< MemoryMoving< Natural, Elemental > >
                 Move
         >
-        constexpr Sequent< Compact< Natural, Length, Elemental >, ReadPositional< Elemental >, Natural, Elemental >
+        constexpr Sequent< Resourceful< Natural, Length, Elemental >, ReadPositional< Elemental >, Natural, Elemental >
             FastSequencer = {
                 Antecede< Natural, Length, Elemental, false >,
                 Account< Natural, Length, Elemental >,
@@ -1233,7 +1172,7 @@ namespace ration {
                 Recede< Natural, Length, Elemental, false >,
                 Secede< Natural, Length, Elemental >,
                 Condense< Natural, Length, Elemental >,
-                FastConjoiner< Compact< Natural, Length, Elemental >, ReadPositional< Elemental >, Natural, Natural, Length, Elemental, Move >
+                FastConjoiner< Resourceful< Natural, Length, Elemental >, ReadPositional< Elemental >, Natural, Natural, Length, Elemental, Move >
             };
 
         template <
@@ -1244,7 +1183,7 @@ namespace ration {
             Referential< MemoryMoving< Natural, Elemental > >
                 Move
         >
-        constexpr Sequent< Compact< Natural, Length, Elemental >, ReadPositional< Elemental >, Natural, Elemental >
+        constexpr Sequent< Resourceful< Natural, Length, Elemental >, ReadPositional< Elemental >, Natural, Elemental >
             SureSequencer = {
                 Antecede< Natural, Length, Elemental, true >,
                 Account< Natural, Length, Elemental >,
@@ -1258,7 +1197,7 @@ namespace ration {
                 Recede< Natural, Length, Elemental, true >,
                 Secede< Natural, Length, Elemental >,
                 Condense< Natural, Length, Elemental >,
-                SureConjoiner< Compact< Natural, Length, Elemental >, ReadPositional< Elemental >, Natural, Natural, Length, Elemental, Move >
+                SureConjoiner< Resourceful< Natural, Length, Elemental >, ReadPositional< Elemental >, Natural, Natural, Length, Elemental, Move >
             };
 
         template <
@@ -1267,7 +1206,7 @@ namespace ration {
                 Length,
             typename Elemental
         >
-        constexpr Scalar< const Compact< Natural, Length, Elemental >, ReadPositional< Elemental >, Natural, const Elemental >
+        constexpr Scalar< const Resourceful< Natural, Length, Elemental >, ReadPositional< Elemental >, Natural, const Elemental >
             ReadIncrementScale = {
                 Comparison< ReadPositional< Elemental > >,
                 BeginReadIncrement< Natural, Length, Elemental >,
@@ -1281,7 +1220,7 @@ namespace ration {
                 Length,
             typename Elemental
         >
-        constexpr Scalar< Compact< Natural, Length, Elemental >, WritePositional< Elemental >, Natural, Elemental >
+        constexpr Scalar< Resourceful< Natural, Length, Elemental >, WritePositional< Elemental >, Natural, Elemental >
             WriteIncrementScale = {
                 Comparison< WritePositional< Elemental > >,
                 BeginWriteIncrement< Natural, Length, Elemental >,
@@ -1295,7 +1234,7 @@ namespace ration {
                 Length,
             typename Elemental
         >
-        constexpr Scalar< const Compact< Natural, Length, Elemental >, ReadPositional< Elemental >, Natural, const Elemental >
+        constexpr Scalar< const Resourceful< Natural, Length, Elemental >, ReadPositional< Elemental >, Natural, const Elemental >
             ReadDecrementScale = {
                 Comparison< ReadPositional< Elemental > >,
                 BeginReadDecrement< Natural, Length, Elemental >,
@@ -1309,7 +1248,7 @@ namespace ration {
                 Length,
             typename Elemental
         >
-        constexpr Scalar< Compact< Natural, Length, Elemental >, WritePositional< Elemental >, Natural, Elemental >
+        constexpr Scalar< Resourceful< Natural, Length, Elemental >, WritePositional< Elemental >, Natural, Elemental >
             WriteDecrementScale = {
                 Comparison< WritePositional< Elemental > >,
                 BeginWriteDecrement< Natural, Length, Elemental >,
@@ -1323,7 +1262,7 @@ namespace ration {
                 Length,
             typename Elemental
         >
-        constexpr Lineal< const Compact< Natural, Length, Elemental >, ReadPositional< Elemental >, Natural, const Elemental >
+        constexpr Lineal< const Resourceful< Natural, Length, Elemental >, ReadPositional< Elemental >, Natural, const Elemental >
             ReadLiner = {
                 ReadIncrementScale< Natural, Length, Elemental >,
                 ReadDecrementScale< Natural, Length, Elemental >
@@ -1335,7 +1274,7 @@ namespace ration {
                 Length,
             typename Elemental
         >
-        constexpr Lineal< Compact< Natural, Length, Elemental >, WritePositional< Elemental >, Natural, Elemental >
+        constexpr Lineal< Resourceful< Natural, Length, Elemental >, WritePositional< Elemental >, Natural, Elemental >
             WriteLiner = {
                 WriteIncrementScale< Natural, Length, Elemental >,
                 WriteDecrementScale< Natural, Length, Elemental >
@@ -1347,7 +1286,7 @@ namespace ration {
                 Length,
             typename Elemental
         >
-        constexpr Directional< const Compact< Natural, Length, Elemental >, ReadPositional< Elemental >, Natural, const Elemental >
+        constexpr Directional< const Resourceful< Natural, Length, Elemental >, ReadPositional< Elemental >, Natural, const Elemental >
             ReadIncrementDirection = {
                 ReadIncrementScale< Natural, Length, Elemental >,
                 Begins< Natural, Length, Elemental >,
@@ -1363,7 +1302,7 @@ namespace ration {
                 Length,
             typename Elemental
         >
-        constexpr Directional< Compact< Natural, Length, Elemental >, WritePositional< Elemental >, Natural, Elemental >
+        constexpr Directional< Resourceful< Natural, Length, Elemental >, WritePositional< Elemental >, Natural, Elemental >
             WriteIncrementDirection = {
                 WriteIncrementScale< Natural, Length, Elemental >,
                 Begins< Natural, Length, Elemental >,
@@ -1379,7 +1318,7 @@ namespace ration {
                 Length,
             typename Elemental
         >
-        constexpr Directional< const Compact< Natural, Length, Elemental >, ReadPositional< Elemental >, Natural, const Elemental >
+        constexpr Directional< const Resourceful< Natural, Length, Elemental >, ReadPositional< Elemental >, Natural, const Elemental >
             ReadDecrementDirection = {
                 ReadDecrementScale< Natural, Length, Elemental >,
                 Begins< Natural, Length, Elemental >,
@@ -1395,7 +1334,7 @@ namespace ration {
                 Length,
             typename Elemental
         >
-        constexpr Directional< Compact< Natural, Length, Elemental >, WritePositional< Elemental >, Natural, Elemental >
+        constexpr Directional< Resourceful< Natural, Length, Elemental >, WritePositional< Elemental >, Natural, Elemental >
             WriteDecrementDirection = {
                 WriteDecrementScale< Natural, Length, Elemental >,
                 Begins< Natural, Length, Elemental >,
@@ -1411,7 +1350,7 @@ namespace ration {
                 Length,
             typename Elemental
         >
-        constexpr Axial< const Compact< Natural, Length, Elemental >, ReadPositional< Elemental >, Natural, const Elemental >
+        constexpr Axial< const Resourceful< Natural, Length, Elemental >, ReadPositional< Elemental >, Natural, const Elemental >
             ReadAxis = {
                 ReadIncrementDirection< Natural, Length, Elemental >,
                 ReadDecrementDirection< Natural, Length, Elemental >
@@ -1423,7 +1362,7 @@ namespace ration {
                 Length,
             typename Elemental
         >
-        constexpr Axial< Compact< Natural, Length, Elemental >, WritePositional< Elemental >, Natural, Elemental >
+        constexpr Axial< Resourceful< Natural, Length, Elemental >, WritePositional< Elemental >, Natural, Elemental >
             WriteAxis = {
                 WriteIncrementDirection< Natural, Length, Elemental >,
                 WriteDecrementDirection< Natural, Length, Elemental >

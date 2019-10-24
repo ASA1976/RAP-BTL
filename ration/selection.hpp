@@ -1,47 +1,57 @@
 // © 2019 Aaron Sami Abassi
 // Licensed under the Academic Free License version 3.0
-#ifndef JUNCTION_SELECTION_MODULE
-#define JUNCTION_SELECTION_MODULE
+#ifndef RATION_SELECTION_MODULE
+#define RATION_SELECTION_MODULE
 #include "consecution.hpp"
 #include "../selection.hpp"
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
+#include <type_traits>
+#endif
 
-namespace junction {
+namespace ration {
 
     /**
-     * @brief         
-     *     Linked list unsorted set management implementation.
-     * @details       
+     * @brief
+     *     Array set management implementation.
+     * @details
      *     Association
      *     -----------
-     *     Linked list unsorted set management implementation.
+     *     Array set management implementation.
      */
     namespace selection {
 
-        using ::composition::Compositional;
-        using ::selection::Selective;
-        using ::selection::Sectional;
-        using ::selection::EquateSelections;
+        using ::location::Referential;
+        using ::trajection::Scalar;
+        using ::trajection::Directional;
         using ::sortation::Assortive;
         using ::sortation::SearchSection;
-        using ::junction::consecution::Consequent;
-        using ::junction::consecution::Concessive;
-        using ::junction::consecution::Recessive;
-        using ::junction::consecution::Proceed;
-        using ::junction::consecution::Succeed;
-        using ::junction::consecution::Concede;
+        using ::composition::Compositional;
+        using ::selection::Sectional;
+        using ::selection::Selective;
+        using ::selection::EquateSelections;
+        using consecution::Consequent;
+        using consecution::Concessive;
+        using consecution::Antecede;
+        using consecution::Account;
+        using consecution::Proceed;
+        using consecution::Concede;
+        using consecution::Secede;
+        using consecution::Condense;
+        using consecution::ReadIncrementScale;
 
         template <
-            typename Connective,
             typename Natural,
+            Natural
+                Length,
             typename Elemental,
             Referential< Assortive< Elemental > >
                 Equate,
-            Referential< const Scalar< const Junctive< Connective, Natural, Elemental >, Positional< Connective, Elemental >, Natural, const Elemental > >
+            Referential< const Scalar< const Resourceful< Natural, Length, Elemental >, ReadPositional< Elemental >, Natural, const Elemental > >
                 Scale
         >
         static inline bool
         AccreditSelection(
-            Referential< const Junctive< Connective, Natural, Elemental > >
+            Referential< const Resourceful< Natural, Length, Elemental > >
                 set,
             Referential< const Elemental >
                 value
@@ -53,28 +63,29 @@ namespace junction {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            Positional< Connective, Elemental >
+            ReadPositional< Elemental >
                 position;
-            if (!set.first)
+            if (Account( set ) < 1)
                 return false;
             Scale.begin( set, position, 0 );
             return SearchSection( set, Scale, value, position, Account( set ) - 1, Equate );
         }
 
         template <
-            typename Connective,
             typename Natural,
+            Natural
+                Length,
             typename Elemental,
-            Referential< Consequent< Connective, Natural, Elemental > >
+            Referential< Consequent< Natural, Length, Elemental > >
                 Proceed,
             Referential< Assortive< Elemental > >
                 Equate,
-            Referential< const Scalar< const Junctive< Connective, Natural, Elemental >, Positional< Connective, Elemental >, Natural, const Elemental > >
+            Referential< const Scalar< const Resourceful< Natural, Length, Elemental >, ReadPositional< Elemental >, Natural, const Elemental > >
                 Scale
         >
         static inline bool
         ComposeSelection(
-            Referential< Junctive< Connective, Natural, Elemental > >
+            Referential< Resourceful< Natural, Length, Elemental > >
                 set,
             Referential< const Elemental >
                 value
@@ -86,9 +97,9 @@ namespace junction {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-			Positional< Connective, Elemental >
+            ReadPositional< Elemental >
                 position;
-            if (set.first) {
+            if (Account( set ) > 0) {
                 Scale.begin( set, position, 0 );
                 if (SearchSection( set, Scale, value, position, Account( set ) - 1, Equate ))
                     return false;
@@ -98,17 +109,19 @@ namespace junction {
 
         template <
             typename Natural,
+            Natural
+                Length,
             typename Elemental,
-            Referential< Recessive< SinglyLinked< Elemental >, Natural, Elemental > >
-                Succeed,
+            Referential< Concessive< Natural, Length, Elemental > >
+                Concede,
             Referential< Assortive< Elemental > >
                 Equate,
-            Referential< const Scalar< const SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, Natural, const Elemental > >
+            Referential< const Scalar< const Resourceful< Natural, Length, Elemental >, ReadPositional< Elemental >, Natural, const Elemental > >
                 Scale
         >
         static inline bool
         DiscomposeSelection(
-            Referential< SinglyJunctive< Natural, Elemental > >
+            Referential< Resourceful< Natural, Length, Elemental > >
                 set,
             Referential< const Elemental >
                 value
@@ -120,81 +133,33 @@ namespace junction {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            SinglyPositional< Elemental >
+            ReadPositional< Elemental >
                 position;
-            Locational< SinglyNodal< Elemental > >
-                previous;
-            Natural
-                count;
-            if (!set.first)
+            if (Account( set ) < 1)
                 return false;
-            previous = 0;
             Scale.begin( set, position, 0 );
-            for (count = Account( set ); count > 0; count--) {
-                if (Equate( Scale.go( set, position ).to, value )) {
-                    if (!previous)
-                        return Succeed( set, 1 );
-                    SetNext( previous, GetNext( position.at ) );
-                    SetNext( position.at, set.unused );
-                    if (!GetNext( previous ))
-                        set.last = previous;
-                    set.unused = position.at;
-                    set.count--;
-                    return true;
-                }
-                previous = position.at;
-                Scale.traverse( set, position, 1 );
-            }
+            if (SearchSection( set, Scale, value, position, Account( set ) - 1, Equate ))
+                return Concede( set, position, 1 );
             return false;
         }
 
         template <
             typename Natural,
+            Natural
+                Length,
             typename Elemental,
-            Referential< Concessive< DoublyLinked< Elemental >, Natural, Elemental > >
+            Referential< Consequent< Natural, Length, Elemental > >
+                Proceed,
+            Referential< Concessive< Natural, Length, Elemental > >
                 Concede,
             Referential< Assortive< Elemental > >
                 Equate,
-            Referential< const Scalar< const DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, const Elemental > >
+            Referential< const Scalar< const Resourceful< Natural, Length, Elemental >, ReadPositional< Elemental >, Natural, const Elemental > >
                 Scale
         >
         static inline bool
-        DiscomposeSelection(
-            Referential< DoublyJunctive< Natural, Elemental > >
-                set,
-            Referential< const Elemental >
-                value
-        ) {
-#ifndef RAPBTL_NO_STD_CPLUSPLUS
-            using namespace ::std;
-            static_assert(
-                is_integral< Natural >::value && is_unsigned< Natural >::value,
-                "Natural:  Unsigned integer type required"
-            );
-#endif
-            DoublyPositional< Elemental >
-                position;
-            if (!set.first)
-                return false;
-            Scale.begin( set, position, 0 );
-            if (!SearchSection( set, Scale, value, position, Account( set ) - 1, Equate ))
-                return false;
-            return Concede( set, position, 1 );
-        }
-
-        template <
-            typename Natural,
-            typename Elemental,
-            Referential< Assortive< Elemental > >
-                Equate,
-            Referential< const Scalar< const SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, Natural, const Elemental > >
-                Scale,
-            Referential< const SinglyAdjunctive< Natural, Elemental > >
-                Adjunct
-        >
-        static inline bool
         RecomposeSelection(
-            Referential< SinglyJunctive< Natural, Elemental > >
+            Referential< Resourceful< Natural, Length, Elemental > >
                 set,
             Referential< const Elemental >
                 original,
@@ -208,137 +173,46 @@ namespace junction {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-            SinglyPositional< Elemental >
-                position;
-            Locational< SinglyNodal< Elemental > >
-                previous, found, result;
-            if (!set.first)
+
+            ReadPositional< Elemental >
+                position, previous;
+            if (Account( set ) < 1)
                 return false;
-            previous = result = found = 0;
+            previous = 0;
             Scale.begin( set, position, 0 );
             for (Natural count = Account( set ); count > 0; count--) {
-                const auto&
-                    value = Scale.go( set, position ).to;
-                if (Equate( value, replacement ))
+                if (Equate( replacement, Scale.go( set, position ).to ))
                     return false;
-                if (Equate( value, original ))
-                    found = position.at;
-                else if (!found)
-                    previous = position.at;
-                Scale.traverse( set, position, 1 );
+                if (Equate( original, Scale.go( set, position ).to ))
+                    previous = position;
             }
-            if (!found)
+            if (!previous)
                 return false;
-            result = Adjunct.proclaim( set, replacement );
-            if (!result)
-                return false;
-            if (previous)
-                SetNext( previous, GetNext( found ) );
-            else
-                set.first = GetNext( found );
-            SetNext( found, set.unused );
-            set.unused = found;
-            SetNext( result, 0 );
-            if (set.first)
-                SetNext( set.last, result );
-            else
-                set.first = result;
-            set.last = result;
-            return true;
+            Concede( set, previous, 1 );
+            return Proceed( set, replacement );
         }
 
         template <
-            typename Natural,
-            typename Elemental,
-            Referential< Assortive< Elemental > >
-                Equate,
-            Referential< const Scalar< const DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, const Elemental > >
-                Scale,
-            Referential< const DoublyAdjunctive< Natural, Elemental > >
-                Adjunct
-        >
-        static inline bool
-        RecomposeSelection(
-            Referential< DoublyJunctive< Natural, Elemental > >
-                set,
-            Referential< const Elemental >
-                original,
-            Referential< const Elemental >
-                replacement
-        ) {
-#ifndef RAPBTL_NO_STD_CPLUSPLUS
-            using namespace ::std;
-            static_assert(
-                is_integral< Natural >::value && is_unsigned< Natural >::value,
-                "Natural:  Unsigned integer type required"
-            );
-#endif
-            DoublyPositional< Elemental >
-                position;
-            Locational< DoublyNodal< Elemental > >
-                found, result;
-            Natural
-                count;
-            if (!set.first)
-                return false;
-            result = found = 0;
-            Scale.begin( set, position, 0 );
-            for (count = Account( set ); count > 0; count--) {
-                const auto&
-                    value = Scale.go( set, position ).to;
-                if (Equate( value, replacement ))
-                    return false;
-                if (Equate( value, original ))
-                    found = position.at;
-                Scale.traverse( set, position, 1 );
-            }
-            if (!found)
-                return false;
-            result = Adjunct.proclaim( set, replacement );
-            if (!result)
-                return false;
-            if (GetPrevious( found ))
-                SetNext( GetPrevious( found ), GetNext( found ) );
-            else
-                set.first = GetNext( found );
-            if (GetNext( found ))
-                SetPrevious( GetNext( found ), GetPrevious( found ) );
-            else
-                set.last = GetPrevious( found );
-            UnsetPrevious( found );
-            SetNext( found, set.unused );
-            if (set.unused)
-                SetPrevious( set.unused, found );
-            set.unused = found;
-            UnsetNext( result );
-            SetPrevious( result, set.last );
-            if (set.last)
-                SetNext( set.last, result );
-            else
-                set.first = result;
-            set.last = result;
-            return true;
-        }
-
-        template <
-            typename Connective,
             typename Basic,
             typename BasicPositional,
             typename BasicNatural,
             typename Natural,
+            Natural
+                Length,
             typename Elemental,
-            Referential< Consequent< Connective, Natural, Elemental > >
-                Proceed
+            const bool
+                Safety
         >
         static inline bool
         DuplicateSelection(
-            Referential< Junctive< Connective, Natural, Elemental > >
+            Referential< Resourceful< Natural, Length, Elemental > >
                 operand,
             Referential< const Directional< const Basic, BasicPositional, BasicNatural, const Elemental > >
                 basis,
             Referential< const Basic >
                 base
         ) {
+            using namespace ::location;
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
             using namespace ::std;
             static_assert(
@@ -350,24 +224,29 @@ namespace junction {
                 "BasicNatural:  Unsigned integer type required"
             );
 #endif
+            WritePositional< Elemental >
+                write_position;
             BasicPositional
-                position;
-            RemoveAll( operand );
+                read_position;
+            Secede( operand );
             if (!basis.begins( base, 0 ))
                 return true;
-            basis.scale.begin( base, position, 0 );
+            write_position = operand.source;
+            basis.scale.begin( base, read_position, 0 );
             while (true) {
-                if (!Proceed( operand, basis.scale.go( base, position ).to ))
+                Refer( write_position ).to = basis.scale.go( base, read_position ).to;
+                write_position++;
+                if (Safety && write_position > operand.source + Length)
                     return false;
-                if (!basis.traverses( base, position, 1 ))
+                if (!basis.traverses( base, read_position, 1 ))
                     break;
-                basis.scale.traverse( base, position, 1 );
+                basis.scale.traverse( base, read_position, 1 );
             }
+            operand.allotment = static_cast<Natural>(write_position - operand.source);
             return true;
         }
 
         template <
-            typename Connective,
             typename Basic,
             typename BasicPositional,
             typename BasicNatural,
@@ -375,15 +254,19 @@ namespace junction {
             typename RelativePositional,
             typename RelativeNatural,
             typename Natural,
+            Natural
+                Length,
             typename Elemental,
-            Referential< Consequent< Connective, Natural, Elemental > >
+            Referential< Consequent< Natural, Length, Elemental > >
                 Proceed,
             Referential< Assortive< Elemental > >
-                Equate
+                Equate,
+            const bool
+                Safety
         >
         static inline bool
         ComplementSelections(
-            Referential< Junctive< Connective, Natural, Elemental > >
+            Referential< Resourceful< Natural, Length, Elemental > >
                 operand,
             Referential< const Directional< const Basic, BasicPositional, BasicNatural, const Elemental > >
                 basis,
@@ -410,7 +293,7 @@ namespace junction {
             );
 #endif
             static auto&
-                DuplicateRelative = DuplicateSelection< Connective, Relative, RelativePositional, RelativeNatural, Natural, Elemental, Proceed >;
+                DuplicateRelative = DuplicateSelection< Relative, RelativePositional, RelativeNatural, Natural, Length, Elemental, Safety >;
             BasicPositional
                 base_position;
             RelativePositional
@@ -419,7 +302,7 @@ namespace junction {
                 extent;
             if (relativity.begins( relative_set, 0 )) {
                 if (basis.begins( base_set, 0 )) {
-                    RemoveAll( operand );
+                    Secede( operand );
                     extent = basis.survey( base_set ) - 1;
                     relativity.scale.begin( relative_set, relative_position, 0 );
                     while (true) {
@@ -437,13 +320,12 @@ namespace junction {
                     return DuplicateRelative( operand, relativity, relative_set );
                 }
             } else {
-                RemoveAll( operand );
+                Secede( operand );
             }
             return true;
         }
 
         template <
-            typename Connective,
             typename Basic,
             typename BasicPositional,
             typename BasicNatural,
@@ -451,15 +333,19 @@ namespace junction {
             typename RelativePositional,
             typename RelativeNatural,
             typename Natural,
+            Natural
+                Length,
             typename Elemental,
-            Referential< Consequent< Connective, Natural, Elemental > >
+            Referential< Consequent< Natural, Length, Elemental > >
                 Proceed,
             Referential< Assortive< Elemental > >
-                Equate
+                Equate,
+            const bool
+                Safety
         >
         static inline bool
         DifferentiateSelections(
-            Referential< Junctive< Connective, Natural, Elemental > >
+            Referential< Resourceful< Natural, Length, Elemental > >
                 operand,
             Referential< const Directional< const Basic, BasicPositional, BasicNatural, const Elemental > >
                 basis,
@@ -486,9 +372,9 @@ namespace junction {
             );
 #endif
             static auto&
-                DuplicateBase = DuplicateSelection< Connective, Basic, BasicPositional, BasicNatural, Natural, Elemental, Proceed >;
+                DuplicateBase = DuplicateSelection< Basic, BasicPositional, BasicNatural, Natural, Length, Elemental, Safety >;
             static auto&
-                DuplicateRelative = DuplicateSelection< Connective, Relative, RelativePositional, RelativeNatural, Natural, Elemental, Proceed >;
+                DuplicateRelative = DuplicateSelection< Relative, RelativePositional, RelativeNatural, Natural, Length, Elemental, Safety >;
             BasicPositional
                 base_position;
             RelativePositional
@@ -503,10 +389,10 @@ namespace junction {
             } else if (relativity.begins( relative_set, 0 )) {
                 return DuplicateRelative( operand, relativity, relative_set );
             } else {
-                RemoveAll( operand );
+                Secede( operand );
                 return true;
             }
-            RemoveAll( operand );
+            Secede( operand );
             relative_extent = relativity.survey( relative_set ) - 1;
             basis.scale.begin( base_set, base_position, 0 );
             while (true) {
@@ -539,7 +425,6 @@ namespace junction {
         }
 
         template <
-            typename Connective,
             typename Basic,
             typename BasicPositional,
             typename BasicNatural,
@@ -547,15 +432,19 @@ namespace junction {
             typename RelativePositional,
             typename RelativeNatural,
             typename Natural,
+            Natural
+                Length,
             typename Elemental,
-            Referential< Consequent< Connective, Natural, Elemental > >
+            Referential< Consequent< Natural, Length, Elemental > >
                 Proceed,
             Referential< Assortive< Elemental > >
-                Equate
+                Equate,
+            const bool
+                Safety
         >
         static inline bool
         IntersectSelections(
-            Referential< Junctive< Connective, Natural, Elemental > >
+            Referential< Resourceful< Natural, Length, Elemental > >
                 operand,
             Referential< const Directional< const Basic, BasicPositional, BasicNatural, const Elemental > >
                 basis,
@@ -587,7 +476,7 @@ namespace junction {
                 relative_position;
             BasicNatural
                 base_extent;
-            RemoveAll( operand );
+            Secede( operand );
             if (relativity.begins( relative_set, 0 ) && basis.begins( base_set, 0 )) {
                 base_extent = basis.survey( base_set ) - 1;
                 relativity.scale.begin( relative_set, relative_position, 0 );
@@ -608,7 +497,6 @@ namespace junction {
         }
 
         template <
-            typename Connective,
             typename Basic,
             typename BasicPositional,
             typename BasicNatural,
@@ -616,15 +504,19 @@ namespace junction {
             typename RelativePositional,
             typename RelativeNatural,
             typename Natural,
+            Natural
+                Length,
             typename Elemental,
-            Referential< Consequent< Connective, Natural, Elemental > >
+            Referential< Consequent< Natural, Length, Elemental > >
                 Proceed,
             Referential< Assortive< Elemental > >
-                Equate
+                Equate,
+            const bool
+                Safety
         >
         static inline bool
         UniteSelections(
-            Referential< Junctive< Connective, Natural, Elemental > >
+            Referential< Resourceful< Natural, Length, Elemental > >
                 operand,
             Referential< const Directional< const Basic, BasicPositional, BasicNatural, const Elemental > >
                 basis,
@@ -651,9 +543,9 @@ namespace junction {
             );
 #endif
             static auto&
-                DuplicateBase = DuplicateSelection< Connective, Basic, BasicPositional, BasicNatural, Natural, Elemental, Proceed >;
+                DuplicateBase = DuplicateSelection< Basic, BasicPositional, BasicNatural, Natural, Length, Elemental, Safety >;
             static auto&
-                DuplicateRelative = DuplicateSelection< Connective, Relative, RelativePositional, RelativeNatural, Natural, Elemental, Proceed >;
+                DuplicateRelative = DuplicateSelection< Relative, RelativePositional, RelativeNatural, Natural, Length, Elemental, Safety >;
             BasicPositional
                 base_position;
             RelativePositional
@@ -683,98 +575,107 @@ namespace junction {
                 if (!DuplicateRelative( operand, relativity, relative_set ))
                     return false;
             } else {
-                RemoveAll( operand );
+                Secede( operand );
             }
             return true;
         }
 
         template <
             typename Natural,
+            Natural
+                Length,
             typename Elemental,
             Referential< Assortive< Elemental > >
                 Equate,
-            Referential< const SinglyAdjunctive< Natural, Elemental > >
-                Adjunct
+            Referential< MemoryMoving< Natural, Elemental > >
+                Move
         >
-        constexpr Compositional< SinglyJunctive< Natural, Elemental >, Natural, Elemental >
-            SingleComposer = {
-                Instantiate< SinglyLinked< Elemental >, Natural, Elemental, Adjunct >,
-                AccreditSelection< 
-                    SinglyLinked< Elemental >, 
+        constexpr Compositional< Resourceful< Natural, Length, Elemental >, Natural, Elemental >
+            FastComposer = {
+                Antecede< Natural, Length, Elemental, false >,
+                AccreditSelection<
                     Natural, 
+                    Length,
                     Elemental, 
                     Equate, 
-                    ReadIncrementSingleScale< Natural, Elemental > 
+                    ReadIncrementScale< Natural, Length, Elemental > 
                 >,
-                ComposeSelection< 
-                    SinglyLinked< Elemental >, 
+                ComposeSelection<
                     Natural, 
+                    Length,
                     Elemental, 
-                    Proceed< Natural, Elemental, Adjunct >, 
+                    Proceed< Natural, Length, Elemental, false >, 
                     Equate, 
-                    ReadIncrementSingleScale< Natural, Elemental > 
+                    ReadIncrementScale< Natural, Length, Elemental > 
                 >,
-                RecomposeSelection< 
+                RecomposeSelection<
                     Natural, 
+                    Length,
                     Elemental, 
-                    Proceed< Natural, Elemental, Adjunct >, 
-                    Succeed< Natural, Elemental >, 
+                    Proceed< Natural, Length, Elemental, false >, 
+                    Concede< Natural, Length, Elemental, Move, false >, 
                     Equate, 
-                    ReadIncrementSingleScale< Natural, Elemental > 
+                    ReadIncrementScale< Natural, Length, Elemental > 
                 >,
-                DiscomposeSelection< 
+                DiscomposeSelection<
                     Natural, 
-                    Elemental, 
-                    Succeed< Natural, Elemental >, 
+                    Length,
+                    Elemental,
+                    Concede< Natural, Length, Elemental, Move, false >, 
                     Equate, 
-                    ReadIncrementSingleScale< Natural, Elemental >
+                    ReadIncrementScale< Natural, Length, Elemental >
                 >,
-                RemoveAll< SinglyLinked< Elemental >, Natural, Elemental >,
-                DeleteOneNode< Natural, Elemental, Adjunct >
+                Secede< Natural, Length, Elemental >,
+                Condense< Natural, Length, Elemental >
             };
 
         template <
             typename Natural,
+            Natural
+                Length,
             typename Elemental,
             Referential< Assortive< Elemental > >
                 Equate,
-            Referential< const DoublyAdjunctive< Natural, Elemental > >
-                Adjunct
+            Referential< MemoryMoving< Natural, Elemental > >
+                Move
         >
-        constexpr Compositional< DoublyJunctive< Natural, Elemental >, Natural, Elemental >
-            DoubleComposer = {
-                Instantiate< DoublyLinked< Elemental >, Natural, Elemental, Adjunct >,
-                AccreditSelection< 
-                    DoublyLinked< Elemental >, 
+        constexpr Compositional< Resourceful< Natural, Length, Elemental >, Natural, Elemental >
+            SureComposer = {
+                Antecede< Natural, Length, Elemental, true >,
+                AccreditSelection<
                     Natural, 
+                    Length,
                     Elemental, 
                     Equate, 
-                    ReadIncrementDoubleScale< Natural, Elemental > 
+                    ReadIncrementScale< Natural, Length, Elemental > 
                 >,
-                ComposeSelection< 
-                    DoublyLinked< Elemental >, 
+                ComposeSelection<
                     Natural, 
+                    Length,
                     Elemental, 
-                    Proceed< Natural, Elemental, Adjunct >, 
+                    Proceed< Natural, Length, Elemental, true >, 
                     Equate, 
-                    ReadIncrementDoubleScale< Natural, Elemental > 
+                    ReadIncrementScale< Natural, Length, Elemental > 
                 >,
-                RecomposeSelection< 
+                RecomposeSelection<
                     Natural, 
+                    Length,
                     Elemental, 
+                    Proceed< Natural, Length, Elemental, true >, 
+                    Concede< Natural, Length, Elemental, Move, true >, 
                     Equate, 
-                    ReadIncrementDoubleScale< Natural, Elemental >,
-                    Adjunct
+                    ReadIncrementScale< Natural, Length, Elemental > 
                 >,
-                DiscomposeSelection< 
+                DiscomposeSelection<
                     Natural, 
-                    Elemental, 
-                    Concede< Natural, Elemental >, 
+                    Length,
+                    Elemental,
+                    Concede< Natural, Length, Elemental, Move, false >, 
                     Equate, 
-                    ReadIncrementDoubleScale< Natural, Elemental >
+                    ReadIncrementScale< Natural, Length, Elemental >
                 >,
-                RemoveAll< DoublyLinked< Elemental >, Natural, Elemental >,
-                DeleteOneNode< Natural, Elemental, Adjunct >
+                Secede< Natural, Length, Elemental >,
+                Condense< Natural, Length, Elemental >
             };
 
         template <
@@ -785,16 +686,17 @@ namespace junction {
             typename RelativePositional,
             typename RelativeNatural,
             typename Natural,
+            Natural
+                Length,
             typename Elemental,
             Referential< Assortive< Elemental > >
                 Equate,
-            Referential< const SinglyAdjunctive< Natural, Elemental > >
-                Adjunct
+            Referential< MemoryMoving< Natural, Elemental > >
+                Move
         >
-        constexpr Sectional< SinglyJunctive< Natural, Elemental >, Basic, BasicPositional, BasicNatural, Relative, RelativePositional, RelativeNatural, Elemental >
-            SingleSection = {
-                ComplementSelections< 
-                    SinglyLinked< Elemental >, 
+        constexpr Sectional< Resourceful< Natural, Length, Elemental >, Basic, BasicPositional, BasicNatural, Relative, RelativePositional, RelativeNatural, Elemental >
+            FastSection = {
+                ComplementSelections<
                     Basic, 
                     BasicPositional, 
                     BasicNatural, 
@@ -802,12 +704,13 @@ namespace junction {
                     RelativePositional, 
                     RelativeNatural, 
                     Natural, 
+                    Length,
                     Elemental, 
-                    Proceed< Natural, Elemental, Adjunct >,
-                    Equate
+                    Proceed< Natural, Length, Elemental, false >, 
+                    Equate,
+                    false
                 >,
                 DifferentiateSelections< 
-                    SinglyLinked< Elemental >, 
                     Basic, 
                     BasicPositional, 
                     BasicNatural, 
@@ -815,12 +718,13 @@ namespace junction {
                     RelativePositional, 
                     RelativeNatural, 
                     Natural, 
+                    Length,
                     Elemental, 
-                    Proceed< Natural, Elemental, Adjunct >, 
-                    Equate
+                    Proceed< Natural, Length, Elemental, false >, 
+                    Equate,
+                    false
                 >,
                 IntersectSelections< 
-                    SinglyLinked< Elemental >, 
                     Basic, 
                     BasicPositional, 
                     BasicNatural, 
@@ -828,12 +732,13 @@ namespace junction {
                     RelativePositional, 
                     RelativeNatural, 
                     Natural, 
+                    Length,
                     Elemental, 
-                    Proceed< Natural, Elemental, Adjunct >, 
-                    Equate
+                    Proceed< Natural, Length, Elemental, false >, 
+                    Equate,
+                    false
                 >,
                 UniteSelections< 
-                    SinglyLinked< Elemental >, 
                     Basic, 
                     BasicPositional, 
                     BasicNatural, 
@@ -841,9 +746,11 @@ namespace junction {
                     RelativePositional, 
                     RelativeNatural, 
                     Natural, 
+                    Length,
                     Elemental, 
-                    Proceed< Natural, Elemental, Adjunct >, 
-                    Equate
+                    Proceed< Natural, Length, Elemental, false >, 
+                    Equate,
+                    false
                 >
             };
 
@@ -855,16 +762,17 @@ namespace junction {
             typename RelativePositional,
             typename RelativeNatural,
             typename Natural,
+            Natural
+                Length,
             typename Elemental,
             Referential< Assortive< Elemental > >
                 Equate,
-            Referential< const DoublyAdjunctive< Natural, Elemental > >
-                Adjunct
+            Referential< MemoryMoving< Natural, Elemental > >
+                Move
         >
-        constexpr Sectional< DoublyJunctive< Natural, Elemental >, Basic, BasicPositional, BasicNatural, Relative, RelativePositional, RelativeNatural, Elemental >
-            DoubleSection = {
-                ComplementSelections< 
-                    DoublyLinked< Elemental >, 
+        constexpr Sectional< Resourceful< Natural, Length, Elemental >, Basic, BasicPositional, BasicNatural, Relative, RelativePositional, RelativeNatural, Elemental >
+            SureSection = {
+                ComplementSelections<
                     Basic, 
                     BasicPositional, 
                     BasicNatural, 
@@ -872,12 +780,13 @@ namespace junction {
                     RelativePositional, 
                     RelativeNatural, 
                     Natural, 
+                    Length,
                     Elemental, 
-                    Proceed< Natural, Elemental, Adjunct >, 
-                    Equate
+                    Proceed< Natural, Length, Elemental, true >, 
+                    Equate,
+                    true
                 >,
                 DifferentiateSelections< 
-                    DoublyLinked< Elemental >, 
                     Basic, 
                     BasicPositional, 
                     BasicNatural, 
@@ -885,12 +794,13 @@ namespace junction {
                     RelativePositional, 
                     RelativeNatural, 
                     Natural, 
+                    Length,
                     Elemental, 
-                    Proceed< Natural, Elemental, Adjunct >, 
-                    Equate
+                    Proceed< Natural, Length, Elemental, true >, 
+                    Equate,
+                    true
                 >,
                 IntersectSelections< 
-                    DoublyLinked< Elemental >, 
                     Basic, 
                     BasicPositional, 
                     BasicNatural, 
@@ -898,12 +808,13 @@ namespace junction {
                     RelativePositional, 
                     RelativeNatural, 
                     Natural, 
+                    Length,
                     Elemental, 
-                    Proceed< Natural, Elemental, Adjunct >, 
-                    Equate
+                    Proceed< Natural, Length, Elemental, true >, 
+                    Equate,
+                    true
                 >,
                 UniteSelections< 
-                    DoublyLinked< Elemental >, 
                     Basic, 
                     BasicPositional, 
                     BasicNatural, 
@@ -911,100 +822,108 @@ namespace junction {
                     RelativePositional, 
                     RelativeNatural, 
                     Natural, 
+                    Length,
                     Elemental, 
-                    Proceed< Natural, Elemental, Adjunct >, 
-                    Equate
+                    Proceed< Natural, Length, Elemental, true >, 
+                    Equate,
+                    true
                 >
             };
 
         template <
             typename Natural,
+            Natural
+                Length,
             typename Elemental,
             Referential< Assortive< Elemental > >
                 Equate,
-            Referential< const SinglyAdjunctive< Natural, Elemental > >
-                Adjunct
+            Referential< MemoryMoving< Natural, Elemental > >
+                Move
         >
-        constexpr Selective< SinglyJunctive< Natural, Elemental >, SinglyPositional< Elemental >, Natural, Elemental >
-            SingleSelector = {
-                SingleComposer< Natural, Elemental, Equate, Adjunct >,
-                SingleSection< 
-                    SinglyJunctive< Natural, Elemental >, 
-                    SinglyPositional< Elemental >, 
+        constexpr Selective< Resourceful< Natural, Length, Elemental >, ReadPositional< Elemental >, Natural, Elemental >
+            FastSelector = {
+                FastComposer< Natural, Length, Elemental, Equate, Move >,
+                FastSection< 
+                    Resourceful< Natural, Length, Elemental >, 
+                    ReadPositional< Elemental >, 
                     Natural, 
-                    SinglyJunctive< Natural, Elemental >, 
-                    SinglyPositional< Elemental >, 
+                    Resourceful< Natural, Length, Elemental >, 
+                    ReadPositional< Elemental >, 
                     Natural, 
                     Natural, 
+                    Length,
                     Elemental, 
                     Equate,
-                    Adjunct
+                    Move
                 >,
-                DuplicateSelection< 
-                    SinglyLinked< Elemental >, 
-                    SinglyJunctive< Natural, Elemental >, 
-                    SinglyPositional< Elemental >, 
+                DuplicateSelection<
+                    Resourceful< Natural, Length, Elemental >, 
+                    ReadPositional< Elemental >, 
                     Natural, 
                     Natural, 
-                    Elemental, 
-                    Proceed< Natural, Elemental, Adjunct > 
+                    Length,
+                    Elemental,
+                    false
                 >,
-                EquateSelections< 
-                    SinglyJunctive< Natural, Elemental >, 
-                    SinglyPositional< Elemental >, 
+                EquateSelections<
+                    Resourceful< Natural, Length, Elemental >, 
+                    ReadPositional< Elemental >, 
                     Natural, 
-                    SinglyJunctive< Natural, Elemental >, 
-                    SinglyPositional< Elemental >, 
+                    Resourceful< Natural, Length, Elemental >, 
+                    ReadPositional< Elemental >, 
                     Natural, 
                     Elemental, 
                     Equate 
                 >,
-                Account< SinglyLinked< Elemental >,  Natural, Elemental >
+                Account< Natural, Length, Elemental >
             };
 
         template <
             typename Natural,
+            Natural
+                Length,
             typename Elemental,
             Referential< Assortive< Elemental > >
                 Equate,
-            Referential< const DoublyAdjunctive< Natural, Elemental > >
-                Adjunct
+            Referential< MemoryMoving< Natural, Elemental > >
+                Move
         >
-        constexpr Selective< DoublyJunctive< Natural, Elemental >, DoublyPositional< Elemental >, Natural, Elemental >
-            DoubleSelector = {
-                DoubleComposer< Natural, Elemental, Equate, Adjunct >,
-                DoubleSection< 
-                    DoublyJunctive< Natural, Elemental >, 
-                    DoublyPositional< Elemental >, 
+        constexpr Selective< Resourceful< Natural, Length, Elemental >, ReadPositional< Elemental >, Natural, Elemental >
+            SureSelector = {
+                SureComposer< Natural, Length, Elemental, Equate, Move >,
+                SureSection< 
+                    Resourceful< Natural, Length, Elemental >, 
+                    ReadPositional< Elemental >, 
                     Natural, 
-                    DoublyJunctive< Natural, Elemental >, 
-                    DoublyPositional< Elemental >, 
+                    Resourceful< Natural, Length, Elemental >, 
+                    ReadPositional< Elemental >, 
                     Natural, 
                     Natural, 
+                    Length,
                     Elemental, 
                     Equate,
-                    Adjunct
+                    Move
                 >,
-                DuplicateSelection< 
-                    DoublyLinked< Elemental >, 
-                    DoublyJunctive< Natural, Elemental >, 
-                    DoublyPositional< Elemental >, 
+                DuplicateSelection<
+                    Resourceful< Natural, Length, Elemental >, 
+                    ReadPositional< Elemental >, 
                     Natural, 
                     Natural, 
-                    Elemental, 
-                    Proceed< Natural, Elemental, Adjunct > 
+                    Length,
+                    Elemental,
+                    true
                 >,
-                EquateSelections< 
-                    DoublyJunctive< Natural, Elemental >, 
-                    DoublyPositional< Elemental >, 
+                EquateSelections<
+                    Resourceful< Natural, Length, Elemental >, 
+                    ReadPositional< Elemental >, 
                     Natural, 
-                    DoublyJunctive< Natural, Elemental >, 
-                    DoublyPositional< Elemental >, 
+                    Resourceful< Natural, Length, Elemental >, 
+                    ReadPositional< Elemental >, 
                     Natural, 
                     Elemental, 
                     Equate 
                 >,
-                Account< DoublyLinked< Elemental >,  Natural, Elemental >
+                Account< Natural, Length, Elemental >
             };
 
     }
