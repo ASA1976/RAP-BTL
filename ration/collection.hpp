@@ -59,7 +59,9 @@ namespace ration {
             Referential< Assortive< Elemental > >
                 Order,
             Referential< const Lineal< const Resourceful< Natural, Length, Elemental >, ReadPositional< Elemental >, Natural, const Elemental > >
-                Liner
+                Liner,
+            const bool
+                Safety
         >
         static inline bool
         AccreditCollection(
@@ -79,7 +81,7 @@ namespace ration {
                 Before = 0;
             ReadPositional< Elemental >
                 position;
-            if (Account( set ) < 1)
+            if (Safety && Account( set ) < 1)
                 return false;
             Liner.increment.begin( set, position, 0 );
             return SearchBisection( set, Liner, value, position, Before, Account( set ) - 1, Equate, Order );
@@ -101,7 +103,9 @@ namespace ration {
             Referential< Assortive< Elemental > >
                 Order,
             Referential< const Lineal< const Resourceful< Natural, Length, Elemental >, ReadPositional< Elemental >, Natural, const Elemental > >
-                Liner
+                Liner,
+            const bool
+                Safety
         >
         static inline bool
         ComposeCollection(
@@ -121,10 +125,12 @@ namespace ration {
                 Before = 0;
 			ReadPositional< Elemental >
                 position;
+            if (Safety && Account( set ) >= Length)
+                return false;
             if (Account( set ) < 1)
                 return Proceed( set, value );
             Liner.increment.begin( set, position, 0 );
-            if (SearchBisection( set, Liner, value, position, Before, Account( set ) - 1, Equate, Order ))
+            if (SearchBisection( set, Liner, value, position, Before, Account( set ) - 1, Equate, Order ) && Safety)
                 return false;
             if (Order( Liner.increment.go( set, position ).to, value ))
                 return Cede( set, position, value );
@@ -143,7 +149,9 @@ namespace ration {
             Referential< Assortive< Elemental > >
                 Order,
             Referential< const Lineal< const Resourceful< Natural, Length, Elemental >, ReadPositional< Elemental >, Natural, const Elemental > >
-                Liner
+                Liner,
+            const bool
+                Safety
         >
         static inline bool
         DiscomposeCollection(
@@ -163,10 +171,10 @@ namespace ration {
                 Before = 0;
             ReadPositional< Elemental >
                 position;
-            if (Account( set ) < 1)
+            if (Safety && Account( set ) < 1)
                 return false;
             Liner.increment.begin( set, position, 0 );
-            if (!SearchBisection( set, Liner, value, position, Before, Account( set ) - 1, Equate, Order ))
+            if (!SearchBisection( set, Liner, value, position, Before, Account( set ) - 1, Equate, Order ) && Safety)
                 return false;
             return Concede( set, position, 1 );
         }
@@ -209,15 +217,15 @@ namespace ration {
             ReadPositional< Elemental >
                 original_position,
                 replacement_position;
-            if (Account( set ) < 1)
+            if (Safety && Account( set ) < 1)
                 return false;
             const Natural
                 extent = Account( set ) - 1;
             Liner.increment.begin( set, original_position, 0 );
-            if (!SearchBisection( set, Liner, original, original_position, Before, extent, Equate, Order ))
+            if (!SearchBisection( set, Liner, original, original_position, Before, extent, Equate, Order ) && Safety)
                 return false;
             Liner.increment.begin( set, replacement_position, 0 );
-            if (SearchBisection( set, Liner, replacement, replacement_position, Before, extent, Equate, Order ))
+            if (SearchBisection( set, Liner, replacement, replacement_position, Before, extent, Equate, Order ) && Safety)
                 return false;
             const WritePositional< Elemental >
                 write_position = const_cast<WritePositional< Elemental >>(replacement_position);
@@ -257,7 +265,9 @@ namespace ration {
             Referential< Assortive< Elemental > >
                 Order,
             Referential< const Lineal< const Resourceful< Natural, Length, Elemental >, ReadPositional< Elemental >, Natural, const Elemental > >
-                Liner
+                Liner,
+            const bool
+                Safety
         >
         static inline bool
         CollateSelection(
@@ -285,7 +295,7 @@ namespace ration {
             if (!basis.begins( base, 0 ))
                 return true;
             basis.scale.begin( base, base_position, 0 );
-            if (!Proceed( operand, basis.scale.go( base, base_position ).to ))
+            if (!Proceed( operand, basis.scale.go( base, base_position ).to ) && Safety)
                 return false;
             Liner.increment.begin( operand, operand_position, 0 );
             before = after = 0;
@@ -294,10 +304,10 @@ namespace ration {
                     base_value = basis.scale.go( base, base_position ).to;
                 if (!SearchBisectionIteratively( operand, Liner, base_value, operand_position, before, after, Equate, Order )) {
                     if (Order( Liner.increment.go( operand, operand_position ).to, base_value )) {
-                        if (!Cede( operand, operand_position, base_value ))
+                        if (!Cede( operand, operand_position, base_value ) && Safety)
                             return false;
                     } else {
-                        if (!Precede( operand, operand_position, base_value ))
+                        if (!Precede( operand, operand_position, base_value ) && Safety)
                             return false;
                     }
                     after++;
@@ -405,7 +415,7 @@ namespace ration {
             );
 #endif
             static auto&
-                CollateRelative = CollateSelection< Relative, RelativePositional, RelativeNatural, Natural, Length, Elemental, Precede, Cede, Proceed, Equate, Order, Liner >;
+                CollateRelative = CollateSelection< Relative, RelativePositional, RelativeNatural, Natural, Length, Elemental, Precede, Cede, Proceed, Equate, Order, Liner, Safety >;
             ReadPositional< Elemental >
                 operand_position;
             BasicPositional
@@ -512,9 +522,9 @@ namespace ration {
             );
 #endif
             static auto&
-                CollateBase = CollateSelection< Basic, BasicPositional, BasicNatural, Natural, Length, Elemental, Precede, Cede, Proceed, Equate, Order, Liner >;
+                CollateBase = CollateSelection< Basic, BasicPositional, BasicNatural, Natural, Length, Elemental, Precede, Cede, Proceed, Equate, Order, Liner, Safety >;
             static auto&
-                CollateRelative = CollateSelection< Relative, RelativePositional, RelativeNatural, Natural, Length, Elemental, Precede, Cede, Proceed, Equate, Order, Liner >;
+                CollateRelative = CollateSelection< Relative, RelativePositional, RelativeNatural, Natural, Length, Elemental, Precede, Cede, Proceed, Equate, Order, Liner, Safety >;
             ReadPositional< Elemental >
                 operand_position;
             BasicPositional
@@ -753,9 +763,9 @@ namespace ration {
             );
 #endif
             static auto&
-                CollateBase = CollateSelection< Basic, BasicPositional, BasicNatural, Natural, Length, Elemental, Precede, Cede, Proceed, Equate, Order, Liner >;
+                CollateBase = CollateSelection< Basic, BasicPositional, BasicNatural, Natural, Length, Elemental, Precede, Cede, Proceed, Equate, Order, Liner, Safety >;
             static auto&
-                CollateRelative = CollateSelection< Relative, RelativePositional, RelativeNatural, Natural, Length, Elemental, Precede, Cede, Proceed, Equate, Order, Liner >;
+                CollateRelative = CollateSelection< Relative, RelativePositional, RelativeNatural, Natural, Length, Elemental, Precede, Cede, Proceed, Equate, Order, Liner, Safety >;
             ReadPositional< Elemental >
                 operand_position;
             BasicPositional
@@ -1249,7 +1259,15 @@ namespace ration {
         constexpr Compositional< Resourceful< Natural, Length, Elemental >, Natural, Elemental >
             FastOrderedComposer = {
                 Antecede< Natural, Length, Elemental, false >,
-                AccreditCollection< Natural, Length, Elemental, Equate, Order, ReadLiner< Natural, Length, Elemental > >,
+                AccreditCollection< 
+                    Natural, 
+                    Length, 
+                    Elemental, 
+                    Equate, 
+                    Order, 
+                    ReadLiner< Natural, Length, Elemental >,
+                    false
+                >,
                 ComposeCollection<
                     Natural, 
                     Length,
@@ -1259,7 +1277,8 @@ namespace ration {
                     Proceed< Natural, Length, Elemental, false >, 
                     Equate, 
                     Order,
-                    ReadLiner< Natural, Length, Elemental > 
+                    ReadLiner< Natural, Length, Elemental >,
+                    false
                 >,
                 RecomposeCollection<
                     Natural, 
@@ -1278,7 +1297,8 @@ namespace ration {
                     Concede< Natural, Length, Elemental, Move, false >, 
                     Equate, 
                     Order, 
-                    ReadLiner< Natural, Length, Elemental > 
+                    ReadLiner< Natural, Length, Elemental >,
+                    false
                 >,
                 Secede< Natural, Length, Elemental >,
                 Condense< Natural, Length, Elemental >
@@ -1299,7 +1319,15 @@ namespace ration {
         constexpr Compositional< Resourceful< Natural, Length, Elemental >, Natural, Elemental >
             SureOrderedComposer = {
                 Antecede< Natural, Length, Elemental, true >,
-                AccreditCollection< Natural, Length, Elemental, Equate, Order, ReadLiner< Natural, Length, Elemental > >,
+                AccreditCollection< 
+                    Natural, 
+                    Length, 
+                    Elemental, 
+                    Equate, 
+                    Order, 
+                    ReadLiner< Natural, Length, Elemental >,
+                    true
+                >,
                 ComposeCollection<
                     Natural, 
                     Length,
@@ -1309,7 +1337,8 @@ namespace ration {
                     Proceed< Natural, Length, Elemental, true >, 
                     Equate, 
                     Order,
-                    ReadLiner< Natural, Length, Elemental > 
+                    ReadLiner< Natural, Length, Elemental >,
+                    true
                 >,
                 RecomposeCollection<
                     Natural, 
@@ -1328,7 +1357,8 @@ namespace ration {
                     Concede< Natural, Length, Elemental, Move, true >, 
                     Equate, 
                     Order, 
-                    ReadLiner< Natural, Length, Elemental > 
+                    ReadLiner< Natural, Length, Elemental >,
+                    true
                 >,
                 Secede< Natural, Length, Elemental >,
                 Condense< Natural, Length, Elemental >
@@ -1563,7 +1593,8 @@ namespace ration {
                     Proceed< Natural, Length, Elemental, false >, 
                     Equate, 
                     Order,
-                    ReadLiner< Natural, Length, Elemental >
+                    ReadLiner< Natural, Length, Elemental >,
+                    false
                 >,
                 EquateSelections<
                     Resourceful< Natural, Length, Elemental >, 
@@ -1619,7 +1650,8 @@ namespace ration {
                     Proceed< Natural, Length, Elemental, true >, 
                     Equate, 
                     Order,
-                    ReadLiner< Natural, Length, Elemental >
+                    ReadLiner< Natural, Length, Elemental >,
+                    true
                 >,
                 EquateSelections<
                     Resourceful< Natural, Length, Elemental >, 

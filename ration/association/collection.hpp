@@ -52,7 +52,9 @@ namespace ration {
                 Referential< Assortive< Correlative > >
                     Order,
                 Referential< const Lineal< const AssociativelyResourceful< Natural, Length, Correlative, Evaluative >, AssociativeReadPositional< Correlative, Evaluative >, Natural, const Correlative > >
-                    Liner
+                    Liner,
+                const bool
+                    Safety
             >
             static inline bool
             Correspond(
@@ -72,7 +74,7 @@ namespace ration {
                     Before = 0;
                 AssociativeReadPositional< Correlative, Evaluative >
                     position;
-                if (Account( map ) < 1)
+                if (Safety && Account( map ) < 1)
                     return false;
                 Liner.increment.begin( map, position, 0 );
                 return SearchBisection( map, Liner, relator, position, Before, Account( map ) - 1, Equate, Order );
@@ -95,7 +97,9 @@ namespace ration {
                 Referential< Assortive< Correlative > >
                     Order,
                 Referential< const Lineal< const AssociativelyResourceful< Natural, Length, Correlative, Evaluative >, AssociativeReadPositional< Correlative, Evaluative >, Natural, const Correlative > >
-                    Liner
+                    Liner,
+                const bool
+                    Safety
             >
             static inline bool
             Associate(
@@ -119,10 +123,12 @@ namespace ration {
                     pair = {relator, value};
                 AssociativeReadPositional< Correlative, Evaluative >
                     position;
-                if (Account( map ) < 1)
+                if (Safety && Account( map ) >= Length)
+                    return false;
+                if (Safety && Account( map ) < 1)
                     return Proceed( map, pair );
                 Liner.increment.begin( map, position, 0 );
-                if (SearchBisection( map, Liner, relator, position, Before, Account( map ) - 1, Equate, Order ))
+                if (SearchBisection( map, Liner, relator, position, Before, Account( map ) - 1, Equate, Order ) && Safety)
                     return false;
                 if (Order( Liner.increment.go( map, position ).to, relator ))
                     return Cede( map, position, pair );
@@ -169,14 +175,14 @@ namespace ration {
                     replacement_position;
                 Natural
                     extent;
-                if (Account( map ) < 1)
+                if (Safety && Account( map ) < 1)
                     return false;
                 Liner.increment.begin( map, original_position, 0 );
                 Liner.increment.begin( map, replacement_position, 0 );
                 extent = Account( map ) - 1;
-                if (!SearchBisection( map, Liner, original, original_position, Before, extent, Equate, Order ))
+                if (!SearchBisection( map, Liner, original, original_position, Before, extent, Equate, Order ) && Safety)
                     return false;
-                if (SearchBisection( map, Liner, replacement, replacement_position, Before, extent, Equate, Order ))
+                if (SearchBisection( map, Liner, replacement, replacement_position, Before, extent, Equate, Order ) && Safety)
                     return false;
                 auto&
                     value = original_position->value;
@@ -212,47 +218,10 @@ namespace ration {
                     Equate,
                 Referential< Assortive< Correlative > >
                     Order,
-                Referential< const Scalar< const AssociativelyResourceful< Natural, Length, Correlative, Evaluative >, AssociativeReadPositional< Correlative, Evaluative >, Natural, const Correlative > >
-                    Scale
-            >
-            static inline bool
-            Disassociate(
-                Referential< AssociativelyResourceful< Natural, Length, Correlative, Evaluative > >
-                    map,
-                Referential< const Correlative >
-                    relator
-            ) {
-#ifndef RAPBTL_NO_STD_CPLUSPLUS
-                using namespace ::std;
-                static_assert(
-                    is_integral< Natural >::value && is_unsigned< Natural >::value,
-                    "Natural:  Unsigned integer type required"
-                );
-#endif
-                AssociativeReadPositional< Correlative, Evaluative >
-                    position;
-                if (Account( map ) < 1)
-                    return false;
-                Scale.begin( map, position, 0 );
-                if (!SearchScalarBisection( map, Scale, relator, position, Account( map ) - 1, Equate, Order ))
-                    return false;
-                return Concede( map, position, 1 );
-            }
-
-            template <
-                typename Natural,
-                Natural
-                    Length,
-                typename Correlative,
-                typename Evaluative,
-                Referential< Concessive< Natural, Length, Complementary< Correlative, Evaluative > > >
-                    Concede,
-                Referential< Assortive< Correlative > >
-                    Equate,
-                Referential< Assortive< Correlative > >
-                    Order,
                 Referential< const Lineal< const AssociativelyResourceful< Natural, Length, Correlative, Evaluative >, AssociativeReadPositional< Correlative, Evaluative >, Natural, const Correlative > >
-                    Liner
+                    Liner,
+                const bool
+                    Safety
             >
             static inline bool
             Disassociate(
@@ -272,10 +241,10 @@ namespace ration {
                     Before = 0;
                 AssociativeReadPositional< Correlative, Evaluative >
                     position;
-                if (Account( map ) < 1)
+                if (Safety && Account( map ) < 1)
                     return false;
                 Liner.increment.begin( map, position, 0 );
-                if (!SearchBisection( map, Liner, relator, position, Before, Account( map ) - 1, Equate, Order ))
+                if (!SearchBisection( map, Liner, relator, position, Before, Account( map ) - 1, Equate, Order ) && Safety)
                     return false;
                 return Concede( map, position, 1 );
             }
@@ -297,10 +266,10 @@ namespace ration {
                 FastAssociator = {
                     Antecede< Natural, Length, Complementary< Correlative, Evaluative >, false >,
                     Account< Natural, Length, Complementary< Correlative, Evaluative > >,
-                    Correspond< Natural, Length, Correlative, Evaluative, Equate, Order, ReadRelatorLiner< Natural, Length, Correlative, Evaluative > >,
-                    Associate< Natural, Length, Correlative, Evaluative, Precede< Natural, Length, Complementary< Correlative, Evaluative >, Move, false >, Cede< Natural, Length, Complementary< Correlative, Evaluative >, Move, false >, Proceed< Natural, Length, Complementary< Correlative, Evaluative >, false >, Equate, Order, ReadRelatorLiner< Natural, Length, Correlative, Evaluative > >,
+                    Correspond< Natural, Length, Correlative, Evaluative, Equate, Order, ReadRelatorLiner< Natural, Length, Correlative, Evaluative >, false >,
+                    Associate< Natural, Length, Correlative, Evaluative, Precede< Natural, Length, Complementary< Correlative, Evaluative >, Move, false >, Cede< Natural, Length, Complementary< Correlative, Evaluative >, Move, false >, Proceed< Natural, Length, Complementary< Correlative, Evaluative >, false >, Equate, Order, ReadRelatorLiner< Natural, Length, Correlative, Evaluative >, false >,
                     Reassociate< Natural, Length, Correlative, Evaluative, Equate, Order, ReadRelatorLiner< Natural, Length, Correlative, Evaluative >, Move, false >,
-                    Disassociate< Natural, Length, Correlative, Evaluative, Concede< Natural, Length, Complementary< Correlative, Evaluative >, Move, false >, Equate, Order, ReadRelatorLiner< Natural, Length, Correlative, Evaluative > >,
+                    Disassociate< Natural, Length, Correlative, Evaluative, Concede< Natural, Length, Complementary< Correlative, Evaluative >, Move, false >, Equate, Order, ReadRelatorLiner< Natural, Length, Correlative, Evaluative >, false >,
                     Secede< Natural, Length, Complementary< Correlative, Evaluative > >,
                     Condense< Natural, Length, Complementary< Correlative, Evaluative > >
                 };
@@ -322,10 +291,10 @@ namespace ration {
                 SureAssociator = {
                     Antecede< Natural, Length, Complementary< Correlative, Evaluative >, true >,
                     Account< Natural, Length, Complementary< Correlative, Evaluative > >,
-                    Correspond< Natural, Length, Correlative, Evaluative, Equate, Order, ReadRelatorLiner< Natural, Length, Correlative, Evaluative > >,
-                    Associate< Natural, Length, Correlative, Evaluative, Precede< Natural, Length, Complementary< Correlative, Evaluative >, Move, true >, Cede< Natural, Length, Complementary< Correlative, Evaluative >, Move, true >, Proceed< Natural, Length, Complementary< Correlative, Evaluative >, true >, Equate, Order, ReadRelatorLiner< Natural, Length, Correlative, Evaluative > >,
+                    Correspond< Natural, Length, Correlative, Evaluative, Equate, Order, ReadRelatorLiner< Natural, Length, Correlative, Evaluative >, true >,
+                    Associate< Natural, Length, Correlative, Evaluative, Precede< Natural, Length, Complementary< Correlative, Evaluative >, Move, true >, Cede< Natural, Length, Complementary< Correlative, Evaluative >, Move, true >, Proceed< Natural, Length, Complementary< Correlative, Evaluative >, true >, Equate, Order, ReadRelatorLiner< Natural, Length, Correlative, Evaluative >, true >,
                     Reassociate< Natural, Length, Correlative, Evaluative, Equate, Order, ReadRelatorLiner< Natural, Length, Correlative, Evaluative >, Move, true >,
-                    Disassociate< Natural, Length, Correlative, Evaluative, Concede< Natural, Length, Complementary< Correlative, Evaluative >, Move, true >, Equate, Order, ReadRelatorLiner< Natural, Length, Correlative, Evaluative > >,
+                    Disassociate< Natural, Length, Correlative, Evaluative, Concede< Natural, Length, Complementary< Correlative, Evaluative >, Move, true >, Equate, Order, ReadRelatorLiner< Natural, Length, Correlative, Evaluative >, true >,
                     Secede< Natural, Length, Complementary< Correlative, Evaluative > >,
                     Condense< Natural, Length, Complementary< Correlative, Evaluative > >
                 };

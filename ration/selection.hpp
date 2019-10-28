@@ -47,7 +47,9 @@ namespace ration {
             Referential< Assortive< Elemental > >
                 Equate,
             Referential< const Scalar< const Resourceful< Natural, Length, Elemental >, ReadPositional< Elemental >, Natural, const Elemental > >
-                Scale
+                Scale,
+            const bool
+                Safety
         >
         static inline bool
         AccreditSelection(
@@ -65,7 +67,7 @@ namespace ration {
 #endif
             ReadPositional< Elemental >
                 position;
-            if (Account( set ) < 1)
+            if (Safety && Account( set ) < 1)
                 return false;
             Scale.begin( set, position, 0 );
             return SearchSection( set, Scale, value, position, Account( set ) - 1, Equate );
@@ -81,7 +83,9 @@ namespace ration {
             Referential< Assortive< Elemental > >
                 Equate,
             Referential< const Scalar< const Resourceful< Natural, Length, Elemental >, ReadPositional< Elemental >, Natural, const Elemental > >
-                Scale
+                Scale,
+            const bool
+                Safety
         >
         static inline bool
         ComposeSelection(
@@ -99,7 +103,9 @@ namespace ration {
 #endif
             ReadPositional< Elemental >
                 position;
-            if (Account( set ) > 0) {
+            if (Safety && Account( set ) >= Length)
+                return false;
+            if (Safety && Account( set ) > 0) {
                 Scale.begin( set, position, 0 );
                 if (SearchSection( set, Scale, value, position, Account( set ) - 1, Equate ))
                     return false;
@@ -117,7 +123,9 @@ namespace ration {
             Referential< Assortive< Elemental > >
                 Equate,
             Referential< const Scalar< const Resourceful< Natural, Length, Elemental >, ReadPositional< Elemental >, Natural, const Elemental > >
-                Scale
+                Scale,
+            const bool
+                Safety
         >
         static inline bool
         DiscomposeSelection(
@@ -135,7 +143,7 @@ namespace ration {
 #endif
             ReadPositional< Elemental >
                 position;
-            if (Account( set ) < 1)
+            if (Safety && Account( set ) < 1)
                 return false;
             Scale.begin( set, position, 0 );
             if (SearchSection( set, Scale, value, position, Account( set ) - 1, Equate ))
@@ -155,7 +163,9 @@ namespace ration {
             Referential< Assortive< Elemental > >
                 Equate,
             Referential< const Scalar< const Resourceful< Natural, Length, Elemental >, ReadPositional< Elemental >, Natural, const Elemental > >
-                Scale
+                Scale,
+            const bool
+                Safety
         >
         static inline bool
         RecomposeSelection(
@@ -173,10 +183,9 @@ namespace ration {
                 "Natural:  Unsigned integer type required"
             );
 #endif
-
             ReadPositional< Elemental >
                 position, previous;
-            if (Account( set ) < 1)
+            if (Safety && Account( set ) < 1)
                 return false;
             previous = 0;
             Scale.begin( set, position, 0 );
@@ -186,9 +195,10 @@ namespace ration {
                 if (Equate( original, Scale.go( set, position ).to ))
                     previous = position;
             }
-            if (!previous)
+            if (Safety && !previous)
                 return false;
-            Concede( set, previous, 1 );
+            if (!Concede( set, previous, 1 ) && Safety)
+                return false;
             return Proceed( set, replacement );
         }
 
@@ -598,7 +608,8 @@ namespace ration {
                     Length,
                     Elemental, 
                     Equate, 
-                    ReadIncrementScale< Natural, Length, Elemental > 
+                    ReadIncrementScale< Natural, Length, Elemental >,
+                    false
                 >,
                 ComposeSelection<
                     Natural, 
@@ -606,7 +617,8 @@ namespace ration {
                     Elemental, 
                     Proceed< Natural, Length, Elemental, false >, 
                     Equate, 
-                    ReadIncrementScale< Natural, Length, Elemental > 
+                    ReadIncrementScale< Natural, Length, Elemental >,
+                    false
                 >,
                 RecomposeSelection<
                     Natural, 
@@ -615,7 +627,8 @@ namespace ration {
                     Proceed< Natural, Length, Elemental, false >, 
                     Concede< Natural, Length, Elemental, Move, false >, 
                     Equate, 
-                    ReadIncrementScale< Natural, Length, Elemental > 
+                    ReadIncrementScale< Natural, Length, Elemental >,
+                    false
                 >,
                 DiscomposeSelection<
                     Natural, 
@@ -623,7 +636,8 @@ namespace ration {
                     Elemental,
                     Concede< Natural, Length, Elemental, Move, false >, 
                     Equate, 
-                    ReadIncrementScale< Natural, Length, Elemental >
+                    ReadIncrementScale< Natural, Length, Elemental >,
+                    false
                 >,
                 Secede< Natural, Length, Elemental >,
                 Condense< Natural, Length, Elemental >
@@ -647,7 +661,8 @@ namespace ration {
                     Length,
                     Elemental, 
                     Equate, 
-                    ReadIncrementScale< Natural, Length, Elemental > 
+                    ReadIncrementScale< Natural, Length, Elemental >,
+                    true
                 >,
                 ComposeSelection<
                     Natural, 
@@ -655,7 +670,8 @@ namespace ration {
                     Elemental, 
                     Proceed< Natural, Length, Elemental, true >, 
                     Equate, 
-                    ReadIncrementScale< Natural, Length, Elemental > 
+                    ReadIncrementScale< Natural, Length, Elemental >,
+                    true
                 >,
                 RecomposeSelection<
                     Natural, 
@@ -664,7 +680,8 @@ namespace ration {
                     Proceed< Natural, Length, Elemental, true >, 
                     Concede< Natural, Length, Elemental, Move, true >, 
                     Equate, 
-                    ReadIncrementScale< Natural, Length, Elemental > 
+                    ReadIncrementScale< Natural, Length, Elemental >,
+                    true
                 >,
                 DiscomposeSelection<
                     Natural, 
@@ -672,7 +689,8 @@ namespace ration {
                     Elemental,
                     Concede< Natural, Length, Elemental, Move, false >, 
                     Equate, 
-                    ReadIncrementScale< Natural, Length, Elemental >
+                    ReadIncrementScale< Natural, Length, Elemental >,
+                    true
                 >,
                 Secede< Natural, Length, Elemental >,
                 Condense< Natural, Length, Elemental >

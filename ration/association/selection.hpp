@@ -45,7 +45,9 @@ namespace ration {
                 Referential< Assortive< Correlative > >
                     Equate,
                 Referential< const Scalar< const AssociativelyResourceful< Natural, Length, Correlative, Evaluative >, AssociativeReadPositional< Correlative, Evaluative >, Natural, const Correlative > >
-                    Scale
+                    Scale,
+                const bool
+                    Safety
             >
             static inline bool
             Correspond(
@@ -63,7 +65,7 @@ namespace ration {
 #endif
                 AssociativeReadPositional< Correlative, Evaluative >
                     position;
-                if (Account( map ) < 1)
+                if (Safety && Account( map ) < 1)
                     return false;
                 Scale.begin( map, position, 0 );
                 return SearchSection( map, Scale, relator, position, Account( map ) - 1, Equate );
@@ -80,7 +82,9 @@ namespace ration {
                 Referential< Assortive< Correlative > >
                     Equate,
                 Referential< const Scalar< const AssociativelyResourceful< Natural, Length, Correlative, Evaluative >, AssociativeReadPositional< Correlative, Evaluative >, Natural, const Correlative > >
-                    Scale
+                    Scale,
+                const bool
+                    Safety
             >
             static inline bool
             Associate(
@@ -99,10 +103,12 @@ namespace ration {
                 );
 #endif
                 static auto&
-                    CorrespondInMap = Correspond< Natural, Length, Correlative, Evaluative, Equate, Scale >;
+                    CorrespondInMap = Correspond< Natural, Length, Correlative, Evaluative, Equate, Scale, Safety >;
                 const Complementary< Correlative, Evaluative >
                     pair = {relator, value};
-                if (CorrespondInMap( map, relator ))
+                if (Safety && Account( map ) >= Length)
+                    return false;
+                if (Safety && CorrespondInMap( map, relator ))
                     return false;
                 return Proceed( map, pair );
             }
@@ -116,7 +122,9 @@ namespace ration {
                 Referential< Assortive< Correlative > >
                     Equate,
                 Referential< const Scalar< const AssociativelyResourceful< Natural, Length, Correlative, Evaluative >, AssociativeReadPositional< Correlative, Evaluative >, Natural, const Correlative > >
-                    Scale
+                    Scale,
+                const bool
+                    Safety
             >
             static inline bool
             Reassociate(
@@ -140,7 +148,7 @@ namespace ration {
                     found;
                 Natural
                     count;
-                if (Account( map ) < 1)
+                if (Safety && Account( map ) < 1)
                     return false;
                 found = 0;
                 Scale.begin( map, position, 0 );
@@ -153,7 +161,7 @@ namespace ration {
                         found = const_cast<AssociativeWritePositional< Correlative, Evaluative >>(position);
                     Scale.traverse( map, position, 1 );
                 }
-                if (!found)
+                if (Safety && !found)
                     return false;
                 found->relator = replacement;
                 return true;
@@ -170,7 +178,9 @@ namespace ration {
                 Referential< Assortive< Correlative > >
                     Equate,
                 Referential< const Scalar< const AssociativelyResourceful< Natural, Length, Correlative, Evaluative >, AssociativeReadPositional< Correlative, Evaluative >, Natural, const Correlative > >
-                    Scale
+                    Scale,
+                const bool
+                    Safety
             >
             static inline bool
             Disassociate(
@@ -188,10 +198,10 @@ namespace ration {
 #endif
                 AssociativeReadPositional< Correlative, Evaluative >
                     position;
-                if (Account( map ) < 1)
+                if (Safety && Account( map ) < 1)
                     return false;
                 Scale.begin( map, position, 0 );
-                if (!SearchSection( map, Scale, relator, position, Account( map ) - 1, Equate ))
+                if (!SearchSection( map, Scale, relator, position, Account( map ) - 1, Equate ) && Safety)
                     return false;
                 return Concede( map, position, 1 );
             }
@@ -211,10 +221,10 @@ namespace ration {
                 FastCorrelator = {
                     Antecede< Natural, Length, Complementary< Correlative, Evaluative >, false >,
                     Account< Natural, Length, Complementary< Correlative, Evaluative > >,
-                    Correspond< Natural, Length, Correlative, Evaluative, Equate, ReadRelatorIncrementScale< Natural, Length, Correlative, Evaluative > >,
-                    Associate< Natural, Length, Correlative, Evaluative, Proceed< Natural, Length, Complementary< Correlative, Evaluative >, false >, Equate, ReadRelatorIncrementScale< Natural, Length, Correlative, Evaluative > >,
-                    Reassociate< Natural, Length, Correlative, Evaluative, Equate, ReadRelatorIncrementScale< Natural, Length, Correlative, Evaluative > >,
-                    Disassociate< Natural, Length, Correlative, Evaluative, Concede< Natural, Length, Complementary< Correlative, Evaluative >, Move, false >, Equate, ReadRelatorIncrementScale< Natural, Length, Correlative, Evaluative > >,
+                    Correspond< Natural, Length, Correlative, Evaluative, Equate, ReadRelatorIncrementScale< Natural, Length, Correlative, Evaluative >, false >,
+                    Associate< Natural, Length, Correlative, Evaluative, Proceed< Natural, Length, Complementary< Correlative, Evaluative >, false >, Equate, ReadRelatorIncrementScale< Natural, Length, Correlative, Evaluative >, false >,
+                    Reassociate< Natural, Length, Correlative, Evaluative, Equate, ReadRelatorIncrementScale< Natural, Length, Correlative, Evaluative >, false >,
+                    Disassociate< Natural, Length, Correlative, Evaluative, Concede< Natural, Length, Complementary< Correlative, Evaluative >, Move, false >, Equate, ReadRelatorIncrementScale< Natural, Length, Correlative, Evaluative >, false >,
                     Secede< Natural, Length, Complementary< Correlative, Evaluative > >,
                     Condense< Natural, Length, Complementary< Correlative, Evaluative > >
                 };
@@ -234,10 +244,10 @@ namespace ration {
                 SureCorrelator = {
                     Antecede< Natural, Length, Complementary< Correlative, Evaluative >, true >,
                     Account< Natural, Length, Complementary< Correlative, Evaluative > >,
-                    Correspond< Natural, Length, Correlative, Evaluative, Equate, ReadRelatorIncrementScale< Natural, Length, Correlative, Evaluative > >,
-                    Associate< Natural, Length, Correlative, Evaluative, Proceed< Natural, Length, Complementary< Correlative, Evaluative >, true >, Equate, ReadRelatorIncrementScale< Natural, Length, Correlative, Evaluative > >,
-                    Reassociate< Natural, Length, Correlative, Evaluative, Equate, ReadRelatorIncrementScale< Natural, Length, Correlative, Evaluative > >,
-                    Disassociate< Natural, Length, Correlative, Evaluative, Concede< Natural, Length, Complementary< Correlative, Evaluative >, Move, true >, Equate, ReadRelatorIncrementScale< Natural, Length, Correlative, Evaluative > >,
+                    Correspond< Natural, Length, Correlative, Evaluative, Equate, ReadRelatorIncrementScale< Natural, Length, Correlative, Evaluative >, true >,
+                    Associate< Natural, Length, Correlative, Evaluative, Proceed< Natural, Length, Complementary< Correlative, Evaluative >, true >, Equate, ReadRelatorIncrementScale< Natural, Length, Correlative, Evaluative >, true >,
+                    Reassociate< Natural, Length, Correlative, Evaluative, Equate, ReadRelatorIncrementScale< Natural, Length, Correlative, Evaluative >, true >,
+                    Disassociate< Natural, Length, Correlative, Evaluative, Concede< Natural, Length, Complementary< Correlative, Evaluative >, Move, true >, Equate, ReadRelatorIncrementScale< Natural, Length, Correlative, Evaluative >, true >,
                     Secede< Natural, Length, Complementary< Correlative, Evaluative > >,
                     Condense< Natural, Length, Complementary< Correlative, Evaluative > >
                 };

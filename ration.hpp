@@ -2,6 +2,7 @@
 // Licensed under the Academic Free License version 3.0
 #ifndef RATION_MODULE
 #define RATION_MODULE
+#include "location.hpp"
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
 #include <type_traits>
 #endif
