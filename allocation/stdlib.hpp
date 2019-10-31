@@ -13,7 +13,7 @@ extern "C" {
 
 namespace allocation {
 
-    /**
+/**
      * @brief
      *     Memory allocation implementations using one of either the C or C++
      *    standard library functions.
@@ -23,9 +23,9 @@ namespace allocation {
      *     C or C++ standard library based functions and objectives of the
      *     default and array memory allocation classifiers.
      */
-    namespace stdlib {
+namespace stdlib {
 
-        /**
+    /**
          * @brief
          *     Allocates memory space for an array of instances of the specified
          *     type using a standard library malloc function.
@@ -44,20 +44,19 @@ namespace allocation {
          *     The same address as stored in the pointer which was bound to 
          *     locality.
          */
-        template <
-            typename Subjective
-        >
-        static inline const Locational< Subjective >
-        AllocateArrayUsingMalloc(
-            Referential< Locational< Subjective > >
-                locality,
-            Referential< const size_t >
-                count
-        ) {
-            return locality = static_cast< Locational< Subjective > >(malloc( sizeof(Subjective) * count ));
-        }
+    template <
+        typename Subjective>
+    static inline const Locational<Subjective>
+    AllocateArrayUsingMalloc(
+        Referential<Locational<Subjective>>
+            locality,
+        Referential<const size_t>
+            count)
+    {
+        return locality = static_cast<Locational<Subjective>>(malloc(sizeof(Subjective) * count));
+    }
 
-        /**
+    /**
          * @brief
          *     Allocates memory space for an instance of the specified type 
          *     using a standard library malloc function.
@@ -74,18 +73,17 @@ namespace allocation {
          *     The same address as stored in the pointer which was bound to 
          *     locality.
          */
-        template <
-            typename Subjective
-        >
-        static inline const Locational< Subjective >
-        AllocateElementUsingMalloc(
-            Referential< Locational< Subjective > >
-                locality
-        ) {
-            return AllocateArrayUsingMalloc( locality, 1 );
-        }
+    template <
+        typename Subjective>
+    static inline const Locational<Subjective>
+    AllocateElementUsingMalloc(
+        Referential<Locational<Subjective>>
+            locality)
+    {
+        return AllocateArrayUsingMalloc(locality, 1);
+    }
 
-        /**
+    /**
          * @brief
          *     Allocates memory space for an array of instances of the specified
          *     type using a standard library calloc function.
@@ -105,20 +103,19 @@ namespace allocation {
          *     The same address as stored in the pointer which was bound to
          *     locality.
          */
-        template <
-            typename Subjective
-        >
-        static inline const Locational< Subjective >
-        AllocateArrayUsingCalloc(
-            Referential< Locational< Subjective > >
-                locality,
-            Referential< const size_t >
-                count
-        ) {
-            return locality = static_cast< Locational< Subjective > >(calloc( count, sizeof(Subjective) ));
-        }
+    template <
+        typename Subjective>
+    static inline const Locational<Subjective>
+    AllocateArrayUsingCalloc(
+        Referential<Locational<Subjective>>
+            locality,
+        Referential<const size_t>
+            count)
+    {
+        return locality = static_cast<Locational<Subjective>>(calloc(count, sizeof(Subjective)));
+    }
 
-        /**
+    /**
          * @brief
          *     Allocates memory space for an instance of the specified type 
          *     using a standard library calloc function.
@@ -136,18 +133,17 @@ namespace allocation {
          *     The same address as stored in the pointer which was bound to 
          *     locality.
          */
-        template <
-            typename Subjective
-        >
-        static inline const Locational< Subjective >
-        AllocateElementUsingCalloc(
-            Referential< Locational< Subjective > >
-                locality
-        ) {
-            return AllocateArrayUsingCalloc( locality, 1 );
-        }
+    template <
+        typename Subjective>
+    static inline const Locational<Subjective>
+    AllocateElementUsingCalloc(
+        Referential<Locational<Subjective>>
+            locality)
+    {
+        return AllocateArrayUsingCalloc(locality, 1);
+    }
 
-        /**
+    /**
          * @brief
          *     Frees the memory space of an instance of the specified type using
          *     a standard library free function.
@@ -165,18 +161,17 @@ namespace allocation {
          * @return
          *     Does not return any value.
          */
-        template <
-            typename Subjective
-        >
-        static inline void
-        DeleteUsingFree(
-            Referential< Locational< Subjective > >
-                locality
-        ) {
-            free( locality );
-        }
+    template <
+        typename Subjective>
+    static inline void
+    DeleteUsingFree(
+        Referential<Locational<Subjective>>
+            locality)
+    {
+        free(locality);
+    }
 
-        /**
+    /**
          * @brief
          *     Frees the memory space of an instance of the specified type using
          *     a standard library free function.
@@ -194,19 +189,18 @@ namespace allocation {
          * @return
          *     Does not return any value.
          */
-        template <
-            typename Subjective
-        >
-        static inline void
-        DeleteUsingFreeAndSetToNull(
-            Referential< Locational< Subjective > >
-                locality
-        ) {
-            DeleteUsingFree( locality );
-            SetToNull( locality );
-        }
+    template <
+        typename Subjective>
+    static inline void
+    DeleteUsingFreeAndSetToNull(
+        Referential<Locational<Subjective>>
+            locality)
+    {
+        DeleteUsingFree(locality);
+        SetToNull(locality);
+    }
 
-        /**
+    /**
          * @brief
          *     Default malloc/free memory allocation.
          * @details
@@ -217,16 +211,15 @@ namespace allocation {
          * @tparam Subjective
          *     Type of the data objects.
          */
-        template <
-            typename Subjective
-        >
-        constexpr DefaultAllocative< Subjective >
-            DefaultMalloc = {
-                AllocateElementUsingMalloc< Subjective >, 
-                DeleteUsingFreeAndSetToNull< Subjective >
-            };
+    template <
+        typename Subjective>
+    constexpr DefaultAllocative<Subjective>
+        DefaultMalloc = {
+            AllocateElementUsingMalloc<Subjective>,
+            DeleteUsingFreeAndSetToNull<Subjective>
+        };
 
-        /**
+    /**
          * @brief
          *     Default malloc memory allocation.
          * @details
@@ -237,16 +230,15 @@ namespace allocation {
          * @tparam Subjective 
          *     Type of the data objects.
          */
-        template <
-            typename Subjective
-        >
-        constexpr DefaultAllocative< Subjective >
-            FastDefaultMalloc = {
-                AllocateElementUsingMalloc< Subjective >, 
-                DeleteUsingFree< Subjective >
-            };
+    template <
+        typename Subjective>
+    constexpr DefaultAllocative<Subjective>
+        FastDefaultMalloc = {
+            AllocateElementUsingMalloc<Subjective>,
+            DeleteUsingFree<Subjective>
+        };
 
-        /**
+    /**
          * @brief
          *     Array malloc memory allocation.
          * @details
@@ -257,16 +249,15 @@ namespace allocation {
          * @tparam Subjective
          *     Type of the data objects.
          */
-        template <
-            typename Subjective
-        >
-        constexpr ArrayAllocative< Subjective, size_t >
-            ArrayMalloc = {
-                AllocateArrayUsingMalloc< Subjective >, 
-                DeleteUsingFreeAndSetToNull< Subjective >
-            };
+    template <
+        typename Subjective>
+    constexpr ArrayAllocative<Subjective, size_t>
+        ArrayMalloc = {
+            AllocateArrayUsingMalloc<Subjective>,
+            DeleteUsingFreeAndSetToNull<Subjective>
+        };
 
-        /**
+    /**
          * @brief
          *     Array malloc memory allocation.
          * @details
@@ -277,16 +268,15 @@ namespace allocation {
          * @tparam Subjective 
          *     Type of the data objects.
          */
-        template <
-            typename Subjective
-        >
-        constexpr ArrayAllocative< Subjective, size_t >
-            FastArrayMalloc = {
-                AllocateArrayUsingMalloc< Subjective >, 
-                DeleteUsingFree< Subjective >
-            };
+    template <
+        typename Subjective>
+    constexpr ArrayAllocative<Subjective, size_t>
+        FastArrayMalloc = {
+            AllocateArrayUsingMalloc<Subjective>,
+            DeleteUsingFree<Subjective>
+        };
 
-        /**
+    /**
          * @brief
          *     Default calloc memory allocation.
          * @details
@@ -297,16 +287,15 @@ namespace allocation {
          * @tparam Subjective
          *     Type of the data objects.
          */
-        template <
-            typename Subjective
-        >
-        constexpr DefaultAllocative< Subjective >
-            DefaultCalloc = {
-                AllocateElementUsingCalloc< Subjective >, 
-                DeleteUsingFreeAndSetToNull< Subjective >
-            };
+    template <
+        typename Subjective>
+    constexpr DefaultAllocative<Subjective>
+        DefaultCalloc = {
+            AllocateElementUsingCalloc<Subjective>,
+            DeleteUsingFreeAndSetToNull<Subjective>
+        };
 
-        /**
+    /**
          * @brief
          *     Default calloc memory allocation.
          * @details
@@ -317,16 +306,15 @@ namespace allocation {
          * @tparam Subjective
          *     Type of the data objects.
          */
-        template <
-            typename Subjective
-        >
-        constexpr DefaultAllocative< Subjective >
-            FastDefaultCalloc = {
-                AllocateElementUsingCalloc< Subjective >, 
-                DeleteUsingFree< Subjective >
-            };
+    template <
+        typename Subjective>
+    constexpr DefaultAllocative<Subjective>
+        FastDefaultCalloc = {
+            AllocateElementUsingCalloc<Subjective>,
+            DeleteUsingFree<Subjective>
+        };
 
-        /**
+    /**
          * @brief
          *     Array calloc memory allocation.
          * @details
@@ -337,16 +325,15 @@ namespace allocation {
          * @tparam Subjective 
          *     Type of the data objects.
          */
-        template <
-            typename Subjective
-        >
-        constexpr ArrayAllocative< Subjective, size_t >
-            ArrayCalloc = {
-                AllocateArrayUsingCalloc< Subjective >, 
-                DeleteUsingFreeAndSetToNull< Subjective >
-            };
+    template <
+        typename Subjective>
+    constexpr ArrayAllocative<Subjective, size_t>
+        ArrayCalloc = {
+            AllocateArrayUsingCalloc<Subjective>,
+            DeleteUsingFreeAndSetToNull<Subjective>
+        };
 
-        /**
+    /**
          * @brief
          *     Array calloc memory allocation.
          * @details
@@ -357,16 +344,15 @@ namespace allocation {
          * @tparam Subjective
          *     Type of the data objects.
          */
-        template <
-            typename Subjective
-        >
-        constexpr ArrayAllocative< Subjective, size_t >
-            FastArrayCalloc = {
-                AllocateArrayUsingCalloc< Subjective >, 
-                DeleteUsingFree< Subjective >
-            };
+    template <
+        typename Subjective>
+    constexpr ArrayAllocative<Subjective, size_t>
+        FastArrayCalloc = {
+            AllocateArrayUsingCalloc<Subjective>,
+            DeleteUsingFree<Subjective>
+        };
 
-    }
+}
 
 }
 

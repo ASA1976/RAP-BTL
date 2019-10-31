@@ -14,10 +14,10 @@
  */
 namespace consecution {
 
-    using ::location::Referential;
-    using ::trajection::Directional;
+using ::location::Referential;
+using ::trajection::Directional;
 
-    /**
+/**
      * @brief
      *     Function type which simplifies declaration syntax.
      * @details 
@@ -38,28 +38,26 @@ namespace consecution {
      * @tparam Elemental 
      *     Type of the elementary objects.
      */
-    template <
-        typename Consolidative,
-        typename Positional,
-        typename Relative,
-        typename Appositional,
-        typename RelativeNatural,
-        typename Elemental
-    >
-    using ConjointlyConsequent = bool(
-        Referential< Consolidative >
-            operand,
-        Referential< const Directional< const Relative, Appositional, RelativeNatural, const Elemental > >
-            relativity,
-        Referential< const Relative >
-            relative, 
-        Referential< const Appositional >
-            first, 
-        Referential< const Appositional >
-            last 
-    );
+template <
+    typename Consolidative,
+    typename Positional,
+    typename Relative,
+    typename Appositional,
+    typename RelativeNatural,
+    typename Elemental>
+using ConjointlyConsequent = bool(
+    Referential<Consolidative>
+        operand,
+    Referential<const Directional<const Relative, Appositional, RelativeNatural, const Elemental>>
+        relativity,
+    Referential<const Relative>
+        relative,
+    Referential<const Appositional>
+        first,
+    Referential<const Appositional>
+        last);
 
-    /**
+/**
      * @brief
      *     Function type which simplifies declaration syntax.
      * @details
@@ -80,30 +78,28 @@ namespace consecution {
      * @tparam Elemental 
      *     Type of the elementary objects.
      */
-    template <
-        typename Consolidative,
-        typename Positional,
-        typename Relative,
-        typename Appositional,
-        typename RelativeNatural,
-        typename Elemental
-    >
-    using ConjointlyPrecedent = bool(
-        Referential< Consolidative >
-            operand, 
-        Referential< const Positional >
-            rank, 
-        Referential< const Directional< const Relative, Appositional, RelativeNatural, const Elemental > >
-            relativity, 
-        Referential< const Relative >
-            relative, 
-        Referential< const Appositional >
-            first, 
-        Referential< const Appositional >
-            last 
-    );
+template <
+    typename Consolidative,
+    typename Positional,
+    typename Relative,
+    typename Appositional,
+    typename RelativeNatural,
+    typename Elemental>
+using ConjointlyPrecedent = bool(
+    Referential<Consolidative>
+        operand,
+    Referential<const Positional>
+        rank,
+    Referential<const Directional<const Relative, Appositional, RelativeNatural, const Elemental>>
+        relativity,
+    Referential<const Relative>
+        relative,
+    Referential<const Appositional>
+        first,
+    Referential<const Appositional>
+        last);
 
-    /**
+/**
      * @brief
      *     Sequence batch insertion classifier.
      * @details
@@ -124,43 +120,41 @@ namespace consecution {
      * @tparam Elemental
      *     Type of the elementary objects.
      */
-    template <
-        typename Consolidative,
-        typename Positional,
-        typename Relative,
-        typename Appositional,
-        typename RelativeNatural,
-        typename Elemental
-    >
-    struct Conjoint {
+template <
+    typename Consolidative,
+    typename Positional,
+    typename Relative,
+    typename Appositional,
+    typename RelativeNatural,
+    typename Elemental>
+struct Conjoint {
 
-        Referential< ConjointlyConsequent< Consolidative, Positional, Relative, Appositional, RelativeNatural, Elemental > >
-            accede; /**< Function reference used to insert the specified range 
+    Referential<ConjointlyConsequent<Consolidative, Positional, Relative, Appositional, RelativeNatural, Elemental>>
+        accede; /**< Function reference used to insert the specified range 
                      *   of elements in the relative space at the beginning of 
                      *   the operand sequence.
                      */
 
-        Referential< ConjointlyPrecedent< Consolidative, Positional, Relative, Appositional, RelativeNatural, Elemental > >
-            precede; /**< Function reference used to insert the specified range 
+    Referential<ConjointlyPrecedent<Consolidative, Positional, Relative, Appositional, RelativeNatural, Elemental>>
+        precede; /**< Function reference used to insert the specified range 
                       *   of elements in the relative space __before__ the 
                       *   specified position in the operand sequence.
                       */
 
-        Referential< ConjointlyPrecedent< Consolidative, Positional, Relative, Appositional, RelativeNatural, Elemental > >
-            cede; /**< Function reference used to insert the specified range 
+    Referential<ConjointlyPrecedent<Consolidative, Positional, Relative, Appositional, RelativeNatural, Elemental>>
+        cede; /**< Function reference used to insert the specified range 
                    *   of elements in the relative space __after__ the specified
                    *   position in the operand sequence.
                    */
 
-        Referential< ConjointlyConsequent< Consolidative, Positional, Relative, Appositional, RelativeNatural, Elemental > >
-            proceed; /**< Function reference used to insert the specified range 
+    Referential<ConjointlyConsequent<Consolidative, Positional, Relative, Appositional, RelativeNatural, Elemental>>
+        proceed; /**< Function reference used to insert the specified range 
                       *   of elements in the relative space at the end of the 
                       *   operand sequence.
                       */
+};
 
-    };
-
-    /**
+/**
      * @brief
      *     Sequence management classifier.
      * @details
@@ -179,21 +173,19 @@ namespace consecution {
      * @tparam Elemental
      *     Type of the elements in the sequence.
      */
-    template <
-        typename Consolidative,
-        typename Positional,
-        typename Natural,
-        typename Elemental
-    >
-    struct Sequent {
+template <
+    typename Consolidative,
+    typename Positional,
+    typename Natural,
+    typename Elemental>
+struct Sequent {
 
-        Referential< bool(
-            Referential< Consolidative >
-                operand, 
-            Referential< const Natural >
-                count 
-        ) >
-            antecede; /**< Function reference which can be used to prepare the
+    Referential<bool(
+        Referential<Consolidative>
+            operand,
+        Referential<const Natural>
+            count)>
+        antecede; /**< Function reference which can be used to prepare the
                        *   sequence for the specified number of elements.  If 
                        *   the sequence does not support this operation or it 
                        *   was unable to prepare for the requested count, false
@@ -201,118 +193,107 @@ namespace consecution {
                        *   condition.
                        */
 
-        Referential< Natural(
-            Referential< const Consolidative >
-                operand 
-        ) >
-            account; /**< Function reference which returns the current number
+    Referential<Natural(
+        Referential<const Consolidative>
+            operand)>
+        account; /**< Function reference which returns the current number
                       *   of elements in the sequence.
                       */
 
-        Referential< bool(
-            Referential< Consolidative >
-                operand, 
-            Referential< const Elemental >
-                value 
-        ) >
-            accede; /**< Function reference which inserts the specified 
+    Referential<bool(
+        Referential<Consolidative>
+            operand,
+        Referential<const Elemental>
+            value)>
+        accede; /**< Function reference which inserts the specified 
                      *   element at the beginning of the sequence.
                      */
 
-        Referential< bool(
-            Referential< Consolidative >
-                operand, 
-            Referential< const Positional >
-                rank, 
-            Referential< const Elemental >
-                value 
-        ) >
-            precede; /**< Function reference which inserts the specified 
+    Referential<bool(
+        Referential<Consolidative>
+            operand,
+        Referential<const Positional>
+            rank,
+        Referential<const Elemental>
+            value)>
+        precede; /**< Function reference which inserts the specified 
                       *   element before the specified position in the sequence.
                       */
 
-        Referential< bool(
-            Referential< Consolidative >
-                operand, 
-            Referential< const Positional >
-                rank, 
-            Referential< const Elemental >
-                value 
-        ) >
-            cede; /**< Function reference which inserts the specified 
+    Referential<bool(
+        Referential<Consolidative>
+            operand,
+        Referential<const Positional>
+            rank,
+        Referential<const Elemental>
+            value)>
+        cede; /**< Function reference which inserts the specified 
                    *   element after the specified position in the sequence.
                    */
 
-        Referential< bool(
-            Referential< Consolidative >
-                operand, 
-            Referential< const Elemental >
-                value 
-        ) >
-            proceed; /**< Function reference which inserts the specified 
+    Referential<bool(
+        Referential<Consolidative>
+            operand,
+        Referential<const Elemental>
+            value)>
+        proceed; /**< Function reference which inserts the specified 
                       *   element at the end of the sequence.
                       */
 
-        Referential< bool(
-            Referential< Consolidative >
-                operand, 
-            Referential< const Natural >
-                count 
-        ) >
-            succeed; /**< Function reference which removes the specified
+    Referential<bool(
+        Referential<Consolidative>
+            operand,
+        Referential<const Natural>
+            count)>
+        succeed; /**< Function reference which removes the specified
                       *   number of elements from the beginning of the
                       *   sequence.
                       */
 
-        Referential< bool(
-            Referential< Consolidative >
-                operand, 
-            Referential< const Positional >
-                rank, 
-            Referential< const Natural >
-                count 
-        ) >
-            supersede; /**< Function reference which removes the specified
+    Referential<bool(
+        Referential<Consolidative>
+            operand,
+        Referential<const Positional>
+            rank,
+        Referential<const Natural>
+            count)>
+        supersede; /**< Function reference which removes the specified
                         *   number of elements from the sequence including
                         *   the specified position and positions __before__ it.
                         */
 
-        Referential< bool(
-            Referential< Consolidative >
-                operand, 
-            Referential< const Positional >
-                rank, 
-            Referential< const Natural >
-                count 
-        ) >
-            concede; /**< Function reference which removes the specified 
+    Referential<bool(
+        Referential<Consolidative>
+            operand,
+        Referential<const Positional>
+            rank,
+        Referential<const Natural>
+            count)>
+        concede; /**< Function reference which removes the specified 
                       *   number of elements from the sequence including
                       *   the specified position and positions __after__ it.
                       */
 
-        Referential< bool(
-            Referential< Consolidative >
-                operand, 
-            Referential< const Natural >
-                count 
-        ) >
-            recede; /**< Function reference which removes the specified
+    Referential<bool(
+        Referential<Consolidative>
+            operand,
+        Referential<const Natural>
+            count)>
+        recede; /**< Function reference which removes the specified
                      *   number of elements from the end of the sequence.
                      */
 
-        Referential< bool(
-            Referential< Consolidative >
-                operand 
-        ) >
-            secede; /**< Function reference which removes all of the elements
+    Referential<bool(
+        Referential<Consolidative>
+            operand)>
+        secede; /**< Function reference which removes all of the elements
                      *   from a sequence.
                      */
 
-        Referential< bool(
-            Referential< Consolidative >
-                operand 
-        ) >
-            condense; /**< Function reference used to indicate that the
+    Referential<bool(
+        Referential<Consolidative>
+            operand)>
+        condense; /**< Function reference used to indicate that the
                        *   implementation should tidy up any temporary space
                        *   being used.  If the implementation cleans the
                        *   temporary space all at once, it should return false
@@ -322,14 +303,12 @@ namespace consecution {
                        *   subsequent call to this function__.
                        */
 
-
-        Referential< const Conjoint< Consolidative, Positional, Consolidative, Positional, Natural, Elemental > >
-            conjoiner; /**< Objective reference used to insert a batch of
+    Referential<const Conjoint<Consolidative, Positional, Consolidative, Positional, Natural, Elemental>>
+        conjoiner; /**< Objective reference used to insert a batch of
                         *   elements at once from a space of the same 
                         *   consolidative type as this sequence.
                         */
-
-    };
+};
 
 }
 

@@ -17,9 +17,9 @@
  */
 namespace ration {
 
-    using ::location::Locational;
+using ::location::Locational;
 
-    /**
+/**
      * @brief
      *     Memory resource conformity.
      * @details 
@@ -37,33 +37,29 @@ namespace ration {
      * @tparam Elemental
      *     Type of the rationed memory elements.
      */
-    template <
-        typename Natural,
-        Natural
-            Maximum,
-        typename Elemental
-    >
-    struct Resourceful {
+template <
+    typename Natural,
+    Natural
+        Maximum,
+    typename Elemental>
+struct Resourceful {
 
-        Natural
-            allotment; /**< Number of allotted elements. */
+    Natural
+        allotment; /**< Number of allotted elements. */
 
-        Elemental
-            source[Maximum]; /**< Array of memory elements to be rationed. */
+    Elemental
+        source[Maximum]; /**< Array of memory elements to be rationed. */
+};
 
-    };
+template <
+    typename Elemental>
+using ReadPositional = Locational<const Elemental>;
 
-    template <
-        typename Elemental
-    >
-    using ReadPositional = Locational< const Elemental >;
+template <
+    typename Elemental>
+using WritePositional = Locational<Elemental>;
 
-    template <
-        typename Elemental
-    >
-    using WritePositional = Locational< Elemental >;
-
-    /**
+/**
      * @brief
      *     Memory move function type.
      * @details 
@@ -74,17 +70,15 @@ namespace ration {
      * @tparam Elemental
      *     Type of the rationed memory elements.
      */
-    template <
-        typename Natural,
-        typename Elemental
-    >
-    using MemoryMoving = bool(
-        Locational< Elemental >,
-        Locational< Elemental >,
-        Natural
-    );
+template <
+    typename Natural,
+    typename Elemental>
+using MemoryMoving = bool(
+    Locational<Elemental>,
+    Locational<Elemental>,
+    Natural);
 
-    /**
+/**
      * @brief
      *     Initialized resource.
      * @details 
@@ -99,47 +93,44 @@ namespace ration {
      * @tparam Elemental
      *     Type of the rationed memory elements.
      */
-    template <
-        typename Natural,
-        Natural
-            Maximum,
-        typename Elemental
-    >
-    constexpr Resourceful< Natural, Maximum, Elemental >
-        InitializedResource = {0};
+template <
+    typename Natural,
+    Natural
+        Maximum,
+    typename Elemental>
+constexpr Resourceful<Natural, Maximum, Elemental>
+    InitializedResource = { 0 };
 
-    template <
-        typename Natural,
-        typename Elemental
-    >
-    static inline bool
-    MoveElements(
-        WritePositional< Elemental >
-            from,
-        WritePositional< Elemental >
-            to,
-        Natural
-            count
-    ) {
+template <
+    typename Natural,
+    typename Elemental>
+static inline bool
+MoveElements(
+    WritePositional<Elemental>
+        from,
+    WritePositional<Elemental>
+        to,
+    Natural
+        count)
+{
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-        using namespace ::std;
-        static_assert(
-            is_integral< Natural >::value && is_unsigned< Natural >::value,
-            "Natural:  Unsigned integer type required"
-        );
+    using namespace ::std;
+    static_assert(
+        is_integral<Natural>::value && is_unsigned<Natural>::value,
+        "Natural:  Unsigned integer type required");
 #endif
-        Natural 
-            index;
-        if (from < to)
-            for (index = count; index > 0; index--) {
-                const Natural offset = index - 1;
-                to[offset] = from[offset];
-            }
-        else
-            for (index = 0; index < count; index++)
-                to[index] = from[index];
-        return true;
-    }
+    Natural
+        index;
+    if (from < to)
+        for (index = count; index > 0; index--) {
+            const Natural offset = index - 1;
+            to[offset] = from[offset];
+        }
+    else
+        for (index = 0; index < count; index++)
+            to[index] = from[index];
+    return true;
+}
 
 }
 

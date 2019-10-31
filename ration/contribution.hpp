@@ -2,8 +2,8 @@
 // Licensed under the Academic Free License version 3.0
 #ifndef RATION_CONTRIBUTION_MODULE
 #define RATION_CONTRIBUTION_MODULE
-#include "../ration.hpp"
 #include "../attribution.hpp"
+#include "../ration.hpp"
 #include "../trajection.hpp"
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
 #include <type_traits>
@@ -11,7 +11,7 @@
 
 namespace ration {
 
-    /**
+/**
      * @brief
      *     Pool rationing.
      * @details 
@@ -20,15 +20,15 @@ namespace ration {
      *     Array based pool rationing conformity, initialization facility, 
      *     tractile management and direct trajection implementations.
      */
-    namespace contribution {
+namespace contribution {
 
-        using ::location::Referential;
-        using ::location::Conferential;
-        using ::trajection::Vectorial;
-        using ::attribution::Tributary;
-        using ::comparison::Comparison;
+    using ::attribution::Tributary;
+    using ::comparison::Comparison;
+    using ::location::Conferential;
+    using ::location::Referential;
+    using ::trajection::Vectorial;
 
-        /**
+    /**
          * @brief
          *     Pool resource conformity.
          * @details 
@@ -43,26 +43,24 @@ namespace ration {
          * @tparam Elemental  
          *     Type of the elements.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        struct Contributory {
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    struct Contributory {
 
-            Natural
-                cycles; /**< Number of recycled indexes. */
+        Natural
+            cycles; /**< Number of recycled indexes. */
 
-            Resourceful< Natural, Maximum, Elemental >
-                resource; /**< Memory resource. */
+        Resourceful<Natural, Maximum, Elemental>
+            resource; /**< Memory resource. */
 
-            Natural
-                recycle[Maximum]; /**< Array of recycled indexes. */
+        Natural
+            recycle[Maximum]; /**< Array of recycled indexes. */
+    };
 
-        };
-
-        /**
+    /**
          * @brief 
          *     Initialized pool.
          * @details 
@@ -77,19 +75,18 @@ namespace ration {
          * @tparam Elemental
          *     Type of the elements.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        constexpr Contributory< Natural, Maximum, Elemental >
-            InitializedPool = {
-                0,
-                InitializedResource< Natural, Maximum, Elemental >
-            };
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    constexpr Contributory<Natural, Maximum, Elemental>
+        InitializedPool = {
+            0,
+            InitializedResource<Natural, Maximum, Elemental>
+        };
 
-        /**
+    /**
          * @brief
          *     Check if index is an allotted pool position.
          * @details
@@ -109,35 +106,33 @@ namespace ration {
          * @return
          *     True if index is allotted.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        static inline bool
-        Contains(
-            Referential< const Contributory< Natural, Maximum, Elemental > >
-                pool,
-            Referential< const Natural >
-                index
-        ) {
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    static inline bool
+    Contains(
+        Referential<const Contributory<Natural, Maximum, Elemental>>
+            pool,
+        Referential<const Natural>
+            index)
+    {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-            using namespace ::std;
-            static_assert(
-                is_integral< Natural >::value && is_unsigned< Natural >::value,
-                "Natural:  Unsigned integer type required"
-            );
+        using namespace ::std;
+        static_assert(
+            is_integral<Natural>::value && is_unsigned<Natural>::value,
+            "Natural:  Unsigned integer type required");
 #endif
-            if (index >= pool.resource.allotment)
+        if (index >= pool.resource.allotment)
+            return false;
+        for (Natural count = 0; count < pool.cycles; count++)
+            if (index == pool.recycle[count])
                 return false;
-            for (Natural count = 0; count < pool.cycles; count++)
-                if (index == pool.recycle[count])
-                    return false;
-            return true;
-        }
+        return true;
+    }
 
-        /**
+    /**
          * @brief 
          *     Confers the element at index.
          * @details
@@ -158,31 +153,29 @@ namespace ration {
          * @return
          *     The reference conferment.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        static inline Conferential< Elemental >
-        GoWrite(
-            Referential< Contributory< Natural, Maximum, Elemental > >
-                pool,
-            Referential< const Natural >
-                index
-        ) {
-            using ::location::Confer;
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    static inline Conferential<Elemental>
+    GoWrite(
+        Referential<Contributory<Natural, Maximum, Elemental>>
+            pool,
+        Referential<const Natural>
+            index)
+    {
+        using ::location::Confer;
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-            using namespace ::std;
-            static_assert(
-                is_integral< Natural >::value && is_unsigned< Natural >::value,
-                "Natural:  Unsigned integer type required"
-            );
+        using namespace ::std;
+        static_assert(
+            is_integral<Natural>::value && is_unsigned<Natural>::value,
+            "Natural:  Unsigned integer type required");
 #endif
-            return Confer( pool.resource.source[index] );
-        }
+        return Confer(pool.resource.source[index]);
+    }
 
-        /**
+    /**
          * @brief
          *     Deters the element at index.
          * @details
@@ -203,31 +196,29 @@ namespace ration {
          * @return
          *     The reference determent.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        static inline Conferential< const Elemental >
-        GoRead(
-            Referential< const Contributory< Natural, Maximum, Elemental > >
-                pool,
-            Referential< const Natural >
-                index
-        ) {
-            using ::location::Deter;
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    static inline Conferential<const Elemental>
+    GoRead(
+        Referential<const Contributory<Natural, Maximum, Elemental>>
+            pool,
+        Referential<const Natural>
+            index)
+    {
+        using ::location::Deter;
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-            using namespace ::std;
-            static_assert(
-                is_integral< Natural >::value && is_unsigned< Natural >::value,
-                "Natural:  Unsigned integer type required"
-            );
+        using namespace ::std;
+        static_assert(
+            is_integral<Natural>::value && is_unsigned<Natural>::value,
+            "Natural:  Unsigned integer type required");
 #endif
-            return Deter( pool.resource.source[index] );
-        }
+        return Deter(pool.resource.source[index]);
+    }
 
-        /**
+    /**
          * @brief 
          *     Initializes the pool.
          * @details
@@ -245,30 +236,28 @@ namespace ration {
          * @return 
          *     A reference to the pool.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        static inline Referential< Contributory< Natural, Maximum, Elemental > >
-        Initialize(
-            Referential< Contributory< Natural, Maximum, Elemental > >
-                pool
-        ) {
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    static inline Referential<Contributory<Natural, Maximum, Elemental>>
+    Initialize(
+        Referential<Contributory<Natural, Maximum, Elemental>>
+            pool)
+    {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-            using namespace ::std;
-            static_assert(
-                is_integral< Natural >::value && is_unsigned< Natural >::value,
-                "Natural:  Unsigned integer type required"
-            );
+        using namespace ::std;
+        static_assert(
+            is_integral<Natural>::value && is_unsigned<Natural>::value,
+            "Natural:  Unsigned integer type required");
 #endif
-            pool.cycles = 0;
-            pool.resource.allotment = 0;
-            return pool;
-        }
+        pool.cycles = 0;
+        pool.resource.allotment = 0;
+        return pool;
+    }
 
-        /**
+    /**
          * @brief 
          *     Empties the pool.
          * @details
@@ -287,31 +276,29 @@ namespace ration {
          * @return 
          *     True if the pool was altered by this operation.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        static inline bool
-        Contribute(
-            Referential< Contributory< Natural, Maximum, Elemental > >
-                pool
-        ) {
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    static inline bool
+    Contribute(
+        Referential<Contributory<Natural, Maximum, Elemental>>
+            pool)
+    {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-            using namespace ::std;
-            static_assert(
-                is_integral< Natural >::value && is_unsigned< Natural >::value,
-                "Natural:  Unsigned integer type required"
-            );
+        using namespace ::std;
+        static_assert(
+            is_integral<Natural>::value && is_unsigned<Natural>::value,
+            "Natural:  Unsigned integer type required");
 #endif
-            if (pool.cycles >= pool.resource.allotment)
-                return false;
-            Initialize( pool );
-            return true;
-        }
+        if (pool.cycles >= pool.resource.allotment)
+            return false;
+        Initialize(pool);
+        return true;
+    }
 
-        /**
+    /**
          * @brief 
          *     Returns the maximum size of the pool.
          * @details
@@ -330,28 +317,26 @@ namespace ration {
          * @return 
          *     The maximum number of pool elements.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        static inline Natural
-        Survey(
-            Referential< const Contributory< Natural, Maximum, Elemental > >
-                pool
-        ) {
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    static inline Natural
+    Survey(
+        Referential<const Contributory<Natural, Maximum, Elemental>>
+            pool)
+    {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-            using namespace ::std;
-            static_assert(
-                is_integral< Natural >::value && is_unsigned< Natural >::value,
-                "Natural:  Unsigned integer type required"
-            );
+        using namespace ::std;
+        static_assert(
+            is_integral<Natural>::value && is_unsigned<Natural>::value,
+            "Natural:  Unsigned integer type required");
 #endif
-            return Maximum;
-        }
+        return Maximum;
+    }
 
-        /**
+    /**
          * @brief 
          *     Returns the number of distributed elements in the pool.
          * @details
@@ -370,28 +355,26 @@ namespace ration {
          * @return 
          *     The number of allotted elements.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        static inline Natural
-        Account(
-            Referential< const Contributory< Natural, Maximum, Elemental > >
-                pool
-        ) {
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    static inline Natural
+    Account(
+        Referential<const Contributory<Natural, Maximum, Elemental>>
+            pool)
+    {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-            using namespace ::std;
-            static_assert(
-                is_integral< Natural >::value && is_unsigned< Natural >::value,
-                "Natural:  Unsigned integer type required"
-            );
+        using namespace ::std;
+        static_assert(
+            is_integral<Natural>::value && is_unsigned<Natural>::value,
+            "Natural:  Unsigned integer type required");
 #endif
-            return pool.resource.allotment - pool.cycles;
-        }
+        return pool.resource.allotment - pool.cycles;
+    }
 
-        /**
+    /**
          * @brief 
          *     Distributes an available element from the pool.
          * @details
@@ -414,34 +397,32 @@ namespace ration {
          * @return 
          *     Always returns true.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        static inline bool
-        Distribute(
-            Referential< Contributory< Natural, Maximum, Elemental > >
-                pool,
-            Referential< Natural >
-                index
-        ) {
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    static inline bool
+    Distribute(
+        Referential<Contributory<Natural, Maximum, Elemental>>
+            pool,
+        Referential<Natural>
+            index)
+    {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-            using namespace ::std;
-            static_assert(
-                is_integral< Natural >::value && is_unsigned< Natural >::value,
-                "Natural:  Unsigned integer type required"
-            );
+        using namespace ::std;
+        static_assert(
+            is_integral<Natural>::value && is_unsigned<Natural>::value,
+            "Natural:  Unsigned integer type required");
 #endif
-            if (pool.cycles)
-                index = pool.recycle[--pool.cycles];
-            else
-                index = pool.resource.allotment++;
-            return true;
-        }
+        if (pool.cycles)
+            index = pool.recycle[--pool.cycles];
+        else
+            index = pool.resource.allotment++;
+        return true;
+    }
 
-        /**
+    /**
          * @brief 
          *     Distributes an element from the pool.
          * @details
@@ -463,32 +444,30 @@ namespace ration {
          * @return 
          *     Returns true if the number of requested elements were protracted.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        static inline bool
-        DistributeAssuredly(
-            Referential< Contributory< Natural, Maximum, Elemental > >
-                pool,
-            Referential< Natural >
-                index
-        ) {
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    static inline bool
+    DistributeAssuredly(
+        Referential<Contributory<Natural, Maximum, Elemental>>
+            pool,
+        Referential<Natural>
+            index)
+    {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-            using namespace ::std;
-            static_assert(
-                is_integral< Natural >::value && is_unsigned< Natural >::value,
-                "Natural:  Unsigned integer type required"
-            );
+        using namespace ::std;
+        static_assert(
+            is_integral<Natural>::value && is_unsigned<Natural>::value,
+            "Natural:  Unsigned integer type required");
 #endif
-            if (Account( pool ) >= Maximum)
-                return false;
-            return Distribute( pool, index );
-        }
+        if (Account(pool) >= Maximum)
+            return false;
+        return Distribute(pool, index);
+    }
 
-        /**
+    /**
          * @brief 
          *     Retributes an element to the pool.
          * @details
@@ -510,31 +489,29 @@ namespace ration {
          * @return 
          *     Always returns true.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        static inline bool
-        Retribute(
-            Referential< Contributory< Natural, Maximum, Elemental > >
-                pool,
-            Referential< const Natural >
-                index
-        ) {
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    static inline bool
+    Retribute(
+        Referential<Contributory<Natural, Maximum, Elemental>>
+            pool,
+        Referential<const Natural>
+            index)
+    {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-            using namespace ::std;
-            static_assert(
-                is_integral< Natural >::value && is_unsigned< Natural >::value,
-                "Natural:  Unsigned integer type required"
-            );
+        using namespace ::std;
+        static_assert(
+            is_integral<Natural>::value && is_unsigned<Natural>::value,
+            "Natural:  Unsigned integer type required");
 #endif
-            pool.recycle[pool.cycles++] = index;
-            return true;
-        }
+        pool.recycle[pool.cycles++] = index;
+        return true;
+    }
 
-        /**
+    /**
          * @brief 
          *     Retributes an element to the pool.
          * @details
@@ -555,34 +532,32 @@ namespace ration {
          * @return 
          *     Returns true if the index was retracted.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        static inline bool
-        RetributeAssuredly(
-            Referential< Contributory< Natural, Maximum, Elemental > >
-                pool,
-            Referential< const Natural >
-                index
-        ) {
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    static inline bool
+    RetributeAssuredly(
+        Referential<Contributory<Natural, Maximum, Elemental>>
+            pool,
+        Referential<const Natural>
+            index)
+    {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-            using namespace ::std;
-            static_assert(
-                is_integral< Natural >::value && is_unsigned< Natural >::value,
-                "Natural:  Unsigned integer type required"
-            );
+        using namespace ::std;
+        static_assert(
+            is_integral<Natural>::value && is_unsigned<Natural>::value,
+            "Natural:  Unsigned integer type required");
 #endif
-            if (!Contains( pool, index ))
-                return false;
-            if (pool.cycles >= Maximum)
-                return false;
-            return Retribute( pool, index );
-        }
+        if (!Contains(pool, index))
+            return false;
+        if (pool.cycles >= Maximum)
+            return false;
+        return Retribute(pool, index);
+    }
 
-        /**
+    /**
          * @brief 
          *     Tributary pool management implementation.
          * @details
@@ -599,22 +574,21 @@ namespace ration {
          * @tparam Elemental 
          *     Type of the elements.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        constexpr Tributary< Contributory< Natural, Maximum, Elemental >, Natural, Natural >
-            FastContributor = {
-                Survey< Natural, Maximum, Elemental >,
-                Account< Natural, Maximum, Elemental >,
-                Distribute< Natural, Maximum, Elemental >,
-                Retribute< Natural, Maximum, Elemental >,
-                Contribute< Natural, Maximum, Elemental >
-            };
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    constexpr Tributary<Contributory<Natural, Maximum, Elemental>, Natural, Natural>
+        FastContributor = {
+            Survey<Natural, Maximum, Elemental>,
+            Account<Natural, Maximum, Elemental>,
+            Distribute<Natural, Maximum, Elemental>,
+            Retribute<Natural, Maximum, Elemental>,
+            Contribute<Natural, Maximum, Elemental>
+        };
 
-        /**
+    /**
          * @brief 
          *     Tributary pool management implementation.
          * @details
@@ -630,22 +604,21 @@ namespace ration {
          * @tparam Elemental 
          *     Type of the elements.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        constexpr Tributary< Contributory< Natural, Maximum, Elemental >, Natural, Natural >
-            SureContributor = {
-                Survey< Natural, Maximum, Elemental >,
-                Account< Natural, Maximum, Elemental >,
-                DistributeAssuredly< Natural, Maximum, Elemental >,
-                RetributeAssuredly< Natural, Maximum, Elemental >,
-                Contribute< Natural, Maximum, Elemental >
-            };
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    constexpr Tributary<Contributory<Natural, Maximum, Elemental>, Natural, Natural>
+        SureContributor = {
+            Survey<Natural, Maximum, Elemental>,
+            Account<Natural, Maximum, Elemental>,
+            DistributeAssuredly<Natural, Maximum, Elemental>,
+            RetributeAssuredly<Natural, Maximum, Elemental>,
+            Contribute<Natural, Maximum, Elemental>
+        };
 
-        /**
+    /**
          * @brief 
          *     Vectorial read trajection implementation.
          * @details
@@ -662,20 +635,19 @@ namespace ration {
          * @tparam Elemental 
          *     Type of the elements.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        constexpr Vectorial< const Contributory< Natural, Maximum, Elemental >, Natural, const Elemental >
-            ReadVector = {
-                Comparison< Natural >,
-                Contains< Natural, Maximum, Elemental >,
-                GoRead< Natural, Maximum, Elemental >
-            };
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    constexpr Vectorial<const Contributory<Natural, Maximum, Elemental>, Natural, const Elemental>
+        ReadVector = {
+            Comparison<Natural>,
+            Contains<Natural, Maximum, Elemental>,
+            GoRead<Natural, Maximum, Elemental>
+        };
 
-        /**
+    /**
          * @brief 
          *     Vectorial write trajection implementation.
          * @details
@@ -692,20 +664,19 @@ namespace ration {
          * @tparam Elemental 
          *     Type of the elements.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        constexpr Vectorial< Contributory< Natural, Maximum, Elemental >, Natural, Elemental >
-            WriteVector = {
-                Comparison< Natural >,
-                Contains< Natural, Maximum, Elemental >,
-                GoWrite< Natural, Maximum, Elemental >
-            };
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    constexpr Vectorial<Contributory<Natural, Maximum, Elemental>, Natural, Elemental>
+        WriteVector = {
+            Comparison<Natural>,
+            Contains<Natural, Maximum, Elemental>,
+            GoWrite<Natural, Maximum, Elemental>
+        };
 
-    }
+}
 
 }
 

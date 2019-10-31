@@ -6,7 +6,7 @@
 
 namespace invocation {
 
-    /**
+/**
      * @brief 
      *     Invokes the procedural object safely.
      * @details
@@ -27,31 +27,31 @@ namespace invocation {
      * @return
      *     Result of the invocation.
      */
-    template <
-        typename Procedural,
-        typename Resultant,
-        typename ...Parametric
-    >
-    Resultant
-    InvokeProcedureSafely(
-        const Locational< const void >
-            locality,
-        Parametric...
-            arguments
-    ) {
-        using Specific = const Locational< const Locational< Procedural > >;
-        static auto&
-            Invoke = InvokeProcedure< Procedural, Resultant, Parametric... >;
-        if (!locality)
-            throw locality
-        Specific
-            procedure = static_cast< Specific >(locality);
-        if (!Refer( procedure ).to)
-            throw Refer( procedure ).to;
-        return Invoke( procedure, arguments ... );
-    }
+template <
+    typename Procedural,
+    typename Resultant,
+    typename... Parametric>
+Resultant
+InvokeProcedureSafely(
+    const Locational<const void>
+        locality,
+    Parametric... arguments)
+{
+    using Specific = const Locational<const Locational<Procedural>>;
+    static auto&
+        Invoke
+        = InvokeProcedure<Procedural, Resultant, Parametric...>;
+    if (!locality)
+        throw locality
+            Specific
+                procedure
+            = static_cast<Specific>(locality);
+    if (!Refer(procedure).to)
+        throw Refer(procedure).to;
+    return Invoke(procedure, arguments...);
+}
 
-    /**
+/**
      * @brief 
      *     Invokes an object oriented non-static method safely.
      * @details
@@ -75,34 +75,34 @@ namespace invocation {
      * @return
      *     Result of the invocation.
      */
-    template <
-        class ClassTypical,
-        typename MethodLocational,
-        typename Resultant,
-        typename ...Parametric
-    >
-    Resultant
-    InvokeMethodSafely(
-        const Locational< const void >
-            locality,
-        Parametric...
-            arguments
-    ) {
-        using Specific = const Locational< const Methodic< ClassTypical, MethodLocational, Resultant, Parametric... > >;
-        static auto&
-            Invoke = InvokeMethod< ClassTypical, MethodLocational, Resultant, Parametric... >;
-        Specific
-            instance = static_cast< Specific >(locality);
-        if (!instance)
-            throw instance;
-        if (!instance->method)
-            throw instance->method;
-        if (!instance->object)
-            throw instance->object;
-        return Invoke( instance, arguments ... );
-    }
+template <
+    class ClassTypical,
+    typename MethodLocational,
+    typename Resultant,
+    typename... Parametric>
+Resultant
+InvokeMethodSafely(
+    const Locational<const void>
+        locality,
+    Parametric... arguments)
+{
+    using Specific = const Locational<const Methodic<ClassTypical, MethodLocational, Resultant, Parametric...>>;
+    static auto&
+        Invoke
+        = InvokeMethod<ClassTypical, MethodLocational, Resultant, Parametric...>;
+    Specific
+        instance
+        = static_cast<Specific>(locality);
+    if (!instance)
+        throw instance;
+    if (!instance->method)
+        throw instance->method;
+    if (!instance->object)
+        throw instance->object;
+    return Invoke(instance, arguments...);
+}
 
-   /**
+/**
      * @brief 
      *     Prepares a lambda expression which can safely invoke the invocation.
      * @details
@@ -122,23 +122,22 @@ namespace invocation {
      * @return
      *     Lambda expression returned by value.
      */
-    template <
-        typename Resultant,
-        typename ...Parametric
-    >
-    static inline auto
-    PrepareInvocationSafely(
-        Referential< const Invocative< Resultant, Parametric... > >
-            invocation
-    ) {
-        if (!invocation.interface)
-            throw invocation.interface;
-        if (!invocation.locality)
-            throw invocation.locality;
-        return PrepareInvocation( invocation );
-    }
+template <
+    typename Resultant,
+    typename... Parametric>
+static inline auto
+PrepareInvocationSafely(
+    Referential<const Invocative<Resultant, Parametric...>>
+        invocation)
+{
+    if (!invocation.interface)
+        throw invocation.interface;
+    if (!invocation.locality)
+        throw invocation.locality;
+    return PrepareInvocation(invocation);
+}
 
-    /**
+/**
      * @brief 
      *     Assigns a non-static method safely.
      * @details
@@ -162,27 +161,26 @@ namespace invocation {
      * @return
      *     Methodic instance returned by value.
      */
-    template <
-        class ClassTypical,
-        typename MethodLocational,
-        typename Resultant,
-        typename ...Parametric
-    >
-    static inline Methodic< ClassTypical, MethodLocational, Resultant, Parametric... >
-    AssignClassMethodSafely(
-        MethodLocational
-            method, 
-        Referential< ClassTypical >
-            object 
-    ) {
-        if (!method)
-            throw method;
-        const Methodic< ClassTypical, MethodLocational, Resultant, Parametric... >
-            instance = {method, Locate( object ).at};
-        return instance;
-    }
+template <
+    class ClassTypical,
+    typename MethodLocational,
+    typename Resultant,
+    typename... Parametric>
+static inline Methodic<ClassTypical, MethodLocational, Resultant, Parametric...>
+AssignClassMethodSafely(
+    MethodLocational
+        method,
+    Referential<ClassTypical>
+        object)
+{
+    if (!method)
+        throw method;
+    const Methodic<ClassTypical, MethodLocational, Resultant, Parametric...>
+        instance = { method, Locate(object).at };
+    return instance;
+}
 
-    /**
+/**
      * @brief 
      *     Assigns a safe procedural invocative instance.
      * @details
@@ -205,26 +203,26 @@ namespace invocation {
      * @return
      *     Invocative instance returned by value.
      */
-    template <
-        typename Procedural,
-        typename Resultant,
-        typename ...Parametric
-    >
-    static inline Invocative< Resultant, Parametric... >
-    AssignInvokeProcedureSafely(
-        Referential< const Locational< Procedural > >
-            locality
-    ) {
-        static auto&
-            Invoke = InvokeProcedureSafely< Procedural, Resultant, Parametric... >;
-        if (!locality)
-            throw locality;
-        const Invocative< Resultant, Parametric... >
-            invocation = {Locate( Invoke ).at, Locate( locality ).at};
-        return invocation;
-    }
+template <
+    typename Procedural,
+    typename Resultant,
+    typename... Parametric>
+static inline Invocative<Resultant, Parametric...>
+AssignInvokeProcedureSafely(
+    Referential<const Locational<Procedural>>
+        locality)
+{
+    static auto&
+        Invoke
+        = InvokeProcedureSafely<Procedural, Resultant, Parametric...>;
+    if (!locality)
+        throw locality;
+    const Invocative<Resultant, Parametric...>
+        invocation = { Locate(Invoke).at, Locate(locality).at };
+    return invocation;
+}
 
-    /**
+/**
      * @brief 
      *     Assigns a safe methodic invocative instance.
      * @details
@@ -249,25 +247,25 @@ namespace invocation {
      * @return
      *     Invocative instance returned by value.
      */
-    template <
-        class ClassTypical,
-        typename MethodLocational,
-        typename Resultant,
-        typename ...Parametric
-    >
-    static inline Invocative< Resultant, Parametric... >
-    AssignInvokeMethodSafely(
-        Referential< const Methodic< ClassTypical, MethodLocational, Resultant, Parametric... > >
-            instance
-    ) {
-        static auto&
-            Invoke = InvokeMethodSafely< ClassTypical, MethodLocational, Resultant, Parametric... >;
-        const Invocative< Resultant, Parametric... >
-            invocation = {Locate( Invoke ).at, Locate( instance ).at};
-        return invocation;
-    }
+template <
+    class ClassTypical,
+    typename MethodLocational,
+    typename Resultant,
+    typename... Parametric>
+static inline Invocative<Resultant, Parametric...>
+AssignInvokeMethodSafely(
+    Referential<const Methodic<ClassTypical, MethodLocational, Resultant, Parametric...>>
+        instance)
+{
+    static auto&
+        Invoke
+        = InvokeMethodSafely<ClassTypical, MethodLocational, Resultant, Parametric...>;
+    const Invocative<Resultant, Parametric...>
+        invocation = { Locate(Invoke).at, Locate(instance).at };
+    return invocation;
+}
 
-    /**
+/**
      * @brief 
      *     Assigns a safe procedural invocative instance.
      * @details
@@ -288,23 +286,23 @@ namespace invocation {
      * @return
      *     Invocative instance returned by value.
      */
-    template <
-        typename Resultant,
-        typename ...Parametric
-    >
-    static inline Invocative< Resultant, Parametric... >
-    AssignInvokeFunctionSafely(
-        Referential< const Locational< Abstract< Resultant, Parametric... > > >
-            locality
-    ) {
-        static auto&
-            Invoke = InvokeProcedureSafely< Abstract< Resultant, Parametric... >, Resultant, Parametric... >;
-        if (!locality)
-            throw locality;
-        const Invocative< Resultant, Parametric... >
-            invocation = {Locate( Invoke ).at, Locate( locality ).at};
-        return invocation;
-    }
+template <
+    typename Resultant,
+    typename... Parametric>
+static inline Invocative<Resultant, Parametric...>
+AssignInvokeFunctionSafely(
+    Referential<const Locational<Abstract<Resultant, Parametric...>>>
+        locality)
+{
+    static auto&
+        Invoke
+        = InvokeProcedureSafely<Abstract<Resultant, Parametric...>, Resultant, Parametric...>;
+    if (!locality)
+        throw locality;
+    const Invocative<Resultant, Parametric...>
+        invocation = { Locate(Invoke).at, Locate(locality).at };
+    return invocation;
+}
 
 }
 

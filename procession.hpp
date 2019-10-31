@@ -2,9 +2,9 @@
 // Licensed under the Academic Free License version 3.0
 #ifndef PROCESSION_MODULE
 #define PROCESSION_MODULE
+#include "association.hpp"
 #include "traction.hpp"
 #include "trajection.hpp"
-#include "association.hpp"
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
 #include <type_traits>
 #endif
@@ -20,13 +20,13 @@
  */
 namespace procession {
 
-    using ::location::Locational;
-    using ::location::Referential;
-    using ::trajection::Directional;
-    using ::traction::Tractile;
-    using ::association::Complementary;
+using ::association::Complementary;
+using ::location::Locational;
+using ::location::Referential;
+using ::traction::Tractile;
+using ::trajection::Directional;
 
-    /**
+/**
      * @brief 
      *     Function type which represents an event function.
      * @details 
@@ -40,17 +40,14 @@ namespace procession {
      * @tparam ...Parametric
      *     Parameter pack which represents extra event parameters.
      */
-    template <
-        typename ...Parametric
-    >
-    using Contractual = void(
-        const Locational< const void >
-            locality,
-        Parametric...
-            arguments
-    );
+template <
+    typename... Parametric>
+using Contractual = void(
+    const Locational<const void>
+        locality,
+    Parametric... arguments);
 
-    /**
+/**
      * @brief   
      *     Event schedule classifier.
      * @details 
@@ -65,12 +62,11 @@ namespace procession {
      * @tparam ...Parametric
      *     Parameter pack which represents extra event parameters.
      */
-    template <
-        typename ...Parametric
-    >
-    using Contextual = Complementary< Locational< Contractual< Parametric... > >, Locational< const void > >;
+template <
+    typename... Parametric>
+using Contextual = Complementary<Locational<Contractual<Parametric...>>, Locational<const void>>;
 
-    /**
+/**
      * @brief 
      *     Schedules an event.
      * @details
@@ -103,46 +99,44 @@ namespace procession {
      * @return
      *     True if the event was successfully scheduled.
      */
-    template <
-        typename Schedular,
-        typename Positional,
-        typename Natural,
-        typename Subjective,
-        Referential< const Tractile< Schedular, Positional, Natural > >
-            Contractor,
-        typename ...Parametric
-    >
-    static inline bool
-    Schedule(
-        Referential< const Directional< Schedular, Positional, Natural, Contextual< Parametric... > > >
-            visitor,
-        Referential< Schedular >
-            schedule,
-        Referential< Contractual< Parametric... > >
-            function,
-        Referential< const Locational< Subjective > >
-            locality
-    ) {
-        using namespace ::location;
+template <
+    typename Schedular,
+    typename Positional,
+    typename Natural,
+    typename Subjective,
+    Referential<const Tractile<Schedular, Positional, Natural>>
+        Contractor,
+    typename... Parametric>
+static inline bool
+Schedule(
+    Referential<const Directional<Schedular, Positional, Natural, Contextual<Parametric...>>>
+        visitor,
+    Referential<Schedular>
+        schedule,
+    Referential<Contractual<Parametric...>>
+        function,
+    Referential<const Locational<Subjective>>
+        locality)
+{
+    using namespace ::location;
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-        using namespace ::std;
-        static_assert(
-            is_integral< Natural >::value && is_unsigned< Natural >::value,
-            "Natural:  Unsigned integer type required"
-        );
+    using namespace ::std;
+    static_assert(
+        is_integral<Natural>::value && is_unsigned<Natural>::value,
+        "Natural:  Unsigned integer type required");
 #endif
-        Positional
-            position;
-        if (!Contractor.protract( schedule, position, 1 ))
-            return false;
-        Referential< Contextual< Parametric... > >
-            event = visitor.scale.go( schedule, position ).to;
-        event.value = Locate( locality ).at;
-        event.relator = function;
-        return true;
-    }
+    Positional
+        position;
+    if (!Contractor.protract(schedule, position, 1))
+        return false;
+    Referential<Contextual<Parametric...>>
+        event = visitor.scale.go(schedule, position).to;
+    event.value = Locate(locality).at;
+    event.relator = function;
+    return true;
+}
 
-    /**
+/**
      * @brief 
      *     Prepares a lambda expression which schedules an event.
      * @details
@@ -171,37 +165,37 @@ namespace procession {
      * @return
      *     The instance of the lambda expression.
      */
-    template <
-        typename Schedular,
-        typename Positional,
-        typename Natural,
-        typename Subjective,
-        Referential< const Tractile< Schedular, Positional, Natural > >
-            Contractor,
-        typename ...Parametric
-    >
-    static inline auto
-    PrepareSchedule(
-        Referential< const Directional< Schedular, Positional, Natural, Contextual< Parametric... > > >
-            visitor,
-        Referential< Schedular >
-            schedule,
-        Referential< Contractual< Parametric... > >
-            function
-    ) {
-        static auto&
-            ScheduleEvent = Schedule< Schedular, Positional, Natural, Subjective, Contractor, Parametric... >;
-        auto 
-            lambda = [&visitor, &schedule, &function]( 
-                Referential< const Locational< Subjective > >
-                    locality 
-            ) {
-                return ScheduleEvent( visitor, schedule, function, locality );
-            };
-        return lambda;
-    }
+template <
+    typename Schedular,
+    typename Positional,
+    typename Natural,
+    typename Subjective,
+    Referential<const Tractile<Schedular, Positional, Natural>>
+        Contractor,
+    typename... Parametric>
+static inline auto
+PrepareSchedule(
+    Referential<const Directional<Schedular, Positional, Natural, Contextual<Parametric...>>>
+        visitor,
+    Referential<Schedular>
+        schedule,
+    Referential<Contractual<Parametric...>>
+        function)
+{
+    static auto&
+        ScheduleEvent
+        = Schedule<Schedular, Positional, Natural, Subjective, Contractor, Parametric...>;
+    auto
+        lambda
+        = [&visitor, &schedule, &function](
+              Referential<const Locational<Subjective>>
+                  locality) {
+              return ScheduleEvent(visitor, schedule, function, locality);
+          };
+    return lambda;
+}
 
-    /**
+/**
      * @brief
      *     Processes a single scheduled event.
      * @details
@@ -228,44 +222,41 @@ namespace procession {
      * @return
      *     True if an event was processed.
      */
-    template <
-        typename Schedular,
-        typename Positional,
-        typename Natural,
-        Referential< const Tractile< Schedular, Positional, Natural > >
-            Contractor,
-        typename ...Parametric
-    >
-    static inline bool
-    ProcessOneEvent(
-        Referential< const Directional< Schedular, Positional, Natural, Contextual< Parametric... > > >
-            visitor,
-        Referential< Schedular >
-            schedule,
-        Parametric...
-            arguments
-    ) {
+template <
+    typename Schedular,
+    typename Positional,
+    typename Natural,
+    Referential<const Tractile<Schedular, Positional, Natural>>
+        Contractor,
+    typename... Parametric>
+static inline bool
+ProcessOneEvent(
+    Referential<const Directional<Schedular, Positional, Natural, Contextual<Parametric...>>>
+        visitor,
+    Referential<Schedular>
+        schedule,
+    Parametric... arguments)
+{
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-        using namespace ::std;
-        static_assert(
-            is_integral< Natural >::value && is_unsigned< Natural >::value,
-            "Natural:  Unsigned integer type required"
-        );
+    using namespace ::std;
+    static_assert(
+        is_integral<Natural>::value && is_unsigned<Natural>::value,
+        "Natural:  Unsigned integer type required");
 #endif
-        Positional
-            position;
-        Contextual< Parametric... >
-            event;
-        if (!visitor.begins( schedule, 0 ))
-            return false;
-        visitor.scale.begin( schedule, position, 0 );
-        event = visitor.scale.go( schedule, position ).to;
-        Contractor.retract( schedule, 1 );
-        event.relator( event.value, arguments... );
-        return true;
-    }
+    Positional
+        position;
+    Contextual<Parametric...>
+        event;
+    if (!visitor.begins(schedule, 0))
+        return false;
+    visitor.scale.begin(schedule, position, 0);
+    event = visitor.scale.go(schedule, position).to;
+    Contractor.retract(schedule, 1);
+    event.relator(event.value, arguments...);
+    return true;
+}
 
-    /**
+/**
      * @brief
      *     Prepares a lambda expression which processes a single scheduled 
      *     event.
@@ -292,32 +283,31 @@ namespace procession {
      * @return
      *     The instance of the lambda expression.
      */
-    template <
-        typename Schedular,
-        typename Positional,
-        typename Natural,
-        Referential< const Tractile< Schedular, Positional, Natural > >
-            Contractor,
-        typename ...Parametric
-    >
-    static inline auto
-    PrepareProcessOneEvent(
-        Referential< const Directional< Schedular, Positional, Natural, Contextual< Parametric... > > >
-            visitor,
-        Referential< Schedular >
-            schedule
-    ) {
-        static auto&
-            Process = ProcessOneEvent< Schedular, Positional, Natural, Contractor, Parametric... >;
-        auto 
-            lambda = [&visitor, &schedule]( 
-                Parametric... 
-                    arguments 
-            ) -> bool {
-                return Process( visitor, schedule, arguments... );
-            };
-        return lambda;
-    }
+template <
+    typename Schedular,
+    typename Positional,
+    typename Natural,
+    Referential<const Tractile<Schedular, Positional, Natural>>
+        Contractor,
+    typename... Parametric>
+static inline auto
+PrepareProcessOneEvent(
+    Referential<const Directional<Schedular, Positional, Natural, Contextual<Parametric...>>>
+        visitor,
+    Referential<Schedular>
+        schedule)
+{
+    static auto&
+        Process
+        = ProcessOneEvent<Schedular, Positional, Natural, Contractor, Parametric...>;
+    auto
+        lambda
+        = [&visitor, &schedule](
+              Parametric... arguments) -> bool {
+        return Process(visitor, schedule, arguments...);
+    };
+    return lambda;
+}
 
 }
 

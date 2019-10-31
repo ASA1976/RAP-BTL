@@ -11,7 +11,7 @@
 
 namespace ration {
 
-    /**
+/**
      * @brief
      *     Queue rationing.
      * @details
@@ -20,19 +20,19 @@ namespace ration {
      *     Array based queue rationing conformity, initialization facility, 
      *     tractile management and sequential trajection implementations.
      */
-    namespace contraction {
+namespace contraction {
 
-        using ::location::Referential;
-        using ::location::Conferential;
-        using ::trajection::Vectorial;
-        using ::trajection::Scalar;
-        using ::trajection::Lineal;
-        using ::trajection::Directional;
-        using ::trajection::Axial;
-        using ::traction::Tractile;
-        using ::comparison::Comparison;
+    using ::comparison::Comparison;
+    using ::location::Conferential;
+    using ::location::Referential;
+    using ::traction::Tractile;
+    using ::trajection::Axial;
+    using ::trajection::Directional;
+    using ::trajection::Lineal;
+    using ::trajection::Scalar;
+    using ::trajection::Vectorial;
 
-        /**
+    /**
          * @brief
          *     Queue resource conformity.
          * @details
@@ -47,23 +47,21 @@ namespace ration {
          * @tparam Elemental
          *     Type of the elements.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        struct Contractional {
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    struct Contractional {
 
-            Natural
-                first; /**< Offset to the first element in the queue. */
+        Natural
+            first; /**< Offset to the first element in the queue. */
 
-            Resourceful< Natural, Maximum, Elemental >
-                resource; /**< Memory resource. */
+        Resourceful<Natural, Maximum, Elemental>
+            resource; /**< Memory resource. */
+    };
 
-        };
-
-        /**
+    /**
          * @brief 
          *     Initialized queue.
          * @details 
@@ -78,19 +76,18 @@ namespace ration {
          * @tparam Elemental
          *     Type of the elements.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        constexpr Contractional< Natural, Maximum, Elemental >
-            InitializedQueue = {
-                0,
-                InitializedResource< Natural, Maximum, Elemental >
-            };
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    constexpr Contractional<Natural, Maximum, Elemental>
+        InitializedQueue = {
+            0,
+            InitializedResource<Natural, Maximum, Elemental>
+        };
 
-        /**
+    /**
          * @brief
          *     Check if index is an allotted queue position.
          * @details
@@ -110,41 +107,40 @@ namespace ration {
          * @return
          *     True if index is allotted.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        static inline bool
-        Contains(
-            Referential< const Contractional< Natural, Maximum, Elemental > >
-                queue,
-            Referential< const Natural >
-                index
-        ) {
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    static inline bool
+    Contains(
+        Referential<const Contractional<Natural, Maximum, Elemental>>
+            queue,
+        Referential<const Natural>
+            index)
+    {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-            using namespace ::std;
-            static_assert(
-                is_integral< Natural >::value && is_unsigned< Natural >::value,
-                "Natural:  Unsigned integer type required"
-            );
+        using namespace ::std;
+        static_assert(
+            is_integral<Natural>::value && is_unsigned<Natural>::value,
+            "Natural:  Unsigned integer type required");
 #endif
-            const Natural
-                terminal = queue.first + queue.resource.allotment;
-            if (index < queue.first) {
-                if (terminal <= Maximum)
-                    return false;
-                if (index >= terminal - Maximum)
-                    return false;
-            } else {
-                if (index >= terminal)
-                    return false;
-            }
-            return true;
+        const Natural
+            terminal
+            = queue.first + queue.resource.allotment;
+        if (index < queue.first) {
+            if (terminal <= Maximum)
+                return false;
+            if (index >= terminal - Maximum)
+                return false;
+        } else {
+            if (index >= terminal)
+                return false;
         }
+        return true;
+    }
 
-        /**
+    /**
          * @brief 
          *     Confers the element at index.
          * @details
@@ -165,31 +161,29 @@ namespace ration {
          * @return
          *     The reference conferment.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        static inline Conferential< Elemental >
-        GoWrite(
-            Referential< Contractional< Natural, Maximum, Elemental > >
-                queue,
-            Referential< const Natural >
-                index
-        ) {
-            using ::location::Confer;
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    static inline Conferential<Elemental>
+    GoWrite(
+        Referential<Contractional<Natural, Maximum, Elemental>>
+            queue,
+        Referential<const Natural>
+            index)
+    {
+        using ::location::Confer;
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-            using namespace ::std;
-            static_assert(
-                is_integral< Natural >::value && is_unsigned< Natural >::value,
-                "Natural:  Unsigned integer type required"
-            );
+        using namespace ::std;
+        static_assert(
+            is_integral<Natural>::value && is_unsigned<Natural>::value,
+            "Natural:  Unsigned integer type required");
 #endif
-            return Confer( queue.resource.source[index] );
-        }
+        return Confer(queue.resource.source[index]);
+    }
 
-        /**
+    /**
          * @brief
          *     Deters the element at index.
          * @details
@@ -210,31 +204,29 @@ namespace ration {
          * @return
          *     The reference determent.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        static inline Conferential< const Elemental >
-        GoRead(
-            Referential< const Contractional< Natural, Maximum, Elemental > >
-                queue,
-            Referential< const Natural >
-                index
-        ) {
-            using ::location::Deter;
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    static inline Conferential<const Elemental>
+    GoRead(
+        Referential<const Contractional<Natural, Maximum, Elemental>>
+            queue,
+        Referential<const Natural>
+            index)
+    {
+        using ::location::Deter;
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-            using namespace ::std;
-            static_assert(
-                is_integral< Natural >::value && is_unsigned< Natural >::value,
-                "Natural:  Unsigned integer type required"
-            );
+        using namespace ::std;
+        static_assert(
+            is_integral<Natural>::value && is_unsigned<Natural>::value,
+            "Natural:  Unsigned integer type required");
 #endif
-            return Deter( queue.resource.source[index] );
-        }
+        return Deter(queue.resource.source[index]);
+    }
 
-       /**
+    /**
          * @brief
          *     Checks if sequential trajection can begin.
          * @details
@@ -256,30 +248,28 @@ namespace ration {
          *     True if the offset can be reached from the either the increment
          *     or decrement beginnings.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        static inline bool
-        Begins(
-            Referential< const Contractional< Natural, Maximum, Elemental > >
-                queue,
-            Referential< const Natural >
-                count
-        ) {
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    static inline bool
+    Begins(
+        Referential<const Contractional<Natural, Maximum, Elemental>>
+            queue,
+        Referential<const Natural>
+            count)
+    {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-            using namespace ::std;
-            static_assert(
-                is_integral< Natural >::value && is_unsigned< Natural >::value,
-                "Natural:  Unsigned integer type required"
-            );
+        using namespace ::std;
+        static_assert(
+            is_integral<Natural>::value && is_unsigned<Natural>::value,
+            "Natural:  Unsigned integer type required");
 #endif
-            return count < queue.resource.allotment;
-        }
+        return count < queue.resource.allotment;
+    }
 
-        /**
+    /**
          * @brief
          *     Begins read increment trajection.
          * @details
@@ -302,35 +292,33 @@ namespace ration {
          * @return 
          *     A reference to the index as a constant.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        static inline Referential< const Natural >
-        BeginReadIncrement(
-            Referential< const Contractional< Natural, Maximum, Elemental > >
-                queue,
-            Referential< Natural >
-                index,
-            Referential< const Natural >
-                count
-        ) {
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    static inline Referential<const Natural>
+    BeginReadIncrement(
+        Referential<const Contractional<Natural, Maximum, Elemental>>
+            queue,
+        Referential<Natural>
+            index,
+        Referential<const Natural>
+            count)
+    {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-            using namespace ::std;
-            static_assert(
-                is_integral< Natural >::value && is_unsigned< Natural >::value,
-                "Natural:  Unsigned integer type required"
-            );
+        using namespace ::std;
+        static_assert(
+            is_integral<Natural>::value && is_unsigned<Natural>::value,
+            "Natural:  Unsigned integer type required");
 #endif
-            index = queue.first + count;
-            if (index >= Maximum)
-                index -= Maximum;
-            return index;
-        }
+        index = queue.first + count;
+        if (index >= Maximum)
+            index -= Maximum;
+        return index;
+    }
 
-        /**
+    /**
          * @brief
          *     Begins write increment trajection.
          * @details
@@ -353,35 +341,33 @@ namespace ration {
          * @return
          *     A reference to the index as a constant.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        static inline Referential< const Natural >
-        BeginWriteIncrement(
-            Referential< Contractional< Natural, Maximum, Elemental > >
-                queue,
-            Referential< Natural >
-                index,
-            Referential< const Natural >
-                count
-        ) {
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    static inline Referential<const Natural>
+    BeginWriteIncrement(
+        Referential<Contractional<Natural, Maximum, Elemental>>
+            queue,
+        Referential<Natural>
+            index,
+        Referential<const Natural>
+            count)
+    {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-            using namespace ::std;
-            static_assert(
-                is_integral< Natural >::value && is_unsigned< Natural >::value,
-                "Natural:  Unsigned integer type required"
-            );
+        using namespace ::std;
+        static_assert(
+            is_integral<Natural>::value && is_unsigned<Natural>::value,
+            "Natural:  Unsigned integer type required");
 #endif
-            index = queue.first + count;
-            if (index >= Maximum)
-                index -= Maximum;
-            return index;
-        }
+        index = queue.first + count;
+        if (index >= Maximum)
+            index -= Maximum;
+        return index;
+    }
 
-        /**
+    /**
          * @brief
          *     Checks if sequential trajection can continue.
          * @details
@@ -404,41 +390,39 @@ namespace ration {
          * @return 
          *     True if the offset can be reached from index.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        static inline bool
-        IncrementTraverses(
-            Referential< const Contractional< Natural, Maximum, Elemental > >
-                queue,
-            Referential< const Natural >
-                index,
-            Referential< const Natural >
-                count
-        ) {
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    static inline bool
+    IncrementTraverses(
+        Referential<const Contractional<Natural, Maximum, Elemental>>
+            queue,
+        Referential<const Natural>
+            index,
+        Referential<const Natural>
+            count)
+    {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-            using namespace ::std;
-            static_assert(
-                is_integral< Natural >::value && is_unsigned< Natural >::value,
-                "Natural:  Unsigned integer type required"
-            );
+        using namespace ::std;
+        static_assert(
+            is_integral<Natural>::value && is_unsigned<Natural>::value,
+            "Natural:  Unsigned integer type required");
 #endif
-            Natural
-                extent;
-            extent = queue.first + queue.resource.allotment;
-            if (index < queue.first) {
-                if (extent <= Maximum)
-                    return false;
-                return index + count < extent - Maximum;
-            } else {
-                return index + count < extent;
-            }
+        Natural
+            extent;
+        extent = queue.first + queue.resource.allotment;
+        if (index < queue.first) {
+            if (extent <= Maximum)
+                return false;
+            return index + count < extent - Maximum;
+        } else {
+            return index + count < extent;
         }
+    }
 
-        /**
+    /**
          * @brief 
          *     Traverses read increment.
          * @details
@@ -460,35 +444,33 @@ namespace ration {
          * @return 
          *     A reference to the index as a constant.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        static inline Referential< const Natural >
-        TraverseReadIncrement(
-            Referential< const Contractional< Natural, Maximum, Elemental > >
-                queue,
-            Referential< Natural >
-                index,
-            Referential< const Natural >
-                count
-        ) {
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    static inline Referential<const Natural>
+    TraverseReadIncrement(
+        Referential<const Contractional<Natural, Maximum, Elemental>>
+            queue,
+        Referential<Natural>
+            index,
+        Referential<const Natural>
+            count)
+    {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-            using namespace ::std;
-            static_assert(
-                is_integral< Natural >::value && is_unsigned< Natural >::value,
-                "Natural:  Unsigned integer type required"
-            );
+        using namespace ::std;
+        static_assert(
+            is_integral<Natural>::value && is_unsigned<Natural>::value,
+            "Natural:  Unsigned integer type required");
 #endif
-            Natural
-                offset;
-            offset = index + count;
-            return index = offset < Maximum ? offset : offset - Maximum;
-        }
+        Natural
+            offset;
+        offset = index + count;
+        return index = offset < Maximum ? offset : offset - Maximum;
+    }
 
-        /**
+    /**
          * @brief 
          *     Traverses write increment.
          * @details
@@ -510,35 +492,33 @@ namespace ration {
          * @return 
          *     A reference to the index as a constant.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        static inline Referential< const Natural >
-        TraverseWriteIncrement(
-            Referential< Contractional< Natural, Maximum, Elemental > >
-                queue,
-            Referential< Natural >
-                index,
-            Referential< const Natural >
-                count
-        ) {
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    static inline Referential<const Natural>
+    TraverseWriteIncrement(
+        Referential<Contractional<Natural, Maximum, Elemental>>
+            queue,
+        Referential<Natural>
+            index,
+        Referential<const Natural>
+            count)
+    {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-            using namespace ::std;
-            static_assert(
-                is_integral< Natural >::value && is_unsigned< Natural >::value,
-                "Natural:  Unsigned integer type required"
-            );
+        using namespace ::std;
+        static_assert(
+            is_integral<Natural>::value && is_unsigned<Natural>::value,
+            "Natural:  Unsigned integer type required");
 #endif
-            Natural
-                offset;
-            offset = index + count;
-            return index = offset < Maximum ? offset : offset - Maximum;
-        }
+        Natural
+            offset;
+        offset = index + count;
+        return index = offset < Maximum ? offset : offset - Maximum;
+    }
 
-        /**
+    /**
          * @brief
          *     Begins read decrement trajection.
          * @details
@@ -561,37 +541,35 @@ namespace ration {
          * @return 
          *     A reference to the index as a constant.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        static inline Referential< const Natural >
-        BeginReadDecrement(
-            Referential< const Contractional< Natural, Maximum, Elemental > >
-                queue,
-            Referential< Natural >
-                index,
-            Referential< const Natural >
-                count
-        ) {
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    static inline Referential<const Natural>
+    BeginReadDecrement(
+        Referential<const Contractional<Natural, Maximum, Elemental>>
+            queue,
+        Referential<Natural>
+            index,
+        Referential<const Natural>
+            count)
+    {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-            using namespace ::std;
-            static_assert(
-                is_integral< Natural >::value && is_unsigned< Natural >::value,
-                "Natural:  Unsigned integer type required"
-            );
+        using namespace ::std;
+        static_assert(
+            is_integral<Natural>::value && is_unsigned<Natural>::value,
+            "Natural:  Unsigned integer type required");
 #endif
-            Natural
-                extent;
-            extent = queue.first + queue.resource.allotment;
-            if (extent > Maximum)
-                return index = extent - Maximum - 1 - count;
-            return extent - 1 - count;
-        }
+        Natural
+            extent;
+        extent = queue.first + queue.resource.allotment;
+        if (extent > Maximum)
+            return index = extent - Maximum - 1 - count;
+        return extent - 1 - count;
+    }
 
-        /**
+    /**
          * @brief
          *     Begins write decrement trajection.
          * @details
@@ -614,37 +592,35 @@ namespace ration {
          * @return 
          *     A reference to the index as a constant.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        static inline Referential< const Natural >
-        BeginWriteDecrement(
-            Referential< Contractional< Natural, Maximum, Elemental > >
-                queue,
-            Referential< Natural >
-                index,
-            Referential< const Natural >
-                count
-        ) {
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    static inline Referential<const Natural>
+    BeginWriteDecrement(
+        Referential<Contractional<Natural, Maximum, Elemental>>
+            queue,
+        Referential<Natural>
+            index,
+        Referential<const Natural>
+            count)
+    {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-            using namespace ::std;
-            static_assert(
-                is_integral< Natural >::value && is_unsigned< Natural >::value,
-                "Natural:  Unsigned integer type required"
-            );
+        using namespace ::std;
+        static_assert(
+            is_integral<Natural>::value && is_unsigned<Natural>::value,
+            "Natural:  Unsigned integer type required");
 #endif
-            Natural
-                extent;
-            extent = queue.first + queue.resource.allotment;
-            if (extent > Maximum)
-                return index = extent - Maximum - 1 - count;
-            return extent - 1 - count;
-        }
+        Natural
+            extent;
+        extent = queue.first + queue.resource.allotment;
+        if (extent > Maximum)
+            return index = extent - Maximum - 1 - count;
+        return extent - 1 - count;
+    }
 
-        /**
+    /**
          * @brief
          *     Checks if sequential trajection can continue.
          * @details
@@ -667,34 +643,32 @@ namespace ration {
          * @return 
          *     True if the offset can be reached from index.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        static inline bool
-        DecrementTraverses(
-            Referential< const Contractional< Natural, Maximum, Elemental > >
-                queue,
-            Referential< const Natural >
-                index,
-            Referential< const Natural >
-                count
-        ) {
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    static inline bool
+    DecrementTraverses(
+        Referential<const Contractional<Natural, Maximum, Elemental>>
+            queue,
+        Referential<const Natural>
+            index,
+        Referential<const Natural>
+            count)
+    {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-            using namespace ::std;
-            static_assert(
-                is_integral< Natural >::value && is_unsigned< Natural >::value,
-                "Natural:  Unsigned integer type required"
-            );
+        using namespace ::std;
+        static_assert(
+            is_integral<Natural>::value && is_unsigned<Natural>::value,
+            "Natural:  Unsigned integer type required");
 #endif
-            if (count > index)
-                return Maximum + index - count >= queue.first;
-            return index - count >= queue.first;
-        }
+        if (count > index)
+            return Maximum + index - count >= queue.first;
+        return index - count >= queue.first;
+    }
 
-        /**
+    /**
          * @brief 
          *     Traverses read decrement.
          * @details
@@ -716,32 +690,30 @@ namespace ration {
          * @return 
          *     A reference to the index as a constant.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        static inline Referential< const Natural >
-        TraverseReadDecrement(
-            Referential< const Contractional< Natural, Maximum, Elemental > >
-                queue,
-            Referential< Natural >
-                index,
-            Referential< const Natural >
-                count
-        ) {
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    static inline Referential<const Natural>
+    TraverseReadDecrement(
+        Referential<const Contractional<Natural, Maximum, Elemental>>
+            queue,
+        Referential<Natural>
+            index,
+        Referential<const Natural>
+            count)
+    {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-            using namespace ::std;
-            static_assert(
-                is_integral< Natural >::value && is_unsigned< Natural >::value,
-                "Natural:  Unsigned integer type required"
-            );
+        using namespace ::std;
+        static_assert(
+            is_integral<Natural>::value && is_unsigned<Natural>::value,
+            "Natural:  Unsigned integer type required");
 #endif
-            return index = count > index ? Maximum + index - count : index - count;
-        }
+        return index = count > index ? Maximum + index - count : index - count;
+    }
 
-        /**
+    /**
          * @brief 
          *     Traverses write decrement.
          * @details
@@ -763,32 +735,30 @@ namespace ration {
          * @return 
          *     A reference to the index as a constant.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        static inline Referential< const Natural >
-        TraverseWriteDecrement(
-            Referential< Contractional< Natural, Maximum, Elemental > >
-                queue,
-            Referential< Natural >
-                index,
-            Referential< const Natural >
-                count
-        ) {
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    static inline Referential<const Natural>
+    TraverseWriteDecrement(
+        Referential<Contractional<Natural, Maximum, Elemental>>
+            queue,
+        Referential<Natural>
+            index,
+        Referential<const Natural>
+            count)
+    {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-            using namespace ::std;
-            static_assert(
-                is_integral< Natural >::value && is_unsigned< Natural >::value,
-                "Natural:  Unsigned integer type required"
-            );
+        using namespace ::std;
+        static_assert(
+            is_integral<Natural>::value && is_unsigned<Natural>::value,
+            "Natural:  Unsigned integer type required");
 #endif
-            return index = count > index ? Maximum + index - count : index - count;
-        }
+        return index = count > index ? Maximum + index - count : index - count;
+    }
 
-        /**
+    /**
          * @brief 
          *     Initializes the queue.
          * @details
@@ -806,30 +776,28 @@ namespace ration {
          * @return 
          *     A reference to the queue.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        static inline Referential< Contractional< Natural, Maximum, Elemental > >
-        Initialize(
-            Referential< Contractional< Natural, Maximum, Elemental > >
-                queue
-        ) {
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    static inline Referential<Contractional<Natural, Maximum, Elemental>>
+    Initialize(
+        Referential<Contractional<Natural, Maximum, Elemental>>
+            queue)
+    {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-            using namespace ::std;
-            static_assert(
-                is_integral< Natural >::value && is_unsigned< Natural >::value,
-                "Natural:  Unsigned integer type required"
-            );
+        using namespace ::std;
+        static_assert(
+            is_integral<Natural>::value && is_unsigned<Natural>::value,
+            "Natural:  Unsigned integer type required");
 #endif
-            queue.first = 0;
-            queue.resource.allotment = 0;
-            return queue;
-        }
+        queue.first = 0;
+        queue.resource.allotment = 0;
+        return queue;
+    }
 
-        /**
+    /**
          * @brief 
          *     Empties the queue.
          * @details
@@ -848,31 +816,29 @@ namespace ration {
          * @return 
          *     True if the queue was altered by this operation.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        static inline bool
-        Contract(
-            Referential< Contractional< Natural, Maximum, Elemental > >
-                queue
-        ) {
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    static inline bool
+    Contract(
+        Referential<Contractional<Natural, Maximum, Elemental>>
+            queue)
+    {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-            using namespace ::std;
-            static_assert(
-                is_integral< Natural >::value && is_unsigned< Natural >::value,
-                "Natural:  Unsigned integer type required"
-            );
+        using namespace ::std;
+        static_assert(
+            is_integral<Natural>::value && is_unsigned<Natural>::value,
+            "Natural:  Unsigned integer type required");
 #endif
-            if (!queue.resource.allotment)
-                return false;
-            Initialize( queue );
-            return true;
-        }
+        if (!queue.resource.allotment)
+            return false;
+        Initialize(queue);
+        return true;
+    }
 
-        /**
+    /**
          * @brief 
          *     Returns the maximum size of the queue.
          * @details
@@ -891,28 +857,26 @@ namespace ration {
          * @return 
          *     The maximum number of queue elements.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        static inline Natural
-        Survey(
-            Referential< const Contractional< Natural, Maximum, Elemental > >
-                queue
-        ) {
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    static inline Natural
+    Survey(
+        Referential<const Contractional<Natural, Maximum, Elemental>>
+            queue)
+    {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-            using namespace ::std;
-            static_assert(
-                is_integral< Natural >::value && is_unsigned< Natural >::value,
-                "Natural:  Unsigned integer type required"
-            );
+        using namespace ::std;
+        static_assert(
+            is_integral<Natural>::value && is_unsigned<Natural>::value,
+            "Natural:  Unsigned integer type required");
 #endif
-            return Maximum;
-        }
+        return Maximum;
+    }
 
-        /**
+    /**
          * @brief 
          *     Returns the number of protracted elements in the queue.
          * @details
@@ -931,28 +895,26 @@ namespace ration {
          * @return 
          *     The number of allotted elements.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        static inline Natural
-        Account(
-            Referential< const Contractional< Natural, Maximum, Elemental > >
-                queue
-        ) {
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    static inline Natural
+    Account(
+        Referential<const Contractional<Natural, Maximum, Elemental>>
+            queue)
+    {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-            using namespace ::std;
-            static_assert(
-                is_integral< Natural >::value && is_unsigned< Natural >::value,
-                "Natural:  Unsigned integer type required"
-            );
+        using namespace ::std;
+        static_assert(
+            is_integral<Natural>::value && is_unsigned<Natural>::value,
+            "Natural:  Unsigned integer type required");
 #endif
-            return queue.resource.allotment;
-        }
+        return queue.resource.allotment;
+    }
 
-        /**
+    /**
          * @brief 
          *     Returns the number of protracted elements __after__ index.
          * @details
@@ -973,30 +935,28 @@ namespace ration {
          * @return 
          *     The number of elements __after__ index.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        static inline Natural
-        CountIncrement(
-            Referential< const Contractional< Natural, Maximum, Elemental > >
-                queue,
-            Referential< const Natural >
-                index
-        ) {
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    static inline Natural
+    CountIncrement(
+        Referential<const Contractional<Natural, Maximum, Elemental>>
+            queue,
+        Referential<const Natural>
+            index)
+    {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-            using namespace ::std;
-            static_assert(
-                is_integral< Natural >::value && is_unsigned< Natural >::value,
-                "Natural:  Unsigned integer type required"
-            );
+        using namespace ::std;
+        static_assert(
+            is_integral<Natural>::value && is_unsigned<Natural>::value,
+            "Natural:  Unsigned integer type required");
 #endif
-            return queue.resource.allotment - 1 - index;
-        }
+        return queue.resource.allotment - 1 - index;
+    }
 
-        /**
+    /**
          * @brief 
          *     Returns the number of protracted elements __before__ index.
          * @details
@@ -1018,30 +978,28 @@ namespace ration {
          * @return 
          *     The number of elements __before__ index.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        static inline Natural
-        CountDecrement(
-            Referential< const Contractional< Natural, Maximum, Elemental > >
-                queue,
-            Referential< const Natural >
-                index
-        ) {
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    static inline Natural
+    CountDecrement(
+        Referential<const Contractional<Natural, Maximum, Elemental>>
+            queue,
+        Referential<const Natural>
+            index)
+    {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-            using namespace ::std;
-            static_assert(
-                is_integral< Natural >::value && is_unsigned< Natural >::value,
-                "Natural:  Unsigned integer type required"
-            );
+        using namespace ::std;
+        static_assert(
+            is_integral<Natural>::value && is_unsigned<Natural>::value,
+            "Natural:  Unsigned integer type required");
 #endif
-            return index;
-        }
+        return index;
+    }
 
-        /**
+    /**
          * @brief 
          *     Protracts elements to the end of the queue.
          * @details
@@ -1066,36 +1024,34 @@ namespace ration {
          * @return 
          *     Always returns true.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        static inline bool
-        Protract(
-            Referential< Contractional< Natural, Maximum, Elemental > >
-                queue,
-            Referential< Natural >
-                index,
-            Referential< const Natural >
-                count
-        ) {
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    static inline bool
+    Protract(
+        Referential<Contractional<Natural, Maximum, Elemental>>
+            queue,
+        Referential<Natural>
+            index,
+        Referential<const Natural>
+            count)
+    {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-            using namespace ::std;
-            static_assert(
-                is_integral< Natural >::value && is_unsigned< Natural >::value,
-                "Natural:  Unsigned integer type required"
-            );
+        using namespace ::std;
+        static_assert(
+            is_integral<Natural>::value && is_unsigned<Natural>::value,
+            "Natural:  Unsigned integer type required");
 #endif
-            index = queue.first + queue.resource.allotment;
-            if (index >= Maximum)
-                index -= Maximum;
-            queue.resource.allotment += count;
-            return true;
-        }
+        index = queue.first + queue.resource.allotment;
+        if (index >= Maximum)
+            index -= Maximum;
+        queue.resource.allotment += count;
+        return true;
+    }
 
-        /**
+    /**
          * @brief 
          *     Protracts elements to the end of the queue.
          * @details
@@ -1119,34 +1075,32 @@ namespace ration {
          * @return 
          *     Returns true if the number of requested elements were protracted.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        static inline bool
-        ProtractAssuredly(
-            Referential< Contractional< Natural, Maximum, Elemental > >
-                queue,
-            Referential< Natural >
-                index,
-            Referential< const Natural >
-                count
-        ) {
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    static inline bool
+    ProtractAssuredly(
+        Referential<Contractional<Natural, Maximum, Elemental>>
+            queue,
+        Referential<Natural>
+            index,
+        Referential<const Natural>
+            count)
+    {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-            using namespace ::std;
-            static_assert(
-                is_integral< Natural >::value && is_unsigned< Natural >::value,
-                "Natural:  Unsigned integer type required"
-            );
+        using namespace ::std;
+        static_assert(
+            is_integral<Natural>::value && is_unsigned<Natural>::value,
+            "Natural:  Unsigned integer type required");
 #endif
-            if (!count || queue.resource.allotment + count > Maximum)
-                return false;
-            return Protract( queue, index, count );
-        }
+        if (!count || queue.resource.allotment + count > Maximum)
+            return false;
+        return Protract(queue, index, count);
+    }
 
-        /**
+    /**
          * @brief 
          *     Retracts elements from the beginning of the queue.
          * @details
@@ -1169,34 +1123,32 @@ namespace ration {
          * @return 
          *     Always returns true.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        static inline bool
-        Retract(
-            Referential< Contractional< Natural, Maximum, Elemental > >
-                queue,
-            Referential< const Natural >
-                count
-        ) {
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    static inline bool
+    Retract(
+        Referential<Contractional<Natural, Maximum, Elemental>>
+            queue,
+        Referential<const Natural>
+            count)
+    {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-            using namespace ::std;
-            static_assert(
-                is_integral< Natural >::value && is_unsigned< Natural >::value,
-                "Natural:  Unsigned integer type required"
-            );
+        using namespace ::std;
+        static_assert(
+            is_integral<Natural>::value && is_unsigned<Natural>::value,
+            "Natural:  Unsigned integer type required");
 #endif
-            queue.resource.allotment -= count;
-            queue.first += count;
-            if (queue.first >= Maximum)
-                queue.first -= Maximum;
-            return true;
-        }
+        queue.resource.allotment -= count;
+        queue.first += count;
+        if (queue.first >= Maximum)
+            queue.first -= Maximum;
+        return true;
+    }
 
-        /**
+    /**
          * @brief 
          *     Retracts elements from the beginning of the queue.
          * @details
@@ -1218,32 +1170,30 @@ namespace ration {
          * @return 
          *     Returns true if the number of requested elements were retracted.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        static inline bool
-        RetractAssuredly(
-            Referential< Contractional< Natural, Maximum, Elemental > >
-                queue,
-            Referential< const Natural >
-                count
-        ) {
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    static inline bool
+    RetractAssuredly(
+        Referential<Contractional<Natural, Maximum, Elemental>>
+            queue,
+        Referential<const Natural>
+            count)
+    {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-            using namespace ::std;
-            static_assert(
-                is_integral< Natural >::value && is_unsigned< Natural >::value,
-                "Natural:  Unsigned integer type required"
-            );
+        using namespace ::std;
+        static_assert(
+            is_integral<Natural>::value && is_unsigned<Natural>::value,
+            "Natural:  Unsigned integer type required");
 #endif
-            if (!count || count > queue.resource.allotment)
-                return false;
-            return Retract( queue, count );
-        }
+        if (!count || count > queue.resource.allotment)
+            return false;
+        return Retract(queue, count);
+    }
 
-        /**
+    /**
          * @brief 
          *     Tractile queue management implementation.
          * @details
@@ -1261,22 +1211,21 @@ namespace ration {
          * @tparam Elemental 
          *     Type of the elements.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        constexpr Tractile< Contractional< Natural, Maximum, Elemental >, Natural, Natural >
-            FastContractor = {
-                Survey< Natural, Maximum, Elemental >,
-                Account< Natural, Maximum, Elemental >,
-                Protract< Natural, Maximum, Elemental >,
-                Retract< Natural, Maximum, Elemental >,
-                Contract< Natural, Maximum, Elemental >
-            };
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    constexpr Tractile<Contractional<Natural, Maximum, Elemental>, Natural, Natural>
+        FastContractor = {
+            Survey<Natural, Maximum, Elemental>,
+            Account<Natural, Maximum, Elemental>,
+            Protract<Natural, Maximum, Elemental>,
+            Retract<Natural, Maximum, Elemental>,
+            Contract<Natural, Maximum, Elemental>
+        };
 
-        /**
+    /**
          * @brief 
          *     Tractile queue management implementation.
          * @details
@@ -1293,22 +1242,21 @@ namespace ration {
          * @tparam Elemental 
          *     Type of the elements.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        constexpr Tractile< Contractional< Natural, Maximum, Elemental >, Natural, Natural >
-            SureContractor = {
-                Survey< Natural, Maximum, Elemental >,
-                Account< Natural, Maximum, Elemental >,
-                ProtractAssuredly< Natural, Maximum, Elemental >,
-                RetractAssuredly< Natural, Maximum, Elemental >,
-                Contract< Natural, Maximum, Elemental >
-            };
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    constexpr Tractile<Contractional<Natural, Maximum, Elemental>, Natural, Natural>
+        SureContractor = {
+            Survey<Natural, Maximum, Elemental>,
+            Account<Natural, Maximum, Elemental>,
+            ProtractAssuredly<Natural, Maximum, Elemental>,
+            RetractAssuredly<Natural, Maximum, Elemental>,
+            Contract<Natural, Maximum, Elemental>
+        };
 
-        /**
+    /**
          * @brief 
          *     Vectorial read trajection implementation.
          * @details
@@ -1325,20 +1273,19 @@ namespace ration {
          * @tparam Elemental 
          *     Type of the elements.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        constexpr Vectorial< const Contractional< Natural, Maximum, Elemental >, Natural, const Elemental >
-            ReadVector = {
-                Comparison< Natural >,
-                Contains< Natural, Maximum, Elemental >,
-                GoRead< Natural, Maximum, Elemental >
-            };
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    constexpr Vectorial<const Contractional<Natural, Maximum, Elemental>, Natural, const Elemental>
+        ReadVector = {
+            Comparison<Natural>,
+            Contains<Natural, Maximum, Elemental>,
+            GoRead<Natural, Maximum, Elemental>
+        };
 
-        /**
+    /**
          * @brief 
          *     Vectorial write trajection implementation.
          * @details
@@ -1355,20 +1302,19 @@ namespace ration {
          * @tparam Elemental 
          *     Type of the elements.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        constexpr Vectorial< Contractional< Natural, Maximum, Elemental >, Natural, Elemental >
-            WriteVector = {
-                Comparison< Natural >,
-                Contains< Natural, Maximum, Elemental >,
-                GoWrite< Natural, Maximum, Elemental >
-            };
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    constexpr Vectorial<Contractional<Natural, Maximum, Elemental>, Natural, Elemental>
+        WriteVector = {
+            Comparison<Natural>,
+            Contains<Natural, Maximum, Elemental>,
+            GoWrite<Natural, Maximum, Elemental>
+        };
 
-        /**
+    /**
          * @brief 
          *     Sequential read trajection implementation.
          * @details
@@ -1384,21 +1330,20 @@ namespace ration {
          * @tparam Elemental 
          *     Type of the elements.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        constexpr Scalar< const Contractional< Natural, Maximum, Elemental >, Natural, Natural, const Elemental >
-            ReadIncrementScale = {
-                Comparison< Natural >,
-                BeginReadIncrement< Natural, Maximum, Elemental >,
-                TraverseReadIncrement< Natural, Maximum, Elemental >,
-                GoRead< Natural, Maximum, Elemental >
-            };
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    constexpr Scalar<const Contractional<Natural, Maximum, Elemental>, Natural, Natural, const Elemental>
+        ReadIncrementScale = {
+            Comparison<Natural>,
+            BeginReadIncrement<Natural, Maximum, Elemental>,
+            TraverseReadIncrement<Natural, Maximum, Elemental>,
+            GoRead<Natural, Maximum, Elemental>
+        };
 
-        /**
+    /**
          * @brief 
          *     Sequential write trajection implementation.
          * @details
@@ -1414,21 +1359,20 @@ namespace ration {
          * @tparam Elemental 
          *     Type of the elements.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        constexpr Scalar< Contractional< Natural, Maximum, Elemental >, Natural, Natural, Elemental >
-            WriteIncrementScale = {
-                Comparison< Natural >,
-                BeginWriteIncrement< Natural, Maximum, Elemental >,
-                TraverseWriteIncrement< Natural, Maximum, Elemental >,
-                GoWrite< Natural, Maximum, Elemental >
-            };
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    constexpr Scalar<Contractional<Natural, Maximum, Elemental>, Natural, Natural, Elemental>
+        WriteIncrementScale = {
+            Comparison<Natural>,
+            BeginWriteIncrement<Natural, Maximum, Elemental>,
+            TraverseWriteIncrement<Natural, Maximum, Elemental>,
+            GoWrite<Natural, Maximum, Elemental>
+        };
 
-        /**
+    /**
          * @brief 
          *     Sequential read trajection implementation.
          * @details
@@ -1444,21 +1388,20 @@ namespace ration {
          * @tparam Elemental 
          *     Type of the elements.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        constexpr Scalar< const Contractional< Natural, Maximum, Elemental >, Natural, Natural, const Elemental >
-            ReadDecrementScale = {
-                Comparison< Natural >,
-                BeginReadDecrement< Natural, Maximum, Elemental >,
-                TraverseReadDecrement< Natural, Maximum, Elemental >,
-                GoRead< Natural, Maximum, Elemental >
-            };
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    constexpr Scalar<const Contractional<Natural, Maximum, Elemental>, Natural, Natural, const Elemental>
+        ReadDecrementScale = {
+            Comparison<Natural>,
+            BeginReadDecrement<Natural, Maximum, Elemental>,
+            TraverseReadDecrement<Natural, Maximum, Elemental>,
+            GoRead<Natural, Maximum, Elemental>
+        };
 
-        /**
+    /**
          * @brief 
          *     Sequential write trajection implementation.
          * @details
@@ -1474,21 +1417,20 @@ namespace ration {
          * @tparam Elemental 
          *     Type of the elements.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        constexpr Scalar< Contractional< Natural, Maximum, Elemental >, Natural, Natural, Elemental >
-            WriteDecrementScale = {
-                Comparison< Natural >,
-                BeginWriteDecrement< Natural, Maximum, Elemental >,
-                TraverseWriteDecrement< Natural, Maximum, Elemental >,
-                GoWrite< Natural, Maximum, Elemental >
-            };
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    constexpr Scalar<Contractional<Natural, Maximum, Elemental>, Natural, Natural, Elemental>
+        WriteDecrementScale = {
+            Comparison<Natural>,
+            BeginWriteDecrement<Natural, Maximum, Elemental>,
+            TraverseWriteDecrement<Natural, Maximum, Elemental>,
+            GoWrite<Natural, Maximum, Elemental>
+        };
 
-        /**
+    /**
          * @brief 
          *     Sequential read trajection implementation.
          * @details
@@ -1504,19 +1446,18 @@ namespace ration {
          * @tparam Elemental 
          *     Type of the elements.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        constexpr Lineal< const Contractional< Natural, Maximum, Elemental >, Natural, Natural, const Elemental >
-            ReadLiner = {
-                ReadIncrementScale< Natural, Maximum, Elemental >,
-                ReadDecrementScale< Natural, Maximum, Elemental >
-            };
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    constexpr Lineal<const Contractional<Natural, Maximum, Elemental>, Natural, Natural, const Elemental>
+        ReadLiner = {
+            ReadIncrementScale<Natural, Maximum, Elemental>,
+            ReadDecrementScale<Natural, Maximum, Elemental>
+        };
 
-        /**
+    /**
          * @brief 
          *     Sequential write trajection implementation.
          * @details
@@ -1532,19 +1473,18 @@ namespace ration {
          * @tparam Elemental 
          *     Type of the elements.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        constexpr Lineal< Contractional< Natural, Maximum, Elemental >, Natural, Natural, Elemental >
-            WriteLiner = {
-                WriteIncrementScale< Natural, Maximum, Elemental >,
-                WriteDecrementScale< Natural, Maximum, Elemental >
-            };
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    constexpr Lineal<Contractional<Natural, Maximum, Elemental>, Natural, Natural, Elemental>
+        WriteLiner = {
+            WriteIncrementScale<Natural, Maximum, Elemental>,
+            WriteDecrementScale<Natural, Maximum, Elemental>
+        };
 
-        /**
+    /**
          * @brief 
          *     Sequential read trajection implementation.
          * @details
@@ -1560,23 +1500,22 @@ namespace ration {
          * @tparam Elemental 
          *     Type of the elements.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        constexpr Directional< const Contractional< Natural, Maximum, Elemental >, Natural, Natural, const Elemental >
-            ReadIncrementDirection = {
-                ReadIncrementScale< Natural, Maximum, Elemental >,
-                Begins< Natural, Maximum, Elemental >,
-                IncrementTraverses< Natural, Maximum, Elemental >,
-                Contains< Natural, Maximum, Elemental >,
-                Account< Natural, Maximum, Elemental >,
-                CountIncrement< Natural, Maximum, Elemental >
-            };
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    constexpr Directional<const Contractional<Natural, Maximum, Elemental>, Natural, Natural, const Elemental>
+        ReadIncrementDirection = {
+            ReadIncrementScale<Natural, Maximum, Elemental>,
+            Begins<Natural, Maximum, Elemental>,
+            IncrementTraverses<Natural, Maximum, Elemental>,
+            Contains<Natural, Maximum, Elemental>,
+            Account<Natural, Maximum, Elemental>,
+            CountIncrement<Natural, Maximum, Elemental>
+        };
 
-        /**
+    /**
          * @brief 
          *     Sequential write trajection implementation.
          * @details
@@ -1592,23 +1531,22 @@ namespace ration {
          * @tparam Elemental 
          *     Type of the elements.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        constexpr Directional< Contractional< Natural, Maximum, Elemental >, Natural, Natural, Elemental >
-            WriteIncrementDirection = {
-                WriteIncrementScale< Natural, Maximum, Elemental >,
-                Begins< Natural, Maximum, Elemental >,
-                IncrementTraverses< Natural, Maximum, Elemental >,
-                Contains< Natural, Maximum, Elemental >,
-                Account< Natural, Maximum, Elemental >,
-                CountIncrement< Natural, Maximum, Elemental >
-            };
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    constexpr Directional<Contractional<Natural, Maximum, Elemental>, Natural, Natural, Elemental>
+        WriteIncrementDirection = {
+            WriteIncrementScale<Natural, Maximum, Elemental>,
+            Begins<Natural, Maximum, Elemental>,
+            IncrementTraverses<Natural, Maximum, Elemental>,
+            Contains<Natural, Maximum, Elemental>,
+            Account<Natural, Maximum, Elemental>,
+            CountIncrement<Natural, Maximum, Elemental>
+        };
 
-        /**
+    /**
          * @brief 
          *     Sequential read trajection implementation.
          * @details
@@ -1624,23 +1562,22 @@ namespace ration {
          * @tparam Elemental 
          *     Type of the elements.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        constexpr Directional< const Contractional< Natural, Maximum, Elemental >, Natural, Natural, const Elemental >
-            ReadDecrementDirection = {
-                ReadDecrementScale< Natural, Maximum, Elemental >,
-                Begins< Natural, Maximum, Elemental >,
-                DecrementTraverses< Natural, Maximum, Elemental >,
-                Contains< Natural, Maximum, Elemental >,
-                Account< Natural, Maximum, Elemental >,
-                CountDecrement< Natural, Maximum, Elemental >
-            };
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    constexpr Directional<const Contractional<Natural, Maximum, Elemental>, Natural, Natural, const Elemental>
+        ReadDecrementDirection = {
+            ReadDecrementScale<Natural, Maximum, Elemental>,
+            Begins<Natural, Maximum, Elemental>,
+            DecrementTraverses<Natural, Maximum, Elemental>,
+            Contains<Natural, Maximum, Elemental>,
+            Account<Natural, Maximum, Elemental>,
+            CountDecrement<Natural, Maximum, Elemental>
+        };
 
-        /**
+    /**
          * @brief 
          *     Sequential write trajection implementation.
          * @details
@@ -1656,23 +1593,22 @@ namespace ration {
          * @tparam Elemental 
          *     Type of the elements.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        constexpr Directional< Contractional< Natural, Maximum, Elemental >, Natural, Natural, Elemental >
-            WriteDecrementDirection = {
-                WriteDecrementScale< Natural, Maximum, Elemental >,
-                Begins< Natural, Maximum, Elemental >,
-                DecrementTraverses< Natural, Maximum, Elemental >,
-                Contains< Natural, Maximum, Elemental >,
-                Account< Natural, Maximum, Elemental >,
-                CountDecrement< Natural, Maximum, Elemental >
-            };
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    constexpr Directional<Contractional<Natural, Maximum, Elemental>, Natural, Natural, Elemental>
+        WriteDecrementDirection = {
+            WriteDecrementScale<Natural, Maximum, Elemental>,
+            Begins<Natural, Maximum, Elemental>,
+            DecrementTraverses<Natural, Maximum, Elemental>,
+            Contains<Natural, Maximum, Elemental>,
+            Account<Natural, Maximum, Elemental>,
+            CountDecrement<Natural, Maximum, Elemental>
+        };
 
-        /**
+    /**
          * @brief 
          *     Sequential read trajection implementation.
          * @details
@@ -1688,19 +1624,18 @@ namespace ration {
          * @tparam Elemental 
          *     Type of the elements.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        constexpr Axial< const Contractional< Natural, Maximum, Elemental >, Natural, Natural, const Elemental >
-            ReadAxis = {
-                ReadIncrementDirection< Natural, Maximum, Elemental >,
-                ReadDecrementDirection< Natural, Maximum, Elemental >
-            };
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    constexpr Axial<const Contractional<Natural, Maximum, Elemental>, Natural, Natural, const Elemental>
+        ReadAxis = {
+            ReadIncrementDirection<Natural, Maximum, Elemental>,
+            ReadDecrementDirection<Natural, Maximum, Elemental>
+        };
 
-        /**
+    /**
          * @brief 
          *     Sequential write trajection implementation.
          * @details
@@ -1716,19 +1651,18 @@ namespace ration {
          * @tparam Elemental 
          *     Type of the elements.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        constexpr Axial< Contractional< Natural, Maximum, Elemental >, Natural, Natural, Elemental >
-            WriteAxis = {
-                WriteIncrementDirection< Natural, Maximum, Elemental >,
-                WriteDecrementDirection< Natural, Maximum, Elemental >
-            };
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    constexpr Axial<Contractional<Natural, Maximum, Elemental>, Natural, Natural, Elemental>
+        WriteAxis = {
+            WriteIncrementDirection<Natural, Maximum, Elemental>,
+            WriteDecrementDirection<Natural, Maximum, Elemental>
+        };
 
-    }
+}
 
 }
 

@@ -20,9 +20,9 @@
  */
 namespace comparison {
 
-    using ::location::Referential;
+using ::location::Referential;
 
-    /**
+/**
      * @brief
      *     Function type used by all comparison classifiers.
      * @details 
@@ -35,18 +35,16 @@ namespace comparison {
      * @tparam Relative
      *     Type of the relative object.
      */
-    template <
-        typename Basic,
-        typename Relative = Basic
-    >
-    using BinaryComparative = bool(
-        Referential< const Basic >
-            base,
-        Referential< const Relative >
-            relative
-    );
+template <
+    typename Basic,
+    typename Relative = Basic>
+using BinaryComparative = bool(
+    Referential<const Basic>
+        base,
+    Referential<const Relative>
+        relative);
 
-    /**
+/**
      * @brief 
      *     Equality comparison classifier.
      * @details 
@@ -58,21 +56,19 @@ namespace comparison {
      * @tparam Relative
      *     Type of the relative object.
      */
-    template <
-        typename Basic,
-        typename Relative = Basic
-    >
-    struct Equative {
+template <
+    typename Basic,
+    typename Relative = Basic>
+struct Equative {
 
-        Referential< BinaryComparative< Basic, Relative > >
-            is_equal, /**< Function reference used to compare for equality. */
-            is_not_equal; /**< Function reference used to compare for 
+    Referential<BinaryComparative<Basic, Relative>>
+        is_equal, /**< Function reference used to compare for equality. */
+        is_not_equal; /**< Function reference used to compare for 
                            *   inequality. 
                            */
+};
 
-    };
-
-    /**
+/**
      * @brief   
      *     Relational comparison classifier.
      * @details 
@@ -84,29 +80,27 @@ namespace comparison {
      * @tparam Relative
      *     Type of the relative object.
      */
-    template <
-        typename Basic,
-        typename Relative = Basic
-    >
-    struct Relational {
+template <
+    typename Basic,
+    typename Relative = Basic>
+struct Relational {
 
-        Referential< BinaryComparative< Basic, Relative > >
-            is_lesser, /**< Function reference used to determine if the first 
+    Referential<BinaryComparative<Basic, Relative>>
+        is_lesser, /**< Function reference used to determine if the first 
                         *   argument is less than the second. 
                         */
-            is_greater, /**< Function reference used to determine if the first 
+        is_greater, /**< Function reference used to determine if the first 
                          *   argument is greater than the second. 
                          */
-            is_not_greater, /**< Function reference used to determine if the 
+        is_not_greater, /**< Function reference used to determine if the 
                              *   first argument is not greater than the second. 
                              */
-            is_not_lesser; /**< Function reference used to determine if the 
+        is_not_lesser; /**< Function reference used to determine if the 
                             *   first argument is not less than the second. 
                             */
+};
 
-    };
-
-    /**
+/**
      * @brief
      *     Combined comparison classifier.
      * @details 
@@ -118,21 +112,19 @@ namespace comparison {
      * @tparam Relative
      *     Type of the relative object.
      */
-    template <
-        typename Basic,
-        typename Relative = Basic
-    >
-    struct Comparative {
+template <
+    typename Basic,
+    typename Relative = Basic>
+struct Comparative {
 
-        Referential< const Equative< Basic, Relative > >
-            equality; /**< Reference to equality comparison objective table. */
+    Referential<const Equative<Basic, Relative>>
+        equality; /**< Reference to equality comparison objective table. */
 
-        Referential< const Relational< Basic, Relative > >
-            relation; /**< Reference to relational comparison objective table. */
+    Referential<const Relational<Basic, Relative>>
+        relation; /**< Reference to relational comparison objective table. */
+};
 
-    };
-
-    /**
+/**
      * @brief
      *     Compares two values for equality using the equal to operator.
      * @details
@@ -151,21 +143,20 @@ namespace comparison {
      * @return
      *     True if both objects are to be considered equal.
      */
-    template <
-        typename Basic,
-        typename Relative = Basic
-    >
-    static inline bool
-    IsEqual(
-        Referential< const Basic >
-            base,
-        Referential< const Relative >
-            relative
-    ) {
-        return base == relative;
-    }
+template <
+    typename Basic,
+    typename Relative = Basic>
+static inline bool
+IsEqual(
+    Referential<const Basic>
+        base,
+    Referential<const Relative>
+        relative)
+{
+    return base == relative;
+}
 
-    /**
+/**
      * @brief
      *     Compares two values for inequality using the not equal to operator.
      * @details
@@ -184,21 +175,20 @@ namespace comparison {
      * @return
      *     True if both objects are to be considered not equal.
      */
-    template <
-        typename Basic,
-        typename Relative = Basic
-    >
-    static inline bool
-    IsNotEqual(
-        Referential< const Basic >
-            base,
-        Referential< const Relative >
-            relative
-    ) {
-        return base != relative;
-    }
+template <
+    typename Basic,
+    typename Relative = Basic>
+static inline bool
+IsNotEqual(
+    Referential<const Basic>
+        base,
+    Referential<const Relative>
+        relative)
+{
+    return base != relative;
+}
 
-    /**
+/**
      * @brief
      *     Compares two values using the less than operator.
      * @details
@@ -217,21 +207,20 @@ namespace comparison {
      * @return
      *     True if base is less than relative.
      */
-    template <
-        typename Basic,
-        typename Relative = Basic
-    >
-    static inline bool
-    IsLesser(
-        Referential< const Basic >
-            base,
-        Referential< const Relative >
-            relative
-    ) {
-        return base < relative;
-    }
+template <
+    typename Basic,
+    typename Relative = Basic>
+static inline bool
+IsLesser(
+    Referential<const Basic>
+        base,
+    Referential<const Relative>
+        relative)
+{
+    return base < relative;
+}
 
-    /**
+/**
      * @brief
      *     Compares two values using the greater than operator.
      * @details
@@ -250,21 +239,20 @@ namespace comparison {
      * @return
      *     True if base is greater than relative.
      */
-    template <
-        typename Basic,
-        typename Relative = Basic
-    >
-    static inline bool
-    IsGreater(
-        Referential< const Basic >
-            base,
-        Referential< const Relative >
-            relative
-    ) {
-        return base > relative;
-    }
+template <
+    typename Basic,
+    typename Relative = Basic>
+static inline bool
+IsGreater(
+    Referential<const Basic>
+        base,
+    Referential<const Relative>
+        relative)
+{
+    return base > relative;
+}
 
-    /**
+/**
      * @brief
      *     Compares two values using the less than or equal to operator.
      * @details
@@ -283,21 +271,20 @@ namespace comparison {
      * @return
      *     True if base is not greater than relative.
      */
-    template <
-        typename Basic,
-        typename Relative = Basic
-    >
-    static inline bool
-    IsNotGreater(
-        Referential< const Basic >
-            base,
-        Referential< const Relative >
-            relative
-    ) {
-        return base <= relative;
-    }
+template <
+    typename Basic,
+    typename Relative = Basic>
+static inline bool
+IsNotGreater(
+    Referential<const Basic>
+        base,
+    Referential<const Relative>
+        relative)
+{
+    return base <= relative;
+}
 
-    /**
+/**
      * @brief
      *     Compares two values greater than or equal to operator.
      * @details
@@ -316,21 +303,20 @@ namespace comparison {
      * @return
      *     True if base is not less than relative.
      */
-    template <
-        typename Basic,
-        typename Relative = Basic
-    >
-    static inline bool
-    IsNotLesser(
-        Referential< const Basic >
-            base,
-        Referential< const Relative >
-            relative
-    ) {
-        return base >= relative;
-    }
+template <
+    typename Basic,
+    typename Relative = Basic>
+static inline bool
+IsNotLesser(
+    Referential<const Basic>
+        base,
+    Referential<const Relative>
+        relative)
+{
+    return base >= relative;
+}
 
-    /**
+/**
      * @brief
      *     Equality comparison objective.
      * @details
@@ -343,17 +329,16 @@ namespace comparison {
      * @tparam Relative
      *     Type of the relative object.
      */
-    template <
-        typename Basic,
-        typename Relative = Basic
-    >
-    constexpr Equative< Basic, Relative >
-        Equality = {
-            IsEqual< Basic, Relative >,
-            IsNotEqual< Basic, Relative >
-        };
+template <
+    typename Basic,
+    typename Relative = Basic>
+constexpr Equative<Basic, Relative>
+    Equality = {
+        IsEqual<Basic, Relative>,
+        IsNotEqual<Basic, Relative>
+    };
 
-    /**
+/**
      * @brief 
      *     Relational comparison objective.
      * @details
@@ -366,19 +351,18 @@ namespace comparison {
      * @tparam Relative
      *     Type of the relative object.
      */
-    template <
-        typename Basic,
-        typename Relative = Basic
-    >
-    constexpr Relational< Basic, Relative >
-        Relation = {
-            IsLesser< Basic, Relative >,
-            IsGreater< Basic, Relative >,
-            IsNotGreater< Basic, Relative >,
-            IsNotLesser< Basic, Relative >
-        };
+template <
+    typename Basic,
+    typename Relative = Basic>
+constexpr Relational<Basic, Relative>
+    Relation = {
+        IsLesser<Basic, Relative>,
+        IsGreater<Basic, Relative>,
+        IsNotGreater<Basic, Relative>,
+        IsNotLesser<Basic, Relative>
+    };
 
-    /**
+/**
      * @brief
      *     Combined comparison objective.
      * @details
@@ -391,15 +375,14 @@ namespace comparison {
      * @tparam Relative
      *     Type of the relative object.
      */
-    template <
-        typename Basic,
-        typename Relative = Basic
-    >
-    constexpr Comparative< Basic, Relative >
-        Comparison = {
-            Equality< Basic, Relative >,
-            Relation< Basic, Relative >
-        };
+template <
+    typename Basic,
+    typename Relative = Basic>
+constexpr Comparative<Basic, Relative>
+    Comparison = {
+        Equality<Basic, Relative>,
+        Relation<Basic, Relative>
+    };
 
 }
 

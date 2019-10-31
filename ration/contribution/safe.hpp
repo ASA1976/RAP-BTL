@@ -6,9 +6,9 @@
 
 namespace ration {
 
-    namespace contribution {
+namespace contribution {
 
-        /**
+    /**
          * @brief
          *     Confers the element at index.
          * @details
@@ -30,32 +30,30 @@ namespace ration {
          * @return 
          *     The reference conferment.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        static inline Conferential< Elemental >
-        GoWriteSafely(
-            Referential< Contributory< Natural, Maximum, Elemental > >
-                pool,
-            Referential< const Natural >
-                index
-        ) {
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    static inline Conferential<Elemental>
+    GoWriteSafely(
+        Referential<Contributory<Natural, Maximum, Elemental>>
+            pool,
+        Referential<const Natural>
+            index)
+    {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-            using namespace ::std;
-            static_assert(
-                is_integral< Natural >::value && is_unsigned< Natural >::value,
-                "Natural:  Unsigned integer type required"
-            );
+        using namespace ::std;
+        static_assert(
+            is_integral<Natural>::value && is_unsigned<Natural>::value,
+            "Natural:  Unsigned integer type required");
 #endif
-            if (!Contains( pool, index ))
-                throw index;
-            return GoWrite( pool, index );
-        }
+        if (!Contains(pool, index))
+            throw index;
+        return GoWrite(pool, index);
+    }
 
-        /**
+    /**
          * @brief 
          *     Deters the element at index.
          * @details
@@ -77,32 +75,30 @@ namespace ration {
          * @return 
          *     The reference determent.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        static inline Conferential< const Elemental >
-        GoReadSafely(
-            Referential< const Contributory< Natural, Maximum, Elemental > >
-                pool,
-            Referential< const Natural >
-                index
-        ) {
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    static inline Conferential<const Elemental>
+    GoReadSafely(
+        Referential<const Contributory<Natural, Maximum, Elemental>>
+            pool,
+        Referential<const Natural>
+            index)
+    {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-            using namespace ::std;
-            static_assert(
-                is_integral< Natural >::value && is_unsigned< Natural >::value,
-                "Natural:  Unsigned integer type required"
-            );
+        using namespace ::std;
+        static_assert(
+            is_integral<Natural>::value && is_unsigned<Natural>::value,
+            "Natural:  Unsigned integer type required");
 #endif
-            if (!Contains( pool, index ))
-                throw index;
-            return GoRead( pool, index );
-        }
+        if (!Contains(pool, index))
+            throw index;
+        return GoRead(pool, index);
+    }
 
-        /**
+    /**
          * @brief 
          *     Vectorial read trajection implementation.
          * @details
@@ -119,20 +115,19 @@ namespace ration {
          * @tparam Elemental 
          *     Type of the elements.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        constexpr Vectorial< const Contributory< Natural, Maximum, Elemental >, Natural, const Elemental >
-            SafeReadVector = {
-                Comparison< Natural >,
-                Contains< Natural, Maximum, Elemental >,
-                GoReadSafely< Natural, Maximum, Elemental >
-            };
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    constexpr Vectorial<const Contributory<Natural, Maximum, Elemental>, Natural, const Elemental>
+        SafeReadVector = {
+            Comparison<Natural>,
+            Contains<Natural, Maximum, Elemental>,
+            GoReadSafely<Natural, Maximum, Elemental>
+        };
 
-        /**
+    /**
          * @brief 
          *     Vectorial write trajection implementation.
          * @details
@@ -149,20 +144,19 @@ namespace ration {
          * @tparam Elemental 
          *     Type of the elements.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        constexpr Vectorial< Contributory< Natural, Maximum, Elemental >, Natural, Elemental >
-            SafeWriteVector = {
-                Comparison< Natural >,
-                Contains< Natural, Maximum, Elemental >,
-                GoWriteSafely< Natural, Maximum, Elemental >
-            };
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    constexpr Vectorial<Contributory<Natural, Maximum, Elemental>, Natural, Elemental>
+        SafeWriteVector = {
+            Comparison<Natural>,
+            Contains<Natural, Maximum, Elemental>,
+            GoWriteSafely<Natural, Maximum, Elemental>
+        };
 
-    }
+}
 
 }
 

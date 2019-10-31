@@ -14,9 +14,9 @@
  */
 namespace representation {
 
-    using ::location::Referential;
+using ::location::Referential;
 
-    /**
+/**
      * @brief
      *     Data type to character array representation.
      * @details
@@ -27,12 +27,11 @@ namespace representation {
      * @tparam Subjective
      *     The data type of the subject being represented as a character array.
      */
-    template <
-        typename Subjective
-    >
-    using NativelyConstant = const unsigned char[sizeof(Subjective)];
+template <
+    typename Subjective>
+using NativelyConstant = const unsigned char[sizeof(Subjective)];
 
-    /**
+/**
      * @brief
      *     Data type to character array representation.
      * @details
@@ -43,12 +42,11 @@ namespace representation {
      * @tparam Subjective
      *     The data type of the subject being represented as a character array.
      */
-    template <
-        typename Subjective
-    >
-    using NativelyModifiable = unsigned char[sizeof(Subjective)];
+template <
+    typename Subjective>
+using NativelyModifiable = unsigned char[sizeof(Subjective)];
 
-    /**
+/**
      * @brief 
      *     Addresses a data subject as a character array.
      * @details
@@ -63,22 +61,22 @@ namespace representation {
      * @return
      *     Reference to the character array representation of the memory space.
      */
-    template <
-        typename Subjective
-    >
-    static inline Referential< NativelyConstant< Subjective > >
-    AddressNatively(
-        Referential< const Subjective >
-            subject
-    ) {
-        using namespace ::location;
-        using Specific = Locational< NativelyConstant< Subjective > >;
-        Specific
-            bytes = (Specific) Locate( subject ).at;
-        return Refer( bytes ).to;
-    }
+template <
+    typename Subjective>
+static inline Referential<NativelyConstant<Subjective>>
+AddressNatively(
+    Referential<const Subjective>
+        subject)
+{
+    using namespace ::location;
+    using Specific = Locational<NativelyConstant<Subjective>>;
+    Specific
+        bytes
+        = (Specific)Locate(subject).at;
+    return Refer(bytes).to;
+}
 
-    /**
+/**
      * @brief 
      *     Addresses a data subject as a character array.
      * @details
@@ -93,20 +91,20 @@ namespace representation {
      * @return
      *     Reference to the character array representation of the memory space.
      */
-    template <
-        typename Subjective
-    >
-    static inline Referential< NativelyModifiable< Subjective > >
-    AddressNatively(
-        Referential< Subjective >
-            subject
-    ) {
-        using namespace ::location;
-        using Specific = Locational< NativelyModifiable< Subjective > >;
-        Specific
-            bytes = (Specific) Locate( subject ).at;
-        return Refer( bytes ).to;
-    }
+template <
+    typename Subjective>
+static inline Referential<NativelyModifiable<Subjective>>
+AddressNatively(
+    Referential<Subjective>
+        subject)
+{
+    using namespace ::location;
+    using Specific = Locational<NativelyModifiable<Subjective>>;
+    Specific
+        bytes
+        = (Specific)Locate(subject).at;
+    return Refer(bytes).to;
+}
 
 }
 

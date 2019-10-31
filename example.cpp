@@ -1,18 +1,17 @@
 // © 2019 Aaron Sami Abassi
 // Licensed under the Academic Free License version 3.0
 // #define RAPBTL_NO_STD_CPLUSPLUS
-#include "segmentation.hpp"
-#include "ordination.hpp"
-#include "ration/string.hpp"
-#include "ration/selection.hpp"
-#include "ration/collection.hpp"
-#include "ration/association/selection.hpp"
-#include "ration/association/collection.hpp"
-#include "junction/stdlib.hpp"
-#include "junction/selection.hpp"
-#include "junction/collection.hpp"
-#include "junction/association/selection.hpp"
 #include "junction/association/collection.hpp"
+#include "junction/association/selection.hpp"
+#include "junction/collection.hpp"
+#include "junction/selection.hpp"
+#include "junction/stdlib.hpp"
+#include "ration/association/collection.hpp"
+#include "ration/association/selection.hpp"
+#include "ration/collection.hpp"
+#include "ration/selection.hpp"
+#include "ration/string.hpp"
+#include "segmentation.hpp"
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
 #include <cstdio>
 #else
@@ -29,115 +28,115 @@ using namespace ::consecution;
 using namespace ::junction;
 using namespace ::junction::stdlib;
 
-template bool ::comparison::IsLesser( Referential< const char >, Referential< const char > );
-template bool ::comparison::IsEqual( Referential< const char >, Referential< const char > );
-template bool ::ration::string::MoveBytes( Locational< char >, Locational< char >, size_t );
-template bool ::ration::string::MoveBytes( Locational< Complementary< char, int > >, Locational< Complementary< char, int > >, size_t );
+template bool ::comparison::IsLesser(Referential<const char>, Referential<const char>);
+template bool ::comparison::IsEqual(Referential<const char>, Referential<const char>);
+template bool ::ration::string::MoveBytes(Locational<char>, Locational<char>, size_t);
+template bool ::ration::string::MoveBytes(Locational<Complementary<char, int>>, Locational<Complementary<char, int>>, size_t);
 
-using MessageLocal = const Locational< const char >;
-using MapComplementary = Complementary< char, int >;
+using MessageLocal = const Locational<const char>;
+using MapComplementary = Complementary<char, int>;
 
-constexpr DoublyAdjunctive< size_t, char >
-    ListAdjunct = DefaultMallocDoubleAdjunct< size_t, char >;
+constexpr DoublyAdjunctive<size_t, char>
+    ListAdjunct = DefaultMallocDoubleAdjunct<size_t, char>;
 
-constexpr DoublyAdjunctive< size_t, MapComplementary >
-    MapAdjunct = DefaultMallocDoubleAdjunct< size_t, MapComplementary >;
+constexpr DoublyAdjunctive<size_t, MapComplementary>
+    MapAdjunct = DefaultMallocDoubleAdjunct<size_t, MapComplementary>;
 
 template <
     typename Spatial,
-    typename Natural
->
+    typename Natural>
 static bool
 ComposeSets(
-    Referential< Spatial >
+    Referential<Spatial>
         base,
-    Referential< Spatial >
+    Referential<Spatial>
         relative,
-    Referential< const Compositional< Spatial, Natural, char > >
-        composer
-) {
-    composer.decompose( base );
-    composer.decompose( relative );
-    composer.precompose( base, 3 );
-    composer.precompose( relative, 3 );
-    return composer.compose( base, 'Y' )
-        && composer.compose( base, 'A' )
-        && composer.compose( base, 'M' )
-        && composer.compose( relative, 'M' )
-        && composer.compose( relative, 'B' )
-        && composer.compose( relative, 'Z' );
+    Referential<const Compositional<Spatial, Natural, char>>
+        composer)
+{
+    composer.decompose(base);
+    composer.decompose(relative);
+    composer.precompose(base, 3);
+    composer.precompose(relative, 3);
+    return composer.compose(base, 'Y')
+        && composer.compose(base, 'A')
+        && composer.compose(base, 'M')
+        && composer.compose(relative, 'M')
+        && composer.compose(relative, 'B')
+        && composer.compose(relative, 'Z');
 }
 
 template <
     typename Spatial,
-    typename Natural
->
+    typename Natural>
 static bool
 AssociateMap(
-    Referential< Spatial >
+    Referential<Spatial>
         map,
-    Referential< const Associative< Spatial, Natural, char, int > >
-        associator
-) {
-    associator.disband( map );
-    associator.prepare( map, 3 );
-    return associator.associate( map, 'y', 1 )
-        && associator.associate( map, 'z', -1 )
-        && associator.associate( map, 'x', 0 );
+    Referential<const Associative<Spatial, Natural, char, int>>
+        associator)
+{
+    associator.disband(map);
+    associator.prepare(map, 3);
+    return associator.associate(map, 'y', 1)
+        && associator.associate(map, 'z', -1)
+        && associator.associate(map, 'x', 0);
 }
 
 template <
     typename Spatial,
     typename Positional,
-    typename Natural
->
+    typename Natural>
 static bool
 ProceedSequence(
-    Referential< Spatial >
+    Referential<Spatial>
         list,
-    Referential< const Sequent< Spatial, Positional, Natural, char > >
+    Referential<const Sequent<Spatial, Positional, Natural, char>>
         sequencer,
-    Referential< const Conjoint< Spatial, Positional, MessageLocal, Natural, Natural, char > >
-        conjoiner
-) {
+    Referential<const Conjoint<Spatial, Positional, MessageLocal, Natural, Natural, char>>
+        conjoiner)
+{
     using namespace ::segmentation;
     static const Natural
-        Length = 7;
+        Length
+        = 7;
     static auto&
-        Direction = ReadIncrementDirection< Natural, Length, char >;
+        Direction
+        = ReadIncrementDirection<Natural, Length, char>;
     static const char
-        Message[Length] = {'M', 'E', 'S', 'S', 'A', 'G', 'E'};
+        Message[Length]
+        = { 'M', 'E', 'S', 'S', 'A', 'G', 'E' };
     static const Natural
-        First = 0,
+        First
+        = 0,
         Last = Length - 1;
-    sequencer.secede( list );
-    sequencer.antecede( list, Length );
-    return conjoiner.proceed( list, Direction, Message, First, Last );
+    sequencer.secede(list);
+    sequencer.antecede(list, Length);
+    return conjoiner.proceed(list, Direction, Message, First, Last);
 }
 
 template <
     typename Spatial,
     typename Positional,
-    typename Natural
->
+    typename Natural>
 static bool
 DisplayCharacters(
-    Referential< const Spatial >
+    Referential<const Spatial>
         list,
-    Referential< const Directional< const Spatial, Positional, Natural, const char > >
-        direction
-) {
+    Referential<const Directional<const Spatial, Positional, Natural, const char>>
+        direction)
+{
     Positional
         position;
-    if (!direction.begins( list, 0 ))
+    if (!direction.begins(list, 0))
         return false;
-    direction.scale.begin( list, position, 0 );
+    direction.scale.begin(list, position, 0);
     while (true) {
-        printf( "'%c'", direction.scale.go( list, position ).to );
-        if (!direction.traverses( list, position, 1 ))
+        printf("'%c'", direction.scale.go(list, position).to);
+        if (!direction.traverses(list, position, 1))
             break;
-        direction.scale.traverse( list, position, 1 );
-        printf( "," );
+        direction.scale.traverse(list, position, 1);
+        printf(",");
     }
     return true;
 }
@@ -145,34 +144,35 @@ DisplayCharacters(
 template <
     typename Spatial,
     typename Positional,
-    typename Natural
->
+    typename Natural>
 static bool
 DisplayMappings(
-    Referential< const Spatial >
+    Referential<const Spatial>
         map,
-    Referential< const Directional< const Spatial, Positional, Natural, const MapComplementary > >
-        direction
-) {
+    Referential<const Directional<const Spatial, Positional, Natural, const MapComplementary>>
+        direction)
+{
     Positional
         position;
-    if (!direction.begins( map, 0 ))
+    if (!direction.begins(map, 0))
         return false;
-    direction.scale.begin( map, position, 0 );
+    direction.scale.begin(map, position, 0);
     while (true) {
         auto&
-            mapping = direction.scale.go( map, position ).to;
-        printf( "%c=%d", mapping.relator, mapping.value );
-        if (!direction.traverses( map, position, 1 ))
+            mapping
+            = direction.scale.go(map, position).to;
+        printf("%c=%d", mapping.relator, mapping.value);
+        if (!direction.traverses(map, position, 1))
             break;
-        printf( " " );
-        direction.scale.traverse( map, position, 1 );
+        printf(" ");
+        direction.scale.traverse(map, position, 1);
     }
     return true;
 }
 
 static bool
-DemonstrateRation() {
+DemonstrateRation()
+{
     using namespace ::ration;
     using namespace ::ration::consecution;
     using namespace ::ration::selection;
@@ -183,78 +183,88 @@ DemonstrateRation() {
     using namespace ::ration::string;
     using namespace ::comparison;
     constexpr size_t
-        Length = 16;
+        Length
+        = 16;
     static auto&
-        ListSequencer = SureSequencer< size_t, Length, char, MoveBytes >;
+        ListSequencer
+        = SureSequencer<size_t, Length, char, MoveBytes>;
     static auto&
-        ListConjoiner = SureConjoiner< const Locational< const char >, size_t, size_t, size_t, Length, char, MoveBytes >;
+        ListConjoiner
+        = SureConjoiner<MessageLocal, size_t, size_t, size_t, Length, char, MoveBytes>;
     static auto&
-        ListSelector = SureSelector< size_t, Length, char, IsEqual, MoveBytes >;
+        ListSelector
+        = SureSelector<size_t, Length, char, IsEqual, MoveBytes>;
     static auto&
-        ListCollector = SureCollector< size_t, Length, char, IsEqual, IsLesser, MoveBytes >;
+        ListCollector
+        = SureCollector<size_t, Length, char, IsEqual, IsLesser, MoveBytes>;
     static auto&
-        ListAxis = ReadAxis< size_t, Length, char >;
+        ListAxis
+        = ReadAxis<size_t, Length, char>;
     static auto&
-        MapCorrelator = SureCorrelator< size_t, Length, char, int, IsEqual, MoveBytes >;
+        MapCorrelator
+        = SureCorrelator<size_t, Length, char, int, IsEqual, MoveBytes>;
     static auto&
-        MapAssociator = SureAssociator< size_t, Length, char, int, IsEqual, IsLesser, MoveBytes >;
+        MapAssociator
+        = SureAssociator<size_t, Length, char, int, IsEqual, IsLesser, MoveBytes>;
     static auto&
-        MapDirection = ReadIncrementDirection< size_t, Length, MapComplementary >;
-    Resourceful< size_t, Length, char >
+        MapDirection
+        = ReadIncrementDirection<size_t, Length, MapComplementary>;
+    Resourceful<size_t, Length, char>
         list,
         base,
         relative;
-    AssociativelyResourceful< size_t, Length, char, int >
+    AssociativelyResourceful<size_t, Length, char, int>
         map;
-    Initialize( list );
-    Initialize( base );
-    Initialize( relative );
-    Initialize( map );
-    puts( "Ration (Array List And Map)" );
-    if (!ProceedSequence( list, ListSequencer, ListConjoiner ))
+    Initialize(list);
+    Initialize(base);
+    Initialize(relative);
+    Initialize(map);
+    puts("Ration (Array List And Map)");
+    if (!ProceedSequence(list, ListSequencer, ListConjoiner))
         return false;
-    printf( "Sequence = (" );
-    DisplayCharacters( list, ListAxis.increment );
-    puts( ")" );
-    if (!ComposeSets( base, relative, ListSelector.composer ))
+    printf("Sequence = (");
+    DisplayCharacters(list, ListAxis.increment);
+    puts(")");
+    if (!ComposeSets(base, relative, ListSelector.composer))
         return false;
-    printf( "Unordered Sets: Base = {" );
-    DisplayCharacters( base, ListAxis.increment );
-    printf( "}, Relative = {" );
-    DisplayCharacters( relative, ListAxis.increment );
-    puts( "}" );
-    if (!ListSelector.section.unite( list, ListAxis.increment, base, ListAxis.increment, relative ))
+    printf("Unordered Sets: Base = {");
+    DisplayCharacters(base, ListAxis.increment);
+    printf("}, Relative = {");
+    DisplayCharacters(relative, ListAxis.increment);
+    puts("}");
+    if (!ListSelector.section.unite(list, ListAxis.increment, base, ListAxis.increment, relative))
         return false;
-    printf( "Unordered Union Of Base And Relative = {" );
-    DisplayCharacters( list, ListAxis.increment );
-    puts( "}" );
-    if (!ComposeSets( base, relative, ListCollector.selector.composer ))
+    printf("Unordered Union Of Base And Relative = {");
+    DisplayCharacters(list, ListAxis.increment);
+    puts("}");
+    if (!ComposeSets(base, relative, ListCollector.selector.composer))
         return false;
-    printf( "Ordered Sets: Base = {" );
-    DisplayCharacters( base, ListAxis.increment );
-    printf( "}, Relative = {" );
-    DisplayCharacters( relative, ListAxis.increment );
-    puts( "}" );
-    if (!ListCollector.bisection.unite( list, ListAxis, base, ListAxis, relative ))
+    printf("Ordered Sets: Base = {");
+    DisplayCharacters(base, ListAxis.increment);
+    printf("}, Relative = {");
+    DisplayCharacters(relative, ListAxis.increment);
+    puts("}");
+    if (!ListCollector.bisection.unite(list, ListAxis, base, ListAxis, relative))
         return false;
-    printf( "Ordered Union Of Base And Relative = {" );
-    DisplayCharacters( list, ListAxis.increment );
-    puts( "}" );
-    if (!AssociateMap( map, MapCorrelator ))
+    printf("Ordered Union Of Base And Relative = {");
+    DisplayCharacters(list, ListAxis.increment);
+    puts("}");
+    if (!AssociateMap(map, MapCorrelator))
         return false;
-    printf( "Unordered Map: [" );
-    DisplayMappings( map, MapDirection );
-    puts( "]" );
-    if (!AssociateMap( map, MapAssociator ))
+    printf("Unordered Map: [");
+    DisplayMappings(map, MapDirection);
+    puts("]");
+    if (!AssociateMap(map, MapAssociator))
         return false;
-    printf( "Ordered Map: [" );
-    DisplayMappings( map, MapDirection );
-    puts( "]" );
+    printf("Ordered Map: [");
+    DisplayMappings(map, MapDirection);
+    puts("]");
     return true;
 }
 
 static bool
-DemonstrateJunction() {
+DemonstrateJunction()
+{
     using namespace ::junction::consecution;
     using namespace ::junction::selection;
     using namespace ::junction::collection;
@@ -263,104 +273,112 @@ DemonstrateJunction() {
     using namespace ::junction::association::collection;
     using namespace ::comparison;
     static auto&
-        ListSequencer = DoubleSequencer< size_t, char, ListAdjunct >;
+        ListSequencer
+        = DoubleSequencer<size_t, char, ListAdjunct>;
     static auto&
-        ListConjoiner = DoubleConjoiner< const Locational< const char >, size_t, size_t, size_t, char, ListAdjunct >;
+        ListConjoiner
+        = DoubleConjoiner<MessageLocal, size_t, size_t, size_t, char, ListAdjunct>;
     static auto&
-        ListSelector = DoubleSelector< size_t, char, IsEqual, ListAdjunct >;
+        ListSelector
+        = DoubleSelector<size_t, char, IsEqual, ListAdjunct>;
     static auto&
-        ListCollector = DoubleCollector< size_t, char, IsEqual, IsLesser, ListAdjunct >;
+        ListCollector
+        = DoubleCollector<size_t, char, IsEqual, IsLesser, ListAdjunct>;
     static auto&
-        ListAxis = ReadDoubleAxis< size_t, char >;
+        ListAxis
+        = ReadDoubleAxis<size_t, char>;
     static auto&
-        MapCorrelator = DoubleCorrelator< size_t, char, int, IsEqual, MapAdjunct >;
+        MapCorrelator
+        = DoubleCorrelator<size_t, char, int, IsEqual, MapAdjunct>;
     static auto&
-        MapAssociator = DoubleAssociator< size_t, char, int, IsEqual, IsLesser, MapAdjunct >;
+        MapAssociator
+        = DoubleAssociator<size_t, char, int, IsEqual, IsLesser, MapAdjunct>;
     static auto&
-        MapDirection = ReadIncrementDoubleDirection< size_t, MapComplementary >;
-    DoublyJunctive< size_t, char >
+        MapDirection
+        = ReadIncrementDoubleDirection<size_t, MapComplementary>;
+    DoublyJunctive<size_t, char>
         list,
         base,
         relative;
-    AssociativelyDoubleJunctive< size_t, char, int >
+    AssociativelyDoubleJunctive<size_t, char, int>
         map;
-    Initialize( list );
-    Initialize( base );
-    Initialize( relative );
-    Initialize( map );
-    puts( "Junction (Linked List And Map)" );
-    if (!ProceedSequence( list, ListSequencer, ListConjoiner ))
+    Initialize(list);
+    Initialize(base);
+    Initialize(relative);
+    Initialize(map);
+    puts("Junction (Linked List And Map)");
+    if (!ProceedSequence(list, ListSequencer, ListConjoiner))
         return false;
-    printf( "Sequence = (" );
-    DisplayCharacters( list, ListAxis.increment );
-    puts( ")" );
-    if (!ComposeSets( base, relative, ListSelector.composer ))
+    printf("Sequence = (");
+    DisplayCharacters(list, ListAxis.increment);
+    puts(")");
+    if (!ComposeSets(base, relative, ListSelector.composer))
         return false;
-    printf( "Unordered Sets: Base = {" );
-    DisplayCharacters( base, ListAxis.increment );
-    printf( "}, Relative = {" );
-    DisplayCharacters( relative, ListAxis.increment );
-    puts( "}" );
-    if (!ListSelector.section.unite( list, ListAxis.increment, base, ListAxis.increment, relative ))
+    printf("Unordered Sets: Base = {");
+    DisplayCharacters(base, ListAxis.increment);
+    printf("}, Relative = {");
+    DisplayCharacters(relative, ListAxis.increment);
+    puts("}");
+    if (!ListSelector.section.unite(list, ListAxis.increment, base, ListAxis.increment, relative))
         return false;
-    printf( "Unordered Union Of Base And Relative = {" );
-    DisplayCharacters( list, ListAxis.increment );
-    puts( "}" );
-    if (!ComposeSets( base, relative, ListCollector.selector.composer ))
+    printf("Unordered Union Of Base And Relative = {");
+    DisplayCharacters(list, ListAxis.increment);
+    puts("}");
+    if (!ComposeSets(base, relative, ListCollector.selector.composer))
         return false;
-    printf( "Ordered Sets: Base = {" );
-    DisplayCharacters( base, ListAxis.increment );
-    printf( "}, Relative = {" );
-    DisplayCharacters( relative, ListAxis.increment );
-    puts( "}" );
-    if (!ListCollector.bisection.unite( list, ListAxis, base, ListAxis, relative ))
+    printf("Ordered Sets: Base = {");
+    DisplayCharacters(base, ListAxis.increment);
+    printf("}, Relative = {");
+    DisplayCharacters(relative, ListAxis.increment);
+    puts("}");
+    if (!ListCollector.bisection.unite(list, ListAxis, base, ListAxis, relative))
         return false;
-    printf( "Ordered Union Of Base And Relative = {" );
-    DisplayCharacters( list, ListAxis.increment );
-    puts( "}" );
-    if (!AssociateMap( map, MapCorrelator ))
+    printf("Ordered Union Of Base And Relative = {");
+    DisplayCharacters(list, ListAxis.increment);
+    puts("}");
+    if (!AssociateMap(map, MapCorrelator))
         return false;
-    printf( "Unordered Map: [" );
-    DisplayMappings( map, MapDirection );
-    puts( "]" );
-    if (!AssociateMap( map, MapAssociator ))
+    printf("Unordered Map: [");
+    DisplayMappings(map, MapDirection);
+    puts("]");
+    if (!AssociateMap(map, MapAssociator))
         return false;
-    printf( "Ordered Map: [" );
-    DisplayMappings( map, MapDirection );
-    puts( "]" );
-    ListSequencer.secede( list );
-    ListSequencer.secede( base );
-    ListSequencer.secede( relative );
-    MapCorrelator.disband( map );
-    printf( "Freeing 1/4." );
-    while (ListSequencer.condense( list ))
-        printf( "." );
-    printf( " 2/4." );
-    while (ListSequencer.condense( base ))
-        printf( "." );
-    printf( " 3/4." );
-    while (ListSequencer.condense( relative ))
-        printf( "." );
-    printf( " 4/4." );
-    while (MapCorrelator.dissolve( map ))
-        printf( "." );
-    puts( "" );
+    printf("Ordered Map: [");
+    DisplayMappings(map, MapDirection);
+    puts("]");
+    ListSequencer.secede(list);
+    ListSequencer.secede(base);
+    ListSequencer.secede(relative);
+    MapCorrelator.disband(map);
+    printf("Freeing 1/4.");
+    while (ListSequencer.condense(list))
+        printf(".");
+    printf(" 2/4.");
+    while (ListSequencer.condense(base))
+        printf(".");
+    printf(" 3/4.");
+    while (ListSequencer.condense(relative))
+        printf(".");
+    printf(" 4/4.");
+    while (MapCorrelator.dissolve(map))
+        printf(".");
+    puts("");
     return true;
 }
 
-int
-main() {
+int main()
+{
     enum Erroneous {
         RationDemonstration = -1,
         JunctionDemonstration = -2
     };
     if (!DemonstrateRation()) {
-        fprintf( stderr, "ERROR during ration demonstration\n" );
+        fprintf(stderr, "ERROR during ration demonstration\n");
         return Erroneous::RationDemonstration;
     }
-    puts( "" );
+    puts("");
     if (!DemonstrateJunction()) {
-        fprintf( stderr, "ERROR during junction demonstration\n" );
+        fprintf(stderr, "ERROR during junction demonstration\n");
         return Erroneous::JunctionDemonstration;
     }
 }

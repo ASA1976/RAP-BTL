@@ -6,9 +6,9 @@
 
 namespace ration {
 
-    namespace contraction {
+namespace contraction {
 
-        /**
+    /**
          * @brief
          *     Confers the element at index.
          * @details
@@ -30,32 +30,30 @@ namespace ration {
          * @return 
          *     The reference conferment.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        static inline Conferential< Elemental >
-        GoWriteSafely(
-            Referential< Contractional< Natural, Maximum, Elemental > >
-                queue,
-            Referential< const Natural >
-                index
-        ) {
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    static inline Conferential<Elemental>
+    GoWriteSafely(
+        Referential<Contractional<Natural, Maximum, Elemental>>
+            queue,
+        Referential<const Natural>
+            index)
+    {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-            using namespace ::std;
-            static_assert(
-                is_integral< Natural >::value && is_unsigned< Natural >::value,
-                "Natural:  Unsigned integer type required"
-            );
+        using namespace ::std;
+        static_assert(
+            is_integral<Natural>::value && is_unsigned<Natural>::value,
+            "Natural:  Unsigned integer type required");
 #endif
-            if (!Contains( queue, index ))
-                throw index;
-            return GoWrite( queue, index );
-        }
+        if (!Contains(queue, index))
+            throw index;
+        return GoWrite(queue, index);
+    }
 
-        /**
+    /**
          * @brief 
          *     Deters the element at index.
          * @details
@@ -77,32 +75,30 @@ namespace ration {
          * @return 
          *     The reference determent.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        static inline Conferential< const Elemental >
-        GoReadSafely(
-            Referential< const Contractional< Natural, Maximum, Elemental > >
-                queue,
-            Referential< const Natural >
-                index
-        ) {
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    static inline Conferential<const Elemental>
+    GoReadSafely(
+        Referential<const Contractional<Natural, Maximum, Elemental>>
+            queue,
+        Referential<const Natural>
+            index)
+    {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-            using namespace ::std;
-            static_assert(
-                is_integral< Natural >::value && is_unsigned< Natural >::value,
-                "Natural:  Unsigned integer type required"
-            );
+        using namespace ::std;
+        static_assert(
+            is_integral<Natural>::value && is_unsigned<Natural>::value,
+            "Natural:  Unsigned integer type required");
 #endif
-            if (!Contains( queue, index ))
-                throw index;
-            return GoRead( queue, index );
-        }
+        if (!Contains(queue, index))
+            throw index;
+        return GoRead(queue, index);
+    }
 
-         /**
+    /**
          * @brief 
          *     Begins read increment trajection.
          * @details
@@ -126,34 +122,32 @@ namespace ration {
          * @return
          *     A reference to the index as a constant.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        static inline Referential< const Natural >
-        BeginReadIncrementSafely(
-            Referential< const Contractional< Natural, Maximum, Elemental > >
-                queue,
-            Referential< Natural >
-                index,
-            Referential< const Natural >
-                count
-        ) {
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    static inline Referential<const Natural>
+    BeginReadIncrementSafely(
+        Referential<const Contractional<Natural, Maximum, Elemental>>
+            queue,
+        Referential<Natural>
+            index,
+        Referential<const Natural>
+            count)
+    {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-            using namespace ::std;
-            static_assert(
-                is_integral< Natural >::value && is_unsigned< Natural >::value,
-                "Natural:  Unsigned integer type required"
-            );
+        using namespace ::std;
+        static_assert(
+            is_integral<Natural>::value && is_unsigned<Natural>::value,
+            "Natural:  Unsigned integer type required");
 #endif
-            if (!Begins( queue, count ))
-                throw queue.allotment;
-            return BeginReadIncrement( queue, index, count );
-        }
+        if (!Begins(queue, count))
+            throw queue.allotment;
+        return BeginReadIncrement(queue, index, count);
+    }
 
-        /**
+    /**
          * @brief
          *     Begins write increment trajection.
          * @details
@@ -177,34 +171,32 @@ namespace ration {
          * @return 
          *     A reference to the index as a constant.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        static inline Referential< const Natural >
-        BeginWriteIncrementSafely(
-            Referential< Contractional< Natural, Maximum, Elemental > >
-                queue,
-            Referential< Natural >
-                index,
-            Referential< const Natural >
-                count
-        ) {
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    static inline Referential<const Natural>
+    BeginWriteIncrementSafely(
+        Referential<Contractional<Natural, Maximum, Elemental>>
+            queue,
+        Referential<Natural>
+            index,
+        Referential<const Natural>
+            count)
+    {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-            using namespace ::std;
-            static_assert(
-                is_integral< Natural >::value && is_unsigned< Natural >::value,
-                "Natural:  Unsigned integer type required"
-            );
+        using namespace ::std;
+        static_assert(
+            is_integral<Natural>::value && is_unsigned<Natural>::value,
+            "Natural:  Unsigned integer type required");
 #endif
-            if (!Begins( queue, count ))
-                throw queue.allotment;
-            return BeginWriteIncrement( queue, index, count );
-        }
+        if (!Begins(queue, count))
+            throw queue.allotment;
+        return BeginWriteIncrement(queue, index, count);
+    }
 
-        /**
+    /**
          * @brief 
          *     Traverses read increment.
          * @details
@@ -227,34 +219,32 @@ namespace ration {
          * @return 
          *     A reference to the index as a constant.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        static inline Referential< const Natural >
-        TraverseReadIncrementSafely(
-            Referential< const Contractional< Natural, Maximum, Elemental > >
-                queue,
-            Referential< Natural >
-                index,
-            Referential< const Natural >
-                count
-        ) {
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    static inline Referential<const Natural>
+    TraverseReadIncrementSafely(
+        Referential<const Contractional<Natural, Maximum, Elemental>>
+            queue,
+        Referential<Natural>
+            index,
+        Referential<const Natural>
+            count)
+    {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-            using namespace ::std;
-            static_assert(
-                is_integral< Natural >::value && is_unsigned< Natural >::value,
-                "Natural:  Unsigned integer type required"
-            );
+        using namespace ::std;
+        static_assert(
+            is_integral<Natural>::value && is_unsigned<Natural>::value,
+            "Natural:  Unsigned integer type required");
 #endif
-            if (!IncrementTraverses( queue, index, count ))
-                throw count;
-            return TraverseReadIncrement( queue, index, count );
-        }
+        if (!IncrementTraverses(queue, index, count))
+            throw count;
+        return TraverseReadIncrement(queue, index, count);
+    }
 
-        /**
+    /**
          * @brief 
          *     Traverses write increment.
          * @details
@@ -277,34 +267,32 @@ namespace ration {
          * @return 
          *     A reference to the index as a constant.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        static inline Referential< const Natural >
-        TraverseWriteIncrementSafely(
-            Referential< Contractional< Natural, Maximum, Elemental > >
-                queue,
-            Referential< Natural >
-                index,
-            Referential< const Natural >
-                count
-        ) {
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    static inline Referential<const Natural>
+    TraverseWriteIncrementSafely(
+        Referential<Contractional<Natural, Maximum, Elemental>>
+            queue,
+        Referential<Natural>
+            index,
+        Referential<const Natural>
+            count)
+    {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-            using namespace ::std;
-            static_assert(
-                is_integral< Natural >::value && is_unsigned< Natural >::value,
-                "Natural:  Unsigned integer type required"
-            );
+        using namespace ::std;
+        static_assert(
+            is_integral<Natural>::value && is_unsigned<Natural>::value,
+            "Natural:  Unsigned integer type required");
 #endif
-            if (!IncrementTraverses( queue, index, count ))
-                throw index;
-            return TraverseWriteIncrement( queue, index, count );
-        }
+        if (!IncrementTraverses(queue, index, count))
+            throw index;
+        return TraverseWriteIncrement(queue, index, count);
+    }
 
-        /**
+    /**
          * @brief 
          *     Begins read decrement trajection.
          * @details
@@ -328,34 +316,32 @@ namespace ration {
          * @return
          *     A reference to the index as a constant.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        static inline Referential< const Natural >
-        BeginReadDecrementSafely(
-            Referential< const Contractional< Natural, Maximum, Elemental > >
-                queue,
-            Referential< Natural >
-                index,
-            Referential< const Natural >
-                count
-        ) {
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    static inline Referential<const Natural>
+    BeginReadDecrementSafely(
+        Referential<const Contractional<Natural, Maximum, Elemental>>
+            queue,
+        Referential<Natural>
+            index,
+        Referential<const Natural>
+            count)
+    {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-            using namespace ::std;
-            static_assert(
-                is_integral< Natural >::value && is_unsigned< Natural >::value,
-                "Natural:  Unsigned integer type required"
-            );
+        using namespace ::std;
+        static_assert(
+            is_integral<Natural>::value && is_unsigned<Natural>::value,
+            "Natural:  Unsigned integer type required");
 #endif
-            if (!Begins( queue, count ))
-                throw queue.allotment;
-            return BeginReadDecrement( queue, index, count );
-        }
+        if (!Begins(queue, count))
+            throw queue.allotment;
+        return BeginReadDecrement(queue, index, count);
+    }
 
-        /**
+    /**
          * @brief 
          *     Begins write decrement trajection.
          * @details
@@ -379,34 +365,32 @@ namespace ration {
          * @return
          *     A reference to the index as a constant.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        static inline Referential< const Natural >
-        BeginWriteDecrementSafely(
-            Referential< Contractional< Natural, Maximum, Elemental > >
-                queue,
-            Referential< Natural >
-                index,
-            Referential< const Natural >
-                count
-        ) {
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    static inline Referential<const Natural>
+    BeginWriteDecrementSafely(
+        Referential<Contractional<Natural, Maximum, Elemental>>
+            queue,
+        Referential<Natural>
+            index,
+        Referential<const Natural>
+            count)
+    {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-            using namespace ::std;
-            static_assert(
-                is_integral< Natural >::value && is_unsigned< Natural >::value,
-                "Natural:  Unsigned integer type required"
-            );
+        using namespace ::std;
+        static_assert(
+            is_integral<Natural>::value && is_unsigned<Natural>::value,
+            "Natural:  Unsigned integer type required");
 #endif
-            if (!Begins( queue, count ))
-                throw queue.allotment;
-            return BeginWriteDecrement( queue, index, count );
-        }
+        if (!Begins(queue, count))
+            throw queue.allotment;
+        return BeginWriteDecrement(queue, index, count);
+    }
 
-        /**
+    /**
          * @brief 
          *     Traverses read decrement.
          * @details
@@ -429,34 +413,32 @@ namespace ration {
          * @return 
          *     A reference to the index as a constant.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        static inline Referential< const Natural >
-        TraverseReadDecrementSafely(
-            Referential< const Contractional< Natural, Maximum, Elemental > >
-                queue,
-            Referential< Natural >
-                index,
-            Referential< const Natural >
-                count
-        ) {
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    static inline Referential<const Natural>
+    TraverseReadDecrementSafely(
+        Referential<const Contractional<Natural, Maximum, Elemental>>
+            queue,
+        Referential<Natural>
+            index,
+        Referential<const Natural>
+            count)
+    {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-            using namespace ::std;
-            static_assert(
-                is_integral< Natural >::value && is_unsigned< Natural >::value,
-                "Natural:  Unsigned integer type required"
-            );
+        using namespace ::std;
+        static_assert(
+            is_integral<Natural>::value && is_unsigned<Natural>::value,
+            "Natural:  Unsigned integer type required");
 #endif
-            if (!DecrementTraverses( queue, index, count ))
-                throw index;
-            return TraverseReadDecrement( queue, index, count );
-        }
+        if (!DecrementTraverses(queue, index, count))
+            throw index;
+        return TraverseReadDecrement(queue, index, count);
+    }
 
-        /**
+    /**
          * @brief 
          *     Traverses read decrement.
          * @details
@@ -479,34 +461,32 @@ namespace ration {
          * @return 
          *     A reference to the index as a constant.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        static inline Referential< const Natural >
-        TraverseWriteDecrementSafely(
-            Referential< Contractional< Natural, Maximum, Elemental > >
-                queue,
-            Referential< Natural >
-                index,
-            Referential< const Natural >
-                count
-        ) {
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    static inline Referential<const Natural>
+    TraverseWriteDecrementSafely(
+        Referential<Contractional<Natural, Maximum, Elemental>>
+            queue,
+        Referential<Natural>
+            index,
+        Referential<const Natural>
+            count)
+    {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-            using namespace ::std;
-            static_assert(
-                is_integral< Natural >::value && is_unsigned< Natural >::value,
-                "Natural:  Unsigned integer type required"
-            );
+        using namespace ::std;
+        static_assert(
+            is_integral<Natural>::value && is_unsigned<Natural>::value,
+            "Natural:  Unsigned integer type required");
 #endif
-            if (!DecrementTraverses( queue, index, count ))
-                throw index;
-            return TraverseWriteDecrement( queue, index, count );
-        }
+        if (!DecrementTraverses(queue, index, count))
+            throw index;
+        return TraverseWriteDecrement(queue, index, count);
+    }
 
-        /**
+    /**
          * @brief 
          *     Vectorial read trajection implementation.
          * @details
@@ -523,20 +503,19 @@ namespace ration {
          * @tparam Elemental 
          *     Type of the elements.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        constexpr Vectorial< const Contractional< Natural, Maximum, Elemental >, Natural, const Elemental >
-            SafeReadVector = {
-                Comparison< Natural >,
-                Contains< Natural, Maximum, Elemental >,
-                GoReadSafely< Natural, Maximum, Elemental >
-            };
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    constexpr Vectorial<const Contractional<Natural, Maximum, Elemental>, Natural, const Elemental>
+        SafeReadVector = {
+            Comparison<Natural>,
+            Contains<Natural, Maximum, Elemental>,
+            GoReadSafely<Natural, Maximum, Elemental>
+        };
 
-        /**
+    /**
          * @brief 
          *     Vectorial write trajection implementation.
          * @details
@@ -553,20 +532,19 @@ namespace ration {
          * @tparam Elemental 
          *     Type of the elements.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        constexpr Vectorial< Contractional< Natural, Maximum, Elemental >, Natural, Elemental >
-            SafeWriteVector = {
-                Comparison< Natural >,
-                Contains< Natural, Maximum, Elemental >,
-                GoWriteSafely< Natural, Maximum, Elemental >
-            };
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    constexpr Vectorial<Contractional<Natural, Maximum, Elemental>, Natural, Elemental>
+        SafeWriteVector = {
+            Comparison<Natural>,
+            Contains<Natural, Maximum, Elemental>,
+            GoWriteSafely<Natural, Maximum, Elemental>
+        };
 
-        /**
+    /**
          * @brief 
          *     Sequential read trajection implementation.
          * @details
@@ -582,21 +560,20 @@ namespace ration {
          * @tparam Elemental 
          *     Type of the elements.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        constexpr Scalar< const Contractional< Natural, Maximum, Elemental >, Natural, Natural, const Elemental >
-            SafeReadIncrementScale = {
-                Comparison< Natural >,
-                BeginReadIncrementSafely< Natural, Maximum, Elemental >,
-                TraverseReadIncrementSafely< Natural, Maximum, Elemental >,
-                GoReadSafely< Natural, Maximum, Elemental >
-            };
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    constexpr Scalar<const Contractional<Natural, Maximum, Elemental>, Natural, Natural, const Elemental>
+        SafeReadIncrementScale = {
+            Comparison<Natural>,
+            BeginReadIncrementSafely<Natural, Maximum, Elemental>,
+            TraverseReadIncrementSafely<Natural, Maximum, Elemental>,
+            GoReadSafely<Natural, Maximum, Elemental>
+        };
 
-        /**
+    /**
          * @brief 
          *     Sequential write trajection implementation.
          * @details
@@ -612,21 +589,20 @@ namespace ration {
          * @tparam Elemental 
          *     Type of the elements.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        constexpr Scalar< Contractional< Natural, Maximum, Elemental >, Natural, Natural, Elemental >
-            SafeWriteIncrementScale = {
-                Comparison< Natural >,
-                BeginWriteIncrementSafely< Natural, Maximum, Elemental >,
-                TraverseWriteIncrementSafely< Natural, Maximum, Elemental >,
-                GoWriteSafely< Natural, Maximum, Elemental >
-            };
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    constexpr Scalar<Contractional<Natural, Maximum, Elemental>, Natural, Natural, Elemental>
+        SafeWriteIncrementScale = {
+            Comparison<Natural>,
+            BeginWriteIncrementSafely<Natural, Maximum, Elemental>,
+            TraverseWriteIncrementSafely<Natural, Maximum, Elemental>,
+            GoWriteSafely<Natural, Maximum, Elemental>
+        };
 
-        /**
+    /**
          * @brief 
          *     Sequential read trajection implementation.
          * @details
@@ -642,21 +618,20 @@ namespace ration {
          * @tparam Elemental 
          *     Type of the elements.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        constexpr Scalar< const Contractional< Natural, Maximum, Elemental >, Natural, Natural, const Elemental >
-            SafeReadDecrementScale = {
-                Comparison< Natural >,
-                BeginReadDecrementSafely< Natural, Maximum, Elemental >,
-                TraverseReadDecrementSafely< Natural, Maximum, Elemental >,
-                GoReadSafely< Natural, Maximum, Elemental >
-            };
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    constexpr Scalar<const Contractional<Natural, Maximum, Elemental>, Natural, Natural, const Elemental>
+        SafeReadDecrementScale = {
+            Comparison<Natural>,
+            BeginReadDecrementSafely<Natural, Maximum, Elemental>,
+            TraverseReadDecrementSafely<Natural, Maximum, Elemental>,
+            GoReadSafely<Natural, Maximum, Elemental>
+        };
 
-        /**
+    /**
          * @brief 
          *     Sequential write trajection implementation.
          * @details
@@ -672,21 +647,20 @@ namespace ration {
          * @tparam Elemental 
          *     Type of the elements.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        constexpr Scalar< Contractional< Natural, Maximum, Elemental >, Natural, Natural, Elemental >
-            SafeWriteDecrementScale = {
-                Comparison< Natural >,
-                BeginWriteDecrementSafely< Natural, Maximum, Elemental >,
-                TraverseWriteDecrementSafely< Natural, Maximum, Elemental >,
-                GoWriteSafely< Natural, Maximum, Elemental >
-            };
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    constexpr Scalar<Contractional<Natural, Maximum, Elemental>, Natural, Natural, Elemental>
+        SafeWriteDecrementScale = {
+            Comparison<Natural>,
+            BeginWriteDecrementSafely<Natural, Maximum, Elemental>,
+            TraverseWriteDecrementSafely<Natural, Maximum, Elemental>,
+            GoWriteSafely<Natural, Maximum, Elemental>
+        };
 
-        /**
+    /**
          * @brief 
          *     Sequential read trajection implementation.
          * @details
@@ -702,19 +676,18 @@ namespace ration {
          * @tparam Elemental 
          *     Type of the elements.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        constexpr Lineal< const Contractional< Natural, Maximum, Elemental >, Natural, Natural, const Elemental >
-            SafeReadLiner = {
-                SafeReadIncrementScale< Natural, Maximum, Elemental >,
-                SafeReadDecrementScale< Natural, Maximum, Elemental >
-            };
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    constexpr Lineal<const Contractional<Natural, Maximum, Elemental>, Natural, Natural, const Elemental>
+        SafeReadLiner = {
+            SafeReadIncrementScale<Natural, Maximum, Elemental>,
+            SafeReadDecrementScale<Natural, Maximum, Elemental>
+        };
 
-        /**
+    /**
          * @brief 
          *     Sequential write trajection implementation.
          * @details
@@ -730,19 +703,18 @@ namespace ration {
          * @tparam Elemental 
          *     Type of the elements.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        constexpr Lineal< Contractional< Natural, Maximum, Elemental >, Natural, Natural, Elemental >
-            SafeWriteLiner = {
-                SafeWriteIncrementScale< Natural, Maximum, Elemental >,
-                SafeWriteDecrementScale< Natural, Maximum, Elemental >
-            };
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    constexpr Lineal<Contractional<Natural, Maximum, Elemental>, Natural, Natural, Elemental>
+        SafeWriteLiner = {
+            SafeWriteIncrementScale<Natural, Maximum, Elemental>,
+            SafeWriteDecrementScale<Natural, Maximum, Elemental>
+        };
 
-        /**
+    /**
          * @brief 
          *     Sequential read trajection implementation.
          * @details
@@ -758,23 +730,22 @@ namespace ration {
          * @tparam Elemental 
          *     Type of the elements.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        constexpr Directional< const Contractional< Natural, Maximum, Elemental >, Natural, Natural, const Elemental >
-            SafeReadIncrementDirection = {
-                SafeReadIncrementScale< Natural, Maximum, Elemental >,
-                Begins< Natural, Maximum, Elemental >,
-                IncrementTraverses< Natural, Maximum, Elemental >,
-                Contains< Natural, Maximum, Elemental >,
-                Account< Natural, Maximum, Elemental >,
-                CountIncrement< Natural, Maximum, Elemental >
-            };
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    constexpr Directional<const Contractional<Natural, Maximum, Elemental>, Natural, Natural, const Elemental>
+        SafeReadIncrementDirection = {
+            SafeReadIncrementScale<Natural, Maximum, Elemental>,
+            Begins<Natural, Maximum, Elemental>,
+            IncrementTraverses<Natural, Maximum, Elemental>,
+            Contains<Natural, Maximum, Elemental>,
+            Account<Natural, Maximum, Elemental>,
+            CountIncrement<Natural, Maximum, Elemental>
+        };
 
-        /**
+    /**
          * @brief 
          *     Sequential write trajection implementation.
          * @details
@@ -790,23 +761,22 @@ namespace ration {
          * @tparam Elemental 
          *     Type of the elements.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        constexpr Directional< Contractional< Natural, Maximum, Elemental >, Natural, Natural, Elemental >
-            SafeWriteIncrementDirection = {
-                SafeWriteIncrementScale< Natural, Maximum, Elemental >,
-                Begins< Natural, Maximum, Elemental >,
-                IncrementTraverses< Natural, Maximum, Elemental >,
-                Contains< Natural, Maximum, Elemental >,
-                Account< Natural, Maximum, Elemental >,
-                CountIncrement< Natural, Maximum, Elemental >
-            };
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    constexpr Directional<Contractional<Natural, Maximum, Elemental>, Natural, Natural, Elemental>
+        SafeWriteIncrementDirection = {
+            SafeWriteIncrementScale<Natural, Maximum, Elemental>,
+            Begins<Natural, Maximum, Elemental>,
+            IncrementTraverses<Natural, Maximum, Elemental>,
+            Contains<Natural, Maximum, Elemental>,
+            Account<Natural, Maximum, Elemental>,
+            CountIncrement<Natural, Maximum, Elemental>
+        };
 
-        /**
+    /**
          * @brief 
          *     Sequential read trajection implementation.
          * @details
@@ -822,23 +792,22 @@ namespace ration {
          * @tparam Elemental 
          *     Type of the elements.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        constexpr Directional< const Contractional< Natural, Maximum, Elemental >, Natural, Natural, const Elemental >
-            SafeReadDecrementDirection = {
-                SafeReadDecrementScale< Natural, Maximum, Elemental >,
-                Begins< Natural, Maximum, Elemental >,
-                DecrementTraverses< Natural, Maximum, Elemental >,
-                Contains< Natural, Maximum, Elemental >,
-                Account< Natural, Maximum, Elemental >,
-                CountDecrement< Natural, Maximum, Elemental >
-            };
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    constexpr Directional<const Contractional<Natural, Maximum, Elemental>, Natural, Natural, const Elemental>
+        SafeReadDecrementDirection = {
+            SafeReadDecrementScale<Natural, Maximum, Elemental>,
+            Begins<Natural, Maximum, Elemental>,
+            DecrementTraverses<Natural, Maximum, Elemental>,
+            Contains<Natural, Maximum, Elemental>,
+            Account<Natural, Maximum, Elemental>,
+            CountDecrement<Natural, Maximum, Elemental>
+        };
 
-        /**
+    /**
          * @brief 
          *     Sequential write trajection implementation.
          * @details
@@ -854,23 +823,22 @@ namespace ration {
          * @tparam Elemental 
          *     Type of the elements.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        constexpr Directional< Contractional< Natural, Maximum, Elemental >, Natural, Natural, Elemental >
-            SafeWriteDecrementDirection = {
-                SafeWriteDecrementScale< Natural, Maximum, Elemental >,
-                Begins< Natural, Maximum, Elemental >,
-                DecrementTraverses< Natural, Maximum, Elemental >,
-                Contains< Natural, Maximum, Elemental >,
-                Account< Natural, Maximum, Elemental >,
-                CountDecrement< Natural, Maximum, Elemental >
-            };
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    constexpr Directional<Contractional<Natural, Maximum, Elemental>, Natural, Natural, Elemental>
+        SafeWriteDecrementDirection = {
+            SafeWriteDecrementScale<Natural, Maximum, Elemental>,
+            Begins<Natural, Maximum, Elemental>,
+            DecrementTraverses<Natural, Maximum, Elemental>,
+            Contains<Natural, Maximum, Elemental>,
+            Account<Natural, Maximum, Elemental>,
+            CountDecrement<Natural, Maximum, Elemental>
+        };
 
-        /**
+    /**
          * @brief 
          *     Sequential read trajection implementation.
          * @details
@@ -886,19 +854,18 @@ namespace ration {
          * @tparam Elemental 
          *     Type of the elements.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        constexpr Axial< const Contractional< Natural, Maximum, Elemental >, Natural, Natural, const Elemental >
-            SafeReadAxis = {
-                SafeReadIncrementDirection< Natural, Maximum, Elemental >,
-                SafeReadDecrementDirection< Natural, Maximum, Elemental >
-            };
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    constexpr Axial<const Contractional<Natural, Maximum, Elemental>, Natural, Natural, const Elemental>
+        SafeReadAxis = {
+            SafeReadIncrementDirection<Natural, Maximum, Elemental>,
+            SafeReadDecrementDirection<Natural, Maximum, Elemental>
+        };
 
-        /**
+    /**
          * @brief 
          *     Sequential write trajection implementation.
          * @details
@@ -914,19 +881,18 @@ namespace ration {
          * @tparam Elemental 
          *     Type of the elements.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Elemental
-        >
-        constexpr Axial< Contractional< Natural, Maximum, Elemental >, Natural, Natural, Elemental >
-            SafeWriteAxis = {
-                SafeWriteIncrementDirection< Natural, Maximum, Elemental >,
-                SafeWriteDecrementDirection< Natural, Maximum, Elemental >
-            };
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Elemental>
+    constexpr Axial<Contractional<Natural, Maximum, Elemental>, Natural, Natural, Elemental>
+        SafeWriteAxis = {
+            SafeWriteIncrementDirection<Natural, Maximum, Elemental>,
+            SafeWriteDecrementDirection<Natural, Maximum, Elemental>
+        };
 
-    }
+}
 
 }
 

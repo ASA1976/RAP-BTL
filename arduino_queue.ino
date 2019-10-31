@@ -3,7 +3,7 @@
 //
 // Arduino specific code was based on The Arduino Reference analogRead() example
 // https://www.arduino.cc/reference/en/language/functions/analog-io/analogread/
-// The Arduino Reference text is licensed under a Creative Commons 
+// The Arduino Reference text is licensed under a Creative Commons
 // Attribution-Share Alike 3.0 License.
 //
 #define ANALOG_PIN A3
@@ -19,7 +19,8 @@ using queue_t = Contractional<SIZES_TYPE, QUEUE_MAX, SAMPLES_TYPE>;
 
 queue_t queue;
 
-static void printQueue() {
+static void printQueue()
+{
     static auto& Reader = ReadIncrementDirection<SIZES_TYPE, QUEUE_MAX, SAMPLES_TYPE>;
     SIZES_TYPE position;
     if (!Reader.begins(queue, 0))
@@ -36,11 +37,13 @@ static void printQueue() {
     Serial.println(F(""));
 }
 
-void setup() {
-    Serial.begin(SERIAL_RATE); 
+void setup()
+{
+    Serial.begin(SERIAL_RATE);
 }
 
-void loop() {
+void loop()
+{
     static auto& Manager = SureContractor<SIZES_TYPE, QUEUE_MAX, SAMPLES_TYPE>;
     static auto& Writer = WriteIncrementDirection<SIZES_TYPE, QUEUE_MAX, SAMPLES_TYPE>;
     SIZES_TYPE position;
@@ -48,5 +51,5 @@ void loop() {
         Manager.retract(queue, 1);
     Manager.protract(queue, position, 1);
     Writer.scale.go(queue, position).to = analogRead(ANALOG_PIN);
-    printQueue(); 
+    printQueue();
 }

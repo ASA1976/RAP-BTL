@@ -2,8 +2,8 @@
 // Licensed under the Academic Free License version 3.0
 #ifndef ORDINATION_MODULE
 #define ORDINATION_MODULE
-#include "trajection.hpp"
 #include "comparison.hpp"
+#include "trajection.hpp"
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
 #include <type_traits>
 #endif
@@ -19,17 +19,17 @@
  */
 namespace ordination {
 
-    using ::location::Locational;
-    using ::location::Referential;
-    using ::location::Conferential;
-    using ::trajection::Vectorial;
-    using ::trajection::Scalar;
-    using ::trajection::Lineal;
-    using ::trajection::Directional;
-    using ::trajection::Axial;
-    using ::comparison::Comparison;
+using ::comparison::Comparison;
+using ::location::Conferential;
+using ::location::Locational;
+using ::location::Referential;
+using ::trajection::Axial;
+using ::trajection::Directional;
+using ::trajection::Lineal;
+using ::trajection::Scalar;
+using ::trajection::Vectorial;
 
-    /**
+/**
      * @brief
      *     Modifiable array type.
      * @details
@@ -40,15 +40,14 @@ namespace ordination {
      * @tparam Elemental
      *     Type of the elements.
      */
-    template <
-        typename Natural,
-        Natural
-            Length,
-        typename Elemental
-    >
-    using WriteOrdinal = Elemental[Length];
+template <
+    typename Natural,
+    Natural
+        Length,
+    typename Elemental>
+using WriteOrdinal = Elemental[Length];
 
-    /**
+/**
      * @brief
      *     Constant array type.
      * @details
@@ -59,15 +58,14 @@ namespace ordination {
      * @tparam Elemental
      *     Type of the elements.
      */
-    template <
-        typename Natural,
-        Natural
-            Length,
-        typename Elemental
-    >
-    using ReadOrdinal = const Elemental[Length];
+template <
+    typename Natural,
+    Natural
+        Length,
+    typename Elemental>
+using ReadOrdinal = const Elemental[Length];
 
-    /**
+/**
      * @brief
      *     Modifiable array sequential position type.
      * @details
@@ -78,12 +76,11 @@ namespace ordination {
      * @tparam Elemental
      *     Type of the elements.
      */
-    template <
-        typename Elemental
-    >
-    using WritePositional = Locational< Elemental >;
+template <
+    typename Elemental>
+using WritePositional = Locational<Elemental>;
 
-    /**
+/**
      * @brief
      *     Constant array sequential position type.
      * @details
@@ -94,12 +91,11 @@ namespace ordination {
      * @tparam Elemental
      *     Type of the elements.
      */
-    template <
-        typename Elemental
-    >
-    using ReadPositional = Locational< const Elemental >;
+template <
+    typename Elemental>
+using ReadPositional = Locational<const Elemental>;
 
-    /**
+/**
      * @brief
      *     Check if index is within the array.
      * @details
@@ -119,30 +115,28 @@ namespace ordination {
      * @return
      *     True if index is less than length.
      */
-    template <
-        typename Natural,
-        Natural
-            Length,
-        typename Elemental
-    >
-    static inline bool
-    ContainsIndex(
-        Referential< const Elemental[Length] >
-            array,
-        Referential< const Natural >
-            index
-    ) {
+template <
+    typename Natural,
+    Natural
+        Length,
+    typename Elemental>
+static inline bool
+ContainsIndex(
+    Referential<const Elemental[Length]>
+        array,
+    Referential<const Natural>
+        index)
+{
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-        using namespace ::std;
-        static_assert(
-            is_integral< Natural >::value && is_unsigned< Natural >::value,
-            "Natural:  Unsigned integer type required"
-        );
+    using namespace ::std;
+    static_assert(
+        is_integral<Natural>::value && is_unsigned<Natural>::value,
+        "Natural:  Unsigned integer type required");
 #endif
-        return index < Length;
-    }
+    return index < Length;
+}
 
-    /**
+/**
      * @brief 
      *     Confers the element at index.
      * @details
@@ -163,30 +157,28 @@ namespace ordination {
      * @return
      *     The reference conferment.
      */
-    template <
-        typename Natural,
-        Natural
-            Length,
-        typename Elemental
-    >
-    static inline Conferential< Elemental >
-    NaturalGo(
-        Referential< Elemental[Length] >
-            array,
-        Referential< const Natural >
-            index
-    ) {
+template <
+    typename Natural,
+    Natural
+        Length,
+    typename Elemental>
+static inline Conferential<Elemental>
+NaturalGo(
+    Referential<Elemental[Length]>
+        array,
+    Referential<const Natural>
+        index)
+{
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-        using namespace ::std;
-        static_assert(
-            is_integral< Natural >::value && is_unsigned< Natural >::value,
-            "Natural:  Unsigned integer type required"
-        );
+    using namespace ::std;
+    static_assert(
+        is_integral<Natural>::value && is_unsigned<Natural>::value,
+        "Natural:  Unsigned integer type required");
 #endif
-        return Confer( array[index] );
-    }
+    return Confer(array[index]);
+}
 
-    /**
+/**
      * @brief
      *     Check if position is within the array.
      * @details
@@ -207,30 +199,28 @@ namespace ordination {
      * @return
      *     True if position is within the array bounds.
      */
-    template <
-        typename Natural,
-        Natural
-            Length,
-        typename Elemental
-    >
-    static inline bool
-    ContainsPosition(
-        Referential< const Elemental[Length] >
-            array,
-        Referential< const Locational< Elemental > >
-            position
-    ) {
+template <
+    typename Natural,
+    Natural
+        Length,
+    typename Elemental>
+static inline bool
+ContainsPosition(
+    Referential<const Elemental[Length]>
+        array,
+    Referential<const Locational<Elemental>>
+        position)
+{
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-        using namespace ::std;
-        static_assert(
-            is_integral< Natural >::value && is_unsigned< Natural >::value,
-            "Natural:  Unsigned integer type required"
-        );
+    using namespace ::std;
+    static_assert(
+        is_integral<Natural>::value && is_unsigned<Natural>::value,
+        "Natural:  Unsigned integer type required");
 #endif
-        return position >= array && position <= array + Length - 1;
-    }
+    return position >= array && position <= array + Length - 1;
+}
 
-    /**
+/**
      * @brief 
      *     Confers the element at position.
      * @details
@@ -251,31 +241,29 @@ namespace ordination {
      * @return
      *     The reference conferment.
      */
-    template <
-        typename Natural,
-        Natural
-            Length,
-        typename Elemental
-    >
-    static inline Conferential< Elemental >
-    PositionalGo(
-        Referential< Elemental[Length] >
-            array,
-        Referential< const Locational< Elemental > >
-            position
-    ) {
-        using ::location::Refer;
+template <
+    typename Natural,
+    Natural
+        Length,
+    typename Elemental>
+static inline Conferential<Elemental>
+PositionalGo(
+    Referential<Elemental[Length]>
+        array,
+    Referential<const Locational<Elemental>>
+        position)
+{
+    using ::location::Refer;
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-        using namespace ::std;
-        static_assert(
-            is_integral< Natural >::value && is_unsigned< Natural >::value,
-            "Natural:  Unsigned integer type required"
-        );
+    using namespace ::std;
+    static_assert(
+        is_integral<Natural>::value && is_unsigned<Natural>::value,
+        "Natural:  Unsigned integer type required");
 #endif
-        return Refer( position );
-    }
+    return Refer(position);
+}
 
-    /**
+/**
      * @brief
      *     Checks if sequential trajection can begin.
      * @details
@@ -297,30 +285,28 @@ namespace ordination {
      * @return 
      *     True if count is less than length.
      */
-    template <
-        typename Natural,
-        Natural
-            Length,
-        typename Elemental
-    >
-    static inline bool
-    Begins(
-        Referential< const Elemental[Length] >
-            array,
-        Referential< const Natural >
-            count
-    ) {
+template <
+    typename Natural,
+    Natural
+        Length,
+    typename Elemental>
+static inline bool
+Begins(
+    Referential<const Elemental[Length]>
+        array,
+    Referential<const Natural>
+        count)
+{
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-        using namespace ::std;
-        static_assert(
-            is_integral< Natural >::value && is_unsigned< Natural >::value,
-            "Natural:  Unsigned integer type required"
-        );
+    using namespace ::std;
+    static_assert(
+        is_integral<Natural>::value && is_unsigned<Natural>::value,
+        "Natural:  Unsigned integer type required");
 #endif
-        return count < Length;
-    }
+    return count < Length;
+}
 
-    /**
+/**
      * @brief
      *     Begins increment trajection.
      * @details
@@ -344,32 +330,30 @@ namespace ordination {
      * @return 
      *     A reference to the position as a constant.
      */
-    template <
-        typename Natural,
-        Natural
-            Length,
-        typename Elemental
-    >
-    static inline Referential< const Locational< Elemental > >
-    BeginIncrement(
-        Referential< Elemental[Length] >
-            array,
-        Referential< Locational< Elemental > >
-            position,
-        Referential< const Natural >
-            count
-    ) {
+template <
+    typename Natural,
+    Natural
+        Length,
+    typename Elemental>
+static inline Referential<const Locational<Elemental>>
+BeginIncrement(
+    Referential<Elemental[Length]>
+        array,
+    Referential<Locational<Elemental>>
+        position,
+    Referential<const Natural>
+        count)
+{
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-        using namespace ::std;
-        static_assert(
-            is_integral< Natural >::value && is_unsigned< Natural >::value,
-            "Natural:  Unsigned integer type required"
-        );
+    using namespace ::std;
+    static_assert(
+        is_integral<Natural>::value && is_unsigned<Natural>::value,
+        "Natural:  Unsigned integer type required");
 #endif
-        return position = array + count;
-    }
+    return position = array + count;
+}
 
-    /**
+/**
      * @brief
      *     Begins decrement trajection.
      * @details
@@ -393,32 +377,30 @@ namespace ordination {
      * @return 
      *     A reference to the position as a constant.
      */
-    template <
-        typename Natural,
-        Natural
-            Length,
-        typename Elemental
-    >
-    static inline Referential< const Locational< Elemental > >
-    BeginDecrement(
-        Referential< Elemental[Length] >
-            array,
-        Referential< Locational< Elemental > >
-            position,
-        Referential< const Natural >
-            count
-    ) {
+template <
+    typename Natural,
+    Natural
+        Length,
+    typename Elemental>
+static inline Referential<const Locational<Elemental>>
+BeginDecrement(
+    Referential<Elemental[Length]>
+        array,
+    Referential<Locational<Elemental>>
+        position,
+    Referential<const Natural>
+        count)
+{
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-        using namespace ::std;
-        static_assert(
-            is_integral< Natural >::value && is_unsigned< Natural >::value,
-            "Natural:  Unsigned integer type required"
-        );
+    using namespace ::std;
+    static_assert(
+        is_integral<Natural>::value && is_unsigned<Natural>::value,
+        "Natural:  Unsigned integer type required");
 #endif
-        return position = array + Length - 1 - count;
-    }
+    return position = array + Length - 1 - count;
+}
 
-    /**
+/**
      * @brief
      *     Checks if sequential trajection can continue.
      * @details
@@ -442,32 +424,30 @@ namespace ordination {
      * @return 
      *     True if the offset can be reached from position.
      */
-    template <
-        typename Natural,
-        Natural
-            Length,
-        typename Elemental
-    >
-    static inline bool
-    IncrementTraverses(
-        Referential< const Elemental[Length] >
-            array,
-        Referential< const Locational< Elemental > >
-            position,
-        Referential< const Natural >
-            count
-    ) {
+template <
+    typename Natural,
+    Natural
+        Length,
+    typename Elemental>
+static inline bool
+IncrementTraverses(
+    Referential<const Elemental[Length]>
+        array,
+    Referential<const Locational<Elemental>>
+        position,
+    Referential<const Natural>
+        count)
+{
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-        using namespace ::std;
-        static_assert(
-            is_integral< Natural >::value && is_unsigned< Natural >::value,
-            "Natural:  Unsigned integer type required"
-        );
+    using namespace ::std;
+    static_assert(
+        is_integral<Natural>::value && is_unsigned<Natural>::value,
+        "Natural:  Unsigned integer type required");
 #endif
-        return count < Length && position < array + Length - count;
-    }
+    return count < Length && position < array + Length - count;
+}
 
-    /**
+/**
      * @brief
      *     Checks if sequential trajection can continue.
      * @details
@@ -491,32 +471,30 @@ namespace ordination {
      * @return 
      *     True if the offset can be reached from position.
      */
-    template <
-        typename Natural,
-        Natural
-            Length,
-        typename Elemental
-    >
-    static inline bool
-    DecrementTraverses(
-        Referential< const Elemental[Length] >
-            array,
-        Referential< const Locational< Elemental > >
-            position,
-        Referential< const Natural >
-            count
-    ) {
+template <
+    typename Natural,
+    Natural
+        Length,
+    typename Elemental>
+static inline bool
+DecrementTraverses(
+    Referential<const Elemental[Length]>
+        array,
+    Referential<const Locational<Elemental>>
+        position,
+    Referential<const Natural>
+        count)
+{
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-        using namespace ::std;
-        static_assert(
-            is_integral< Natural >::value && is_unsigned< Natural >::value,
-            "Natural:  Unsigned integer type required"
-        );
+    using namespace ::std;
+    static_assert(
+        is_integral<Natural>::value && is_unsigned<Natural>::value,
+        "Natural:  Unsigned integer type required");
 #endif
-        return count < Length && position > array + Length - 1 - count;
-    }
+    return count < Length && position > array + Length - 1 - count;
+}
 
-    /**
+/**
      * @brief 
      *     Traverses increment.
      * @details
@@ -539,32 +517,30 @@ namespace ordination {
      * @return 
      *     A reference to the position as a constant.
      */
-    template <
-        typename Natural,
-        Natural
-            Length,
-        typename Elemental
-    >
-    static inline Referential< const Locational< Elemental > >
-    TraverseIncrement(
-        Referential< Elemental[Length] >
-            array,
-        Referential< Locational< Elemental > >
-            position,
-        Referential< const Natural >
-            count
-    ) {
+template <
+    typename Natural,
+    Natural
+        Length,
+    typename Elemental>
+static inline Referential<const Locational<Elemental>>
+TraverseIncrement(
+    Referential<Elemental[Length]>
+        array,
+    Referential<Locational<Elemental>>
+        position,
+    Referential<const Natural>
+        count)
+{
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-        using namespace ::std;
-        static_assert(
-            is_integral< Natural >::value && is_unsigned< Natural >::value,
-            "Natural:  Unsigned integer type required"
-        );
+    using namespace ::std;
+    static_assert(
+        is_integral<Natural>::value && is_unsigned<Natural>::value,
+        "Natural:  Unsigned integer type required");
 #endif
-        return position += count;
-    }
+    return position += count;
+}
 
-    /**
+/**
      * @brief 
      *     Traverses decrement.
      * @details
@@ -587,32 +563,30 @@ namespace ordination {
      * @return 
      *     A reference to the position as a constant.
      */
-    template <
-        typename Natural,
-        Natural
-            Length,
-        typename Elemental
-    >
-    static inline Referential< const Locational< Elemental > >
-    TraverseDecrement(
-        Referential< Elemental[Length] >
-            array,
-        Referential< Locational< Elemental > >
-            position,
-        Referential< const Natural >
-            count
-    ) {
+template <
+    typename Natural,
+    Natural
+        Length,
+    typename Elemental>
+static inline Referential<const Locational<Elemental>>
+TraverseDecrement(
+    Referential<Elemental[Length]>
+        array,
+    Referential<Locational<Elemental>>
+        position,
+    Referential<const Natural>
+        count)
+{
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-        using namespace ::std;
-        static_assert(
-            is_integral< Natural >::value && is_unsigned< Natural >::value,
-            "Natural:  Unsigned integer type required"
-        );
+    using namespace ::std;
+    static_assert(
+        is_integral<Natural>::value && is_unsigned<Natural>::value,
+        "Natural:  Unsigned integer type required");
 #endif
-        return position -= count;
-    }
+    return position -= count;
+}
 
-    /**
+/**
      * @brief 
      *     Returns the number of elements in the array.
      * @details
@@ -630,28 +604,26 @@ namespace ordination {
      * @return 
      *     The number of elements in the array.
      */
-    template <
-        typename Natural,
-        Natural
-            Length,
-        typename Elemental
-    >
-    static inline Natural
-    Account(
-        Referential< Elemental[Length] >
-            array
-    ) {
+template <
+    typename Natural,
+    Natural
+        Length,
+    typename Elemental>
+static inline Natural
+Account(
+    Referential<Elemental[Length]>
+        array)
+{
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-        using namespace ::std;
-        static_assert(
-            is_integral< Natural >::value && is_unsigned< Natural >::value,
-            "Natural:  Unsigned integer type required"
-        );
+    using namespace ::std;
+    static_assert(
+        is_integral<Natural>::value && is_unsigned<Natural>::value,
+        "Natural:  Unsigned integer type required");
 #endif
-        return Length;
-    }
+    return Length;
+}
 
-    /**
+/**
      * @brief 
      *     Returns the number of elements in the array __after__ position.
      * @details
@@ -672,30 +644,28 @@ namespace ordination {
      * @return 
      *     The number of elements __after__ position.
      */
-    template <
-        typename Natural,
-        Natural
-            Length,
-        typename Elemental
-    >
-    static inline Natural
-    CountIncrement(
-        Referential< const Elemental[Length] >
-            array,
-        Referential< const Locational< Elemental > >
-            position
-    ) {
+template <
+    typename Natural,
+    Natural
+        Length,
+    typename Elemental>
+static inline Natural
+CountIncrement(
+    Referential<const Elemental[Length]>
+        array,
+    Referential<const Locational<Elemental>>
+        position)
+{
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-        using namespace ::std;
-        static_assert(
-            is_integral< Natural >::value && is_unsigned< Natural >::value,
-            "Natural:  Unsigned integer type required"
-        );
+    using namespace ::std;
+    static_assert(
+        is_integral<Natural>::value && is_unsigned<Natural>::value,
+        "Natural:  Unsigned integer type required");
 #endif
-        return static_cast< Natural >(array + Length - position);
-    }
+    return static_cast<Natural>(array + Length - position);
+}
 
-    /**
+/**
      * @brief 
      *     Returns the number of elements in the array __before__ position.
      * @details
@@ -716,30 +686,28 @@ namespace ordination {
      * @return 
      *     The number of elements __before__ position.
      */
-    template <
-        typename Natural,
-        Natural
-            Length,
-        typename Elemental
-    >
-    static inline Natural
-    CountDecrement(
-        Referential< const Elemental[Length] >
-            array,
-        Referential< const Locational< Elemental > >
-            position
-    ) {
+template <
+    typename Natural,
+    Natural
+        Length,
+    typename Elemental>
+static inline Natural
+CountDecrement(
+    Referential<const Elemental[Length]>
+        array,
+    Referential<const Locational<Elemental>>
+        position)
+{
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-        using namespace ::std;
-        static_assert(
-            is_integral< Natural >::value && is_unsigned< Natural >::value,
-            "Natural:  Unsigned integer type required"
-        );
+    using namespace ::std;
+    static_assert(
+        is_integral<Natural>::value && is_unsigned<Natural>::value,
+        "Natural:  Unsigned integer type required");
 #endif
-        return static_cast< Natural >(position - array);
-    }
+    return static_cast<Natural>(position - array);
+}
 
-    /**
+/**
      * @brief 
      *     Vectorial read trajection implementation.
      * @details
@@ -756,19 +724,18 @@ namespace ordination {
      * @tparam Elemental 
      *     Type of the elements.
      */
-    template <
-        typename Natural,
-        Natural
-            Length,
-        typename Elemental
-    >
-    constexpr Vectorial< const Elemental[Length], Natural, const Elemental >
-        ReadVector = {
-            ContainsIndex< Natural, Length, const Elemental >,
-            NaturalGo< Natural, Length, const Elemental >
-        };
+template <
+    typename Natural,
+    Natural
+        Length,
+    typename Elemental>
+constexpr Vectorial<const Elemental[Length], Natural, const Elemental>
+    ReadVector = {
+        ContainsIndex<Natural, Length, const Elemental>,
+        NaturalGo<Natural, Length, const Elemental>
+    };
 
-    /**
+/**
      * @brief 
      *     Vectorial write trajection implementation.
      * @details
@@ -785,19 +752,18 @@ namespace ordination {
      * @tparam Elemental 
      *     Type of the elements.
      */
-    template <
-        typename Natural,
-        Natural
-            Length,
-        typename Elemental
-    >
-    constexpr Vectorial< Elemental[Length], Natural, Elemental >
-        WriteVector = {
-            ContainsIndex< Natural, Length, Elemental >,
-            NaturalGo< Natural, Length, Elemental >
-        };
+template <
+    typename Natural,
+    Natural
+        Length,
+    typename Elemental>
+constexpr Vectorial<Elemental[Length], Natural, Elemental>
+    WriteVector = {
+        ContainsIndex<Natural, Length, Elemental>,
+        NaturalGo<Natural, Length, Elemental>
+    };
 
-    /**
+/**
      * @brief 
      *     Sequential read trajection implementation.
      * @details
@@ -813,21 +779,20 @@ namespace ordination {
      * @tparam Elemental 
      *     Type of the elements.
      */
-    template <
-        typename Natural,
-        Natural
-            Length,
-        typename Elemental
-    >
-    constexpr Scalar< const Elemental[Length], Locational< const Elemental >, Natural, const Elemental >
-        ReadIncrementScale = {
-            Comparison< Locational< const Elemental > >,
-            BeginIncrement< Natural, Length, const Elemental >,
-            TraverseIncrement< Natural, Length, const Elemental >,
-            PositionalGo< Natural, Length, const Elemental >,
-        };
+template <
+    typename Natural,
+    Natural
+        Length,
+    typename Elemental>
+constexpr Scalar<const Elemental[Length], Locational<const Elemental>, Natural, const Elemental>
+    ReadIncrementScale = {
+        Comparison<Locational<const Elemental>>,
+        BeginIncrement<Natural, Length, const Elemental>,
+        TraverseIncrement<Natural, Length, const Elemental>,
+        PositionalGo<Natural, Length, const Elemental>,
+    };
 
-    /**
+/**
      * @brief 
      *     Sequential write trajection implementation.
      * @details
@@ -843,21 +808,20 @@ namespace ordination {
      * @tparam Elemental 
      *     Type of the elements.
      */
-    template <
-        typename Natural,
-        Natural
-            Length,
-        typename Elemental
-    >
-    constexpr Scalar< Elemental[Length], Locational< Elemental >, Natural, Elemental >
-        WriteIncrementScale = {
-            Comparison< Locational< Elemental > >,
-            BeginIncrement< Natural, Length, Elemental >,
-            TraverseIncrement< Natural, Length, Elemental >,
-            PositionalGo< Natural, Length, Elemental >,
-        };
+template <
+    typename Natural,
+    Natural
+        Length,
+    typename Elemental>
+constexpr Scalar<Elemental[Length], Locational<Elemental>, Natural, Elemental>
+    WriteIncrementScale = {
+        Comparison<Locational<Elemental>>,
+        BeginIncrement<Natural, Length, Elemental>,
+        TraverseIncrement<Natural, Length, Elemental>,
+        PositionalGo<Natural, Length, Elemental>,
+    };
 
-    /**
+/**
      * @brief 
      *     Sequential read trajection implementation.
      * @details
@@ -873,21 +837,20 @@ namespace ordination {
      * @tparam Elemental 
      *     Type of the elements.
      */
-    template <
-        typename Natural,
-        Natural
-            Length,
-        typename Elemental
-    >
-    constexpr Scalar< const Elemental[Length], Locational< const Elemental >, Natural, const Elemental >
-        ReadDecrementScale = {
-            Comparison< Locational< const Elemental > >,
-            BeginDecrement< Natural, Length, const Elemental >,
-            TraverseDecrement< Natural, Length, const Elemental >,
-            PositionalGo< Natural, Length, const Elemental >,
-        };
+template <
+    typename Natural,
+    Natural
+        Length,
+    typename Elemental>
+constexpr Scalar<const Elemental[Length], Locational<const Elemental>, Natural, const Elemental>
+    ReadDecrementScale = {
+        Comparison<Locational<const Elemental>>,
+        BeginDecrement<Natural, Length, const Elemental>,
+        TraverseDecrement<Natural, Length, const Elemental>,
+        PositionalGo<Natural, Length, const Elemental>,
+    };
 
-    /**
+/**
      * @brief 
      *     Sequential write trajection implementation.
      * @details
@@ -903,21 +866,20 @@ namespace ordination {
      * @tparam Elemental 
      *     Type of the elements.
      */
-    template <
-        typename Natural,
-        Natural
-            Length,
-        typename Elemental
-    >
-    constexpr Scalar< Elemental[Length], Locational< Elemental >, Natural, Elemental >
-        WriteDecrementScale = {
-            Comparison< Locational< Elemental > >,
-            BeginDecrement< Natural, Length, Elemental >,
-            TraverseDecrement< Natural, Length, Elemental >,
-            PositionalGo< Natural, Length, Elemental >,
-        };
+template <
+    typename Natural,
+    Natural
+        Length,
+    typename Elemental>
+constexpr Scalar<Elemental[Length], Locational<Elemental>, Natural, Elemental>
+    WriteDecrementScale = {
+        Comparison<Locational<Elemental>>,
+        BeginDecrement<Natural, Length, Elemental>,
+        TraverseDecrement<Natural, Length, Elemental>,
+        PositionalGo<Natural, Length, Elemental>,
+    };
 
-    /**
+/**
      * @brief 
      *     Sequential read trajection implementation.
      * @details
@@ -933,19 +895,18 @@ namespace ordination {
      * @tparam Elemental 
      *     Type of the elements.
      */
-    template <
-        typename Natural,
-        Natural
-            Length,
-        typename Elemental
-    >
-    constexpr Lineal< const Elemental[Length], Locational< const Elemental >, Natural, const Elemental >
-        ReadLiner = {
-            ReadIncrementScale< Natural, Length, Elemental >,
-            ReadDecrementScale< Natural, Length, Elemental >
-        };
+template <
+    typename Natural,
+    Natural
+        Length,
+    typename Elemental>
+constexpr Lineal<const Elemental[Length], Locational<const Elemental>, Natural, const Elemental>
+    ReadLiner = {
+        ReadIncrementScale<Natural, Length, Elemental>,
+        ReadDecrementScale<Natural, Length, Elemental>
+    };
 
-    /**
+/**
      * @brief 
      *     Sequential write trajection implementation.
      * @details
@@ -961,19 +922,18 @@ namespace ordination {
      * @tparam Elemental 
      *     Type of the elements.
      */
-    template <
-        typename Natural,
-        Natural
-            Length,
-        typename Elemental
-    >
-    constexpr Lineal< Elemental[Length], Locational< Elemental >, Natural, Elemental >
-        WriteLiner = {
-            WriteIncrementScale< Natural, Length, Elemental >,
-            WriteDecrementScale< Natural, Length, Elemental >
-        };
+template <
+    typename Natural,
+    Natural
+        Length,
+    typename Elemental>
+constexpr Lineal<Elemental[Length], Locational<Elemental>, Natural, Elemental>
+    WriteLiner = {
+        WriteIncrementScale<Natural, Length, Elemental>,
+        WriteDecrementScale<Natural, Length, Elemental>
+    };
 
-    /**
+/**
      * @brief 
      *     Sequential read trajection implementation.
      * @details
@@ -989,23 +949,22 @@ namespace ordination {
      * @tparam Elemental 
      *     Type of the elements.
      */
-    template <
-        typename Natural,
-        Natural
-            Length,
-        typename Elemental
-    >
-    constexpr Directional< const Elemental[Length], Locational< const Elemental >, Natural, const Elemental >
-        ReadIncrementDirection = {
-            ReadIncrementScale< Natural, Length, Elemental >,
-            Begins< Natural, Length, const Elemental >,
-            IncrementTraverses< Natural, Length, const Elemental >,
-            ContainsPosition< Natural, Length, const Elemental >,
-            Account< Natural, Length, const Elemental >,
-            CountIncrement< Natural, Length, const Elemental >
-        };
+template <
+    typename Natural,
+    Natural
+        Length,
+    typename Elemental>
+constexpr Directional<const Elemental[Length], Locational<const Elemental>, Natural, const Elemental>
+    ReadIncrementDirection = {
+        ReadIncrementScale<Natural, Length, Elemental>,
+        Begins<Natural, Length, const Elemental>,
+        IncrementTraverses<Natural, Length, const Elemental>,
+        ContainsPosition<Natural, Length, const Elemental>,
+        Account<Natural, Length, const Elemental>,
+        CountIncrement<Natural, Length, const Elemental>
+    };
 
-    /**
+/**
      * @brief 
      *     Sequential write trajection implementation.
      * @details
@@ -1021,23 +980,22 @@ namespace ordination {
      * @tparam Elemental 
      *     Type of the elements.
      */
-    template <
-        typename Natural,
-        Natural
-            Length,
-        typename Elemental
-    >
-    constexpr Directional< Elemental[Length], Locational< Elemental >, Natural, Elemental >
-        WriteIncrementDirection = {
-            WriteIncrementScale< Natural, Length, Elemental >,
-            Begins< Natural, Length, Elemental >,
-            IncrementTraverses< Natural, Length, Elemental >,
-            ContainsPosition< Natural, Length, Elemental >,
-            Account< Natural, Length, Elemental >,
-            CountIncrement< Natural, Length, Elemental >
-        };
+template <
+    typename Natural,
+    Natural
+        Length,
+    typename Elemental>
+constexpr Directional<Elemental[Length], Locational<Elemental>, Natural, Elemental>
+    WriteIncrementDirection = {
+        WriteIncrementScale<Natural, Length, Elemental>,
+        Begins<Natural, Length, Elemental>,
+        IncrementTraverses<Natural, Length, Elemental>,
+        ContainsPosition<Natural, Length, Elemental>,
+        Account<Natural, Length, Elemental>,
+        CountIncrement<Natural, Length, Elemental>
+    };
 
-    /**
+/**
      * @brief 
      *     Sequential read trajection implementation.
      * @details
@@ -1053,23 +1011,22 @@ namespace ordination {
      * @tparam Elemental 
      *     Type of the elements.
      */
-    template <
-        typename Natural,
-        Natural
-            Length,
-        typename Elemental
-    >
-    constexpr Directional< const Elemental[Length], Locational< const Elemental >, Natural, const Elemental >
-        ReadDecrementDirection = {
-            ReadDecrementScale< Natural, Length, Elemental >,
-            Begins< Natural, Length, const Elemental >,
-            DecrementTraverses< Natural, Length, const Elemental >,
-            ContainsPosition< Natural, Length, const Elemental >,
-            Account< Natural, Length, const Elemental >,
-            CountDecrement< Natural, Length, const Elemental >
-        };
+template <
+    typename Natural,
+    Natural
+        Length,
+    typename Elemental>
+constexpr Directional<const Elemental[Length], Locational<const Elemental>, Natural, const Elemental>
+    ReadDecrementDirection = {
+        ReadDecrementScale<Natural, Length, Elemental>,
+        Begins<Natural, Length, const Elemental>,
+        DecrementTraverses<Natural, Length, const Elemental>,
+        ContainsPosition<Natural, Length, const Elemental>,
+        Account<Natural, Length, const Elemental>,
+        CountDecrement<Natural, Length, const Elemental>
+    };
 
-    /**
+/**
      * @brief 
      *     Sequential write trajection implementation.
      * @details
@@ -1085,23 +1042,22 @@ namespace ordination {
      * @tparam Elemental 
      *     Type of the elements.
      */
-    template <
-        typename Natural,
-        Natural
-            Length,
-        typename Elemental
-    >
-    constexpr Directional< Elemental[Length], Locational< Elemental >, Natural, Elemental >
-        WriteDecrementDirection = {
-            WriteDecrementScale< Natural, Length, Elemental >,
-            Begins< Natural, Length, Elemental >,
-            DecrementTraverses< Natural, Length, Elemental >,
-            ContainsPosition< Natural, Length, Elemental >,
-            Account< Natural, Length, Elemental >,
-            CountDecrement< Natural, Length, Elemental >
-        };
+template <
+    typename Natural,
+    Natural
+        Length,
+    typename Elemental>
+constexpr Directional<Elemental[Length], Locational<Elemental>, Natural, Elemental>
+    WriteDecrementDirection = {
+        WriteDecrementScale<Natural, Length, Elemental>,
+        Begins<Natural, Length, Elemental>,
+        DecrementTraverses<Natural, Length, Elemental>,
+        ContainsPosition<Natural, Length, Elemental>,
+        Account<Natural, Length, Elemental>,
+        CountDecrement<Natural, Length, Elemental>
+    };
 
-    /**
+/**
      * @brief 
      *     Sequential read trajection implementation.
      * @details
@@ -1117,19 +1073,18 @@ namespace ordination {
      * @tparam Elemental 
      *     Type of the elements.
      */
-    template <
-        typename Natural,
-        Natural
-            Length,
-        typename Elemental
-    >
-    constexpr Axial< const Elemental[Length], Locational< const Elemental >, Natural, const Elemental >
-        ReadAxis = {
-            ReadIncrementDirection< Natural, Length, Elemental >,
-            ReadDecrementDirection< Natural, Length, Elemental >
-        };
+template <
+    typename Natural,
+    Natural
+        Length,
+    typename Elemental>
+constexpr Axial<const Elemental[Length], Locational<const Elemental>, Natural, const Elemental>
+    ReadAxis = {
+        ReadIncrementDirection<Natural, Length, Elemental>,
+        ReadDecrementDirection<Natural, Length, Elemental>
+    };
 
-    /**
+/**
      * @brief 
      *     Sequential write trajection implementation.
      * @details
@@ -1145,17 +1100,16 @@ namespace ordination {
      * @tparam Elemental 
      *     Type of the elements.
      */
-    template <
-        typename Natural,
-        Natural
-            Length,
-        typename Elemental
-    >
-    constexpr Axial< Elemental[Length], Locational< Elemental >, Natural, Elemental >
-        WriteAxis = {
-            WriteIncrementDirection< Natural, Length, Elemental >,
-            WriteDecrementDirection< Natural, Length, Elemental >
-        };
+template <
+    typename Natural,
+    Natural
+        Length,
+    typename Elemental>
+constexpr Axial<Elemental[Length], Locational<Elemental>, Natural, Elemental>
+    WriteAxis = {
+        WriteIncrementDirection<Natural, Length, Elemental>,
+        WriteDecrementDirection<Natural, Length, Elemental>
+    };
 
 }
 

@@ -21,13 +21,13 @@
 #include "invocative.def"
 #include <stdio.h>
 
-void call_from_c( const struct invocative_s invocation )
+void call_from_c(const struct invocative_s invocation)
 {
     static unsigned count = 0;
-    invocation.interface( invocation.locality, ++count );
+    invocation.interface(invocation.locality, ++count);
 }
 
-void c_function( unsigned value )
+void c_function(unsigned value)
 {
-    printf( "c_function( %u ), C programming language.\n", value );
+    printf("c_function( %u ), C programming language.\n", value);
 }

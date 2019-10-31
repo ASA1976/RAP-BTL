@@ -20,7 +20,7 @@ extern "C" {
 
 namespace allocation {
 
-    /**
+/**
      * @brief   
      *     Aligned memory allocation implementations using one of either the 
      *     C++17, C11 or MSC CRT library functions.
@@ -33,9 +33,9 @@ namespace allocation {
      *     detected it is used, otherwise C11 or C++17 are used depending on the
      *     presence of the RAPBTL_NO_STD_CPLUSPLUS macro.
      */
-    namespace alignment {
+namespace alignment {
 
-        /**
+    /**
          * @brief
          *     Allocates memory space for an instance of the specified type at a
          *     specified memory boundary.
@@ -57,29 +57,30 @@ namespace allocation {
          *     The same address as stored in the pointer which was bound to 
          *     locality.
          */
-        template <
-            typename Subjective,
-            size_t
-                Alignment = alignof(Subjective),
-            size_t
-                Size = sizeof(Subjective)
-        >
-        static inline const Locational< Subjective >
-        AllocateAlignedElement(
-            Referential< Locational< Subjective > >
-                locality
-        ) {
+    template <
+        typename Subjective,
+        size_t
+            Alignment
+        = alignof(Subjective),
+        size_t
+            Size
+        = sizeof(Subjective)>
+    static inline const Locational<Subjective>
+    AllocateAlignedElement(
+        Referential<Locational<Subjective>>
+            locality)
+    {
 #ifndef _MSC_VER
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-            using namespace ::std;
+        using namespace ::std;
 #endif
-            return locality = static_cast< Locational< Subjective > >(aligned_alloc( Alignment, Size ));
+        return locality = static_cast<Locational<Subjective>>(aligned_alloc(Alignment, Size));
 #else
-            return locality = static_cast< Locational< Subjective > >(_aligned_malloc( Size, Alignment ));
+        return locality = static_cast<Locational<Subjective>>(_aligned_malloc(Size, Alignment));
 #endif
-        }
+    }
 
-        /**
+    /**
          * @brief
          *     Allocates memory space for an array of instances of the specified
          *     type at a specified memory boundary.
@@ -103,31 +104,32 @@ namespace allocation {
          *     The same address as stored in the pointer which was bound to
          *     locality.
          */
-        template <
-            typename Subjective,
-            size_t
-                Alignment = alignof(Subjective),
-            size_t
-                Size = sizeof(Subjective)
-        >
-        static inline const Locational< Subjective >
-        AllocateAlignedArray(
-            Referential< Locational< Subjective > >
-                locality,
-            Referential< const size_t >
-                count
-        ) {
+    template <
+        typename Subjective,
+        size_t
+            Alignment
+        = alignof(Subjective),
+        size_t
+            Size
+        = sizeof(Subjective)>
+    static inline const Locational<Subjective>
+    AllocateAlignedArray(
+        Referential<Locational<Subjective>>
+            locality,
+        Referential<const size_t>
+            count)
+    {
 #ifndef _MSC_VER
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-            using namespace ::std;
+        using namespace ::std;
 #endif
-            return locality = static_cast< Locational< Subjective > >(aligned_alloc( Alignment, count * Size ));
+        return locality = static_cast<Locational<Subjective>>(aligned_alloc(Alignment, count * Size));
 #else
-            return locality = static_cast< Locational< Subjective > >(_aligned_malloc( count * Size, Alignment ));
+        return locality = static_cast<Locational<Subjective>>(_aligned_malloc(count * Size, Alignment));
 #endif
-        }
+    }
 
-        /**
+    /**
          * @brief
          *     Frees the memory space for an aligned instance of the specified 
          *     type.
@@ -144,25 +146,24 @@ namespace allocation {
          * @return
          *     Does not return any value.
          */
-        template <
-            typename Subjective
-        >
-        static inline void
-        DeleteAlignedSubject(
-            Referential< Locational< Subjective > >
-                locality
-        ) {
+    template <
+        typename Subjective>
+    static inline void
+    DeleteAlignedSubject(
+        Referential<Locational<Subjective>>
+            locality)
+    {
 #ifndef _MSC_VER
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-            ::std::
+        ::std::
 #endif
-            free( locality );
+            free(locality);
 #else
-            _aligned_free( locality );
+        _aligned_free(locality);
 #endif
-        }
+    }
 
-        /**
+    /**
          * @brief
          *     Frees the memory space for an aligned instance of the specified
          *     type.
@@ -179,19 +180,18 @@ namespace allocation {
          * @return
          *     Does not return any value.
          */
-        template <
-            typename Subjective
-        >
-        static inline void
-        DeleteAlignedSubjectAndSetToNull(
-            Referential< Locational< Subjective > >
-                locality
-        ) {
-            DeleteAlignedSubject( locality );
-            SetToNull( locality );
-        }
+    template <
+        typename Subjective>
+    static inline void
+    DeleteAlignedSubjectAndSetToNull(
+        Referential<Locational<Subjective>>
+            locality)
+    {
+        DeleteAlignedSubject(locality);
+        SetToNull(locality);
+    }
 
-        /**
+    /**
          * @brief
          *     Default aligned memory allocation.
          * @details
@@ -207,20 +207,21 @@ namespace allocation {
          * @tparam Size
          *     Size of the memory space to be allocated.
          */
-        template <
-            typename Subjective,
-            size_t
-                Alignment = alignof(Subjective),
-            size_t
-                Size = sizeof(Subjective)
-        >
-        constexpr DefaultAllocative< Subjective >
-            DefaultAligned = {
-                AllocateAlignedElement< Subjective, Alignment, Size >, 
-                DeleteAlignedSubjectAndSetToNull< Subjective >
-            };
+    template <
+        typename Subjective,
+        size_t
+            Alignment
+        = alignof(Subjective),
+        size_t
+            Size
+        = sizeof(Subjective)>
+    constexpr DefaultAllocative<Subjective>
+        DefaultAligned = {
+            AllocateAlignedElement<Subjective, Alignment, Size>,
+            DeleteAlignedSubjectAndSetToNull<Subjective>
+        };
 
-        /**
+    /**
          * @brief
          *     Default aligned memory allocation.
          * @details
@@ -236,20 +237,21 @@ namespace allocation {
          * @tparam Size
          *     Size of the memory space to be allocated.
          */
-        template <
-            typename Subjective,
-            size_t
-                Alignment = alignof(Subjective),
-            size_t
-                Size = sizeof(Subjective)
-        >
-        constexpr DefaultAllocative< Subjective >
-            FastDefaultAligned = {
-                AllocateAlignedElement< Subjective, Alignment, Size >, 
-                DeleteAlignedSubject< Subjective >
-            };
+    template <
+        typename Subjective,
+        size_t
+            Alignment
+        = alignof(Subjective),
+        size_t
+            Size
+        = sizeof(Subjective)>
+    constexpr DefaultAllocative<Subjective>
+        FastDefaultAligned = {
+            AllocateAlignedElement<Subjective, Alignment, Size>,
+            DeleteAlignedSubject<Subjective>
+        };
 
-        /**
+    /**
          * @brief
          *     Array aligned memory allocation.
          * @details
@@ -265,20 +267,21 @@ namespace allocation {
          * @tparam Size 
          *     Size of the memory space to be allocated.
          */
-        template <
-            typename Subjective,
-            size_t
-                Alignment = alignof(Subjective),
-            size_t
-                Size = sizeof(Subjective)
-        >
-        constexpr ArrayAllocative< Subjective, size_t >
-            ArrayAligned = {
-                AllocateAlignedArray< Subjective, Alignment, Size >, 
-                DeleteAlignedSubjectAndSetToNull< Subjective >
-            };
+    template <
+        typename Subjective,
+        size_t
+            Alignment
+        = alignof(Subjective),
+        size_t
+            Size
+        = sizeof(Subjective)>
+    constexpr ArrayAllocative<Subjective, size_t>
+        ArrayAligned = {
+            AllocateAlignedArray<Subjective, Alignment, Size>,
+            DeleteAlignedSubjectAndSetToNull<Subjective>
+        };
 
-        /**
+    /**
          * @brief
          *     Array aligned memory allocation.
          * @details
@@ -294,20 +297,21 @@ namespace allocation {
          * @tparam Size
          *     Size of the memory space to be allocated.
          */
-        template <
-            typename Subjective,
-            size_t
-                Alignment = alignof(Subjective),
-            size_t
-                Size = sizeof(Subjective)
-        >
-        constexpr ArrayAllocative< Subjective, size_t >
-            FastArrayAligned = {
-                AllocateAlignedArray< Subjective, Alignment, Size >, 
-                DeleteAlignedSubject< Subjective >
-            };
+    template <
+        typename Subjective,
+        size_t
+            Alignment
+        = alignof(Subjective),
+        size_t
+            Size
+        = sizeof(Subjective)>
+    constexpr ArrayAllocative<Subjective, size_t>
+        FastArrayAligned = {
+            AllocateAlignedArray<Subjective, Alignment, Size>,
+            DeleteAlignedSubject<Subjective>
+        };
 
-    }
+}
 
 }
 

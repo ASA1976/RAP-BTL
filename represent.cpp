@@ -14,47 +14,45 @@ using namespace ::location;
 
 template <
     size_t
-        Length
->
+        Length>
 static inline void
 DisplayHexByteList(
-    Referential< const unsigned char[Length] >
-        bytes
-) {
+    Referential<const unsigned char[Length]>
+        bytes)
+{
     size_t
         count;
     for (count = 0; count < Length; count++) {
-        printf( "%02X", bytes[count] );
+        printf("%02X", bytes[count]);
         if (count < Length - 1)
-            printf( ", " );
+            printf(", ");
     }
 }
 
 template <
-    typename Subjective
->
+    typename Subjective>
 static inline void
 DisplayHexMemory(
-    Referential< const Subjective >
-        subject
-) {
+    Referential<const Subjective>
+        subject)
+{
     using namespace ::representation;
-    DisplayHexByteList( AddressNatively( subject ) );
+    DisplayHexByteList(AddressNatively(subject));
 }
 
-int
-main() {
-    puts( "" );
-    puts( "Literal 7 Hex Byte List: " );
-    DisplayHexMemory( 7 );
-    puts( "" );
-    puts( "" );
-    puts( "Literal true Hex Byte List: " );
-    DisplayHexMemory( true );
-    puts( "" );
-    puts( "" );
-    puts( "Literal 3.14159 Hex Byte List: " );
-    DisplayHexMemory( 3.14159 );
-    puts( "" );
-    puts( "" );
+int main()
+{
+    puts("");
+    puts("Literal 7 Hex Byte List: ");
+    DisplayHexMemory(7);
+    puts("");
+    puts("");
+    puts("Literal true Hex Byte List: ");
+    DisplayHexMemory(true);
+    puts("");
+    puts("");
+    puts("Literal 3.14159 Hex Byte List: ");
+    DisplayHexMemory(3.14159);
+    puts("");
+    puts("");
 }

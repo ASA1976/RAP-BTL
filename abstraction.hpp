@@ -17,9 +17,9 @@
  */
 namespace abstraction {
 
-    using ::location::Referential;
+using ::location::Referential;
 
-    /**
+/**
      * @brief 
      *     Function abstract.
      * @details 
@@ -31,13 +31,12 @@ namespace abstraction {
      * @tparam ...Parametric
      *     Parameter pack which represents the parameter types of the invocation.
      */
-    template <
-        typename Resultant,
-        typename ...Parametric
-    >
-    using Abstract = Resultant( Parametric... );
+template <
+    typename Resultant,
+    typename... Parametric>
+using Abstract = Resultant(Parametric...);
 
-    /**
+/**
      * @brief 
      *     Invokes a lambda or functor with linkage.
      * @details
@@ -60,22 +59,20 @@ namespace abstraction {
      * @return
      *     Result of the invocation.
      */
-    template <
-        typename Procedural,
-        Referential< Procedural >
-            Location,
-        typename Resultant,
-        typename ...Parametric
-    >
-    Resultant
-    AbstractProcedure(
-        Parametric...
-            arguments
-    ) {
-        return Location( arguments... );
-    }
+template <
+    typename Procedural,
+    Referential<Procedural>
+        Location,
+    typename Resultant,
+    typename... Parametric>
+Resultant
+AbstractProcedure(
+    Parametric... arguments)
+{
+    return Location(arguments...);
+}
 
-    /**
+/**
      * @brief 
      *     Invokes a non-static method against an object with linkage.
      * @details
@@ -100,30 +97,27 @@ namespace abstraction {
      * @return
      *     Result of the invocation.
      */
-    template <
-        typename ClassTypical,
-        typename MethodLocational,
-        Referential< ClassTypical >
-            Object,
-        MethodLocational
-            Method,
-        typename Resultant,
-        typename ...Parametric
-    >
-    Resultant
-    AbstractMethod(
-        Parametric...
-            arguments
-    ) {
+template <
+    typename ClassTypical,
+    typename MethodLocational,
+    Referential<ClassTypical>
+        Object,
+    MethodLocational
+        Method,
+    typename Resultant,
+    typename... Parametric>
+Resultant
+AbstractMethod(
+    Parametric... arguments)
+{
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-        static_assert(
-            ::std::is_member_function_pointer< MethodLocational >::value,
-            "MethodLocational:  Pointer to member function type required"
-        );
+    static_assert(
+        ::std::is_member_function_pointer<MethodLocational>::value,
+        "MethodLocational:  Pointer to member function type required");
 #endif
-        static_assert(Method != 0, "Method:  Pointer is null");
-        return (Object.*Method)( arguments... );
-    }
+    static_assert(Method != 0, "Method:  Pointer is null");
+    return (Object.*Method)(arguments...);
+}
 
 }
 

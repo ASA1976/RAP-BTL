@@ -6,7 +6,7 @@
 
 namespace localization {
 
-    /**
+/**
      * @brief
      *     Confers the element at index.
      * @details
@@ -25,30 +25,28 @@ namespace localization {
      * @return
      *     The reference conferment.
      */
-    template <
-        typename Integral,
-        typename Elemental
-    >
-    static inline Conferential< Elemental >
-    IndexicalGoCoherently(
-        Referential< const Locational< Elemental > >
-            locality,
-        Referential< const Integral >
-            index
-    ) {
+template <
+    typename Integral,
+    typename Elemental>
+static inline Conferential<Elemental>
+IndexicalGoCoherently(
+    Referential<const Locational<Elemental>>
+        locality,
+    Referential<const Integral>
+        index)
+{
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-        using namespace ::std;
-        static_assert(
-            is_integral< Integral >::value,
-            "Integral:  Integer type required"
-        );
+    using namespace ::std;
+    static_assert(
+        is_integral<Integral>::value,
+        "Integral:  Integer type required");
 #endif
-        if (!locality)
-            throw locality;
-        return IndexicalGo( locality, index );
-    }
+    if (!locality)
+        throw locality;
+    return IndexicalGo(locality, index);
+}
 
-    /**
+/**
      * @brief
      *     Begins increment trajection.
      * @details
@@ -72,37 +70,34 @@ namespace localization {
      * @return 
      *     A reference to the index as a constant.
      */
-    template <
-        typename Integral,
-        typename Natural,
-        typename Elemental
-    >
-    static inline Referential< const Integral >
-    BeginIncrementCoherently(
-        Referential< const Locational< Elemental > >
-            locality,
-        Referential< Integral >
-            index,
-        Referential< const Natural >
-            count
-    ) {
+template <
+    typename Integral,
+    typename Natural,
+    typename Elemental>
+static inline Referential<const Integral>
+BeginIncrementCoherently(
+    Referential<const Locational<Elemental>>
+        locality,
+    Referential<Integral>
+        index,
+    Referential<const Natural>
+        count)
+{
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-        using namespace ::std;
-        static_assert(
-            is_integral< Integral >::value,
-            "Integral:  Integer type required"
-        );
-        static_assert(
-            is_integral< Natural >::value && is_unsigned< Natural >::value,
-            "Natural:  Unsigned integer type required"
-        );
+    using namespace ::std;
+    static_assert(
+        is_integral<Integral>::value,
+        "Integral:  Integer type required");
+    static_assert(
+        is_integral<Natural>::value && is_unsigned<Natural>::value,
+        "Natural:  Unsigned integer type required");
 #endif
-        if (count < 0)
-            throw count;
-        return index = static_cast< Integral >(count);
-    }
+    if (count < 0)
+        throw count;
+    return index = static_cast<Integral>(count);
+}
 
-    /**
+/**
      * @brief
      *     Begins decrement trajection.
      * @details
@@ -126,37 +121,34 @@ namespace localization {
      * @return 
      *     A reference to the index as a constant.
      */
-    template <
-        typename Integral,
-        typename Natural,
-        typename Elemental
-    >
-    static inline Referential< const Integral >
-    BeginDecrementCoherently(
-        Referential< const Locational< Elemental > >
-            locality,
-        Referential< Integral >
-            index,
-        Referential< const Natural >
-            count
-    ) {
+template <
+    typename Integral,
+    typename Natural,
+    typename Elemental>
+static inline Referential<const Integral>
+BeginDecrementCoherently(
+    Referential<const Locational<Elemental>>
+        locality,
+    Referential<Integral>
+        index,
+    Referential<const Natural>
+        count)
+{
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-        using namespace ::std;
-        static_assert(
-            is_integral< Integral >::value,
-            "Integral:  Integer type required"
-        );
-        static_assert(
-            is_integral< Natural >::value && is_unsigned< Natural >::value,
-            "Natural:  Unsigned integer type required"
-        );
+    using namespace ::std;
+    static_assert(
+        is_integral<Integral>::value,
+        "Integral:  Integer type required");
+    static_assert(
+        is_integral<Natural>::value && is_unsigned<Natural>::value,
+        "Natural:  Unsigned integer type required");
 #endif
-        if (count < 0)
-            throw count;
-        return index = -static_cast< Integral >(count);
-    }
+    if (count < 0)
+        throw count;
+    return index = -static_cast<Integral>(count);
+}
 
-    /**
+/**
      * @brief 
      *     Traverses increment.
      * @details
@@ -179,37 +171,34 @@ namespace localization {
      * @return 
      *     A reference to the index as a constant.
      */
-    template <
-        typename Integral,
-        typename Natural,
-        typename Elemental
-    >
-    static inline Referential< const Integral >
-    TraverseIncrementCoherently(
-        Referential< const Locational< Elemental > >
-            locality,
-        Referential< Integral >
-            index,
-        Referential< const Natural >
-            count
-    ) {
+template <
+    typename Integral,
+    typename Natural,
+    typename Elemental>
+static inline Referential<const Integral>
+TraverseIncrementCoherently(
+    Referential<const Locational<Elemental>>
+        locality,
+    Referential<Integral>
+        index,
+    Referential<const Natural>
+        count)
+{
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-        using namespace ::std;
-        static_assert(
-            is_integral< Integral >::value,
-            "Integral:  Integer type required"
-        );
-        static_assert(
-            is_integral< Natural >::value && is_unsigned< Natural >::value,
-            "Natural:  Unsigned integer type required"
-        );
+    using namespace ::std;
+    static_assert(
+        is_integral<Integral>::value,
+        "Integral:  Integer type required");
+    static_assert(
+        is_integral<Natural>::value && is_unsigned<Natural>::value,
+        "Natural:  Unsigned integer type required");
 #endif
-        if (count < 0)
-            throw count;
-        return index += static_cast< Integral >(count);
-    }
+    if (count < 0)
+        throw count;
+    return index += static_cast<Integral>(count);
+}
 
-    /**
+/**
      * @brief 
      *     Traverses decrement.
      * @details
@@ -232,37 +221,34 @@ namespace localization {
      * @return 
      *     A reference to the index as a constant.
      */
-    template <
-        typename Integral,
-        typename Natural,
-        typename Elemental
-    >
-    static inline Referential< const Integral >
-    TraverseDecrementCoherently(
-        Referential< const Locational< Elemental > >
-            locality,
-        Referential< Integral >
-            index,
-        Referential< const Natural >
-            count
-    ) {
+template <
+    typename Integral,
+    typename Natural,
+    typename Elemental>
+static inline Referential<const Integral>
+TraverseDecrementCoherently(
+    Referential<const Locational<Elemental>>
+        locality,
+    Referential<Integral>
+        index,
+    Referential<const Natural>
+        count)
+{
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-        using namespace ::std;
-        static_assert(
-            is_integral< Integral >::value,
-            "Integral:  Integer type required"
-        );
-        static_assert(
-            is_integral< Natural >::value && is_unsigned< Natural >::value,
-            "Natural:  Unsigned integer type required"
-        );
+    using namespace ::std;
+    static_assert(
+        is_integral<Integral>::value,
+        "Integral:  Integer type required");
+    static_assert(
+        is_integral<Natural>::value && is_unsigned<Natural>::value,
+        "Natural:  Unsigned integer type required");
 #endif
-        if (count < 0)
-            throw count;
-        return index -= static_cast< Integral >(count);
-    }
+    if (count < 0)
+        throw count;
+    return index -= static_cast<Integral>(count);
+}
 
-    /**
+/**
      * @brief 
      *     Sequential read trajection implementation.
      * @details
@@ -278,20 +264,19 @@ namespace localization {
      * @tparam Elemental 
      *     Type of the elements.
      */
-    template <
-        typename Integral,
-        typename Natural,
-        typename Elemental
-    >
-    constexpr Scalar< const Locational< const Elemental >, Integral, Natural, const Elemental >
-        CoherentReadIncrementScale = {
-            Comparison< Integral >,
-            BeginIncrementCoherently< Integral, Natural, const Elemental >,
-            TraverseIncrementCoherently< Integral, Natural, const Elemental >,
-            IndexicalGoCoherently< Integral, const Elemental >
-        };
+template <
+    typename Integral,
+    typename Natural,
+    typename Elemental>
+constexpr Scalar<const Locational<const Elemental>, Integral, Natural, const Elemental>
+    CoherentReadIncrementScale = {
+        Comparison<Integral>,
+        BeginIncrementCoherently<Integral, Natural, const Elemental>,
+        TraverseIncrementCoherently<Integral, Natural, const Elemental>,
+        IndexicalGoCoherently<Integral, const Elemental>
+    };
 
-    /**
+/**
      * @brief 
      *     Sequential write trajection implementation.
      * @details
@@ -307,20 +292,19 @@ namespace localization {
      * @tparam Elemental 
      *     Type of the elements.
      */
-    template <
-        typename Integral,
-        typename Natural,
-        typename Elemental
-    >
-    constexpr Scalar< const Locational< Elemental >, Integral, Natural, Elemental >
-        CoherentWriteIncrementScale = {
-            Comparison< Integral >,
-            BeginIncrementCoherently< Integral, Natural, Elemental >,
-            TraverseIncrementCoherently< Integral, Natural, Elemental >,
-            IndexicalGoCoherently< Integral, Elemental >
-        };
+template <
+    typename Integral,
+    typename Natural,
+    typename Elemental>
+constexpr Scalar<const Locational<Elemental>, Integral, Natural, Elemental>
+    CoherentWriteIncrementScale = {
+        Comparison<Integral>,
+        BeginIncrementCoherently<Integral, Natural, Elemental>,
+        TraverseIncrementCoherently<Integral, Natural, Elemental>,
+        IndexicalGoCoherently<Integral, Elemental>
+    };
 
-    /**
+/**
      * @brief 
      *     Sequential read trajection implementation.
      * @details
@@ -336,20 +320,19 @@ namespace localization {
      * @tparam Elemental 
      *     Type of the elements.
      */
-    template <
-        typename Integral,
-        typename Natural,
-        typename Elemental
-    >
-    constexpr Scalar< const Locational< const Elemental >, Integral, Natural, const Elemental >
-        CoherentReadDecrementScale = {
-            Comparison< Integral >,
-            BeginDecrementCoherently< Integral, Natural, const Elemental >,
-            TraverseDecrementCoherently< Integral, Natural, const Elemental >,
-            IndexicalGoCoherently< Integral, const Elemental >
-        };
+template <
+    typename Integral,
+    typename Natural,
+    typename Elemental>
+constexpr Scalar<const Locational<const Elemental>, Integral, Natural, const Elemental>
+    CoherentReadDecrementScale = {
+        Comparison<Integral>,
+        BeginDecrementCoherently<Integral, Natural, const Elemental>,
+        TraverseDecrementCoherently<Integral, Natural, const Elemental>,
+        IndexicalGoCoherently<Integral, const Elemental>
+    };
 
-    /**
+/**
      * @brief 
      *     Sequential write trajection implementation.
      * @details
@@ -365,20 +348,19 @@ namespace localization {
      * @tparam Elemental 
      *     Type of the elements.
      */
-    template <
-        typename Integral,
-        typename Natural,
-        typename Elemental
-    >
-    constexpr Scalar< const Locational< Elemental >, Integral, Natural, Elemental >
-        CoherentWriteDecrementScale = {
-            Comparison< Integral >,
-            BeginDecrementCoherently< Integral, Natural, Elemental >,
-            TraverseDecrementCoherently< Integral, Natural, Elemental >,
-            IndexicalGoCoherently< Integral, Elemental >
-        };
+template <
+    typename Integral,
+    typename Natural,
+    typename Elemental>
+constexpr Scalar<const Locational<Elemental>, Integral, Natural, Elemental>
+    CoherentWriteDecrementScale = {
+        Comparison<Integral>,
+        BeginDecrementCoherently<Integral, Natural, Elemental>,
+        TraverseDecrementCoherently<Integral, Natural, Elemental>,
+        IndexicalGoCoherently<Integral, Elemental>
+    };
 
-    /**
+/**
      * @brief 
      *     Sequential read trajection implementation.
      * @details
@@ -394,18 +376,17 @@ namespace localization {
      * @tparam Elemental 
      *     Type of the elements.
      */
-    template <
-        typename Integral,
-        typename Natural,
-        typename Elemental
-    >
-    constexpr Lineal< const Locational< const Elemental >, Integral, Natural, const Elemental >
-        CoherentReadLiner = {
-            CoherentReadIncrementScale< Integral, Natural, Elemental >,
-            CoherentReadDecrementScale< Integral, Natural, Elemental >
-        };
+template <
+    typename Integral,
+    typename Natural,
+    typename Elemental>
+constexpr Lineal<const Locational<const Elemental>, Integral, Natural, const Elemental>
+    CoherentReadLiner = {
+        CoherentReadIncrementScale<Integral, Natural, Elemental>,
+        CoherentReadDecrementScale<Integral, Natural, Elemental>
+    };
 
-    /**
+/**
      * @brief 
      *     Sequential write trajection implementation.
      * @details
@@ -421,16 +402,15 @@ namespace localization {
      * @tparam Elemental 
      *     Type of the elements.
      */
-    template <
-        typename Integral,
-        typename Natural,
-        typename Elemental
-    >
-    constexpr Lineal< const Locational< Elemental >, Integral, Natural, Elemental >
-        CoherentWriteLiner = {
-            CoherentWriteIncrementScale< Integral, Natural, Elemental >,
-            CoherentWriteDecrementScale< Integral, Natural, Elemental >
-        };
+template <
+    typename Integral,
+    typename Natural,
+    typename Elemental>
+constexpr Lineal<const Locational<Elemental>, Integral, Natural, Elemental>
+    CoherentWriteLiner = {
+        CoherentWriteIncrementScale<Integral, Natural, Elemental>,
+        CoherentWriteDecrementScale<Integral, Natural, Elemental>
+    };
 
 }
 

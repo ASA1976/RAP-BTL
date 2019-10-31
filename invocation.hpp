@@ -17,13 +17,13 @@
  */
 namespace invocation {
 
-    using ::location::Locational;
-    using ::location::Referential;
-    using ::location::Locate;
-    using ::location::Refer;
-    using ::abstraction::Abstract;
+using ::abstraction::Abstract;
+using ::location::Locate;
+using ::location::Locational;
+using ::location::Refer;
+using ::location::Referential;
 
-    /**
+/**
      * @brief         
      *     Invocation classifier.
      * @details       
@@ -36,19 +36,18 @@ namespace invocation {
      * @tparam ...Parametric
      *     Parameter pack which represents the parameter types of the invocation.
      */
-    template <
-        typename Resultant,
-        typename ...Parametric
-    >
-    struct Invocative {
+template <
+    typename Resultant,
+    typename... Parametric>
+struct Invocative {
 
-        Locational< Abstract< Resultant, const Locational< const void >, Parametric... > >
-            interface; /**< Code pointer to the interface function. */
+    Locational<Abstract<Resultant, const Locational<const void>, Parametric...>>
+        interface; /**< Code pointer to the interface function. */
 
-        Locational< const void >
-            locality; /**< Data pointer to the invocable object */
+    Locational<const void>
+        locality; /**< Data pointer to the invocable object */
 
-        /**
+    /**
          * @brief 
          *     Allows instances of the Invocative type to be directly invoked.
          * @details
@@ -57,17 +56,16 @@ namespace invocation {
          *     Invokes any kind of stored procedure, specific to the invocation
          *     abstract specified by the template arguments.
          */
-        constexpr Resultant
-        operator()( 
-            Parametric... 
-                arguments /**< Argument pack which is expanded for the invocation. */
-        ) const {
-            return interface( locality, arguments... );
-        }
+    constexpr Resultant
+    operator()(
+        Parametric... arguments /**< Argument pack which is expanded for the invocation. */
+        ) const
+    {
+        return interface(locality, arguments...);
+    }
+};
 
-    };
-
-    /**
+/**
      * @brief         
      *     Object oriented non-static method classifier.
      * @details       
@@ -87,30 +85,27 @@ namespace invocation {
      * @tparam ...Parametric
      *     Parameter pack which represents the parameter types of the invocation.
      */
-    template <
-        class ClassTypical,
-        typename MethodLocational,
-        typename Resultant,
-        typename ...Parametric
-    >
-    struct Methodic {
+template <
+    class ClassTypical,
+    typename MethodLocational,
+    typename Resultant,
+    typename... Parametric>
+struct Methodic {
 
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-        static_assert(
-            ::std::is_member_function_pointer< MethodLocational >::value,
-            "MethodLocational:  Pointer to member function type required"
-        );
+    static_assert(
+        ::std::is_member_function_pointer<MethodLocational>::value,
+        "MethodLocational:  Pointer to member function type required");
 #endif
 
-        MethodLocational
-            method; /**< Pointer to qualified member function. */
+    MethodLocational
+        method; /**< Pointer to qualified member function. */
 
-        Locational< ClassTypical >
-            object; /**< Pointer to qualified data object. */
+    Locational<ClassTypical>
+        object; /**< Pointer to qualified data object. */
+};
 
-    };
-
-    /**
+/**
      * @brief 
      *     Invokes the procedural object.
      * @details
@@ -130,25 +125,24 @@ namespace invocation {
      * @return
      *     Result of the invocation.
      */
-    template <
-        typename Procedural,
-        typename Resultant,
-        typename ...Parametric
-    >
-    Resultant
-    InvokeProcedure(
-        const Locational< const void >
-            locality,
-        Parametric...
-            arguments
-    ) {
-        using Specific = const Locational< const Locational< Procedural > >;
-        Specific
-            procedure = static_cast< Specific >(locality);
-        return Refer( Refer( procedure ).to ).to( arguments... );
-    }
+template <
+    typename Procedural,
+    typename Resultant,
+    typename... Parametric>
+Resultant
+InvokeProcedure(
+    const Locational<const void>
+        locality,
+    Parametric... arguments)
+{
+    using Specific = const Locational<const Locational<Procedural>>;
+    Specific
+        procedure
+        = static_cast<Specific>(locality);
+    return Refer(Refer(procedure).to).to(arguments...);
+}
 
-    /**
+/**
      * @brief 
      *     Invokes an object oriented non-static method.
      * @details
@@ -170,26 +164,25 @@ namespace invocation {
      * @return
      *     Result of the invocation.
      */
-    template <
-        class ClassTypical,
-        typename MethodLocational,
-        typename Resultant,
-        typename ...Parametric
-    >
-    Resultant
-    InvokeMethod(
-        const Locational< const void >
-            locality,
-        Parametric...
-            arguments
-    ) {
-        using Specific = const Locational< const Methodic< ClassTypical, MethodLocational, Resultant, Parametric... > >;
-        Specific
-            instance = static_cast< Specific >(locality);
-        return (instance->object->*instance->method)( arguments... );
-    }
+template <
+    class ClassTypical,
+    typename MethodLocational,
+    typename Resultant,
+    typename... Parametric>
+Resultant
+InvokeMethod(
+    const Locational<const void>
+        locality,
+    Parametric... arguments)
+{
+    using Specific = const Locational<const Methodic<ClassTypical, MethodLocational, Resultant, Parametric...>>;
+    Specific
+        instance
+        = static_cast<Specific>(locality);
+    return (instance->object->*instance->method)(arguments...);
+}
 
-   /**
+/**
      * @brief 
      *     Prepares a lambda expression which can later invoke the invocation.
      * @details
@@ -207,26 +200,24 @@ namespace invocation {
      * @return
      *     Lambda expression returned by value.
      */
-    template <
-        typename Resultant,
-        typename ...Parametric
-    >
-    static inline auto
-    PrepareInvocation(
-        Referential< const Invocative< Resultant, Parametric... > >
-            invocation
-    ) {
-        auto 
-            lambda = [invocation]( 
-                Parametric... 
-                    arguments 
-            ) -> Resultant {
-                return invocation( arguments... );
-            };
-        return lambda;
-    }
+template <
+    typename Resultant,
+    typename... Parametric>
+static inline auto
+PrepareInvocation(
+    Referential<const Invocative<Resultant, Parametric...>>
+        invocation)
+{
+    auto
+        lambda
+        = [invocation](
+              Parametric... arguments) -> Resultant {
+        return invocation(arguments...);
+    };
+    return lambda;
+}
 
-    /**
+/**
      * @brief 
      *     Assigns a non-static method instance.
      * @details
@@ -249,25 +240,24 @@ namespace invocation {
      * @return
      *     Methodic instance returned by value.
      */
-    template <
-        class ClassTypical,
-        typename MethodLocational,
-        typename Resultant,
-        typename ...Parametric
-    >
-    static inline Methodic< ClassTypical, MethodLocational, Resultant, Parametric... >
-    AssignClassMethod(
-        MethodLocational
-            method, 
-        Referential< ClassTypical >
-            object
-    ) {
-        const Methodic< ClassTypical, MethodLocational, Resultant, Parametric... >
-            instance = {method, Locate( object ).at};
-        return instance;
-    }
+template <
+    class ClassTypical,
+    typename MethodLocational,
+    typename Resultant,
+    typename... Parametric>
+static inline Methodic<ClassTypical, MethodLocational, Resultant, Parametric...>
+AssignClassMethod(
+    MethodLocational
+        method,
+    Referential<ClassTypical>
+        object)
+{
+    const Methodic<ClassTypical, MethodLocational, Resultant, Parametric...>
+        instance = { method, Locate(object).at };
+    return instance;
+}
 
-    /**
+/**
      * @brief 
      *     Assigns a procedural invocative instance.
      * @details
@@ -288,24 +278,24 @@ namespace invocation {
      * @return
      *     Invocative instance returned by value.
      */
-    template <
-        typename Procedural,
-        typename Resultant,
-        typename ...Parametric
-    >
-    static inline Invocative< Resultant, Parametric... >
-    AssignInvokeProcedure(
-        Referential< const Locational< Procedural > >
-            locality
-    ) {
-        static auto&
-            Invoke = InvokeProcedure< Procedural, Resultant, Parametric... >;
-        const Invocative< Resultant, Parametric... >
-            invocation = {Locate( Invoke ).at, Locate( locality ).at};
-        return invocation;
-    }
+template <
+    typename Procedural,
+    typename Resultant,
+    typename... Parametric>
+static inline Invocative<Resultant, Parametric...>
+AssignInvokeProcedure(
+    Referential<const Locational<Procedural>>
+        locality)
+{
+    static auto&
+        Invoke
+        = InvokeProcedure<Procedural, Resultant, Parametric...>;
+    const Invocative<Resultant, Parametric...>
+        invocation = { Locate(Invoke).at, Locate(locality).at };
+    return invocation;
+}
 
-    /**
+/**
      * @brief 
      *     Assigns a methodic invocative instance.
      * @details
@@ -328,25 +318,25 @@ namespace invocation {
      * @return
      *     Invocative instance returned by value.
      */
-    template <
-        class ClassTypical,
-        typename MethodLocational,
-        typename Resultant,
-        typename ...Parametric
-    >
-    static inline Invocative< Resultant, Parametric... >
-    AssignInvokeMethod(
-        Referential< const Methodic< ClassTypical, MethodLocational, Resultant, Parametric... > >
-            instance
-    ) {
-        static auto&
-            Invoke = InvokeMethod< ClassTypical, MethodLocational, Resultant, Parametric... >;
-        const Invocative< Resultant, Parametric... >
-            invocation = {Locate( Invoke ).at, Locate( instance ).at};
-        return invocation;
-    }
+template <
+    class ClassTypical,
+    typename MethodLocational,
+    typename Resultant,
+    typename... Parametric>
+static inline Invocative<Resultant, Parametric...>
+AssignInvokeMethod(
+    Referential<const Methodic<ClassTypical, MethodLocational, Resultant, Parametric...>>
+        instance)
+{
+    static auto&
+        Invoke
+        = InvokeMethod<ClassTypical, MethodLocational, Resultant, Parametric...>;
+    const Invocative<Resultant, Parametric...>
+        invocation = { Locate(Invoke).at, Locate(instance).at };
+    return invocation;
+}
 
-    /**
+/**
      * @brief 
      *     Assigns an invocative instance for functions (only) which can deduce
      *     the template arguments.
@@ -366,21 +356,21 @@ namespace invocation {
      * @return
      *     Invocative instance returned by value.
      */
-    template <
-        typename Resultant,
-        typename ...Parametric
-    >
-    static inline Invocative< Resultant, Parametric... >
-    AssignInvokeFunction(
-        Referential< const Locational< Abstract< Resultant, Parametric... > > >
-            locality
-    ) {
-        static auto&
-            Invoke = InvokeProcedure< Abstract< Resultant, Parametric... >, Resultant, Parametric... >;
-        const Invocative< Resultant, Parametric... >
-            invocation = {Locate( Invoke ).at, Locate( locality ).at};
-        return invocation;
-    }
+template <
+    typename Resultant,
+    typename... Parametric>
+static inline Invocative<Resultant, Parametric...>
+AssignInvokeFunction(
+    Referential<const Locational<Abstract<Resultant, Parametric...>>>
+        locality)
+{
+    static auto&
+        Invoke
+        = InvokeProcedure<Abstract<Resultant, Parametric...>, Resultant, Parametric...>;
+    const Invocative<Resultant, Parametric...>
+        invocation = { Locate(Invoke).at, Locate(locality).at };
+    return invocation;
+}
 
 }
 

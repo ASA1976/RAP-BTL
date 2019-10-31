@@ -3,7 +3,7 @@
 //
 // Arduino specific code was based on The Arduino Reference analogRead() example
 // https://www.arduino.cc/reference/en/language/functions/analog-io/analogread/
-// The Arduino Reference text is licensed under a Creative Commons 
+// The Arduino Reference text is licensed under a Creative Commons
 // Attribution-Share Alike 3.0 License.
 //
 #define ANALOG_PIN A3
@@ -22,11 +22,12 @@ using write_position_t = WritePositional<SAMPLES_TYPE>;
 
 sequence_t sequence;
 
-static void printSequence() {
+static void printSequence()
+{
     static auto& Reader = ReadIncrementDirection<SIZES_TYPE, SEQUENCE_MAX, SAMPLES_TYPE>;
     read_position_t position;
     if (!Reader.begins(sequence, 0))
-        return; 
+        return;
     Reader.scale.begin(sequence, position, 0);
     while (true) {
         Serial.print(Reader.scale.go(sequence, position).to);
@@ -38,11 +39,13 @@ static void printSequence() {
     Serial.println(F(""));
 }
 
-void setup() {
-    Serial.begin(SERIAL_RATE); 
+void setup()
+{
+    Serial.begin(SERIAL_RATE);
 }
 
-void loop() {
+void loop()
+{
     using namespace sortation;
     using namespace comparison;
     static auto& ArraySequencer = SureSequencer<SIZES_TYPE, SEQUENCE_MAX, SAMPLES_TYPE, MoveElements<SIZES_TYPE, SAMPLES_TYPE>>;

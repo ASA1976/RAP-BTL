@@ -19,7 +19,7 @@
  */
 namespace location {
 
-    /**
+/**
      * @brief
      *     Memory pointer conformity.
      * @details
@@ -31,12 +31,11 @@ namespace location {
      * @tparam Subjective
      *     Type of the object.
      */
-    template <
-        typename Subjective
-    >
-    using Locational = Subjective*;
+template <
+    typename Subjective>
+using Locational = Subjective*;
 
-    /**
+/**
      * @brief
      *     Lvalue reference conformity.
      * @details 
@@ -48,12 +47,11 @@ namespace location {
      * @tparam Subjective 
      *     Type of the object.
      */
-    template <
-        typename Subjective
-    >
-    using Referential = Subjective&;
+template <
+    typename Subjective>
+using Referential = Subjective&;
 
-    /**
+/**
      * @brief
      *     Rvalue reference conformity.
      * @details
@@ -64,12 +62,11 @@ namespace location {
      * @tparam Subjective 
      *     Type of the object.
      */
-    template <
-        typename Subjective
-    >
-    using Deferential = Subjective&&;
+template <
+    typename Subjective>
+using Deferential = Subjective&&;
 
-    /**
+/**
      * @brief
      *     Memory pointer posit conformity.
      * @details 
@@ -81,17 +78,15 @@ namespace location {
      * @tparam Subjective
      *     Type of the object.
      */
-    template <
-        typename Subjective
-    >
-    struct Positive {
+template <
+    typename Subjective>
+struct Positive {
 
-        Locational< Subjective >
-            at; /**< Pointer to the subject. */
+    Locational<Subjective>
+        at; /**< Pointer to the subject. */
+};
 
-    };
-
-    /**
+/**
      * @brief
      *     Lvalue reference conferment conformity.
      * @details 
@@ -103,17 +98,15 @@ namespace location {
      * @tparam Subjective
      *     Type of the object.
      */
-    template <
-        typename Subjective
-    >
-    struct Conferential {
+template <
+    typename Subjective>
+struct Conferential {
 
-        Referential< Subjective >
-            to; /**< Lvalue reference to the subject. */
+    Referential<Subjective>
+        to; /**< Lvalue reference to the subject. */
+};
 
-    };
-
-    /**
+/**
      * @brief
      *     Rvalue reference deferment conformity.
      * @details 
@@ -125,17 +118,15 @@ namespace location {
      * @tparam Subjective
      *     Type of the object.
      */
-    template <
-        typename Subjective
-    >
-    struct Deferent {
+template <
+    typename Subjective>
+struct Deferent {
 
-        Deferential< Subjective >
-            to; /**< Rvalue reference to the subject. */
+    Deferential<Subjective>
+        to; /**< Rvalue reference to the subject. */
+};
 
-    };
-
-    /**
+/**
      * @brief
      *     Locates the memory address of a subject as a posit.
      * @details
@@ -156,20 +147,19 @@ namespace location {
      * @return
      *     The address of the subject as a posit.
      */
-    template <
-        typename Subjective
-    >
-    static inline Positive< Subjective >
-    Locate(
-        Referential< Subjective >
-            subject
-    ) {
-        const Positive< Subjective >
-            posit = {&subject};
-        return posit;
-    }
+template <
+    typename Subjective>
+static inline Positive<Subjective>
+Locate(
+    Referential<Subjective>
+        subject)
+{
+    const Positive<Subjective>
+        posit = { &subject };
+    return posit;
+}
 
-    /**
+/**
      * @brief
      *     Confers an Lvalue reference as a conferment.
      * @details
@@ -189,20 +179,19 @@ namespace location {
      * @return
      *     The reference to the subject as a conferment.
      */
-    template <
-        typename Subjective
-    >
-    static inline Conferential< Subjective >
-    Confer(
-        Referential< Subjective >
-            subject
-    ) {
-        const Conferential< Subjective >
-            conferment = {subject};
-        return conferment;
-    }
+template <
+    typename Subjective>
+static inline Conferential<Subjective>
+Confer(
+    Referential<Subjective>
+        subject)
+{
+    const Conferential<Subjective>
+        conferment = { subject };
+    return conferment;
+}
 
-    /**
+/**
      * @brief
      *     Defers an Rvalue reference as a deferment. 
      * @details
@@ -220,20 +209,19 @@ namespace location {
      * @return
      *     The reference to the subject as a deferment.
      */
-    template <
-        typename Subjective
-    >
-    static inline Deferent< Subjective >
-    Defer(
-        Referential< Subjective >
-            subject
-    ) {
-        const Deferent< Subjective >
-            deferment = {subject};
-        return deferment;
-    }
+template <
+    typename Subjective>
+static inline Deferent<Subjective>
+Defer(
+    Referential<Subjective>
+        subject)
+{
+    const Deferent<Subjective>
+        deferment = { subject };
+    return deferment;
+}
 
-    /**
+/**
      * @brief
      *     Deters a reference to constant subject as a deterrent.
      * @details
@@ -253,20 +241,20 @@ namespace location {
      * @return
      *     The reference to the subject as a deterrent.
      */
-    template <
-        typename Subjective
-    >
-    static inline Conferential< const Subjective >
-    Deter(
-        Referential< Subjective >
-            subject
-    ) {
-		static auto&
-			View = Confer< const Subjective >;
-        return View( subject );
-    }
+template <
+    typename Subjective>
+static inline Conferential<const Subjective>
+Deter(
+    Referential<Subjective>
+        subject)
+{
+    static auto&
+        View
+        = Confer<const Subjective>;
+    return View(subject);
+}
 
-    /**
+/**
      * @brief
      *     Refers to subject provided by location as a conferment.
      * @details
@@ -285,16 +273,15 @@ namespace location {
      * @return
      *     The reference to the subject as a conferment.
      */
-    template <
-        typename Subjective
-    >
-    static inline Conferential< Subjective >
-    Refer(
-        const Locational< Subjective >
-            locality
-    ) {
-        return Confer( *locality );
-    }
+template <
+    typename Subjective>
+static inline Conferential<Subjective>
+Refer(
+    const Locational<Subjective>
+        locality)
+{
+    return Confer(*locality);
+}
 
 }
 

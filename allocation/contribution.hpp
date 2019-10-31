@@ -7,7 +7,7 @@
 
 namespace allocation {
 
-    /**
+/**
      * @brief
      *     Memory pseudo-allocation implementations which use a pre-allocated 
      *     memory pool.
@@ -17,11 +17,11 @@ namespace allocation {
      *     Functions and objectives which make use of memory pools to manage 
      *     pre-allocated memory spaces.
      */
-    namespace contribution {
+namespace contribution {
 
-        using ::ration::contribution::Contributory;
+    using ::ration::contribution::Contributory;
 
-        /**
+    /**
          * @brief
          *     Distributes an element from the data pool.
          * @details
@@ -44,35 +44,33 @@ namespace allocation {
          *     The same address as stored in the pointer which was bound to
          *     locality.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Subjective,
-            Referential< Contributory< Natural, Maximum, Subjective > >
-                Pool
-        >
-        static inline const Locational< Subjective >
-        Assign(
-            Referential< Locational< Subjective > >
-                locality
-        ) {
-            using namespace ::location;
-            using namespace ::ration::contribution;
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Subjective,
+        Referential<Contributory<Natural, Maximum, Subjective>>
+            Pool>
+    static inline const Locational<Subjective>
+    Assign(
+        Referential<Locational<Subjective>>
+            locality)
+    {
+        using namespace ::location;
+        using namespace ::ration::contribution;
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-            using namespace ::std;
-            static_assert(
-                is_integral< Natural >::value && is_unsigned< Natural >::value,
-                "Natural:  Unsigned integer type required"
-            );
+        using namespace ::std;
+        static_assert(
+            is_integral<Natural>::value && is_unsigned<Natural>::value,
+            "Natural:  Unsigned integer type required");
 #endif
-            Natural
-                index;
-            Distribute( Pool, index );
-            return locality = Locate( GoWrite( Pool, index ).to ).at;
-        }
+        Natural
+            index;
+        Distribute(Pool, index);
+        return locality = Locate(GoWrite(Pool, index).to).at;
+    }
 
-        /**
+    /**
          * @brief
          *     Distributes an element from the data pool.
          * @details
@@ -95,38 +93,36 @@ namespace allocation {
          *     The same address as stored in the pointer which was bound to 
          *     locality.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Subjective,
-            Referential< Contributory< Natural, Maximum, Subjective > >
-                Pool
-        >
-        static inline const Locational< Subjective >
-        AssignAssuredly(
-            Referential< Locational< Subjective > >
-                locality
-        ) {
-            using namespace ::location;
-            using namespace ::ration::contribution;
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Subjective,
+        Referential<Contributory<Natural, Maximum, Subjective>>
+            Pool>
+    static inline const Locational<Subjective>
+    AssignAssuredly(
+        Referential<Locational<Subjective>>
+            locality)
+    {
+        using namespace ::location;
+        using namespace ::ration::contribution;
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-            using namespace ::std;
-            static_assert(
-                is_integral< Natural >::value && is_unsigned< Natural >::value,
-                "Natural:  Unsigned integer type required"
-            );
+        using namespace ::std;
+        static_assert(
+            is_integral<Natural>::value && is_unsigned<Natural>::value,
+            "Natural:  Unsigned integer type required");
 #endif
-            Natural
-                index;
-            if (DistributeAssuredly( Pool, index ))
-                locality = Locate( GoWrite( Pool, index ).to ).at;
-            else
-                locality = 0;
-            return locality;
-        }
+        Natural
+            index;
+        if (DistributeAssuredly(Pool, index))
+            locality = Locate(GoWrite(Pool, index).to).at;
+        else
+            locality = 0;
+        return locality;
+    }
 
-        /**
+    /**
          * @brief
          *     Revokes an element and returns it into the data pool.
          * @details
@@ -148,34 +144,32 @@ namespace allocation {
          * @return 
          *     Does not return any value.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Subjective,
-            Referential< Contributory< Natural, Maximum, Subjective > >
-                Pool
-        >
-        static inline void
-        Revoke(
-            Referential< Locational< Subjective > >
-                locality
-        ) {
-            using namespace ::ration::contribution;
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Subjective,
+        Referential<Contributory<Natural, Maximum, Subjective>>
+            Pool>
+    static inline void
+    Revoke(
+        Referential<Locational<Subjective>>
+            locality)
+    {
+        using namespace ::ration::contribution;
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-            using namespace ::std;
-            static_assert(
-                is_integral< Natural >::value && is_unsigned< Natural >::value,
-                "Natural:  Unsigned integer type required"
-            );
+        using namespace ::std;
+        static_assert(
+            is_integral<Natural>::value && is_unsigned<Natural>::value,
+            "Natural:  Unsigned integer type required");
 #endif
-            Natural
-                index;
-            index = static_cast< Natural >(locality - Pool.resource.source);
-            Retribute( Pool, index );
-        }
+        Natural
+            index;
+        index = static_cast<Natural>(locality - Pool.resource.source);
+        Retribute(Pool, index);
+    }
 
-        /**
+    /**
          * @brief
          *     Revokes an element and returns it into the data pool.
          * @details
@@ -197,35 +191,33 @@ namespace allocation {
          * @return
          *     Does not return any value.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Subjective,
-            Referential< Contributory< Natural, Maximum, Subjective > >
-                Pool
-        >
-        static inline void
-        RevokeAssuredly(
-            Referential< Locational< Subjective > >
-                locality
-        ) {
-            using namespace ::ration::contribution;
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Subjective,
+        Referential<Contributory<Natural, Maximum, Subjective>>
+            Pool>
+    static inline void
+    RevokeAssuredly(
+        Referential<Locational<Subjective>>
+            locality)
+    {
+        using namespace ::ration::contribution;
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-            using namespace ::std;
-            static_assert(
-                is_integral< Natural >::value && is_unsigned< Natural >::value,
-                "Natural:  Unsigned integer type required"
-            );
+        using namespace ::std;
+        static_assert(
+            is_integral<Natural>::value && is_unsigned<Natural>::value,
+            "Natural:  Unsigned integer type required");
 #endif
-            Natural
-                index;
-            index = static_cast< Natural >(locality - Pool.resource.source);
-            if (RetributeAssuredly( Pool, index ))
-                locality = 0;
-        }
+        Natural
+            index;
+        index = static_cast<Natural>(locality - Pool.resource.source);
+        if (RetributeAssuredly(Pool, index))
+            locality = 0;
+    }
 
-        /**
+    /**
          * @brief
          *     Fast pool pseudo-allocator.
          * @details
@@ -241,21 +233,20 @@ namespace allocation {
          * @tparam Subjective
          *     Type of the data elements.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Subjective,
-            Referential< Contributory< Natural, Maximum, Subjective > >
-                Pool
-        >
-        constexpr DefaultAllocative< Subjective >
-            FastPoolAllocator = {
-                Assign< Natural, Maximum, Subjective, Pool >,
-                Revoke< Natural, Maximum, Subjective, Pool >
-            };
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Subjective,
+        Referential<Contributory<Natural, Maximum, Subjective>>
+            Pool>
+    constexpr DefaultAllocative<Subjective>
+        FastPoolAllocator = {
+            Assign<Natural, Maximum, Subjective, Pool>,
+            Revoke<Natural, Maximum, Subjective, Pool>
+        };
 
-        /**
+    /**
          * @brief
          *     Safe pool pseudo-allocator.
          * @details
@@ -271,21 +262,20 @@ namespace allocation {
          * @tparam Subjective
          *     Type of the data elements.
          */
-        template <
-            typename Natural,
-            Natural
-                Maximum,
-            typename Subjective,
-            Referential< Contributory< Natural, Maximum, Subjective > >
-                Pool
-        >
-        constexpr DefaultAllocative< Subjective >
-            SurePoolAllocator = {
-                AssignAssuredly< Natural, Maximum, Subjective, Pool >,
-                RevokeAssuredly< Natural, Maximum, Subjective, Pool >
-            };
+    template <
+        typename Natural,
+        Natural
+            Maximum,
+        typename Subjective,
+        Referential<Contributory<Natural, Maximum, Subjective>>
+            Pool>
+    constexpr DefaultAllocative<Subjective>
+        SurePoolAllocator = {
+            AssignAssuredly<Natural, Maximum, Subjective, Pool>,
+            RevokeAssuredly<Natural, Maximum, Subjective, Pool>
+        };
 
-    }
+}
 
 }
 

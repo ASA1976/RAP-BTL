@@ -2,8 +2,8 @@
 // Licensed under the Academic Free License version 3.0
 #ifndef SORTATION_MODULE
 #define SORTATION_MODULE
-#include "trajection.hpp"
 #include "comparison.hpp"
+#include "trajection.hpp"
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
 #include <type_traits>
 #endif
@@ -21,12 +21,12 @@
  */
 namespace sortation {
 
-    using ::location::Referential;
-    using ::trajection::Scalar;
-    using ::trajection::Lineal;
-    using ::comparison::BinaryComparative;
+using ::comparison::BinaryComparative;
+using ::location::Referential;
+using ::trajection::Lineal;
+using ::trajection::Scalar;
 
-    /**
+/**
      * @brief   
      *     Function type which simplifies declaration syntax.
      * @details 
@@ -37,12 +37,11 @@ namespace sortation {
      * @tparam Evaluative
      *     Type of both values being compared.
      */
-    template <
-        typename Evaluative
-    >
-    using Assortive = BinaryComparative< Evaluative, Evaluative >;
+template <
+    typename Evaluative>
+using Assortive = BinaryComparative<Evaluative, Evaluative>;
 
-    /**
+/**
      * @brief
      *     Searches sequentially for some value in a scalar space.
      * @details
@@ -82,44 +81,42 @@ namespace sortation {
      * @return
      *     True if the value sought was found.
      */
-    template <
-        typename Spatial, 
-        typename Positional,
-        typename Natural,
-        typename Evaluative
-    >
-    static inline bool
-    SearchSection(
-        Referential< const Spatial >
-            space,
-        Referential< const Scalar< const Spatial, Positional, Natural, const Evaluative > >
-            scale,
-        Referential< const Evaluative >
-            value,
-        Referential< Positional >
-            position,
-        Natural
-            extent,
-        Referential< Assortive< Evaluative > >
-            equate
-    ) {
+template <
+    typename Spatial,
+    typename Positional,
+    typename Natural,
+    typename Evaluative>
+static inline bool
+SearchSection(
+    Referential<const Spatial>
+        space,
+    Referential<const Scalar<const Spatial, Positional, Natural, const Evaluative>>
+        scale,
+    Referential<const Evaluative>
+        value,
+    Referential<Positional>
+        position,
+    Natural
+        extent,
+    Referential<Assortive<Evaluative>>
+        equate)
+{
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-        using namespace ::std;
-        static_assert(
-            is_integral< Natural >::value && is_unsigned< Natural >::value,
-            "Natural:  Unsigned integer type required"
-        );
+    using namespace ::std;
+    static_assert(
+        is_integral<Natural>::value && is_unsigned<Natural>::value,
+        "Natural:  Unsigned integer type required");
 #endif
-        while (true) {
-            if (equate( scale.go( space, position ).to, value )) 
-                return true;
-            else if (!extent--)
-                return false;
-            scale.traverse( space, position, 1 );
-        }
+    while (true) {
+        if (equate(scale.go(space, position).to, value))
+            return true;
+        else if (!extent--)
+            return false;
+        scale.traverse(space, position, 1);
     }
+}
 
-    /**
+/**
      * @brief
      *     Searches sequentially for some value in a scalar space.
      * @details
@@ -159,38 +156,36 @@ namespace sortation {
      * @return 
      *     True or false if the value was found.
      */
-    template <
-        typename Spatial,
-        typename Positional,
-        typename Natural,
-        typename Evaluative,
-        Referential< Assortive< Evaluative > >
-            Equate,
-        Referential< const Scalar< const Spatial, Positional, Natural, const Evaluative > >
-            Scale
-    >
-    static inline bool
-    SearchSection(
-        Referential< const Spatial >
-            space,
-        Referential< const Evaluative >
-            value,
-        Referential< Positional >
-            position,
-        Natural
-            extent
-    ) {
+template <
+    typename Spatial,
+    typename Positional,
+    typename Natural,
+    typename Evaluative,
+    Referential<Assortive<Evaluative>>
+        Equate,
+    Referential<const Scalar<const Spatial, Positional, Natural, const Evaluative>>
+        Scale>
+static inline bool
+SearchSection(
+    Referential<const Spatial>
+        space,
+    Referential<const Evaluative>
+        value,
+    Referential<Positional>
+        position,
+    Natural
+        extent)
+{
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-        using namespace ::std;
-        static_assert(
-            is_integral< Natural >::value && is_unsigned< Natural >::value,
-            "Natural:  Unsigned integer type required"
-        );
+    using namespace ::std;
+    static_assert(
+        is_integral<Natural>::value && is_unsigned<Natural>::value,
+        "Natural:  Unsigned integer type required");
 #endif
-        return SearchSection( space, Scale, value, position, extent, Equate );
-    }
+    return SearchSection(space, Scale, value, position, extent, Equate);
+}
 
-    /**
+/**
      * @brief
      *     Searches sequentially for some value in a scalar space.
      * @details
@@ -233,44 +228,42 @@ namespace sortation {
      * @return
      *     True or false if the value was found.
      */
-    template <
-        typename Spatial,
-        typename Positional,
-        typename Natural,
-        typename Evaluative
-    >
-    static inline bool
-    SearchSectionIteratively(
-        Referential< const Spatial >
-            space,
-        Referential< const Scalar< const Spatial, Positional, Natural, const Evaluative > >
-            scale,
-        Referential< const Evaluative >
-            value,
-        Referential< Positional >
-            position,
-        Referential< Natural >
-            extent,
-        Referential< Assortive< Evaluative > >
-            equate
-    ) {
+template <
+    typename Spatial,
+    typename Positional,
+    typename Natural,
+    typename Evaluative>
+static inline bool
+SearchSectionIteratively(
+    Referential<const Spatial>
+        space,
+    Referential<const Scalar<const Spatial, Positional, Natural, const Evaluative>>
+        scale,
+    Referential<const Evaluative>
+        value,
+    Referential<Positional>
+        position,
+    Referential<Natural>
+        extent,
+    Referential<Assortive<Evaluative>>
+        equate)
+{
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-        using namespace ::std;
-        static_assert(
-            is_integral< Natural >::value && is_unsigned< Natural >::value,
-            "Natural:  Unsigned integer type required"
-        );
+    using namespace ::std;
+    static_assert(
+        is_integral<Natural>::value && is_unsigned<Natural>::value,
+        "Natural:  Unsigned integer type required");
 #endif
-        while (true) {
-            if (equate( scale.go( space, position ).to, value )) 
-                return true;
-            else if (!extent--)
-                return false;
-            scale.traverse( space, position, 1 );
-        }
+    while (true) {
+        if (equate(scale.go(space, position).to, value))
+            return true;
+        else if (!extent--)
+            return false;
+        scale.traverse(space, position, 1);
     }
+}
 
-    /**
+/**
      * @brief
      *     Searches sequentially for some value in a scalar space.
      * @details
@@ -313,38 +306,36 @@ namespace sortation {
      * @return 
      *     True or false if the value was found.
      */
-    template <
-        typename Spatial,
-        typename Positional,
-        typename Natural,
-        typename Evaluative,
-        Referential< Assortive< Evaluative > >
-            Equate,
-        Referential< const Scalar< const Spatial, Positional, Natural, const Evaluative > >
-            Scale
-    >
-    static inline bool
-    SearchSectionIteratively(
-        Referential< const Spatial >
-            space,
-        Referential< const Evaluative >
-            value,
-        Referential< Positional >
-            position,
-        Referential< Natural >
-            extent
-    ) {
+template <
+    typename Spatial,
+    typename Positional,
+    typename Natural,
+    typename Evaluative,
+    Referential<Assortive<Evaluative>>
+        Equate,
+    Referential<const Scalar<const Spatial, Positional, Natural, const Evaluative>>
+        Scale>
+static inline bool
+SearchSectionIteratively(
+    Referential<const Spatial>
+        space,
+    Referential<const Evaluative>
+        value,
+    Referential<Positional>
+        position,
+    Referential<Natural>
+        extent)
+{
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-        using namespace ::std;
-        static_assert(
-            is_integral< Natural >::value && is_unsigned< Natural >::value,
-            "Natural:  Unsigned integer type required"
-        );
+    using namespace ::std;
+    static_assert(
+        is_integral<Natural>::value && is_unsigned<Natural>::value,
+        "Natural:  Unsigned integer type required");
 #endif
-        return SearchSectionIteratively( space, Scale, value, position, extent, Equate );
-    }
+    return SearchSectionIteratively(space, Scale, value, position, extent, Equate);
+}
 
-    /**
+/**
      * @brief
      *     Searches bisectionally for some value in a linear space.
      * @details
@@ -391,70 +382,68 @@ namespace sortation {
      * @return
      *     True or false if the value was found.
      */
-    template <
-        typename Spatial,
-        typename Positional,
-        typename Natural,
-        typename Evaluative
-    >
-    static inline bool
-    SearchBisection(
-        Referential< const Spatial >
-            space,
-        Referential< const Lineal< const Spatial, Positional, Natural, const Evaluative > >
-            liner,
-        Referential< const Evaluative >
-            value,
-        Referential< Positional >
-            position,
-        Natural
-            before,
-        Natural 
-            after,
-        Referential< Assortive< Evaluative > >
-            equate,
-        Referential< Assortive< Evaluative > >
-            order
-    ) {
+template <
+    typename Spatial,
+    typename Positional,
+    typename Natural,
+    typename Evaluative>
+static inline bool
+SearchBisection(
+    Referential<const Spatial>
+        space,
+    Referential<const Lineal<const Spatial, Positional, Natural, const Evaluative>>
+        liner,
+    Referential<const Evaluative>
+        value,
+    Referential<Positional>
+        position,
+    Natural
+        before,
+    Natural
+        after,
+    Referential<Assortive<Evaluative>>
+        equate,
+    Referential<Assortive<Evaluative>>
+        order)
+{
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-        using namespace ::std;
-        static_assert(
-            is_integral< Natural >::value && is_unsigned< Natural >::value,
-            "Natural:  Unsigned integer type required"
-        );
+    using namespace ::std;
+    static_assert(
+        is_integral<Natural>::value && is_unsigned<Natural>::value,
+        "Natural:  Unsigned integer type required");
 #endif
-        Natural
-            moves,
-            remainder,
-            difference;
-        while (true) {
-            Referential< const Evaluative >
-                element = liner.increment.go( space, position ).to;
-            if (equate( element, value ))
-                return true;
-            if (order( element, value )) {
-                if (!after)
-                    return false;
-                remainder = after % 2;
-                moves = after / 2 + remainder;
-                difference = after - moves;
-                before = difference - (remainder ? 0 : 1);
-                after = difference;
-                liner.increment.traverse( space, position, moves );
-            } else {
-                if (!before)
-                    return false;
-                remainder = before % 2;
-                moves = before / 2 + remainder;
-                difference = before - moves;
-                after = difference - (remainder ? 0 : 1);
-                before = difference;
-                liner.decrement.traverse( space, position, moves );
-            }
+    Natural
+        moves,
+        remainder,
+        difference;
+    while (true) {
+        Referential<const Evaluative>
+            element = liner.increment.go(space, position).to;
+        if (equate(element, value))
+            return true;
+        if (order(element, value)) {
+            if (!after)
+                return false;
+            remainder = after % 2;
+            moves = after / 2 + remainder;
+            difference = after - moves;
+            before = difference - (remainder ? 0 : 1);
+            after = difference;
+            liner.increment.traverse(space, position, moves);
+        } else {
+            if (!before)
+                return false;
+            remainder = before % 2;
+            moves = before / 2 + remainder;
+            difference = before - moves;
+            after = difference - (remainder ? 0 : 1);
+            before = difference;
+            liner.decrement.traverse(space, position, moves);
         }
     }
+}
 
-    /**
+/**
      * @brief
      *     Searches bisectionally for some value in a linear space.
      * @details
@@ -501,42 +490,40 @@ namespace sortation {
      * @return
      *     True or false if the value was found.
      */
-    template <
-        typename Spatial,
-        typename Positional,
-        typename Natural,
-        typename Evaluative,
-        Referential< Assortive< Evaluative > >
-            Equate,
-        Referential< Assortive< Evaluative > >
-            Order,
-        Referential< const Lineal< const Spatial, Positional, Natural, const Evaluative > >
-            Liner
-    >
-    static inline bool
-    SearchBisection(
-        Referential< const Spatial >
-            space,
-        Referential< const Evaluative >
-            value,
-        Referential< Positional >
-            position,
-        Natural
-            before,
-        Natural
-            after
-    ) {
+template <
+    typename Spatial,
+    typename Positional,
+    typename Natural,
+    typename Evaluative,
+    Referential<Assortive<Evaluative>>
+        Equate,
+    Referential<Assortive<Evaluative>>
+        Order,
+    Referential<const Lineal<const Spatial, Positional, Natural, const Evaluative>>
+        Liner>
+static inline bool
+SearchBisection(
+    Referential<const Spatial>
+        space,
+    Referential<const Evaluative>
+        value,
+    Referential<Positional>
+        position,
+    Natural
+        before,
+    Natural
+        after)
+{
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-        using namespace ::std;
-        static_assert(
-            is_integral< Natural >::value && is_unsigned< Natural >::value,
-            "Natural:  Unsigned integer type required"
-        );
+    using namespace ::std;
+    static_assert(
+        is_integral<Natural>::value && is_unsigned<Natural>::value,
+        "Natural:  Unsigned integer type required");
 #endif
-        return SearchBisection( space, Liner, value, position, before, after, Equate, Order );
-    }
+    return SearchBisection(space, Liner, value, position, before, after, Equate, Order);
+}
 
-    /**
+/**
      * @brief
      *     Searches bisectionally for some value in a linear space.
      * @details
@@ -586,78 +573,76 @@ namespace sortation {
      * @return
      *     True or false if the value was found.
      */
-    template <
-        typename Spatial,
-        typename Positional,
-        typename Natural,
-        typename Evaluative
-    >
-    static inline bool
-    SearchBisectionIteratively(
-        Referential< const Spatial >
-            space,
-        Referential< const Lineal< const Spatial, Positional, Natural, const Evaluative > >
-            liner,
-        Referential< const Evaluative >
-            value,
-        Referential< Positional >
-            position,
-        Referential< Natural >
-            before,
-        Referential< Natural >
-            after,
-        Referential< Assortive< Evaluative > >
-            equate,
-        Referential< Assortive< Evaluative > >
-            order
-    ) {
+template <
+    typename Spatial,
+    typename Positional,
+    typename Natural,
+    typename Evaluative>
+static inline bool
+SearchBisectionIteratively(
+    Referential<const Spatial>
+        space,
+    Referential<const Lineal<const Spatial, Positional, Natural, const Evaluative>>
+        liner,
+    Referential<const Evaluative>
+        value,
+    Referential<Positional>
+        position,
+    Referential<Natural>
+        before,
+    Referential<Natural>
+        after,
+    Referential<Assortive<Evaluative>>
+        equate,
+    Referential<Assortive<Evaluative>>
+        order)
+{
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-        using namespace ::std;
-        static_assert(
-            is_integral< Natural >::value && is_unsigned< Natural >::value,
-            "Natural:  Unsigned integer type required"
-        );
+    using namespace ::std;
+    static_assert(
+        is_integral<Natural>::value && is_unsigned<Natural>::value,
+        "Natural:  Unsigned integer type required");
 #endif
-        Natural
-            moves,
-            remainder,
-            difference,
-            min,
-            max;
-        min = before;
-        max = after;
-        while (true) {
-            Referential< const Evaluative >
-                element = liner.increment.go( space, position ).to;
-            if (equate( element, value ))
-                return true;
-            if (order( element, value )) {
-                if (!max)
-                    return false;
-                remainder = max % 2;
-                moves = max / 2 + remainder;
-                before += moves;
-                after -= moves;
-                difference = max - moves;
-                min = difference - (remainder ? 0 : 1);
-                max = difference;
-                liner.increment.traverse( space, position, moves );
-            } else {
-                if (!min)
-                    return false;
-                remainder = min % 2;
-                moves = min / 2 + remainder;
-                before -= moves;
-                after += moves;
-                difference = min - moves;
-                max = difference - (remainder ? 0 : 1);
-                min = difference;
-                liner.decrement.traverse( space, position, moves );
-            }
+    Natural
+        moves,
+        remainder,
+        difference,
+        min,
+        max;
+    min = before;
+    max = after;
+    while (true) {
+        Referential<const Evaluative>
+            element = liner.increment.go(space, position).to;
+        if (equate(element, value))
+            return true;
+        if (order(element, value)) {
+            if (!max)
+                return false;
+            remainder = max % 2;
+            moves = max / 2 + remainder;
+            before += moves;
+            after -= moves;
+            difference = max - moves;
+            min = difference - (remainder ? 0 : 1);
+            max = difference;
+            liner.increment.traverse(space, position, moves);
+        } else {
+            if (!min)
+                return false;
+            remainder = min % 2;
+            moves = min / 2 + remainder;
+            before -= moves;
+            after += moves;
+            difference = min - moves;
+            max = difference - (remainder ? 0 : 1);
+            min = difference;
+            liner.decrement.traverse(space, position, moves);
         }
     }
+}
 
-    /**
+/**
      * @brief
      *     Searches bisectionally for some value in a linear space.
      * @details
@@ -707,42 +692,40 @@ namespace sortation {
      * @return
      *     True or false if the value was found.
      */
-    template <
-        typename Spatial,
-        typename Positional,
-        typename Natural,
-        typename Evaluative,
-        Referential< Assortive< Evaluative > >
-            Equate,
-        Referential< Assortive< Evaluative > >
-            Order,
-        Referential< const Lineal< const Spatial, Positional, Natural, const Evaluative > >
-            Liner
-    >
-    static inline bool
-    SearchBisectionIteratively(
-        Referential< const Spatial >
-            space,
-        Referential< const Evaluative >
-            value,
-        Referential< Positional >
-            position,
-        Referential< Natural >
-            before,
-        Referential< Natural >
-            after
-    ) {
+template <
+    typename Spatial,
+    typename Positional,
+    typename Natural,
+    typename Evaluative,
+    Referential<Assortive<Evaluative>>
+        Equate,
+    Referential<Assortive<Evaluative>>
+        Order,
+    Referential<const Lineal<const Spatial, Positional, Natural, const Evaluative>>
+        Liner>
+static inline bool
+SearchBisectionIteratively(
+    Referential<const Spatial>
+        space,
+    Referential<const Evaluative>
+        value,
+    Referential<Positional>
+        position,
+    Referential<Natural>
+        before,
+    Referential<Natural>
+        after)
+{
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-        using namespace ::std;
-        static_assert(
-            is_integral< Natural >::value && is_unsigned< Natural >::value,
-            "Natural:  Unsigned integer type required"
-        );
+    using namespace ::std;
+    static_assert(
+        is_integral<Natural>::value && is_unsigned<Natural>::value,
+        "Natural:  Unsigned integer type required");
 #endif
-        return SearchBisectionIteratively( space, Liner, value, position, before, after, Equate, Order );
-    }
+    return SearchBisectionIteratively(space, Liner, value, position, before, after, Equate, Order);
+}
 
-    /**
+/**
      * @brief
      *     Searches bisectionally for some value in a scalar space.
      * @details
@@ -786,63 +769,61 @@ namespace sortation {
      * @return
      *     True if the value sought was found.
      */
-    template <
-        typename Spatial, 
-        typename Positional,
-        typename Natural,
-        typename Evaluative
-    >
-    static inline bool
-    SearchScalarBisection(
-        Referential< const Spatial >
-            space,
-        Referential< const Scalar< const Spatial, Positional, Natural, const Evaluative > >
-            scale,
-        Referential< const Evaluative >
-            value,
-        Referential< Positional >
-            position,
-        Natural
-            extent,
-        Referential< Assortive< Evaluative > >
-            equate,
-        Referential< Assortive< Evaluative > >
-            order
-    ) {
+template <
+    typename Spatial,
+    typename Positional,
+    typename Natural,
+    typename Evaluative>
+static inline bool
+SearchScalarBisection(
+    Referential<const Spatial>
+        space,
+    Referential<const Scalar<const Spatial, Positional, Natural, const Evaluative>>
+        scale,
+    Referential<const Evaluative>
+        value,
+    Referential<Positional>
+        position,
+    Natural
+        extent,
+    Referential<Assortive<Evaluative>>
+        equate,
+    Referential<Assortive<Evaluative>>
+        order)
+{
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-        using namespace ::std;
-        static_assert(
-            is_integral< Natural >::value && is_unsigned< Natural >::value,
-            "Natural:  Unsigned integer type required"
-        );
+    using namespace ::std;
+    static_assert(
+        is_integral<Natural>::value && is_unsigned<Natural>::value,
+        "Natural:  Unsigned integer type required");
 #endif
-        Positional
-            first;
-        Natural
-            moves;
-        first = position;
-        while (true) {
+    Positional
+        first;
+    Natural
+        moves;
+    first = position;
+    while (true) {
+        if (!extent)
+            return equate(scale.go(space, position).to, value);
+        moves = extent / 2 + extent % 2;
+        scale.traverse(space, position, moves);
+        if (equate(scale.go(space, position).to, value))
+            return true;
+        if (order(scale.go(space, position).to, value)) {
+            extent -= moves;
             if (!extent)
-                return equate( scale.go( space, position ).to, value );
-            moves = extent / 2 + extent % 2;
-            scale.traverse( space, position, moves );
-            if (equate( scale.go( space, position ).to, value ))
-                return true;
-            if (order( scale.go( space, position ).to, value )) {
-                extent -= moves;
-                if (!extent)
-                    return false;
-                extent--;
-                scale.traverse( space, position, 1 );
-                first = position;
-            } else {
-                extent = moves - 1;
-                position = first;
-            }
+                return false;
+            extent--;
+            scale.traverse(space, position, 1);
+            first = position;
+        } else {
+            extent = moves - 1;
+            position = first;
         }
     }
+}
 
-    /**
+/**
      * @brief
      *     Searches bisectionally for some value in a scalar space.
      * @details
@@ -889,38 +870,36 @@ namespace sortation {
      * @return
      *     True or false if the value was found.
      */
-    template <
-        typename Spatial, 
-        typename Positional,
-        typename Natural,
-        typename Evaluative,
-        Referential< Assortive< Evaluative > >
-            Equate,
-        Referential< Assortive< Evaluative > >
-            Order,
-        Referential< const Scalar< const Spatial, Positional, Natural, const Evaluative > >
-            Scale
-    >
-    static inline bool
-    SearchScalarBisection(
-        Referential< const Spatial >
-            space,
-        Referential< const Evaluative >
-            value,
-        Referential< Positional >
-            position,
-        Natural
-            extent
-    ) {
+template <
+    typename Spatial,
+    typename Positional,
+    typename Natural,
+    typename Evaluative,
+    Referential<Assortive<Evaluative>>
+        Equate,
+    Referential<Assortive<Evaluative>>
+        Order,
+    Referential<const Scalar<const Spatial, Positional, Natural, const Evaluative>>
+        Scale>
+static inline bool
+SearchScalarBisection(
+    Referential<const Spatial>
+        space,
+    Referential<const Evaluative>
+        value,
+    Referential<Positional>
+        position,
+    Natural
+        extent)
+{
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
-        using namespace ::std;
-        static_assert(
-            is_integral< Natural >::value && is_unsigned< Natural >::value,
-            "Natural:  Unsigned integer type required"
-        );
+    using namespace ::std;
+    static_assert(
+        is_integral<Natural>::value && is_unsigned<Natural>::value,
+        "Natural:  Unsigned integer type required");
 #endif
-        return SearchScalarBisection( space, Scale, value, position, extent, Equate, Order );
-    }
+    return SearchScalarBisection(space, Scale, value, position, extent, Equate, Order);
+}
 
 }
 

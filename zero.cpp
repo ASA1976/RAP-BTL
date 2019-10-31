@@ -16,43 +16,45 @@ using namespace ::comparison;
 
 template <
     const size_t
-        Length
->
+        Length>
 static inline bool
 Find(
-    Referential< const char[Length] >
+    Referential<const char[Length]>
         array,
-    Referential< const char >
+    Referential<const char>
         value,
-    Referential< Locational< const char > >
+    Referential<Locational<const char>>
         position,
-    Referential< BinaryComparative< char > >
+    Referential<BinaryComparative<char>>
         equate,
-    Referential< BinaryComparative< char > >
-        order
-) {
+    Referential<BinaryComparative<char>>
+        order)
+{
     using namespace ::ordination;
     using namespace ::sortation;
     static auto&
-        Liner = ReadLiner< size_t, Length, char >;
+        Liner
+        = ReadLiner<size_t, Length, char>;
     static const size_t
-        Before = 0,
+        Before
+        = 0,
         After = Length - 1;
     position = array;
-    return SearchBisection( array, Liner, value, position, Before, After, equate, order );
+    return SearchBisection(array, Liner, value, position, Before, After, equate, order);
 }
 
-int
-main() {
+int main()
+{
     static const char
-        array[] = {'A','C','E','G','I','K','M'},
+        array[]
+        = { 'A', 'C', 'E', 'G', 'I', 'K', 'M' },
         key = 'G';
-    static Locational< const char >
+    static Locational<const char>
         locality;
     static unsigned
         offset;
-    if (!Find( array, key, locality, IsEqual, IsLesser ))
+    if (!Find(array, key, locality, IsEqual, IsLesser))
         return -1;
     offset = locality - array;
-    printf( "array[%u] = '%c'\n", offset, Refer( locality ).to );
+    printf("array[%u] = '%c'\n", offset, Refer(locality).to);
 }

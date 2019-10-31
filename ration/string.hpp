@@ -2,8 +2,8 @@
 // Licensed under the Academic Free License version 3.0
 #ifndef RATION_STRING_MODULE
 #define RATION_STRING_MODULE
-#include "../ration.hpp"
 #include "../location.hpp"
+#include "../ration.hpp"
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
 #include <cstring>
 #else
@@ -14,7 +14,7 @@ extern "C" {
 
 namespace ration {
 
-    /**
+/**
      * @brief
      *     Array sequence memory move implementation using one of either the C 
      *     or C++ standard memmove library function.
@@ -24,27 +24,26 @@ namespace ration {
      *     C or C++ standard library based function which implements the Moving
      *     function type.
      */
-    namespace string {
+namespace string {
 
-        using ::location::Locational;
+    using ::location::Locational;
 
-        template <
-            typename Natural,
-            typename Elemental
-        >
-        static inline bool
-        MoveBytes(
-            Locational< Elemental >
-                from,
-            Locational< Elemental >
-                to,
-            Natural
-                count
-        ) {
-            return memmove( to, from, count * sizeof(Elemental) );
-        }
-
+    template <
+        typename Natural,
+        typename Elemental>
+    static inline bool
+    MoveBytes(
+        Locational<Elemental>
+            from,
+        Locational<Elemental>
+            to,
+        Natural
+            count)
+    {
+        return memmove(to, from, count * sizeof(Elemental));
     }
+
+}
 
 }
 

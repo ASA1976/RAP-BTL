@@ -15,9 +15,9 @@
  */
 namespace traction {
 
-    using ::location::Referential;
+using ::location::Referential;
 
-    /**
+/**
      * @brief   
      *     Stack or queue management classifier.
      * @details 
@@ -31,65 +31,57 @@ namespace traction {
      * @tparam Natural
      *     Type of natural integer used by the space.
      */
-    template <
-        typename Consolidative,
-        typename Positional,
-        typename Natural
-    >
-    struct Tractile {
+template <
+    typename Consolidative,
+    typename Positional,
+    typename Natural>
+struct Tractile {
 
-        Referential< Natural(
-            Referential< const Consolidative >
-                operand
-        ) >
-            survey; /**< Function reference used to report the maximum number
+    Referential<Natural(
+        Referential<const Consolidative>
+            operand)>
+        survey; /**< Function reference used to report the maximum number
                      *   of elements available in the space.
                      */
 
-        Referential< Natural(
-            Referential< const Consolidative >
-                operand
-        ) >
-            account; /**< Function reference used to report the number of 
+    Referential<Natural(
+        Referential<const Consolidative>
+            operand)>
+        account; /**< Function reference used to report the number of 
                       *   currently allotted elements from the space.
                       */
 
-        Referential< bool(
-            Referential< Consolidative >
-                operand,
-            Referential< Positional >
-                position,
-            Referential< const Natural >
-                count
-        ) >
-            protract; /**< Function reference used to request the allotment of
+    Referential<bool(
+        Referential<Consolidative>
+            operand,
+        Referential<Positional>
+            position,
+        Referential<const Natural>
+            count)>
+        protract; /**< Function reference used to request the allotment of
                        *   a specified number of elements from the space, where 
                        *   if the function returns true the position argument 
                        *   will represent the first allotted element in the
                        *   batch.
                        */
 
-        Referential< bool(
-            Referential< Consolidative >
-                operand,
-            Referential< const Natural >
-                count
-        ) >
-            retract; /**< Function reference used to return the specified 
+    Referential<bool(
+        Referential<Consolidative>
+            operand,
+        Referential<const Natural>
+            count)>
+        retract; /**< Function reference used to return the specified 
                       *   number of elements to the space.
                       */
 
-        Referential< bool(
-            Referential< Consolidative >
-                operand
-        ) >
-            contract; /**< Function reference used to retract all allotted
+    Referential<bool(
+        Referential<Consolidative>
+            operand)>
+        contract; /**< Function reference used to retract all allotted
                        *   elements to the space.
                        */
-
-    };
+};
 
 }
 
 #endif
-

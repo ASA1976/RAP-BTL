@@ -16,11 +16,11 @@
  */
 namespace trajection {
 
-    using ::location::Referential;
-    using ::location::Conferential;
-    using ::comparison::Comparative;
+using ::comparison::Comparative;
+using ::location::Conferential;
+using ::location::Referential;
 
-    /**
+/**
      * @brief   
      *     Function type which simplifies declaration syntax.
      * @details 
@@ -34,18 +34,16 @@ namespace trajection {
      * @tparam Natural
      *     Type of natural integer to denote magnitude.
      */
-    template <
-        typename Spatial,
-        typename Natural
-    >
-    using Enterable = bool(
-        Referential< const Spatial >
-            space,
-        Referential< const Natural >
-            offset
-    );
+template <
+    typename Spatial,
+    typename Natural>
+using Enterable = bool(
+    Referential<const Spatial>
+        space,
+    Referential<const Natural>
+        offset);
 
-    /**
+/**
      * @brief
      *     Function type which simplifies declaration syntax.
      * @details 
@@ -58,18 +56,16 @@ namespace trajection {
      * @tparam Positional
      *     Type of positions used by the space.
      */
-    template <
-        typename Spatial,
-        typename Positional
-    >
-    using Attainable = bool(
-        Referential< const Spatial >
-            space,
-        Referential< const Positional >
-            position
-    );
+template <
+    typename Spatial,
+    typename Positional>
+using Attainable = bool(
+    Referential<const Spatial>
+        space,
+    Referential<const Positional>
+        position);
 
-    /**
+/**
      * @brief   
      *     Function type which simplifies declaration syntax.
      * @details 
@@ -85,21 +81,19 @@ namespace trajection {
      * @tparam Natural
      *     Type of natural integer to denote magnitude.
      */
-    template <
-        typename Spatial,
-        typename Positional,
-        typename Natural
-    >
-    using Traversable = bool(
-        Referential< const Spatial >
-            space,
-        Referential< const Positional >
-            position,
-        Referential< const Natural >
-            offset
-    );
+template <
+    typename Spatial,
+    typename Positional,
+    typename Natural>
+using Traversable = bool(
+    Referential<const Spatial>
+        space,
+    Referential<const Positional>
+        position,
+    Referential<const Natural>
+        offset);
 
-    /**
+/**
      * @brief
      *     Function type which simplifies declaration syntax.
      * @details 
@@ -117,21 +111,19 @@ namespace trajection {
      * @tparam Natural
      *     Type of natural integer to denote magnitude.
      */
-    template <
-        typename Spatial,
-        typename Positional,
-        typename Natural
-    >
-    using Trajectile = Referential< const Positional >(
-        Referential< Spatial >
-            space,
-        Referential< Positional >
-            position,
-        Referential< const Natural >
-            offset
-    );
+template <
+    typename Spatial,
+    typename Positional,
+    typename Natural>
+using Trajectile = Referential<const Positional>(
+    Referential<Spatial>
+        space,
+    Referential<Positional>
+        position,
+    Referential<const Natural>
+        offset);
 
-    /**
+/**
      * @brief
      *     Function type which simplifies declaration syntax.
      * @details 
@@ -146,19 +138,17 @@ namespace trajection {
      * @tparam Endemical
      *     Type of subspaces within the space.
      */
-    template <
-        typename Spatial,
-        typename Positional,
-        typename Endemical
-    >
-    using Expositive = Conferential< Endemical >(
-        Referential< Spatial >
-            space,
-        Referential< const Positional >
-            position
-    );
+template <
+    typename Spatial,
+    typename Positional,
+    typename Endemical>
+using Expositive = Conferential<Endemical>(
+    Referential<Spatial>
+        space,
+    Referential<const Positional>
+        position);
 
-    /**
+/**
      * @brief
      *     Function type which simplifies declaration syntax.
      * @details 
@@ -171,16 +161,14 @@ namespace trajection {
      * @tparam Natural
      *     Type of natural integer to denote magnitude.
      */
-    template <
-        typename Spatial,
-        typename Natural
-    >
-    using Aggregate = Natural(
-        Referential< const Spatial >
-            space
-    );
+template <
+    typename Spatial,
+    typename Natural>
+using Aggregate = Natural(
+    Referential<const Spatial>
+        space);
 
-    /**
+/**
      * @brief
      *     Function type which simplifies declaration syntax.
      * @details 
@@ -197,19 +185,17 @@ namespace trajection {
      * @tparam Natural
      *     Type of natural integer to denote magnitude.
      */
-    template <
-        typename Spatial,
-        typename Positional,
-        typename Natural
-    >
-    using Cumulative = Natural(
-        Referential< const Spatial >
-            space,
-        Referential< const Positional >
-            position
-    );
+template <
+    typename Spatial,
+    typename Positional,
+    typename Natural>
+using Cumulative = Natural(
+    Referential<const Spatial>
+        space,
+    Referential<const Positional>
+        position);
 
-    /**
+/**
      * @brief
      *     Vectorial trajection classifier.
      * @details 
@@ -224,31 +210,29 @@ namespace trajection {
      * @tparam Endemical
      *     Type of subspaces within the space.
      */
-    template <
-        typename Spatial,
-        typename Positional,
-        typename Endemical
-    >
-    struct Vectorial {
+template <
+    typename Spatial,
+    typename Positional,
+    typename Endemical>
+struct Vectorial {
 
-        Referential< const Comparative< Positional > >
-            order; /**< Objective reference used to determine the order of
+    Referential<const Comparative<Positional>>
+        order; /**< Objective reference used to determine the order of
                     *   positions.
                     */
 
-        Referential< Attainable< Spatial, Positional > >
-            contains; /**< Function reference used to verify if a position is 
+    Referential<Attainable<Spatial, Positional>>
+        contains; /**< Function reference used to verify if a position is 
                        *   contained within the space. 
                        */
 
-        Referential< Expositive< Spatial, Positional, Endemical > >
-            go; /**< Function reference used to expose a subspace at a 
+    Referential<Expositive<Spatial, Positional, Endemical>>
+        go; /**< Function reference used to expose a subspace at a 
                  *   specified position. 
                  */
+};
 
-    };
-
-    /**
+/**
      * @brief
      *     Scalar trajection classifier.
      * @details 
@@ -266,39 +250,37 @@ namespace trajection {
      * @tparam Endemical
      *     Type of subspaces within the space.
      */
-    template <
-        typename Spatial,
-        typename Positional,
-        typename Natural,
-        typename Endemical
-    >
-    struct Scalar {
+template <
+    typename Spatial,
+    typename Positional,
+    typename Natural,
+    typename Endemical>
+struct Scalar {
 
-        Referential< const Comparative< Positional > >
-            order; /**< Objective reference used to determine the order of
+    Referential<const Comparative<Positional>>
+        order; /**< Objective reference used to determine the order of
                     *   positions.
                     */
 
-        Referential< Trajectile< Spatial, Positional, Natural > >
-            begin, /**< Function reference used to begin sequential 
+    Referential<Trajectile<Spatial, Positional, Natural>>
+        begin, /**< Function reference used to begin sequential 
                     *   trajection through the space at the specified offset
                     *   magnitude, where an offset of zero should set the 
                     *   position to the first valid position.
                     */
-            traverse; /**< Function reference used to traverse sequentially 
+        traverse; /**< Function reference used to traverse sequentially 
                        *   through the space from the specified position by
                        *   the specified offset magnitude, where zero should 
                        *   not modify the position.
                        */
 
-        Referential< Expositive< Spatial, Positional, Endemical > >
-            go; /**< Function reference used to expose a subspace in the 
+    Referential<Expositive<Spatial, Positional, Endemical>>
+        go; /**< Function reference used to expose a subspace in the 
                  *   space at the specified position.
                  */
+};
 
-    };
-
-    /**
+/**
      * @brief   
      *     Lineal trajection classifier.
      * @details 
@@ -316,25 +298,23 @@ namespace trajection {
      * @tparam Endemical
      *     Type of subspaces within the space.
      */
-    template <
-        typename Spatial,
-        typename Positional,
-        typename Natural,
-        typename Endemical
-    >
-    struct Lineal {
+template <
+    typename Spatial,
+    typename Positional,
+    typename Natural,
+    typename Endemical>
+struct Lineal {
 
-        Referential< const Scalar< Spatial, Positional, Natural, Endemical > >
-            increment, /**< Objective reference used for scalar increment
+    Referential<const Scalar<Spatial, Positional, Natural, Endemical>>
+        increment, /**< Objective reference used for scalar increment
                         *   trajection.
                         */
-            decrement; /**< Objective reference used for scalar decrement 
+        decrement; /**< Objective reference used for scalar decrement 
                         *   trajection.
                         */
+};
 
-    };
-
-    /**
+/**
      * @brief
      *     Directional trajection classifier.
      * @details 
@@ -352,56 +332,54 @@ namespace trajection {
      * @tparam Endemical
      *     Type of subspaces within the space.
      */
-    template <
-        typename Spatial,
-        typename Positional,
-        typename Natural,
-        typename Endemical
-    >
-    struct Directional {
+template <
+    typename Spatial,
+    typename Positional,
+    typename Natural,
+    typename Endemical>
+struct Directional {
 
-        Referential< const Scalar< Spatial, Positional, Natural, Endemical > >
-            scale; /**< Objective reference used for scalar trajection
+    Referential<const Scalar<Spatial, Positional, Natural, Endemical>>
+        scale; /**< Objective reference used for scalar trajection
                     *   in this direction.
                     */
 
-        Referential< Enterable< Spatial, Natural > >
-            begins; /**< Function reference used to determine if trajection
+    Referential<Enterable<Spatial, Natural>>
+        begins; /**< Function reference used to determine if trajection
                      *   in this direction can begin at the specified 
                      *   offset magnitude relative to the implied beginning
                      *   of the space, where zero means the first position.
                      */
 
-        Referential< Traversable< Spatial, Positional, Natural > >
-            traverses; /**< Function reference used to determine if the space
+    Referential<Traversable<Spatial, Positional, Natural>>
+        traverses; /**< Function reference used to determine if the space
                         *   can be traversed from the specified position to a 
                         *   position at a specified offset magnitude, where 
                         *   an offset of zero should always return false.
                         */
 
-        Referential< Attainable< Spatial, Positional > >
-            meets; /**< Function reference used to determine if the 
+    Referential<Attainable<Spatial, Positional>>
+        meets; /**< Function reference used to determine if the 
                     *   specified position exists along this direction
                     *   of travel through the space.
                     */
 
-        Referential< Aggregate< Spatial, Natural > >
-            survey; /**< Function reference used to report the total number 
+    Referential<Aggregate<Spatial, Natural>>
+        survey; /**< Function reference used to report the total number 
                      *   of valid positions along this direction of travel
                      *   through the space.
                      */
 
-        Referential< Cumulative< Spatial, Positional, Natural > >
-            count; /**< Function reference used to report the relative 
+    Referential<Cumulative<Spatial, Positional, Natural>>
+        count; /**< Function reference used to report the relative 
                     *   number of remaining valid positions __after__ the
                     *   specified position along this direction of travel
                     *   through the space, where zero should be returned
                     *   if the specified position is the last one.
                     */
+};
 
-    };
-
-    /**
+/**
      * @brief   
      *     Axial trajection classifier.
      * @details 
@@ -419,23 +397,21 @@ namespace trajection {
      * @tparam Endemical 
      *     Type of subspaces within the space.
      */
-    template <
-        typename Spatial,
-        typename Positional,
-        typename Natural,
-        typename Endemical
-    >
-    struct Axial {
+template <
+    typename Spatial,
+    typename Positional,
+    typename Natural,
+    typename Endemical>
+struct Axial {
 
-        Referential< const Directional< Spatial, Positional, Natural, Endemical > >
-            increment, /**< Objective reference used for directional increment
+    Referential<const Directional<Spatial, Positional, Natural, Endemical>>
+        increment, /**< Objective reference used for directional increment
                         *   trajection.
                         */
-            decrement; /**< Objective reference used for directional decrement
+        decrement; /**< Objective reference used for directional decrement
                         *   trajection.
                         */
-
-    };
+};
 
 }
 
