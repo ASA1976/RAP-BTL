@@ -14,9 +14,7 @@ extern "C" {
 using namespace ::location;
 using namespace ::comparison;
 
-template <
-    const size_t
-        Length>
+template <const size_t Length>
 static inline bool
 Find(
     Referential<const char[Length]>
@@ -34,6 +32,8 @@ Find(
     using namespace ::sortation;
     static auto& Liner = ReadLiner<size_t, Length, char>;
     static const size_t Before = 0, After = Length - 1;
+    if (Length < 1)
+        return false;
     position = array;
     return SearchBisection(array, Liner, value, position, Before, After, equate, order);
 }
