@@ -20,34 +20,23 @@ c_function(unsigned);
 
 struct Class {
 
-    void
-    operator()(
-        unsigned
-            value) const
+    void operator()(unsigned value) const
     {
         printf("Class::operator()( %u ), C++ programming language.\n", value);
     }
 
-    static void
-    Static(
-        unsigned
-            value)
+    static void Static(unsigned value)
     {
         printf("Class::Static( %u ), C++ programming language\n", value);
     }
 
-    void
-    method(
-        unsigned
-            value) const
+    void method(unsigned value) const
     {
         printf("Class::method( %u ), C++ programming language.\n", value);
     }
 };
 
-void Function(
-    unsigned
-        value)
+void Function(unsigned value)
 {
     printf("Function( %u ), C++ programming language.\n", value);
 }

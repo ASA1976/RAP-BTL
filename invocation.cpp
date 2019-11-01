@@ -14,34 +14,23 @@ using namespace ::invocation;
 
 struct Class {
 
-    void
-    operator()(
-        unsigned
-            value) const
+    void operator()(unsigned value) const
     {
         printf("Class::operator()( %u )\n", value);
     }
 
-    static void
-    Static(
-        unsigned
-            value)
+    static void Static(unsigned value)
     {
         printf("Class::Static( %u )\n", value);
     }
 
-    void
-    method(
-        unsigned
-            value) const
+    void method(unsigned value) const
     {
         printf("Class::method( %u )\n", value);
     }
 };
 
-void Function(
-    unsigned
-        value)
+void Function(unsigned value)
 {
     printf("Function( %u )\n", value);
 }
