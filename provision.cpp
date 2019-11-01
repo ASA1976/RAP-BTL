@@ -28,8 +28,7 @@ DemonstrateElevation(
     Referential<const Tractile<Spatial, Positional, unsigned>>
         elevator)
 {
-    Positional
-        position;
+    Positional position;
     printf("Stack limit: %u\n", elevator.survey(stack));
     elevator.protract(stack, position, 2);
     printf("Stack size: %u\n", elevator.account(stack));
@@ -47,8 +46,7 @@ DemonstrateContraction(
     Referential<const Tractile<Spatial, Positional, unsigned>>
         contractor)
 {
-    Positional
-        position;
+    Positional position;
     printf("Queue limit: %u\n", contractor.survey(queue));
     contractor.protract(queue, position, 2);
     printf("Queue size: %u\n", contractor.account(queue));
@@ -66,8 +64,7 @@ DemonstrateContribution(
     Referential<const Tributary<Spatial, Positional, unsigned>>
         contributor)
 {
-    Positional
-        position;
+    Positional position;
     printf("Pool limit: %u\n", contributor.survey(pool));
     contributor.distribute(pool, position);
     printf("Pool size: %u\n", contributor.account(pool));
@@ -81,24 +78,16 @@ DemonstrateRation()
     using namespace ::ration::elevation;
     using namespace ::ration::contraction;
     using namespace ::ration::contribution;
-    static const unsigned
-        Maximum
-        = 16;
-    static auto&
-        StackElevator
-        = SureElevator<unsigned, Maximum, int>;
-    static auto&
-        QueueContractor
-        = SureContractor<unsigned, Maximum, int>;
-    static auto&
-        PoolContributor
-        = SureContributor<unsigned, Maximum, int>;
-    Elevatory<unsigned, Maximum, int>
-        stack;
-    Contractional<unsigned, Maximum, int>
-        queue;
-    Contributory<unsigned, Maximum, int>
-        pool;
+    static const unsigned Maximum = 16;
+    using StackElevatory = Elevatory<unsigned, Maximum, int>;
+    using QueueContractional = Contractional<unsigned, Maximum, int>;
+    using PoolContributory = Contributory<unsigned, Maximum, int>;
+    static auto& StackElevator = SureElevator<unsigned, Maximum, int>;
+    static auto& QueueContractor = SureContractor<unsigned, Maximum, int>;
+    static auto& PoolContributor = SureContributor<unsigned, Maximum, int>;
+    StackElevatory stack;
+    QueueContractional queue;
+    PoolContributory pool;
     Initialize(stack);
     Initialize(queue);
     Initialize(pool);
@@ -114,22 +103,14 @@ DemonstrateJunction()
     using namespace ::junction::provision::elevation;
     using namespace ::junction::provision::contraction;
     using namespace ::junction::provision::contribution;
-    static const unsigned
-        Maximum
-        = 16;
-    static auto&
-        StackElevator
-        = DoubleElevator<unsigned, int>;
-    static auto&
-        QueueContractor
-        = DoubleContractor<unsigned, int>;
-    static auto&
-        PoolContributor
-        = DoubleContributor<unsigned, int>;
-    DoublyJunctive<unsigned, int>
-        list;
-    DoublyNodal<int>
-        nodes[Maximum];
+    static const unsigned Maximum = 16;
+    using ListJunctive = DoublyJunctive<unsigned, int>;
+    using ListNodal = DoublyNodal<int>;
+    static auto& StackElevator = DoubleElevator<unsigned, int>;
+    static auto& QueueContractor = DoubleContractor<unsigned, int>;
+    static auto& PoolContributor = DoubleContributor<unsigned, int>;
+    ListJunctive list;
+    ListNodal nodes[Maximum];
     Initialize(list);
     IntegrateNodes(list, nodes);
     DemonstrateElevation(list, StackElevator);

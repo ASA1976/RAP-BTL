@@ -15,8 +15,8 @@
 #include "ration/consecution.hpp"
 #include "sortation.hpp"
 
-using namespace ration::consecution;
-using sequence_t = Compact<SIZES_TYPE, SEQUENCE_MAX, SAMPLES_TYPE>;
+using namespace ration;
+using sequence_t = Resourceful<SIZES_TYPE, SEQUENCE_MAX, SAMPLES_TYPE>;
 using read_position_t = ReadPositional<SAMPLES_TYPE>;
 using write_position_t = WritePositional<SAMPLES_TYPE>;
 
@@ -24,6 +24,7 @@ sequence_t sequence;
 
 static void printSequence()
 {
+    using namespace ration::consecution;
     static auto& Reader = ReadIncrementDirection<SIZES_TYPE, SEQUENCE_MAX, SAMPLES_TYPE>;
     read_position_t position;
     if (!Reader.begins(sequence, 0))
@@ -48,6 +49,7 @@ void loop()
 {
     using namespace sortation;
     using namespace comparison;
+    using namespace ration::consecution;
     static auto& ArraySequencer = SureSequencer<SIZES_TYPE, SEQUENCE_MAX, SAMPLES_TYPE, MoveElements<SIZES_TYPE, SAMPLES_TYPE>>;
     static auto& Search = SearchBisection<sequence_t, read_position_t, SIZES_TYPE, SAMPLES_TYPE>;
     static auto& Liner = ReadLiner<SIZES_TYPE, SEQUENCE_MAX, SAMPLES_TYPE>;

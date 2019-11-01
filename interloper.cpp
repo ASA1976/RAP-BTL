@@ -12,11 +12,11 @@ extern "C" {
 
 using namespace ::invocation;
 
-extern "C" Abstract<void, const Invocative<void, unsigned>>
-    call_from_c;
+extern "C" void
+call_from_c(const Invocative<void, unsigned>);
 
-extern "C" Abstract<void, unsigned>
-    c_function;
+extern "C" void
+c_function(unsigned);
 
 struct Class {
 
@@ -54,30 +54,17 @@ void Function(
 
 int main()
 {
-    static auto
-        lambda
-        = [](
-              unsigned
-                  value) -> void {
+    static auto lambda = [](unsigned value) -> void {
         printf("main::lambda( %u ), C++ programming language.\n", value);
     };
-    const Class
-        object;
+    const Class object;
     using ObjectTypical = decltype(object);
     using MethodLocational = decltype(&Class::method);
     using LambdaTypical = decltype(lambda);
-    static auto&
-        AssignFunctor
-        = AssignInvokeProcedure<ObjectTypical, void, unsigned>;
-    static auto&
-        AssignLambda
-        = AssignInvokeProcedure<LambdaTypical, void, unsigned>;
-    static auto&
-        AssignMethod
-        = AssignInvokeMethod<ObjectTypical, MethodLocational, void, unsigned>;
-    static auto&
-        AssignObject
-        = AssignClassMethod<ObjectTypical, MethodLocational, void, unsigned>;
+    static auto& AssignFunctor = AssignInvokeProcedure<ObjectTypical, void, unsigned>;
+    static auto& AssignLambda = AssignInvokeProcedure<LambdaTypical, void, unsigned>;
+    static auto& AssignMethod = AssignInvokeMethod<ObjectTypical, MethodLocational, void, unsigned>;
+    static auto& AssignObject = AssignClassMethod<ObjectTypical, MethodLocational, void, unsigned>;
     call_from_c(AssignInvokeFunction(&c_function));
     call_from_c(AssignFunctor(&object));
     call_from_c(AssignInvokeFunction(&Class::Static));

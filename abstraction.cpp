@@ -46,11 +46,7 @@ Bind(
     const Locational<const char>
         identifier)
 {
-    auto
-        lambda
-        = [identifier](
-              unsigned
-                  value) -> void {
+    auto lambda = [identifier](unsigned value) -> void {
         printf("Bind::lambda[");
         if (identifier)
             printf("\"%s\"", identifier);
@@ -61,10 +57,7 @@ Bind(
     return lambda;
 }
 
-auto
-    LambdaNull
-    = Bind(0),
-    LambdaNamed = Bind("Named");
+auto LambdaNull = Bind(0), LambdaNamed = Bind("Named");
 
 void Function(
     unsigned
@@ -78,9 +71,7 @@ Demonstrate(
     Referential<Abstract<void, unsigned>>
         invoke)
 {
-    static unsigned
-        count
-        = 0;
+    static unsigned count = 0;
     invoke(++count);
 }
 
@@ -89,18 +80,10 @@ int main()
     using LambdaTypical = decltype(LambdaNull);
     using ObjectTypical = decltype(Object);
     using MethodLocational = decltype(&Class::method);
-    static auto&
-        WrapFunctor
-        = AbstractProcedure<ObjectTypical, Object, void, unsigned>;
-    static auto&
-        WrapMethod
-        = AbstractMethod<ObjectTypical, MethodLocational, Object, &Class::method, void, unsigned>;
-    static auto&
-        WrapLambdaNull
-        = AbstractProcedure<LambdaTypical, LambdaNull, void, unsigned>;
-    static auto&
-        WrapLambdaNamed
-        = AbstractProcedure<LambdaTypical, LambdaNamed, void, unsigned>;
+    static auto& WrapFunctor = AbstractProcedure<ObjectTypical, Object, void, unsigned>;
+    static auto& WrapMethod = AbstractMethod<ObjectTypical, MethodLocational, Object, &Class::method, void, unsigned>;
+    static auto& WrapLambdaNull = AbstractProcedure<LambdaTypical, LambdaNull, void, unsigned>;
+    static auto& WrapLambdaNamed = AbstractProcedure<LambdaTypical, LambdaNamed, void, unsigned>;
     Demonstrate(WrapFunctor);
     Demonstrate(Class::Static);
     Demonstrate(WrapMethod);

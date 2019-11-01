@@ -34,8 +34,7 @@ OutputIntegers(
     Locational<FILE>
         handle)
 {
-    Positional
-        position;
+    Positional position;
     if (!direction.begins(list, 0))
         return false;
     direction.scale.begin(list, position, 0);
@@ -57,35 +56,22 @@ int main(
     using namespace ::junction::collection;
     using namespace ::comparison;
     using IntegerNodal = SinglyNodal<int>;
+    using IntegerJunctive = SinglyJunctive<unsigned, int>;
     enum Erroneous {
         NumberOfArguments = -1,
         InputFile = -2,
         OutputFile = -3,
         IntegerCount = -4
     };
-    static const unsigned
-        CacheLimit
-        = 0x2000,
-        CacheReserve = 0x80;
-    static const unsigned
-        MaximumNodes
-        = (CacheLimit - CacheReserve) / sizeof(IntegerNodal);
-    static auto&
-        // Problem 388684
-        Composer
-        = OrderedSingleComposer<unsigned, int, IsEqual, IsLesser, StaticAdjunct>;
-    static auto&
-        Increment
-        = ReadIncrementSingleDirection<unsigned, int>;
-    Locational<FILE>
-        input,
-        output;
-    SinglyJunctive<unsigned, int>
-        set;
-    IntegerNodal
-        nodes[MaximumNodes];
-    int
-        value;
+    static const unsigned CacheLimit = 0x2000, CacheReserve = 0x80;
+    static const unsigned MaximumNodes = (CacheLimit - CacheReserve) / sizeof(IntegerNodal);
+    // Problem 388684
+    static auto& Composer = OrderedSingleComposer<unsigned, int, IsEqual, IsLesser, StaticAdjunct>;
+    static auto& Increment = ReadIncrementSingleDirection<unsigned, int>;
+    Locational<FILE> input, output;
+    IntegerJunctive set;
+    IntegerNodal nodes[MaximumNodes];
+    int value;
     output = stdout;
     switch (argc) {
     case 3:

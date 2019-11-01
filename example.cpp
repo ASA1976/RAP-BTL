@@ -28,19 +28,18 @@ using namespace ::consecution;
 using namespace ::junction;
 using namespace ::junction::stdlib;
 
+using MessageLocal = const Locational<const char>;
+using MapComplementary = Complementary<char, int>;
+using ListAdjunctive = DoublyAdjunctive<size_t, char>;
+using MapAdjunctive = DoublyAdjunctive<size_t, MapComplementary>;
+
 template bool ::comparison::IsLesser(Referential<const char>, Referential<const char>);
 template bool ::comparison::IsEqual(Referential<const char>, Referential<const char>);
 template bool ::ration::string::MoveBytes(Locational<char>, Locational<char>, size_t);
-template bool ::ration::string::MoveBytes(Locational<Complementary<char, int>>, Locational<Complementary<char, int>>, size_t);
+template bool ::ration::string::MoveBytes(Locational<MapComplementary>, Locational<MapComplementary>, size_t);
 
-using MessageLocal = const Locational<const char>;
-using MapComplementary = Complementary<char, int>;
-
-constexpr DoublyAdjunctive<size_t, char>
-    ListAdjunct = DefaultMallocDoubleAdjunct<size_t, char>;
-
-constexpr DoublyAdjunctive<size_t, MapComplementary>
-    MapAdjunct = DefaultMallocDoubleAdjunct<size_t, MapComplementary>;
+constexpr ListAdjunctive ListAdjunct = DefaultMallocDoubleAdjunct<size_t, char>;
+constexpr MapAdjunctive MapAdjunct = DefaultMallocDoubleAdjunct<size_t, MapComplementary>;
 
 template <
     typename Spatial,
@@ -97,19 +96,10 @@ ProceedSequence(
         conjoiner)
 {
     using namespace ::segmentation;
-    static const Natural
-        Length
-        = 7;
-    static auto&
-        Direction
-        = ReadIncrementDirection<Natural, Length, char>;
-    static const char
-        Message[Length]
-        = { 'M', 'E', 'S', 'S', 'A', 'G', 'E' };
-    static const Natural
-        First
-        = 0,
-        Last = Length - 1;
+    static const Natural Length = 7;
+    static auto& Direction = ReadIncrementDirection<Natural, Length, char>;
+    static const char Message[Length] = { 'M', 'E', 'S', 'S', 'A', 'G', 'E' };
+    static const Natural First = 0, Last = Length - 1;
     sequencer.secede(list);
     sequencer.antecede(list, Length);
     return conjoiner.proceed(list, Direction, Message, First, Last);
@@ -126,8 +116,7 @@ DisplayCharacters(
     Referential<const Directional<const Spatial, Positional, Natural, const char>>
         direction)
 {
-    Positional
-        position;
+    Positional position;
     if (!direction.begins(list, 0))
         return false;
     direction.scale.begin(list, position, 0);
@@ -152,15 +141,12 @@ DisplayMappings(
     Referential<const Directional<const Spatial, Positional, Natural, const MapComplementary>>
         direction)
 {
-    Positional
-        position;
+    Positional position;
     if (!direction.begins(map, 0))
         return false;
     direction.scale.begin(map, position, 0);
     while (true) {
-        auto&
-            mapping
-            = direction.scale.go(map, position).to;
+        auto& mapping = direction.scale.go(map, position).to;
         printf("%c=%d", mapping.relator, mapping.value);
         if (!direction.traverses(map, position, 1))
             break;
@@ -182,39 +168,19 @@ DemonstrateRation()
     using namespace ::ration::association::collection;
     using namespace ::ration::string;
     using namespace ::comparison;
-    constexpr size_t
-        Length
-        = 16;
-    static auto&
-        ListSequencer
-        = SureSequencer<size_t, Length, char, MoveBytes>;
-    static auto&
-        ListConjoiner
-        = SureConjoiner<MessageLocal, size_t, size_t, size_t, Length, char, MoveBytes>;
-    static auto&
-        ListSelector
-        = SureSelector<size_t, Length, char, IsEqual, MoveBytes>;
-    static auto&
-        ListCollector
-        = SureCollector<size_t, Length, char, IsEqual, IsLesser, MoveBytes>;
-    static auto&
-        ListAxis
-        = ReadAxis<size_t, Length, char>;
-    static auto&
-        MapCorrelator
-        = SureCorrelator<size_t, Length, char, int, IsEqual, MoveBytes>;
-    static auto&
-        MapAssociator
-        = SureAssociator<size_t, Length, char, int, IsEqual, IsLesser, MoveBytes>;
-    static auto&
-        MapDirection
-        = ReadIncrementDirection<size_t, Length, MapComplementary>;
-    Resourceful<size_t, Length, char>
-        list,
-        base,
-        relative;
-    AssociativelyResourceful<size_t, Length, char, int>
-        map;
+    constexpr size_t Length = 16;
+    using ListResourceful = Resourceful<size_t, Length, char>;
+    using MapResourceful = AssociativelyResourceful<size_t, Length, char, int>;
+    static auto& ListSequencer = SureSequencer<size_t, Length, char, MoveBytes>;
+    static auto& ListConjoiner = SureConjoiner<MessageLocal, size_t, size_t, size_t, Length, char, MoveBytes>;
+    static auto& ListSelector = SureSelector<size_t, Length, char, IsEqual, MoveBytes>;
+    static auto& ListCollector = SureCollector<size_t, Length, char, IsEqual, IsLesser, MoveBytes>;
+    static auto& ListAxis = ReadAxis<size_t, Length, char>;
+    static auto& MapCorrelator = SureCorrelator<size_t, Length, char, int, IsEqual, MoveBytes>;
+    static auto& MapAssociator = SureAssociator<size_t, Length, char, int, IsEqual, IsLesser, MoveBytes>;
+    static auto& MapDirection = ReadIncrementDirection<size_t, Length, MapComplementary>;
+    ListResourceful list, base, relative;
+    MapResourceful map;
     Initialize(list);
     Initialize(base);
     Initialize(relative);
@@ -272,36 +238,18 @@ DemonstrateJunction()
     using namespace ::junction::association::selection;
     using namespace ::junction::association::collection;
     using namespace ::comparison;
-    static auto&
-        ListSequencer
-        = DoubleSequencer<size_t, char, ListAdjunct>;
-    static auto&
-        ListConjoiner
-        = DoubleConjoiner<MessageLocal, size_t, size_t, size_t, char, ListAdjunct>;
-    static auto&
-        ListSelector
-        = DoubleSelector<size_t, char, IsEqual, ListAdjunct>;
-    static auto&
-        ListCollector
-        = DoubleCollector<size_t, char, IsEqual, IsLesser, ListAdjunct>;
-    static auto&
-        ListAxis
-        = ReadDoubleAxis<size_t, char>;
-    static auto&
-        MapCorrelator
-        = DoubleCorrelator<size_t, char, int, IsEqual, MapAdjunct>;
-    static auto&
-        MapAssociator
-        = DoubleAssociator<size_t, char, int, IsEqual, IsLesser, MapAdjunct>;
-    static auto&
-        MapDirection
-        = ReadIncrementDoubleDirection<size_t, MapComplementary>;
-    DoublyJunctive<size_t, char>
-        list,
-        base,
-        relative;
-    AssociativelyDoubleJunctive<size_t, char, int>
-        map;
+    using ListJunctive = DoublyJunctive<size_t, char>;
+    using MapJunctive = AssociativelyDoubleJunctive<size_t, char, int>;
+    static auto& ListSequencer = DoubleSequencer<size_t, char, ListAdjunct>;
+    static auto& ListConjoiner = DoubleConjoiner<MessageLocal, size_t, size_t, size_t, char, ListAdjunct>;
+    static auto& ListSelector = DoubleSelector<size_t, char, IsEqual, ListAdjunct>;
+    static auto& ListCollector = DoubleCollector<size_t, char, IsEqual, IsLesser, ListAdjunct>;
+    static auto& ListAxis = ReadDoubleAxis<size_t, char>;
+    static auto& MapCorrelator = DoubleCorrelator<size_t, char, int, IsEqual, MapAdjunct>;
+    static auto& MapAssociator = DoubleAssociator<size_t, char, int, IsEqual, IsLesser, MapAdjunct>;
+    static auto& MapDirection = ReadIncrementDoubleDirection<size_t, MapComplementary>;
+    ListJunctive list, base, relative;
+    MapJunctive map;
     Initialize(list);
     Initialize(base);
     Initialize(relative);

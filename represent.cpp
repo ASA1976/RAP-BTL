@@ -20,8 +20,7 @@ DisplayHexByteList(
     Referential<const unsigned char[Length]>
         bytes)
 {
-    size_t
-        count;
+    size_t count;
     for (count = 0; count < Length; count++) {
         printf("%02X", bytes[count]);
         if (count < Length - 1)
@@ -43,15 +42,15 @@ DisplayHexMemory(
 int main()
 {
     puts("");
-    puts("Literal 7 Hex Byte List: ");
+    puts("Literal value 7 Hex Byte List: ");
     DisplayHexMemory(7);
     puts("");
     puts("");
-    puts("Literal true Hex Byte List: ");
+    puts("Literal value true Hex Byte List: ");
     DisplayHexMemory(true);
     puts("");
     puts("");
-    puts("Literal 3.14159 Hex Byte List: ");
+    puts("Literal value 3.14159 Hex Byte List: ");
     DisplayHexMemory(3.14159);
     puts("");
     puts("");

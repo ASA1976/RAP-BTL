@@ -51,38 +51,23 @@ Demonstrate(
     Referential<const Invocative<void, unsigned>>
         invoke)
 {
-    static unsigned
-        count
-        = 0;
+    static unsigned count = 0;
     invoke(++count);
 }
 
 int main()
 {
-    static auto
-        lambda
-        = [](
-              unsigned
-                  value) -> void {
+    static auto lambda = [](unsigned value) -> void {
         printf("main::lambda( %u )\n", value);
     };
-    const Class
-        object;
+    const Class object;
     using ObjectTypical = decltype(object);
     using MethodLocational = decltype(&Class::method);
     using LambdaTypical = decltype(lambda);
-    static auto&
-        AssignLambda
-        = AssignInvokeProcedure<LambdaTypical, void, unsigned>;
-    static auto&
-        AssignFunctor
-        = AssignInvokeProcedure<ObjectTypical, void, unsigned>;
-    static auto&
-        AssignMethod
-        = AssignInvokeMethod<ObjectTypical, MethodLocational, void, unsigned>;
-    static auto&
-        AssignObject
-        = AssignClassMethod<ObjectTypical, MethodLocational, void, unsigned>;
+    static auto& AssignLambda = AssignInvokeProcedure<LambdaTypical, void, unsigned>;
+    static auto& AssignFunctor = AssignInvokeProcedure<ObjectTypical, void, unsigned>;
+    static auto& AssignMethod = AssignInvokeMethod<ObjectTypical, MethodLocational, void, unsigned>;
+    static auto& AssignObject = AssignClassMethod<ObjectTypical, MethodLocational, void, unsigned>;
     Demonstrate(AssignFunctor(&object));
     Demonstrate(AssignInvokeFunction(&Class::Static));
     Demonstrate(AssignMethod(AssignObject(&Class::method, object)));

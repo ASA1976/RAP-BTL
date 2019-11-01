@@ -36,10 +36,8 @@ OutputIntegers(
     Locational<FILE>
         handle)
 {
-    Positional
-        position;
-    Natural
-        index;
+    Positional position;
+    Natural index;
     scale.begin(list, position, 0);
     for (index = 0; index < count; index++) {
         fprintf(handle, "%d\n", scale.go(list, position).to);
@@ -64,28 +62,13 @@ int main(
         OutputFile = -3,
         IntegerCount = -4
     };
-    static const unsigned
-        CacheLimit
-        = 0x2000,
-        CacheReserve = 0x80;
-    static const unsigned
-        MaximumIntegers
-        = (CacheLimit - CacheReserve) / sizeof(int);
-    static auto&
-        Increment
-        = ReadIncrementScale<unsigned, unsigned, int>;
-    static auto&
-        SearchIntegers
-        = SearchBisectionIteratively<IntegerSegmental, unsigned, unsigned, int, IsEqual, IsLesser, ReadLiner<unsigned, MaximumIntegers, int>>;
-    Locational<FILE>
-        input,
-        output;
-    int
-        value,
-        integers[MaximumIntegers];
-    unsigned
-        count,
-        position, before, after;
+    static const unsigned CacheLimit = 0x2000, CacheReserve = 0x80;
+    static const unsigned MaximumIntegers = (CacheLimit - CacheReserve) / sizeof(int);
+    static auto& Increment = ReadIncrementScale<unsigned, unsigned, int>;
+    static auto& SearchIntegers = SearchBisectionIteratively<IntegerSegmental, unsigned, unsigned, int, IsEqual, IsLesser, ReadLiner<unsigned, MaximumIntegers, int>>;
+    Locational<FILE> input, output;
+    int value, integers[MaximumIntegers];
+    unsigned count, position, before, after;
     output = stdout;
     switch (argc) {
     case 3:

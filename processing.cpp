@@ -16,30 +16,18 @@ using namespace ::procession;
 using namespace ::invocation;
 using namespace ::ration::contraction;
 
-constexpr unsigned
-    MaximumEvents
-    = 127;
+constexpr unsigned MaximumEvents = 127;
 
 using EventSchedular = Contractional<unsigned, MaximumEvents, Contextual<unsigned>>;
 using Demonstrative = Abstract<void>;
+using EventTractile = Tractile<EventSchedular, unsigned, unsigned>;
 
-constexpr auto&
-    EventVisitor
-    = WriteIncrementDirection<unsigned, MaximumEvents, Contextual<unsigned>>;
-constexpr Tractile<EventSchedular, unsigned, unsigned>
-    EventContractor = Contractor<unsigned, MaximumEvents, Contextual<unsigned>>;
-auto&
-    PreparePrintString
-    = PrepareSchedule<EventSchedular, unsigned, unsigned, const char, EventContractor, unsigned>;
-auto&
-    PreparePrintNatural
-    = PrepareSchedule<EventSchedular, unsigned, unsigned, const unsigned, EventContractor, unsigned>;
-auto&
-    PrepareRunFunction
-    = PrepareSchedule<EventSchedular, unsigned, unsigned, Demonstrative, EventContractor, unsigned>;
-auto&
-    PrepareProcessEvent
-    = PrepareProcessOneEvent<EventSchedular, unsigned, unsigned, EventContractor, unsigned>;
+constexpr auto& EventVisitor = WriteIncrementDirection<unsigned, MaximumEvents, Contextual<unsigned>>;
+constexpr EventTractile EventContractor = SureContractor<unsigned, MaximumEvents, Contextual<unsigned>>;
+auto& PreparePrintString = PrepareSchedule<EventSchedular, unsigned, unsigned, const char, EventContractor, unsigned>;
+auto& PreparePrintNatural = PrepareSchedule<EventSchedular, unsigned, unsigned, const unsigned, EventContractor, unsigned>;
+auto& PrepareRunFunction = PrepareSchedule<EventSchedular, unsigned, unsigned, Demonstrative, EventContractor, unsigned>;
+auto& PrepareProcessEvent = PrepareProcessOneEvent<EventSchedular, unsigned, unsigned, EventContractor, unsigned>;
 
 struct Coordinate {
 
@@ -61,8 +49,7 @@ PrintString(
         identifier)
 {
     using Specific = Locational<const Locational<const char>>;
-    const Locational<const char>
-        text = Refer(static_cast<Specific>(locality)).to;
+    const Locational<const char> text = Refer(static_cast<Specific>(locality)).to;
     printf("PrintString( \"%s\", %u )\n", text, identifier);
 }
 
@@ -74,8 +61,7 @@ PrintNatural(
         identifier)
 {
     using Specific = Locational<const Locational<const unsigned>>;
-    Referential<const unsigned>
-        value = Refer(Refer(static_cast<Specific>(locality)).to).to;
+    Referential<const unsigned> value = Refer(Refer(static_cast<Specific>(locality)).to).to;
     printf("PrintNatural( %u, %u )\n", value, identifier);
 }
 
@@ -87,8 +73,7 @@ RunFunction(
         identifier)
 {
     using Specific = Locational<const Locational<Demonstrative>>;
-    const Locational<Demonstrative>
-        function = Refer(Refer(static_cast<Specific>(locality)).to).to;
+    const Locational<Demonstrative> function = Refer(Refer(static_cast<Specific>(locality)).to).to;
     printf("RunFunction( ");
     if (function)
         function();
@@ -121,11 +106,8 @@ ScheduleSampleEvents(
         FirstObjective = Function1,
         SecondObjective = Function2,
         NullObjective = 0;
-    static const unsigned
-        QueueSize
-        = sizeof(EventSchedular);
-    static const Locational<const unsigned>
-        QueueLocality = Locate(QueueSize).at;
+    static const unsigned QueueSize = sizeof(EventSchedular);
+    static const Locational<const unsigned> QueueLocality = Locate(QueueSize).at;
     printf("Scheduling sample event(s), ");
     coordinator.schedule_print_string(HelloLocality);
     coordinator.schedule_run_function(FirstObjective);
@@ -141,8 +123,7 @@ ProcessSampleEvents(
     Referential<const Invocative<bool, unsigned>>
         process_event)
 {
-    unsigned
-        count;
+    unsigned count;
     puts("Processing event(s):");
     puts("--------------------");
     for (count = 0; process_event(count); count++)
@@ -153,51 +134,28 @@ ProcessSampleEvents(
 
 int main()
 {
-    EventSchedular
-        event_queue;
-    auto
-        print_string_lambda
-        = PreparePrintString(EventVisitor, event_queue, PrintString);
-    auto
-        print_natural_lambda
-        = PreparePrintNatural(EventVisitor, event_queue, PrintNatural);
-    auto
-        run_function_lambda
-        = PrepareRunFunction(EventVisitor, event_queue, RunFunction);
-    auto
-        process_event_lambda
-        = PrepareProcessEvent(EventVisitor, event_queue);
+    EventSchedular event_queue;
+    auto print_string_lambda = PreparePrintString(EventVisitor, event_queue, PrintString);
+    auto print_natural_lambda = PreparePrintNatural(EventVisitor, event_queue, PrintNatural);
+    auto run_function_lambda = PrepareRunFunction(EventVisitor, event_queue, RunFunction);
+    auto process_event_lambda = PrepareProcessEvent(EventVisitor, event_queue);
     using PrintStringTypical = decltype(print_string_lambda);
     using PrintNaturalTypical = decltype(print_natural_lambda);
     using RunFunctionTypical = decltype(run_function_lambda);
     using ProcessEventTypical = decltype(process_event_lambda);
-    static auto&
-        AssignPrintString
-        = AssignInvokeProcedure<PrintStringTypical, bool, Referential<const Locational<const char>>>;
-    static auto&
-        AssignPrintNatural
-        = AssignInvokeProcedure<PrintNaturalTypical, bool, Referential<const Locational<const unsigned>>>;
-    static auto&
-        AssignRunFunction
-        = AssignInvokeProcedure<RunFunctionTypical, bool, Referential<const Locational<Demonstrative>>>;
-    static auto&
-        AssignProcessEvent
-        = AssignInvokeProcedure<ProcessEventTypical, bool, unsigned>;
-    const Locational<PrintStringTypical>
-        print_string_locality = &print_string_lambda;
-    const Locational<PrintNaturalTypical>
-        print_natural_locality = &print_natural_lambda;
-    const Locational<RunFunctionTypical>
-        run_function_locality = &run_function_lambda;
-    const Locational<ProcessEventTypical>
-        process_event_locality = &process_event_lambda;
-    const Coordinate
-        coordinator
-        = {
-              AssignPrintString(print_string_locality),
-              AssignPrintNatural(print_natural_locality),
-              AssignRunFunction(run_function_locality)
-          };
+    static auto& AssignPrintString = AssignInvokeProcedure<PrintStringTypical, bool, Referential<const Locational<const char>>>;
+    static auto& AssignPrintNatural = AssignInvokeProcedure<PrintNaturalTypical, bool, Referential<const Locational<const unsigned>>>;
+    static auto& AssignRunFunction = AssignInvokeProcedure<RunFunctionTypical, bool, Referential<const Locational<Demonstrative>>>;
+    static auto& AssignProcessEvent = AssignInvokeProcedure<ProcessEventTypical, bool, unsigned>;
+    const Locational<PrintStringTypical> print_string_locality = &print_string_lambda;
+    const Locational<PrintNaturalTypical> print_natural_locality = &print_natural_lambda;
+    const Locational<RunFunctionTypical> run_function_locality = &run_function_lambda;
+    const Locational<ProcessEventTypical> process_event_locality = &process_event_lambda;
+    const Coordinate coordinator = {
+        AssignPrintString(print_string_locality),
+        AssignPrintNatural(print_natural_locality),
+        AssignRunFunction(run_function_locality)
+    };
     Initialize(event_queue);
     ScheduleSampleEvents(coordinator);
     ProcessSampleEvents(AssignProcessEvent(process_event_locality));

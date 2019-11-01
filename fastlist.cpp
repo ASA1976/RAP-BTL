@@ -14,17 +14,13 @@ extern "C" {
 using namespace ::junction;
 using namespace ::junction::contribution;
 using namespace ::consecution;
+constexpr unsigned short NodePoolSize = 3;
+using PoolNodal = Contributory<unsigned short, NodePoolSize, SinglyNodal<char>>;
+using PoolAdjunctive = SinglyAdjunctive<unsigned short, char>;
 
-const unsigned short
-    NodePoolSize
-    = 3;
-
-Contributory<unsigned short, NodePoolSize, SinglyNodal<char>>
-    NodePool;
-
+PoolNodal NodePool;
 // Use SurePoolSingleAdjunct if overflowing the pool is a possibility
-constexpr SinglyAdjunctive<unsigned short, char>
-    NodePoolAdjunct = FastPoolSingleAdjunct<unsigned short, NodePoolSize, char, NodePool>;
+constexpr PoolAdjunctive NodePoolAdjunct = FastPoolSingleAdjunct<unsigned short, NodePoolSize, char, NodePool>;
 
 template <
     typename Spatial,
@@ -37,8 +33,7 @@ DisplayCharacters(
     Referential<const Directional<const Spatial, Positional, Natural, const char>>
         direction)
 {
-    Positional
-        position;
+    Positional position;
     if (!direction.begins(list, 0))
         return false;
     direction.scale.begin(list, position, 0);
@@ -83,14 +78,10 @@ DemonstrateSequence(
 int main()
 {
     using namespace ::junction::consecution;
-    static auto&
-        Sequencer
-        = SingleSequencer<unsigned short, char, NodePoolAdjunct>;
-    static auto&
-        Increment
-        = ReadIncrementSingleDirection<unsigned short, char>;
-    SinglyJunctive<unsigned short, char>
-        list;
+    using ListJunctive = SinglyJunctive<unsigned short, char>;
+    static auto& Sequencer = SingleSequencer<unsigned short, char, NodePoolAdjunct>;
+    static auto& Increment = ReadIncrementSingleDirection<unsigned short, char>;
+    ListJunctive list;
     Initialize(list);
     DemonstrateSequence(list, Sequencer, Increment);
 }
