@@ -9,43 +9,39 @@
  * @brief         
  *     Linked list management and trajection implementation.
  * @details       
- *     Association
- *     -----------
  *     Linked list management and trajection implementation.
  */
 namespace junction {
 
+using ::location::Conferential;
+using ::location::Locational;
+using ::location::Positive;
+using ::location::Referential;
+using ::comparison::Comparative;
+using ::comparison::Equative;
+using ::comparison::Relational;
+using ::trajection::Axial;
+using ::trajection::Directional;
+using ::trajection::Lineal;
+using ::trajection::Scalar;
+using ::trajection::Vectorial;
 using ::allocation::Allocative;
 using ::allocation::CopyClaimable;
 using ::allocation::DefaultClaimable;
 using ::allocation::DefaultDisclaimable;
 using ::allocation::FastCopyNew;
 using ::allocation::FastDefaultNew;
-using ::comparison::Comparative;
-using ::comparison::Equative;
-using ::comparison::Relational;
-using ::location::Conferential;
-using ::location::Locational;
-using ::location::Positive;
-using ::location::Referential;
-using ::trajection::Axial;
-using ::trajection::Directional;
-using ::trajection::Lineal;
-using ::trajection::Scalar;
-using ::trajection::Vectorial;
 
 /**
-     * @brief 
-     *     Linked list node conformity.
-     * @details  
-     *     Conformation Template
-     *     ---------------------
-     *     This type is used to represent a linked list node.
-     * @tparam Connective
-     *     Type of the node linkage.
-     * @tparam Elemental
-     *     Type of the elements.
-     */
+ * @brief 
+ *     Linked list node conformity.
+ * @details  
+ *     This type is used to represent a linked list node.
+ * @tparam Connective
+ *     Type of the node linkage.
+ * @tparam Elemental
+ *     Type of the elements.
+ */
 template <
     typename Connective,
     typename Elemental>
@@ -59,17 +55,14 @@ struct Nodal {
 };
 
 /**
-     * @brief 
-     *     Single link conformity.
-     * @details  
-     *     Conformation Template
-     *     ---------------------
-     *     This type is used to represent a singly connective list node link.
-     * @tparam Elemental
-     *     Type of the elements.
-     */
-template <
-    typename Elemental>
+ * @brief 
+ *     Single link conformity.
+ * @details  
+ *     This type is used to represent a singly connective list node link.
+ * @tparam Elemental
+ *     Type of the elements.
+ */
+template <typename Elemental>
 struct SinglyLinked {
 
     Locational<Nodal<SinglyLinked<Elemental>, Elemental>>
@@ -77,17 +70,14 @@ struct SinglyLinked {
 };
 
 /**
-     * @brief 
-     *     Double link conformity.
-     * @details  
-     *     Conformation Template
-     *     ---------------------
-     *     This type is used to represent a doubly connective list node link.
-     * @tparam Elemental
-     *     Type of the elements.
-     */
-template <
-    typename Elemental>
+ * @brief 
+ *     Double link conformity.
+ * @details  
+ *     This type is used to represent a doubly connective list node link.
+ * @tparam Elemental
+ *     Type of the elements.
+ */
+template <typename Elemental>
 struct DoublyLinked {
 
     Locational<Nodal<DoublyLinked<Elemental>, Elemental>>
@@ -96,47 +86,39 @@ struct DoublyLinked {
 };
 
 /**
-     * @brief 
-     *     Singly linked node conformity.
-     * @details  
-     *     Conformation Template
-     *     ---------------------
-     *     This type alias is used to represent a singly linked list node.
-     * @tparam Elemental
-     *     Type of the elements.
-     */
-template <
-    typename Elemental>
+ * @brief 
+ *     Singly linked node conformity.
+ * @details  
+ *     This type alias is used to represent a singly linked list node.
+ * @tparam Elemental
+ *     Type of the elements.
+ */
+template <typename Elemental>
 using SinglyNodal = Nodal<SinglyLinked<Elemental>, Elemental>;
 
 /**
-     * @brief 
-     *     Doubly linked node conformity.
-     * @details  
-     *     Conformation Template
-     *     ---------------------
-     *     This type alias is used to represent a doubly linked list node.
-     * @tparam Elemental
-     *     Type of the elements.
-     */
-template <
-    typename Elemental>
+ * @brief 
+ *     Doubly linked node conformity.
+ * @details  
+ *     This type alias is used to represent a doubly linked list node.
+ * @tparam Elemental
+ *     Type of the elements.
+ */
+template <typename Elemental>
 using DoublyNodal = Nodal<DoublyLinked<Elemental>, Elemental>;
 
 /**
-     * @brief 
-     *     Linked list conformity.
-     * @details  
-     *     Conformation Template
-     *     ---------------------
-     *     This type is used to represent a linked list.
-     * @tparam Connective
-     *     Type of the node linkage.
-     * @tparam Natural
-     *     Type of unsigned integer.
-     * @tparam Elemental
-     *     Type of the elements.
-     */
+ * @brief 
+ *     Linked list conformity.
+ * @details  
+ *     This type is used to represent a linked list.
+ * @tparam Connective
+ *     Type of the node linkage.
+ * @tparam Natural
+ *     Type of unsigned integer.
+ * @tparam Elemental
+ *     Type of the elements.
+ */
 template <
     typename Connective,
     typename Natural,
@@ -154,54 +136,48 @@ struct Junctive {
 };
 
 /**
-     * @brief 
-     *     Singly linked list conformity.
-     * @details  
-     *     Conformation Template
-     *     ---------------------
-     *     This type alias is used to represent a singly linked list.
-     * @tparam Natural
-     *     Type of unsigned integer.
-     * @tparam Elemental
-     *     Type of the elements.
-     */
+ * @brief 
+ *     Singly linked list conformity.
+ * @details  
+ *     This type alias is used to represent a singly linked list.
+ * @tparam Natural
+ *     Type of unsigned integer.
+ * @tparam Elemental
+ *     Type of the elements.
+ */
 template <
     typename Natural,
     typename Elemental>
 using SinglyJunctive = Junctive<SinglyLinked<Elemental>, Natural, Elemental>;
 
 /**
-     * @brief 
-     *     Doubly linked list conformity.
-     * @details  
-     *     Conformation Template
-     *     ---------------------
-     *     This type alias is used to represent a doubly linked list.
-     * @tparam Natural
-     *     Type of unsigned integer.
-     * @tparam Elemental
-     *     Type of the elements.
-     */
+ * @brief 
+ *     Doubly linked list conformity.
+ * @details  
+ *     This type alias is used to represent a doubly linked list.
+ * @tparam Natural
+ *     Type of unsigned integer.
+ * @tparam Elemental
+ *     Type of the elements.
+ */
 template <
     typename Natural,
     typename Elemental>
 using DoublyJunctive = Junctive<DoublyLinked<Elemental>, Natural, Elemental>;
 
 /**
-     * @brief
-     *     Linked list node management classifier.
-     * @details
-     *     Classification Template
-     *     -----------------------
-     *     This type is used to manage linked list nodes, including enforcement
-     *     of recycling policy.
-     * @tparam Connective
-     *     Type of the node linkage.
-     * @tparam Natural
-     *     Type of unsigned integer.
-     * @tparam Elemental
-     *     Type of the elements.
-     */
+ * @brief
+ *     Linked list node management classifier.
+ * @details
+ *     This type is used to manage linked list nodes, including enforcement
+ *     of recycling policy.
+ * @tparam Connective
+ *     Type of the node linkage.
+ * @tparam Natural
+ *     Type of unsigned integer.
+ * @tparam Elemental
+ *     Type of the elements.
+ */
 template <
     typename Connective,
     typename Natural,
@@ -211,41 +187,39 @@ struct Adjunctive {
     Referential<Locational<Nodal<Connective, Elemental>>(
         Referential<Junctive<Connective, Natural, Elemental>>)>
         allocate; /**< Allocates one or more uninitialized nodes.  
-                       *   Implementations may simply return null if this 
-                       *   operation is not supported.
-                       */
+                   *   Implementations may simply return null if this 
+                   *   operation is not supported.
+                   */
 
     Referential<bool(
         Referential<Junctive<Connective, Natural, Elemental>>,
         Referential<Locational<Nodal<Connective, Elemental>>>)>
         deallocate; /**< Frees the memory used by one linked list node which
-                         *   has already been removed from either the active 
-                         *   node list or unused node sublist.
-                         */
+                     *   has already been removed from either the active 
+                     *   node list or unused node sublist.
+                     */
 
     Referential<Locational<Nodal<Connective, Elemental>>(
         Referential<Junctive<Connective, Natural, Elemental>>,
         Referential<const Elemental>)>
         proclaim; /**< Proclaims an element with the specified value.  
-                       *   Implementations may recycle an unused node and assign
-                       *   it the provided value or allocate and initialize a 
-                       *   new node to the provided value.
-                       */
+                   *   Implementations may recycle an unused node and assign
+                   *   it the provided value or allocate and initialize a 
+                   *   new node to the provided value.
+                   */
 };
 
 /**
-     * @brief 
-     *     Singly linked list node management classifier.
-     * @details  
-     *     Classification Template
-     *     -----------------------
-     *     This type alias is used to represent a singly linked list node 
-     *     management adjunct.
-     * @tparam Natural
-     *     Type of unsigned integer.
-     * @tparam Elemental
-     *     Type of the elements.
-     */
+ * @brief 
+ *     Singly linked list node management classifier.
+ * @details  
+ *     This type alias is used to represent a singly linked list node 
+ *     management adjunct.
+ * @tparam Natural
+ *     Type of unsigned integer.
+ * @tparam Elemental
+ *     Type of the elements.
+ */
 template <
     typename Natural,
     typename Elemental>
@@ -255,8 +229,6 @@ using SinglyAdjunctive = Adjunctive<SinglyLinked<Elemental>, Natural, Elemental>
      * @brief 
      *     Doubly linked list node management classifier.
      * @details  
-     *     Classification Template
-     *     -----------------------
      *     This type alias is used to represent a doubly linked list node 
      *     management adjunct.
      * @tparam Natural
@@ -270,67 +242,57 @@ template <
 using DoublyAdjunctive = Adjunctive<DoublyLinked<Elemental>, Natural, Elemental>;
 
 /**
-     * @brief
-     *     Linked list position conformity.
-     * @details
-     *     Conformation Template
-     *     ---------------------
-     *     This type alias is used to represent a position in the linked list.
-     * @tparam Connective
-     *     Type of the node linkage.
-     * @tparam Elemental
-     *     Type of the elements.
-     */
+ * @brief
+ *     Linked list position conformity.
+ * @details
+ *     This type alias is used to represent a position in the linked list.
+ * @tparam Connective
+ *     Type of the node linkage.
+ * @tparam Elemental
+ *     Type of the elements.
+ */
 template <
     typename Connective,
     typename Elemental>
 using Positional = Positive<Nodal<Connective, Elemental>>;
 
 /**
-     * @brief 
-     *     Singly linked list position conformity.
-     * @details  
-     *     Conformation Template
-     *     ---------------------
-     *     This type alias is used to represent a position in singly linked 
-     *     list.
-     * @tparam Elemental
-     *     Type of the elements.
-     */
-template <
-    typename Elemental>
+ * @brief 
+ *     Singly linked list position conformity.
+ * @details  
+ *     This type alias is used to represent a position in singly linked 
+ *     list.
+ * @tparam Elemental
+ *     Type of the elements.
+ */
+template <typename Elemental>
 using SinglyPositional = Positional<SinglyLinked<Elemental>, Elemental>;
 
 /**
-     * @brief 
-     *     Doubly linked list position conformity.
-     * @details  
-     *     Conformation Template
-     *     ---------------------
-     *     This type alias is used to represent a position in doubly linked 
-     *     list.
-     * @tparam Elemental
-     *     Type of the elements.
-     */
-template <
-    typename Elemental>
+ * @brief 
+ *     Doubly linked list position conformity.
+ * @details  
+ *     This type alias is used to represent a position in doubly linked 
+ *     list.
+ * @tparam Elemental
+ *     Type of the elements.
+ */
+template <typename Elemental>
 using DoublyPositional = Positional<DoublyLinked<Elemental>, Elemental>;
 
 /**
-     * @brief 
-     *     Function abstract used to get a polar position in the list.
-     * @details  
-     *     Abstraction Template
-     *     --------------------
-     *     This function type alias is used to declare function references which
-     *     return either the first or last node in the linked list.
-     * @tparam Connective
-     *     Type of the node linkage.
-     * @tparam Natural
-     *     Type of unsigned integer.
-     * @tparam Elemental
-     *     Type of the elements.
-     */
+ * @brief 
+ *     Function abstract used to get a polar position in the list.
+ * @details  
+ *     This function type alias is used to declare function references which
+ *     return either the first or last node in the linked list.
+ * @tparam Connective
+ *     Type of the node linkage.
+ * @tparam Natural
+ *     Type of unsigned integer.
+ * @tparam Elemental
+ *     Type of the elements.
+ */
 template <
     typename Connective,
     typename Natural,
@@ -340,18 +302,16 @@ using Original = Locational<Nodal<Connective, Elemental>>(
         list);
 
 /**
-     * @brief 
-     *     Function abstract used to get a node subsequent to another node.
-     * @details  
-     *     Abstraction Template
-     *     --------------------
-     *     This function type alias is used to declare function references which
-     *     return either the next or previous node in the linked list.
-     * @tparam Connective
-     *     Type of the node linkage.
-     * @tparam Elemental
-     *     Type of the elements.
-     */
+ * @brief 
+ *     Function abstract used to get a node subsequent to another node.
+ * @details  
+ *     This function type alias is used to declare function references which
+ *     return either the next or previous node in the linked list.
+ * @tparam Connective
+ *     Type of the node linkage.
+ * @tparam Elemental
+ *     Type of the elements.
+ */
 template <
     typename Connective,
     typename Elemental>

@@ -12,8 +12,6 @@
  * @brief         
  *     Array space trajection implementation.
  * @details       
- *     Association
- *     -----------
  *     Implements vectorial and sequential trajection through an array of 
  *     elements.
  */
@@ -30,95 +28,80 @@ using ::trajection::Scalar;
 using ::trajection::Vectorial;
 
 /**
-     * @brief
-     *     Modifiable array type.
-     * @details
-     *     Conformation Template
-     *     ---------------------
-     *     This type alias is used to represent an array of modifiable
-     *     elements.
-     * @tparam Elemental
-     *     Type of the elements.
-     */
+ * @brief
+ *     Modifiable array type.
+ * @details
+ *     This type alias is used to represent an array of modifiable
+ *     elements.
+ * @tparam Elemental
+ *     Type of the elements.
+ */
 template <
     typename Natural,
-    Natural
-        Length,
+    Natural Length,
     typename Elemental>
 using WriteOrdinal = Elemental[Length];
 
 /**
-     * @brief
-     *     Constant array type.
-     * @details
-     *     Conformation Template
-     *     ---------------------
-     *     This type alias is used to represent an array of constant
-     *     elements.
-     * @tparam Elemental
-     *     Type of the elements.
-     */
+ * @brief
+ *     Constant array type.
+ * @details
+ *     This type alias is used to represent an array of constant
+ *     elements.
+ * @tparam Elemental
+ *     Type of the elements.
+ */
 template <
     typename Natural,
-    Natural
-        Length,
+    Natural Length,
     typename Elemental>
 using ReadOrdinal = const Elemental[Length];
 
 /**
-     * @brief
-     *     Modifiable array sequential position type.
-     * @details
-     *     Conformation Template
-     *     ---------------------
-     *     This type alias is used to represent a position in modifiable
-     *     array sequential trajections.
-     * @tparam Elemental
-     *     Type of the elements.
-     */
-template <
-    typename Elemental>
+ * @brief
+ *     Modifiable array sequential position type.
+ * @details
+ *     This type alias is used to represent a position in modifiable
+ *     array sequential trajections.
+ * @tparam Elemental
+ *     Type of the elements.
+ */
+template <typename Elemental>
 using WritePositional = Locational<Elemental>;
 
 /**
-     * @brief
-     *     Constant array sequential position type.
-     * @details
-     *     Conformation Template
-     *     ---------------------
-     *     This type alias is used to represent a position in constant
-     *     array sequential trajections.
-     * @tparam Elemental
-     *     Type of the elements.
-     */
-template <
-    typename Elemental>
+ * @brief
+ *     Constant array sequential position type.
+ * @details
+ *     This type alias is used to represent a position in constant
+ *     array sequential trajections.
+ * @tparam Elemental
+ *     Type of the elements.
+ */
+template <typename Elemental>
 using ReadPositional = Locational<const Elemental>;
 
 /**
-     * @brief
-     *     Check if index is within the array.
-     * @details
-     *     Function Template
-     *     -----------------
-     *     Checks if index is within the array.
-     * @tparam Natural
-     *     Type of natural integer.
-     * @tparam Length
-     *     The length of the array.
-     * @tparam Elemental
-     *     Type of the elements.
-     * @param[in] array
-     *     Reference to the array.
-     * @param[in] index
-     *     Reference to the index.
-     * @return
-     *     True if index is less than length.
-     */
+ * @brief
+ *     Check if index is within the array.
+ * @details
+ *     Checks if index is within the array.
+ * @tparam Natural
+ *     Type of natural integer.
+ * @tparam Length
+ *     The length of the array.
+ * @tparam Elemental
+ *     Type of the elements.
+ * @param[in] array
+ *     Reference to the array.
+ * @param[in] index
+ *     Reference to the index.
+ * @return
+ *     True if index is less than length.
+ */
 template <
     typename Natural,
-    Natural
-        Length,
+    Natural Length,
     typename Elemental>
 static inline bool
 ContainsIndex(
@@ -137,30 +120,27 @@ ContainsIndex(
 }
 
 /**
-     * @brief 
-     *     Confers the element at index.
-     * @details
-     *     Function Template
-     *     -----------------
-     *     Returns a reference to the element at the specified index.  This 
-     *     version does not check if index is within the array bounds.
-     * @tparam Natural
-     *     Type of natural integer.
-     * @tparam Length
-     *     The length of the array.
-     * @tparam Elemental
-     *     Type of the elements.
-     * @param[in] array
-     *     Reference to the array.
-     * @param[in] index
-     *     Reference to the index.
-     * @return
-     *     The reference conferment.
-     */
+ * @brief 
+ *     Confers the element at index.
+ * @details
+ *     Returns a reference to the element at the specified index.  This 
+ *     version does not check if index is within the array bounds.
+ * @tparam Natural
+ *     Type of natural integer.
+ * @tparam Length
+ *     The length of the array.
+ * @tparam Elemental
+ *     Type of the elements.
+ * @param[in] array
+ *     Reference to the array.
+ * @param[in] index
+ *     Reference to the index.
+ * @return
+ *     The reference conferment.
+ */
 template <
     typename Natural,
-    Natural
-        Length,
+    Natural Length,
     typename Elemental>
 static inline Conferential<Elemental>
 NaturalGo(
@@ -179,30 +159,27 @@ NaturalGo(
 }
 
 /**
-     * @brief
-     *     Check if position is within the array.
-     * @details
-     *     Function Template
-     *     -----------------
-     *     Checks if position is within the array.  This version does not check
-     *     if position is null.
-     * @tparam Natural
-     *     Type of natural integer.
-     * @tparam Length
-     *     The length of the array.
-     * @tparam Elemental
-     *     Type of the elements.
-     * @param[in] array
-     *     Reference to the array.
-     * @param[in] position
-     *     Reference to the position.
-     * @return
-     *     True if position is within the array bounds.
-     */
+ * @brief
+ *     Check if position is within the array.
+ * @details
+ *     Checks if position is within the array.  This version does not check
+ *     if position is null.
+ * @tparam Natural
+ *     Type of natural integer.
+ * @tparam Length
+ *     The length of the array.
+ * @tparam Elemental
+ *     Type of the elements.
+ * @param[in] array
+ *     Reference to the array.
+ * @param[in] position
+ *     Reference to the position.
+ * @return
+ *     True if position is within the array bounds.
+ */
 template <
     typename Natural,
-    Natural
-        Length,
+    Natural Length,
     typename Elemental>
 static inline bool
 ContainsPosition(
@@ -221,30 +198,27 @@ ContainsPosition(
 }
 
 /**
-     * @brief 
-     *     Confers the element at position.
-     * @details
-     *     Function Template
-     *     -----------------
-     *     Returns a reference to the element at the specified position.  This
-     *     version does not check if position is within the array bounds.
-     * @tparam Natural
-     *     Type of natural integer.
-     * @tparam Length
-     *     The length of the array.
-     * @tparam Elemental
-     *     Type of the elements.
-     * @param[in] array
-     *     Reference to the array.
-     * @param[in] position
-     *     Reference to the position.
-     * @return
-     *     The reference conferment.
-     */
+ * @brief 
+ *     Confers the element at position.
+ * @details
+ *     Returns a reference to the element at the specified position.  This
+ *     version does not check if position is within the array bounds.
+ * @tparam Natural
+ *     Type of natural integer.
+ * @tparam Length
+ *     The length of the array.
+ * @tparam Elemental
+ *     Type of the elements.
+ * @param[in] array
+ *     Reference to the array.
+ * @param[in] position
+ *     Reference to the position.
+ * @return
+ *     The reference conferment.
+ */
 template <
     typename Natural,
-    Natural
-        Length,
+    Natural Length,
     typename Elemental>
 static inline Conferential<Elemental>
 PositionalGo(
@@ -264,31 +238,28 @@ PositionalGo(
 }
 
 /**
-     * @brief
-     *     Checks if sequential trajection can begin.
-     * @details
-     *     Function Template
-     *     -----------------
-     *     Checks if sequential trajection can begin at the specified offset
-     *     count.  This version offers less integrity than SafelyBegins when
-     *     the Natural type specifier is allowed to be a signed integer.
-     * @tparam Natural
-     *     Type of natural integer.
-     * @tparam Length
-     *     The length of the array.
-     * @tparam Elemental 
-     *     Type of the elements.
-     * @param[in] array
-     *     Reference to the array.
-     * @param[in] count
-     *     Reference to the offset count.
-     * @return 
-     *     True if count is less than length.
-     */
+ * @brief
+ *     Checks if sequential trajection can begin.
+ * @details
+ *     Checks if sequential trajection can begin at the specified offset
+ *     count.  This version offers less integrity than SafelyBegins when
+ *     the Natural type specifier is allowed to be a signed integer.
+ * @tparam Natural
+ *     Type of natural integer.
+ * @tparam Length
+ *     The length of the array.
+ * @tparam Elemental 
+ *     Type of the elements.
+ * @param[in] array
+ *     Reference to the array.
+ * @param[in] count
+ *     Reference to the offset count.
+ * @return 
+ *     True if count is less than length.
+ */
 template <
     typename Natural,
-    Natural
-        Length,
+    Natural Length,
     typename Elemental>
 static inline bool
 Begins(
@@ -307,33 +278,30 @@ Begins(
 }
 
 /**
-     * @brief
-     *     Begins increment trajection.
-     * @details
-     *     Function Template
-     *     -----------------
-     *     Assigns to position the element address at count positive offset from
-     *     the base element of the array.  This version does not check if count
-     *     would move position beyond the array bounds.
-     * @tparam Natural
-     *     Type of natural integer.
-     * @tparam Length
-     *     The length of the array.
-     * @tparam Elemental 
-     *     Type of the elements.
-     * @param[in] array 
-     *     Reference to the array.
-     * @param[out] position
-     *     Reference to the position.
-     * @param[in] count
-     *     Reference to the offset count.
-     * @return 
-     *     A reference to the position as a constant.
-     */
+ * @brief
+ *     Begins increment trajection.
+ * @details
+ *     Assigns to position the element address at count positive offset from
+ *     the base element of the array.  This version does not check if count
+ *     would move position beyond the array bounds.
+ * @tparam Natural
+ *     Type of natural integer.
+ * @tparam Length
+ *     The length of the array.
+ * @tparam Elemental 
+ *     Type of the elements.
+ * @param[in] array 
+ *     Reference to the array.
+ * @param[out] position
+ *     Reference to the position.
+ * @param[in] count
+ *     Reference to the offset count.
+ * @return 
+ *     A reference to the position as a constant.
+ */
 template <
     typename Natural,
-    Natural
-        Length,
+    Natural Length,
     typename Elemental>
 static inline Referential<const Locational<Elemental>>
 BeginIncrement(
@@ -354,33 +322,30 @@ BeginIncrement(
 }
 
 /**
-     * @brief
-     *     Begins decrement trajection.
-     * @details
-     *     Function Template
-     *     -----------------
-     *     Assigns to position the element address at count negative offset from
-     *     the last element of the array.  This version does not check if count
-     *     would move position beyond the array bounds.
-     * @tparam Natural
-     *     Type of natural integer.
-     * @tparam Length
-     *     The length of the array.
-     * @tparam Elemental 
-     *     Type of the elements.
-     * @param[in] array 
-     *     Reference to the array.
-     * @param[out] position
-     *     Reference to the position.
-     * @param[in] count
-     *     Reference to the offset count.
-     * @return 
-     *     A reference to the position as a constant.
-     */
+ * @brief
+ *     Begins decrement trajection.
+ * @details
+ *     Assigns to position the element address at count negative offset from
+ *     the last element of the array.  This version does not check if count
+ *     would move position beyond the array bounds.
+ * @tparam Natural
+ *     Type of natural integer.
+ * @tparam Length
+ *     The length of the array.
+ * @tparam Elemental 
+ *     Type of the elements.
+ * @param[in] array 
+ *     Reference to the array.
+ * @param[out] position
+ *     Reference to the position.
+ * @param[in] count
+ *     Reference to the offset count.
+ * @return 
+ *     A reference to the position as a constant.
+ */
 template <
     typename Natural,
-    Natural
-        Length,
+    Natural Length,
     typename Elemental>
 static inline Referential<const Locational<Elemental>>
 BeginDecrement(
@@ -401,33 +366,30 @@ BeginDecrement(
 }
 
 /**
-     * @brief
-     *     Checks if sequential trajection can continue.
-     * @details
-     *     Function Template
-     *     -----------------
-     *     Checks if sequential trajection can traverse from position to the
-     *     specified count offset.  This version does not check if the pointer
-     *     is null.
-     * @tparam Natural
-     *     Type of natural integer.
-     * @tparam Length
-     *     The length of the array.
-     * @tparam Elemental 
-     *     Type of the elements.
-     * @param[in] array
-     *     Reference to the array.
-     * @param[in] position
-     *     Reference to the position.
-     * @param[in] count
-     *     Reference to the offset count.
-     * @return 
-     *     True if the offset can be reached from position.
-     */
+ * @brief
+ *     Checks if sequential trajection can continue.
+ * @details
+ *     Checks if sequential trajection can traverse from position to the
+ *     specified count offset.  This version does not check if the pointer
+ *     is null.
+ * @tparam Natural
+ *     Type of natural integer.
+ * @tparam Length
+ *     The length of the array.
+ * @tparam Elemental 
+ *     Type of the elements.
+ * @param[in] array
+ *     Reference to the array.
+ * @param[in] position
+ *     Reference to the position.
+ * @param[in] count
+ *     Reference to the offset count.
+ * @return 
+ *     True if the offset can be reached from position.
+ */
 template <
     typename Natural,
-    Natural
-        Length,
+    Natural Length,
     typename Elemental>
 static inline bool
 IncrementTraverses(
@@ -448,33 +410,30 @@ IncrementTraverses(
 }
 
 /**
-     * @brief
-     *     Checks if sequential trajection can continue.
-     * @details
-     *     Function Template
-     *     -----------------
-     *     Checks if sequential trajection can traverse from position to the
-     *     specified count offset.  This version does not check if the pointer
-     *     is null.
-     * @tparam Natural
-     *     Type of natural integer.
-     * @tparam Length
-     *     The length of the array.
-     * @tparam Elemental 
-     *     Type of the elements.
-     * @param[in] array
-     *     Reference to the array.
-     * @param[in] position
-     *     Reference to the position.
-     * @param[in] count
-     *     Reference to the offset count.
-     * @return 
-     *     True if the offset can be reached from position.
-     */
+ * @brief
+ *     Checks if sequential trajection can continue.
+ * @details
+ *     Checks if sequential trajection can traverse from position to the
+ *     specified count offset.  This version does not check if the pointer
+ *     is null.
+ * @tparam Natural
+ *     Type of natural integer.
+ * @tparam Length
+ *     The length of the array.
+ * @tparam Elemental 
+ *     Type of the elements.
+ * @param[in] array
+ *     Reference to the array.
+ * @param[in] position
+ *     Reference to the position.
+ * @param[in] count
+ *     Reference to the offset count.
+ * @return 
+ *     True if the offset can be reached from position.
+ */
 template <
     typename Natural,
-    Natural
-        Length,
+    Natural Length,
     typename Elemental>
 static inline bool
 DecrementTraverses(
@@ -495,32 +454,29 @@ DecrementTraverses(
 }
 
 /**
-     * @brief 
-     *     Traverses increment.
-     * @details
-     *     Function Template
-     *     -----------------
-     *     Increases position by count offset.  This version does not check if
-     *     position is null or would be moved out of the array bounds.
-     * @tparam Natural
-     *     Type of natural integer.
-     * @tparam Length
-     *     The length of the array.
-     * @tparam Elemental 
-     *     Type of the elements.
-     * @param[in] array 
-     *     Reference to the array.
-     * @param[in,out] position
-     *     Reference to the position.
-     * @param[in] count
-     *     Reference to the offset count.
-     * @return 
-     *     A reference to the position as a constant.
-     */
+ * @brief 
+ *     Traverses increment.
+ * @details
+ *     Increases position by count offset.  This version does not check if
+ *     position is null or would be moved out of the array bounds.
+ * @tparam Natural
+ *     Type of natural integer.
+ * @tparam Length
+ *     The length of the array.
+ * @tparam Elemental 
+ *     Type of the elements.
+ * @param[in] array 
+ *     Reference to the array.
+ * @param[in,out] position
+ *     Reference to the position.
+ * @param[in] count
+ *     Reference to the offset count.
+ * @return 
+ *     A reference to the position as a constant.
+ */
 template <
     typename Natural,
-    Natural
-        Length,
+    Natural Length,
     typename Elemental>
 static inline Referential<const Locational<Elemental>>
 TraverseIncrement(
@@ -541,32 +497,29 @@ TraverseIncrement(
 }
 
 /**
-     * @brief 
-     *     Traverses decrement.
-     * @details
-     *     Function Template
-     *     -----------------
-     *     Decreases position by count offset.  This version does not check if
-     *     position is null or would be moved out of the array bounds.
-     * @tparam Natural
-     *     Type of natural integer.
-     * @tparam Length
-     *     The length of the array.
-     * @tparam Elemental 
-     *     Type of the elements.
-     * @param[in] array 
-     *     Reference to the array.
-     * @param[in,out] position
-     *     Reference to the position.
-     * @param[in] count
-     *     Reference to the offset count.
-     * @return 
-     *     A reference to the position as a constant.
-     */
+ * @brief 
+ *     Traverses decrement.
+ * @details
+ *     Decreases position by count offset.  This version does not check if
+ *     position is null or would be moved out of the array bounds.
+ * @tparam Natural
+ *     Type of natural integer.
+ * @tparam Length
+ *     The length of the array.
+ * @tparam Elemental 
+ *     Type of the elements.
+ * @param[in] array 
+ *     Reference to the array.
+ * @param[in,out] position
+ *     Reference to the position.
+ * @param[in] count
+ *     Reference to the offset count.
+ * @return 
+ *     A reference to the position as a constant.
+ */
 template <
     typename Natural,
-    Natural
-        Length,
+    Natural Length,
     typename Elemental>
 static inline Referential<const Locational<Elemental>>
 TraverseDecrement(
@@ -587,27 +540,24 @@ TraverseDecrement(
 }
 
 /**
-     * @brief 
-     *     Returns the number of elements in the array.
-     * @details
-     *     Function Template
-     *     -----------------
-     *     Returns the number of elements in the array.
-     * @tparam Natural
-     *     Type of natural integer.
-     * @tparam Length
-     *     The length of the array.
-     * @tparam Elemental 
-     *     Type of the elements.
-     * @param[in] array 
-     *     Reference to the array.
-     * @return 
-     *     The number of elements in the array.
-     */
+ * @brief 
+ *     Returns the number of elements in the array.
+ * @details
+ *     Returns the number of elements in the array.
+ * @tparam Natural
+ *     Type of natural integer.
+ * @tparam Length
+ *     The length of the array.
+ * @tparam Elemental 
+ *     Type of the elements.
+ * @param[in] array 
+ *     Reference to the array.
+ * @return 
+ *     The number of elements in the array.
+ */
 template <
     typename Natural,
-    Natural
-        Length,
+    Natural Length,
     typename Elemental>
 static inline Natural
 Account(
@@ -624,30 +574,27 @@ Account(
 }
 
 /**
-     * @brief 
-     *     Returns the number of elements in the array __after__ position.
-     * @details
-     *     Function Template
-     *     -----------------
-     *     Returns the number of elements in the array __after__ the specified
-     *     position (does not include the element at position).
-     * @tparam Natural
-     *     Type of natural integer.
-     * @tparam Length
-     *     The length of the array.
-     * @tparam Elemental 
-     *     Type of the elements.
-     * @param[in] array 
-     *     Reference to the array.
-     * @param[in] position
-     *     Reference to the position.
-     * @return 
-     *     The number of elements __after__ position.
-     */
+ * @brief 
+ *     Returns the number of elements in the array __after__ position.
+ * @details
+ *     Returns the number of elements in the array __after__ the specified
+ *     position (does not include the element at position).
+ * @tparam Natural
+ *     Type of natural integer.
+ * @tparam Length
+ *     The length of the array.
+ * @tparam Elemental 
+ *     Type of the elements.
+ * @param[in] array 
+ *     Reference to the array.
+ * @param[in] position
+ *     Reference to the position.
+ * @return 
+ *     The number of elements __after__ position.
+ */
 template <
     typename Natural,
-    Natural
-        Length,
+    Natural Length,
     typename Elemental>
 static inline Natural
 CountIncrement(
@@ -666,30 +613,27 @@ CountIncrement(
 }
 
 /**
-     * @brief 
-     *     Returns the number of elements in the array __before__ position.
-     * @details
-     *     Function Template
-     *     -----------------
-     *     Returns the number of elements in the array __before__ the specified
-     *     position (does not include the element at position).
-     * @tparam Natural
-     *     Type of natural integer.
-     * @tparam Length
-     *     The length of the array.
-     * @tparam Elemental 
-     *     Type of the elements.
-     * @param[in] array 
-     *     Reference to the array.
-     * @param[in] position
-     *     Reference to the position.
-     * @return 
-     *     The number of elements __before__ position.
-     */
+ * @brief 
+ *     Returns the number of elements in the array __before__ position.
+ * @details
+ *     Returns the number of elements in the array __before__ the specified
+ *     position (does not include the element at position).
+ * @tparam Natural
+ *     Type of natural integer.
+ * @tparam Length
+ *     The length of the array.
+ * @tparam Elemental 
+ *     Type of the elements.
+ * @param[in] array 
+ *     Reference to the array.
+ * @param[in] position
+ *     Reference to the position.
+ * @return 
+ *     The number of elements __before__ position.
+ */
 template <
     typename Natural,
-    Natural
-        Length,
+    Natural Length,
     typename Elemental>
 static inline Natural
 CountDecrement(
@@ -708,26 +652,23 @@ CountDecrement(
 }
 
 /**
-     * @brief 
-     *     Vectorial read trajection implementation.
-     * @details
-     *     Objectification Template
-     *     ------------------------
-     *     Objective table which provides vectorial trajection into the array.
-     *     Use this version if performance is stringent and requests for invalid 
-     *     index positions will not occur, as this version does not perform any 
-     *     run-time checks.
-     * @tparam Natural
-     *     Type of natural integer.
-     * @tparam Length
-     *     The length of the array.
-     * @tparam Elemental 
-     *     Type of the elements.
-     */
+ * @brief 
+ *     Vectorial read trajection implementation.
+ * @details
+ *     Objective table which provides vectorial trajection into the array.
+ *     Use this version if performance is stringent and requests for invalid 
+ *     index positions will not occur, as this version does not perform any 
+ *     run-time checks.
+ * @tparam Natural
+ *     Type of natural integer.
+ * @tparam Length
+ *     The length of the array.
+ * @tparam Elemental 
+ *     Type of the elements.
+ */
 template <
     typename Natural,
-    Natural
-        Length,
+    Natural Length,
     typename Elemental>
 constexpr Vectorial<const Elemental[Length], Natural, const Elemental>
     ReadVector = {
@@ -736,26 +677,23 @@ constexpr Vectorial<const Elemental[Length], Natural, const Elemental>
     };
 
 /**
-     * @brief 
-     *     Vectorial write trajection implementation.
-     * @details
-     *     Objectification Template
-     *     ------------------------
-     *     Objective table which provides vectorial trajection into the array.
-     *     Use this version if performance is stringent and requests for invalid 
-     *     index positions will not occur, as this version does not perform any 
-     *     run-time checks.
-     * @tparam Natural
-     *     Type of natural integer.
-     * @tparam Length
-     *     The length of the array.
-     * @tparam Elemental 
-     *     Type of the elements.
-     */
+ * @brief 
+ *     Vectorial write trajection implementation.
+ * @details
+ *     Objective table which provides vectorial trajection into the array.
+ *     Use this version if performance is stringent and requests for invalid 
+ *     index positions will not occur, as this version does not perform any 
+ *     run-time checks.
+ * @tparam Natural
+ *     Type of natural integer.
+ * @tparam Length
+ *     The length of the array.
+ * @tparam Elemental 
+ *     Type of the elements.
+ */
 template <
     typename Natural,
-    Natural
-        Length,
+    Natural Length,
     typename Elemental>
 constexpr Vectorial<Elemental[Length], Natural, Elemental>
     WriteVector = {
@@ -764,25 +702,22 @@ constexpr Vectorial<Elemental[Length], Natural, Elemental>
     };
 
 /**
-     * @brief 
-     *     Sequential read trajection implementation.
-     * @details
-     *     Objectification Template
-     *     ------------------------
-     *     Objective table which provides sequential positive trajection through
-     *     an array.  Use this version if performance is stringent and run-time
-     *     checks are unnecessary.
-     * @tparam Natural
-     *     Type of natural integer.
-     * @tparam Length
-     *     The length of the array.
-     * @tparam Elemental 
-     *     Type of the elements.
-     */
+ * @brief 
+ *     Sequential read trajection implementation.
+ * @details
+ *     Objective table which provides sequential positive trajection through
+ *     an array.  Use this version if performance is stringent and run-time
+ *     checks are unnecessary.
+ * @tparam Natural
+ *     Type of natural integer.
+ * @tparam Length
+ *     The length of the array.
+ * @tparam Elemental 
+ *     Type of the elements.
+ */
 template <
     typename Natural,
-    Natural
-        Length,
+    Natural Length,
     typename Elemental>
 constexpr Scalar<const Elemental[Length], Locational<const Elemental>, Natural, const Elemental>
     ReadIncrementScale = {
@@ -793,25 +728,22 @@ constexpr Scalar<const Elemental[Length], Locational<const Elemental>, Natural, 
     };
 
 /**
-     * @brief 
-     *     Sequential write trajection implementation.
-     * @details
-     *     Objectification Template
-     *     ------------------------
-     *     Objective table which provides sequential positive trajection through
-     *     an array.  Use this version if performance is stringent and run-time
-     *     checks are unnecessary.
-     * @tparam Natural
-     *     Type of natural integer.
-     * @tparam Length
-     *     The length of the array.
-     * @tparam Elemental 
-     *     Type of the elements.
-     */
+ * @brief 
+ *     Sequential write trajection implementation.
+ * @details
+ *     Objective table which provides sequential positive trajection through
+ *     an array.  Use this version if performance is stringent and run-time
+ *     checks are unnecessary.
+ * @tparam Natural
+ *     Type of natural integer.
+ * @tparam Length
+ *     The length of the array.
+ * @tparam Elemental 
+ *     Type of the elements.
+ */
 template <
     typename Natural,
-    Natural
-        Length,
+    Natural Length,
     typename Elemental>
 constexpr Scalar<Elemental[Length], Locational<Elemental>, Natural, Elemental>
     WriteIncrementScale = {
@@ -822,25 +754,22 @@ constexpr Scalar<Elemental[Length], Locational<Elemental>, Natural, Elemental>
     };
 
 /**
-     * @brief 
-     *     Sequential read trajection implementation.
-     * @details
-     *     Objectification Template
-     *     ------------------------
-     *     Objective table which provides sequential negative trajection through
-     *     an array.  Use this version if performance is stringent and run-time
-     *     checks are unnecessary.
-     * @tparam Natural
-     *     Type of natural integer.
-     * @tparam Length
-     *     The length of the array.
-     * @tparam Elemental 
-     *     Type of the elements.
-     */
+ * @brief 
+ *     Sequential read trajection implementation.
+ * @details
+ *     Objective table which provides sequential negative trajection through
+ *     an array.  Use this version if performance is stringent and run-time
+ *     checks are unnecessary.
+ * @tparam Natural
+ *     Type of natural integer.
+ * @tparam Length
+ *     The length of the array.
+ * @tparam Elemental 
+ *     Type of the elements.
+ */
 template <
     typename Natural,
-    Natural
-        Length,
+    Natural Length,
     typename Elemental>
 constexpr Scalar<const Elemental[Length], Locational<const Elemental>, Natural, const Elemental>
     ReadDecrementScale = {
@@ -851,25 +780,22 @@ constexpr Scalar<const Elemental[Length], Locational<const Elemental>, Natural, 
     };
 
 /**
-     * @brief 
-     *     Sequential write trajection implementation.
-     * @details
-     *     Objectification Template
-     *     ------------------------
-     *     Objective table which provides sequential negative trajection through
-     *     an array.  Use this version if performance is stringent and run-time
-     *     checks are unnecessary.
-     * @tparam Natural
-     *     Type of natural integer.
-     * @tparam Length
-     *     The length of the array.
-     * @tparam Elemental 
-     *     Type of the elements.
-     */
+ * @brief 
+ *     Sequential write trajection implementation.
+ * @details
+ *     Objective table which provides sequential negative trajection through
+ *     an array.  Use this version if performance is stringent and run-time
+ *     checks are unnecessary.
+ * @tparam Natural
+ *     Type of natural integer.
+ * @tparam Length
+ *     The length of the array.
+ * @tparam Elemental 
+ *     Type of the elements.
+ */
 template <
     typename Natural,
-    Natural
-        Length,
+    Natural Length,
     typename Elemental>
 constexpr Scalar<Elemental[Length], Locational<Elemental>, Natural, Elemental>
     WriteDecrementScale = {
@@ -880,25 +806,22 @@ constexpr Scalar<Elemental[Length], Locational<Elemental>, Natural, Elemental>
     };
 
 /**
-     * @brief 
-     *     Sequential read trajection implementation.
-     * @details
-     *     Objectification Template
-     *     ------------------------
-     *     Objective table which provides sequential trajection through an 
-     *     array.  Use this version if performance is stringent and run-time 
-     *     checks are unnecessary.
-     * @tparam Natural
-     *     Type of natural integer.
-     * @tparam Length
-     *     The length of the array.
-     * @tparam Elemental 
-     *     Type of the elements.
-     */
+ * @brief 
+ *     Sequential read trajection implementation.
+ * @details
+ *     Objective table which provides sequential trajection through an 
+ *     array.  Use this version if performance is stringent and run-time 
+ *     checks are unnecessary.
+ * @tparam Natural
+ *     Type of natural integer.
+ * @tparam Length
+ *     The length of the array.
+ * @tparam Elemental 
+ *     Type of the elements.
+ */
 template <
     typename Natural,
-    Natural
-        Length,
+    Natural Length,
     typename Elemental>
 constexpr Lineal<const Elemental[Length], Locational<const Elemental>, Natural, const Elemental>
     ReadLiner = {
@@ -907,25 +830,22 @@ constexpr Lineal<const Elemental[Length], Locational<const Elemental>, Natural, 
     };
 
 /**
-     * @brief 
-     *     Sequential write trajection implementation.
-     * @details
-     *     Objectification Template
-     *     ------------------------
-     *     Objective table which provides sequential trajection through an 
-     *     array.  Use this version if performance is stringent and run-time 
-     *     checks are unnecessary.
-     * @tparam Natural
-     *     Type of natural integer.
-     * @tparam Length
-     *     The length of the array.
-     * @tparam Elemental 
-     *     Type of the elements.
-     */
+ * @brief 
+ *     Sequential write trajection implementation.
+ * @details
+ *     Objective table which provides sequential trajection through an 
+ *     array.  Use this version if performance is stringent and run-time 
+ *     checks are unnecessary.
+ * @tparam Natural
+ *     Type of natural integer.
+ * @tparam Length
+ *     The length of the array.
+ * @tparam Elemental 
+ *     Type of the elements.
+ */
 template <
     typename Natural,
-    Natural
-        Length,
+    Natural Length,
     typename Elemental>
 constexpr Lineal<Elemental[Length], Locational<Elemental>, Natural, Elemental>
     WriteLiner = {
@@ -934,25 +854,22 @@ constexpr Lineal<Elemental[Length], Locational<Elemental>, Natural, Elemental>
     };
 
 /**
-     * @brief 
-     *     Sequential read trajection implementation.
-     * @details
-     *     Objectification Template
-     *     ------------------------
-     *     Objective table which provides sequential positive trajection through
-     *     an array.  Use this version if performance is stringent and run-time
-     *     checks are unnecessary.
-     * @tparam Natural
-     *     Type of natural integer.
-     * @tparam Length
-     *     The length of the array.
-     * @tparam Elemental 
-     *     Type of the elements.
-     */
+ * @brief 
+ *     Sequential read trajection implementation.
+ * @details
+ *     Objective table which provides sequential positive trajection through
+ *     an array.  Use this version if performance is stringent and run-time
+ *     checks are unnecessary.
+ * @tparam Natural
+ *     Type of natural integer.
+ * @tparam Length
+ *     The length of the array.
+ * @tparam Elemental 
+ *     Type of the elements.
+ */
 template <
     typename Natural,
-    Natural
-        Length,
+    Natural Length,
     typename Elemental>
 constexpr Directional<const Elemental[Length], Locational<const Elemental>, Natural, const Elemental>
     ReadIncrementDirection = {
@@ -965,25 +882,22 @@ constexpr Directional<const Elemental[Length], Locational<const Elemental>, Natu
     };
 
 /**
-     * @brief 
-     *     Sequential write trajection implementation.
-     * @details
-     *     Objectification Template
-     *     ------------------------
-     *     Objective table which provides sequential positive trajection through
-     *     an array.  Use this version if performance is stringent and run-time
-     *     checks are unnecessary.
-     * @tparam Natural
-     *     Type of natural integer.
-     * @tparam Length
-     *     The length of the array.
-     * @tparam Elemental 
-     *     Type of the elements.
-     */
+ * @brief 
+ *     Sequential write trajection implementation.
+ * @details
+ *     Objective table which provides sequential positive trajection through
+ *     an array.  Use this version if performance is stringent and run-time
+ *     checks are unnecessary.
+ * @tparam Natural
+ *     Type of natural integer.
+ * @tparam Length
+ *     The length of the array.
+ * @tparam Elemental 
+ *     Type of the elements.
+ */
 template <
     typename Natural,
-    Natural
-        Length,
+    Natural Length,
     typename Elemental>
 constexpr Directional<Elemental[Length], Locational<Elemental>, Natural, Elemental>
     WriteIncrementDirection = {
@@ -996,25 +910,22 @@ constexpr Directional<Elemental[Length], Locational<Elemental>, Natural, Element
     };
 
 /**
-     * @brief 
-     *     Sequential read trajection implementation.
-     * @details
-     *     Objectification Template
-     *     ------------------------
-     *     Objective table which provides sequential negative trajection through
-     *     an array.  Use this version if performance is stringent and run-time
-     *     checks are unnecessary.
-     * @tparam Natural
-     *     Type of natural integer.
-     * @tparam Length
-     *     The length of the array.
-     * @tparam Elemental 
-     *     Type of the elements.
-     */
+ * @brief 
+ *     Sequential read trajection implementation.
+ * @details
+ *     Objective table which provides sequential negative trajection through
+ *     an array.  Use this version if performance is stringent and run-time
+ *     checks are unnecessary.
+ * @tparam Natural
+ *     Type of natural integer.
+ * @tparam Length
+ *     The length of the array.
+ * @tparam Elemental 
+ *     Type of the elements.
+ */
 template <
     typename Natural,
-    Natural
-        Length,
+    Natural Length,
     typename Elemental>
 constexpr Directional<const Elemental[Length], Locational<const Elemental>, Natural, const Elemental>
     ReadDecrementDirection = {
@@ -1027,25 +938,22 @@ constexpr Directional<const Elemental[Length], Locational<const Elemental>, Natu
     };
 
 /**
-     * @brief 
-     *     Sequential write trajection implementation.
-     * @details
-     *     Objectification Template
-     *     ------------------------
-     *     Objective table which provides sequential negative trajection through
-     *     an array.  Use this version if performance is stringent and run-time
-     *     checks are unnecessary.
-     * @tparam Natural
-     *     Type of natural integer.
-     * @tparam Length
-     *     The length of the array.
-     * @tparam Elemental 
-     *     Type of the elements.
-     */
+ * @brief 
+ *     Sequential write trajection implementation.
+ * @details
+ *     Objective table which provides sequential negative trajection through
+ *     an array.  Use this version if performance is stringent and run-time
+ *     checks are unnecessary.
+ * @tparam Natural
+ *     Type of natural integer.
+ * @tparam Length
+ *     The length of the array.
+ * @tparam Elemental 
+ *     Type of the elements.
+ */
 template <
     typename Natural,
-    Natural
-        Length,
+    Natural Length,
     typename Elemental>
 constexpr Directional<Elemental[Length], Locational<Elemental>, Natural, Elemental>
     WriteDecrementDirection = {
@@ -1058,25 +966,22 @@ constexpr Directional<Elemental[Length], Locational<Elemental>, Natural, Element
     };
 
 /**
-     * @brief 
-     *     Sequential read trajection implementation.
-     * @details
-     *     Objectification Template
-     *     ------------------------
-     *     Objective table which provides sequential trajection through an 
-     *     array.  Use this version if performance is stringent and run-time 
-     *     checks are unnecessary.
-     * @tparam Natural
-     *     Type of natural integer.
-     * @tparam Length
-     *     The length of the array.
-     * @tparam Elemental 
-     *     Type of the elements.
-     */
+ * @brief 
+ *     Sequential read trajection implementation.
+ * @details
+ *     Objective table which provides sequential trajection through an 
+ *     array.  Use this version if performance is stringent and run-time 
+ *     checks are unnecessary.
+ * @tparam Natural
+ *     Type of natural integer.
+ * @tparam Length
+ *     The length of the array.
+ * @tparam Elemental 
+ *     Type of the elements.
+ */
 template <
     typename Natural,
-    Natural
-        Length,
+    Natural Length,
     typename Elemental>
 constexpr Axial<const Elemental[Length], Locational<const Elemental>, Natural, const Elemental>
     ReadAxis = {
@@ -1085,25 +990,22 @@ constexpr Axial<const Elemental[Length], Locational<const Elemental>, Natural, c
     };
 
 /**
-     * @brief 
-     *     Sequential write trajection implementation.
-     * @details
-     *     Objectification Template
-     *     ------------------------
-     *     Objective table which provides sequential trajection through an 
-     *     array.  Use this version if performance is stringent and run-time 
-     *     checks are unnecessary.
-     * @tparam Natural
-     *     Type of natural integer.
-     * @tparam Length
-     *     The length of the array.
-     * @tparam Elemental 
-     *     Type of the elements.
-     */
+ * @brief 
+ *     Sequential write trajection implementation.
+ * @details
+ *     Objective table which provides sequential trajection through an 
+ *     array.  Use this version if performance is stringent and run-time 
+ *     checks are unnecessary.
+ * @tparam Natural
+ *     Type of natural integer.
+ * @tparam Length
+ *     The length of the array.
+ * @tparam Elemental 
+ *     Type of the elements.
+ */
 template <
     typename Natural,
-    Natural
-        Length,
+    Natural Length,
     typename Elemental>
 constexpr Axial<Elemental[Length], Locational<Elemental>, Natural, Elemental>
     WriteAxis = {

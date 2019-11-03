@@ -9,8 +9,6 @@
  * @brief   
  *     Unsorted set management.
  * @details 
- *     Association
- *     -----------
  *     Unsorted set management abstracts, classifiers and unsorted set equality 
  *     comparison function.
  */
@@ -22,24 +20,22 @@ using ::sortation::Assortive;
 using ::trajection::Directional;
 
 /**
-     * @brief  
-     *     Function type which simplifies declaration syntax.
-     * @details 
-     *     Abstraction Template
-     *     --------------------
-     *     Function type alias used to declare unsorted set duplication function
-     *     references.
-     * @tparam Consolidative   
-     *     Type of the operand set.
-     * @tparam Basic
-     *     Type of the base set.
-     * @tparam BasicPositional 
-     *     Type of positions used by the base set.
-     * @tparam BasicNatural
-     *     Type of natural integer used by the base set.
-     * @tparam Elemental 
-     *     Type of the elementary set objects.
-     */
+ * @brief  
+ *     Function type which simplifies declaration syntax.
+ * @details 
+ *     Function type alias used to declare unsorted set duplication function
+ *     references.
+ * @tparam Consolidative   
+ *     Type of the operand set.
+ * @tparam Basic
+ *     Type of the base set.
+ * @tparam BasicPositional 
+ *     Type of positions used by the base set.
+ * @tparam BasicNatural
+ *     Type of natural integer used by the base set.
+ * @tparam Elemental 
+ *     Type of the elementary set objects.
+ */
 template <
     typename Consolidative,
     typename Basic,
@@ -55,28 +51,26 @@ using Duplicative = bool(
         base_set);
 
 /**
-     * @brief 
-     *     Function type which simplifies declaration syntax.
-     * @details 
-     *     Abstraction Template
-     *     --------------------
-     *     Function type alias used to declare set equivalency determination 
-     *     function references.
-     * @tparam Basic 
-     *     Type of the base set.
-     * @tparam BasicPositional
-     *     Type of positions used by the base set.
-     * @tparam BasicNatural 
-     *     Type of natural integer used by the base set.
-     * @tparam Relative
-     *     Type of the relative set.
-     * @tparam RelativePositional 
-     *     Type of positions used by the relative set.
-     * @tparam RelativeNatural
-     *     Type of natural integer used by the relative set.
-     * @tparam Elemental 
-     *     Type of the elementary set objects.
-     */
+ * @brief 
+ *     Function type which simplifies declaration syntax.
+ * @details 
+ *     Function type alias used to declare set equivalency determination 
+ *     function references.
+ * @tparam Basic 
+ *     Type of the base set.
+ * @tparam BasicPositional
+ *     Type of positions used by the base set.
+ * @tparam BasicNatural 
+ *     Type of natural integer used by the base set.
+ * @tparam Relative
+ *     Type of the relative set.
+ * @tparam RelativePositional 
+ *     Type of positions used by the relative set.
+ * @tparam RelativeNatural
+ *     Type of natural integer used by the relative set.
+ * @tparam Elemental 
+ *     Type of the elementary set objects.
+ */
 template <
     typename Basic,
     typename BasicPositional,
@@ -96,30 +90,28 @@ using Equipollent = bool(
         relative_set);
 
 /**
-     * @brief 
-     *     Set on set operations classifier.
-     * @details 
-     *     Classification Template
-     *     -----------------------
-     *     This type is used for unsorted set operations.
-     *
-     * @tparam Consolidative 
-     *     Type of the operand set.
-     * @tparam Basic 
-     *     Type of the base set.
-     * @tparam BasicPositional
-     *     Type of positions used by the base set.
-     * @tparam BasicNatural 
-     *     Type of natural integer used by the base set.
-     * @tparam Relative 
-     *     Type of the relative set.
-     * @tparam RelativePositional 
-     *     Type of positions used by the relative set.
-     * @tparam RelativeNatural
-     *     Type of natural integer used by the relative set.
-     * @tparam Elemental 
-     *     Type of the elementary set objects.
-     */
+ * @brief 
+ *     Set on set operations classifier.
+ * @details 
+ *     This type is used for unsorted set operations.
+ *
+ * @tparam Consolidative 
+ *     Type of the operand set.
+ * @tparam Basic 
+ *     Type of the base set.
+ * @tparam BasicPositional
+ *     Type of positions used by the base set.
+ * @tparam BasicNatural 
+ *     Type of natural integer used by the base set.
+ * @tparam Relative 
+ *     Type of the relative set.
+ * @tparam RelativePositional 
+ *     Type of positions used by the relative set.
+ * @tparam RelativeNatural
+ *     Type of natural integer used by the relative set.
+ * @tparam Elemental 
+ *     Type of the elementary set objects.
+ */
 template <
     typename Consolidative,
     typename Basic,
@@ -143,37 +135,35 @@ struct Sectional {
         Referential<const Relative>
             relative_set)>
         complement, /**< Function reference used to compose the relative 
-                         *   complement of two unsorted sets. 
-                         */
+                     *   complement of two unsorted sets. 
+                     */
         differentiate, /**< Function reference used to compose the 
-                            *   difference of two unsorted sets. 
-                            */
-        intersect, /**< Function reference used to compose the 
-                        *   intersection of two unsorted sets. 
+                        *   difference of two unsorted sets. 
                         */
-        unite; /**< Function reference used to compose the union
-                    *   of two unsorted sets. 
+        intersect, /**< Function reference used to compose the 
+                    *   intersection of two unsorted sets. 
                     */
+        unite; /**< Function reference used to compose the union
+                *   of two unsorted sets. 
+                */
 };
 
 /**
-     * @brief 
-     *     Unsorted set management classifier.
-     * @details 
-     *     Classification Template
-     *     -----------------------
-     *     This type is used for unsorted set management including elementary 
-     *     and whole set operation objectives, unsorted set duplication, 
-     *     unsorted set comparison and set counting.
-     * @tparam Consolidative
-     *     Type of the operand set.
-     * @tparam Positional
-     *     Type of positions used by the operand set.
-     * @tparam Natural
-     *     Type of natural integer used by the operand set.
-     * @tparam Elemental
-     *     Type of the elementary set objects.
-     */
+ * @brief 
+ *     Unsorted set management classifier.
+ * @details 
+ *     This type is used for unsorted set management including elementary 
+ *     and whole set operation objectives, unsorted set duplication, 
+ *     unsorted set comparison and set counting.
+ * @tparam Consolidative
+ *     Type of the operand set.
+ * @tparam Positional
+ *     Type of positions used by the operand set.
+ * @tparam Natural
+ *     Type of natural integer used by the operand set.
+ * @tparam Elemental
+ *     Type of the elementary set objects.
+ */
 template <
     typename Consolidative,
     typename Positional,
@@ -183,69 +173,67 @@ struct Selective {
 
     Referential<const Compositional<Consolidative, Natural, Elemental>>
         composer; /**< Objective reference used to perform elementary 
-                       *   set operations.  This composer must not allow two
-                       *   elements which are equivalent to exist in the set.
-                       */
+                   *   set operations.  This composer must not allow two
+                   *   elements which are equivalent to exist in the set.
+                   */
 
     Referential<const Sectional<Consolidative, Consolidative, Positional, Natural, Consolidative, Positional, Natural, Elemental>>
         section; /**< Objective reference used to perform set operations 
-                      *   between unsorted sets.
-                      */
+                  *   between unsorted sets.
+                  */
 
     Referential<Duplicative<Consolidative, Consolidative, Positional, Natural, Elemental>>
         duplicate; /**< Function reference used to duplicate an unsorted 
-                        *   set.
-                        */
+                    *   set.
+                    */
 
     Referential<Equipollent<Consolidative, Positional, Natural, Consolidative, Positional, Natural, Elemental>>
         equate; /**< Function reference used to evaluate the equivalency
-                     *   of two unsorted sets.
-                     */
+                 *   of two unsorted sets.
+                 */
 
     Referential<Natural(
         Referential<const Consolidative>
             operand)>
         count; /**< Function reference used to count the number of 
-                    *   elements in a set.
-                    */
+                *   elements in a set.
+                */
 };
 
 /**
-     * @brief
-     *     Compares two unsorted sets for set equivalence.
-     * @details
-     *     Function Template
-     *     -----------------
-     *     Compares the elements of any two unsorted sets for equivalence.  If 
-     *     both sets are empty or both sets contain the same number of 
-     *     equivalent elements, the two sets are considered equal.
-     * @tparam Basic
-     *     Type of the base set.
-     * @tparam BasicPositional
-     *     Type of positions used by the base set.
-     * @tparam BasicNatural
-     *     Type of natural integer used by the base set.
-     * @tparam Relative 
-     *     Type of the relative set.
-     * @tparam RelativePositional 
-     *     Type of positions used by the relative set.
-     * @tparam RelativeNatural 
-     *     Type of natural integer used by the relative set.
-     * @tparam Elemental
-     *     Type of the elementary set objects.
-     * @tparam Equate
-     *     Function reference used to compare set elements for equivalence.
-     * @param[in] basis
-     *     Reference to the base set directional trajection objective.
-     * @param[in] base_set
-     *     Reference to the base set.
-     * @param[in] relativity
-     *     Reference to the relative set directional trajection objective.
-     * @param[in] relative_set
-     *     Reference to the relative set.
-     * @return
-     *     True if both sets contain the same equivalent elements.
-     */
+ * @brief
+ *     Compares two unsorted sets for set equivalence.
+ * @details
+ *     Compares the elements of any two unsorted sets for equivalence.  If 
+ *     both sets are empty or both sets contain the same number of 
+ *     equivalent elements, the two sets are considered equal.
+ * @tparam Basic
+ *     Type of the base set.
+ * @tparam BasicPositional
+ *     Type of positions used by the base set.
+ * @tparam BasicNatural
+ *     Type of natural integer used by the base set.
+ * @tparam Relative 
+ *     Type of the relative set.
+ * @tparam RelativePositional 
+ *     Type of positions used by the relative set.
+ * @tparam RelativeNatural 
+ *     Type of natural integer used by the relative set.
+ * @tparam Elemental
+ *     Type of the elementary set objects.
+ * @tparam Equate
+ *     Function reference used to compare set elements for equivalence.
+ * @param[in] basis
+ *     Reference to the base set directional trajection objective.
+ * @param[in] base_set
+ *     Reference to the base set.
+ * @param[in] relativity
+ *     Reference to the relative set directional trajection objective.
+ * @param[in] relative_set
+ *     Reference to the relative set.
+ * @return
+ *     True if both sets contain the same equivalent elements.
+ */
 template <
     typename Basic,
     typename BasicPositional,
@@ -254,8 +242,7 @@ template <
     typename RelativePositional,
     typename RelativeNatural,
     typename Elemental,
-    Referential<Assortive<Elemental>>
-        Equate>
+    Referential<Assortive<Elemental>> Equate>
 static inline bool
 EquateSelections(
     Referential<const Directional<const Basic, BasicPositional, BasicNatural, const Elemental>>
@@ -276,23 +263,17 @@ EquateSelections(
         is_integral<RelativeNatural>::value && is_unsigned<RelativeNatural>::value,
         "RelativeNatural:  Unsigned integer type required");
 #endif
-    BasicPositional
-        base_position;
-    RelativePositional
-        relative_position;
+    BasicPositional base_position;
+    RelativePositional relative_position;
     if (basis.begins(base_set, 0)) {
         if (!relativity.begins(relative_set, 0))
             return false;
         basis.scale.begin(base_set, base_position, 0);
         while (true) {
-            auto&
-                base_value
-                = basis.scale.go(base_set, base_position).to;
+            auto& base_value = basis.scale.go(base_set, base_position).to;
             relativity.scale.begin(relative_set, relative_position, 0);
             while (true) {
-                auto&
-                    relative_value
-                    = relativity.scale.go(relative_set, relative_position).to;
+                auto& relative_value = relativity.scale.go(relative_set, relative_position).to;
                 if (Equate(base_value, relative_value))
                     break;
                 if (!relativity.traverses(relative_set, relative_position, 1))

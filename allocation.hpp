@@ -11,8 +11,6 @@
  * @brief         
  *     Memory allocation and operator based implementations.
  * @details       
- *     Association
- *     -----------
  *     An opaque memory allocation classifier template is provided in order to
  *     unify the naming convention of function references used to allocate and 
  *     free memory spaces for the various allocation schemes.  The default, 
@@ -28,19 +26,17 @@ using ::location::Locational;
 using ::location::Referential;
 
 /**
-     * @brief         
-     *     Opaque memory allocation classifier.
-     * @details       
-     *     Classification Template
-     *     -----------------------
-     *     This type is used to unify the naming convention of the function 
-     *     references used to allocate and free memory for specific memory 
-     *     allocation schemes.
-     * @tparam Claimable
-     *     Function type used to specify the claim abstract.
-     * @tparam Disclaimable 
-     *     Function type used to specify the disclaim abstract.
-     */
+ * @brief         
+ *     Opaque memory allocation classifier.
+ * @details       
+ *     This type is used to unify the naming convention of the function 
+ *     references used to allocate and free memory for specific memory 
+ *     allocation schemes.
+ * @tparam Claimable
+ *     Function type used to specify the claim abstract.
+ * @tparam Disclaimable 
+ *     Function type used to specify the disclaim abstract.
+ */
 template <
     typename Claimable,
     typename Disclaimable>
@@ -63,52 +59,44 @@ struct Allocative {
 };
 
 /**
-     * @brief         
-     *     Claim default abstract.
-     * @details       
-     *     Abstraction Template
-     *     --------------------
-     *     Function type alias used when the claim function does not require any
-     *     additional arguments.
-     * @tparam Subjective
-     *     Type of the data object.
-     */
-template <
-    typename Subjective>
+ * @brief         
+ *     Claim default abstract.
+ * @details       
+ *     Function type alias used when the claim function does not require any
+ *     additional arguments.
+ * @tparam Subjective
+ *     Type of the data object.
+ */
+template <typename Subjective>
 using DefaultClaimable = const Locational<Subjective>(
-    Referential<Locational<Subjective>>
+    Referential<Locational<Subjective>> 
         locality);
 
 /**
-     * @brief
-     *     Disclaim default abstract.
-     * @details       
-     *     Abstraction Template
-     *     --------------------
-     *     Function type alias used when the disclaim function does not require
-     *     any additional arguments.
-     * @tparam Subjective
-     *     Type of the data object.
-     */
-template <
-    typename Subjective>
+ * @brief
+ *     Disclaim default abstract.
+ * @details       
+ *     Function type alias used when the disclaim function does not require
+ *     any additional arguments.
+ * @tparam Subjective
+ *     Type of the data object.
+ */
+template <typename Subjective>
 using DefaultDisclaimable = void(
     Referential<Locational<Subjective>>
         locality);
 
 /**
-     * @brief
-     *     Claim array abstract.
-     * @details
-     *     Abstraction Template
-     *     --------------------
-     *     Function type alias used when the claim function requires an 
-     *     additional count argument.
-     * @tparam Natural 
-     *     Type of the natural integer array bounds.
-     * @tparam Subjective 
-     *     Type of the array element.
-     */
+ * @brief
+ *     Claim array abstract.
+ * @details
+ *     Function type alias used when the claim function requires an 
+ *     additional count argument.
+ * @tparam Natural 
+ *     Type of the natural integer array bounds.
+ * @tparam Subjective 
+ *     Type of the array element.
+ */
 template <
     typename Natural,
     typename Subjective>
@@ -119,18 +107,15 @@ using ArrayClaimable = const Locational<Subjective>(
         count);
 
 /**
-     * @brief
-     *     Claim copy abstract.
-     * @details
-     *     Abstraction Template
-     *     --------------------
-     *     Function type alias used when the claim function requires an 
-     *     additional value argument.
-     * @tparam Subjective 
-     *     Type of the data object.
-     */
-template <
-    typename Subjective>
+ * @brief
+ *     Claim copy abstract.
+ * @details
+ *     Function type alias used when the claim function requires an 
+ *     additional value argument.
+ * @tparam Subjective 
+ *      Type of the data object.
+ */
+template <typename Subjective>
 using CopyClaimable = const Locational<Subjective>(
     Referential<Locational<Subjective>>
         locality,
@@ -138,69 +123,58 @@ using CopyClaimable = const Locational<Subjective>(
         value);
 
 /**
-     * @brief
-     *     Default memory allocation classifier.
-     * @details
-     *     Classification Template
-     *     -----------------------
-     *     This type alias defines the default memory allocation classifier.
-     * @tparam Subjective 
-     *     Type of the data object.
-     */
-template <
-    typename Subjective>
+ * @brief
+ *     Default memory allocation classifier.
+ * @details
+ *     This type alias defines the default memory allocation classifier.
+ * @tparam Subjective 
+ *     Type of the data object.
+ */
+template <typename Subjective>
 using DefaultAllocative = Allocative<DefaultClaimable<Subjective>, DefaultDisclaimable<Subjective>>;
 
 /**
-     * @brief
-     *     Array memory allocation classifier.
-     * @details       
-     *     Classification Template
-     *     -----------------------
-     *     This type alias defines the array memory allocation classifier.
-     * @tparam Natural 
-     *     Type of the natural integer array bounds.
-     * @tparam Subjective 
-     *     Type of the array element.
-     */
+ * @brief
+ *     Array memory allocation classifier.
+ * @details       
+ *     This type alias defines the array memory allocation classifier.
+ * @tparam Natural 
+ *     Type of the natural integer array bounds.
+ * @tparam Subjective 
+ *     Type of the array element.
+ */
 template <
     typename Natural,
     typename Subjective>
 using ArrayAllocative = Allocative<ArrayClaimable<Natural, Subjective>, DefaultDisclaimable<Subjective>>;
 
 /**
-     * @brief
-     *     Copy memory allocation classifier.
-     * @details
-     *     Classification Template
-     *     -----------------------
-     *     This type alias defines the copy memory allocation classifier.
-     * @tparam Subjective
-     *     Type of the data object.
-     */
-template <
-    typename Subjective>
+ * @brief
+ *     Copy memory allocation classifier.
+ * @details
+ *     This type alias defines the copy memory allocation classifier.
+ * @tparam Subjective
+ *     Type of the data object.
+ */
+template <typename Subjective>
 using CopyAllocative = Allocative<CopyClaimable<Subjective>, DefaultDisclaimable<Subjective>>;
 
 /**
-     * @brief
-     *     Allocates memory space for an instance of the specified 
-     *     type using the new operator.
-     * @details
-     *     Function Template
-     *     -----------------
-     *     With this function, the default constructor will be invoked.
-     * @tparam Subjective   
-     *     Type of the data object.
-     * @param[out] locality     
-     *     Reference to a pointer which will receive the address of the data 
-     *     object.
-     * @return        
-     *     The same address as stored in the pointer which was bound to 
-     *     locality.
-     */
-template <
-    typename Subjective>
+ * @brief
+ *     Allocates memory space for an instance of the specified 
+ *     type using the new operator.
+ * @details
+ *     With this function, the default constructor will be invoked.
+ * @tparam Subjective   
+ *     Type of the data object.
+ * @param[out] locality     
+ *     Reference to a pointer which will receive the address of the data 
+ *     object.
+ * @return        
+ *     The same address as stored in the pointer which was bound to 
+ *     locality.
+ */
+template <typename Subjective>
 static inline const Locational<Subjective>
 AllocateNewElement(
     Referential<Locational<Subjective>>
@@ -210,26 +184,24 @@ AllocateNewElement(
 }
 
 /**
-     * @brief
-     *     Allocates memory space for an array of instances of the specified 
-     *     type using the new operator.
-     * @details
-     *     Function Template
-     *     -----------------
-     *     With this function, the default constructor(s) will be invoked.
-     * @tparam Natural 
-     *     Type of the natural integer array bounds.
-     * @tparam Subjective
-     *     Type of the array element.
-     * @param[out] locality
-     *     Reference to a pointer which will receive the address of the array of
-     *     data objects.
-     * @param[in] count
-     *     The number of objects in the array.
-     * @return        
-     *     The same address as stored in the pointer which was bound to 
-     *     locality.
-     */
+ * @brief
+ *     Allocates memory space for an array of instances of the specified 
+ *     type using the new operator.
+ * @details
+ *     With this function, the default constructor(s) will be invoked.
+ * @tparam Natural 
+ *     Type of the natural integer array bounds.
+ * @tparam Subjective
+ *     Type of the array element.
+ * @param[out] locality
+ *     Reference to a pointer which will receive the address of the array of
+ *     data objects.
+ * @param[in] count
+ *     The number of objects in the array.
+ * @return        
+ *     The same address as stored in the pointer which was bound to 
+ *     locality.
+ */
 template <
     typename Natural,
     typename Subjective>
@@ -250,26 +222,23 @@ AllocateNewArray(
 }
 
 /**
-     * @brief
-     *     Allocates memory space for an instance of the specified type using 
-     *     the new operator.
-     * @details
-     *     Function Template
-     *     -----------------
-     *     With this function, the copy constructor will be invoked.
-     * @tparam Subjective 
-     *     Type of the data object.
-     * @param[out] locality
-     *     Reference to a pointer which will receive the address of the data 
-     *     object.
-     * @param[in] subject
-     *     The value to be passed to the copy constructor.
-     * @return        
-     *     The same address as stored in the pointer which was bound to 
-     *     locality.
-     */
-template <
-    typename Subjective>
+ * @brief
+ *     Allocates memory space for an instance of the specified type using 
+ *     the new operator.
+ * @details
+ *     With this function, the copy constructor will be invoked.
+ * @tparam Subjective 
+ *     Type of the data object.
+ * @param[out] locality
+ *     Reference to a pointer which will receive the address of the data 
+ *     object.
+ * @param[in] subject
+ *     The value to be passed to the copy constructor.
+ * @return        
+ *     The same address as stored in the pointer which was bound to 
+ *     locality.
+ */
+template <typename Subjective>
 static inline const Locational<Subjective>
 AllocateNewCopy(
     Referential<Locational<Subjective>>
@@ -281,21 +250,18 @@ AllocateNewCopy(
 }
 
 /**
-     * @brief
-     *     Sets the pointer to null (does not free the memory space).
-     * @details
-     *     Function Template
-     *     -----------------
-     *     This function can be useful in pseudo-allocation.
-     * @tparam Subjective 
-     *     Type of the data object.
-     * @param[out] locality
-     *     Reference to a pointer which will be set to null.
-     * @return
-     *     Does not return any value.
-     */
-template <
-    typename Subjective>
+ * @brief
+ *     Sets the pointer to null (does not free the memory space).
+ * @details
+ *     This function can be useful in pseudo-allocation.
+ * @tparam Subjective 
+ *     Type of the data object.
+ * @param[out] locality
+ *     Reference to a pointer which will be set to null.
+ * @return
+ *     Does not return any value.
+ */
+template <typename Subjective>
 static inline void
 SetToNull(
     Referential<Locational<Subjective>>
@@ -305,23 +271,20 @@ SetToNull(
 }
 
 /**
-     * @brief
-     *     Frees the memory space of an instance of the specified type using the
-     *     delete operator.
-     * @details
-     *     Function Template
-     *     -----------------
-     *     With this function, the destructor will be invoked but the pointer 
-     *     will not be set to null.
-     * @tparam Subjective 
-     *     Type of the data object.
-     * @param[in] locality
-     *     Reference to a pointer containing the address which will be deleted.
-     * @return
-     *     Does not return any value.
-     */
-template <
-    typename Subjective>
+ * @brief
+ *     Frees the memory space of an instance of the specified type using the
+ *     delete operator.
+ * @details
+ *     With this function, the destructor will be invoked but the pointer 
+ *     will not be set to null.
+ * @tparam Subjective 
+ *     Type of the data object.
+ * @param[in] locality
+ *     Reference to a pointer containing the address which will be deleted.
+ * @return
+ *     Does not return any value.
+ */
+template <typename Subjective>
 static inline void
 DeleteElement(
     Referential<Locational<Subjective>>
@@ -331,23 +294,20 @@ DeleteElement(
 }
 
 /**
-     * @brief
-     *     Frees the memory space of an instance of the specified type using 
-     *     the delete operator and sets the pointer to null.
-     * @details
-     *     Function Template
-     *     -----------------
-     *     With this function, the destructor will be invoked and the pointer 
-     *     will be set to null.
-     * @tparam Subjective 
-     *     Type of the data object.
-     * @param[in,out] locality
-     *     Reference to a pointer containing the address which will be deleted.
-     * @return
-     *     Does not return any value.
-     */
-template <
-    typename Subjective>
+ * @brief
+ *     Frees the memory space of an instance of the specified type using 
+ *     the delete operator and sets the pointer to null.
+ * @details
+ *     With this function, the destructor will be invoked and the pointer 
+ *     will be set to null.
+ * @tparam Subjective 
+ *     Type of the data object.
+ * @param[in,out] locality
+ *     Reference to a pointer containing the address which will be deleted.
+ * @return
+ *     Does not return any value.
+ */
+template <typename Subjective>
 static inline void
 DeleteElementAndSetToNull(
     Referential<Locational<Subjective>>
@@ -358,24 +318,21 @@ DeleteElementAndSetToNull(
 }
 
 /**
-     * @brief
-     *     Frees the memory space of an array of the specified type using the 
-     *     delete array operator.
-     * @details
-     *     Function Template
-     *     ----------------
-     *     With this function, the destructor(s) will be invoked but the pointer
-     *     will not be set to null.
-     * @tparam Subjective 
-     *     Type of the array element.
-     * @param[in] locality 
-     *     Reference to a pointer containing the array address which will be
-     *     deleted.
-     * @return
-     *     Does not return any value.
-     */
-template <
-    typename Subjective>
+ * @brief
+ *     Frees the memory space of an array of the specified type using the 
+ *     delete array operator.
+ * @details
+ *     With this function, the destructor(s) will be invoked but the pointer
+ *     will not be set to null.
+ * @tparam Subjective 
+ *     Type of the array element.
+ * @param[in] locality 
+ *     Reference to a pointer containing the array address which will be
+ *     deleted.
+ * @return
+ *     Does not return any value.
+ */
+template <typename Subjective>
 static inline void
 DeleteArray(
     Referential<Locational<Subjective>>
@@ -385,24 +342,21 @@ DeleteArray(
 }
 
 /**
-     * @brief
-     *     Frees the memory space of an array of the specified type using the
-     *     delete array operator and sets the pointer to null.
-     * @details
-     *     Function Template
-     *     -----------------
-     *     With this function, the destructor(s) will be invoked and the 
-     *     pointer will be set to null.
-     * @tparam Subjective 
-     *     Type of the array element.
-     * @param[in,out] locality
-     *     Reference to a pointer containing the array address which will be 
-     *     deleted.
-     * @return
-     *     Does not return any value.
-     */
-template <
-    typename Subjective>
+ * @brief
+ *     Frees the memory space of an array of the specified type using the
+ *     delete array operator and sets the pointer to null.
+ * @details
+ *     With this function, the destructor(s) will be invoked and the 
+ *     pointer will be set to null.
+ * @tparam Subjective 
+ *     Type of the array element.
+ * @param[in,out] locality
+ *     Reference to a pointer containing the array address which will be 
+ *     deleted.
+ * @return
+ *     Does not return any value.
+ */
+template <typename Subjective>
 static inline void
 DeleteArrayAndSetToNull(
     Referential<Locational<Subjective>>
@@ -413,18 +367,15 @@ DeleteArrayAndSetToNull(
 }
 
 /**
-     * @brief
-     *     Default new/delete memory allocation.
-     * @details
-     *     Objectification Template
-     *     ------------------------
-     *     Objective table which uses the default new and delete operators.
-     *     Disclaim frees the memory space and then sets the pointer to null.
-     * @tparam Subjective 
-     *     Type of the data objects.
-     */
-template <
-    typename Subjective>
+ * @brief
+ *     Default new/delete memory allocation.
+ * @details
+ *     Objective table which uses the default new and delete operators.
+ *     Disclaim frees the memory space and then sets the pointer to null.
+ * @tparam Subjective 
+ *     Type of the data objects.
+ */
+template <typename Subjective>
 constexpr DefaultAllocative<Subjective>
     DefaultNew = {
         AllocateNewElement<Subjective>,
@@ -432,18 +383,15 @@ constexpr DefaultAllocative<Subjective>
     };
 
 /**
-     * @brief
-     *     Default new/delete memory allocation.
-     * @details
-     *     Objectification Template
-     *     ------------------------
-     *     Objective table which uses the default new and delete operators.  
-     *     Disclaim frees the memory space but does not set the pointer to null.
-     * @tparam Subjective 
-     *     Type of the data objects.
-     */
-template <
-    typename Subjective>
+ * @brief
+ *     Default new/delete memory allocation.
+ * @details
+ *     Objective table which uses the default new and delete operators.  
+ *     Disclaim frees the memory space but does not set the pointer to null.
+ * @tparam Subjective 
+ *     Type of the data objects.
+ */
+template <typename Subjective>
 constexpr DefaultAllocative<Subjective>
     FastDefaultNew = {
         AllocateNewElement<Subjective>,
@@ -451,18 +399,16 @@ constexpr DefaultAllocative<Subjective>
     };
 
 /**
-     * @brief
-     *     Array new/delete memory allocation.
-     * @details
-     *     Objectification Template
-     *     ------------------------
-     *     Objective table which uses the array new and array delete operators.  
-     *     Disclaim frees the memory space and then sets the pointer to null.
-     * @tparam Natural 
-     *     Type of the natural integer array bounds.
-     * @tparam Subjective 
-     *     Type of the array elements.
-     */
+ * @brief
+ *     Array new/delete memory allocation.
+ * @details
+ *     Objective table which uses the array new and array delete operators.  
+ *     Disclaim frees the memory space and then sets the pointer to null.
+ * @tparam Natural 
+ *     Type of the natural integer array bounds.
+ * @tparam Subjective 
+ *     Type of the array elements.
+ */
 template <
     typename Natural,
     typename Subjective>
@@ -473,18 +419,16 @@ constexpr ArrayAllocative<Natural, Subjective>
     };
 
 /**
-     * @brief
-     *     Array new/delete memory allocation.
-     * @details
-     *     Objectification Template
-     *     ------------------------
-     *     Objective table which uses the array new and array delete operators.
-     *     Disclaim frees the memory space but does not set the pointer to null.
-     * @tparam Natural 
-     *     Type of the natural integer array bounds.
-     * @tparam Subjective 
-     *     Type of the array elements.
-     */
+ * @brief
+ *     Array new/delete memory allocation.
+ * @details
+ *     Objective table which uses the array new and array delete operators.
+ *     Disclaim frees the memory space but does not set the pointer to null.
+ * @tparam Natural 
+ *     Type of the natural integer array bounds.
+ * @tparam Subjective 
+ *     Type of the array elements.
+ */
 template <
     typename Natural,
     typename Subjective>
@@ -495,18 +439,15 @@ constexpr ArrayAllocative<Natural, Subjective>
     };
 
 /**
-     * @brief
-     *     Copy new/delete memory allocation.
-     * @details
-     *     Objectification Template
-     *     ------------------------
-     *     Objective table which uses the copy new and delete operators.  
-     *     Disclaim frees the memory space and then sets the pointer to null.
-     * @tparam Subjective
-     *     Type of the data objects.
-     */
-template <
-    typename Subjective>
+ * @brief
+ *     Copy new/delete memory allocation.
+ * @details
+ *     Objective table which uses the copy new and delete operators.  
+ *     Disclaim frees the memory space and then sets the pointer to null.
+ * @tparam Subjective
+ *     Type of the data objects.
+ */
+template <typename Subjective>
 constexpr CopyAllocative<Subjective>
     CopyNew = {
         AllocateNewCopy<Subjective>,
@@ -514,18 +455,15 @@ constexpr CopyAllocative<Subjective>
     };
 
 /**
-     * @brief
-     *     Copy new/delete memory allocation.
-     * @details
-     *     Objectification Template
-     *     ------------------------
-     *     Objective table which uses the copy new and delete operators.  
-     *     Disclaim frees the memory space but does not set the pointer to null.
-     * @tparam Subjective
-     *     Type of the data objects.
-     */
-template <
-    typename Subjective>
+ * @brief
+ *     Copy new/delete memory allocation.
+ * @details
+ *     Objective table which uses the copy new and delete operators.  
+ *     Disclaim frees the memory space but does not set the pointer to null.
+ * @tparam Subjective
+ *     Type of the data objects.
+ */
+template <typename Subjective>
 constexpr CopyAllocative<Subjective>
     FastCopyNew = {
         AllocateNewCopy<Subjective>,

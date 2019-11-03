@@ -12,8 +12,6 @@
  * @brief         
  *     Pointer space trajection implementation.
  * @details       
- *     Association
- *     -----------
  *     Implements sequential scalar trajection from a pointer.  This form of
  *     trajection is indeterminate since a pointer does not relate a count
  *     number of local elements.
@@ -28,54 +26,46 @@ using ::trajection::Lineal;
 using ::trajection::Scalar;
 
 /**
-     * @brief
-     *     Pointer to modifiable elements.
-     * @details
-     *     Conformation Template
-     *     ---------------------
-     *     This type alias is used to represent a pointer type to modifiable
-     *     elements.
-     * @tparam Elemental
-     *     Type of the elements.
-     */
-template <
-    typename Elemental>
+ * @brief
+ *     Pointer to modifiable elements.
+ * @details
+ *     This type alias is used to represent a pointer type to modifiable
+ *     elements.
+ * @tparam Elemental
+ *     Type of the elements.
+ */
+template <typename Elemental>
 using WriteLocal = const Locational<Elemental>;
 
 /**
-     * @brief
-     *     Pointer to constant elements.
-     * @details
-     *     Conformation Template
-     *     ---------------------
-     *     This type alias is used to represent a pointer type to constant
-     *     elements.
-     * @tparam Elemental
-     *     Type of the elements.
-     */
-template <
-    typename Elemental>
+ * @brief
+ *     Pointer to constant elements.
+ * @details
+ *     This type alias is used to represent a pointer type to constant
+ *     elements.
+ * @tparam Elemental
+ *     Type of the elements.
+ */
+template <typename Elemental>
 using ReadLocal = const Locational<const Elemental>;
 
 /**
-     * @brief 
-     *     Confers the element at index.
-     * @details
-     *     Function Template
-     *     -----------------
-     *     Returns a reference to the element at the specified index.  This 
-     *     version does not check if the pointer is null.
-     * @tparam Integral
-     *     Type of integer for index.
-     * @tparam Elemental
-     *     Type of the elements.
-     * @param[in] locality
-     *     Reference to the pointer.
-     * @param[in] index
-     *     Reference to the index.
-     * @return
-     *     The reference conferment.
-     */
+ * @brief 
+ *     Confers the element at index.
+ * @details
+ *     Returns a reference to the element at the specified index.  This 
+ *     version does not check if the pointer is null.
+ * @tparam Integral
+ *     Type of integer for index.
+ * @tparam Elemental
+ *     Type of the elements.
+ * @param[in] locality
+ *     Reference to the pointer.
+ * @param[in] index
+ *     Reference to the index.
+ * @return
+ *     The reference conferment.
+ */
 template <
     typename Integral,
     typename Elemental>
@@ -97,27 +87,25 @@ IndexicalGo(
 }
 
 /**
-     * @brief
-     *     Begins increment trajection.
-     * @details
-     *     Function Template
-     *     -----------------
-     *     Assigns to index the count positive offset from zero.
-     * @tparam Integral
-     *     Type of integer for index.
-     * @tparam Natural
-     *     Type of natural integer for count.
-     * @tparam Elemental 
-     *     Type of the elements.
-     * @param[in] locality 
-     *     Reference to the pointer.
-     * @param[out] index
-     *     Reference to the index.
-     * @param[in] count
-     *     Reference to the offset count.
-     * @return 
-     *     A reference to the index as a constant.
-     */
+ * @brief
+ *     Begins increment trajection.
+ * @details
+ *     Assigns to index the count positive offset from zero.
+ * @tparam Integral
+ *     Type of integer for index.
+ * @tparam Natural
+ *     Type of natural integer for count.
+ * @tparam Elemental 
+ *     Type of the elements.
+ * @param[in] locality 
+ *     Reference to the pointer.
+ * @param[out] index
+ *     Reference to the index.
+ * @param[in] count
+ *     Reference to the offset count.
+ * @return 
+ *     A reference to the index as a constant.
+ */
 template <
     typename Integral,
     typename Natural,
@@ -144,27 +132,25 @@ BeginIncrement(
 }
 
 /**
-     * @brief
-     *     Begins decrement trajection.
-     * @details
-     *     Function Template
-     *     -----------------
-     *     Assigns to index the count negative offset from zero.
-     * @tparam Integral
-     *     Type of integer for index.
-     * @tparam Natural
-     *     Type of natural integer for count.
-     * @tparam Elemental 
-     *     Type of the elements.
-     * @param[in] locality 
-     *     Reference to the pointer.
-     * @param[out] index
-     *     Reference to the index.
-     * @param[in] count
-     *     Reference to the offset count.
-     * @return 
-     *     A reference to the index as a constant.
-     */
+ * @brief
+ *     Begins decrement trajection.
+ * @details
+ *     Assigns to index the count negative offset from zero.
+ * @tparam Integral
+ *     Type of integer for index.
+ * @tparam Natural
+ *     Type of natural integer for count.
+ * @tparam Elemental 
+ *     Type of the elements.
+ * @param[in] locality 
+ *     Reference to the pointer.
+ * @param[out] index
+ *     Reference to the index.
+ * @param[in] count
+ *     Reference to the offset count.
+ * @return 
+ *     A reference to the index as a constant.
+ */
 template <
     typename Integral,
     typename Natural,
@@ -191,27 +177,25 @@ BeginDecrement(
 }
 
 /**
-     * @brief 
-     *     Traverses increment.
-     * @details
-     *     Function Template
-     *     -----------------
-     *     Increases index by count offset.
-     * @tparam Integral
-     *     Type of integer for index.
-     * @tparam Natural
-     *     Type of natural integer for count.
-     * @tparam Elemental 
-     *     Type of the elements.
-     * @param[in] locality 
-     *     Reference to the pointer.
-     * @param[in,out] index
-     *     Reference to the index.
-     * @param[in] count
-     *     Reference to the offset count.
-     * @return 
-     *     A reference to the index as a constant.
-     */
+ * @brief 
+ *     Traverses increment.
+ * @details
+ *     Increases index by count offset.
+ * @tparam Integral
+ *     Type of integer for index.
+ * @tparam Natural
+ *     Type of natural integer for count.
+ * @tparam Elemental 
+ *     Type of the elements.
+ * @param[in] locality 
+ *     Reference to the pointer.
+ * @param[in,out] index
+ *     Reference to the index.
+ * @param[in] count
+ *     Reference to the offset count.
+ * @return 
+ *     A reference to the index as a constant.
+ */
 template <
     typename Integral,
     typename Natural,
@@ -238,27 +222,25 @@ TraverseIncrement(
 }
 
 /**
-     * @brief 
-     *     Traverses decrement.
-     * @details
-     *     Function Template
-     *     -----------------
-     *     Decreases index by count offset.
-     * @tparam Integral
-     *     Type of integer for index.
-     * @tparam Natural
-     *     Type of natural integer for count.
-     * @tparam Elemental 
-     *     Type of the elements.
-     * @param[in] locality 
-     *     Reference to the pointer.
-     * @param[in,out] index
-     *     Reference to the index.
-     * @param[in] count
-     *     Reference to the offset count.
-     * @return 
-     *     A reference to the index as a constant.
-     */
+ * @brief 
+ *     Traverses decrement.
+ * @details
+ *     Decreases index by count offset.
+ * @tparam Integral
+ *     Type of integer for index.
+ * @tparam Natural
+ *     Type of natural integer for count.
+ * @tparam Elemental 
+ *     Type of the elements.
+ * @param[in] locality 
+ *     Reference to the pointer.
+ * @param[in,out] index
+ *     Reference to the index.
+ * @param[in] count
+ *     Reference to the offset count.
+ * @return 
+ *     A reference to the index as a constant.
+ */
 template <
     typename Integral,
     typename Natural,
@@ -285,21 +267,19 @@ TraverseDecrement(
 }
 
 /**
-     * @brief 
-     *     Sequential read trajection implementation.
-     * @details
-     *     Objectification Template
-     *     ------------------------
-     *     Objective table which provides sequential positive trajection from a
-     *     pointer.  Use this version if performance is stringent and the 
-     *     pointer is prevented from being null.
-     * @tparam Integral
-     *     Type of integer for index.
-     * @tparam Natural
-     *     Type of natural integer for count.
-     * @tparam Elemental 
-     *     Type of the elements.
-     */
+ * @brief 
+ *     Sequential read trajection implementation.
+ * @details
+ *     Objective table which provides sequential positive trajection from a
+ *     pointer.  Use this version if performance is stringent and the 
+ *     pointer is prevented from being null.
+ * @tparam Integral
+ *     Type of integer for index.
+ * @tparam Natural
+ *     Type of natural integer for count.
+ * @tparam Elemental 
+ *     Type of the elements.
+ */
 template <
     typename Integral,
     typename Natural,
@@ -313,21 +293,19 @@ constexpr Scalar<const Locational<const Elemental>, Integral, Natural, const Ele
     };
 
 /**
-     * @brief 
-     *     Sequential write trajection implementation.
-     * @details
-     *     Objectification Template
-     *     ------------------------
-     *     Objective table which provides sequential positive trajection from a 
-     *     pointer.  Use this version if performance is stringent and the 
-     *     pointer is prevented from being null.
-     * @tparam Integral
-     *     Type of integer for index.
-     * @tparam Natural
-     *     Type of natural integer for count.
-     * @tparam Elemental 
-     *     Type of the elements.
-     */
+ * @brief 
+ *     Sequential write trajection implementation.
+ * @details
+ *     Objective table which provides sequential positive trajection from a 
+ *     pointer.  Use this version if performance is stringent and the 
+ *     pointer is prevented from being null.
+ * @tparam Integral
+ *     Type of integer for index.
+ * @tparam Natural
+ *     Type of natural integer for count.
+ * @tparam Elemental 
+ *     Type of the elements.
+ */
 template <
     typename Integral,
     typename Natural,
@@ -341,21 +319,19 @@ constexpr Scalar<const Locational<Elemental>, Integral, Natural, Elemental>
     };
 
 /**
-     * @brief 
-     *     Sequential read trajection implementation.
-     * @details
-     *     Objectification Template
-     *     ------------------------
-     *     Objective table which provides sequential negative trajection from a 
-     *     pointer.  Use this version if performance is stringent and the 
-     *     pointer is prevented from being null.
-     * @tparam Integral
-     *     Type of integer for index.
-     * @tparam Natural
-     *     Type of natural integer for count.
-     * @tparam Elemental 
-     *     Type of the elements.
-     */
+ * @brief 
+ *     Sequential read trajection implementation.
+ * @details
+ *     Objective table which provides sequential negative trajection from a 
+ *     pointer.  Use this version if performance is stringent and the 
+ *     pointer is prevented from being null.
+ * @tparam Integral
+ *     Type of integer for index.
+ * @tparam Natural
+ *     Type of natural integer for count.
+ * @tparam Elemental 
+ *     Type of the elements.
+ */
 template <
     typename Integral,
     typename Natural,
@@ -369,21 +345,19 @@ constexpr Scalar<const Locational<const Elemental>, Integral, Natural, const Ele
     };
 
 /**
-     * @brief 
-     *     Sequential write trajection implementation.
-     * @details
-     *     Objectification Template
-     *     ------------------------
-     *     Objective table which provides sequential negative trajection from a 
-     *     pointer.  Use this version if performance is stringent and the 
-     *     pointer is prevented from being null.
-     * @tparam Integral
-     *     Type of integer for index.
-     * @tparam Natural
-     *     Type of natural integer for count.
-     * @tparam Elemental 
-     *     Type of the elements.
-     */
+ * @brief 
+ *     Sequential write trajection implementation.
+ * @details
+ *     Objective table which provides sequential negative trajection from a 
+ *     pointer.  Use this version if performance is stringent and the 
+ *     pointer is prevented from being null.
+ * @tparam Integral
+ *     Type of integer for index.
+ * @tparam Natural
+ *     Type of natural integer for count.
+ * @tparam Elemental 
+ *     Type of the elements.
+ */
 template <
     typename Integral,
     typename Natural,
@@ -397,21 +371,19 @@ constexpr Scalar<const Locational<Elemental>, Integral, Natural, Elemental>
     };
 
 /**
-     * @brief 
-     *     Sequential read trajection implementation.
-     * @details
-     *     Objectification Template
-     *     ------------------------
-     *     Objective table which provides sequential trajection from a pointer.
-     *     Use this version if performance is stringent and the pointer is 
-     *     prevented from being null.
-     * @tparam Integral
-     *     Type of integer for index.
-     * @tparam Natural
-     *     Type of natural integer for count.
-     * @tparam Elemental 
-     *     Type of the elements.
-     */
+ * @brief 
+ *     Sequential read trajection implementation.
+ * @details
+ *     Objective table which provides sequential trajection from a pointer.
+ *     Use this version if performance is stringent and the pointer is 
+ *     prevented from being null.
+ * @tparam Integral
+ *     Type of integer for index.
+ * @tparam Natural
+ *     Type of natural integer for count.
+ * @tparam Elemental 
+ *     Type of the elements.
+ */
 template <
     typename Integral,
     typename Natural,
@@ -423,21 +395,19 @@ constexpr Lineal<const Locational<const Elemental>, Integral, Natural, const Ele
     };
 
 /**
-     * @brief 
-     *     Sequential write trajection implementation.
-     * @details
-     *     Objectification Template
-     *     ------------------------
-     *     Objective table which provides sequential trajection from a pointer.  
-     *     Use this version if performance is stringent and the pointer is 
-     *     prevented from being null.
-     * @tparam Integral
-     *     Type of integer for index.
-     * @tparam Natural
-     *     Type of natural integer for count.
-     * @tparam Elemental 
-     *     Type of the elements.
-     */
+ * @brief 
+ *     Sequential write trajection implementation.
+ * @details
+ *     Objective table which provides sequential trajection from a pointer.  
+ *     Use this version if performance is stringent and the pointer is 
+ *     prevented from being null.
+ * @tparam Integral
+ *     Type of integer for index.
+ * @tparam Natural
+ *     Type of natural integer for count.
+ * @tparam Elemental 
+ *     Type of the elements.
+ */
 template <
     typename Integral,
     typename Natural,
