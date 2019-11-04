@@ -55,12 +55,12 @@ using Abstract = Resultant(Parametric...);
  */
 template <
     typename Procedural,
-    Referential<Procedural> Location,
+    Referential<Procedural> Objective,
     typename Resultant,
     typename... Parametric>
 Resultant AbstractProcedure(Parametric... arguments)
 {
-    return Location(arguments...);
+    return Objective(arguments...); // Shapeless Slab Of Clay
 }
 
 /**
@@ -101,7 +101,7 @@ Resultant AbstractMethod(Parametric... arguments)
         "MethodLocational:  Pointer to member function type required");
 #endif
     static_assert(Method != 0, "Method:  Pointer is null");
-    return (Object.*Method)(arguments...);
+    return (Object.*Method)(arguments...); // Took __time to write this__
 }
 
 }
