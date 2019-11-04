@@ -36,9 +36,7 @@ void Function(unsigned value)
 }
 
 static inline void
-Demonstrate(
-    Referential<const Invocative<void, unsigned>>
-        invoke)
+Demonstrate(Referential<const Invocative<void, unsigned>> invoke)
 {
     static unsigned count = 0;
     invoke(++count);

@@ -27,19 +27,19 @@ using namespace ::association;
 using namespace ::consecution;
 using namespace ::junction;
 using namespace ::junction::stdlib;
-
 using MessageLocal = const Locational<const char>;
 using MapComplementary = Complementary<char, int>;
 using ListAdjunctive = DoublyAdjunctive<size_t, char>;
 using MapAdjunctive = DoublyAdjunctive<size_t, MapComplementary>;
+constexpr ListAdjunctive ListAdjunct = DefaultMallocDoubleAdjunct<size_t, char>;
+constexpr MapAdjunctive MapAdjunct = DefaultMallocDoubleAdjunct<size_t, MapComplementary>;
 
+#if defined(_MSC_VER) && _MSC_VER < 1921
 template bool ::comparison::IsLesser(Referential<const char>, Referential<const char>);
 template bool ::comparison::IsEqual(Referential<const char>, Referential<const char>);
 template bool ::ration::string::MoveBytes(Locational<char>, Locational<char>, size_t);
 template bool ::ration::string::MoveBytes(Locational<MapComplementary>, Locational<MapComplementary>, size_t);
-
-constexpr ListAdjunctive ListAdjunct = DefaultMallocDoubleAdjunct<size_t, char>;
-constexpr MapAdjunctive MapAdjunct = DefaultMallocDoubleAdjunct<size_t, MapComplementary>;
+#endif
 
 template <
     typename Spatial,

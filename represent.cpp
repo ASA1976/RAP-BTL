@@ -12,13 +12,9 @@ extern "C" {
 
 using namespace ::location;
 
-template <
-    size_t
-        Length>
+template <size_t Length>
 static inline void
-DisplayHexByteList(
-    Referential<const unsigned char[Length]>
-        bytes)
+DisplayHexByteList(Referential<const unsigned char[Length]> bytes)
 {
     size_t count;
     for (count = 0; count < Length; count++) {
@@ -28,12 +24,9 @@ DisplayHexByteList(
     }
 }
 
-template <
-    typename Subjective>
+template <typename Subjective>
 static inline void
-DisplayHexMemory(
-    Referential<const Subjective>
-        subject)
+DisplayHexMemory(Referential<const Subjective> subject)
 {
     using namespace ::representation;
     DisplayHexByteList(AddressNatively(subject));

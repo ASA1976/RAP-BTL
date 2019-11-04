@@ -15,33 +15,31 @@ extern "C" {
 namespace ration {
 
 /**
-     * @brief
-     *     Array sequence memory move implementation using one of either the C 
-     *     or C++ standard memmove library function.
-     * @details
-     *     Association
-     *     -----------
-     *     C or C++ standard library based function which implements the Moving
-     *     function type.
-     */
+ * @brief
+ *     Array sequence memory move implementation using one of either the C 
+ *     or C++ standard memmove library function.
+ * @details
+ *     C or C++ standard library based function which implements the Moving
+ *     function type.
+ */
 namespace string {
 
-    using ::location::Locational;
+using ::location::Locational;
 
-    template <
-        typename Natural,
-        typename Elemental>
-    static inline bool
-    MoveBytes(
-        Locational<Elemental>
-            from,
-        Locational<Elemental>
-            to,
-        Natural
-            count)
-    {
-        return memmove(to, from, count * sizeof(Elemental));
-    }
+template <
+    typename Natural,
+    typename Elemental>
+static inline bool
+MoveBytes(
+    Locational<Elemental>
+        from,
+    Locational<Elemental>
+        to,
+    Natural
+        count)
+{
+    return memmove(to, from, count * sizeof(Elemental));
+}
 
 }
 

@@ -114,9 +114,7 @@ GoReadSafely(
         is_integral<Natural>::value && is_unsigned<Natural>::value,
         "Natural:  Unsigned integer type required");
 #endif
-    static auto&
-        ContainsPosition
-        = Contains<Connective, Natural, Elemental, true>;
+    static auto& ContainsPosition = Contains<Connective, Natural, Elemental, true>;
     if (!ContainsPosition(list, position))
         throw position;
     return GoRead(list, position);
@@ -140,9 +138,7 @@ GoWriteSafely(
         is_integral<Natural>::value && is_unsigned<Natural>::value,
         "Natural:  Unsigned integer type required");
 #endif
-    static auto&
-        ContainsPosition
-        = Contains<Connective, Natural, Elemental, true>;
+    static auto& ContainsPosition = Contains<Connective, Natural, Elemental, true>;
     if (!ContainsPosition(list, position))
         throw position;
     return GoWrite(list, position);
@@ -152,10 +148,8 @@ template <
     typename Connective,
     typename Natural,
     typename Elemental,
-    Referential<Original<Connective, Natural, Elemental>>
-        GetOrigin,
-    Referential<Subsequent<Connective, Elemental>>
-        GetSubsequent>
+    Referential<Original<Connective, Natural, Elemental>> GetOrigin,
+    Referential<Subsequent<Connective, Elemental>> GetSubsequent>
 static inline Referential<const Positional<Connective, Elemental>>
 BeginReadScaleSafely(
     Referential<const Junctive<Connective, Natural, Elemental>>
@@ -171,10 +165,9 @@ BeginReadScaleSafely(
         is_integral<Natural>::value && is_unsigned<Natural>::value,
         "Natural:  Unsigned integer type required");
 #endif
-    Locational<Nodal<Connective, Elemental>>
-        current;
-    Natural
-        index;
+    using NodeLocational = Locational<Nodal<Connective, Elemental>>;
+    NodeLocational current;
+    Natural index;
     current = GetOrigin(list);
     if (!current)
         throw list;
@@ -191,10 +184,8 @@ template <
     typename Connective,
     typename Natural,
     typename Elemental,
-    Referential<Original<Connective, Natural, Elemental>>
-        GetOrigin,
-    Referential<Subsequent<Connective, Elemental>>
-        GetSubsequent>
+    Referential<Original<Connective, Natural, Elemental>> GetOrigin,
+    Referential<Subsequent<Connective, Elemental>> GetSubsequent>
 static inline Referential<const Positional<Connective, Elemental>>
 BeginWriteScaleSafely(
     Referential<Junctive<Connective, Natural, Elemental>>
@@ -210,10 +201,9 @@ BeginWriteScaleSafely(
         is_integral<Natural>::value && is_unsigned<Natural>::value,
         "Natural:  Unsigned integer type required");
 #endif
-    Locational<Nodal<Connective, Elemental>>
-        current;
-    Natural
-        index;
+    using NodeLocational = Locational<Nodal<Connective, Elemental>>;
+    NodeLocational current;
+    Natural index;
     current = GetOrigin(list);
     if (!current)
         throw list;
@@ -230,8 +220,7 @@ template <
     typename Connective,
     typename Natural,
     typename Elemental,
-    Referential<Subsequent<Connective, Elemental>>
-        GetSubsequent>
+    Referential<Subsequent<Connective, Elemental>> GetSubsequent>
 static inline Referential<const Positional<Connective, Elemental>>
 TraverseReadScaleSafely(
     Referential<const Junctive<Connective, Natural, Elemental>>
@@ -247,10 +236,9 @@ TraverseReadScaleSafely(
         is_integral<Natural>::value && is_unsigned<Natural>::value,
         "Natural:  Unsigned integer type required");
 #endif
-    Locational<Nodal<Connective, Elemental>>
-        current;
-    Natural
-        index;
+    using NodeLocational = Locational<Nodal<Connective, Elemental>>;
+    NodeLocational current;
+    Natural index;
     if (!position.at)
         throw position;
     current = position.at;
@@ -267,8 +255,7 @@ template <
     typename Connective,
     typename Natural,
     typename Elemental,
-    Referential<Subsequent<Connective, Elemental>>
-        GetSubsequent>
+    Referential<Subsequent<Connective, Elemental>> GetSubsequent>
 static inline Referential<const Positional<Connective, Elemental>>
 TraverseWriteScaleSafely(
     Referential<Junctive<Connective, Natural, Elemental>>
@@ -284,10 +271,9 @@ TraverseWriteScaleSafely(
         is_integral<Natural>::value && is_unsigned<Natural>::value,
         "Natural:  Unsigned integer type required");
 #endif
-    Locational<Nodal<Connective, Elemental>>
-        current;
-    Natural
-        index;
+    using NodeLocational = Locational<Nodal<Connective, Elemental>>;
+    NodeLocational current;
+    Natural index;
     if (!position.at)
         throw position;
     current = position.at;
@@ -304,8 +290,7 @@ template <
     typename Connective,
     typename Natural,
     typename Elemental,
-    Referential<Subsequent<Connective, Elemental>>
-        GetSubsequent>
+    Referential<Subsequent<Connective, Elemental>> GetSubsequent>
 static inline bool
 DirectionTraversesCheckSafely(
     Referential<const Junctive<Connective, Natural, Elemental>>
@@ -321,16 +306,13 @@ DirectionTraversesCheckSafely(
         is_integral<Natural>::value && is_unsigned<Natural>::value,
         "Natural:  Unsigned integer type required");
 #endif
-    static auto&
-        Traverses
-        = DirectionTraverses<Connective, Natural, Elemental, GetSubsequent>;
+    static auto& Traverses = DirectionTraverses<Connective, Natural, Elemental, GetSubsequent>;
     if (!position.at)
         throw position;
     return Traverses(list, position, count);
 }
 
-template <
-    typename Elemental>
+template <typename Elemental>
 constexpr Relational<SinglyPositional<Elemental>>
     SafeSingleRelation = {
         IsLesserCheckSafely<SinglyLinked<Elemental>, Elemental>,
@@ -339,8 +321,7 @@ constexpr Relational<SinglyPositional<Elemental>>
         IsNotLesserCheckSafely<SinglyLinked<Elemental>, Elemental>
     };
 
-template <
-    typename Elemental>
+template <typename Elemental>
 constexpr Relational<DoublyPositional<Elemental>>
     SafeDoubleRelation = {
         IsLesserCheckSafely<DoublyLinked<Elemental>, Elemental>,
@@ -349,16 +330,14 @@ constexpr Relational<DoublyPositional<Elemental>>
         IsNotLesserCheckSafely<DoublyLinked<Elemental>, Elemental>
     };
 
-template <
-    typename Elemental>
+template <typename Elemental>
 constexpr Comparative<SinglyPositional<Elemental>>
     SafeSingleComparison = {
         SingleEquality<Elemental>,
         SafeSingleRelation<Elemental>
     };
 
-template <
-    typename Elemental>
+template <typename Elemental>
 constexpr Comparative<DoublyPositional<Elemental>>
     SafeDoubleComparison = {
         DoubleEquality<Elemental>,

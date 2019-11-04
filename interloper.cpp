@@ -11,12 +11,8 @@ extern "C" {
 #endif
 
 using namespace ::invocation;
-
-extern "C" void
-call_from_c(const Invocative<void, unsigned>);
-
-extern "C" void
-c_function(unsigned);
+extern "C" void call_from_c(const Invocative<void, unsigned>);
+extern "C" void c_function(unsigned);
 
 struct Class {
 

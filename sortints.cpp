@@ -12,9 +12,8 @@ extern "C" {
 
 using namespace ::location;
 using namespace ::junction;
-
-constexpr SinglyAdjunctive<unsigned, int>
-    StaticAdjunct = DefaultStaticSingleAdjunct<unsigned, int>;
+using ListAdjunctive = SinglyAdjunctive<unsigned, int>;
+constexpr ListAdjunctive StaticAdjunct = DefaultStaticSingleAdjunct<unsigned, int>;
 
 #if defined(_MSC_VER) && _MSC_VER < 1921
 template bool ::comparison::IsLesser(Referential<const int>, Referential<const int>);

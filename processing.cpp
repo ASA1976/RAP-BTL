@@ -12,16 +12,14 @@ extern "C" {
 }
 #endif
 
+using namespace ::location;
 using namespace ::procession;
 using namespace ::invocation;
 using namespace ::ration::contraction;
-
 constexpr unsigned MaximumEvents = 127;
-
 using EventSchedular = Contractional<unsigned, MaximumEvents, Contextual<unsigned>>;
 using Demonstrative = Abstract<void>;
 using EventTractile = Tractile<EventSchedular, unsigned, unsigned>;
-
 constexpr auto& EventVisitor = WriteIncrementDirection<unsigned, MaximumEvents, Contextual<unsigned>>;
 constexpr EventTractile EventContractor = SureContractor<unsigned, MaximumEvents, Contextual<unsigned>>;
 auto& PreparePrintString = PrepareSchedule<EventSchedular, unsigned, unsigned, const char, EventContractor, unsigned>;
@@ -99,6 +97,7 @@ ScheduleSampleEvents(
     Referential<const Coordinate>
         coordinator)
 {
+    using namespace ::location;
     static const Locational<const char>
         HelloLocality = "Hello world!",
         GoodbyeLocality = "Goodbye";
