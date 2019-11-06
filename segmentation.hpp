@@ -13,21 +13,21 @@
  */
 namespace segmentation {
 
-using ::location::Conferential;
-using ::location::Locational;
-using ::location::Referential;
 using ::comparison::Comparison;
-using ::trajection::Axial;
-using ::trajection::Directional;
-using ::trajection::Lineal;
-using ::trajection::Scalar;
-using ::trajection::Vectorial;
 using ::localization::IndexicalGo;
 using ::localization::ReadIncrementScale;
 using ::localization::ReadLocal;
 using ::localization::TraverseDecrement;
 using ::localization::WriteIncrementScale;
 using ::localization::WriteLocal;
+using ::location::Conferential;
+using ::location::Locational;
+using ::location::Referential;
+using ::trajection::Axial;
+using ::trajection::Directional;
+using ::trajection::Lineal;
+using ::trajection::Scalar;
+using ::trajection::Vectorial;
 
 /**
  * @brief

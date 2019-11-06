@@ -40,8 +40,7 @@ template <typename... Parametric>
 using Contractual = void(
     const Locational<const void>
         locality,
-    Parametric... 
-        arguments);
+    Parametric... arguments);
 
 /**
  * @brief   
@@ -213,8 +212,7 @@ ProcessOneEvent(
         visitor,
     Referential<Schedular>
         schedule,
-    Parametric... 
-        arguments)
+    Parametric... arguments)
 {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
     using namespace ::std;

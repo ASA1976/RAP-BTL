@@ -118,13 +118,12 @@ Resultant
 InvokeProcedure(
     const Locational<const void>
         locality,
-    Parametric... 
-        arguments)
+    Parametric... arguments)
 {
     using namespace ::location;
     using Classificatory = Locational<const Locational<Procedural>>;
     const Classificatory objective = static_cast<Classificatory>(locality);
-    return Refer(Refer(objective).to).to(arguments...); // __I RAP like dat__
+    return Refer(Refer(objective).to).to(arguments...);
 }
 
 /**
@@ -141,7 +140,7 @@ InvokeProcedure(
  * @tparam ...Parametric
  *     Parameter pack which represents the parameter types of the invocation.
  * @param[in] locality 
- *     Data pointer to the methodic instance.
+ *     Data pointer to the methodic message instance.
  * @param[in] arguments
  *     Argument pack which is expanded for the invocation.
  * @return
@@ -156,12 +155,12 @@ Resultant
 InvokeMethod(
     const Locational<const void>
         locality,
-    Parametric... 
-        arguments)
+    Parametric... arguments)
 {
-    using Classificatory = Locational<const Methodic<ClassTypical, MethodLocational, Resultant, Parametric...>>;
+    using Specific = Methodic<ClassTypical, MethodLocational, Resultant, Parametric...>;
+    using Classificatory = Locational<const Specific>;
     const Classificatory objective = static_cast<Classificatory>(locality);
-    return (objective->object->*objective->method)(arguments...); // RAP Is Boss
+    return (objective->object->*objective->method)(arguments...);
 }
 
 /**
@@ -213,7 +212,7 @@ PrepareInvocation(
  * @param[in] object
  *     Reference to qualified data object.
  * @return
- *     Methodic instance returned by value.
+ *     Methodic message instance returned by value.
  */
 template <
     class ClassTypical,
@@ -229,8 +228,8 @@ AssignClassMethod(
 {
     using namespace ::location;
     using Specific = Methodic<ClassTypical, MethodLocational, Resultant, Parametric...>;
-    const Specific objective = { method, Locate(object).at };
-    return objective;
+    const Specific message = { method, Locate(object).at };
+    return message;
 }
 
 /**
@@ -284,8 +283,8 @@ AssignInvokeProcedure(
  *     Return type of the invocation.
  * @tparam ...Parametric
  *     Parameter pack which represents the parameter types of the invocation.
- * @param[in] instance
- *     Reference to a methodic instance with suitable duration.
+ * @param[in] message
+ *     Reference to a methodic message instance with suitable duration.
  * @return
  *     Invocative instance returned by value.
  */
@@ -297,12 +296,12 @@ template <
 static inline Invocative<Resultant, Parametric...>
 AssignInvokeMethod(
     Referential<const Methodic<ClassTypical, MethodLocational, Resultant, Parametric...>>
-        instance)
+        message)
 {
     using namespace ::location;
     using Specific = Invocative<Resultant, Parametric...>;
     static auto& Invoke = InvokeMethod<ClassTypical, MethodLocational, Resultant, Parametric...>;
-    const Specific invocation = { Locate(Invoke).at, Locate(instance).at };
+    const Specific invocation = { Locate(Invoke).at, Locate(message).at };
     return invocation;
 }
 

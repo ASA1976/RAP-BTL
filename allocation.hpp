@@ -69,7 +69,7 @@ struct Allocative {
  */
 template <typename Subjective>
 using DefaultClaimable = const Locational<Subjective>(
-    Referential<Locational<Subjective>> 
+    Referential<Locational<Subjective>>
         locality);
 
 /**

@@ -13,24 +13,24 @@
  */
 namespace junction {
 
-using ::location::Conferential;
-using ::location::Locational;
-using ::location::Positive;
-using ::location::Referential;
-using ::comparison::Comparative;
-using ::comparison::Equative;
-using ::comparison::Relational;
-using ::trajection::Axial;
-using ::trajection::Directional;
-using ::trajection::Lineal;
-using ::trajection::Scalar;
-using ::trajection::Vectorial;
 using ::allocation::Allocative;
 using ::allocation::CopyClaimable;
 using ::allocation::DefaultClaimable;
 using ::allocation::DefaultDisclaimable;
 using ::allocation::FastCopyNew;
 using ::allocation::FastDefaultNew;
+using ::comparison::Comparative;
+using ::comparison::Equative;
+using ::comparison::Relational;
+using ::location::Conferential;
+using ::location::Locational;
+using ::location::Positive;
+using ::location::Referential;
+using ::trajection::Axial;
+using ::trajection::Directional;
+using ::trajection::Lineal;
+using ::trajection::Scalar;
+using ::trajection::Vectorial;
 
 /**
  * @brief 
@@ -184,24 +184,19 @@ template <
     typename Elemental>
 struct Adjunctive {
 
-    Referential<Locational<Nodal<Connective, Elemental>>(
-        Referential<Junctive<Connective, Natural, Elemental>>)>
+    Referential<Locational<Nodal<Connective, Elemental>>(Referential<Junctive<Connective, Natural, Elemental>>)>
         allocate; /**< Allocates one or more uninitialized nodes.  
                    *   Implementations may simply return null if this 
                    *   operation is not supported.
                    */
 
-    Referential<bool(
-        Referential<Junctive<Connective, Natural, Elemental>>,
-        Referential<Locational<Nodal<Connective, Elemental>>>)>
+    Referential<bool(Referential<Junctive<Connective, Natural, Elemental>>, Referential<Locational<Nodal<Connective, Elemental>>>)>
         deallocate; /**< Frees the memory used by one linked list node which
                      *   has already been removed from either the active 
                      *   node list or unused node sublist.
                      */
 
-    Referential<Locational<Nodal<Connective, Elemental>>(
-        Referential<Junctive<Connective, Natural, Elemental>>,
-        Referential<const Elemental>)>
+    Referential<Locational<Nodal<Connective, Elemental>>(Referential<Junctive<Connective, Natural, Elemental>>, Referential<const Elemental>)>
         proclaim; /**< Proclaims an element with the specified value.  
                    *   Implementations may recycle an unused node and assign
                    *   it the provided value or allocate and initialize a 
@@ -226,16 +221,16 @@ template <
 using SinglyAdjunctive = Adjunctive<SinglyLinked<Elemental>, Natural, Elemental>;
 
 /**
-     * @brief 
-     *     Doubly linked list node management classifier.
-     * @details  
-     *     This type alias is used to represent a doubly linked list node 
-     *     management adjunct.
-     * @tparam Natural
-     *     Type of unsigned integer.
-     * @tparam Elemental
-     *     Type of the elements.
-     */
+ * @brief 
+ *     Doubly linked list node management classifier.
+ * @details  
+ *     This type alias is used to represent a doubly linked list node 
+ *     management adjunct.
+ * @tparam Natural
+ *     Type of unsigned integer.
+ * @tparam Elemental
+ *     Type of the elements.
+ */
 template <
     typename Natural,
     typename Elemental>
@@ -326,8 +321,7 @@ template <
 constexpr Junctive<Connective, Natural, Elemental>
     InitializedList = { 0, 0, 0, 0, 0 };
 
-template <
-    typename Elemental>
+template <typename Elemental>
 static inline Locational<SinglyNodal<Elemental>>
 GetNext(
     const Locational<SinglyNodal<Elemental>>
@@ -336,8 +330,7 @@ GetNext(
     return node->link.node;
 }
 
-template <
-    typename Elemental>
+template <typename Elemental>
 static inline Locational<DoublyNodal<Elemental>>
 GetNext(
     const Locational<DoublyNodal<Elemental>>
@@ -346,8 +339,7 @@ GetNext(
     return node->link.next;
 }
 
-template <
-    typename Elemental>
+template <typename Elemental>
 static inline Locational<DoublyNodal<Elemental>>
 GetPrevious(
     const Locational<DoublyNodal<Elemental>>
@@ -356,8 +348,7 @@ GetPrevious(
     return node->link.previous;
 }
 
-template <
-    typename Elemental>
+template <typename Elemental>
 static inline void
 SetNext(
     const Locational<SinglyNodal<Elemental>>
@@ -368,8 +359,7 @@ SetNext(
     node->link.node = next;
 }
 
-template <
-    typename Elemental>
+template <typename Elemental>
 static inline void
 SetNext(
     const Locational<DoublyNodal<Elemental>>
@@ -380,8 +370,7 @@ SetNext(
     node->link.next = next;
 }
 
-template <
-    typename Elemental>
+template <typename Elemental>
 static inline void
 SetPrevious(
     const Locational<DoublyNodal<Elemental>>
@@ -392,8 +381,7 @@ SetPrevious(
     node->link.previous = previous;
 }
 
-template <
-    typename Elemental>
+template <typename Elemental>
 static inline void
 UnsetNext(
     const Locational<SinglyNodal<Elemental>>
@@ -402,8 +390,7 @@ UnsetNext(
     node->link.node = 0;
 }
 
-template <
-    typename Elemental>
+template <typename Elemental>
 static inline void
 UnsetNext(
     const Locational<DoublyNodal<Elemental>>
@@ -412,8 +399,7 @@ UnsetNext(
     node->link.next = 0;
 }
 
-template <
-    typename Elemental>
+template <typename Elemental>
 static inline void
 UnsetPrevious(
     const Locational<DoublyNodal<Elemental>>
@@ -422,8 +408,7 @@ UnsetPrevious(
     node->link.previous = 0;
 }
 
-template <
-    typename Elemental>
+template <typename Elemental>
 static inline void
 ConnectNext(
     const Locational<SinglyNodal<Elemental>>
@@ -434,8 +419,7 @@ ConnectNext(
     SetNext(first, second);
 }
 
-template <
-    typename Elemental>
+template <typename Elemental>
 static inline void
 ConnectNext(
     const Locational<DoublyNodal<Elemental>>
@@ -448,8 +432,7 @@ ConnectNext(
         SetPrevious(second, first);
 }
 
-template <
-    typename Elemental>
+template <typename Elemental>
 static inline void
 ConnectPrevious(
     const Locational<DoublyNodal<Elemental>>
@@ -462,8 +445,7 @@ ConnectPrevious(
         SetNext(second, first);
 }
 
-template <
-    typename Elemental>
+template <typename Elemental>
 static inline void
 DisconnectNext(
     const Locational<SinglyNodal<Elemental>>
@@ -472,8 +454,7 @@ DisconnectNext(
     UnsetNext(node);
 }
 
-template <
-    typename Elemental>
+template <typename Elemental>
 static inline void
 DisconnectNext(
     const Locational<DoublyNodal<Elemental>>
@@ -485,8 +466,7 @@ DisconnectNext(
     }
 }
 
-template <
-    typename Elemental>
+template <typename Elemental>
 static inline void
 DisconnectPrevious(
     const Locational<DoublyNodal<Elemental>>
@@ -603,10 +583,9 @@ Count(
         is_integral<Natural>::value && is_unsigned<Natural>::value,
         "Natural:  Unsigned integer type required");
 #endif
-    Locational<Nodal<Connective, Elemental>>
-        current;
-    Natural
-        count;
+    using NodeLocational = Locational<Nodal<Connective, Elemental>>;
+    NodeLocational current;
+    Natural count;
     count = 0;
     current = position.at;
     while (GetSubsequent(current)) {
@@ -652,8 +631,8 @@ IsGreater(
     Referential<const Positional<Connective, Elemental>>
         relative)
 {
-    Locational<Nodal<Connective, Elemental>>
-        current;
+    using NodeLocational = Locational<Nodal<Connective, Elemental>>;
+    NodeLocational current;
     current = GetNext(relative.at);
     while (current) {
         if (current == relative.at)
@@ -673,8 +652,8 @@ IsLesser(
     Referential<const Positional<Connective, Elemental>>
         relative)
 {
-    Locational<Nodal<Connective, Elemental>>
-        current;
+    using NodeLocational = Locational<Nodal<Connective, Elemental>>;
+    NodeLocational current;
     current = GetNext(base.at);
     while (current) {
         if (current == relative.at)
@@ -694,8 +673,8 @@ IsNotLesser(
     Referential<const Positional<Connective, Elemental>>
         relative)
 {
-    Locational<Nodal<Connective, Elemental>>
-        current;
+    using NodeLocational = Locational<Nodal<Connective, Elemental>>;
+    NodeLocational current;
     current = relative.at;
     while (current) {
         if (current == relative.at)
@@ -715,8 +694,8 @@ IsNotGreater(
     Referential<const Positional<Connective, Elemental>>
         relative)
 {
-    Locational<Nodal<Connective, Elemental>>
-        current;
+    using NodeLocational = Locational<Nodal<Connective, Elemental>>;
+    NodeLocational current;
     current = base.at;
     while (current) {
         if (current == relative.at)
@@ -763,8 +742,7 @@ IntegrateNodes(
         is_integral<Natural>::value && is_unsigned<Natural>::value,
         "Natural:  Unsigned integer type required");
 #endif
-    Natural
-        offset;
+    Natural offset;
     if (count < 1)
         return list;
     for (offset = 1; offset < count; offset++)
@@ -812,9 +790,7 @@ RemoveAll(
         is_integral<Natural>::value && is_unsigned<Natural>::value,
         "Natural:  Unsigned integer type required");
 #endif
-    bool
-        actioned
-        = false;
+    bool actioned = false;
     if (list.last) {
         ConnectNext(list.last, list.unused);
         list.unused = list.first;
@@ -840,8 +816,8 @@ Reclaim(
         is_integral<Natural>::value && is_unsigned<Natural>::value,
         "Natural:  Unsigned integer type required");
 #endif
-    Locational<Nodal<Connective, Elemental>>
-        result;
+    using NodeLocational = Locational<Nodal<Connective, Elemental>>;
+    NodeLocational result;
     result = list.unused;
     if (result)
         list.unused = GetNext(result);
@@ -854,8 +830,7 @@ Reclaim(
 template <
     typename Natural,
     typename Elemental,
-    Referential<const SinglyAdjunctive<Natural, Elemental>>
-        Adjunct>
+    Referential<const SinglyAdjunctive<Natural, Elemental>> Adjunct>
 static inline bool
 DeleteOneNode(
     Referential<SinglyJunctive<Natural, Elemental>>
@@ -867,8 +842,8 @@ DeleteOneNode(
         is_integral<Natural>::value && is_unsigned<Natural>::value,
         "Natural:  Unsigned integer type required");
 #endif
-    Locational<SinglyNodal<Elemental>>
-        next;
+    using NodeLocational = Locational<SinglyNodal<Elemental>>;
+    NodeLocational next;
     if (!list.unused)
         return false;
     next = GetNext(list.unused);
@@ -884,8 +859,7 @@ DeleteOneNode(
 template <
     typename Natural,
     typename Elemental,
-    Referential<const DoublyAdjunctive<Natural, Elemental>>
-        Adjunct>
+    Referential<const DoublyAdjunctive<Natural, Elemental>> Adjunct>
 static inline bool
 DeleteOneNode(
     Referential<DoublyJunctive<Natural, Elemental>>
@@ -897,8 +871,8 @@ DeleteOneNode(
         is_integral<Natural>::value && is_unsigned<Natural>::value,
         "Natural:  Unsigned integer type required");
 #endif
-    Locational<DoublyNodal<Elemental>>
-        next;
+    using NodeLocational = Locational<DoublyNodal<Elemental>>;
+    NodeLocational next;
     if (!list.unused)
         return false;
     next = GetNext(list.unused);
@@ -933,8 +907,7 @@ template <
     typename Disclaimable,
     typename Natural,
     typename Elemental,
-    Referential<const Allocative<DefaultClaimable<Nodal<Connective, Elemental>>, Disclaimable>>
-        Allocator>
+    Referential<const Allocative<DefaultClaimable<Nodal<Connective, Elemental>>, Disclaimable>> Allocator>
 static inline Locational<Nodal<Connective, Elemental>>
 AllocateDefault(
     Referential<Junctive<Connective, Natural, Elemental>>
@@ -946,8 +919,8 @@ AllocateDefault(
         is_integral<Natural>::value && is_unsigned<Natural>::value,
         "Natural:  Unsigned integer type required");
 #endif
-    Locational<Nodal<Connective, Elemental>>
-        result;
+    using NodeLocational = Locational<Nodal<Connective, Elemental>>;
+    NodeLocational result;
     Allocator.claim(result);
     if (result)
         list.total++;
@@ -979,8 +952,7 @@ template <
     typename Claimable,
     typename Natural,
     typename Elemental,
-    Referential<const Allocative<Claimable, DefaultDisclaimable<Nodal<Connective, Elemental>>>>
-        Allocator>
+    Referential<const Allocative<Claimable, DefaultDisclaimable<Nodal<Connective, Elemental>>>> Allocator>
 static inline bool
 DeallocateDefault(
     Referential<Junctive<Connective, Natural, Elemental>>
@@ -1007,8 +979,7 @@ template <
     typename Disclaimable,
     typename Natural,
     typename Elemental,
-    Referential<const Allocative<DefaultClaimable<Nodal<Connective, Elemental>>, Disclaimable>>
-        Allocator>
+    Referential<const Allocative<DefaultClaimable<Nodal<Connective, Elemental>>, Disclaimable>> Allocator>
 static inline Locational<Nodal<Connective, Elemental>>
 ProclaimDefault(
     Referential<Junctive<Connective, Natural, Elemental>>
@@ -1022,8 +993,8 @@ ProclaimDefault(
         is_integral<Natural>::value && is_unsigned<Natural>::value,
         "Natural:  Unsigned integer type required");
 #endif
-    Locational<Nodal<Connective, Elemental>>
-        result;
+    using NodeLocational = Locational<Nodal<Connective, Elemental>>;
+    NodeLocational result;
     result = Reclaim(list);
     if (!result) {
         Allocator.claim(result);
@@ -1052,8 +1023,8 @@ ProclaimCyclic(
         is_integral<Natural>::value && is_unsigned<Natural>::value,
         "Natural:  Unsigned integer type required");
 #endif
-    Locational<Nodal<Connective, Elemental>>
-        result;
+    using NodeLocational = Locational<Nodal<Connective, Elemental>>;
+    NodeLocational result;
     result = Reclaim(list);
     if (result)
         result->element = value;
@@ -1064,8 +1035,7 @@ template <
     typename Disclaimable,
     typename Natural,
     typename Elemental,
-    Referential<const Allocative<CopyClaimable<SinglyNodal<Elemental>>, Disclaimable>>
-        Allocator>
+    Referential<const Allocative<CopyClaimable<SinglyNodal<Elemental>>, Disclaimable>> Allocator>
 static inline Locational<SinglyNodal<Elemental>>
 ProclaimCopy(
     Referential<SinglyJunctive<Natural, Elemental>>
@@ -1079,10 +1049,9 @@ ProclaimCopy(
         is_integral<Natural>::value && is_unsigned<Natural>::value,
         "Natural:  Unsigned integer type required");
 #endif
-    const SinglyNodal<Elemental>
-        copy = { { 0 }, value };
-    Locational<SinglyNodal<Elemental>>
-        result;
+    using NodeLocational = Locational<SinglyNodal<Elemental>>;
+    const SinglyNodal<Elemental> copy = { { 0 }, value };
+    NodeLocational result;
     Allocator.claim(result, copy);
     if (result)
         list.total++;
@@ -1093,8 +1062,7 @@ template <
     typename Disclaimable,
     typename Natural,
     typename Elemental,
-    Referential<const Allocative<CopyClaimable<DoublyNodal<Elemental>>, Disclaimable>>
-        Allocator>
+    Referential<const Allocative<CopyClaimable<DoublyNodal<Elemental>>, Disclaimable>> Allocator>
 static inline Locational<DoublyNodal<Elemental>>
 ProclaimCopy(
     Referential<DoublyJunctive<Natural, Elemental>>
@@ -1108,10 +1076,9 @@ ProclaimCopy(
         is_integral<Natural>::value && is_unsigned<Natural>::value,
         "Natural:  Unsigned integer type required");
 #endif
-    const DoublyNodal<Elemental>
-        copy = { { 0, 0 }, value };
-    Locational<DoublyNodal<Elemental>>
-        result;
+    using NodeLocational = Locational<DoublyNodal<Elemental>>;
+    const DoublyNodal<Elemental> copy = { { 0, 0 }, value };
+    NodeLocational result;
     Allocator.claim(result, copy);
     if (result)
         list.total++;
@@ -1122,8 +1089,7 @@ template <
     typename Connective,
     typename Natural,
     typename Elemental,
-    Referential<const Adjunctive<Connective, Natural, Elemental>>
-        Adjunct>
+    Referential<const Adjunctive<Connective, Natural, Elemental>> Adjunct>
 static inline bool
 Instantiate(
     Referential<Junctive<Connective, Natural, Elemental>>
@@ -1137,8 +1103,8 @@ Instantiate(
         is_integral<Natural>::value && is_unsigned<Natural>::value,
         "Natural:  Unsigned integer type required");
 #endif
-    Locational<Nodal<Connective, Elemental>>
-        result;
+    using NodeLocational = Locational<Nodal<Connective, Elemental>>;
+    NodeLocational result;
     while (list.total - list.count < count) {
         result = Adjunct.allocate(list);
         if (!result)
@@ -1166,8 +1132,8 @@ Contains(
         is_integral<Natural>::value && is_unsigned<Natural>::value,
         "Natural:  Unsigned integer type required");
 #endif
-    Locational<Nodal<Connective, Elemental>>
-        current;
+    using NodeLocational = Locational<Nodal<Connective, Elemental>>;
+    NodeLocational current;
     current = list.first;
     while (current) {
         if (current == position.at)
@@ -1195,9 +1161,7 @@ GoRead(
         is_integral<Natural>::value && is_unsigned<Natural>::value,
         "Natural:  Unsigned integer type required");
 #endif
-    static auto&
-        DeterElement
-        = Deter<Elemental>;
+    static auto& DeterElement = Deter<Elemental>;
     return DeterElement(position.at->element);
 }
 
@@ -1219,9 +1183,7 @@ GoWrite(
         is_integral<Natural>::value && is_unsigned<Natural>::value,
         "Natural:  Unsigned integer type required");
 #endif
-    static auto&
-        ConferElement
-        = Confer<Elemental>;
+    static auto& ConferElement = Confer<Elemental>;
     return ConferElement(position.at->element);
 }
 
@@ -1229,10 +1191,8 @@ template <
     typename Connective,
     typename Natural,
     typename Elemental,
-    Referential<Original<Connective, Natural, Elemental>>
-        GetOrigin,
-    Referential<Subsequent<Connective, Elemental>>
-        GetSubsequent>
+    Referential<Original<Connective, Natural, Elemental>> GetOrigin,
+    Referential<Subsequent<Connective, Elemental>> GetSubsequent>
 static inline Referential<const Positional<Connective, Elemental>>
 BeginReadScale(
     Referential<const Junctive<Connective, Natural, Elemental>>
@@ -1248,10 +1208,9 @@ BeginReadScale(
         is_integral<Natural>::value && is_unsigned<Natural>::value,
         "Natural:  Unsigned integer type required");
 #endif
-    Locational<Nodal<Connective, Elemental>>
-        current;
-    Natural
-        index;
+    using NodeLocational = Locational<Nodal<Connective, Elemental>>;
+    NodeLocational current;
+    Natural index;
     current = GetOrigin(list);
     for (index = 0; index < count; index++)
         current = GetSubsequent(current);
@@ -1263,10 +1222,8 @@ template <
     typename Connective,
     typename Natural,
     typename Elemental,
-    Referential<Original<Connective, Natural, Elemental>>
-        GetOrigin,
-    Referential<Subsequent<Connective, Elemental>>
-        GetSubsequent>
+    Referential<Original<Connective, Natural, Elemental>> GetOrigin,
+    Referential<Subsequent<Connective, Elemental>> GetSubsequent>
 static inline Referential<const Positional<Connective, Elemental>>
 BeginWriteScale(
     Referential<Junctive<Connective, Natural, Elemental>>
@@ -1282,10 +1239,9 @@ BeginWriteScale(
         is_integral<Natural>::value && is_unsigned<Natural>::value,
         "Natural:  Unsigned integer type required");
 #endif
-    Locational<Nodal<Connective, Elemental>>
-        current;
-    Natural
-        index;
+    using NodeLocational = Locational<Nodal<Connective, Elemental>>;
+    NodeLocational current;
+    Natural index;
     current = GetOrigin(list);
     for (index = 0; index < count; index++)
         current = GetSubsequent(current);
@@ -1297,10 +1253,8 @@ template <
     typename Connective,
     typename Natural,
     typename Elemental,
-    Referential<Original<Connective, Natural, Elemental>>
-        GetOrigin,
-    Referential<Subsequent<Connective, Elemental>>
-        GetSubsequent>
+    Referential<Original<Connective, Natural, Elemental>> GetOrigin,
+    Referential<Subsequent<Connective, Elemental>> GetSubsequent>
 static inline bool
 DirectionBegins(
     Referential<const Junctive<Connective, Natural, Elemental>>
@@ -1314,10 +1268,9 @@ DirectionBegins(
         is_integral<Natural>::value && is_unsigned<Natural>::value,
         "Natural:  Unsigned integer type required");
 #endif
-    Locational<Nodal<Connective, Elemental>>
-        current;
-    Natural
-        index;
+    using NodeLocational = Locational<Nodal<Connective, Elemental>>;
+    NodeLocational current;
+    Natural index;
     current = GetOrigin(list);
     if (!current)
         return false;
@@ -1333,8 +1286,7 @@ template <
     typename Connective,
     typename Natural,
     typename Elemental,
-    Referential<Subsequent<Connective, Elemental>>
-        GetSubsequent>
+    Referential<Subsequent<Connective, Elemental>> GetSubsequent>
 static inline Referential<const Positional<Connective, Elemental>>
 TraverseReadScale(
     Referential<const Junctive<Connective, Natural, Elemental>>
@@ -1350,10 +1302,9 @@ TraverseReadScale(
         is_integral<Natural>::value && is_unsigned<Natural>::value,
         "Natural:  Unsigned integer type required");
 #endif
-    Locational<Nodal<Connective, Elemental>>
-        current;
-    Natural
-        index;
+    using NodeLocational = Locational<Nodal<Connective, Elemental>>;
+    NodeLocational current;
+    Natural index;
     current = position.at;
     for (index = 0; index < count; index++)
         current = GetSubsequent(current);
@@ -1365,8 +1316,7 @@ template <
     typename Connective,
     typename Natural,
     typename Elemental,
-    Referential<Subsequent<Connective, Elemental>>
-        GetSubsequent>
+    Referential<Subsequent<Connective, Elemental>> GetSubsequent>
 static inline Referential<const Positional<Connective, Elemental>>
 TraverseWriteScale(
     Referential<Junctive<Connective, Natural, Elemental>>
@@ -1382,10 +1332,9 @@ TraverseWriteScale(
         is_integral<Natural>::value && is_unsigned<Natural>::value,
         "Natural:  Unsigned integer type required");
 #endif
-    Locational<Nodal<Connective, Elemental>>
-        current;
-    Natural
-        index;
+    using NodeLocational = Locational<Nodal<Connective, Elemental>>;
+    NodeLocational current;
+    Natural index;
     current = position.at;
     for (index = 0; index < count; index++)
         current = GetSubsequent(current);
@@ -1397,8 +1346,7 @@ template <
     typename Connective,
     typename Natural,
     typename Elemental,
-    Referential<Subsequent<Connective, Elemental>>
-        GetSubsequent>
+    Referential<Subsequent<Connective, Elemental>> GetSubsequent>
 static inline bool
 DirectionTraverses(
     Referential<const Junctive<Connective, Natural, Elemental>>
@@ -1414,10 +1362,9 @@ DirectionTraverses(
         is_integral<Natural>::value && is_unsigned<Natural>::value,
         "Natural:  Unsigned integer type required");
 #endif
-    Locational<Nodal<Connective, Elemental>>
-        current;
-    Natural
-        index;
+    using NodeLocational = Locational<Nodal<Connective, Elemental>>;
+    NodeLocational current;
+    Natural index;
     current = position.at;
     for (index = 0; index < count; index++) {
         current = GetSubsequent(current);
@@ -1487,24 +1434,21 @@ constexpr DoublyAdjunctive<Natural, Elemental>
         ProclaimCopy<DefaultDisclaimable<DoublyNodal<Elemental>>, Natural, Elemental, FastCopyNew<DoublyNodal<Elemental>>>
     };
 
-template <
-    typename Elemental>
+template <typename Elemental>
 constexpr Equative<SinglyPositional<Elemental>>
     SingleEquality = {
         IsEqual<SinglyLinked<Elemental>, Elemental>,
         IsNotEqual<SinglyLinked<Elemental>, Elemental>
     };
 
-template <
-    typename Elemental>
+template <typename Elemental>
 constexpr Equative<DoublyPositional<Elemental>>
     DoubleEquality = {
         IsEqual<DoublyLinked<Elemental>, Elemental>,
         IsNotEqual<DoublyLinked<Elemental>, Elemental>
     };
 
-template <
-    typename Elemental>
+template <typename Elemental>
 constexpr Relational<SinglyPositional<Elemental>>
     SingleRelation = {
         IsLesser<SinglyLinked<Elemental>, Elemental>,
@@ -1513,8 +1457,7 @@ constexpr Relational<SinglyPositional<Elemental>>
         IsNotLesser<SinglyLinked<Elemental>, Elemental>
     };
 
-template <
-    typename Elemental>
+template <typename Elemental>
 constexpr Relational<DoublyPositional<Elemental>>
     DoubleRelation = {
         IsLesser<DoublyLinked<Elemental>, Elemental>,
@@ -1523,16 +1466,14 @@ constexpr Relational<DoublyPositional<Elemental>>
         IsNotLesser<DoublyLinked<Elemental>, Elemental>
     };
 
-template <
-    typename Elemental>
+template <typename Elemental>
 constexpr Comparative<SinglyPositional<Elemental>>
     SingleComparison = {
         SingleEquality<Elemental>,
         SingleRelation<Elemental>
     };
 
-template <
-    typename Elemental>
+template <typename Elemental>
 constexpr Comparative<DoublyPositional<Elemental>>
     DoubleComparison = {
         DoubleEquality<Elemental>,

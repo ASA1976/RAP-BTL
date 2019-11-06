@@ -46,9 +46,27 @@ struct Resourceful {
         source[Maximum]; /**< Array of memory elements to be rationed. */
 };
 
+/**
+ * @brief
+ *     Constant array resource sequential position type.
+ * @details
+ *     This type alias is used to represent a position in constant
+ *     array sequential trajections.
+ * @tparam Elemental
+ *     Type of the elements.
+ */
 template <typename Elemental>
 using ReadPositional = Locational<const Elemental>;
 
+/**
+ * @brief
+ *     Modifiable array resource sequential position type.
+ * @details
+ *     This type alias is used to represent a position in modifiable
+ *     array sequential trajections.
+ * @tparam Elemental
+ *     Type of the elements.
+ */
 template <typename Elemental>
 using WritePositional = Locational<Elemental>;
 
@@ -56,10 +74,10 @@ using WritePositional = Locational<Elemental>;
  * @brief
  *     Memory move function type.
  * @details 
- *     Type alias which represents functions which move memory within an 
- *     array.
+ *     Type alias which represents functions which move memory within the
+ *     resource array.
  * @tparam Natural
- *     Type of natural integer used to specify counts.
+ *     Type of natural integer used to specify the __element__ (not byte) count.
  * @tparam Elemental
  *     Type of the rationed memory elements.
  */
@@ -95,6 +113,26 @@ template <
 constexpr Resourceful<Natural, Maximum, Elemental>
     InitializedResource = { 0 };
 
+/**
+ * @brief
+ *     Moves array elements by assignment.
+ * @details
+ *     Moves count array elements using the assignment operator, from one
+ *     position to another within an array.  The direction of the move
+ *     determines the order of the assignments.
+ * @tparam Natural
+ *     Type of natural integer.
+ * @tparam Elemental 
+ *     Type of the elements.
+ * @param[in] from
+ *     Position to move the elements from.
+ * @param[in] to
+ *     Position to move the elements to.
+ * @param[in] count
+ *     Number of elements to move.
+ * @return 
+ *     This implementation always returns true.
+ */
 template <
     typename Natural,
     typename Elemental>
@@ -113,14 +151,13 @@ MoveElements(
         is_integral<Natural>::value && is_unsigned<Natural>::value,
         "Natural:  Unsigned integer type required");
 #endif
-    Natural index;
     if (from < to)
-        for (index = count; index > 0; index--) {
+        for (Natural index = count; index > 0; index--) {
             const Natural offset = index - 1;
             to[offset] = from[offset];
         }
     else
-        for (index = 0; index < count; index++)
+        for (Natural index = 0; index < count; index++)
             to[index] = from[index];
     return true;
 }

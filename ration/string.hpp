@@ -20,26 +20,28 @@ namespace ration {
  *     or C++ standard memmove library function.
  * @details
  *     C or C++ standard library based function which implements the Moving
- *     function type.
+ *     function type.  Users who wish to use an implementation of memmove 
+ *     declared in a different header file, should implement their own 
+ *     MemoryMoving interface in a manner similar to the MoveBytes template.
  */
 namespace string {
 
-using ::location::Locational;
+    using ::location::Locational;
 
-template <
-    typename Natural,
-    typename Elemental>
-static inline bool
-MoveBytes(
-    Locational<Elemental>
-        from,
-    Locational<Elemental>
-        to,
-    Natural
-        count)
-{
-    return memmove(to, from, count * sizeof(Elemental));
-}
+    template <
+        typename Natural,
+        typename Elemental>
+    static inline bool
+    MoveBytes(
+        Locational<Elemental>
+            from,
+        Locational<Elemental>
+            to,
+        Natural
+            count)
+    {
+        return memmove(to, from, count * sizeof(Elemental));
+    }
 
 }
 

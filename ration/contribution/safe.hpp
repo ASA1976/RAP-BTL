@@ -9,27 +9,27 @@ namespace ration {
 namespace contribution {
 
     /**
-         * @brief
-         *     Confers the element at index.
-         * @details
-         *     Function Template
-         *     -----------------
-         *     Returns a modifiable reference to the element at the specified 
-         *     index.  Throws an exception if the index is not currently 
-         *     allotted.
-         * @tparam Natural
-         *     Type of natural integer for sizes.
-         * @tparam Maximum
-         *     The maximum number of elements.
-         * @tparam Elemental
-         *     Type of the elements.
-         * @param[in] pool
-         *     Reference to the pool.
-         * @param[in] index
-         *     Reference to the index.
-         * @return 
-         *     The reference conferment.
-         */
+     * @brief
+     *     Confers the element at index.
+     * @details
+     *     Function Template
+     *     -----------------
+     *     Returns a modifiable reference to the element at the specified 
+     *     index.  Throws an exception if the index is not currently 
+     *     allotted.
+     * @tparam Natural
+     *     Type of natural integer for sizes.
+     * @tparam Maximum
+     *     The maximum number of elements.
+     * @tparam Elemental
+     *     Type of the elements.
+     * @param[in] pool
+     *     Reference to the pool.
+     * @param[in] index
+     *     Reference to the index.
+     * @return 
+     *     The reference conferment.
+     */
     template <
         typename Natural,
         Natural
@@ -54,27 +54,27 @@ namespace contribution {
     }
 
     /**
-         * @brief 
-         *     Deters the element at index.
-         * @details
-         *     Function Template
-         *     -----------------
-         *     Returns a constant reference to the element at the specified 
-         *     positional index.  Throws an exception if the index is not 
-         *     currently allotted.
-         * @tparam Natural
-         *     Type of natural integer for sizes.
-         * @tparam Maximum
-         *     The maximum number of elements.
-         * @tparam Elemental 
-         *     Type of the elements.
-         * @param[in] pool
-         *     Reference to the pool.
-         * @param[in] index
-         *     Reference to the index.
-         * @return 
-         *     The reference determent.
-         */
+     * @brief 
+     *     Deters the element at index.
+     * @details
+     *     Function Template
+     *     -----------------
+     *     Returns a constant reference to the element at the specified 
+     *     positional index.  Throws an exception if the index is not 
+     *     currently allotted.
+     * @tparam Natural
+     *     Type of natural integer for sizes.
+     * @tparam Maximum
+     *     The maximum number of elements.
+     * @tparam Elemental 
+     *     Type of the elements.
+     * @param[in] pool
+     *     Reference to the pool.
+     * @param[in] index
+     *     Reference to the index.
+     * @return 
+     *     The reference determent.
+     */
     template <
         typename Natural,
         Natural
@@ -99,22 +99,22 @@ namespace contribution {
     }
 
     /**
-         * @brief 
-         *     Vectorial read trajection implementation.
-         * @details
-         *     Objectification Template
-         *     ------------------------
-         *     Objective table which provides safe vectorial trajection into the
-         *     pool.  Use this version if performance is not stringent and 
-         *     requests for invalid index positions might occur, as this version
-         *     does perform run-time checks.
-         * @tparam Natural
-         *     Type of natural integer for sizes.
-         * @tparam Maximum 
-         *     The maximum number of elements.
-         * @tparam Elemental 
-         *     Type of the elements.
-         */
+     * @brief 
+     *     Vectorial read trajection implementation.
+     * @details
+     *     Objectification Template
+     *     ------------------------
+     *     Objective table which provides safe vectorial trajection into the
+     *     pool.  Use this version if performance is not stringent and 
+     *     requests for invalid index positions might occur, as this version
+     *     does perform run-time checks.
+     * @tparam Natural
+     *     Type of natural integer for sizes.
+     * @tparam Maximum 
+     *     The maximum number of elements.
+     * @tparam Elemental 
+     *     Type of the elements.
+     */
     template <
         typename Natural,
         Natural
@@ -128,22 +128,22 @@ namespace contribution {
         };
 
     /**
-         * @brief 
-         *     Vectorial write trajection implementation.
-         * @details
-         *     Objectification Template
-         *     ------------------------
-         *     Objective table which provides safe vectorial trajection into the
-         *     pool.  Use this version if performance is not stringent and 
-         *     requests for invalid index positions might occur, as this version
-         *     does perform run-time checks.
-         * @tparam Natural
-         *     Type of natural integer for sizes.
-         * @tparam Maximum 
-         *     The maximum number of elements.
-         * @tparam Elemental 
-         *     Type of the elements.
-         */
+     * @brief 
+     *     Vectorial write trajection implementation.
+     * @details
+     *     Objectification Template
+     *     ------------------------
+     *     Objective table which provides safe vectorial trajection into the
+     *     pool.  Use this version if performance is not stringent and 
+     *     requests for invalid index positions might occur, as this version
+     *     does perform run-time checks.
+     * @tparam Natural
+     *     Type of natural integer for sizes.
+     * @tparam Maximum 
+     *     The maximum number of elements.
+     * @tparam Elemental 
+     *     Type of the elements.
+     */
     template <
         typename Natural,
         Natural

@@ -229,7 +229,7 @@ template <typename Subjective>
 static inline Conferential<Subjective>
 Refer(const Locational<Subjective> locality)
 {
-    return Confer(*locality);
+    return Confer<Subjective>(*locality);
 }
 
 }

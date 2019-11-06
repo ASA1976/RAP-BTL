@@ -35,14 +35,15 @@ InvokeProcedureSafely(
         locality,
     Parametric... arguments)
 {
+    using namespace ::location;
     using Classificatory = Locational<const Locational<Procedural>>;
     static auto& Invoke = InvokeProcedure<Procedural, Resultant, Parametric...>;
-    if (!locality)
-        throw locality;
     const Classificatory objective = static_cast<Classificatory>(locality);
+    if (!objective)
+        throw objective;
     if (!Refer(objective).to)
         throw Refer(objective).to;
-    return Invoke(objective, arguments...); // I Missed The Bus...
+    return Invoke(objective, arguments...);
 }
 
 /**
@@ -78,7 +79,8 @@ InvokeMethodSafely(
         locality,
     Parametric... arguments)
 {
-    using Classificatory = Locational<const Methodic<ClassTypical, MethodLocational, Resultant, Parametric...>>;
+    using Specific = Methodic<ClassTypical, MethodLocational, Resultant, Parametric...>;
+    using Classificatory = Locational<const Specific>;
     static auto& Invoke = InvokeMethod<ClassTypical, MethodLocational, Resultant, Parametric...>;
     const Classificatory objective = static_cast<Classificatory>(locality);
     if (!objective)
@@ -87,7 +89,7 @@ InvokeMethodSafely(
         throw objective->method;
     if (!objective->object)
         throw objective->object;
-    return Invoke(objective, arguments...); // Can't C Me
+    return Invoke(objective, arguments...);
 }
 
 /**
@@ -143,7 +145,7 @@ PrepareInvocationSafely(
  * @param[in] object
  *     Reference to qualified data object.
  * @return
- *     Methodic instance returned by value.
+ *     Methodic message instance returned by value.
  */
 template <
     class ClassTypical,
@@ -161,8 +163,8 @@ AssignClassMethodSafely(
     using Specific = Methodic<ClassTypical, MethodLocational, Resultant, Parametric...>;
     if (!method)
         throw method;
-    const Specific objective = { method, Locate(object).at };
-    return objective;
+    const Specific message = { method, Locate(object).at };
+    return message;
 }
 
 /**
@@ -222,8 +224,8 @@ AssignInvokeProcedureSafely(
  *     Return type of the invocation.
  * @tparam ...Parametric
  *     Parameter pack which represents the parameter types of the invocation.
- * @param[in] instance
- *     Reference to a methodic instance with suitable duration.
+ * @param[in] message
+ *     Reference to a methodic message instance with suitable duration.
  * @return
  *     Invocative instance returned by value.
  */
@@ -235,12 +237,12 @@ template <
 static inline Invocative<Resultant, Parametric...>
 AssignInvokeMethodSafely(
     Referential<const Methodic<ClassTypical, MethodLocational, Resultant, Parametric...>>
-        instance)
+        message)
 {
     using namespace ::location;
     using Specific = Invocative<Resultant, Parametric...>;
     static auto& Invoke = InvokeMethodSafely<ClassTypical, MethodLocational, Resultant, Parametric...>;
-    const Specific invocation = { Locate(Invoke).at, Locate(instance).at };
+    const Specific invocation = { Locate(Invoke).at, Locate(message).at };
     return invocation;
 }
 
@@ -272,8 +274,7 @@ AssignInvokeFunctionSafely(
         locality)
 {
     using namespace ::location;
-    using Specific = Invocative<Resultant, Parametric...>
-    static auto& Invoke = InvokeProcedureSafely<Abstract<Resultant, Parametric...>, Resultant, Parametric...>;
+    using Specific = Invocative<Resultant, Parametric...> static auto& Invoke = InvokeProcedureSafely<Abstract<Resultant, Parametric...>, Resultant, Parametric...>;
     if (!locality)
         throw locality;
     const Specific invocation = { Locate(Invoke).at, Locate(locality).at };
