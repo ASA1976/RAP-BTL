@@ -6,6 +6,11 @@
 // The Arduino Reference text is licensed under a Creative Commons
 // Attribution-Share Alike 3.0 License.
 //
+
+/*
+   Stores the last 8 analog sample readings in a very fast queue object.
+   Prints the queue to the serial monitor after every sample reading.
+*/
 #define ANALOG_PIN A3
 #define SERIAL_RATE 9600
 #define QUEUE_MAX 8
@@ -17,21 +22,22 @@
 using namespace ration::contraction;
 using queue_t = Contractional<SIZES_TYPE, QUEUE_MAX, SAMPLES_TYPE>;
 
+constexpr SIZES_TYPE BaseOffset = 0, OneSample = 1;
 queue_t queue;
 
 static void printQueue()
 {
-    static auto& Reader = ReadIncrementDirection<SIZES_TYPE, QUEUE_MAX, SAMPLES_TYPE>;
+    static auto& Increment = ReadIncrementDirection<SIZES_TYPE, QUEUE_MAX, SAMPLES_TYPE>;
     SIZES_TYPE position;
-    if (!Reader.begins(queue, 0))
+    if (!Increment.begins(queue, BaseOffset))
         return;
-    Reader.scale.begin(queue, position, 0);
+    Increment.scale.begin(queue, position, BaseOffset);
     Serial.print(F("Queue: "));
     while (true) {
-        Serial.print(Reader.scale.go(queue, position).to);
-        if (!Reader.traverses(queue, position, 1))
+        Serial.print(Increment.scale.go(queue, position).to);
+        if (!Increment.traverses(queue, position, OneSample))
             break;
-        Reader.scale.traverse(queue, position, 1);
+        Increment.scale.traverse(queue, position, OneSample);
         Serial.print(F(", "));
     }
     Serial.println(F(""));
@@ -44,12 +50,12 @@ void setup()
 
 void loop()
 {
-    static auto& Manager = SureContractor<SIZES_TYPE, QUEUE_MAX, SAMPLES_TYPE>;
-    static auto& Writer = WriteIncrementDirection<SIZES_TYPE, QUEUE_MAX, SAMPLES_TYPE>;
+    static auto& Contractor = SureContractor<SIZES_TYPE, QUEUE_MAX, SAMPLES_TYPE>;
+    static auto& Increment = WriteIncrementDirection<SIZES_TYPE, QUEUE_MAX, SAMPLES_TYPE>;
     SIZES_TYPE position;
-    if (Manager.account(queue) == Manager.survey(queue))
-        Manager.retract(queue, 1);
-    Manager.protract(queue, position, 1);
-    Writer.scale.go(queue, position).to = analogRead(ANALOG_PIN);
+    if (Contractor.account(queue) == Contractor.survey(queue))
+        Contractor.retract(queue, OneSample);
+    Contractor.protract(queue, position, OneSample);
+    Increment.scale.go(queue, position).to = analogRead(ANALOG_PIN);
     printQueue();
 }

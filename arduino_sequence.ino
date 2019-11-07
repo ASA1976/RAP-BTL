@@ -6,35 +6,39 @@
 // The Arduino Reference text is licensed under a Creative Commons
 // Attribution-Share Alike 3.0 License.
 //
+
+/*
+   Stores the top 10 highest analog sample readings, ignoring duplicate values.
+   Prints the sequence to the serial monitor after every sample reading.
+*/
 #define ANALOG_PIN A3
 #define SERIAL_RATE 9600
-#define SEQUENCE_MAX 8
+#define SEQUENCE_MAX 10
 #define SIZES_TYPE unsigned int
 #define SAMPLES_TYPE int
 #define RAPBTL_NO_STD_CPLUSPLUS
-#include "ration/consecution.hpp"
-#include "sortation.hpp"
+#include "ration/collection.hpp"
 
 using namespace ration;
-using sequence_t = Resourceful<SIZES_TYPE, SEQUENCE_MAX, SAMPLES_TYPE>;
-using read_position_t = ReadPositional<SAMPLES_TYPE>;
-using write_position_t = WritePositional<SAMPLES_TYPE>;
+using resource_t = Resourceful<SIZES_TYPE, SEQUENCE_MAX, SAMPLES_TYPE>;
+using position_t = ReadPositional<SAMPLES_TYPE>;
 
-sequence_t sequence;
+constexpr SIZES_TYPE BaseOffset = 0, OneSample = 1;
+resource_t resource;
 
 static void printSequence()
 {
     using namespace ration::consecution;
-    static auto& Reader = ReadIncrementDirection<SIZES_TYPE, SEQUENCE_MAX, SAMPLES_TYPE>;
-    read_position_t position;
-    if (!Reader.begins(sequence, 0))
+    static auto& Increment = ReadIncrementDirection<SIZES_TYPE, SEQUENCE_MAX, SAMPLES_TYPE>;
+    position_t position;
+    if (!Increment.begins(resource, BaseOffset))
         return;
-    Reader.scale.begin(sequence, position, 0);
+    Increment.scale.begin(resource, position, BaseOffset);
     while (true) {
-        Serial.print(Reader.scale.go(sequence, position).to);
-        if (!Reader.traverses(sequence, position, 1))
+        Serial.print(Increment.scale.go(resource, position).to);
+        if (!Increment.traverses(resource, position, OneSample))
             break;
-        Reader.scale.traverse(sequence, position, 1);
+        Increment.scale.traverse(resource, position, OneSample);
         Serial.print(F(", "));
     }
     Serial.println(F(""));
@@ -47,28 +51,26 @@ void setup()
 
 void loop()
 {
-    using namespace sortation;
     using namespace comparison;
     using namespace ration::consecution;
-    static auto& ArraySequencer = SureSequencer<SIZES_TYPE, SEQUENCE_MAX, SAMPLES_TYPE, MoveElements<SIZES_TYPE, SAMPLES_TYPE>>;
-    static auto& Search = SearchBisection<sequence_t, read_position_t, SIZES_TYPE, SAMPLES_TYPE>;
-    static auto& Liner = ReadLiner<SIZES_TYPE, SEQUENCE_MAX, SAMPLES_TYPE>;
-    read_position_t read_position;
-    write_position_t write_position;
+    using namespace ration::collection;
+    static auto& Sequencer = SureSequencer<SIZES_TYPE, SEQUENCE_MAX, SAMPLES_TYPE, MoveElements<SIZES_TYPE, SAMPLES_TYPE>>;
+    static auto& Composer = SureOrderedComposer<SIZES_TYPE, SEQUENCE_MAX, SAMPLES_TYPE, IsEqual<SAMPLES_TYPE>, IsGreater<SAMPLES_TYPE>, MoveElements<SIZES_TYPE, SAMPLES_TYPE>>;
+    static auto& Decrement = ReadDecrementDirection<SIZES_TYPE, SEQUENCE_MAX, SAMPLES_TYPE>;
+    position_t position;
     int sample;
     sample = analogRead(ANALOG_PIN);
-    if (ArraySequencer.account(sequence) == 0) {
-        ArraySequencer.accede(sequence, sample);
-        return;
+    if (Decrement.begins(resource, BaseOffset)) {
+        Decrement.scale.begin(resource, position, BaseOffset);
+        if (sample > Decrement.scale.go(resource, position).to) {
+            if (!Composer.accredit(resource, sample)) {
+                if (Sequencer.account(resource) == SEQUENCE_MAX)
+                    Sequencer.recede(resource, OneSample);
+                Composer.compose(resource, sample);
+            }
+        }
+    } else {
+        Sequencer.accede(resource, sample);
     }
-    if (ArraySequencer.account(sequence) == SEQUENCE_MAX)
-        ArraySequencer.recede(sequence, 1);
-    Liner.increment.begin(sequence, read_position, 0);
-    Search(sequence, Liner, sample, read_position, 0, ArraySequencer.account(sequence) - 1, IsEqual, IsGreater);
-    write_position = const_cast<write_position_t>(read_position);
-    if (sample > Liner.increment.go(sequence, read_position).to)
-        ArraySequencer.precede(sequence, write_position, sample);
-    else
-        ArraySequencer.cede(sequence, write_position, sample);
     printSequence();
 }
