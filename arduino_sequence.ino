@@ -16,6 +16,8 @@
 #define SEQUENCE_MAX 10
 #define SIZES_TYPE unsigned int
 #define SAMPLES_TYPE int
+#define BASE_OFFSET 0
+#define ONE_SAMPLE 1
 #define RAPBTL_NO_STD_CPLUSPLUS
 #include "ration/collection.hpp"
 
@@ -23,7 +25,6 @@ using namespace ration;
 using resource_t = Resourceful<SIZES_TYPE, SEQUENCE_MAX, SAMPLES_TYPE>;
 using position_t = ReadPositional<SAMPLES_TYPE>;
 
-constexpr SIZES_TYPE BaseOffset = 0, OneSample = 1;
 resource_t resource;
 
 static void printSequence()
@@ -31,14 +32,14 @@ static void printSequence()
     using namespace ration::consecution;
     static auto& Increment = ReadIncrementDirection<SIZES_TYPE, SEQUENCE_MAX, SAMPLES_TYPE>;
     position_t position;
-    if (!Increment.begins(resource, BaseOffset))
+    if (!Increment.begins(resource, BASE_OFFSET))
         return;
-    Increment.scale.begin(resource, position, BaseOffset);
+    Increment.scale.begin(resource, position, BASE_OFFSET);
     while (true) {
         Serial.print(Increment.scale.go(resource, position).to);
-        if (!Increment.traverses(resource, position, OneSample))
+        if (!Increment.traverses(resource, position, ONE_SAMPLE))
             break;
-        Increment.scale.traverse(resource, position, OneSample);
+        Increment.scale.traverse(resource, position, ONE_SAMPLE);
         Serial.print(F(", "));
     }
     Serial.println(F(""));
@@ -60,12 +61,12 @@ void loop()
     position_t position;
     int sample;
     sample = analogRead(ANALOG_PIN);
-    if (Decrement.begins(resource, BaseOffset)) {
-        Decrement.scale.begin(resource, position, BaseOffset);
+    if (Decrement.begins(resource, BASE_OFFSET)) {
+        Decrement.scale.begin(resource, position, BASE_OFFSET);
         if (sample > Decrement.scale.go(resource, position).to) {
             if (!Composer.accredit(resource, sample)) {
                 if (Sequencer.account(resource) == SEQUENCE_MAX)
-                    Sequencer.recede(resource, OneSample);
+                    Sequencer.recede(resource, ONE_SAMPLE);
                 Composer.compose(resource, sample);
             }
         }

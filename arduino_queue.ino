@@ -17,27 +17,28 @@
 #define SIZES_TYPE unsigned int
 #define SAMPLES_TYPE int
 #define RAPBTL_NO_STD_CPLUSPLUS
+#define BASE_OFFSET 0
+#define ONE_SAMPLE 1
 #include "ration/contraction.hpp"
 
 using namespace ration::contraction;
 using queue_t = Contractional<SIZES_TYPE, QUEUE_MAX, SAMPLES_TYPE>;
 
-constexpr SIZES_TYPE BaseOffset = 0, OneSample = 1;
 queue_t queue;
 
 static void printQueue()
 {
     static auto& Increment = ReadIncrementDirection<SIZES_TYPE, QUEUE_MAX, SAMPLES_TYPE>;
     SIZES_TYPE position;
-    if (!Increment.begins(queue, BaseOffset))
+    if (!Increment.begins(queue, BASE_OFFSET))
         return;
-    Increment.scale.begin(queue, position, BaseOffset);
+    Increment.scale.begin(queue, position, BASE_OFFSET);
     Serial.print(F("Queue: "));
     while (true) {
         Serial.print(Increment.scale.go(queue, position).to);
-        if (!Increment.traverses(queue, position, OneSample))
+        if (!Increment.traverses(queue, position, ONE_SAMPLE))
             break;
-        Increment.scale.traverse(queue, position, OneSample);
+        Increment.scale.traverse(queue, position, ONE_SAMPLE);
         Serial.print(F(", "));
     }
     Serial.println(F(""));
@@ -54,8 +55,8 @@ void loop()
     static auto& Increment = WriteIncrementDirection<SIZES_TYPE, QUEUE_MAX, SAMPLES_TYPE>;
     SIZES_TYPE position;
     if (Contractor.account(queue) == Contractor.survey(queue))
-        Contractor.retract(queue, OneSample);
-    Contractor.protract(queue, position, OneSample);
+        Contractor.retract(queue, ONE_SAMPLE);
+    Contractor.protract(queue, position, ONE_SAMPLE);
     Increment.scale.go(queue, position).to = analogRead(ANALOG_PIN);
     printQueue();
 }
