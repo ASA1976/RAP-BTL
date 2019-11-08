@@ -14,23 +14,19 @@ using namespace ::abstraction;
 using namespace ::location;
 
 struct Class {
-
     void operator()(unsigned value) const
     {
-        printf("Class::operator()( %u )\n", value);
+        printf("Class::operator()(%u)\n", value);
     }
-
-    static void Static(unsigned value)
+    static void StaticFunction(unsigned value)
     {
-        printf("Class::Static( %u )\n", value);
+        printf("Class::StaticFunction(%u)\n", value);
     }
-
-    void method(unsigned value) const
+    void nonstatic_function(unsigned value) const
     {
-        printf("Class::method( %u )\n", value);
+        printf("Class::nonstatic_function(%u)\n", value);
     }
-
-} const Object;
+};
 
 static auto Bind(const Locational<const char> identifier)
 {
@@ -40,16 +36,14 @@ static auto Bind(const Locational<const char> identifier)
             printf("\"%s\"", identifier);
         else
             printf("null");
-        printf("]( %u )\n", value);
+        printf("](%u)\n", value);
     };
     return lambda;
 }
 
-auto LambdaNull = Bind(0), LambdaNamed = Bind("Named");
-
 void Function(unsigned value)
 {
-    printf("Function( %u )\n", value);
+    printf("Function(%u)\n", value);
 }
 
 static inline void
@@ -59,17 +53,19 @@ Demonstrate(Referential<Abstract<void, unsigned>> invoke)
     invoke(++count);
 }
 
+const Class Object;
+auto LambdaNull = Bind(0), LambdaNamed = Bind("Named");
+
 int main()
 {
-    using LambdaTypical = decltype(LambdaNull);
-    using ObjectTypical = decltype(Object);
-    using MethodLocational = decltype(&Class::method);
-    static auto& WrapFunctor = AbstractProcedure<ObjectTypical, Object, void, unsigned>;
-    static auto& WrapMethod = AbstractMethod<ObjectTypical, MethodLocational, Object, &Class::method, void, unsigned>;
-    static auto& WrapLambdaNull = AbstractProcedure<LambdaTypical, LambdaNull, void, unsigned>;
-    static auto& WrapLambdaNamed = AbstractProcedure<LambdaTypical, LambdaNamed, void, unsigned>;
+    using MemberLocational = decltype(&Class::nonstatic_function);
+    static constexpr MemberLocational MemberLocation = &Class::nonstatic_function;
+    static auto& WrapFunctor = AbstractProcedure<const Class, Object, void, unsigned>;
+    static auto& WrapMethod = AbstractMethod<const Class, MemberLocational, Object, MemberLocation, void, unsigned>;
+    static auto& WrapLambdaNull = AbstractProcedure<decltype(LambdaNull), LambdaNull, void, unsigned>;
+    static auto& WrapLambdaNamed = AbstractProcedure<decltype(LambdaNamed), LambdaNamed, void, unsigned>;
     Demonstrate(WrapFunctor);
-    Demonstrate(Class::Static);
+    Demonstrate(Class::StaticFunction);
     Demonstrate(WrapMethod);
     Demonstrate(WrapLambdaNull);
     Demonstrate(WrapLambdaNamed);

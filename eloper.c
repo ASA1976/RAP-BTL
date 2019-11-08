@@ -15,13 +15,13 @@
     ./elope
 
 */
-#define INVOCATIVE_STRUCT invocative_s
+#define INVOCATIVE_TYPEDEF invocative_t
 #define INVOCATIVE_RESULTANT void
 #define INVOCATIVE_PARAMETRIC unsigned
 #include "invocative.def"
 #include <stdio.h>
 
-void call_from_c(const struct invocative_s invocation)
+void call_from_c(const invocative_t invocation)
 {
     static unsigned count = 0;
     invocation.interface(invocation.locality, ++count);
@@ -29,5 +29,5 @@ void call_from_c(const struct invocative_s invocation)
 
 void c_function(unsigned value)
 {
-    printf("c_function( %u ), C programming language.\n", value);
+    printf("c_function(%u), C programming language.\n", value);
 }

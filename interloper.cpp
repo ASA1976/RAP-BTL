@@ -15,45 +15,41 @@ extern "C" void call_from_c(const Invocative<void, unsigned>);
 extern "C" void c_function(unsigned);
 
 struct Class {
-
     void operator()(unsigned value) const
     {
-        printf("Class::operator()( %u ), C++ programming language.\n", value);
+        printf("Class::operator()(%u), C++ programming language.\n", value);
     }
-
-    static void Static(unsigned value)
+    static void StaticFunction(unsigned value)
     {
-        printf("Class::Static( %u ), C++ programming language\n", value);
+        printf("Class::StaticFunction(%u), C++ programming language\n", value);
     }
-
-    void method(unsigned value) const
+    void nonstatic_function(unsigned value) const
     {
-        printf("Class::method( %u ), C++ programming language.\n", value);
+        printf("Class::nonstatic_function(%u), C++ programming language.\n", value);
     }
 };
 
-void Function(unsigned value)
+void CPPFunction(unsigned value)
 {
-    printf("Function( %u ), C++ programming language.\n", value);
+    printf("CPPFunction(%u), C++ programming language.\n", value);
 }
 
 int main()
 {
-    static auto lambda = [](unsigned value) -> void {
-        printf("main::lambda( %u ), C++ programming language.\n", value);
+    using MethodLocational = decltype(&Class::nonstatic_function);
+    static auto Lambda = [](unsigned value) -> void {
+        printf("main::Lambda(%u), C++ programming language.\n", value);
     };
-    const Class object;
-    using ObjectTypical = decltype(object);
-    using MethodLocational = decltype(&Class::method);
-    using LambdaTypical = decltype(lambda);
-    static auto& AssignFunctor = AssignInvokeProcedure<ObjectTypical, void, unsigned>;
-    static auto& AssignLambda = AssignInvokeProcedure<LambdaTypical, void, unsigned>;
-    static auto& AssignMethod = AssignInvokeMethod<ObjectTypical, MethodLocational, void, unsigned>;
-    static auto& AssignObject = AssignClassMethod<ObjectTypical, MethodLocational, void, unsigned>;
-    call_from_c(AssignInvokeFunction(&c_function));
-    call_from_c(AssignFunctor(&object));
-    call_from_c(AssignInvokeFunction(&Class::Static));
-    call_from_c(AssignMethod(AssignObject(&Class::method, object)));
-    call_from_c(AssignInvokeFunction(&Function));
-    call_from_c(AssignLambda(&lambda));
+    static const Class Object;
+    static auto& AssignFunction = AssignInvokeFunction<void, unsigned>;
+    static auto& AssignFunctor = AssignInvokeProcedure<decltype(Object), void, unsigned>;
+    static auto& AssignLambda = AssignInvokeProcedure<decltype(Lambda), void, unsigned>;
+    static auto& AssignMethod = AssignInvokeMethod<decltype(Object), MethodLocational, void, unsigned>;
+    static auto& AssignObject = AssignClassMethod<decltype(Object), MethodLocational, void, unsigned>;
+    call_from_c(AssignFunction(&c_function));
+    call_from_c(AssignFunctor(&Object));
+    call_from_c(AssignFunction(&Class::StaticFunction));
+    call_from_c(AssignMethod(AssignObject(&Class::nonstatic_function, Object)));
+    call_from_c(AssignFunction(&CPPFunction));
+    call_from_c(AssignLambda(&Lambda));
 }

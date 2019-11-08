@@ -13,26 +13,23 @@ extern "C" {
 using namespace ::invocation;
 
 struct Class {
-
     void operator()(unsigned value) const
     {
-        printf("Class::operator()( %u )\n", value);
+        printf("Class::operator()(%u)\n", value);
     }
-
-    static void Static(unsigned value)
+    static void StaticFunction(unsigned value)
     {
-        printf("Class::Static( %u )\n", value);
+        printf("Class::StaticFunction(%u)\n", value);
     }
-
-    void method(unsigned value) const
+    void nonstatic_function(unsigned value) const
     {
-        printf("Class::method( %u )\n", value);
+        printf("Class::nonstatic_function(%u)\n", value);
     }
 };
 
 void Function(unsigned value)
 {
-    printf("Function( %u )\n", value);
+    printf("Function(%u)\n", value);
 }
 
 static inline void
@@ -44,20 +41,19 @@ Demonstrate(Referential<const Invocative<void, unsigned>> invoke)
 
 int main()
 {
-    static auto lambda = [](unsigned value) -> void {
-        printf("main::lambda( %u )\n", value);
+    using MemberLocational = decltype(&Class::nonstatic_function);
+    static auto Lambda = [](unsigned value) -> void {
+        printf("main::lambda(%u)\n", value);
     };
-    const Class object;
-    using ObjectTypical = decltype(object);
-    using MethodLocational = decltype(&Class::method);
-    using LambdaTypical = decltype(lambda);
-    static auto& AssignLambda = AssignInvokeProcedure<LambdaTypical, void, unsigned>;
-    static auto& AssignFunctor = AssignInvokeProcedure<ObjectTypical, void, unsigned>;
-    static auto& AssignMethod = AssignInvokeMethod<ObjectTypical, MethodLocational, void, unsigned>;
-    static auto& AssignObject = AssignClassMethod<ObjectTypical, MethodLocational, void, unsigned>;
-    Demonstrate(AssignFunctor(&object));
-    Demonstrate(AssignInvokeFunction(&Class::Static));
-    Demonstrate(AssignMethod(AssignObject(&Class::method, object)));
-    Demonstrate(AssignInvokeFunction(&Function));
-    Demonstrate(AssignLambda(&lambda));
+    static const Class Object;
+    static auto& AssignFunction = AssignInvokeFunction<void, unsigned>;
+    static auto& AssignLambda = AssignInvokeProcedure<decltype(Lambda), void, unsigned>;
+    static auto& AssignFunctor = AssignInvokeProcedure<const Class, void, unsigned>;
+    static auto& AssignMethod = AssignInvokeMethod<const Class, MemberLocational, void, unsigned>;
+    static auto& AssignObject = AssignClassMethod<const Class, MemberLocational, void, unsigned>;
+    Demonstrate(AssignFunctor(&Object));
+    Demonstrate(AssignFunction(&Class::StaticFunction));
+    Demonstrate(AssignMethod(AssignObject(&Class::nonstatic_function, Object)));
+    Demonstrate(AssignFunction(&Function));
+    Demonstrate(AssignLambda(&Lambda));
 }
