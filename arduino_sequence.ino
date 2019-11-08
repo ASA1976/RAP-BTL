@@ -19,7 +19,8 @@
 #define BASE_OFFSET 0
 #define ONE_SAMPLE 1
 #define RAPBTL_NO_STD_CPLUSPLUS
-#include "ration/collection.hpp"
+#include "ration/consecution.hpp"
+#include "sortation.hpp"
 
 using namespace ration;
 using resource_t = Resourceful<SIZES_TYPE, SEQUENCE_MAX, SAMPLES_TYPE>;
@@ -53,21 +54,33 @@ void setup()
 void loop()
 {
     using namespace comparison;
+    using namespace sortation;
     using namespace ration::consecution;
-    using namespace ration::collection;
     static auto& Sequencer = SureSequencer<SIZES_TYPE, SEQUENCE_MAX, SAMPLES_TYPE, MoveElements<SIZES_TYPE, SAMPLES_TYPE>>;
-    static auto& Composer = SureOrderedComposer<SIZES_TYPE, SEQUENCE_MAX, SAMPLES_TYPE, IsEqual<SAMPLES_TYPE>, IsGreater<SAMPLES_TYPE>, MoveElements<SIZES_TYPE, SAMPLES_TYPE>>;
-    static auto& Decrement = ReadDecrementDirection<SIZES_TYPE, SEQUENCE_MAX, SAMPLES_TYPE>;
+    static auto& Liner = ReadLiner<SIZES_TYPE, SEQUENCE_MAX, SAMPLES_TYPE>;
+    static auto& Equate = IsEqual<SAMPLES_TYPE>;
+    static auto& Order = IsGreater<SAMPLES_TYPE>;
+    static const SIZES_TYPE ZeroSize = 0;
     position_t position;
-    int sample;
+    SAMPLES_TYPE sample;
     sample = analogRead(ANALOG_PIN);
-    if (Decrement.begins(resource, BASE_OFFSET)) {
-        Decrement.scale.begin(resource, position, BASE_OFFSET);
-        if (sample > Decrement.scale.go(resource, position).to) {
-            if (!Composer.accredit(resource, sample)) {
-                if (Sequencer.account(resource) == SEQUENCE_MAX)
+    if (resource.allotment > ZeroSize) {
+        Liner.decrement.begin(resource, position, BASE_OFFSET);
+        if (sample > Liner.decrement.go(resource, position).to) {
+            if (!SearchBisection(resource, Liner, sample, position, resource.allotment - 1, ZeroSize, Equate, Order)) {
+                if (resource.allotment == SEQUENCE_MAX)
                     Sequencer.recede(resource, ONE_SAMPLE);
-                Composer.compose(resource, sample);
+                if (resource.allotment > ZeroSize) {
+					Liner.increment.begin(resource, position, BASE_OFFSET);
+					SearchBisection(resource, Liner, sample, position, ZeroSize, resource.allotment - 1, Equate, Order);
+					if (sample > Liner.increment.go(resource, position).to) {
+						Sequencer.precede(resource, position, sample);
+					} else {
+						Sequencer.cede(resource, position, sample);
+					}
+                } else {
+                	Sequencer.accede(resource,sample);
+                }
             }
         }
     } else {
