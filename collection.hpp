@@ -13,10 +13,8 @@
  */
 namespace collection {
 
-using ::composition::Compositional;
 using ::location::Referential;
 using ::selection::Equipollent;
-using ::selection::Sectional;
 using ::selection::Selective;
 using ::sortation::Assortive;
 using ::trajection::Axial;
@@ -55,50 +53,6 @@ using Collative = bool(
 
 /**
  * @brief
- *     Function type which simplifies declaration syntax.
- * @details
- *     Function type alias used to declare sorted set operation function 
- *     references.
- * @tparam Consolidative
- *     Type of the operand set.
- * @tparam Basic
- *     Type of the base set.
- * @tparam BasicPositional
- *     Type of positions used by the base set.
- * @tparam BasicNatural
- *     Type of natural integer used by the base set.
- * @tparam Relative
- *     Type of the relative set.
- * @tparam RelativePositional 
- *     Type of positions used by the relative set.
- * @tparam RelativeNatural
- *     Type of natural integer used by the relative set.
- * @tparam Elemental
- *    Type of the elementary set objects.
- */
-template <
-    typename Consolidative,
-    typename Basic,
-    typename BasicPositional,
-    typename BasicNatural,
-    typename Relative,
-    typename RelativePositional,
-    typename RelativeNatural,
-    typename Elemental>
-using BisectionallyOperative = bool(
-    Referential<Consolidative>
-        opeand,
-    Referential<const Axial<const Basic, BasicPositional, BasicNatural, const Elemental>>
-        basis,
-    Referential<const Basic>
-        base_set,
-    Referential<const Axial<const Relative, RelativePositional, RelativeNatural, const Elemental>>
-        relativity,
-    Referential<const Relative>
-        relative_set);
-
-/**
- * @brief
  *     Set on set operations classifier.
  * @details
  *     This type is used for sorted set operations when both sets make use
@@ -131,18 +85,28 @@ template <
     typename Elemental>
 struct Bisectional {
 
-    Referential<BisectionallyOperative<Consolidative, Basic, BasicPositional, BasicNatural, Relative, RelativePositional, RelativeNatural, Elemental>>
+    using OperandReferential = Referential<Consolidative>;
+    using BasisReferential = Referential<const Axial<const Basic, BasicPositional, BasicNatural, const Elemental>>;
+    using BaseReferential = Referential<const Basic>;
+    using RelativityReferential = Referential<const Axial<const Relative, RelativePositional, RelativeNatural, const Elemental>>;
+    using RelativeReferential = Referential<const Relative>;
+
+    Referential<bool(OperandReferential operand, BasisReferential basis, BaseReferential base_set, RelativityReferential relativity, RelativeReferential relative_set)>
         complement, /**< Function reference used to compose the relative 
-                     *   complement of two sorted sets. 
+                     *   complement of two sorted sets _already in the same 
+                     *   sortation order as the operand set_. 
                      */
-        differentiate, /**< Function reference used to compose the
-                        *   difference of two sorted sets. 
+        differentiate, /**< Function reference used to compose the symmetric 
+                        *   difference of two sorted sets _already in the same
+                        *   sortation order as the operand set_.
                         */
-        intersect, /**< Function reference used to compose the
-                    *   intersection of two sorted sets. 
+        intersect, /**< Function reference used to compose the intersection of 
+                    *   two sorted sets _already in the same sortation order as
+                    *   the operand set_.
                     */
-        unite; /**< Function reference used to compose the union of two
-                *   sorted sets. 
+        unite; /**< Function reference used to compose the union of two sorted 
+                *   sets _already in the same sortation order as the operand
+                *   set_.
                 */
 };
 
@@ -172,20 +136,24 @@ struct Collective {
     Referential<const Selective<Consolidative, Positional, Natural, Elemental>>
         selector; /**< Objective reference used to perform elementary 
                    *   sorted set operations and operations between sets 
-                   *   which are not in the same sortation order.
+                   *   which are __not in the same sortation order__.
                    */
 
     Referential<const Bisectional<Consolidative, Consolidative, Positional, Natural, Consolidative, Positional, Natural, Elemental>>
         bisection; /**< Objective reference used to perform set operations 
-                    *   between sets in the same sortation order. 
+                    *   between sets which are __already in the same sortation
+                    *   order__. 
                     */
 
     Referential<Collative<Consolidative, Consolidative, Positional, Natural, Elemental>>
-        collate; /**< Function reference used to duplicate a sorted set. */
+        collate; /**< Function reference used to duplicate a sorted set already
+                  *   in the same sortation order.
+                  */
 
     Referential<Equipollent<Consolidative, Positional, Natural, Consolidative, Positional, Natural, Elemental>>
         correlate; /**< Function reference used to evaluate the equivalency
-                    *   of two sorted sets. 
+                    *   of two sorted sets _already in the same sortation 
+                    *   order_. 
                     */
 };
 

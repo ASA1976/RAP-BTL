@@ -123,17 +123,13 @@ template <
     typename Elemental>
 struct Sectional {
 
-    Referential<bool(
-        Referential<Consolidative>
-            operand,
-        Referential<const Directional<const Basic, BasicPositional, BasicNatural, const Elemental>>
-            basis,
-        Referential<const Basic>
-            base_set,
-        Referential<const Directional<const Relative, RelativePositional, RelativeNatural, const Elemental>>
-            relativity,
-        Referential<const Relative>
-            relative_set)>
+    using OperandReferential = Referential<Consolidative>;
+    using BasisReferential = Referential<const Directional<const Basic, BasicPositional, BasicNatural, const Elemental>>;
+    using BaseReferential = Referential<const Basic>;
+    using RelativityReferential = Referential<const Directional<const Relative, RelativePositional, RelativeNatural, const Elemental>>;
+    using RelativeReferential = Referential<const Relative>;
+
+    Referential<bool(OperandReferential operand, BasisReferential basis, BaseReferential base_set, RelativityReferential relativity, RelativeReferential relative_set)>
         complement, /**< Function reference used to compose the relative 
                      *   complement of two unsorted sets. 
                      */
@@ -173,28 +169,34 @@ struct Selective {
 
     Referential<const Compositional<Consolidative, Natural, Elemental>>
         composer; /**< Objective reference used to perform elementary 
-                   *   set operations.  This composer must not allow two
-                   *   elements which are equivalent to exist in the set.
+                   *   set operations.  This composer should not allow two
+                   *   elements which are equivalent to exist in the set,
+                   *   however implementations may forego duplicate element
+                   *   prevention if performance demands require it and
+                   *   manual checks for element duplication are performed 
+                   *   as a prevention instead.
                    */
 
     Referential<const Sectional<Consolidative, Consolidative, Positional, Natural, Consolidative, Positional, Natural, Elemental>>
         section; /**< Objective reference used to perform set operations 
-                  *   between unsorted sets.
+                  *   between unsorted sets.  Set operations should presume
+                  *   that no duplicate elements exist in the base and relative 
+                  *   sets in order to maximize set operation performance.
                   */
 
     Referential<Duplicative<Consolidative, Consolidative, Positional, Natural, Elemental>>
         duplicate; /**< Function reference used to duplicate an unsorted 
-                    *   set.
+                    *   set.  The input set is presumed to not contain duplicate
+                    *   elements.
                     */
 
     Referential<Equipollent<Consolidative, Positional, Natural, Consolidative, Positional, Natural, Elemental>>
         equate; /**< Function reference used to evaluate the equivalency
-                 *   of two unsorted sets.
+                 *   of two unsorted sets.  Both sets are presumed to not
+                 *   contain duplicate elements.
                  */
 
-    Referential<Natural(
-        Referential<const Consolidative>
-            operand)>
+    Referential<Natural(Referential<const Consolidative> operand)>
         count; /**< Function reference used to count the number of 
                 *   elements in a set.
                 */
