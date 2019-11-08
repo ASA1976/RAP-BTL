@@ -71,15 +71,15 @@ void loop()
                 if (resource.allotment == SEQUENCE_MAX)
                     Sequencer.recede(resource, ONE_SAMPLE);
                 if (resource.allotment > ZeroSize) {
-					Liner.increment.begin(resource, position, BASE_OFFSET);
-					SearchBisection(resource, Liner, sample, position, ZeroSize, resource.allotment - 1, Equate, Order);
-					if (sample > Liner.increment.go(resource, position).to) {
-						Sequencer.precede(resource, position, sample);
-					} else {
-						Sequencer.cede(resource, position, sample);
-					}
+                    Liner.increment.begin(resource, position, BASE_OFFSET);
+                    SearchBisection(resource, Liner, sample, position, ZeroSize, resource.allotment - 1, Equate, Order);
+                    if (sample > Liner.increment.go(resource, position).to) {
+                        Sequencer.precede(resource, position, sample);
+                    } else {
+                        Sequencer.cede(resource, position, sample);
+                    }
                 } else {
-                	Sequencer.accede(resource,sample);
+                    Sequencer.accede(resource, sample);
                 }
             }
         }
