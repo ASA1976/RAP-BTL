@@ -930,9 +930,8 @@ namespace consecution {
             is_integral<Natural>::value && is_unsigned<Natural>::value,
             "Natural:  Unsigned integer type required");
 #endif
-        using NodeLocational = Locational<SinglyNodal<Elemental>>
-            NodeLocational first,
-              last, previous;
+        using NodeLocational = Locational<SinglyNodal<Elemental>>;
+        NodeLocational first, last, previous;
         Natural index;
         if (count <= 0)
             return false;
