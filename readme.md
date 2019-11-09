@@ -20,6 +20,14 @@ systems programming ranges between high performance and high surety.  That is
 why funtionality is provided as base templates and safe versions which verify 
 arguments (etc.).
 
+## Usage
+
+In order to use the Basic Template Library, add the directory containing the
+header files to the include directory for your compilation unit.  See the "-I"
+parameter with the GNU and Clang compilers, add an include directory for
+the project using Visual Studio or add existing code to your project with the
+Sloeber Eclipse IDE plugin.
+
 ## The Paradigm
 
 For those of you unaware of my paradigm proposal, the [Relational Association
