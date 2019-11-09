@@ -59,9 +59,8 @@ auto LambdaNull = Bind(0), LambdaNamed = Bind("Named");
 int main()
 {
     using MemberLocational = decltype(&Class::nonstatic_function);
-    static constexpr MemberLocational MemberLocation = &Class::nonstatic_function;
-    static auto& WrapFunctor = AbstractProcedure<const Class, Object, void, unsigned>;
-    static auto& WrapMethod = AbstractMethod<const Class, MemberLocational, Object, MemberLocation, void, unsigned>;
+    static auto& WrapFunctor = AbstractProcedure<decltype(Object), Object, void, unsigned>;
+    static auto& WrapMethod = AbstractMethod<decltype(Object), MemberLocational, Object, &Class::nonstatic_function, void, unsigned>;
     static auto& WrapLambdaNull = AbstractProcedure<decltype(LambdaNull), LambdaNull, void, unsigned>;
     static auto& WrapLambdaNamed = AbstractProcedure<decltype(LambdaNamed), LambdaNamed, void, unsigned>;
     Demonstrate(WrapFunctor);
