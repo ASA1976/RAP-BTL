@@ -1,7 +1,7 @@
 // © 2019 Aaron Sami Abassi
 // Licensed under the Academic Free License version 3.0
 // #define RAPBTL_NO_STD_CPLUSPLUS
-#include "junction/collection.hpp"
+#include "ration/collection.hpp"
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
 #include <cstdio>
 #else
@@ -11,14 +11,7 @@ extern "C" {
 #endif
 
 using namespace ::location;
-using namespace ::junction;
-using ListAdjunctive = SinglyAdjunctive<unsigned, int>;
-constexpr ListAdjunctive StaticAdjunct = DefaultStaticSingleAdjunct<unsigned, int>;
-
-#if defined(_MSC_VER) && _MSC_VER < 1921
-template bool ::comparison::IsLesser(Referential<const int>, Referential<const int>);
-template bool ::comparison::IsEqual(Referential<const int>, Referential<const int>);
-#endif
+using namespace ::trajection;
 
 template <
     typename Spatial,
@@ -52,24 +45,23 @@ int main(
     Locational<Locational<char>>
         argv)
 {
-    using namespace ::junction::collection;
+    using namespace ::ration;
+    using namespace ::ration::collection;
+    using namespace ::ration::consecution;
     using namespace ::comparison;
-    using IntegerNodal = SinglyNodal<int>;
-    using IntegerJunctive = SinglyJunctive<unsigned, int>;
     enum Erroneous {
         NumberOfArguments = -1,
         InputFile = -2,
         OutputFile = -3,
         IntegerCount = -4
     };
-    static const unsigned CacheLimit = 0x2000, CacheReserve = 0x80;
-    static const unsigned MaximumNodes = (CacheLimit - CacheReserve) / sizeof(IntegerNodal);
-    // Problem 388684
-    static auto& Composer = OrderedSingleComposer<unsigned, int, IsEqual, IsLesser, StaticAdjunct>;
-    static auto& Increment = ReadIncrementSingleDirection<unsigned, int>;
+    static constexpr unsigned CacheLimit = 0x2000, CacheReserve = 0x80;
+    static constexpr unsigned MaximumNodes = (CacheLimit - CacheReserve) / sizeof(int);
+    using IntegerResourceful = Resourceful<unsigned, MaximumNodes, int>;
+    static auto& Composer = SureOrderedComposer<unsigned, MaximumNodes, int, IsEqual<int>, IsLesser<int>, MoveElements<unsigned, int>>;
+    static auto& Increment = ReadIncrementDirection<unsigned, MaximumNodes, int>;
     Locational<FILE> input, output;
-    IntegerJunctive set;
-    IntegerNodal nodes[MaximumNodes];
+    IntegerResourceful set;
     int value;
     output = stdout;
     switch (argc) {
@@ -91,7 +83,6 @@ int main(
         return Erroneous::NumberOfArguments;
     }
     Initialize(set);
-    IntegrateNodes(set, nodes);
     while (!feof(input)) {
         if (fscanf(input, "%d", Locate(value).at) == 1) {
             if (Account(set) == MaximumNodes) {
