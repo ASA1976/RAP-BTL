@@ -10,8 +10,8 @@
     
     Example:
 
-    clang -O -c eloper.c
-    clang++ -O -o elope eloper.o interloper.cpp
+    clang -O -I../rap-btl -c eloper.c
+    clang++ -O -I../rap-btl -o elope eloper.o interloper.cpp
     ./elope
 
 */
