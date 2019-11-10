@@ -17,15 +17,15 @@ CFLAGS = $(C_DEBUG) $(C_DEFS) $(C_INCLUDES)
 
 ###############################################################################
 
-SRC	 =	abstraction.cpp eloper.c example.cpp fastlist.cpp interloper.cpp \
-        invocation.cpp processing.cpp provision.cpp represent.cpp \
-        sortints.cpp zero.cpp
+SRC  = abstraction.cpp eloper.c example.cpp fastlist.cpp interloper.cpp \
+       invocation.cpp processing.cpp provision.cpp represent.cpp \
+       sortints.cpp zero.cpp
 
-OBJ	 =	abstraction.o eloper.o example.o fastlist.o interloper.o invocation.o \
-        processing.o provision.o represent.o sortints.o zero.o
+OBJ  = abstraction.o eloper.o example.o fastlist.o interloper.o invocation.o \
+       processing.o provision.o represent.o sortints.o zero.o
 
-BINS =  abstraction elope example fastlist invocation processing provision \
-        represent sortints zero
+BINS = abstraction elope example fastlist invocation processing provision \
+       represent sortints zero
 
 all: $(BINS)
 
