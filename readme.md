@@ -23,10 +23,12 @@ arguments (etc.).
 ## Usage
 
 In order to use the Basic Template Library, add the directory containing the
-header files to the include directory for your compilation unit.  See the "-I"
-parameter with the GNU and Clang compilers, add an include directory for
-the project using Visual Studio or add existing code to your project with the
-Sloeber Eclipse IDE plugin.
+header files as an include directory for your compilation unit.  See the "-I"
+parameter with the GNU and Clang compilers.  Add an include directory in the 
+project settings using Visual Studio.  Import existing code into your project 
+with the Sloeber Eclipse IDE plugin.  The copy of the rap-btl **directory** in 
+this project structure is the key path to supply to the compiler or integrated
+development environment.
 
 ## The Paradigm
 
