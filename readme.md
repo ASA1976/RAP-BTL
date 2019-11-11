@@ -27,8 +27,8 @@ header files as an include directory for your compilation unit.  See the "-I"
 parameter with the GNU and Clang compilers.  Add an include directory in the 
 project settings using Visual Studio.  Import existing code into your project 
 with the Sloeber Eclipse IDE plugin.  The copy of the rap-btl **directory** in 
-this project structure is the key path to supply to the compiler or integrated
-development environment.
+this project structure containing the top level header files is the key path to 
+supply to the compiler or integrated development environment.
 
 ## The Paradigm
 
