@@ -42,7 +42,7 @@ using Abstract = Resultant(Parametric...);
  *     template can also be used to invoke them.
  * @tparam Procedural
  *     Procedural (function, lambda or functor) type.
- * @tparam Location
+ * @tparam Objective
  *     Reference to a function, lambda or functor object.
  * @tparam Resultant
  *     Return type of the invocation.
