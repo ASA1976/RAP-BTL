@@ -42,9 +42,9 @@ struct Automatic final {
  * @details 
  *     This function is useful for initializing an automatic object without
  *     requiring explicitly naming any types.  An example might be the statement
- *     "auto trigger = Automate(lambda)".
+ *     "auto trigger = Automate([bindings]{ body });".
  * @tparam Expressive
- *     Type of the lambda expression to be called.
+ *     Type of the lambda expression without parameters to be called.
  */
 template <typename Expressive>
 static inline Automatic<Expressive>
