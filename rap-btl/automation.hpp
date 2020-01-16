@@ -32,7 +32,9 @@ template <typename Expressive>
 struct Automatic final {
 
     Referential<const Expressive> closure; /**< Reference to a lambda expression. */
+
     Automatic(Referential<const Expressive> expression) : closure(expression) {}
+
     ~Automatic() { closure(); }
 };
 
@@ -42,7 +44,7 @@ struct Automatic final {
  * @details 
  *     This function is useful for initializing an automatic object without
  *     requiring explicitly naming any types.  An example might be the statement
- *     "auto trigger = Automate([bindings]{ body });".
+ *     "auto trigger = Automate([captures...]{ body... });".
  * @tparam Expressive
  *     Type of the lambda expression without parameters to be called.
  */
