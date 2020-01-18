@@ -12,6 +12,7 @@
 #include <ration/selection.hpp>
 #include <ration/string.hpp>
 #include <segmentation.hpp>
+#include <automation.hpp>
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
 #include <cstdio>
 #else
@@ -238,6 +239,7 @@ DemonstrateJunction()
     using namespace ::junction::association::selection;
     using namespace ::junction::association::collection;
     using namespace ::comparison;
+    using namespace ::automation;
     using ListJunctive = DoublyJunctive<size_t, char>;
     using MapJunctive = AssociativelyDoubleJunctive<size_t, char, int>;
     static auto& ListSequencer = DoubleSequencer<size_t, char, ListAdjunct>;
@@ -250,6 +252,25 @@ DemonstrateJunction()
     static auto& MapDirection = ReadIncrementDoubleDirection<size_t, MapComplementary>;
     ListJunctive list, base, relative;
     MapJunctive map;
+    auto cleaner = Automate([&]{
+        ListSequencer.secede(list);
+        ListSequencer.secede(base);
+        ListSequencer.secede(relative);
+        MapCorrelator.disband(map);
+        printf("Freeing 1/4.");
+        while (ListSequencer.condense(list))
+            printf(".");
+        printf(" 2/4.");
+        while (ListSequencer.condense(base))
+            printf(".");
+        printf(" 3/4.");
+        while (ListSequencer.condense(relative))
+            printf(".");
+        printf(" 4/4.");
+        while (MapCorrelator.dissolve(map))
+            printf(".");
+        puts("");
+    });
     Initialize(list);
     Initialize(base);
     Initialize(relative);
@@ -294,23 +315,6 @@ DemonstrateJunction()
     printf("Ordered Map: [");
     DisplayMappings(map, MapDirection);
     puts("]");
-    ListSequencer.secede(list);
-    ListSequencer.secede(base);
-    ListSequencer.secede(relative);
-    MapCorrelator.disband(map);
-    printf("Freeing 1/4.");
-    while (ListSequencer.condense(list))
-        printf(".");
-    printf(" 2/4.");
-    while (ListSequencer.condense(base))
-        printf(".");
-    printf(" 3/4.");
-    while (ListSequencer.condense(relative))
-        printf(".");
-    printf(" 4/4.");
-    while (MapCorrelator.dissolve(map))
-        printf(".");
-    puts("");
     return true;
 }
 
