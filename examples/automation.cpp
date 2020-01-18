@@ -14,7 +14,7 @@ using namespace ::automation;
 
 int main()
 {
-    const auto automaton = Automate([]{ 
+    auto automaton = Automate([]{ 
         puts("Now running lambda expression."); 
     });
     puts("Now at the end of main.");
