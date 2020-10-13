@@ -48,7 +48,7 @@ struct Invocative {
      *     Invokes any kind of stored procedure, specific to the invocation
      *     abstract specified by the template arguments.
      */
-    constexpr Resultant operator()(Parametric... arguments) const
+    Resultant operator()(Parametric... arguments) const
     {
         return interface(locality, arguments...);
     }
