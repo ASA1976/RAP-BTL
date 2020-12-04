@@ -1,4 +1,4 @@
-// © 2019 Aaron Sami Abassi
+// Â© 2020 Aaron Sami Abassi
 // Licensed under the Academic Free License version 3.0
 #ifndef INVOCATION_MODULE
 #define INVOCATION_MODULE
@@ -67,16 +67,10 @@ struct Invocative {
  *     Qualified object oriented class type.
  * @tparam MethodLocational
  *     Pointer to qualified member function type.
- * @tparam Resultant
- *     Return type of the invocation.
- * @tparam ...Parametric
- *     Parameter pack which represents the parameter types of the invocation.
  */
 template <
     class ClassTypical,
-    typename MethodLocational,
-    typename Resultant,
-    typename... Parametric>
+    typename MethodLocational>
 struct Methodic {
 
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
@@ -157,7 +151,7 @@ InvokeMethod(
         locality,
     Parametric... arguments)
 {
-    using Specific = Methodic<ClassTypical, MethodLocational, Resultant, Parametric...>;
+    using Specific = Methodic<ClassTypical, MethodLocational>;
     using Classificatory = Locational<const Specific>;
     const Classificatory objective = static_cast<Classificatory>(locality);
     return (objective->object->*objective->method)(arguments...);
@@ -203,10 +197,6 @@ PrepareInvocation(
  *     Qualified object oriented class type.
  * @tparam MethodLocational
  *     Pointer to qualified member function type.
- * @tparam Resultant
- *     Return type of the invocation.
- * @tparam ...Parametric
- *     Parameter pack which represents the parameter types of the invocation.
  * @param[in] method
  *     Pointer to qualified member function.
  * @param[in] object
@@ -216,10 +206,8 @@ PrepareInvocation(
  */
 template <
     class ClassTypical,
-    typename MethodLocational,
-    typename Resultant,
-    typename... Parametric>
-static inline Methodic<ClassTypical, MethodLocational, Resultant, Parametric...>
+    typename MethodLocational>
+static inline Methodic<ClassTypical, MethodLocational>
 AssignClassMethod(
     MethodLocational
         method,
@@ -227,7 +215,7 @@ AssignClassMethod(
         object)
 {
     using namespace ::location;
-    using Specific = Methodic<ClassTypical, MethodLocational, Resultant, Parametric...>;
+    using Specific = Methodic<ClassTypical, MethodLocational>;
     const Specific message = { method, Locate(object).at };
     return message;
 }
@@ -295,7 +283,7 @@ template <
     typename... Parametric>
 static inline Invocative<Resultant, Parametric...>
 AssignInvokeMethod(
-    Referential<const Methodic<ClassTypical, MethodLocational, Resultant, Parametric...>>
+    Referential<const Methodic<ClassTypical, MethodLocational>>
         message)
 {
     using namespace ::location;
