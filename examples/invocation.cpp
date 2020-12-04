@@ -1,4 +1,4 @@
-// © 2019 Aaron Sami Abassi
+// Â© 2020 Aaron Sami Abassi
 // Licensed under the Academic Free License version 3.0
 // #define RAPBTL_NO_STD_CPLUSPLUS
 #include <invocation.hpp>
@@ -50,7 +50,8 @@ int main()
     static auto& AssignLambda = AssignInvokeProcedure<decltype(Lambda), void, unsigned>;
     static auto& AssignFunctor = AssignInvokeProcedure<const Class, void, unsigned>;
     static auto& AssignMethod = AssignInvokeMethod<const Class, MemberLocational, void, unsigned>;
-    static auto& AssignObject = AssignClassMethod<const Class, MemberLocational, void, unsigned>;
+    static auto& AssignObject = AssignClassMethod<const Class, MemberLocational>;
+    // These durations are sufficient for immediate callback
     Demonstrate(AssignFunctor(&Object));
     Demonstrate(AssignFunction(&Class::StaticFunction));
     Demonstrate(AssignMethod(AssignObject(&Class::nonstatic_function, Object)));
