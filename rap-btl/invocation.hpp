@@ -23,8 +23,8 @@ using ::location::Referential;
  * @brief         
  *     Invocation classifier.
  * @details       
- *     This type is used to represent the invocation of any stored procedure
- *     whose invocation abstract matches the provided specifiers.
+ *     This type is used to represent the invocation of any procedure whose 
+ *     invocation abstract matches the provided specifiers.
  * @tparam Resultant
  *     Return type of the invocation.
  * @tparam ...Parametric
@@ -45,8 +45,8 @@ struct Invocative {
      * @brief 
      *     Allows instances of the Invocative type to be directly invoked.
      * @details
-     *     Invokes any kind of stored procedure, specific to the invocation
-     *     abstract specified by the template arguments.
+     *     Invokes any kind of procedure, specific to the invocation abstract 
+     *     specified by the template arguments.
      */
     Resultant operator()(Parametric... arguments) const
     {
