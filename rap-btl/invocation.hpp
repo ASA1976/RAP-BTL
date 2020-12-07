@@ -176,15 +176,14 @@ InvokeMethod(
 template <
     typename Resultant,
     typename... Parametric>
-static inline auto
+static constexpr auto
 PrepareInvocation(
     Referential<const Invocative<Resultant, Parametric...>>
         invocation)
 {
-    auto lambda = [invocation](Parametric... arguments) -> Resultant {
+    return [invocation](Parametric... arguments) -> Resultant {
         return invocation(arguments...);
     };
-    return lambda;
 }
 
 /**
