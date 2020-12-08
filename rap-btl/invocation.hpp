@@ -39,7 +39,7 @@ struct Invocative {
         interface; /**< Code pointer to the interface function. */
 
     Locational<const void>
-        locality; /**< Data pointer to the invocable object */
+        locality; /**< Data pointer to a pointer to the invocable object */
 
     /**
      * @brief 
