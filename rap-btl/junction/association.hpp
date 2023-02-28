@@ -1,4 +1,4 @@
-// © 2019 Aaron Sami Abassi
+// ï¿½ 2019 Aaron Sami Abassi
 // Licensed under the Academic Free License version 3.0
 #ifndef JUNCTION_ASSOCIATION_MODULE
 #define JUNCTION_ASSOCIATION_MODULE
@@ -303,6 +303,7 @@ namespace association {
         Referential<const AssociativelyPositional<Connective, Correlative, Evaluative>>
             position)
     {
+        using ::location::Confer;
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
         using namespace ::std;
         static_assert(
