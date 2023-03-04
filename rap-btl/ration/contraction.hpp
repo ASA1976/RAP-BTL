@@ -1,4 +1,4 @@
-// © 2019 Aaron Sami Abassi
+// ï¿½ 2019 Aaron Sami Abassi
 // Licensed under the Academic Free License version 3.0
 #ifndef RATION_CONTRACTION_MODULE
 #define RATION_CONTRACTION_MODULE
@@ -522,7 +522,7 @@ namespace contraction {
         extent = queue.first + queue.resource.allotment;
         if (extent > Maximum)
             return index = extent - Maximum - 1 - count;
-        return extent - 1 - count;
+        return index = extent - 1 - count;
     }
 
     /**
@@ -569,7 +569,7 @@ namespace contraction {
         extent = queue.first + queue.resource.allotment;
         if (extent > Maximum)
             return index = extent - Maximum - 1 - count;
-        return extent - 1 - count;
+        return index = extent - 1 - count;
     }
 
     /**
