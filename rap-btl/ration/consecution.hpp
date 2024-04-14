@@ -1,4 +1,4 @@
-// © 2019 Aaron Sami Abassi
+// ï¿½ 2019 Aaron Sami Abassi
 // Licensed under the Academic Free License version 3.0
 #ifndef RATION_CONSECUTION_MODULE
 #define RATION_CONSECUTION_MODULE
@@ -115,7 +115,7 @@ namespace consecution {
         Natural Length,
         typename Elemental>
     static inline Natural
-    CountIncrement(
+    CountReadIncrement(
         Referential<const Resourceful<Natural, Length, Elemental>>
             sequence,
         Referential<const ReadPositional<Elemental>>
@@ -135,10 +135,50 @@ namespace consecution {
         Natural Length,
         typename Elemental>
     static inline Natural
-    CountDecrement(
+    CountWriteIncrement(
+        Referential<const Resourceful<Natural, Length, Elemental>>
+            sequence,
+        Referential<const WritePositional<Elemental>>
+            position)
+    {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
+        using namespace ::std;
+        static_assert(
+            is_integral<Natural>::value && is_unsigned<Natural>::value,
+            "Natural:  Unsigned integer type required");
+#endif
+        return static_cast<Natural>(sequence.source + sequence.allotment - 1 - position);
+    }
+
+    template <
+        typename Natural,
+        Natural Length,
+        typename Elemental>
+    static inline Natural
+    CountReadDecrement(
         Referential<const Resourceful<Natural, Length, Elemental>>
             sequence,
         Referential<const ReadPositional<Elemental>>
+            position)
+    {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
+        using namespace ::std;
+        static_assert(
+            is_integral<Natural>::value && is_unsigned<Natural>::value,
+            "Natural:  Unsigned integer type required");
+#endif
+        return static_cast<Natural>(position - sequence.source);
+    }
+
+    template <
+        typename Natural,
+        Natural Length,
+        typename Elemental>
+    static inline Natural
+    CountWriteDecrement(
+        Referential<const Resourceful<Natural, Length, Elemental>>
+            sequence,
+        Referential<const WritePositional<Elemental>>
             position)
     {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
@@ -175,10 +215,32 @@ namespace consecution {
         Natural Length,
         typename Elemental>
     static inline bool
-    Meets(
+    ReadMeets(
         Referential<const Resourceful<Natural, Length, Elemental>>
             sequence,
         Referential<const ReadPositional<Elemental>>
+            position)
+    {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
+        using namespace ::std;
+        static_assert(
+            is_integral<Natural>::value && is_unsigned<Natural>::value,
+            "Natural:  Unsigned integer type required");
+#endif
+        return sequence.allotment > 0
+            && sequence.source <= position
+            && position <= sequence.source + sequence.allotment - 1;
+    }
+
+    template <
+        typename Natural,
+        Natural Length,
+        typename Elemental>
+    static inline bool
+    WriteMeets(
+        Referential<const Resourceful<Natural, Length, Elemental>>
+            sequence,
+        Referential<const WritePositional<Elemental>>
             position)
     {
 #ifndef RAPBTL_NO_STD_CPLUSPLUS
@@ -283,10 +345,34 @@ namespace consecution {
         Natural Length,
         typename Elemental>
     static inline bool
-    IncrementTraverses(
+    ReadIncrementTraverses(
         Referential<const Resourceful<Natural, Length, Elemental>>
             sequence,
         Referential<const ReadPositional<Elemental>>
+            position,
+        Referential<const Natural>
+            count)
+    {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
+        using namespace ::std;
+        static_assert(
+            is_integral<Natural>::value && is_unsigned<Natural>::value,
+            "Natural:  Unsigned integer type required");
+#endif
+        if (sequence.allotment < 1)
+            return false;
+        return position + count <= sequence.source + sequence.allotment - 1;
+    }
+
+    template <
+        typename Natural,
+        Natural Length,
+        typename Elemental>
+    static inline bool
+    WriteIncrementTraverses(
+        Referential<const Resourceful<Natural, Length, Elemental>>
+            sequence,
+        Referential<const WritePositional<Elemental>>
             position,
         Referential<const Natural>
             count)
@@ -395,10 +481,34 @@ namespace consecution {
         Natural Length,
         typename Elemental>
     static inline bool
-    DecrementTraverses(
+    ReadDecrementTraverses(
         Referential<const Resourceful<Natural, Length, Elemental>>
             sequence,
         Referential<const ReadPositional<Elemental>>
+            position,
+        Referential<const Natural>
+            count)
+    {
+#ifndef RAPBTL_NO_STD_CPLUSPLUS
+        using namespace ::std;
+        static_assert(
+            is_integral<Natural>::value && is_unsigned<Natural>::value,
+            "Natural:  Unsigned integer type required");
+#endif
+        if (sequence.allotment < 1)
+            return false;
+        return sequence.source <= position - count;
+    }
+
+    template <
+        typename Natural,
+        Natural Length,
+        typename Elemental>
+    static inline bool
+    WriteDecrementTraverses(
+        Referential<const Resourceful<Natural, Length, Elemental>>
+            sequence,
+        Referential<const WritePositional<Elemental>>
             position,
         Referential<const Natural>
             count)
@@ -977,8 +1087,7 @@ namespace consecution {
         typename Appositional,
         typename RelativeNatural,
         typename Natural,
-        Natural
-            Length,
+        Natural Length,
         typename Elemental,
         Referential<MemoryMoving<Natural, Elemental>>
             Move>
@@ -1110,10 +1219,10 @@ namespace consecution {
         ReadIncrementDirection = {
             ReadIncrementScale<Natural, Length, Elemental>,
             Begins<Natural, Length, Elemental>,
-            IncrementTraverses<Natural, Length, Elemental>,
-            Meets<Natural, Length, Elemental>,
+            ReadIncrementTraverses<Natural, Length, Elemental>,
+            ReadMeets<Natural, Length, Elemental>,
             Account<Natural, Length, Elemental>,
-            CountIncrement<Natural, Length, Elemental>
+            CountReadIncrement<Natural, Length, Elemental>
         };
 
     template <
@@ -1124,10 +1233,10 @@ namespace consecution {
         WriteIncrementDirection = {
             WriteIncrementScale<Natural, Length, Elemental>,
             Begins<Natural, Length, Elemental>,
-            IncrementTraverses<Natural, Length, Elemental>,
-            Meets<Natural, Length, Elemental>,
+            WriteIncrementTraverses<Natural, Length, Elemental>,
+            WriteMeets<Natural, Length, Elemental>,
             Account<Natural, Length, Elemental>,
-            CountIncrement<Natural, Length, Elemental>
+            CountWriteIncrement<Natural, Length, Elemental>
         };
 
     template <
@@ -1138,10 +1247,10 @@ namespace consecution {
         ReadDecrementDirection = {
             ReadDecrementScale<Natural, Length, Elemental>,
             Begins<Natural, Length, Elemental>,
-            DecrementTraverses<Natural, Length, Elemental>,
-            Meets<Natural, Length, Elemental>,
+            ReadDecrementTraverses<Natural, Length, Elemental>,
+            ReadMeets<Natural, Length, Elemental>,
             Account<Natural, Length, Elemental>,
-            CountDecrement<Natural, Length, Elemental>
+            CountReadDecrement<Natural, Length, Elemental>
         };
 
     template <
@@ -1152,10 +1261,10 @@ namespace consecution {
         WriteDecrementDirection = {
             WriteDecrementScale<Natural, Length, Elemental>,
             Begins<Natural, Length, Elemental>,
-            DecrementTraverses<Natural, Length, Elemental>,
-            Meets<Natural, Length, Elemental>,
+            WriteDecrementTraverses<Natural, Length, Elemental>,
+            WriteMeets<Natural, Length, Elemental>,
             Account<Natural, Length, Elemental>,
-            CountDecrement<Natural, Length, Elemental>
+            CountWriteDecrement<Natural, Length, Elemental>
         };
 
     template <

@@ -1,4 +1,4 @@
-// © 2019 Aaron Sami Abassi
+// ï¿½ 2019 Aaron Sami Abassi
 // Licensed under the Academic Free License version 3.0
 #ifndef JUNCTION_ASSOCIATION_SELECTION_MODULE
 #define JUNCTION_ASSOCIATION_SELECTION_MODULE
@@ -52,7 +52,7 @@ namespace association {
             if (!map.first)
                 return false;
             Scale.begin(map, position, 0);
-            return SearchSection(map, Scale, relator, position, Account(map) - 1, Equate);
+            return SearchSection(map, Scale, relator, position, (Natural) (Account(map) - 1), Equate);
         }
 
         template <
@@ -290,7 +290,7 @@ namespace association {
             if (!map.first)
                 return false;
             Scale.begin(map, position, 0);
-            if (!SearchSection(map, Scale, relator, position, Account(map) - 1, Equate))
+            if (!SearchSection(map, Scale, relator, position, (Natural) (Account(map) - 1), Equate))
                 return false;
             return Concede(map, position, 1);
         }

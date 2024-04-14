@@ -1,4 +1,4 @@
-// © 2019 Aaron Sami Abassi
+// ï¿½ 2019 Aaron Sami Abassi
 // Licensed under the Academic Free License version 3.0
 #ifndef RATION_ASSOCIATION_MODULE
 #define RATION_ASSOCIATION_MODULE
@@ -21,15 +21,28 @@ namespace association {
     using ::association::Associative;
     using ::association::Complementary;
     using ::comparison::Comparison;
-    using consecution::BeginReadDecrement;
+    using consecution::Account;
     using consecution::BeginReadIncrement;
+    using consecution::BeginReadDecrement;
+    using consecution::BeginWriteIncrement;
+    using consecution::BeginWriteDecrement;
     using consecution::Begins;
-    using consecution::DecrementTraverses;
+    using consecution::CountReadIncrement;
+    using consecution::CountWriteIncrement;
+    using consecution::CountReadDecrement;
+    using consecution::CountWriteDecrement;
+    using consecution::ReadDecrementTraverses;
+    using consecution::WriteDecrementTraverses;
     using consecution::GoRead;
-    using consecution::IncrementTraverses;
-    using consecution::Meets;
-    using consecution::TraverseReadDecrement;
+    using consecution::GoWrite;
+    using consecution::ReadIncrementTraverses;
+    using consecution::WriteIncrementTraverses;
+    using consecution::ReadMeets;
+    using consecution::WriteMeets;
     using consecution::TraverseReadIncrement;
+    using consecution::TraverseReadDecrement;
+    using consecution::TraverseWriteIncrement;
+    using consecution::TraverseWriteDecrement;
     using ::location::Conferential;
     using ::location::Referential;
     using ::trajection::Axial;
@@ -167,7 +180,7 @@ namespace association {
     constexpr Scalar<const AssociativelyResourceful<Natural, Length, Correlative, Evaluative>, AssociativeReadPositional<Correlative, Evaluative>, Natural, const Evaluative>
         ReadElementDecrementScale = {
             Comparison<AssociativeReadPositional<Correlative, Evaluative>>,
-            BeginReadIncrement<Natural, Length, Complementary<Correlative, Evaluative>>,
+            BeginReadDecrement<Natural, Length, Complementary<Correlative, Evaluative>>,
             TraverseReadDecrement<Natural, Length, Complementary<Correlative, Evaluative>>,
             GoReadElement<Natural, Length, Correlative, Evaluative>
         };
@@ -177,11 +190,11 @@ namespace association {
         Natural Length,
         typename Correlative,
         typename Evaluative>
-    constexpr Scalar<const AssociativelyResourceful<Natural, Length, Correlative, Evaluative>, AssociativeReadPositional<Correlative, Evaluative>, Natural, const Evaluative>
+    constexpr Scalar<AssociativelyResourceful<Natural, Length, Correlative, Evaluative>, AssociativeWritePositional<Correlative, Evaluative>, Natural, Evaluative>
         WriteElementIncrementScale = {
-            Comparison<AssociativeReadPositional<Correlative, Evaluative>>,
-            BeginReadIncrement<Natural, Length, Complementary<Correlative, Evaluative>>,
-            TraverseReadIncrement<Natural, Length, Complementary<Correlative, Evaluative>>,
+            Comparison<AssociativeWritePositional<Correlative, Evaluative>>,
+            BeginWriteIncrement<Natural, Length, Complementary<Correlative, Evaluative>>,
+            TraverseWriteIncrement<Natural, Length, Complementary<Correlative, Evaluative>>,
             GoWriteElement<Natural, Length, Correlative, Evaluative>
         };
 
@@ -191,11 +204,11 @@ namespace association {
             Length,
         typename Correlative,
         typename Evaluative>
-    constexpr Scalar<const AssociativelyResourceful<Natural, Length, Correlative, Evaluative>, AssociativeReadPositional<Correlative, Evaluative>, Natural, const Evaluative>
+    constexpr Scalar<AssociativelyResourceful<Natural, Length, Correlative, Evaluative>, AssociativeWritePositional<Correlative, Evaluative>, Natural, Evaluative>
         WriteElementDecrementScale = {
-            Comparison<AssociativeReadPositional<Correlative, Evaluative>>,
-            BeginReadDecrement<Natural, Length, Complementary<Correlative, Evaluative>>,
-            TraverseReadDecrement<Natural, Length, Complementary<Correlative, Evaluative>>,
+            Comparison<AssociativeWritePositional<Correlative, Evaluative>>,
+            BeginWriteDecrement<Natural, Length, Complementary<Correlative, Evaluative>>,
+            TraverseWriteDecrement<Natural, Length, Complementary<Correlative, Evaluative>>,
             GoWriteElement<Natural, Length, Correlative, Evaluative>
         };
 
@@ -226,7 +239,7 @@ namespace association {
         Natural Length,
         typename Correlative,
         typename Evaluative>
-    constexpr Lineal<AssociativelyResourceful<Natural, Length, Correlative, Evaluative>, AssociativeReadPositional<Correlative, Evaluative>, Natural, Evaluative>
+    constexpr Lineal<AssociativelyResourceful<Natural, Length, Correlative, Evaluative>, AssociativeWritePositional<Correlative, Evaluative>, Natural, Evaluative>
         WriteElementLiner = {
             WriteElementIncrementScale<Natural, Length, Correlative, Evaluative>,
             WriteElementDecrementScale<Natural, Length, Correlative, Evaluative>
@@ -241,8 +254,10 @@ namespace association {
         ReadRelatorIncrementDirection = {
             ReadRelatorIncrementScale<Natural, Length, Correlative, Evaluative>,
             Begins<Natural, Length, Complementary<Correlative, Evaluative>>,
-            IncrementTraverses<Natural, Length, Complementary<Correlative, Evaluative>>,
-            Meets<Natural, Length, Complementary<Correlative, Evaluative>>
+            ReadIncrementTraverses<Natural, Length, Complementary<Correlative, Evaluative>>,
+            ReadMeets<Natural, Length, Complementary<Correlative, Evaluative>>,
+            Account<Natural, Length, Complementary<Correlative, Evaluative>>,
+            CountReadIncrement<Natural, Length, Complementary<Correlative, Evaluative>>
         };
 
     template <
@@ -254,8 +269,10 @@ namespace association {
         ReadRelatorDecrementDirection = {
             ReadRelatorDecrementScale<Natural, Length, Correlative, Evaluative>,
             Begins<Natural, Length, Complementary<Correlative, Evaluative>>,
-            DecrementTraverses<Natural, Length, Complementary<Correlative, Evaluative>>,
-            Meets<Natural, Length, Complementary<Correlative, Evaluative>>
+            ReadDecrementTraverses<Natural, Length, Complementary<Correlative, Evaluative>>,
+            ReadMeets<Natural, Length, Complementary<Correlative, Evaluative>>,
+            Account<Natural, Length, Complementary<Correlative, Evaluative>>,
+            CountReadDecrement<Natural, Length, Complementary<Correlative, Evaluative>>
         };
 
     template <
@@ -267,8 +284,10 @@ namespace association {
         ReadElementIncrementDirection = {
             ReadElementIncrementScale<Natural, Length, Correlative, Evaluative>,
             Begins<Natural, Length, Complementary<Correlative, Evaluative>>,
-            IncrementTraverses<Natural, Length, Complementary<Correlative, Evaluative>>,
-            Meets<Natural, Length, Complementary<Correlative, Evaluative>>
+            ReadIncrementTraverses<Natural, Length, Complementary<Correlative, Evaluative>>,
+            ReadMeets<Natural, Length, Complementary<Correlative, Evaluative>>,
+            Account<Natural, Length, Complementary<Correlative, Evaluative>>,
+            CountReadIncrement<Natural, Length, Complementary<Correlative, Evaluative>>
         };
 
     template <
@@ -280,8 +299,10 @@ namespace association {
         ReadElementDecrementDirection = {
             ReadElementDecrementScale<Natural, Length, Correlative, Evaluative>,
             Begins<Natural, Length, Complementary<Correlative, Evaluative>>,
-            DecrementTraverses<Natural, Length, Complementary<Correlative, Evaluative>>,
-            Meets<Natural, Length, Complementary<Correlative, Evaluative>>
+            ReadDecrementTraverses<Natural, Length, Complementary<Correlative, Evaluative>>,
+            ReadMeets<Natural, Length, Complementary<Correlative, Evaluative>>,
+            Account<Natural, Length, Complementary<Correlative, Evaluative>>,
+            CountReadDecrement<Natural, Length, Complementary<Correlative, Evaluative>>
         };
 
     template <
@@ -289,12 +310,14 @@ namespace association {
         Natural Length,
         typename Correlative,
         typename Evaluative>
-    constexpr Directional<AssociativelyResourceful<Natural, Length, Correlative, Evaluative>, AssociativeReadPositional<Correlative, Evaluative>, Natural, Evaluative>
+    constexpr Directional<AssociativelyResourceful<Natural, Length, Correlative, Evaluative>, AssociativeWritePositional<Correlative, Evaluative>, Natural, Evaluative>
         WriteElementIncrementDirection = {
             WriteElementIncrementScale<Natural, Length, Correlative, Evaluative>,
             Begins<Natural, Length, Complementary<Correlative, Evaluative>>,
-            IncrementTraverses<Natural, Length, Complementary<Correlative, Evaluative>>,
-            Meets<Natural, Length, Complementary<Correlative, Evaluative>>
+            WriteIncrementTraverses<Natural, Length, Complementary<Correlative, Evaluative>>,
+            WriteMeets<Natural, Length, Complementary<Correlative, Evaluative>>,
+            Account<Natural, Length, Complementary<Correlative, Evaluative>>,
+            CountWriteIncrement<Natural, Length, Complementary<Correlative, Evaluative>>
         };
 
     template <
@@ -302,12 +325,14 @@ namespace association {
         Natural Length,
         typename Correlative,
         typename Evaluative>
-    constexpr Directional<AssociativelyResourceful<Natural, Length, Correlative, Evaluative>, AssociativeReadPositional<Correlative, Evaluative>, Natural, Evaluative>
+    constexpr Directional<AssociativelyResourceful<Natural, Length, Correlative, Evaluative>, AssociativeWritePositional<Correlative, Evaluative>, Natural, Evaluative>
         WriteElementDecrementDirection = {
-            WriteElementDecrementScale<Natural, Correlative, Evaluative>,
+            WriteElementDecrementScale<Natural, Length, Correlative, Evaluative>,
             Begins<Natural, Length, Complementary<Correlative, Evaluative>>,
-            DecrementTraverses<Natural, Length, Complementary<Correlative, Evaluative>>,
-            Meets<Natural, Length, Complementary<Correlative, Evaluative>>
+            WriteDecrementTraverses<Natural, Length, Complementary<Correlative, Evaluative>>,
+            WriteMeets<Natural, Length, Complementary<Correlative, Evaluative>>,
+            Account<Natural, Length, Complementary<Correlative, Evaluative>>,
+            CountWriteDecrement<Natural, Length, Complementary<Correlative, Evaluative>>
         };
 
     template <
@@ -337,7 +362,7 @@ namespace association {
         Natural Length,
         typename Correlative,
         typename Evaluative>
-    constexpr Axial<AssociativelyResourceful<Natural, Length, Correlative, Evaluative>, AssociativeReadPositional<Correlative, Evaluative>, Natural, Evaluative>
+    constexpr Axial<AssociativelyResourceful<Natural, Length, Correlative, Evaluative>, AssociativeWritePositional<Correlative, Evaluative>, Natural, Evaluative>
         WriteElementAxis = {
             WriteElementIncrementDirection<Natural, Length, Correlative, Evaluative>,
             WriteElementDecrementDirection<Natural, Length, Correlative, Evaluative>

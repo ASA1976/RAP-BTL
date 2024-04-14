@@ -1,4 +1,4 @@
-// © 2019 Aaron Sami Abassi
+// ï¿½ 2019 Aaron Sami Abassi
 // Licensed under the Academic Free License version 3.0
 #ifndef RATION_COLLECTION_MODULE
 #define RATION_COLLECTION_MODULE
@@ -73,7 +73,7 @@ namespace collection {
         if (Safety && Account(set) < 1)
             return false;
         Liner.increment.begin(set, position, 0);
-        return SearchBisection(set, Liner, value, position, Before, Account(set) - 1, Equate, Order);
+        return SearchBisection(set, Liner, value, position, Before, (Natural) (Account(set) - 1), Equate, Order);
     }
 
     template <
@@ -107,7 +107,7 @@ namespace collection {
         if (Account(set) < 1)
             return Proceed(set, value);
         Liner.increment.begin(set, position, 0);
-        if (SearchBisection(set, Liner, value, position, Before, Account(set) - 1, Equate, Order) && Safety)
+        if (SearchBisection(set, Liner, value, position, Before, (Natural) (Account(set) - 1), Equate, Order) && Safety)
             return false;
         if (Order(Liner.increment.go(set, position).to, value))
             return Cede(set, position, value);
@@ -141,7 +141,7 @@ namespace collection {
         if (Safety && Account(set) < 1)
             return false;
         Liner.increment.begin(set, position, 0);
-        if (!SearchBisection(set, Liner, value, position, Before, Account(set) - 1, Equate, Order) && Safety)
+        if (!SearchBisection(set, Liner, value, position, Before, (Natural) (Account(set) - 1), Equate, Order) && Safety)
             return false;
         return Concede(set, position, 1);
     }

@@ -1,4 +1,4 @@
-// © 2019 Aaron Sami Abassi
+// ï¿½ 2019 Aaron Sami Abassi
 // Licensed under the Academic Free License version 3.0
 #ifndef JUNCTION_COLLECTION_MODULE
 #define JUNCTION_COLLECTION_MODULE
@@ -59,7 +59,7 @@ namespace collection {
         if (!set.first)
             return false;
         Scale.begin(set, position, 0);
-        return SearchScalarBisection(set, Scale, value, position, Account(set) - 1, Equate, Order);
+        return SearchScalarBisection(set, Scale, value, position, (Natural) (Account(set) - 1), Equate, Order);
     }
 
     template <
@@ -86,7 +86,7 @@ namespace collection {
         if (!set.first)
             return false;
         Liner.increment.begin(set, position, 0);
-        return SearchBisection(set, Liner, value, position, Before, Account(set) - 1, Equate, Order);
+        return SearchBisection(set, Liner, value, position, Before, (Natural) (Account(set) - 1), Equate, Order);
     }
 
     template <
@@ -115,7 +115,7 @@ namespace collection {
         if (!set.first)
             return Proceed(set, value);
         Scale.begin(set, position, 0);
-        if (SearchScalarBisection(set, Scale, value, position, Account(set) - 1, Equate, Order))
+        if (SearchScalarBisection(set, Scale, value, position, (Natural) (Account(set) - 1), Equate, Order))
             return false;
         if (Order(Scale.go(set, position).to, value))
             return Cede(set, position, value);
@@ -149,7 +149,7 @@ namespace collection {
         if (!set.first)
             return Proceed(set, value);
         Liner.increment.begin(set, position, 0);
-        if (SearchBisection(set, Liner, value, position, Before, Account(set) - 1, Equate, Order))
+        if (SearchBisection(set, Liner, value, position, Before, (Natural) (Account(set) - 1), Equate, Order))
             return false;
         if (Order(Liner.increment.go(set, position).to, value))
             return Cede(set, position, value);
@@ -180,7 +180,7 @@ namespace collection {
         if (!set.first)
             return false;
         Scale.begin(set, position, 0);
-        if (!SearchScalarBisection(set, Scale, value, position, Account(set) - 1, Equate, Order))
+        if (!SearchScalarBisection(set, Scale, value, position, (Natural) (Account(set) - 1), Equate, Order))
             return false;
         return Concede(set, position, 1);
     }
@@ -210,7 +210,7 @@ namespace collection {
         if (!set.first)
             return false;
         Liner.increment.begin(set, position, 0);
-        if (!SearchBisection(set, Liner, value, position, Before, Account(set) - 1, Equate, Order))
+        if (!SearchBisection(set, Liner, value, position, Before, (Natural) (Account(set) - 1), Equate, Order))
             return false;
         return Concede(set, position, 1);
     }

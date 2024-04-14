@@ -1,4 +1,4 @@
-// © 2019 Aaron Sami Abassi
+// ï¿½ 2019 Aaron Sami Abassi
 // Licensed under the Academic Free License version 3.0
 #ifndef RATION_ASSOCIATION_COLLECTION_MODULE
 #define RATION_ASSOCIATION_COLLECTION_MODULE
@@ -67,7 +67,7 @@ namespace association {
             if (Safety && Account(map) < 1)
                 return false;
             Liner.increment.begin(map, position, 0);
-            return SearchBisection(map, Liner, relator, position, Before, Account(map) - 1, Equate, Order);
+            return SearchBisection(map, Liner, relator, position, Before, (Natural) (Account(map) - 1), Equate, Order);
         }
 
         template <
@@ -107,7 +107,7 @@ namespace association {
             if (Safety && Account(map) < 1)
                 return Proceed(map, pair);
             Liner.increment.begin(map, position, 0);
-            if (SearchBisection(map, Liner, relator, position, Before, Account(map) - 1, Equate, Order) && Safety)
+            if (SearchBisection(map, Liner, relator, position, Before, (Natural) (Account(map) - 1), Equate, Order) && Safety)
                 return false;
             if (Order(Liner.increment.go(map, position).to, relator))
                 return Cede(map, position, pair);
@@ -199,7 +199,7 @@ namespace association {
             if (Safety && Account(map) < 1)
                 return false;
             Liner.increment.begin(map, position, 0);
-            if (!SearchBisection(map, Liner, relator, position, Before, Account(map) - 1, Equate, Order) && Safety)
+            if (!SearchBisection(map, Liner, relator, position, Before, (Natural) (Account(map) - 1), Equate, Order) && Safety)
                 return false;
             return Concede(map, position, 1);
         }

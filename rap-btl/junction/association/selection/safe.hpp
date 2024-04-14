@@ -1,4 +1,4 @@
-// © 2019 Aaron Sami Abassi
+// ï¿½ 2019 Aaron Sami Abassi
 // Licensed under the Academic Free License version 3.0
 #ifndef SAFE_JUNCTION_ASSOCIATION_SELECTION_MODULE
 #define SAFE_JUNCTION_ASSOCIATION_SELECTION_MODULE
@@ -41,7 +41,7 @@ namespace association {
             if (!map.first)
                 throw relator;
             Scale.begin(map, position, 0);
-            if (!SearchSection(map, Scale, relator, position, Account(map) - 1, Equate))
+            if (!SearchSection(map, Scale, relator, position, (Natural) (Account(map) - 1), Equate))
                 throw relator;
             return GoReadElement(map, position);
         }
@@ -73,7 +73,7 @@ namespace association {
             if (!map.first)
                 throw relator;
             Scale.begin(map, position, 0);
-            if (!SearchSection(map, Scale, relator, position, Account(map) - 1, Equate))
+            if (!SearchSection(map, Scale, relator, position, (Natural) (Account(map) - 1), Equate))
                 throw relator;
             return GoWriteElement(map, position);
         }

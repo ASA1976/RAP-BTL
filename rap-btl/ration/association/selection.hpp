@@ -1,4 +1,4 @@
-// © 2019 Aaron Sami Abassi
+// ï¿½ 2019 Aaron Sami Abassi
 // Licensed under the Academic Free License version 3.0
 #ifndef RATION_ASSOCIATION_SELECTION_MODULE
 #define RATION_ASSOCIATION_SELECTION_MODULE
@@ -60,7 +60,7 @@ namespace association {
             if (Safety && Account(map) < 1)
                 return false;
             Scale.begin(map, position, 0);
-            return SearchSection(map, Scale, relator, position, Account(map) - 1, Equate);
+            return SearchSection(map, Scale, relator, position, (Natural) (Account(map) - 1), Equate);
         }
 
         template <
@@ -170,7 +170,7 @@ namespace association {
             if (Safety && Account(map) < 1)
                 return false;
             Scale.begin(map, position, 0);
-            if (!SearchSection(map, Scale, relator, position, Account(map) - 1, Equate) && Safety)
+            if (!SearchSection(map, Scale, relator, position, (Natural) (Account(map) - 1), Equate) && Safety)
                 return false;
             return Concede(map, position, 1);
         }

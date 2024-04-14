@@ -1,4 +1,4 @@
-// © 2019 Aaron Sami Abassi
+// ï¿½ 2019 Aaron Sami Abassi
 // Licensed under the Academic Free License version 3.0
 #ifndef JUNCTION_SELECTION_MODULE
 #define JUNCTION_SELECTION_MODULE
@@ -51,7 +51,7 @@ namespace selection {
         if (!set.first)
             return false;
         Scale.begin(set, position, 0);
-        return SearchSection(set, Scale, value, position, Account(set) - 1, Equate);
+        return SearchSection(set, Scale, value, position, (Natural) (Account(set) - 1), Equate);
     }
 
     template <
@@ -77,7 +77,7 @@ namespace selection {
         Positional<Connective, Elemental> position;
         if (set.first) {
             Scale.begin(set, position, 0);
-            if (SearchSection(set, Scale, value, position, Account(set) - 1, Equate))
+            if (SearchSection(set, Scale, value, position, (Natural) (Account(set) - 1), Equate))
                 return false;
         }
         return Proceed(set, value);
@@ -151,7 +151,7 @@ namespace selection {
         if (!set.first)
             return false;
         Scale.begin(set, position, 0);
-        if (!SearchSection(set, Scale, value, position, Account(set) - 1, Equate))
+        if (!SearchSection(set, Scale, value, position, (Natural) (Account(set) - 1), Equate))
             return false;
         return Concede(set, position, 1);
     }

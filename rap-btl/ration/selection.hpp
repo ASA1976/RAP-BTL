@@ -1,4 +1,4 @@
-// © 2019 Aaron Sami Abassi
+// ï¿½ 2019 Aaron Sami Abassi
 // Licensed under the Academic Free License version 3.0
 #ifndef RATION_SELECTION_MODULE
 #define RATION_SELECTION_MODULE
@@ -61,7 +61,7 @@ namespace selection {
         if (Safety && Account(set) < 1)
             return false;
         Scale.begin(set, position, 0);
-        return SearchSection(set, Scale, value, position, Account(set) - 1, Equate);
+        return SearchSection(set, Scale, value, position, (Natural) (Account(set) - 1), Equate);
     }
 
     template <
@@ -90,7 +90,7 @@ namespace selection {
             return false;
         if (Safety && Account(set) > 0) {
             Scale.begin(set, position, 0);
-            if (SearchSection(set, Scale, value, position, Account(set) - 1, Equate))
+            if (SearchSection(set, Scale, value, position, (Natural) (Account(set) - 1), Equate))
                 return false;
         }
         return Proceed(set, value);
@@ -121,7 +121,7 @@ namespace selection {
         if (Safety && Account(set) < 1)
             return false;
         Scale.begin(set, position, 0);
-        if (SearchSection(set, Scale, value, position, Account(set) - 1, Equate))
+        if (SearchSection(set, Scale, value, position, (Natural) (Account(set) - 1), Equate))
             return Concede(set, position, 1);
         return false;
     }

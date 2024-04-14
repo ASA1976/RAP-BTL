@@ -1,4 +1,4 @@
-// © 2019 Aaron Sami Abassi
+// ï¿½ 2019 Aaron Sami Abassi
 // Licensed under the Academic Free License version 3.0
 #ifndef SAFE_JUNCTION_ASSOCIATION_COLLECTION_MODULE
 #define SAFE_JUNCTION_ASSOCIATION_COLLECTION_MODULE
@@ -132,7 +132,7 @@ namespace association {
             if (!map.first)
                 throw relator;
             Scale.begin(map, position, 0);
-            if (!SearchScalarBisection(map, Scale, relator, position, Account(map) - 1, Equate, Order))
+            if (!SearchScalarBisection(map, Scale, relator, position, (Natural) (Account(map) - 1), Equate, Order))
                 throw relator;
             return GoReadElement(map, position);
         }
@@ -165,7 +165,7 @@ namespace association {
             if (!map.first)
                 throw relator;
             Liner.increment.begin(map, position, 0);
-            if (!SearchBisection(map, Liner, relator, position, Before, Account(map) - 1, Equate, Order))
+            if (!SearchBisection(map, Liner, relator, position, Before, (Natural) (Account(map) - 1), Equate, Order))
                 throw relator;
             return GoReadElement(map, position);
         }
@@ -197,7 +197,7 @@ namespace association {
             if (!map.first)
                 throw relator;
             Scale.begin(map, position, 0);
-            if (!SearchScalarBisection(map, Scale, relator, position, Account(map) - 1, Equate, Order))
+            if (!SearchScalarBisection(map, Scale, relator, position, (Natural) (Account(map) - 1), Equate, Order))
                 throw relator;
             return GoWriteElement(map, position);
         }
@@ -230,7 +230,7 @@ namespace association {
             if (!map.first)
                 throw relator;
             Liner.increment.begin(map, position, 0);
-            if (!SearchBisection(map, Liner, relator, position, Before, Account(map) - 1, Equate, Order))
+            if (!SearchBisection(map, Liner, relator, position, Before, (Natural) (Account(map) - 1), Equate, Order))
                 throw relator;
             return GoWriteElement(map, position);
         }

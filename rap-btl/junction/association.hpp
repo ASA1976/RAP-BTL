@@ -482,7 +482,9 @@ namespace association {
             ReadRelatorIncrementSingleScale<Natural, Correlative, Evaluative>,
             DirectionBegins<SingleComplementary<Correlative, Evaluative>, Natural, Complementary<Correlative, Evaluative>, GetFirst<Natural, Complementary<Correlative, Evaluative>>, GetNext<Complementary<Correlative, Evaluative>>>,
             DirectionTraverses<SingleComplementary<Correlative, Evaluative>, Natural, Complementary<Correlative, Evaluative>, GetNext<Complementary<Correlative, Evaluative>>>,
-            Contains<SingleComplementary<Correlative, Evaluative>, Natural, Complementary<Correlative, Evaluative>>
+            Contains<SingleComplementary<Correlative, Evaluative>, Natural, Complementary<Correlative, Evaluative>>,
+            Account<SingleComplementary<Correlative, Evaluative>, Natural, Complementary<Correlative, Evaluative>>,
+            Count<SingleComplementary<Correlative, Evaluative>, Natural, Complementary<Correlative, Evaluative>, GetNext<Complementary<Correlative, Evaluative>>>
         };
 
     template <
@@ -494,7 +496,9 @@ namespace association {
             ReadRelatorIncrementDoubleScale<Natural, Correlative, Evaluative>,
             DirectionBegins<DoubleComplementary<Correlative, Evaluative>, Natural, Complementary<Correlative, Evaluative>, GetFirst<Natural, Complementary<Correlative, Evaluative>>, GetNext<Complementary<Correlative, Evaluative>>>,
             DirectionTraverses<DoubleComplementary<Correlative, Evaluative>, Natural, Complementary<Correlative, Evaluative>, GetNext<Complementary<Correlative, Evaluative>>>,
-            Contains<DoubleComplementary<Correlative, Evaluative>, Natural, Complementary<Correlative, Evaluative>>
+            Contains<DoubleComplementary<Correlative, Evaluative>, Natural, Complementary<Correlative, Evaluative>>,
+            Account<DoubleComplementary<Correlative, Evaluative>, Natural, Complementary<Correlative, Evaluative>>,
+            Count<DoubleComplementary<Correlative, Evaluative>, Natural, Complementary<Correlative, Evaluative>, GetNext<Complementary<Correlative, Evaluative>>>
         };
 
     template <
@@ -506,7 +510,9 @@ namespace association {
             ReadRelatorDecrementDoubleScale<Natural, Correlative, Evaluative>,
             DirectionBegins<DoubleComplementary<Correlative, Evaluative>, Natural, Complementary<Correlative, Evaluative>, GetLast<Natural, Complementary<Correlative, Evaluative>>, GetPrevious<Complementary<Correlative, Evaluative>>>,
             DirectionTraverses<DoubleComplementary<Correlative, Evaluative>, Natural, Complementary<Correlative, Evaluative>, GetPrevious<Complementary<Correlative, Evaluative>>>,
-            Contains<DoubleComplementary<Correlative, Evaluative>, Natural, Complementary<Correlative, Evaluative>>
+            Contains<DoubleComplementary<Correlative, Evaluative>, Natural, Complementary<Correlative, Evaluative>>,
+            Account<DoubleComplementary<Correlative, Evaluative>, Natural, Complementary<Correlative, Evaluative>>,
+            Count<DoubleComplementary<Correlative, Evaluative>, Natural, Complementary<Correlative, Evaluative>, GetPrevious<Complementary<Correlative, Evaluative>>>
         };
 
     template <
@@ -518,7 +524,9 @@ namespace association {
             ReadElementIncrementSingleScale<Natural, Correlative, Evaluative>,
             DirectionBegins<SingleComplementary<Correlative, Evaluative>, Natural, Complementary<Correlative, Evaluative>, GetFirst<Natural, Complementary<Correlative, Evaluative>>, GetNext<Complementary<Correlative, Evaluative>>>,
             DirectionTraverses<SingleComplementary<Correlative, Evaluative>, Natural, Complementary<Correlative, Evaluative>, GetNext<Complementary<Correlative, Evaluative>>>,
-            Contains<SingleComplementary<Correlative, Evaluative>, Natural, Complementary<Correlative, Evaluative>>
+            Contains<SingleComplementary<Correlative, Evaluative>, Natural, Complementary<Correlative, Evaluative>>,
+            Account<SingleComplementary<Correlative, Evaluative>, Natural, Complementary<Correlative, Evaluative>>,
+            Count<SingleComplementary<Correlative, Evaluative>, Natural, Complementary<Correlative, Evaluative>, GetNext<Complementary<Correlative, Evaluative>>>
         };
 
     template <
@@ -530,7 +538,9 @@ namespace association {
             ReadElementIncrementDoubleScale<Natural, Correlative, Evaluative>,
             DirectionBegins<DoubleComplementary<Correlative, Evaluative>, Natural, Complementary<Correlative, Evaluative>, GetFirst<Natural, Complementary<Correlative, Evaluative>>, GetNext<Complementary<Correlative, Evaluative>>>,
             DirectionTraverses<DoubleComplementary<Correlative, Evaluative>, Natural, Complementary<Correlative, Evaluative>, GetNext<Complementary<Correlative, Evaluative>>>,
-            Contains<DoubleComplementary<Correlative, Evaluative>, Natural, Complementary<Correlative, Evaluative>>
+            Contains<DoubleComplementary<Correlative, Evaluative>, Natural, Complementary<Correlative, Evaluative>>,
+            Account<DoubleComplementary<Correlative, Evaluative>, Natural, Complementary<Correlative, Evaluative>>,
+            Count<DoubleComplementary<Correlative, Evaluative>, Natural, Complementary<Correlative, Evaluative>, GetNext<Complementary<Correlative, Evaluative>>>
         };
 
     template <
@@ -542,8 +552,10 @@ namespace association {
             ReadElementDecrementDoubleScale<Natural, Correlative, Evaluative>,
             DirectionBegins<DoubleComplementary<Correlative, Evaluative>, Natural, Complementary<Correlative, Evaluative>, GetLast<Natural, Complementary<Correlative, Evaluative>>, GetPrevious<Complementary<Correlative, Evaluative>>>,
             DirectionTraverses<DoubleComplementary<Correlative, Evaluative>, Natural, Complementary<Correlative, Evaluative>, GetPrevious<Complementary<Correlative, Evaluative>>>,
-            Contains<DoubleComplementary<Correlative, Evaluative>, Natural, Complementary<Correlative, Evaluative>>
-        };
+            Contains<DoubleComplementary<Correlative, Evaluative>, Natural, Complementary<Correlative, Evaluative>>,
+            Account<DoubleComplementary<Correlative, Evaluative>, Natural, Complementary<Correlative, Evaluative>>,
+            Count<DoubleComplementary<Correlative, Evaluative>, Natural, Complementary<Correlative, Evaluative>, GetPrevious<Complementary<Correlative, Evaluative>>>
+    };
 
     template <
         typename Natural,
@@ -554,8 +566,10 @@ namespace association {
             WriteElementIncrementSingleScale<Natural, Correlative, Evaluative>,
             DirectionBegins<SingleComplementary<Correlative, Evaluative>, Natural, Complementary<Correlative, Evaluative>, GetFirst<Natural, Complementary<Correlative, Evaluative>>, GetNext<Complementary<Correlative, Evaluative>>>,
             DirectionTraverses<SingleComplementary<Correlative, Evaluative>, Natural, Complementary<Correlative, Evaluative>, GetNext<Complementary<Correlative, Evaluative>>>,
-            Contains<SingleComplementary<Correlative, Evaluative>, Natural, Complementary<Correlative, Evaluative>>
-        };
+            Contains<SingleComplementary<Correlative, Evaluative>, Natural, Complementary<Correlative, Evaluative>>,
+            Account<SingleComplementary<Correlative, Evaluative>, Natural, Complementary<Correlative, Evaluative>>,
+            Count<SingleComplementary<Correlative, Evaluative>, Natural, Complementary<Correlative, Evaluative>, GetNext<Complementary<Correlative, Evaluative>>>
+    };
 
     template <
         typename Natural,
@@ -566,8 +580,10 @@ namespace association {
             WriteElementIncrementDoubleScale<Natural, Correlative, Evaluative>,
             DirectionBegins<DoubleComplementary<Correlative, Evaluative>, Natural, Complementary<Correlative, Evaluative>, GetFirst<Natural, Complementary<Correlative, Evaluative>>, GetNext<Complementary<Correlative, Evaluative>>>,
             DirectionTraverses<DoubleComplementary<Correlative, Evaluative>, Natural, Complementary<Correlative, Evaluative>, GetNext<Complementary<Correlative, Evaluative>>>,
-            Contains<DoubleComplementary<Correlative, Evaluative>, Natural, Complementary<Correlative, Evaluative>>
-        };
+            Contains<DoubleComplementary<Correlative, Evaluative>, Natural, Complementary<Correlative, Evaluative>>,
+            Account<DoubleComplementary<Correlative, Evaluative>, Natural, Complementary<Correlative, Evaluative>>,
+            Count<DoubleComplementary<Correlative, Evaluative>, Natural, Complementary<Correlative, Evaluative>, GetNext<Complementary<Correlative, Evaluative>>>
+    };
 
     template <
         typename Natural,
@@ -578,8 +594,10 @@ namespace association {
             WriteElementDecrementDoubleScale<Natural, Correlative, Evaluative>,
             DirectionBegins<DoubleComplementary<Correlative, Evaluative>, Natural, Complementary<Correlative, Evaluative>, GetLast<Natural, Complementary<Correlative, Evaluative>>, GetPrevious<Complementary<Correlative, Evaluative>>>,
             DirectionTraverses<DoubleComplementary<Correlative, Evaluative>, Natural, Complementary<Correlative, Evaluative>, GetPrevious<Complementary<Correlative, Evaluative>>>,
-            Contains<DoubleComplementary<Correlative, Evaluative>, Natural, Complementary<Correlative, Evaluative>>
-        };
+            Contains<DoubleComplementary<Correlative, Evaluative>, Natural, Complementary<Correlative, Evaluative>>,
+            Account<DoubleComplementary<Correlative, Evaluative>, Natural, Complementary<Correlative, Evaluative>>,
+            Count<DoubleComplementary<Correlative, Evaluative>, Natural, Complementary<Correlative, Evaluative>, GetPrevious<Complementary<Correlative, Evaluative>>>
+    };
 
     template <
         typename Natural,
